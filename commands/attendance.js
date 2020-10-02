@@ -11,12 +11,7 @@ module.exports = {
         }
 
         if (args.length === 0) {
-            msg.react(bot.emojis.cache.find(emoji => emoji.name === modules.constObj.errorEmoji));
-            errorEmbed = new Discord.MessageEmbed()
-                .setColor(modules.constObj.error)
-                .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
-                .setDescription(`${msg.author} You must enter a message. ${modules.helpObj.errorAttendance}`);
-            msg.channel.send(errorEmbed);
+            modules.sendErrorEmbed(Discord, bot, msg, 'You must enter a message.', modules.helpObj.errorAttendance);
         }
 
         else {
@@ -33,10 +28,10 @@ module.exports = {
             }
 
             attendanceEmbed = new Discord.MessageEmbed()
-            .setColor(formationColour)
-            .setAuthor(`${formationName} (${msg.member.displayName})`, msg.guild.iconURL())
-            .setDescription(`${args.join(' ')}`)
-            .setFooter(`${dateFormat(msg.createdAt.toString(), modules.constObj.dateOutput)}`);
+                .setColor(formationColour)
+                .setAuthor(`${formationName} (${msg.member.displayName})`, msg.guild.iconURL())
+                .setDescription(`${args.join(' ')}`)
+                .setFooter(`${dateFormat(msg.createdAt.toString(), modules.constObj.dateOutput)}`);
 
             bot.channels.cache.get(modules.constObj.attendanceID).send(attendanceEmbed);
             msg.channel.send(attendanceEmbed);

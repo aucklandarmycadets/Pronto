@@ -224,6 +224,18 @@ function capitalise(string) {
     return string.charAt(0).toUpperCase() + string.slice(1)
 };
 
+function sendErrorEmbed(Discord, bot, msg, errMsg, cmdErr, footer) {
+    msg.react(bot.emojis.cache.find(emoji => emoji.name === constObj.errorEmoji));
+    errorEmbed = new Discord.MessageEmbed()
+        .setColor(constObj.error)
+        .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
+        .setDescription(`${msg.author} ${errMsg} ${cmdErr}`);
+
+    if (footer) errorEmbed.setFooter(footer);
+
+    msg.channel.send(errorEmbed);
+}
+
 function newMember(Discord, bot, member) {
     if (member.user.bot) return;
     
@@ -340,5 +352,6 @@ exports.cmdList = cmdList;
 exports.cmdTxt = cmdTxt;
 exports.helpObj = helpObj;
 exports.capitalise = capitalise;
+exports.sendErrorEmbed = sendErrorEmbed;
 exports.newMember = newMember;
 exports.channelPair = channelPair;

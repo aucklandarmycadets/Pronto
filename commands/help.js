@@ -92,7 +92,7 @@ module.exports = {
         function createHelpEmbed(command, text) {
             helpEmbed = new Discord.MessageEmbed()
                 .setTitle(`Command: ${prefix}${command}`)
-                .setColor(modules.constObj.grey);
+                .setColor(modules.constObj.grey)
                 .setDescription(text)
                 .setFooter(`Requested by ${msg.member.displayName}`);
             showCmdList = false;

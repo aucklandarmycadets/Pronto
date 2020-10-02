@@ -5,26 +5,21 @@ module.exports = {
     name: modules.cmdList.connectedCmd,
     description: modules.cmdTxt.connectedDesc,
     execute(Discord, bot, msg, args) {
-        sendError = false;
-
         if (!msg.member.roles.cache.some(roles=>modules.constObj.sgtPlus.includes(roles.id))) {
             bot.commands.get(modules.cmdList.helpCmd).execute(Discord, bot, msg, args);
             return;
         }
 
         if (msg.mentions.channels.size === 0) {
-            errorMessage = 'You must specify a channel.';
-            sendError = true;
+            modules.sendErrorEmbed(Discord, bot, msg, 'You must specify a voice channel.', modules.helpObj.errorConnected, 'Note: Use the <#channelID> syntax!');
         }
 
         else if (msg.mentions.channels.some(mention => mention.type !== 'voice')) {
-            errorMessage = 'Input must be a voice channel.';
-            sendError = true;
+            modules.sendErrorEmbed(Discord, bot, msg, 'Input must be a voice channel.', modules.helpObj.errorConnected, 'Note: Use the <#channelID> syntax!');
         }
 
         else if (msg.mentions.channels.size > 1) {
-            errorMessage = 'You must export channels individually.';
-            sendError = true;
+            modules.sendErrorEmbed(Discord, bot, msg, 'You can only display one channel at a time.', modules.helpObj.errorConnected, 'Note: Use the <#channelID> syntax!');
         }
 
         else {
@@ -43,16 +38,6 @@ module.exports = {
                 .setDescription(connectedMembers.join('\n'))
                 .setFooter(`${dateFormat(msg.createdAt.toString(), modules.constObj.dateOutput)}`);
             bot.channels.cache.get(modules.constObj.attendanceID).send(connectedEmbed);
-        }
-
-        if (sendError === true) {
-            msg.react(bot.emojis.cache.find(emoji => emoji.name === modules.constObj.errorEmoji));
-            errorEmbed = new Discord.MessageEmbed()
-                .setColor(modules.constObj.error)
-                .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
-                .setDescription(`${msg.author} ${errorMessage} ${modules.helpObj.errorConnected}`)
-                .setFooter('Note: Use the <#channelID> syntax!')
-            msg.channel.send(errorEmbed);
         }
     },
 };

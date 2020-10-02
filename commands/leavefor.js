@@ -7,31 +7,25 @@ module.exports = {
     name: modules.cmdList.leaveForCmd,
     description: modules.cmdTxt.leaveForDesc,
     execute(Discord, bot, msg, args) {
-        sendError = false;
-
         if (!msg.member.roles.cache.some(roles=>modules.constObj.tacPlus.includes(roles.id))) {
             bot.commands.get(modules.cmdList.helpCmd).execute(Discord, bot, msg, args);
             return;
         }
 
         if (msg.mentions.members.size === 0) {
-            errorMessage = 'You must tag a user.';
-            sendError = true;
+            modules.sendErrorEmbed(Discord, bot, msg, 'You must tag a user.', modules.helpObj.errorLeaveFor);
         }
 
         else if (msg.mentions.members.some(mention => mention.user.bot === true)) {
-            errorMessage = ' You cannot submit leave for a bot!';
-            sendError = true;
+            modules.sendErrorEmbed(Discord, bot, msg, 'You cannot submit leave for a bot!', modules.helpObj.errorLeaveFor);
         }
 
         else if (msg.mentions.members.size > 1) {
-            errorMessage = 'You must submit leave individually.';
-            sendError = true;
+            modules.sendErrorEmbed(Discord, bot, msg, 'You must submit leave individually.', modules.helpObj.errorLeaveFor);
         }
 
         else if (args.length < 2) {
-            errorMessage = 'Insufficient arguments.';
-            sendError = true;
+            modules.sendErrorEmbed(Discord, bot, msg, 'Insufficient arguments.', modules.helpObj.errorLeaveFor);
         }
 
         else {
@@ -52,7 +46,7 @@ module.exports = {
                     { name: 'Date', value: dateFormat(msg.createdAt.toString(), modules.constObj.dateOutput) },
                     { name: 'Absentee', value: msg.mentions.members.first() },
                     { name: 'Details', value: modules.capitalise(args.join(' ')) },
-            );
+                );
             
             dmEmbed = new Discord.MessageEmbed()
                 .setTitle(leaveForEmbedTitle)
@@ -63,7 +57,7 @@ module.exports = {
                     { name: 'Date', value: dateFormat(msg.createdAt.toString(), modules.constObj.dateOutput) },
                     { name: 'Channel', value: msg.channel.toString() },
                     { name: 'Details', value: modules.capitalise(args.join(' ')) },
-            );
+                );
 
             absenteeEmbed = new Discord.MessageEmbed()
                 .setTitle(leaveForEmbedTitle)
@@ -80,15 +74,6 @@ module.exports = {
             bot.channels.cache.get(modules.constObj.attendanceID).send(attendanceEmbed);
             msg.author.send(dmEmbed);
             msg.mentions.members.first().send(absenteeEmbed);
-        }
-
-        if (sendError === true) {
-            msg.react(bot.emojis.cache.find(emoji => emoji.name === modules.constObj.errorEmoji));
-            errorEmbed = new Discord.MessageEmbed()
-                .setColor(modules.constObj.error)
-                .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
-                .setDescription(`${msg.author} ${errorMessage} ${modules.helpObj.errorLeaveFor}`);
-            msg.channel.send(errorEmbed);
         }
     },
 };

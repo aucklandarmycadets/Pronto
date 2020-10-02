@@ -4,27 +4,22 @@ module.exports = {
     name: modules.cmdList.purgeCmd,
     description: modules.cmdTxt.purgeDesc,
     execute(Discord, bot, msg, args) {
-        sendError = false;
-
         if (!msg.member.roles.cache.some(roles=>modules.constObj.adjPlus.includes(roles.id))) {
             bot.commands.get(modules.cmdList.helpCmd).execute(Discord, bot, msg, args);
             return;
         }
 
         if (args.length === 0) {
-            errorMessage = 'Insufficent arguments.';
-            sendError = true;
+            modules.sendErrorEmbed(Discord, bot, msg, 'Insufficient arguments.', modules.helpObj.errorPurge);
         }
 
         else if (msg.mentions.members.size > 1) {
-            errorMessage = 'You cannot purge multiple users simultaneously.';
-            sendError = true;
+            modules.sendErrorEmbed(Discord, bot, msg, 'You cannot purge multiple users simultaneously.', modules.helpObj.errorPurge);
         }
 
 
         else if (args.length > 2) {
-            errorMessage = 'Too many arguments.';
-            sendError = true;
+            modules.sendErrorEmbed(Discord, bot, msg, 'Too many arguments.', modules.helpObj.errorPurge);
         }
 
         const user = msg.mentions.users.first();
@@ -32,27 +27,15 @@ module.exports = {
         const purgeCount = !!parseInt(msg.content.split(' ')[1]) ? parseInt(msg.content.split(' ')[1]) : parseInt(msg.content.split(' ')[2])
         
         if (!purgeCount && !user && !sendError) {
-            errorMessage = 'Invalid input.';
-            sendError = true;
+            modules.sendErrorEmbed(Discord, bot, msg, 'Invalid input.', modules.helpObj.errorPurge);
         }
 
         else if (!purgeCount && !sendError) {
-            errorMessage = 'You must specify an amount to delete.';
-            sendError = true;
+            modules.sendErrorEmbed(Discord, bot, msg, 'You must specify an amount of messages to delete.', modules.helpObj.errorPurge);
         }
 
         if (purgeCount > 100 && !sendError) {
-            errorMessage = 'You cannot purge more than 100 messages at a time.';
-            sendError = true;
-        }
-
-        if (sendError === true) {
-            msg.react(bot.emojis.cache.find(emoji => emoji.name === modules.constObj.errorEmoji));
-            errorEmbed = new Discord.MessageEmbed()
-                .setColor(modules.constObj.error)
-                .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
-                .setDescription(`${msg.author} ${errorMessage} ${modules.helpObj.errorPurge}`);
-            msg.channel.send(errorEmbed);
+            modules.sendErrorEmbed(Discord, bot, msg, 'You cannot purge more than 100 messages at a time.', modules.helpObj.errorPurge);
         }
 
         else {

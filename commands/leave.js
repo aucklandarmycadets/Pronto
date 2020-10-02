@@ -13,13 +13,7 @@ module.exports = {
         }
 
         if (args.length === 0) {
-            msg.react(bot.emojis.cache.find(emoji => emoji.name === modules.constObj.errorEmoji));
-
-            errorEmbed = new Discord.MessageEmbed()
-            .setColor(modules.constObj.error)
-            .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
-            .setDescription(`${msg.author} Insufficient arguments. ${modules.helpObj.errorLeave}`);
-            msg.channel.send(errorEmbed);
+            modules.sendErrorEmbed(Discord, bot, msg, 'Insufficient arguments.', modules.helpObj.errorLeave);
         }
 
         else {
