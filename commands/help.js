@@ -21,9 +21,9 @@ module.exports = {
         if (msg.guild === null) {
             if (args[0] === modules.cmdList.leaveCmd) {
                 helpEmbed = new Discord.MessageEmbed()
-                .setTitle(`Command: ${prefix}${modules.cmdList.leaveCmd}`)
-                .setColor(modules.constObj.grey)
-                .setDescription(modules.helpObj.helpLeave);
+                    .setTitle(`Command: ${prefix}${modules.cmdList.leaveCmd}`)
+                    .setColor(modules.constObj.grey)
+                    .setDescription(modules.helpObj.helpLeave);
                 msg.author.send(helpEmbed);
             }
             return;
@@ -31,60 +31,44 @@ module.exports = {
 
         commandList = modules.helpObj.helpAll;
 
-        if (cmd === modules.cmdList.helpCmd) {
-            createHelpEmbed(modules.cmdList.helpCmd, modules.helpObj.helpHelp);
-        }
+        if (cmd === modules.cmdList.helpCmd) createHelpEmbed(modules.cmdList.helpCmd, modules.helpObj.helpHelp);
 
         if (!msg.member.roles.cache.some(roles=>modules.constObj.nonCadet.includes(roles.id))) {
             commandList = modules.helpObj.helpCadet;
 
-            if (cmd === modules.cmdList.leaveCmd) {
-                createHelpEmbed(modules.cmdList.leaveCmd, modules.helpObj.helpLeave);
-            }
+            if (cmd === modules.cmdList.leaveCmd) createHelpEmbed(modules.cmdList.leaveCmd, modules.helpObj.helpLeave);
         }
 
         if (msg.member.roles.cache.some(roles=>modules.constObj.tacPlus.includes(roles.id))) {
             commandList = modules.helpObj.helpTacPlus;
 
-            if (cmd === modules.cmdList.leaveForCmd) {
-                createHelpEmbed(modules.cmdList.leaveForCmd, modules.helpObj.helpLeaveFor);
-            }
+            if (cmd === modules.cmdList.leaveForCmd) createHelpEmbed(modules.cmdList.leaveForCmd, modules.helpObj.helpLeaveFor);
 
-            else if (cmd === modules.cmdList.attendanceCmd) {
-                createHelpEmbed(modules.cmdList.attendanceCmd, modules.helpObj.helpAttendance);
-            }
+            else if (cmd === modules.cmdList.attendanceCmd) createHelpEmbed(modules.cmdList.attendanceCmd, modules.helpObj.helpAttendance);
         }
 
         if (msg.member.roles.cache.some(roles=>modules.constObj.sgtPlus.includes(roles.id))) {
             commandList = modules.helpObj.helpSgtPlus;
 
-            if (cmd === modules.cmdList.connectedCmd) {
-                createHelpEmbed(modules.cmdList.connectedCmd, modules.helpObj.helpConnected);
-            }
+            if (cmd === modules.cmdList.connectedCmd) createHelpEmbed(modules.cmdList.connectedCmd, modules.helpObj.helpConnected);
         }
 
         if (msg.member.roles.cache.some(roles=>modules.constObj.cqmsPlus.includes(roles.id))) {
             commandList = modules.helpObj.helpCqmsPlus;
 
-            if (cmd === modules.cmdList.archiveCmd) {
-                createHelpEmbed(modules.cmdList.archiveCmd, modules.helpObj.helpArchive);
-            }
+            if (cmd === modules.cmdList.archiveCmd) createHelpEmbed(modules.cmdList.archiveCmd, modules.helpObj.helpArchive);
         }
 
         if (msg.member.roles.cache.some(roles=>modules.constObj.adjPlus.includes(roles.id))) {
             commandList = modules.helpObj.helpAdjPlus;
 
-            if (cmd === modules.cmdList.purgeCmd) {
-                createHelpEmbed(modules.cmdList.purgeCmd, modules.helpObj.helpPurge);
-            }
+            if (cmd === modules.cmdList.purgeCmd) createHelpEmbed(modules.cmdList.purgeCmd, modules.helpObj.helpPurge);
         }
 
         if (msg.author.id === modules.constObj.devID) {
             commandList = modules.helpObj.helpDev;
 
-            if (cmd === modules.cmdList.pingCmd) {
-                createHelpEmbed(modules.cmdList.pingCmd, modules.helpObj.helpPing);
-            }
+            if (cmd === modules.cmdList.pingCmd) createHelpEmbed(modules.cmdList.pingCmd, modules.helpObj.helpPing);
         }
 
         if (showCmdList === true) {
@@ -101,13 +85,9 @@ module.exports = {
             }
         }
         
-        if (embedDM === false) {
-            msg.channel.send(helpEmbed);
-        }
+        if (embedDM === false) msg.channel.send(helpEmbed);
 
-        else if (embedDM === true) {
-            msg.author.send(helpEmbed);
-        }
+        else if (embedDM === true) msg.author.send(helpEmbed);
 
         function createHelpEmbed(command, text) {
             helpEmbed = new Discord.MessageEmbed()
