@@ -1,0 +1,15 @@
+{
+  "name": "Pronto",
+  "version": "1.0.0",
+  "description": "Discord bot designed for the City of Auckland Cadet Unit",
+  "main": "pronto.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "James Bao",
+  "dependencies": {
+    "dateformat": "^3.0.3",
+    "discord.js": "^12.3.1",
+    "dotenv": "^8.2.0"
+  }
+}
