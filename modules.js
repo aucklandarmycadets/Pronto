@@ -147,39 +147,27 @@ const helpObj = {
     }, '**', ':** '),
 
     get errorLeave() {
-        return '\n\n' + this.helpLeave + '\n' + helpText({
-        'Help Command': `${constObj.prefix}${cmdList.helpCmd} ${cmdList.leaveCmd}`,
-        }, '**', ':** ')
+        return errorText(this.helpLeave, cmdList.leaveCmd);
     },
 
     get errorLeaveFor() {
-        return '\n\n' + this.helpLeaveFor + '\n' + helpText({
-        'Help Command': `${constObj.prefix}${cmdList.helpCmd} ${cmdList.leaveForCmd}`,
-        }, '**', ':** ')
+        return errorText(this.helpLeaveFor, cmdList.leaveForCmd);
     },
 
     get errorAttendance() {
-        return '\n\n' + this.helpAttendance + '\n' + helpText({
-        'Help Command': `${constObj.prefix}${cmdList.helpCmd} ${cmdList.attendanceCmd}`,
-        }, '**', ':** ')
+        return errorText(this.helpAttendance, cmdList.attendanceCmd);
     },
 
     get errorConnected() {
-        return '\n\n' + this.helpConnected + '\n' + helpText({
-        'Help Command': `${constObj.prefix}${cmdList.helpCmd} ${cmdList.connectedCmd}`,
-        }, '**', ':** ')
+        return errorText(this.helpConnected, cmdList.connectedCmd);
     },
 
     get errorArchive() {
-        return '\n\n' + this.helpArchive + '\n' + helpText({
-        'Help Command': `${constObj.prefix}${cmdList.helpCmd} ${cmdList.archiveCmd}`,
-        }, '**', ':** ')
+        return errorText(this.helpArchive, cmdList.archiveCmd);
     },
 
     get errorPurge() {
-        return '\n\n' + this.helpPurge + '\n' + helpText({
-        'Help Command': `${constObj.prefix}${cmdList.helpCmd} ${cmdList.purgeCmd}`,
-        }, '**', ':** ')
+        return errorText(this.helpPurge, cmdList.purgeCmd);
     },
 };
 
@@ -205,6 +193,12 @@ function helpText(object, startFormat, endFormat) {
 
     return helpString;
 };
+
+function errorText(helpTxt, cmd) {
+    return '\n\n' + helpTxt + '\n' + helpText({
+        'Help Command': `${constObj.prefix}${cmdList.helpCmd} ${cmd}`,
+    }, '**', ':** ')
+}
 
 function rolesOutput(array) {
     var rolesString = '';
