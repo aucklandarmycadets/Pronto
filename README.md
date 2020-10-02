@@ -26,3 +26,4 @@ Discord bot developed for the City of Auckland Cadet Unit.
 - `!connected`
 - `!archive`
 - `!purge`
+- `!ping`
