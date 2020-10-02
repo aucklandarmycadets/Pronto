@@ -39,7 +39,7 @@ module.exports = {
                 .setTitle('Channel Archived 🔒')
                 .setColor(modules.constObj.error)
                 .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
-                .setFooter(`${dateFormat(msg.createdAt.toString(), 'HHMM "h" ddd, dd mmm yy')}`);
+                .setFooter(`${dateFormat(msg.createdAt.toString(), modules.constObj.dateOutput)}`);
             bot.channels.cache.get(msg.mentions.channels.first().id).send(archiveEmbed);
 
             msg.mentions.channels.first().setParent(modules.constObj.archivedID, { lockPermissions: true })

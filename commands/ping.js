@@ -19,7 +19,7 @@ module.exports = {
                 .setTitle('Pong!')
                 .setColor(modules.constObj.success)
                 .setDescription(`Latency is ${Date.now() - msg.createdTimestamp}ms. API Latency is ${Math.round(bot.ws.ping)}ms`)
-                .setFooter(`${dateFormat(msg.createdAt.toString(), 'HHMM "h" ddd, dd mmm yy')}`);
+                .setFooter(`${dateFormat(msg.createdAt.toString(), modules.constObj.dateOutput)}`);
             msg.channel.send(pingEmbed);
         }
     },

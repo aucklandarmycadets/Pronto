@@ -36,7 +36,7 @@ module.exports = {
             .setColor(formationColour)
             .setAuthor(`${formationName} (${msg.member.displayName})`, msg.guild.iconURL())
             .setDescription(`${args.join(' ')}`)
-            .setFooter(`${dateFormat(msg.createdAt.toString(), 'HHMM "h" ddd, dd mmm yy')}`);
+            .setFooter(`${dateFormat(msg.createdAt.toString(), modules.constObj.dateOutput)}`);
 
             bot.channels.cache.get(modules.constObj.attendanceID).send(attendanceEmbed);
             msg.channel.send(attendanceEmbed);

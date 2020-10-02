@@ -25,6 +25,7 @@ const constObj = {
     yellow: 0xffd456,
     success: 0x45bb8a,
     error: 0xef4949,
+    dateOutput: 'HHMM "h" ddd, dd mmm yy',
 };
 
 const cmdList = {
@@ -233,7 +234,7 @@ function newMember(Discord, bot, member) {
             .setColor(constObj.yellow)
             .setAuthor(member.user.tag, member.user.displayAvatarURL())
             .setDescription(`${member.user} has just entered ${member.guild.channels.cache.get(constObj.newStatesID)}.\n\nMake them feel welcome!`)
-            .setFooter(`${dateFormat(member.joinedAt.toString(), 'HHMM "h" ddd, dd mmm yy')}`);
+            .setFooter(`${dateFormat(member.joinedAt.toString(), constObj.dateOutput)}`);
     member.guild.channels.cache.get(constObj.recruitingID).send(welcomeEmbed);
 };
 
@@ -260,7 +261,7 @@ function channelPair(Discord, bot, oldState, newState) {
                 .setColor(constObj.success)
                 .setAuthor(newState.member.displayName, newState.member.user.displayAvatarURL())
                 .setDescription(`${newState.member} has joined the channel.`)
-                .setFooter(`${dateFormat(Date(), 'HHMM "h" ddd, dd mmm yy')}`);
+                .setFooter(`${dateFormat(Date(), constObj.dateOutput)}`);
             textChannel.send(joinEmbed);
         } 
 
@@ -272,7 +273,7 @@ function channelPair(Discord, bot, oldState, newState) {
                 .setColor(constObj.error)
                 .setAuthor(newState.member.displayName, newState.member.user.displayAvatarURL())
                 .setDescription(`${newState.member} has left the channel.`)
-                .setFooter(`${dateFormat(Date(), 'HHMM "h" ddd, dd mmm yy')}`);
+                .setFooter(`${dateFormat(Date(), constObj.dateOutput)}`);
             textChannel.send(leaveEmbed);
 
             if (oldState.channel.members.size === 0) {

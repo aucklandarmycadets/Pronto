@@ -54,7 +54,7 @@ bot.on('message', msg => {
             .setColor(modules.constObj.error)
             .setAuthor(bot.user.tag, bot.user.avatarURL())
             .setDescription(`**Error executing ${command} :c**`)
-            .setFooter(`${dateFormat(msg.createdAt.toString(), 'HHMM "h" ddd, dd mmm yy')}`);
+            .setFooter(`${dateFormat(msg.createdAt.toString(), modules.constObj.dateOutput)}`);
 
         bot.channels.cache.get(modules.constObj.debugID).send(errorEmbed);
     };

@@ -1,6 +1,8 @@
 const dateFormat = require('dateformat');
 const modules = require('../modules');
 
+const leaveEmbedTitle = 'Leave Request';
+
 module.exports = {
     name: modules.cmdList.leaveCmd,
     description: modules.cmdTxt.leaveDesc,
@@ -24,22 +26,22 @@ module.exports = {
             msg.react(bot.emojis.cache.find(emoji => emoji.name === modules.constObj.successEmoji));
 
             attendanceEmbed = new Discord.MessageEmbed()
-            .setTitle('Leave Request')
+            .setTitle(leaveEmbedTitle)
             .setColor(modules.constObj.red)
             .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
             .setDescription(`${msg.author} has requested leave in ${msg.channel}`)
             .addFields(
-                { name: 'Date', value: dateFormat(msg.createdAt.toString(), 'HHMM "h" ddd, dd mmm yy') },
+                { name: 'Date', value: dateFormat(msg.createdAt.toString(), modules.constObj.dateOutput) },
                 { name: 'Details', value: modules.capitalise(args.join(' ')) },
             );
 
             dmEmbed = new Discord.MessageEmbed()
-            .setTitle('Leave Request')
+            .setTitle(leaveEmbedTitle)
             .setColor(modules.constObj.red)
             .setAuthor(msg.guild.name, msg.guild.iconURL())
             .setDescription(`Hi ${msg.author}, your submission of leave has been received.`)
             .addFields(
-                { name: 'Date', value: dateFormat(msg.createdAt.toString(), 'HHMM "h" ddd, dd mmm yy') },
+                { name: 'Date', value: dateFormat(msg.createdAt.toString(), modules.constObj.dateOutput) },
                 { name: 'Channel', value: msg.channel.toString() },
                 { name: 'Details', value: modules.capitalise(args.join(' ')) },
             );

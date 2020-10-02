@@ -41,7 +41,7 @@ module.exports = {
                 .setColor(modules.constObj.success)
                 .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
                 .setDescription(connectedMembers.join('\n'))
-                .setFooter(`${dateFormat(msg.createdAt.toString(), 'HHMM "h" ddd, dd mmm yy')}`);
+                .setFooter(`${dateFormat(msg.createdAt.toString(), modules.constObj.dateOutput)}`);
             bot.channels.cache.get(modules.constObj.attendanceID).send(connectedEmbed);
         }
 

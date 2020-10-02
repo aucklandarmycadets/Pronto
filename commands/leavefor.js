@@ -1,6 +1,8 @@
 const dateFormat = require('dateformat');
 const modules = require('../modules');
 
+const leaveForEmbedTitle = 'Leave Request (For)';
+
 module.exports = {
     name: modules.cmdList.leaveForCmd,
     description: modules.cmdTxt.leaveForDesc,
@@ -42,38 +44,38 @@ module.exports = {
             }
 
             attendanceEmbed = new Discord.MessageEmbed()
-                .setTitle('Leave Request (For)')
+                .setTitle(leaveForEmbedTitle)
                 .setColor(modules.constObj.red)
                 .setAuthor(msg.mentions.members.first().displayName, msg.mentions.members.first().user.displayAvatarURL())
                 .setDescription(`${msg.author} has submitted leave for ${msg.mentions.members.first()} in ${msg.channel}`)
                 .addFields(
-                    { name: 'Date', value: dateFormat(msg.createdAt.toString(), 'HHMM "h" ddd, dd mmm yy') },
+                    { name: 'Date', value: dateFormat(msg.createdAt.toString(), modules.constObj.dateOutput) },
                     { name: 'Absentee', value: msg.mentions.members.first() },
                     { name: 'Details', value: modules.capitalise(args.join(' ')) },
             );
             
             dmEmbed = new Discord.MessageEmbed()
-                .setTitle('Leave Request (For)')
+                .setTitle(leaveForEmbedTitle)
                 .setColor(modules.constObj.red)
                 .setAuthor(msg.guild.name, msg.guild.iconURL())
                 .setDescription(`Hi ${msg.author}, your submission of leave for ${msg.mentions.members.first()} has been received.`)
                 .addFields(
-                    { name: 'Date', value: dateFormat(msg.createdAt.toString(), 'HHMM "h" ddd, dd mmm yy') },
+                    { name: 'Date', value: dateFormat(msg.createdAt.toString(), modules.constObj.dateOutput) },
                     { name: 'Channel', value: msg.channel.toString() },
                     { name: 'Details', value: modules.capitalise(args.join(' ')) },
             );
 
             absenteeEmbed = new Discord.MessageEmbed()
-                .setTitle('Leave Submission (For)')
+                .setTitle(leaveForEmbedTitle)
                 .setColor(modules.constObj.red)
                 .setAuthor(msg.guild.name, msg.guild.iconURL())
                 .setDescription(`${msg.author} has submitted leave for you in ${msg.channel}.`)
                 .addFields(
-                    { name: 'Date', value: dateFormat(msg.createdAt.toString(), 'HHMM "h" ddd, dd mmm yy') },
+                    { name: 'Date', value: dateFormat(msg.createdAt.toString(), modules.constObj.dateOutput) },
                     { name: 'Channel', value: msg.channel.toString() },
                     { name: 'Details', value: modules.capitalise(args.join(' ')) },
                 )
-                .setFooter(`Reply with ${modules.constObj.prefix${}modules.cmdList.helpCmd} ${modules.cmdList.leaveCmd} to learn how to request leave for yourself.`);
+                .setFooter(`Reply with ${modules.constObj.prefix}${modules.cmdList.helpCmd} ${modules.cmdList.leaveCmd} to learn how to request leave for yourself.`);
 
             bot.channels.cache.get(modules.constObj.attendanceID).send(attendanceEmbed);
             msg.author.send(dmEmbed);
