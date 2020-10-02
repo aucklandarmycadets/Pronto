@@ -71,7 +71,7 @@ module.exports = {
             if (cmd === modules.cmdList.pingCmd) createHelpEmbed(modules.cmdList.pingCmd, modules.helpObj.helpPing);
         }
 
-        if (showCmdList === true) {
+        if (showCmdList) {
             helpEmbed = new Discord.MessageEmbed()
                 .setTitle('Commands List')
                 .setThumbnail('https://i.imgur.com/EzmJVyV.png')
@@ -85,9 +85,9 @@ module.exports = {
             }
         }
         
-        if (embedDM === false) msg.channel.send(helpEmbed);
+        if (!embedDM) msg.channel.send(helpEmbed);
 
-        else if (embedDM === true) msg.author.send(helpEmbed);
+        else if (embedDM) msg.author.send(helpEmbed);
 
         function createHelpEmbed(command, text) {
             helpEmbed = new Discord.MessageEmbed()

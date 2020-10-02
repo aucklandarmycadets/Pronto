@@ -16,7 +16,7 @@ module.exports = {
             modules.sendErrorEmbed(Discord, bot, msg, 'You must tag a user.', modules.helpObj.errorLeaveFor);
         }
 
-        else if (msg.mentions.members.some(mention => mention.user.bot === true)) {
+        else if (msg.mentions.members.some(mention => mention.user.bot)) {
             modules.sendErrorEmbed(Discord, bot, msg, 'You cannot submit leave for a bot!', modules.helpObj.errorLeaveFor);
         }
 
