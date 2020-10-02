@@ -13,12 +13,17 @@ module.exports = {
         else {
             msg.react(bot.emojis.cache.find(emoji => emoji.name === modules.constObj.successEmoji));
 
+            var ping = 'Pinging...';
+
             pingEmbed = new Discord.MessageEmbed()
-                .setTitle('Pong!')
                 .setColor(modules.constObj.success)
-                .setDescription(`Latency is ${Date.now() - msg.createdTimestamp}ms. API Latency is ${Math.round(bot.ws.ping)}ms`)
+                .setDescription(`**Pong!** \`${ping}\`ms`)
                 .setFooter(`${dateFormat(msg.createdAt.toString(), modules.constObj.dateOutput)}`);
-            msg.channel.send(pingEmbed);
+            msg.channel.send(pingEmbed).then(reply => {
+                ping = reply.createdTimestamp - msg.createdTimestamp;
+                pingEmbed.setDescription(`**Pong!** \`${ping}\`ms`);
+                reply.edit(pingEmbed);
+            });
         }
     },
 };
