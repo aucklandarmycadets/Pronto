@@ -2,13 +2,13 @@ const dateFormat = require('dateformat');
 const modules = require('../modules');
 
 module.exports = {
-    name: 'connected',
-    description: 'List of members connected to a voice channel.',
+    name: modules.cmdList.connectedCmd,
+    description: modules.cmdTxt.connectedDesc,
     execute(Discord, bot, msg, args) {
         sendError = false;
 
         if (!msg.member.roles.cache.some(roles=>modules.constObj.sgtPlus.includes(roles.id))) {
-            bot.commands.get('help').execute(Discord, bot, msg, args);
+            bot.commands.get(modules.cmdList.helpCmd).execute(Discord, bot, msg, args);
             return;
         }
 

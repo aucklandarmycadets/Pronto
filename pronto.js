@@ -18,7 +18,7 @@ bot.login(TOKEN);
 bot.on('ready', () => {
     console.info(`Logged in as ${bot.user.tag}!`);
 
-    bot.user.setActivity(`the radio net | ${{prefix}}help`, {type: 'LISTENING'});
+    bot.user.setActivity(`the radio net | ${prefix}${modules.cmdList.helpCmd}`, {type: 'LISTENING'});
 });
 
 bot.on('guildMemberAdd', member => {
@@ -30,7 +30,7 @@ bot.on('message', msg => {
 
     if (msg.author.bot || !msg.content.startsWith(prefix)) return;
     
-    if (msg.guild === null && msg.content !== `${prefix}help leave`) return;
+    if (msg.guild === null && msg.content !== `${prefix}${modules.cmdList.helpCmd} ${modules.cmdList.leaveCmd}`) return;
 
     const args = msg.content.split(/ +/);
     const command = args.shift().toLowerCase().replace(prefix, '');
@@ -38,7 +38,7 @@ bot.on('message', msg => {
     if (!bot.commands.has(command)) {
         var regExp = /[a-zA-Z]/g;
 
-        if (regExp.test(command)) bot.commands.get('help').execute(Discord, bot, msg, args);
+        if (regExp.test(command)) bot.commands.get(modules.cmdList.helpCmd).execute(Discord, bot, msg, args);
 
         return;
     };

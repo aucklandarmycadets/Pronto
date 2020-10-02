@@ -2,13 +2,13 @@ const dateFormat = require('dateformat');
 const modules = require('../modules');
 
 module.exports = {
-    name: 'archive',
-    description: 'Archive a text channel.',
+    name: modules.cmdList.archiveCmd,
+    description: modules.cmdTxt.archiveDesc,
     execute(Discord, bot, msg, args) {
         sendError = false;
 
         if (!msg.member.roles.cache.some(roles=>modules.constObj.cqmsPlus.includes(roles.id))) {
-            bot.commands.get('help').execute(Discord, bot, msg, args);
+            bot.commands.get(modules.cmdList.helpCmd).execute(Discord, bot, msg, args);
             return;
         }
 

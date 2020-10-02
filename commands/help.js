@@ -4,8 +4,8 @@ var devTag;
 var devIcon;
 
 module.exports = {
-    name: 'help',
-    description: 'Get help with commands.',
+    name: modules.cmdList.helpCmd,
+    description: modules.cmdTxt.helpGeneric,
     execute(Discord, bot, msg, args) {
         msg.delete();
 

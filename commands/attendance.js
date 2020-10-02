@@ -2,11 +2,11 @@ const dateFormat = require('dateformat');
 const modules = require('../modules');
 
 module.exports = {
-    name: 'attendance',
-    description: 'Submit an attendance register.',
+    name: modules.cmdList.attendanceCmd,
+    description: modules.cmdTxt.attendanceDesc,
     execute(Discord, bot, msg, args) {
         if (!msg.member.roles.cache.some(roles=>modules.constObj.tacPlus.includes(roles.id))) {
-            bot.commands.get('help').execute(Discord, bot, msg, args);
+            bot.commands.get(modules.cmdList.helpCmd).execute(Discord, bot, msg, args);
             return;
         }
 

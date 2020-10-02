@@ -2,13 +2,13 @@ const dateFormat = require('dateformat');
 const modules = require('../modules');
 
 module.exports = {
-    name: 'ping',
-    description: 'Test the latency of the bot.',
+    name: modules.cmdList.pingCmd,
+    description: modules.cmdTxt.pingDesc,
     execute(Discord, bot, msg, args) {
         sendError = false;
 
         if (!msg.author.id === modules.constObj.devID) {
-            bot.commands.get('help').execute(Discord, bot, msg, args);
+            bot.commands.get(modules.cmdList.helpCmd).execute(Discord, bot, msg, args);
             return;
         }
 

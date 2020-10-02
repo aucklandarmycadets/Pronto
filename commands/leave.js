@@ -2,11 +2,11 @@ const dateFormat = require('dateformat');
 const modules = require('../modules');
 
 module.exports = {
-    name: 'leave',
-    description: 'Submit a leave request.',
+    name: modules.cmdList.leaveCmd,
+    description: modules.cmdTxt.leaveDesc,
     execute(Discord, bot, msg, args) {
         if (msg.member.roles.cache.some(roles=>modules.constObj.nonCadet.includes(roles.id))) {
-            bot.commands.get('help').execute(Discord, bot, msg, args);
+            bot.commands.get(modules.cmdList.helpCmd).execute(Discord, bot, msg, args);
             return;
         }
 

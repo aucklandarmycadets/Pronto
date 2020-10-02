@@ -2,13 +2,13 @@ const dateFormat = require('dateformat');
 const modules = require('../modules');
 
 module.exports = {
-    name: 'leavefor',
-    description: 'Submit a leave request for another cadet.',
+    name: modules.cmdList.leaveForCmd,
+    description: modules.cmdTxt.leaveForDesc,
     execute(Discord, bot, msg, args) {
         sendError = false;
 
         if (!msg.member.roles.cache.some(roles=>modules.constObj.tacPlus.includes(roles.id))) {
-            bot.commands.get('help').execute(Discord, bot, msg, args);
+            bot.commands.get(modules.cmdList.helpCmd).execute(Discord, bot, msg, args);
             return;
         }
 
@@ -73,7 +73,7 @@ module.exports = {
                     { name: 'Channel', value: msg.channel.toString() },
                     { name: 'Details', value: modules.capitalise(args.join(' ')) },
                 )
-                .setFooter(`Reply with ${modules.constObj.prefix}help leave to learn how to request leave for yourself.`);
+                .setFooter(`Reply with ${modules.constObj.prefix${}modules.cmdList.helpCmd} ${modules.cmdList.leaveCmd} to learn how to request leave for yourself.`);
 
             bot.channels.cache.get(modules.constObj.attendanceID).send(attendanceEmbed);
             msg.author.send(dmEmbed);
