@@ -3,7 +3,7 @@ const modules = require('../modules');
 
 module.exports = {
     name: '!archive',
-    description: 'Archive a channel.',
+    description: 'Archive a text channel.',
     execute(Discord, bot, botcmds, msg, args) {
         sendError = false;
 
