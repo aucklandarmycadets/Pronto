@@ -11,30 +11,33 @@ module.exports = {
 
         if (args.length === 0) {
             modules.sendErrorEmbed(Discord, bot, msg, 'Insufficient arguments.', modules.helpObj.errorPurge);
+            return;
         }
 
         else if (msg.mentions.members.size > 1) {
             modules.sendErrorEmbed(Discord, bot, msg, 'You cannot purge multiple users simultaneously.', modules.helpObj.errorPurge);
+            return;
         }
 
 
         else if (args.length > 2) {
             modules.sendErrorEmbed(Discord, bot, msg, 'Too many arguments.', modules.helpObj.errorPurge);
+            return;
         }
 
         const user = msg.mentions.users.first();
 
         const purgeCount = !!parseInt(msg.content.split(' ')[1]) ? parseInt(msg.content.split(' ')[1]) : parseInt(msg.content.split(' ')[2])
         
-        if (!purgeCount && !user && !sendError) {
+        if (!purgeCount && !user) {
             modules.sendErrorEmbed(Discord, bot, msg, 'Invalid input.', modules.helpObj.errorPurge);
         }
 
-        else if (!purgeCount && !sendError) {
+        else if (!purgeCount) {
             modules.sendErrorEmbed(Discord, bot, msg, 'You must specify an amount of messages to delete.', modules.helpObj.errorPurge);
         }
 
-        if (purgeCount > 100 && !sendError) {
+        if (purgeCount > 100) {
             modules.sendErrorEmbed(Discord, bot, msg, 'You cannot purge more than 100 messages at a time.', modules.helpObj.errorPurge);
         }
 
