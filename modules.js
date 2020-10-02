@@ -29,156 +29,156 @@ const constObj = {
 };
 
 const cmdList = {
-    pingCmd: 'ping',
     helpCmd: 'help',
     leaveCmd: 'leave',
     leaveForCmd: 'leavefor',
     attendanceCmd: 'attendance',
-    purgeCmd: 'purge',
-    archiveCmd: 'archive',
     connectedCmd: 'connected',
+    archiveCmd: 'archive',
+    purgeCmd: 'purge',
+    pingCmd: 'ping',
 }
 
 const cmdTxt = {
-    pingDesc: 'Test the latency of the bot.',
     helpGeneric: 'Get help with commands.', // all
     helpDesc: 'Message a list of all commands.', // all
     helpArg: 'Get help with a command.', // all
     leaveDesc: 'Submit a leave request.', // visitoarPlus
     leaveForDesc: 'Submit a leave request for another cadet.', // tacPalus
     attendanceDesc: 'Submit an attendance register.', // tacaPlus
-    purgeDesc: 'Delete a number of messages from a channel.', // adjPlaus
+    connectedDesc: 'List of members connected to a voice channel.', // sgtplus
     archiveDesc: 'Archive a text channel.', // cqmsPalus
-    connectedDesc: 'List of members connected to a voice channel.',
+    purgeDesc: 'Delete a number of messages from a channel.', // adjPlaus
+    pingDesc: 'Test the latency of the bot.',
 };
 
 const helpObj = {
     helpAll: helpText({
-        '!help': cmdTxt.helpDesc,
-        '!help (command)': cmdTxt.helpArg,
+        [`${constObj.prefix}${cmdList.helpCmd}`]: cmdTxt.helpDesc,
+        [`${constObj.prefix}${cmdList.helpCmd} (command)`]: cmdTxt.helpArg,
     }, '`', '` - '),
 
     get helpCadet() {
         return this.helpAll + '\n' + helpText({
-            '!leave': cmdTxt.leaveDesc,
+            [`${constObj.prefix}${cmdList.leaveCmd}`]: cmdTxt.leaveDesc,
         }, '`', '` - ')
     },
 
     get helpTacPlus() {
         return this.helpCadet + '\n' + helpText({
-            '!leavefor': cmdTxt.leaveForDesc,
-            '!attendance': cmdTxt.attendanceDesc,
+            [`${constObj.prefix}${cmdList.leaveForCmd}`]: cmdTxt.leaveForDesc,
+            [`${constObj.prefix}${cmdList.attendanceCmd}`]: cmdTxt.attendanceDesc,
         }, '`', '` - ')
     },
 
     get helpSgtPlus() {
         return this.helpTacPlus + '\n' + helpText({
-            '!connected': cmdTxt.connectedDesc,
+            [`${constObj.prefix}${cmdList.connectedCmd}`]: cmdTxt.connectedDesc,
         }, '`', '` - ')
     },
 
     get helpCqmsPlus() {
         return this.helpSgtPlus + '\n' + helpText({
-            '!archive': cmdTxt.archiveDesc,
+            [`${constObj.prefix}${cmdList.archiveCmd}`]: cmdTxt.archiveDesc,
         }, '`', '` - ')
     },
 
     get helpAdjPlus() {
         return this.helpCqmsPlus + '\n' + helpText({
-            '!purge': cmdTxt.purgeDesc,
+            [`${constObj.prefix}${cmdList.purgeCmd}`]: cmdTxt.purgeDesc,
         }, '`', '` - ')
     },
 
     get helpDev() {
         return this.helpAdjPlus + '\n' + helpText({
-            '!ping': cmdTxt.pingDesc,
+            [`${constObj.prefix}${cmdList.pingCmd}`]: cmdTxt.pingDesc,
         }, '`', '` - ')
     },
 
-    helpPing: helpText({
-        'Description': cmdTxt.pingDesc,
-        'Usage': '!ping',
-    }, '**', ':** '),
-
     helpHelp: helpText({
         'Description': cmdTxt.helpGeneric,
-        'Usage': '!help (command)',
-        'Example': '!help, !help leave',
+        'Usage': `${constObj.prefix}${cmdList.helpCmd} (command)`,
+        'Example': `${constObj.prefix}${cmdList.helpCmd}, ${constObj.prefix}${cmdList.helpCmd} ${cmdList.leaveCmd}`,
     }, '**', ':** '),
 
     helpLeave: helpText({
         'Description': cmdTxt.leaveDesc,
-        'Usage': '!leave [dates] [activity] [reason] (additional remarks)',
-        'Example': '!leave 01 Jan for Parade Night due to an appointment',
+        'Usage': `${constObj.prefix}${cmdList.leaveCmd} [dates] [activity] [reason] (additional remarks)`,
+        'Example': `${constObj.prefix}${cmdList.leaveCmd} 01 Jan for Parade Night due to an appointment`,
     }, '**', ':** '),
 
     helpLeaveFor: helpText({
         'Description': cmdTxt.leaveForDesc,
-        'Usage': '!leavefor [user] [dates] [activity] [reason] (additional remarks)',
-        'Example': '!leavefor <@192181901065322496> 01 Jan for Parade Night due to an appointment',
+        'Usage': `${constObj.prefix}${cmdList.leaveForCmd} [user] [dates] [activity] [reason] (additional remarks)`,
+        'Example': `${constObj.prefix}${cmdList.leaveForCmd} <@${constObj.devID}> 01 Jan for Parade Night due to an appointment`,
         'Allowed Roles': rolesOutput(constObj.tacPlus),
     }, '**', ':** '),
 
     helpAttendance: helpText({
         'Description': cmdTxt.attendanceDesc,
-        'Usage': '!attendance [message]',
+        'Usage': `${constObj.prefix}${cmdList.attendanceCmd} [message]`,
         'Allowed Roles': rolesOutput(constObj.tacPlus),
-    }, '**', ':** '),
-
-    helpPurge: helpText({
-        'Description': cmdTxt.purgeDesc,
-        'Usage': '\n!purge [count]\n!purge [user] [count]',
-        'Example': '\n!purge 10\n!purge <@192181901065322496> 5',
-        'Allowed Roles': rolesOutput(constObj.adjPlus),
-    }, '**', ':** '),
-
-    helpArchive: helpText({
-        'Description': cmdTxt.archiveDesc,
-        'Usage': '!archive [text channel]',
-        'Example': `!archive <#${constObj.tacticalID}>`,
-        'Allowed Roles': rolesOutput(constObj.cqmsPlus),
     }, '**', ':** '),
 
     helpConnected: helpText({
         'Description': cmdTxt.connectedDesc,
-        'Usage': '!connected [voice channel]',
-        'Example': `!connected <#${constObj.classroomID}>`,
+        'Usage': `${constObj.prefix}${cmdList.connectedCmd} [voice channel]`,
+        'Example': `${constObj.prefix}${cmdList.connectedCmd} <#${constObj.classroomID}>`,
         'Allowed Roles': rolesOutput(constObj.sgtPlus),
+    }, '**', ':** '),
+
+    helpArchive: helpText({
+        'Description': cmdTxt.archiveDesc,
+        'Usage': `${constObj.prefix}${cmdList.archiveCmd} [text channel]`,
+        'Example': `${constObj.prefix}${cmdList.archiveCmd} <#${constObj.tacticalID}>`,
+        'Allowed Roles': rolesOutput(constObj.cqmsPlus),
+    }, '**', ':** '),
+
+    helpPurge: helpText({
+        'Description': cmdTxt.purgeDesc,
+        'Usage': `\n${constObj.prefix}${cmdList.purgeCmd} [count]\n!purge [user] [count]`,
+        'Example': `\n${constObj.prefix}${cmdList.purgeCmd} 10\n!purge <@${constObj.devID}> 5`,
+        'Allowed Roles': rolesOutput(constObj.adjPlus),
+    }, '**', ':** '),
+
+    helpPing: helpText({
+        'Description': cmdTxt.pingDesc,
+        'Usage': `${constObj.prefix}${cmdList.pingCmd}`,
     }, '**', ':** '),
 
     get errorLeave() {
         return '\n\n' + this.helpLeave + '\n' + helpText({
-        'Help Command': '!help leave',
+        'Help Command': `${constObj.prefix}${cmdList.helpCmd} ${cmdList.leaveCmd}`,
         }, '**', ':** ')
     },
 
     get errorLeaveFor() {
         return '\n\n' + this.helpLeaveFor + '\n' + helpText({
-        'Help Command': '!help leavefor',
+        'Help Command': `${constObj.prefix}${cmdList.helpCmd} ${cmdList.leaveForCmd}`,
         }, '**', ':** ')
     },
 
     get errorAttendance() {
         return '\n\n' + this.helpAttendance + '\n' + helpText({
-        'Help Command': '!help attendance',
-        }, '**', ':** ')
-    },
-
-    get errorPurge() {
-        return '\n\n' + this.helpPurge + '\n' + helpText({
-        'Help Command': '!help purge',
-        }, '**', ':** ')
-    },
-
-    get errorArchive() {
-        return '\n\n' + this.helpArchive + '\n' + helpText({
-        'Help Command': '!help archive',
+        'Help Command': `${constObj.prefix}${cmdList.helpCmd} ${cmdList.attendanceCmd}`,
         }, '**', ':** ')
     },
 
     get errorConnected() {
         return '\n\n' + this.helpConnected + '\n' + helpText({
-        'Help Command': '!help connected',
+        'Help Command': `${constObj.prefix}${cmdList.helpCmd} ${cmdList.connectedCmd}`,
+        }, '**', ':** ')
+    },
+
+    get errorArchive() {
+        return '\n\n' + this.helpArchive + '\n' + helpText({
+        'Help Command': `${constObj.prefix}${cmdList.helpCmd} ${cmdList.archiveCmd}`,
+        }, '**', ':** ')
+    },
+
+    get errorPurge() {
+        return '\n\n' + this.helpPurge + '\n' + helpText({
+        'Help Command': `${constObj.prefix}${cmdList.helpCmd} ${cmdList.purgeCmd}`,
         }, '**', ':** ')
     },
 };
@@ -324,7 +324,7 @@ function channelPair(Discord, bot, oldState, newState) {
                             timeEmbed = new Discord.MessageEmbed()
                                 .setColor(constObj.error)
                                 .setAuthor(bot.user.tag, bot.user.avatarURL())
-                                .setDescription('Timed out. Type `!purge 100` to clear this channel manually.');
+                                .setDescription(`Timed out. Type \`${constObj.prefix}${cmdList.purgeCmd} 100\` to clear this channel manually.`);
                             textChannel.send(timeEmbed);
                         }
                     });

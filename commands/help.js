@@ -19,9 +19,9 @@ module.exports = {
         devIcon = dev.avatarURL();
 
         if (msg.guild === null) {
-            if (args[0] === 'leave') {
+            if (args[0] === modules.cmdList.leaveCmd) {
                 helpEmbed = new Discord.MessageEmbed()
-                .setTitle(`Command: ${prefix}leave`)
+                .setTitle(`Command: ${prefix}${modules.cmdList.leaveCmd}`)
                 .setColor(modules.constObj.grey)
                 .setDescription(modules.helpObj.helpLeave);
                 msg.author.send(helpEmbed);
@@ -42,9 +42,9 @@ module.exports = {
         if (!msg.member.roles.cache.some(roles=>modules.constObj.nonCadet.includes(roles.id))) {
             commandList = modules.helpObj.helpCadet;
 
-            if (cmd === 'leave') {
+            if (cmd === modules.cmdList.leaveCmd) {
                 helpEmbed = new Discord.MessageEmbed()
-                    .setTitle(`Command: ${prefix}leave`)
+                    .setTitle(`Command: ${prefix}${modules.cmdList.leaveCmd}`)
                     .setDescription(modules.helpObj.helpLeave);
                 showCmdList = false;
             }
@@ -53,16 +53,16 @@ module.exports = {
         if (msg.member.roles.cache.some(roles=>modules.constObj.tacPlus.includes(roles.id))) {
             commandList = modules.helpObj.helpTacPlus;
 
-            if (cmd === 'leavefor') {
+            if (cmd === modules.cmdList.leaveForCmd) {
                 helpEmbed = new Discord.MessageEmbed()
-                    .setTitle(`Command: ${prefix}leavefor`)
+                    .setTitle(`Command: ${prefix}${modules.cmdList.leaveForCmd}`)
                     .setDescription(modules.helpObj.helpLeaveFor);
                 showCmdList = false;
             }
 
-            else if (cmd === 'attendance') {
+            else if (cmd === modules.cmdList.attendanceCmd) {
                 helpEmbed = new Discord.MessageEmbed()
-                    .setTitle(`Command: ${prefix}attendance`)
+                    .setTitle(`Command: ${prefix}${modules.cmdList.attendanceCmd}`)
                     .setDescription(modules.helpObj.helpAttendance);
                 showCmdList = false;
             }
@@ -71,9 +71,9 @@ module.exports = {
         if (msg.member.roles.cache.some(roles=>modules.constObj.sgtPlus.includes(roles.id))) {
             commandList = modules.helpObj.helpSgtPlus;
 
-            if (cmd === 'connected') {
+            if (cmd === modules.cmdList.connectedCmd) {
                 helpEmbed = new Discord.MessageEmbed()
-                    .setTitle(`Command: ${prefix}connected`)
+                    .setTitle(`Command: ${prefix}${modules.cmdList.connectedCmd}`)
                     .setDescription(modules.helpObj.helpConnected);
                 showCmdList = false;
             }
@@ -82,9 +82,9 @@ module.exports = {
         if (msg.member.roles.cache.some(roles=>modules.constObj.cqmsPlus.includes(roles.id))) {
             commandList = modules.helpObj.helpCqmsPlus;
 
-            if (cmd === 'archive') {
+            if (cmd === modules.cmdList.archiveCmd) {
                 helpEmbed = new Discord.MessageEmbed()
-                    .setTitle(`Command: ${prefix}archive`)
+                    .setTitle(`Command: ${prefix}${modules.cmdList.archiveCmd}`)
                     .setDescription(modules.helpObj.helpArchive);
                 showCmdList = false;
             }
@@ -93,9 +93,9 @@ module.exports = {
         if (msg.member.roles.cache.some(roles=>modules.constObj.adjPlus.includes(roles.id))) {
             commandList = modules.helpObj.helpAdjPlus;
 
-            if (cmd === 'purge') {
+            if (cmd === modules.cmdList.purgeCmd) {
                 helpEmbed = new Discord.MessageEmbed()
-                    .setTitle(`Command: ${prefix}purge`)
+                    .setTitle(`Command: ${prefix}${modules.cmdList.purgeCmd}`)
                     .setDescription(modules.helpObj.helpPurge);
                 showCmdList = false;
             }
@@ -104,9 +104,9 @@ module.exports = {
         if (msg.author.id === modules.constObj.devID) {
             commandList = modules.helpObj.helpDev;
 
-            if (cmd === 'ping') {
+            if (cmd === modules.cmdList.pingCmd) {
                 helpEmbed = new Discord.MessageEmbed()
-                    .setTitle(`Command: ${prefix}ping`)
+                    .setTitle(`Command: ${prefix}${modules.cmdList.pingCmd}`)
                     .setDescription(modules.helpObj.helpPing);
                 showCmdList = false;
             }
