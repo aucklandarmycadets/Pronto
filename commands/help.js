@@ -13,7 +13,7 @@ module.exports = {
 
         cmd = args[0];
 
-        dev = bot.users.cache.get('192181901065322496');
+        dev = bot.users.cache.get(modules.constObj.devID);
         devTag = dev.tag;
         devIcon = dev.avatarURL();
 
