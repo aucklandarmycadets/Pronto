@@ -80,7 +80,7 @@ module.exports = {
                 .setFooter('Developed by ' + devTag, devIcon);
             embedDM = true;
 
-            if (!msg.member.roles.cache.some(roles=>modules.constObj.adjPlus.includes(roles.id))) {
+            if (!msg.member.roles.cache.some(roles=>modules.constObj.adjPlus.includes(roles.id)) && msg.author.id !== modules.constObj.devID) {
                 helpEmbed.addField('Note', `Only displaying commands available to ${msg.author}.`)
             }
         }
