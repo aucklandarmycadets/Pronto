@@ -1,11 +1,12 @@
 const modules = require('../modules');
+const prefix = modules.constObj.prefix;
 var devTag;
 var devIcon;
 
 module.exports = {
-    name: '!help',
+    name: 'help',
     description: 'Get help with commands.',
-    execute(Discord, bot, botcmds, msg, args) {
+    execute(Discord, bot, msg, args) {
         msg.delete();
 
         var showCmdList = true;
@@ -20,7 +21,7 @@ module.exports = {
         if (msg.guild === null) {
             if (args[0] === 'leave') {
                 helpEmbed = new Discord.MessageEmbed()
-                .setTitle('Command: !leave')
+                .setTitle(`Command: ${prefix}leave`)
                 .setColor(modules.constObj.grey)
                 .setDescription(modules.helpObj.helpLeave);
                 msg.author.send(helpEmbed);
@@ -33,7 +34,7 @@ module.exports = {
 
         if (cmd === 'help') {
             helpEmbed = new Discord.MessageEmbed()
-                .setTitle('Command: !help')
+                .setTitle(`Command: ${prefix}help`)
                 .setDescription(modules.helpObj.helpHelp);
             showCmdList = false;
         }
@@ -43,7 +44,7 @@ module.exports = {
 
             if (cmd === 'leave') {
                 helpEmbed = new Discord.MessageEmbed()
-                    .setTitle('Command: !leave')
+                    .setTitle(`Command: ${prefix}leave`)
                     .setDescription(modules.helpObj.helpLeave);
                 showCmdList = false;
             }
@@ -54,14 +55,14 @@ module.exports = {
 
             if (cmd === 'leavefor') {
                 helpEmbed = new Discord.MessageEmbed()
-                    .setTitle('Command: !leavefor')
+                    .setTitle(`Command: ${prefix}leavefor`)
                     .setDescription(modules.helpObj.helpLeaveFor);
                 showCmdList = false;
             }
 
             else if (cmd === 'attendance') {
                 helpEmbed = new Discord.MessageEmbed()
-                    .setTitle('Command: !attendance')
+                    .setTitle(`Command: ${prefix}attendance`)
                     .setDescription(modules.helpObj.helpAttendance);
                 showCmdList = false;
             }
@@ -72,7 +73,7 @@ module.exports = {
 
             if (cmd === 'connected') {
                 helpEmbed = new Discord.MessageEmbed()
-                    .setTitle('Command: !connected')
+                    .setTitle(`Command: ${prefix}connected`)
                     .setDescription(modules.helpObj.helpConnected);
                 showCmdList = false;
             }
@@ -83,7 +84,7 @@ module.exports = {
 
             if (cmd === 'archive') {
                 helpEmbed = new Discord.MessageEmbed()
-                    .setTitle('Command: !archive')
+                    .setTitle(`Command: ${prefix}archive`)
                     .setDescription(modules.helpObj.helpArchive);
                 showCmdList = false;
             }
@@ -94,7 +95,7 @@ module.exports = {
 
             if (cmd === 'purge') {
                 helpEmbed = new Discord.MessageEmbed()
-                    .setTitle('Command: !purge')
+                    .setTitle(`Command: ${prefix}purge`)
                     .setDescription(modules.helpObj.helpPurge);
                 showCmdList = false;
             }
@@ -105,7 +106,7 @@ module.exports = {
 
             if (cmd === 'ping') {
                 helpEmbed = new Discord.MessageEmbed()
-                    .setTitle('Command: !ping')
+                    .setTitle(`Command: ${prefix}ping`)
                     .setDescription(modules.helpObj.helpPing);
                 showCmdList = false;
             }

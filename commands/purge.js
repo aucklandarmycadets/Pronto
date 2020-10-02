@@ -1,13 +1,13 @@
 const modules = require('../modules');
 
 module.exports = {
-    name: '!purge',
+    name: 'purge',
     description: 'Delete a number of messages from a channel.',
-    execute(Discord, bot, botcmds, msg, args) {
+    execute(Discord, bot, msg, args) {
         sendError = false;
 
         if (!msg.member.roles.cache.some(roles=>modules.constObj.adjPlus.includes(roles.id))) {
-            bot.commands.get('!help').execute(Discord, bot, botcmds, msg, args);
+            bot.commands.get('help').execute(Discord, bot, msg, args);
             return;
         }
 

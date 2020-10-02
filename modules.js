@@ -2,6 +2,7 @@ const pairs = require('./channelPairs');
 const dateFormat = require('dateformat');
 
 const constObj = {
+    prefix: '!',
     devID: '192181901065322496',
     debugID: '760745439225577482',
     attendanceID: '760820697542426644',
