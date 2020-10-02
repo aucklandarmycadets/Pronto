@@ -27,6 +27,7 @@ const constObj = {
 };
 
 const cmdTxt = {
+    pingCmd: 'Test the latency of the bot.',
     helpGeneric: 'Get help with commands.', // all
     helpCmd: 'Message a list of all commands.', // all
     helpArg: 'Get help with a command.', // all
@@ -74,6 +75,17 @@ const helpObj = {
             '!purge': cmdTxt.purgeCmd,
         }, '`', '` - ')
     },
+
+    get helpDev() {
+        return this.helpAdjPlus + '\n' + helpText({
+            '!ping': cmdTxt.pingCmd,
+        }, '`', '` - ')
+    },
+
+    helpPing: helpText({
+        'Description': cmdTxt.pingCmd,
+        'Usage': '!ping',
+    }, '**', ':** '),
 
     helpHelp: helpText({
         'Description': cmdTxt.helpGeneric,

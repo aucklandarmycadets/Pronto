@@ -100,6 +100,17 @@ module.exports = {
             }
         }
 
+        if (msg.author.id === modules.constObj.devID) {
+            commandList = modules.helpObj.helpDev;
+
+            if (cmd === 'ping') {
+                helpEmbed = new Discord.MessageEmbed()
+                    .setTitle('Command: !ping')
+                    .setDescription(modules.helpObj.helpPing);
+                showCmdList = false;
+            }
+        }
+
         if (showCmdList === true) {
             helpEmbed = new Discord.MessageEmbed()
                 .setTitle('Commands List')

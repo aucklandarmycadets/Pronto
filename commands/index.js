@@ -1,4 +1,5 @@
 module.exports = {
+    Ping: require('./ping'),
     Help: require('./help'),
     Leave: require('./leave'),
     LeaveFor: require('./leavefor'),
