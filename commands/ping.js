@@ -17,7 +17,7 @@ module.exports = {
                 ping = reply.createdTimestamp - msg.createdTimestamp;
                 pingEmbed = new Discord.MessageEmbed()
                     .setColor(modules.constObj.success)
-                    .setFooter(`${ping} ms | ${dateFormat(msg.createdAt.toString(), modules.constObj.dateOutput)}`);
+                    .setFooter(`${ping} ms | ${dateFormat(msg.createdAt.toString(), modules.constObj.dateOutput)} | Pronto v${modules.constObj.version}`);
                 reply.edit(pingEmbed);
             });
         }
