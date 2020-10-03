@@ -37,6 +37,8 @@ bot.on('message', msg => {
     const args = msg.content.split(/ +/);
     const command = args.shift().toLowerCase().replace(prefix, '');
 
+    if (command === 'restart' && msg.author.id === modules.constObj.devID) process.exit();
+
     if (!bot.commands.has(command)) {
         var regExp = /[a-zA-Z]/g;
 
