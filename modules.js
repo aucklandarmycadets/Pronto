@@ -1,4 +1,3 @@
-const pairs = require('./channelPairs');
 const dateFormat = require('dateformat');
 
 const constObj = {
@@ -28,7 +27,7 @@ const constObj = {
     success: 0x45bb8a,
     error: 0xef4949,
     dateOutput: 'HHMM "h" ddd, dd mmm yy',
-    version: '1.5.4'
+    version: '1.5.5'
 };
 
 const cmdList = {
@@ -236,9 +235,33 @@ function sendErrorEmbed(Discord, bot, msg, errMsg, cmdErr, footer) {
     msg.channel.send(errorEmbed);
 }
 
+function formatAge(raw) {
+    var years = 0;
+    var months = 0;
+    var days = 0;
+    var hours = 0;
+    var minutes = 0;
+    var seconds = 0;
+
+    if (raw > 31556952000) years = Math.floor(raw / 31556952000);
+    if ((raw - (years * 31556952000)) > 2629800000) months = Math.floor((raw - (years * 31556952000)) / 2629800000);
+    if ((raw - (years * 31556952000) - (months * 2629800000)) > 86400000) days = Math.floor((raw - (years * 31556952000) - (months * 2629800000)) / 86400000);
+    if ((raw - (years * 31556952000) - (months * 2629800000) - (days * 86400000)) > 3600000) hours = Math.floor((raw - (years * 31556952000) - (months * 2629800000) - (days * 86400000)) / 3600000);
+    if ((raw - (years * 31556952000) - (months * 2629800000) - (days * 86400000) - (hours * 3600000)) > 60000) minutes = Math.floor((raw - (years * 31556952000) - (months * 2629800000) - (days * 86400000) - (hours * 3600000)) / 60000);
+    if ((raw - (years * 31556952000) - (months * 2629800000) - (days * 86400000) - (hours * 3600000) - (minutes * 60000)) > 1000) seconds = Math.floor((raw - (years * 31556952000) - (months * 2629800000) - (days * 86400000) - (hours * 3600000) - (minutes * 60000)) / 1000);
+
+    if (years) return `${years} years, ${months} months, ${days} days`;
+    else if (months) return `${months} months, ${days} days, ${hours} hrs`;
+    else if (days) return `${days} days, ${hours} hrs, ${minutes} min`;
+    else if (hours) return `${hours} hrs, ${minutes} min, ${seconds} sec`;
+    else if (minutes) return `${minutes} min, ${seconds} sec`;
+    else return `${seconds} sec`;
+}
+
 exports.constObj = constObj;
 exports.cmdList = cmdList;
 exports.cmdTxt = cmdTxt;
 exports.helpObj = helpObj;
 exports.capitalise = capitalise;
 exports.sendErrorEmbed = sendErrorEmbed;
+exports.formatAge = formatAge;

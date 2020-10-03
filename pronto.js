@@ -51,6 +51,8 @@ function onMessage(msg) {
 
     if (command === 'restart' && msg.author.id === modules.constObj.devID) process.exit();
 
+    if (command === 'join') { bot.emit('guildMemberAdd', msg.guild.members.cache.get('748441083662434355')); return; }
+
     if (!bot.commands.has(command)) {
         var regExp = /[a-zA-Z]/g;
 
@@ -88,6 +90,15 @@ function onMemberAdd(member) {
         .setDescription(`**${member.user} has just entered ${member.guild.channels.cache.get(modules.constObj.newStatesID)}.**\nMake them feel welcome!`)
         .setFooter(`${dateFormat(member.joinedAt.toString(), modules.constObj.dateOutput)}`);
     member.guild.channels.cache.get(modules.constObj.recruitingID).send(welcomeEmbed);
+
+    logEmbed = new Discord.MessageEmbed()
+        .setColor(modules.constObj.success)
+        .setAuthor('Member Joined', member.user.displayAvatarURL())
+        .setThumbnail(member.user.displayAvatarURL())
+        .setDescription(`${member.user} ${member.user.tag}`)
+        .addField('Account Age', modules.formatAge(Date.now() - member.user.createdAt))
+        .setFooter(`${dateFormat(member.joinedAt.toString(), modules.constObj.dateOutput)}`);
+    member.guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
 };
 
 function onVoiceUpdate(oldState, newState) {
@@ -113,7 +124,7 @@ function onVoiceUpdate(oldState, newState) {
                 .setColor(modules.constObj.success)
                 .setAuthor(newState.member.displayName, newState.member.user.displayAvatarURL())
                 .setDescription(`${newState.member} has joined the channel.`)
-                .setFooter(`${dateFormat(Date(), modules.constObj.dateOutput)}`);
+                .setFooter(`${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
             textChannel.send(joinEmbed);
         } 
 
@@ -125,7 +136,7 @@ function onVoiceUpdate(oldState, newState) {
                 .setColor(modules.constObj.error)
                 .setAuthor(newState.member.displayName, newState.member.user.displayAvatarURL())
                 .setDescription(`${newState.member} has left the channel.`)
-                .setFooter(`${dateFormat(Date(), modules.constObj.dateOutput)}`);
+                .setFooter(`${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
             textChannel.send(leaveEmbed);
 
             if (oldState.channel.members.size === 0) {
@@ -195,7 +206,7 @@ function onDevInfo(info, type) {
             .setColor(modules.constObj.error)
             .setAuthor(bot.user.tag, bot.user.avatarURL())
             .setDescription(`${type}: Check the logs!`)
-            .setFooter(`${dateFormat(Date(), modules.constObj.dateOutput)} | Pronto v${modules.constObj.version}`);
+            .setFooter(`${dateFormat(Date.now(), modules.constObj.dateOutput)} | Pronto v${modules.constObj.version}`);
         bot.users.cache.get(modules.constObj.devID).send(devEmbed);
     };
 };
