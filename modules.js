@@ -3,6 +3,7 @@ const dateFormat = require('dateformat');
 
 const constObj = {
     prefix: '!',
+    serverID: '748336465465049230',
     devID: '192181901065322496',
     debugID: '758217147187986432',
     attendanceID: '748360212754464779',

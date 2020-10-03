@@ -7,8 +7,6 @@ module.exports = {
     name: modules.cmdList.helpCmd,
     description: modules.cmdTxt.helpGeneric,
     execute(Discord, bot, msg, args) {
-        msg.delete();
-
         var showCmdList = true;
         var embedDM = false;
 
@@ -18,8 +16,10 @@ module.exports = {
         devTag = dev.tag;
         devIcon = dev.avatarURL();
 
-        if (msg.guild === null) {
-            if (args[0] === modules.cmdList.leaveCmd) {
+        if (msg.guild === null && args[0] === modules.cmdList.leaveCmd) {
+            var memberRoles = bot.guilds.cache.get(modules.constObj.serverID).members.cache.get(msg.author.id).roles.cache;
+
+            if (!memberRoles.some(roles=>modules.constObj.nonCadet.includes(roles.id))) {
                 helpEmbed = new Discord.MessageEmbed()
                     .setTitle(`Command: ${prefix}${modules.cmdList.leaveCmd}`)
                     .setColor(modules.constObj.grey)
@@ -28,6 +28,8 @@ module.exports = {
             }
             return;
         }
+
+        if (msg.guild) msg.delete();
 
         commandList = modules.helpObj.helpAll;
 
