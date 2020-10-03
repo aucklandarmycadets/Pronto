@@ -188,4 +188,13 @@ function onVoiceUpdate(oldState, newState) {
 
 function onDevInfo(info, type) {
     console.log(`${type}: ${info}`);
+
+    if (type === 'Error') {
+        devEmbed = new Discord.MessageEmbed()
+            .setColor(modules.constObj.error)
+            .setAuthor(bot.user.tag, bot.user.avatarURL())
+            .setDescription(`${type}: Check the logs!`)
+            .setFooter(`${dateFormat(Date(), modules.constObj.dateOutput)} | Pronto v${modules.constObj.version}`);
+        bot.users.cache.get(modules.constObj.devID).send(devEmbed);
+    };
 };
