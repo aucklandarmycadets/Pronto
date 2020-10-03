@@ -21,13 +21,14 @@ const constObj = {
     sgtPlus: ['748340611521839115', '748340221719871558', '748340045689389176', '750959240578859018', '748339616112836619', '748338095446949908', '748337933194625104', '748346409853517896'],
     cqmsPlus: ['748340045689389176', '748339616112836619', '748338095446949908', '748337933194625104', '748346409853517896'],
     adjPlus: ['748338095446949908', '748337933194625104', '748346409853517896'],
+    administratorID: '748346409853517896',
     grey: 0x1b1b1b,
     red: 0xd31145,
     yellow: 0xffd456,
     success: 0x45bb8a,
     error: 0xef4949,
     dateOutput: 'HHMM "h" ddd, dd mmm yy',
-    version: '1.3'
+    version: '1.5'
 };
 
 const cmdList = {
@@ -206,6 +207,8 @@ function rolesOutput(array) {
     var rolesString = '';
 
     for (index in array) {
+        if (array[index] === constObj.administratorID) continue;
+
         if (index % 3 === 0) {
             rolesString += '\n';
         }
