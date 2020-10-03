@@ -19,6 +19,7 @@ bot.login(TOKEN);
 bot.on('ready', () => onReady());
 bot.on('message', msg => onMessage(msg));
 bot.on('guildMemberAdd', member => onMemberAdd(member));
+bot.on('guildMemberRemove', member => onMemberRemove(member));
 bot.on('voiceStateUpdate', (oldState, newState) => onVoiceUpdate(oldState, newState));
 bot.on('debug', info => onDevInfo(info, 'Debug'));
 bot.on('error', info => onDevInfo(info, 'Error'));
@@ -31,7 +32,7 @@ function onReady() {
         .setColor(modules.constObj.success)
         .setAuthor(bot.user.tag, bot.user.avatarURL())
         .setDescription(`**Ready to go!**`)
-        .setFooter(`${dateFormat(Date(), modules.constObj.dateOutput)} | Pronto v${modules.constObj.version}`);
+        .setFooter(`${dateFormat(Date.now(), modules.constObj.dateOutput)} | Pronto v${modules.constObj.version}`);
     bot.channels.cache.get(modules.constObj.debugID).send(readyEmbed);
 
     if (bot.user.discriminator == '7780') prefix = '-';
@@ -51,7 +52,7 @@ function onMessage(msg) {
 
     if (command === 'restart' && msg.author.id === modules.constObj.devID) process.exit();
 
-    if (command === 'join') { bot.emit('guildMemberAdd', msg.guild.members.cache.get('748441083662434355')); return; }
+    if (command === 'test') { bot.emit('guildMemberRemove', msg.guild.members.cache.get('748441083662434355')); return; }
 
     if (!bot.commands.has(command)) {
         var regExp = /[a-zA-Z]/g;
@@ -100,6 +101,17 @@ function onMemberAdd(member) {
         .setFooter(`${dateFormat(member.joinedAt.toString(), modules.constObj.dateOutput)}`);
     member.guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
 };
+
+function onMemberRemove(member) {
+    logEmbed = new Discord.MessageEmbed()
+        .setColor(modules.constObj.success)
+        .setAuthor('Member Left', member.user.displayAvatarURL())
+        .setThumbnail(member.user.displayAvatarURL())
+        .setDescription(`${member.user} ${member.user.tag}`)
+        .addField('Roles', modules.rolesOutput(member.roles.cache.array(), true))
+        .setFooter(`${dateFormat(member.joinedAt.toString(), modules.constObj.dateOutput)}`);
+    member.guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
+}
 
 function onVoiceUpdate(oldState, newState) {
     let oldID;
