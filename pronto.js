@@ -16,8 +16,8 @@ const TOKEN = process.env.TOKEN;
 bot.login(TOKEN);
 
 bot.on('ready', () => onReady());
-bot.on('guildMemberAdd', member => onMemberAdd(member));
 bot.on('message', msg => onMessage(msg));
+bot.on('guildMemberAdd', member => onMemberAdd(member));
 bot.on('voiceStateUpdate', (oldState, newState) => onVoiceUpdate(oldState, newState));
 bot.on('debug', info => onDevInfo(info, 'Debug'));
 bot.on('error', info => onDevInfo(info, 'Error'));
@@ -31,7 +31,6 @@ function onReady() {
         .setAuthor(bot.user.tag, bot.user.avatarURL())
         .setDescription(`**Ready to go!**`)
         .setFooter(`${dateFormat(Date(), modules.constObj.dateOutput)} | Pronto v${modules.constObj.version}`);
-
     bot.channels.cache.get(modules.constObj.debugID).send(readyEmbed);
 
     if (bot.user.discriminator == '7780') prefix = '-';
@@ -79,15 +78,15 @@ function onMessage(msg) {
 function onMemberAdd(member) {
     if (member.user.bot) return;
     
-    const visitorRole = member.guild.roles.cache.find(role => role.id === constObj.visitorID);
+    const visitorRole = member.guild.roles.cache.find(role => role.id === modules.constObj.visitorID);
     member.roles.add(visitorRole);
 
     welcomeEmbed = new Discord.MessageEmbed()
-            .setColor(constObj.yellow)
-            .setAuthor(member.user.tag, member.user.displayAvatarURL())
-            .setDescription(`${member.user} has just entered ${member.guild.channels.cache.get(constObj.newStatesID)}.\n\nMake them feel welcome!`)
-            .setFooter(`${dateFormat(member.joinedAt.toString(), constObj.dateOutput)}`);
-    member.guild.channels.cache.get(constObj.recruitingID).send(welcomeEmbed);
+        .setColor(modules.constObj.yellow)
+        .setAuthor(member.user.tag, member.user.displayAvatarURL())
+        .setDescription(`${member.user} has just entered ${member.guild.channels.cache.get(modules.constObj.newStatesID)}.\n\nMake them feel welcome!`)
+        .setFooter(`${dateFormat(member.joinedAt.toString(), modules.constObj.dateOutput)}`);
+    member.guild.channels.cache.get(modules.constObj.recruitingID).send(welcomeEmbed);
 };
 
 function onVoiceUpdate(oldState, newState) {
@@ -110,10 +109,10 @@ function onVoiceUpdate(oldState, newState) {
                 .catch(console.error);
 
             joinEmbed = new Discord.MessageEmbed()
-                .setColor(constObj.success)
+                .setColor(modules.constObj.success)
                 .setAuthor(newState.member.displayName, newState.member.user.displayAvatarURL())
                 .setDescription(`${newState.member} has joined the channel.`)
-                .setFooter(`${dateFormat(Date(), constObj.dateOutput)}`);
+                .setFooter(`${dateFormat(Date(), modules.constObj.dateOutput)}`);
             textChannel.send(joinEmbed);
         } 
 
@@ -122,22 +121,22 @@ function onVoiceUpdate(oldState, newState) {
                 .catch(console.error);
 
             leaveEmbed = new Discord.MessageEmbed()
-                .setColor(constObj.error)
+                .setColor(modules.constObj.error)
                 .setAuthor(newState.member.displayName, newState.member.user.displayAvatarURL())
                 .setDescription(`${newState.member} has left the channel.`)
-                .setFooter(`${dateFormat(Date(), constObj.dateOutput)}`);
+                .setFooter(`${dateFormat(Date(), modules.constObj.dateOutput)}`);
             textChannel.send(leaveEmbed);
 
             if (oldState.channel.members.size === 0) {
                 purgeEmbed = new Discord.MessageEmbed()
                     .setTitle('Purge Text Channel')
-                    .setColor(constObj.success)
-                    .setDescription(`Click on the ${newState.guild.emojis.cache.find(emoji => emoji.name === constObj.successEmoji)} reaction to purge this channel.`);
+                    .setColor(modules.constObj.success)
+                    .setDescription(`Click on the ${newState.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.successEmoji)} reaction to purge this channel.`);
                 textChannel.send(purgeEmbed).then(msg => {
-                    msg.react(newState.guild.emojis.cache.find(emoji => emoji.name === constObj.successEmoji));
+                    msg.react(newState.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.successEmoji));
 
                     const filter = (reaction, user) => {
-                        return reaction.emoji.name === constObj.successEmoji;
+                        return reaction.emoji.name === modules.constObj.successEmoji;
                     };
 
                     const collector = msg.createReactionCollector(filter, { time: 60000, dispose: true });
@@ -153,7 +152,7 @@ function onVoiceUpdate(oldState, newState) {
                         
                         else if (!user.bot) {
                             errorEmbed = new Discord.MessageEmbed()
-                                .setColor(constObj.error)
+                                .setColor(modules.constObj.error)
                                 .setAuthor(newState.member.displayName, newState.member.user.displayAvatarURL())
                                 .setDescription(`${user} Insufficient permissions. ${helpObj.errorPurge}`);
                             textChannel.send(errorEmbed);
@@ -174,7 +173,7 @@ function onVoiceUpdate(oldState, newState) {
                         if (reason === 'time') {
                             msg.reactions.removeAll();
                             timeEmbed = new Discord.MessageEmbed()
-                                .setColor(constObj.error)
+                                .setColor(modules.constObj.error)
                                 .setAuthor(bot.user.tag, bot.user.avatarURL())
                                 .setDescription(`Timed out. Type \`${constObj.prefix}${cmdList.purgeCmd} 100\` to clear this channel manually.`);
                             textChannel.send(timeEmbed);
