@@ -85,7 +85,7 @@ function onMemberAdd(member) {
     welcomeEmbed = new Discord.MessageEmbed()
         .setColor(modules.constObj.yellow)
         .setAuthor(member.user.tag, member.user.displayAvatarURL())
-        .setDescription(`${member.user} has just entered ${member.guild.channels.cache.get(modules.constObj.newStatesID)}.\n\nMake them feel welcome!`)
+        .setDescription(`**${member.user} has just entered ${member.guild.channels.cache.get(modules.constObj.newStatesID)}.**\nMake them feel welcome!`)
         .setFooter(`${dateFormat(member.joinedAt.toString(), modules.constObj.dateOutput)}`);
     member.guild.channels.cache.get(modules.constObj.recruitingID).send(welcomeEmbed);
 };
