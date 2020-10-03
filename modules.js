@@ -28,7 +28,7 @@ const constObj = {
     success: 0x45bb8a,
     error: 0xef4949,
     dateOutput: 'HHMM "h" ddd, dd mmm yy',
-    version: '1.5.1'
+    version: '1.5.2'
 };
 
 const cmdList = {
@@ -205,14 +205,15 @@ function errorText(helpTxt, cmd) {
 
 function rolesOutput(array) {
     var rolesString = '';
+    var filteredArray = array.filter(function(role, index, arr) { 
+        return role !== constObj.administratorID; 
+    });
 
-    for (index in array.reverse()) {
-        if (array[index] === constObj.administratorID) continue;
-
+    for (index in filteredArray) {
         if (index % 3 === 0) {
             rolesString += '\n';
         }
-        rolesString += `<@&${array[index]}> `;
+        rolesString += `<@&${filteredArray[index]}> `;
     }
 
     return rolesString;
