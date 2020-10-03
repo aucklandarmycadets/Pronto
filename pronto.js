@@ -4,6 +4,7 @@ const bot = new Discord.Client();
 bot.commands = new Discord.Collection();
 const botCommands = require('./commands');
 const modules = require('./modules');
+const pairs = require('./channelPairs');
 prefix = modules.constObj.prefix;
 const dateFormat = require('dateformat');
 
@@ -142,7 +143,7 @@ function onVoiceUpdate(oldState, newState) {
                     const collector = msg.createReactionCollector(filter, { time: 60000, dispose: true });
 
                     collector.on('collect', (reaction, user) => {
-                        if (msg.guild.members.cache.get(user.id).roles.cache.some(roles=>constObj.adjPlus.includes(roles.id))) {
+                        if (msg.guild.members.cache.get(user.id).roles.cache.some(roles=>modules.constObj.adjPlus.includes(roles.id))) {
                             msg.channel.messages.fetch({ limit: 100 })
                                 .then((messages) => {
                                     msg.channel.bulkDelete(messages).catch(error => console.log(error.stack));
@@ -160,7 +161,7 @@ function onVoiceUpdate(oldState, newState) {
                     });
 
                     collector.on('remove', (reaction, user) => {
-                        if (msg.guild.members.cache.get(user.id).roles.cache.some(roles=>constObj.adjPlus.includes(roles.id))) {
+                        if (msg.guild.members.cache.get(user.id).roles.cache.some(roles=>modules.constObj.adjPlus.includes(roles.id))) {
                             msg.channel.messages.fetch({ limit: 100 })
                                 .then((messages) => {
                                     msg.channel.bulkDelete(messages).catch(error => console.log(error.stack));
@@ -175,7 +176,7 @@ function onVoiceUpdate(oldState, newState) {
                             timeEmbed = new Discord.MessageEmbed()
                                 .setColor(modules.constObj.error)
                                 .setAuthor(bot.user.tag, bot.user.avatarURL())
-                                .setDescription(`Timed out. Type \`${constObj.prefix}${cmdList.purgeCmd} 100\` to clear this channel manually.`);
+                                .setDescription(`Timed out. Type \`${modules.constObj.prefix}${cmdList.purgeCmd} 100\` to clear this channel manually.`);
                             textChannel.send(timeEmbed);
                         }
                     });
