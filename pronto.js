@@ -187,10 +187,5 @@ function onVoiceUpdate(oldState, newState) {
 };
 
 function onDevInfo(info, type) {
-    devEmbed = new Discord.MessageEmbed()
-        .setColor(constObj.error)
-        .setAuthor(bot.user.tag, bot.user.avatarURL())
-        .setDescription(`${type}: ${info}`)
-        .setFooter(`${dateFormat(Date(), constObj.dateOutput)}`);
-    textChannel.send(joinEmbed);
+    console.log(`${type}: ${info}`);
 };
