@@ -4,7 +4,7 @@ const bot = new Discord.Client();
 bot.commands = new Discord.Collection();
 const botCommands = require('./commands');
 const modules = require('./modules');
-const prefix = modules.constObj.prefix;
+prefix = modules.constObj.prefix;
 const dateFormat = require('dateformat');
 
 Object.keys(botCommands).map(key => {
@@ -17,6 +17,8 @@ bot.login(TOKEN);
 
 bot.on('ready', () => {
     console.info(`Logged in as ${bot.user.tag}!`);
+
+    if (bot.user.discriminator == '7780') prefix = '-';
 
     bot.user.setActivity(`the radio net | ${prefix}${modules.cmdList.helpCmd}`, {type: 'LISTENING'});
 });
