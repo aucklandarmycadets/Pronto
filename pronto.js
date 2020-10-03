@@ -22,7 +22,7 @@ bot.on('ready', () => {
         .setColor(modules.constObj.success)
         .setAuthor(bot.user.tag, bot.user.avatarURL())
         .setDescription(`**Ready to go!**`)
-        .setFooter(`${dateFormat(Date.now(), modules.constObj.dateOutput)} | Pronto v${modules.constObj.version}`);
+        .setFooter(`${dateFormat(Date(), modules.constObj.dateOutput)} | Pronto v${modules.constObj.version}`);
 
     bot.channels.cache.get(modules.constObj.debugID).send(readyEmbed);
 
@@ -31,9 +31,7 @@ bot.on('ready', () => {
     bot.user.setActivity(`the radio net | ${prefix}${modules.cmdList.helpCmd}`, {type: 'LISTENING'});
 });
 
-bot.on('guildMemberAdd', member => {
-    modules.newMember(Discord, bot, member);
-});
+bot.on('guildMemberAdd', member => modules.newMember(member));
 
 bot.on('message', msg => {
     if (msg.channel.type === 'news') msg.react('✅');
@@ -72,6 +70,114 @@ bot.on('message', msg => {
     };
 });
 
-bot.on('voiceStateUpdate', (oldState, newState) => {
-    modules.channelPair(Discord, bot, oldState, newState); 
-});
+
+function newMember(member) {
+    if (member.user.bot) return;
+    
+    const visitorRole = member.guild.roles.cache.find(role => role.id === constObj.visitorID);
+    member.roles.add(visitorRole);
+
+    welcomeEmbed = new Discord.MessageEmbed()
+            .setColor(constObj.yellow)
+            .setAuthor(member.user.tag, member.user.displayAvatarURL())
+            .setDescription(`${member.user} has just entered ${member.guild.channels.cache.get(constObj.newStatesID)}.\n\nMake them feel welcome!`)
+            .setFooter(`${dateFormat(member.joinedAt.toString(), constObj.dateOutput)}`);
+    member.guild.channels.cache.get(constObj.recruitingID).send(welcomeEmbed);
+};
+
+function channelPair(oldState, newState) {
+    let oldID;
+    let newID;
+    if (oldState.channel) oldID = oldState.channelID;
+    if (newState.channel) newID = newState.channelID;
+
+    for (let i = 0; i < pairs.length; i++) {
+        const textChannel = newState.guild.channels.cache.get(pairs[i].text);
+        if (!textChannel) {
+            console.log('Invalid text channel ID in JSON.');
+            continue;
+        }
+
+        const vcID = pairs[i].voice;
+
+        if (oldID !== vcID && newID === vcID) {
+            textChannel.updateOverwrite(newState.id, { VIEW_CHANNEL: true, SEND_MESSAGES: true })
+                .catch(console.error);
+
+            joinEmbed = new Discord.MessageEmbed()
+                .setColor(constObj.success)
+                .setAuthor(newState.member.displayName, newState.member.user.displayAvatarURL())
+                .setDescription(`${newState.member} has joined the channel.`)
+                .setFooter(`${dateFormat(Date(), constObj.dateOutput)}`);
+            textChannel.send(joinEmbed);
+        } 
+
+        else if (oldID === vcID && newID !== vcID) {
+            textChannel.updateOverwrite(newState.id, { VIEW_CHANNEL: false, SEND_MESSAGES: false })
+                .catch(console.error);
+
+            leaveEmbed = new Discord.MessageEmbed()
+                .setColor(constObj.error)
+                .setAuthor(newState.member.displayName, newState.member.user.displayAvatarURL())
+                .setDescription(`${newState.member} has left the channel.`)
+                .setFooter(`${dateFormat(Date(), constObj.dateOutput)}`);
+            textChannel.send(leaveEmbed);
+
+            if (oldState.channel.members.size === 0) {
+                purgeEmbed = new Discord.MessageEmbed()
+                    .setTitle('Purge Text Channel')
+                    .setColor(constObj.success)
+                    .setDescription(`Click on the ${newState.guild.emojis.cache.find(emoji => emoji.name === constObj.successEmoji)} reaction to purge this channel.`);
+                textChannel.send(purgeEmbed).then(msg => {
+                    msg.react(newState.guild.emojis.cache.find(emoji => emoji.name === constObj.successEmoji));
+
+                    const filter = (reaction, user) => {
+                        return reaction.emoji.name === constObj.successEmoji;
+                    };
+
+                    const collector = msg.createReactionCollector(filter, { time: 60000, dispose: true });
+
+                    collector.on('collect', (reaction, user) => {
+                        if (msg.guild.members.cache.get(user.id).roles.cache.some(roles=>constObj.adjPlus.includes(roles.id))) {
+                            msg.channel.messages.fetch({ limit: 100 })
+                                .then((messages) => {
+                                    msg.channel.bulkDelete(messages).catch(error => console.log(error.stack));
+                                    collector.stop();
+                                });
+                        }
+                        
+                        else if (!user.bot) {
+                            errorEmbed = new Discord.MessageEmbed()
+                                .setColor(constObj.error)
+                                .setAuthor(newState.member.displayName, newState.member.user.displayAvatarURL())
+                                .setDescription(`${user} Insufficient permissions. ${helpObj.errorPurge}`);
+                            textChannel.send(errorEmbed);
+                        }
+                    });
+
+                    collector.on('remove', (reaction, user) => {
+                        if (msg.guild.members.cache.get(user.id).roles.cache.some(roles=>constObj.adjPlus.includes(roles.id))) {
+                            msg.channel.messages.fetch({ limit: 100 })
+                                .then((messages) => {
+                                    msg.channel.bulkDelete(messages).catch(error => console.log(error.stack));
+                                    collector.stop();
+                                });
+                        }
+                    });
+
+                    collector.on('end', (collected, reason) => {
+                        if (reason === 'time') {
+                            msg.reactions.removeAll();
+                            timeEmbed = new Discord.MessageEmbed()
+                                .setColor(constObj.error)
+                                .setAuthor(bot.user.tag, bot.user.avatarURL())
+                                .setDescription(`Timed out. Type \`${constObj.prefix}${cmdList.purgeCmd} 100\` to clear this channel manually.`);
+                            textChannel.send(timeEmbed);
+                        }
+                    });
+                });
+
+            }
+        }
+    }
+};
