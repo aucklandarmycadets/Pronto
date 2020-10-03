@@ -23,7 +23,7 @@ module.exports = {
         }
 
         else {
-            msg.react(bot.emojis.cache.find(emoji => emoji.name === modules.constObj.successEmoji));
+            msg.react(msg.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.successEmoji));
 
             connectedMembers = [];
 

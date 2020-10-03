@@ -13,8 +13,8 @@ const constObj = {
     tacticalID: '748342934880911371',
     classroomID: '748677930778886144',
     visitorID: '748411879923253259',
-    successEmoji: 'success',
-    errorEmoji: 'error',
+    successEmoji: '757935039999901746',
+    errorEmoji: '757935039886393374',
     formations: ['761143813632294963', '748341753249136672', '748341787336376370', '748342048788316181'],
     nonCadet: ['748411879923253259', '748343310124580894'],
     tacPlus: ['748340800093552731', '748337961321496637', '748338027402756142', '748337933194625104', '748346409853517896'],
@@ -221,7 +221,7 @@ function capitalise(string) {
 };
 
 function sendErrorEmbed(Discord, bot, msg, errMsg, cmdErr, footer) {
-    msg.react(bot.emojis.cache.find(emoji => emoji.name === constObj.errorEmoji));
+    msg.react(msg.guild.emojis.cache.find(emoji => emoji.name === constObj.errorEmoji));
     errorEmbed = new Discord.MessageEmbed()
         .setColor(constObj.error)
         .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
@@ -288,9 +288,9 @@ function channelPair(Discord, bot, oldState, newState) {
                 purgeEmbed = new Discord.MessageEmbed()
                     .setTitle('Purge Text Channel')
                     .setColor(constObj.success)
-                    .setDescription(`Click on the ${bot.emojis.cache.find(emoji => emoji.name === constObj.successEmoji)} reaction to purge this channel.`);
+                    .setDescription(`Click on the ${newState.guild.emojis.cache.find(emoji => emoji.name === constObj.successEmoji)} reaction to purge this channel.`);
                 textChannel.send(purgeEmbed).then(msg => {
-                    msg.react(bot.emojis.cache.find(emoji => emoji.name === constObj.successEmoji));
+                    msg.react(newState.guild.emojis.cache.find(emoji => emoji.name === constObj.successEmoji));
 
                     const filter = (reaction, user) => {
                         return reaction.emoji.name === constObj.successEmoji;
