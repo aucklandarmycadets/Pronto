@@ -15,7 +15,15 @@ const TOKEN = process.env.TOKEN;
 
 bot.login(TOKEN);
 
-bot.on('ready', () => {
+bot.on('ready', () => onReady());
+bot.on('guildMemberAdd', member => onMemberAdd(member));
+bot.on('message', msg => onMessage(msg));
+bot.on('voiceStateUpdate', (oldState, newState) => onVoiceUpdate(oldState, newState));
+bot.on('debug', info => onDevInfo(info, 'Debug'));
+bot.on('error', info => onDevInfo(info, 'Error'));
+bot.on('warn', info => onDevInfo(info, 'Warn'));
+
+function onReady() {
     console.info(`Logged in as ${bot.user.tag}!`);
 
     readyEmbed = new Discord.MessageEmbed()
@@ -29,11 +37,9 @@ bot.on('ready', () => {
     if (bot.user.discriminator == '7780') prefix = '-';
 
     bot.user.setActivity(`the radio net | ${prefix}${modules.cmdList.helpCmd}`, {type: 'LISTENING'});
-});
+};
 
-bot.on('guildMemberAdd', member => modules.newMember(member));
-
-bot.on('message', msg => {
+function onMessage(msg) {
     if (msg.channel.type === 'news') msg.react('✅');
 
     if (msg.author.bot || !msg.content.startsWith(prefix)) return;
@@ -68,10 +74,9 @@ bot.on('message', msg => {
 
         bot.channels.cache.get(modules.constObj.debugID).send(errorEmbed);
     };
-});
+};
 
-
-function newMember(member) {
+function onMemberAdd(member) {
     if (member.user.bot) return;
     
     const visitorRole = member.guild.roles.cache.find(role => role.id === constObj.visitorID);
@@ -85,7 +90,7 @@ function newMember(member) {
     member.guild.channels.cache.get(constObj.recruitingID).send(welcomeEmbed);
 };
 
-function channelPair(oldState, newState) {
+function onVoiceUpdate(oldState, newState) {
     let oldID;
     let newID;
     if (oldState.channel) oldID = oldState.channelID;
@@ -180,4 +185,13 @@ function channelPair(oldState, newState) {
             }
         }
     }
+};
+
+function onDevInfo(info, type) {
+    devEmbed = new Discord.MessageEmbed()
+        .setColor(constObj.error)
+        .setAuthor(bot.user.tag, bot.user.avatarURL())
+        .setDescription(`${type}: ${info}`)
+        .setFooter(`${dateFormat(Date(), constObj.dateOutput)}`);
+    textChannel.send(joinEmbed);
 };
