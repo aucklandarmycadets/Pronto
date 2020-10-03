@@ -18,6 +18,14 @@ bot.login(TOKEN);
 bot.on('ready', () => {
     console.info(`Logged in as ${bot.user.tag}!`);
 
+    readyEmbed = new Discord.MessageEmbed()
+        .setColor(modules.constObj.success)
+        .setAuthor(bot.user.tag, bot.user.avatarURL())
+        .setDescription(`**Ready to go!**`)
+        .setFooter(`${dateFormat(Date.now(), modules.constObj.dateOutput)} | Pronto v${modules.constObj.version}`);
+
+    bot.channels.cache.get(modules.constObj.debugID).send(readyEmbed);
+
     if (bot.user.discriminator == '7780') prefix = '-';
 
     bot.user.setActivity(`the radio net | ${prefix}${modules.cmdList.helpCmd}`, {type: 'LISTENING'});
