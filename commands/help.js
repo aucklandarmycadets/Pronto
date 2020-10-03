@@ -17,6 +17,8 @@ module.exports = {
         devIcon = dev.avatarURL();
 
         if (msg.guild === null && args[0] === modules.cmdList.leaveCmd) {
+            if (!bot.guilds.cache.get(modules.constObj.serverID).available) return;
+
             var memberRoles = bot.guilds.cache.get(modules.constObj.serverID).members.cache.get(msg.author.id).roles.cache;
 
             if (!memberRoles.some(roles=>modules.constObj.nonCadet.includes(roles.id))) {
