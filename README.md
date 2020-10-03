@@ -1,6 +1,6 @@
 # Pronto
 
-Discord bot developed for the City of Auckland Cadet Unit.
+A Discord bot developed for the City of Auckland Cadet Unit.
 
 ## Features
 
