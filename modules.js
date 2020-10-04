@@ -29,10 +29,13 @@ const constObj = {
     success: 0x45bb8a,
     error: 0xef4949,
     dateOutput: 'HHMM "h" ddd, dd mmm yy',
-    version: '1.6.2'
+    version: '1.6.3'
 };
 
 const cmdList = {
+    pingCmd: 'ping',
+    uptimeCmd: 'uptime',
+    restartCmd: 'restart',
     helpCmd: 'help',
     leaveCmd: 'leave',
     leaveForCmd: 'leavefor',
@@ -40,10 +43,12 @@ const cmdList = {
     connectedCmd: 'connected',
     archiveCmd: 'archive',
     purgeCmd: 'purge',
-    pingCmd: 'ping',
 }
 
 const cmdTxt = {
+    pingDesc: 'Test the latency of the bot.',
+    uptimeDesc: 'Time since last restart.',
+    restartDesc: 'Restart the bot.',
     helpGeneric: 'Get help with commands.',
     helpDesc: 'Message a list of all commands.',
     helpArg: 'Get help with a command.',
@@ -53,7 +58,6 @@ const cmdTxt = {
     connectedDesc: 'List of members connected to a voice channel.',
     archiveDesc: 'Archive a text channel.',
     purgeDesc: 'Delete a number of messages from a channel.',
-    pingDesc: 'Test the latency of the bot.',
 };
 
 const helpObj = {
@@ -96,8 +100,25 @@ const helpObj = {
     get helpDev() {
         return this.helpAdjPlus + '\n' + helpText({
             [`${constObj.prefix}${cmdList.pingCmd}`]: cmdTxt.pingDesc,
+            [`${constObj.prefix}${cmdList.uptimeCmd}`]: cmdTxt.uptimeDesc,
+            [`${constObj.prefix}${cmdList.restartCmd}`]: cmdTxt.restartDesc,
         }, '`', '` - ')
     },
+
+    helpPing: helpText({
+        'Description': cmdTxt.pingDesc,
+        'Usage': `${constObj.prefix}${cmdList.pingCmd}`,
+    }, '**', ':** '),
+
+    helpUptime: helpText({
+        'Description': cmdTxt.uptimeDesc,
+        'Usage': `${constObj.prefix}${cmdList.uptimeCmd}`,
+    }, '**', ':** '),
+
+    helpRestart: helpText({
+        'Description': cmdTxt.restartDesc,
+        'Usage': `${constObj.prefix}${cmdList.restartCmd}`,
+    }, '**', ':** '),
 
     helpHelp: helpText({
         'Description': cmdTxt.helpGeneric,
@@ -143,11 +164,6 @@ const helpObj = {
         'Usage': `\n${constObj.prefix}${cmdList.purgeCmd} [count]\n!purge [user] [count]`,
         'Example': `\n${constObj.prefix}${cmdList.purgeCmd} 10\n!purge <@${constObj.devID}> 5`,
         'Allowed Roles': rolesOutput(constObj.adjPlus),
-    }, '**', ':** '),
-
-    helpPing: helpText({
-        'Description': cmdTxt.pingDesc,
-        'Usage': `${constObj.prefix}${cmdList.pingCmd}`,
     }, '**', ':** '),
 
     get errorLeave() {

@@ -47,7 +47,6 @@ module.exports = {
             commandList = modules.helpObj.helpTacPlus;
 
             if (cmd === modules.cmdList.leaveForCmd) createHelpEmbed(modules.cmdList.leaveForCmd, modules.helpObj.helpLeaveFor);
-
             else if (cmd === modules.cmdList.attendanceCmd) createHelpEmbed(modules.cmdList.attendanceCmd, modules.helpObj.helpAttendance);
         }
 
@@ -73,6 +72,8 @@ module.exports = {
             commandList = modules.helpObj.helpDev;
 
             if (cmd === modules.cmdList.pingCmd) createHelpEmbed(modules.cmdList.pingCmd, modules.helpObj.helpPing);
+            else if (cmd === modules.cmdList.uptimeCmd) createHelpEmbed(modules.cmdList.uptimeCmd, modules.helpObj.helpUptime);
+            else if (cmd === modules.cmdList.restartCmd) createHelpEmbed(modules.cmdList.restartCmd, modules.helpObj.helpRestart);
         }
 
         if (showCmdList) {
