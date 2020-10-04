@@ -152,6 +152,8 @@ function onMemberUpdate(oldMember, newMember) {
 };
 
 function onMessageDelete(msg) {
+    if (msg.content.startsWith(prefix)) return;
+
     logEmbed = new Discord.MessageEmbed()
         .setColor(modules.constObj.error)
         .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
