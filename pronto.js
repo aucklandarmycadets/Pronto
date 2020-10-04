@@ -379,6 +379,8 @@ function onMessageUpdate(oldMessage, newMessage) {
 };
 
 function onDevInfo(info, type) {
+    if (info.includes('heartbeat')) return;
+
     console.log(`${type}: ${info}`);
 
     if (type === 'Error') {
