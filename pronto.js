@@ -22,6 +22,7 @@ bot.on('guildMemberAdd', member => onMemberAdd(member));
 bot.on('guildMemberRemove', member => onMemberRemove(member));
 bot.on('guildMemberUpdate', (oldMember, newMember) => onMemberUpdate(oldMember, newMember));
 bot.on('voiceStateUpdate', (oldState, newState) => onVoiceUpdate(oldState, newState));
+bot.on('messageDelete', msg => onMessageDelete(msg));
 bot.on('debug', info => onDevInfo(info, 'Debug'));
 bot.on('error', info => onDevInfo(info, 'Error'));
 bot.on('warn', info => onDevInfo(info, 'Warn'));
@@ -99,7 +100,7 @@ function onMemberAdd(member) {
         .setThumbnail(member.user.displayAvatarURL())
         .setDescription(`${member.user} ${member.user.tag}`)
         .addField('Account Age', modules.formatAge(Date.now() - member.user.createdAt))
-        .setFooter(`ID: ${member.user.id} | ${dateFormat(member.joinedAt.toString(), modules.constObj.dateOutput)}`);
+        .setFooter(`ID: ${member.user.id} | ${dateFormat(Date(), modules.constObj.dateOutput)}`);
     member.guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
 };
 
@@ -110,7 +111,7 @@ function onMemberRemove(member) {
         .setThumbnail(member.user.displayAvatarURL())
         .setDescription(`${member.user} ${member.user.tag}`)
         .addField('Roles', modules.rolesOutput(member.roles.cache.array(), true))
-        .setFooter(`ID: ${member.user.id} | ${dateFormat(member.joinedAt.toString(), modules.constObj.dateOutput)}`);
+        .setFooter(`ID: ${member.user.id} | ${dateFormat(Date(), modules.constObj.dateOutput)}`);
     member.guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
 }
 
@@ -150,8 +151,17 @@ function onMemberUpdate(oldMember, newMember) {
 
     logEmbed.setAuthor(newMember.user.tag, newMember.user.displayAvatarURL());
     logEmbed.setColor(modules.constObj.yellow);
-    logEmbed.setFooter(`ID: ${newMember.user.id} | ${dateFormat(newMember.joinedAt.toString(), modules.constObj.dateOutput)}`);
+    logEmbed.setFooter(`ID: ${newMember.user.id} | ${dateFormat(Date(), modules.constObj.dateOutput)}`);
     newMember.guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
+};
+
+function onMessageDelete(msg) {
+    logEmbed = new Discord.MessageEmbed()
+        .setColor(modules.constObj.error)
+        .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+        .setDescription(`**Message sent by ${msg.author} deleted in ${msg.channel}**\n${msg.content}`)
+        .setFooter(`Author: ${msg.author.id} | Message: ${msg.id} | ${dateFormat(Date(), modules.constObj.dateOutput)}`);
+    msg.guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
 };
 
 function onVoiceUpdate(oldState, newState) {
