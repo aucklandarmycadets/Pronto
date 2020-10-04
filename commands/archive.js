@@ -39,8 +39,12 @@ module.exports = {
                 .setFooter(`${dateFormat(msg.createdAt, modules.constObj.dateOutput)}`);
             bot.channels.cache.get(msg.mentions.channels.first().id).send(archiveEmbed);
 
-            msg.mentions.channels.first().setParent(modules.constObj.archivedID, { lockPermissions: true })
-                .catch(console.error);
+            logEmbed = new Discord.MessageEmbed()
+                .setColor(modules.constObj.yellow)
+                .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+                .setDescription(`**Channel ${msg.mentions.channels.first()} archived by ${msg.author}**`)
+                .setFooter(`User: ${msg.author.id} | Channel: ${msg.mentions.channels.first().id} | ${dateFormat(msg.createdAt, modules.constObj.dateOutput)}`);
+            bot.channels.cache.get(modules.constObj.logID).send(logEmbed);
         }
     },
 };
