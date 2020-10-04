@@ -29,11 +29,14 @@ module.exports = {
         else {
             msg.react(msg.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.successEmoji));
 
+            msg.mentions.channels.first().setParent(modules.constObj.archivedID, { lockPermissions: true })
+                .catch(console.error);
+
             archiveEmbed = new Discord.MessageEmbed()
                 .setTitle('Channel Archived 🔒')
                 .setColor(modules.constObj.error)
                 .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
-                .setFooter(`${dateFormat(msg.createdAt.toString(), modules.constObj.dateOutput)}`);
+                .setFooter(`${dateFormat(msg.createdAt, modules.constObj.dateOutput)}`);
             bot.channels.cache.get(msg.mentions.channels.first().id).send(archiveEmbed);
 
             msg.mentions.channels.first().setParent(modules.constObj.archivedID, { lockPermissions: true })

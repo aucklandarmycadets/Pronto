@@ -43,7 +43,7 @@ module.exports = {
                 .setAuthor(msg.mentions.members.first().displayName, msg.mentions.members.first().user.displayAvatarURL())
                 .setDescription(`${msg.author} has submitted leave for ${msg.mentions.members.first()} in ${msg.channel}`)
                 .addFields(
-                    { name: 'Date', value: dateFormat(msg.createdAt.toString(), modules.constObj.dateOutput) },
+                    { name: 'Date', value: dateFormat(msg.createdAt, modules.constObj.dateOutput) },
                     { name: 'Absentee', value: msg.mentions.members.first() },
                     { name: 'Details', value: modules.capitalise(args.join(' ')) },
                 );
@@ -54,7 +54,7 @@ module.exports = {
                 .setAuthor(msg.guild.name, msg.guild.iconURL())
                 .setDescription(`Hi ${msg.author}, your submission of leave for ${msg.mentions.members.first()} has been received.`)
                 .addFields(
-                    { name: 'Date', value: dateFormat(msg.createdAt.toString(), modules.constObj.dateOutput) },
+                    { name: 'Date', value: dateFormat(msg.createdAt, modules.constObj.dateOutput) },
                     { name: 'Channel', value: msg.channel.toString() },
                     { name: 'Details', value: modules.capitalise(args.join(' ')) },
                 );
@@ -65,7 +65,7 @@ module.exports = {
                 .setAuthor(msg.guild.name, msg.guild.iconURL())
                 .setDescription(`${msg.author} has submitted leave for you in ${msg.channel}.`)
                 .addFields(
-                    { name: 'Date', value: dateFormat(msg.createdAt.toString(), modules.constObj.dateOutput) },
+                    { name: 'Date', value: dateFormat(msg.createdAt, modules.constObj.dateOutput) },
                     { name: 'Channel', value: msg.channel.toString() },
                     { name: 'Details', value: modules.capitalise(args.join(' ')) },
                 )

@@ -81,7 +81,7 @@ function onMessage(msg) {
             .setColor(modules.constObj.error)
             .setAuthor(bot.user.tag, bot.user.avatarURL())
             .setDescription(`**Error executing ${command} :c**`)
-            .setFooter(`${dateFormat(msg.createdAt.toString(), modules.constObj.dateOutput)}`);
+            .setFooter(`${dateFormat(msg.createdAt, modules.constObj.dateOutput)}`);
 
         bot.channels.cache.get(modules.constObj.debugID).send(errorEmbed);
     };
@@ -97,7 +97,7 @@ function onMemberAdd(member) {
         .setColor(modules.constObj.yellow)
         .setAuthor(member.user.tag, member.user.displayAvatarURL())
         .setDescription(`**${member.user} has just entered ${member.guild.channels.cache.get(modules.constObj.newMembersID)}.**\nMake them feel welcome!`)
-        .setFooter(`${dateFormat(member.joinedAt.toString(), modules.constObj.dateOutput)}`);
+        .setFooter(`${dateFormat(member.joinedAt, modules.constObj.dateOutput)}`);
     member.guild.channels.cache.get(modules.constObj.recruitingID).send(welcomeEmbed);
 
     logEmbed = new Discord.MessageEmbed()
