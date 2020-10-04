@@ -29,7 +29,7 @@ const constObj = {
     success: 0x45bb8a,
     error: 0xef4949,
     dateOutput: 'HHMM "h" ddd, dd mmm yy',
-    version: '1.6.3'
+    version: '1.6.4'
 };
 
 const cmdList = {

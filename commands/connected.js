@@ -23,13 +23,18 @@ module.exports = {
         }
 
         else {
-            msg.react(msg.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.successEmoji));
-
             connectedMembers = [];
 
             for (const [index, member] of Object.entries(msg.mentions.channels.first().members.array())) {
                 connectedMembers.push(member.toString());
             }
+
+            if (connectedMembers.length === 0) {
+                modules.sendErrorEmbed(Discord, bot, msg, `There are no members connected to ${msg.mentions.channels.first()}.`, modules.helpObj.errorConnected);
+                return;
+            }
+
+            msg.react(msg.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.successEmoji));
 
             connectedEmbed = new Discord.MessageEmbed()
                 .setTitle(`Members Connected to #${msg.mentions.channels.first().name}`)
