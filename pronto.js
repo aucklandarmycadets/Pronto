@@ -53,7 +53,7 @@ function onMessage(msg) {
 
     if (msg.author.bot || !msg.content.startsWith(prefix)) return;
     
-    if (msg.guild === null && msg.content !== `${prefix}${modules.cmdList.helpCmd} ${modules.cmdList.leaveCmd}`) return;
+    if (!msg.guild && msg.content !== `${prefix}${modules.cmdList.helpCmd} ${modules.cmdList.leaveCmd}`) return;
 
     const args = msg.content.split(/ +/);
     const command = args.shift().toLowerCase().replace(prefix, '');
@@ -240,6 +240,33 @@ function onVoiceUpdate(oldState, newState) {
     let newID;
     if (oldState.channel) oldID = oldState.channelID;
     if (newState.channel) newID = newState.channelID;
+
+    if (oldID && newID) {
+        logEmbed = new Discord.MessageEmbed()
+            .setColor(modules.constObj.yellow)
+            .setAuthor(newState.member.displayName, newState.member.user.displayAvatarURL())
+            .setDescription(`**${newState.member} changed voice channel ${oldState.channel} > ${newState.channel}**`)
+            .setFooter(`ID: ${newState.member.id} | ${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
+        newState.guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
+    }
+
+    else if (!oldID) {
+        logEmbed = new Discord.MessageEmbed()
+            .setColor(modules.constObj.success)
+            .setAuthor(newState.member.displayName, newState.member.user.displayAvatarURL())
+            .setDescription(`**${newState.member} joined voice channel ${newState.channel}**`)
+            .setFooter(`ID: ${newState.member.id} | Channel: ${newID} | ${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
+        newState.guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
+    }
+
+    else if (!newID) {
+        logEmbed = new Discord.MessageEmbed()
+            .setColor(modules.constObj.error)
+            .setAuthor(newState.member.displayName, newState.member.user.displayAvatarURL())
+            .setDescription(`**${newState.member} left voice channel ${oldState.channel}**`)
+            .setFooter(`ID: ${newState.member.id} | Channel: ${oldID} | ${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
+        newState.guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
+    }
 
     for (let i = 0; i < pairs.length; i++) {
         const textChannel = newState.guild.channels.cache.get(pairs[i].text);
