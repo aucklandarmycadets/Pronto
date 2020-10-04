@@ -18,6 +18,8 @@ bot.login(TOKEN);
 
 bot.on('ready', () => onReady());
 bot.on('message', msg => onMessage(msg));
+bot.on('guildBanAdd', (guild, member) => onMemberBan(guild, member, true));
+bot.on('guildBanRemove', (guild, member) => onMemberBan(guild, member));
 bot.on('guildMemberAdd', member => onMemberAdd(member));
 bot.on('guildMemberRemove', member => onMemberRemove(member));
 bot.on('guildMemberUpdate', (oldMember, newMember) => onMemberUpdate(oldMember, newMember));
@@ -60,8 +62,6 @@ function onMessage(msg) {
 
     if (command === 'restart' && msg.author.id === modules.constObj.devID) process.exit();
 
-    if (command === 'test') { bot.emit('guildMemberAdd', msg.guild.members.cache.get('192181901065322496')); return; }
-
     if (!bot.commands.has(command)) {
         var regExp = /[a-zA-Z]/g;
 
@@ -87,7 +87,35 @@ function onMessage(msg) {
     };
 };
 
+function onMemberBan(guild, member, banned) {
+    if (banned) {
+        logEmbed = new Discord.MessageEmbed()
+            .setColor(modules.constObj.error)
+            .setAuthor('Member Banned', member.displayAvatarURL());
+    }
+
+    else {
+        logEmbed = new Discord.MessageEmbed()
+            .setColor(modules.constObj.success)
+            .setAuthor('Member Unbanned', member.displayAvatarURL());
+    }
+
+    logEmbed.setThumbnail(member.displayAvatarURL())
+    logEmbed.setDescription(`${member} ${member.tag}`)
+    logEmbed.setFooter(`ID: ${member.id} | ${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
+    guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
+}
+
 function onMemberAdd(member) {
+    logEmbed = new Discord.MessageEmbed()
+        .setColor(modules.constObj.success)
+        .setAuthor('Member Joined', member.user.displayAvatarURL())
+        .setThumbnail(member.user.displayAvatarURL())
+        .setDescription(`${member.user} ${member.user.tag}`)
+        .addField('Account Age', modules.formatAge(Date.now() - member.user.createdAt))
+        .setFooter(`ID: ${member.user.id} | ${dateFormat(member.joinedAt, modules.constObj.dateOutput)}`);
+    member.guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
+
     if (member.user.bot) return;
     
     const visitorRole = member.guild.roles.cache.find(role => role.id === modules.constObj.visitorID);
@@ -99,20 +127,13 @@ function onMemberAdd(member) {
         .setDescription(`**${member.user} has just entered ${member.guild.channels.cache.get(modules.constObj.newMembersID)}.**\nMake them feel welcome!`)
         .setFooter(`${dateFormat(member.joinedAt, modules.constObj.dateOutput)}`);
     member.guild.channels.cache.get(modules.constObj.recruitingID).send(welcomeEmbed);
-
-    logEmbed = new Discord.MessageEmbed()
-        .setColor(modules.constObj.success)
-        .setAuthor('Member Joined', member.user.displayAvatarURL())
-        .setThumbnail(member.user.displayAvatarURL())
-        .setDescription(`${member.user} ${member.user.tag}`)
-        .addField('Account Age', modules.formatAge(Date.now() - member.user.createdAt))
-        .setFooter(`ID: ${member.user.id} | ${dateFormat(member.joinedAt, modules.constObj.dateOutput)}`);
-    member.guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
 };
 
 function onMemberRemove(member) {
+    if (member.deleted) return;
+
     logEmbed = new Discord.MessageEmbed()
-        .setColor(modules.constObj.success)
+        .setColor(modules.constObj.error)
         .setAuthor('Member Left', member.user.displayAvatarURL())
         .setThumbnail(member.user.displayAvatarURL())
         .setDescription(`${member.user} ${member.user.tag}`)
