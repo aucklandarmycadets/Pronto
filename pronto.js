@@ -20,6 +20,7 @@ bot.on('ready', () => onReady());
 bot.on('message', msg => onMessage(msg));
 bot.on('guildMemberAdd', member => onMemberAdd(member));
 bot.on('guildMemberRemove', member => onMemberRemove(member));
+bot.on('guildMemberUpdate', (oldMember, newMember) => onMemberUpdate(oldMember, newMember));
 bot.on('voiceStateUpdate', (oldState, newState) => onVoiceUpdate(oldState, newState));
 bot.on('debug', info => onDevInfo(info, 'Debug'));
 bot.on('error', info => onDevInfo(info, 'Error'));
@@ -52,7 +53,7 @@ function onMessage(msg) {
 
     if (command === 'restart' && msg.author.id === modules.constObj.devID) process.exit();
 
-    if (command === 'test') { bot.emit('guildMemberRemove', msg.guild.members.cache.get('748441083662434355')); return; }
+    if (command === 'test') { bot.emit('guildMemberAdd', msg.guild.members.cache.get('192181901065322496')); return; }
 
     if (!bot.commands.has(command)) {
         var regExp = /[a-zA-Z]/g;
@@ -88,7 +89,7 @@ function onMemberAdd(member) {
     welcomeEmbed = new Discord.MessageEmbed()
         .setColor(modules.constObj.yellow)
         .setAuthor(member.user.tag, member.user.displayAvatarURL())
-        .setDescription(`**${member.user} has just entered ${member.guild.channels.cache.get(modules.constObj.newStatesID)}.**\nMake them feel welcome!`)
+        .setDescription(`**${member.user} has just entered ${member.guild.channels.cache.get(modules.constObj.newMembersID)}.**\nMake them feel welcome!`)
         .setFooter(`${dateFormat(member.joinedAt.toString(), modules.constObj.dateOutput)}`);
     member.guild.channels.cache.get(modules.constObj.recruitingID).send(welcomeEmbed);
 
@@ -98,7 +99,7 @@ function onMemberAdd(member) {
         .setThumbnail(member.user.displayAvatarURL())
         .setDescription(`${member.user} ${member.user.tag}`)
         .addField('Account Age', modules.formatAge(Date.now() - member.user.createdAt))
-        .setFooter(`${dateFormat(member.joinedAt.toString(), modules.constObj.dateOutput)}`);
+        .setFooter(`ID: ${member.user.id} | ${dateFormat(member.joinedAt.toString(), modules.constObj.dateOutput)}`);
     member.guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
 };
 
@@ -109,9 +110,49 @@ function onMemberRemove(member) {
         .setThumbnail(member.user.displayAvatarURL())
         .setDescription(`${member.user} ${member.user.tag}`)
         .addField('Roles', modules.rolesOutput(member.roles.cache.array(), true))
-        .setFooter(`${dateFormat(member.joinedAt.toString(), modules.constObj.dateOutput)}`);
+        .setFooter(`ID: ${member.user.id} | ${dateFormat(member.joinedAt.toString(), modules.constObj.dateOutput)}`);
     member.guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
 }
+
+function onMemberUpdate(oldMember, newMember) {
+    var removedRole = null;
+    var addedRole = null;
+    var oldNickname = null;
+    var newNickname = null;
+
+    var roleDifference = newMember.roles.cache.difference(oldMember.roles.cache);
+
+    if (roleDifference.first()) {
+        if (newMember.roles.cache.some(role => role.id === roleDifference.first().id)) {
+            addedRole = roleDifference;
+
+            logEmbed = new Discord.MessageEmbed()
+                .setDescription(`**${newMember.user} was added to** ${roleDifference.first()}`)
+        }
+
+        else if (oldMember.roles.cache.some(role => role.id === roleDifference.first().id)) {
+            removedRole = roleDifference;
+
+            logEmbed = new Discord.MessageEmbed()
+                .setDescription(`**${newMember.user} was removed from** ${roleDifference.first()}`)
+        }
+    }
+
+    if (newMember.displayName !== oldMember.displayName) {
+        oldNickname = oldMember.displayName;
+        newNickname = newMember.displayName;
+
+        logEmbed = new Discord.MessageEmbed()
+            .setDescription(`**${newMember.user} Nickname changed**`)
+            .addField('Before', oldNickname)
+            .addField('After', newNickname)
+    }
+
+    logEmbed.setAuthor(newMember.user.tag, newMember.user.displayAvatarURL());
+    logEmbed.setColor(modules.constObj.yellow);
+    logEmbed.setFooter(`ID: ${newMember.user.id} | ${dateFormat(newMember.joinedAt.toString(), modules.constObj.dateOutput)}`);
+    newMember.guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
+};
 
 function onVoiceUpdate(oldState, newState) {
     let oldID;
