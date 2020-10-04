@@ -27,7 +27,7 @@ module.exports = {
 
         const user = msg.mentions.users.first();
 
-        const purgeCount = !!parseInt(msg.content.split(' ')[1]) ? parseInt(msg.content.split(' ')[1]) : parseInt(msg.content.split(' ')[2])
+        const purgeCount = (!!parseInt(msg.content.split(' ')[1]) ? parseInt(msg.content.split(' ')[1]) : parseInt(msg.content.split(' ')[2])) + 1
         
         if (!purgeCount && !user) {
             modules.sendErrorEmbed(Discord, bot, msg, 'Invalid input.', modules.helpObj.errorPurge);
@@ -42,8 +42,6 @@ module.exports = {
         }
 
         else {
-            msg.delete();
-
             msg.channel.messages.fetch({ limit: 100 })
                 .then((messages) => {
                     if (user) {

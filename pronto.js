@@ -166,11 +166,20 @@ function onMessageDelete(msg) {
 };
 
 function onBulkDelete(msgs) {
-    logEmbed = new Discord.MessageEmbed()
-        .setColor(modules.constObj.error)
-        .setAuthor(msgs.first().guild.name, msgs.first().guild.iconURL())
-        .setDescription(`**${msgs.array().length} messages bulk deleted in ${msgs.first().channel}**`)
-        .setFooter(`${dateFormat(Date(), modules.constObj.dateOutput)}`);
+    if (msgs.first().content.includes('purge')) {
+        logEmbed = new Discord.MessageEmbed()
+            .setAuthor(msgs.first().author.tag, msgs.first().author.displayAvatarURL())
+            .setDescription(`**${msgs.array().length - 1} messages bulk deleted by ${msgs.first().author} in ${msgs.first().channel}**`)
+    }
+
+    else {
+        logEmbed = new Discord.MessageEmbed()
+            .setAuthor(msgs.first().guild.name, msgs.first().guild.iconURL())
+            .setDescription(`**${msgs.array().length} messages bulk deleted in ${msgs.first().channel}**`)
+    }
+
+    logEmbed.setColor(modules.constObj.error)
+    logEmbed.setFooter(`${dateFormat(Date(), modules.constObj.dateOutput)}`);
     msgs.first().guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
 };
 
