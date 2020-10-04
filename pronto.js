@@ -23,6 +23,7 @@ bot.on('guildMemberRemove', member => onMemberRemove(member));
 bot.on('guildMemberUpdate', (oldMember, newMember) => onMemberUpdate(oldMember, newMember));
 bot.on('voiceStateUpdate', (oldState, newState) => onVoiceUpdate(oldState, newState));
 bot.on('messageDelete', msg => onMessageDelete(msg));
+bot.on('messageDeleteBulk', msgs => onBulkDelete(msgs));
 bot.on('debug', info => onDevInfo(info, 'Debug'));
 bot.on('error', info => onDevInfo(info, 'Error'));
 bot.on('warn', info => onDevInfo(info, 'Warn'));
@@ -162,6 +163,15 @@ function onMessageDelete(msg) {
         .setDescription(`**Message sent by ${msg.author} deleted in ${msg.channel}**\n${msg.content}`)
         .setFooter(`Author: ${msg.author.id} | Message: ${msg.id} | ${dateFormat(Date(), modules.constObj.dateOutput)}`);
     msg.guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
+};
+
+function onBulkDelete(msgs) {
+    logEmbed = new Discord.MessageEmbed()
+        .setColor(modules.constObj.error)
+        .setAuthor(msgs.first().guild.name, msgs.first().guild.iconURL())
+        .setDescription(`**${msgs.array().length} messages bulk deleted in ${msgs.first().channel}**`)
+        .setFooter(`${dateFormat(Date(), modules.constObj.dateOutput)}`);
+    msgs.first().guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
 };
 
 function onVoiceUpdate(oldState, newState) {
