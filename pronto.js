@@ -172,90 +172,6 @@ function onMemberUpdate(oldMember, newMember) {
     newMember.guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
 };
 
-function onMessageDelete(msg) {
-    if (msg.content.startsWith(prefix)) return;
-
-    logEmbed = new Discord.MessageEmbed()
-        .setColor(modules.constObj.error)
-        .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-        .setDescription(`**Message sent by ${msg.author} deleted in ${msg.channel}**\n${msg.content}`)
-        .setFooter(`Author: ${msg.author.id} | Message: ${msg.id} | ${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
-    msg.guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
-};
-
-function onBulkDelete(msgs) {
-    if (msgs.first().content.includes('purge')) {
-        logEmbed = new Discord.MessageEmbed()
-            .setAuthor(msgs.first().author.tag, msgs.first().author.displayAvatarURL())
-            .setDescription(`**${msgs.array().length - 1} messages bulk deleted by ${msgs.first().author} in ${msgs.first().channel}**`);
-    }
-
-    else {
-        logEmbed = new Discord.MessageEmbed()
-            .setAuthor(msgs.first().guild.name, msgs.first().guild.iconURL())
-            .setDescription(`**${msgs.array().length} messages bulk deleted in ${msgs.first().channel}**`);
-    }
-
-    logEmbed.setColor(modules.constObj.error);
-    logEmbed.setFooter(`${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
-    msgs.first().guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
-};
-
-function onMessageUpdate(oldMessage, newMessage) {
-    if (oldMessage.content === newMessage.content || newMessage.author.bot) return;
-
-    logEmbed = new Discord.MessageEmbed()
-        .setColor(modules.constObj.yellow)
-        .setAuthor(newMessage.author.tag, newMessage.author.displayAvatarURL())
-        .setDescription(`**Message edited in ${newMessage.channel}** [Jump to Message](${newMessage.url})`)
-        .addField('Before', oldMessage.content)
-        .addField('After', newMessage.content)
-        .setFooter(`Author: ${newMessage.author.id} | Message: ${newMessage.id} | ${dateFormat(newMessage.editedAt, modules.constObj.dateOutput)}`);
-    newMessage.guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
-};
-
-function onRoleCreate(role) {
-    logEmbed = new Discord.MessageEmbed()
-        .setColor(modules.constObj.success)
-        .setAuthor(role.guild.name, role.guild.iconURL())
-        .setDescription(`**Role Created: ${role.name}**`)
-        .setFooter(`ID: ${role.id} | ${dateFormat(role.createdAt, modules.constObj.dateOutput)}`);
-    role.guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
-};
-
-function onRoleDelete(role) {
-    logEmbed = new Discord.MessageEmbed()
-        .setColor(modules.constObj.error)
-        .setAuthor(role.guild.name, role.guild.iconURL())
-        .setDescription(`**Role Deleted: ${role.name}**`)
-        .setFooter(`ID: ${role.id} | ${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
-    role.guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
-};
-
-function onRoleUpdate(oldRole, newRole) {
-    if (oldRole.color !== newRole.color) {
-        logEmbed = new Discord.MessageEmbed()
-            .setColor(newRole.color)
-            .setDescription(`**Role colour ${newRole} changed**`)
-            .addField('Before', oldRole.hexColor)
-            .addField('After', newRole.hexColor);
-    }
-
-    else if (oldRole.name !== newRole.name) {
-        logEmbed = new Discord.MessageEmbed()
-            .setColor(modules.constObj.yellow)
-            .setDescription(`**Role name ${newRole} changed**`)
-            .addField('Before', oldRole.name)
-            .addField('After', newRole.name);
-    }
-
-    else return;
-
-    logEmbed.setAuthor(newRole.guild.name, newRole.guild.iconURL());
-    logEmbed.setFooter(`ID: ${newRole.id} | ${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
-    newRole.guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
-};
-
 function onVoiceUpdate(oldState, newState) {
     let oldID;
     let newID;
@@ -378,6 +294,90 @@ function onVoiceUpdate(oldState, newState) {
             }
         }
     }
+};
+
+function onRoleCreate(role) {
+    logEmbed = new Discord.MessageEmbed()
+        .setColor(modules.constObj.success)
+        .setAuthor(role.guild.name, role.guild.iconURL())
+        .setDescription(`**Role Created: ${role.name}**`)
+        .setFooter(`ID: ${role.id} | ${dateFormat(role.createdAt, modules.constObj.dateOutput)}`);
+    role.guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
+};
+
+function onRoleDelete(role) {
+    logEmbed = new Discord.MessageEmbed()
+        .setColor(modules.constObj.error)
+        .setAuthor(role.guild.name, role.guild.iconURL())
+        .setDescription(`**Role Deleted: ${role.name}**`)
+        .setFooter(`ID: ${role.id} | ${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
+    role.guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
+};
+
+function onRoleUpdate(oldRole, newRole) {
+    if (oldRole.color !== newRole.color) {
+        logEmbed = new Discord.MessageEmbed()
+            .setColor(newRole.color)
+            .setDescription(`**Role colour ${newRole} changed**`)
+            .addField('Before', oldRole.hexColor)
+            .addField('After', newRole.hexColor);
+    }
+
+    else if (oldRole.name !== newRole.name) {
+        logEmbed = new Discord.MessageEmbed()
+            .setColor(modules.constObj.yellow)
+            .setDescription(`**Role name ${newRole} changed**`)
+            .addField('Before', oldRole.name)
+            .addField('After', newRole.name);
+    }
+
+    else return;
+
+    logEmbed.setAuthor(newRole.guild.name, newRole.guild.iconURL());
+    logEmbed.setFooter(`ID: ${newRole.id} | ${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
+    newRole.guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
+};
+
+function onMessageDelete(msg) {
+    if (msg.content.startsWith(prefix)) return;
+
+    logEmbed = new Discord.MessageEmbed()
+        .setColor(modules.constObj.error)
+        .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+        .setDescription(`**Message sent by ${msg.author} deleted in ${msg.channel}**\n${msg.content}`)
+        .setFooter(`Author: ${msg.author.id} | Message: ${msg.id} | ${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
+    msg.guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
+};
+
+function onBulkDelete(msgs) {
+    if (msgs.first().content.includes('purge')) {
+        logEmbed = new Discord.MessageEmbed()
+            .setAuthor(msgs.first().author.tag, msgs.first().author.displayAvatarURL())
+            .setDescription(`**${msgs.array().length - 1} messages bulk deleted by ${msgs.first().author} in ${msgs.first().channel}**`);
+    }
+
+    else {
+        logEmbed = new Discord.MessageEmbed()
+            .setAuthor(msgs.first().guild.name, msgs.first().guild.iconURL())
+            .setDescription(`**${msgs.array().length} messages bulk deleted in ${msgs.first().channel}**`);
+    }
+
+    logEmbed.setColor(modules.constObj.error);
+    logEmbed.setFooter(`${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
+    msgs.first().guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
+};
+
+function onMessageUpdate(oldMessage, newMessage) {
+    if (oldMessage.content === newMessage.content || newMessage.author.bot) return;
+
+    logEmbed = new Discord.MessageEmbed()
+        .setColor(modules.constObj.yellow)
+        .setAuthor(newMessage.author.tag, newMessage.author.displayAvatarURL())
+        .setDescription(`**Message edited in ${newMessage.channel}** [Jump to Message](${newMessage.url})`)
+        .addField('Before', oldMessage.content)
+        .addField('After', newMessage.content)
+        .setFooter(`Author: ${newMessage.author.id} | Message: ${newMessage.id} | ${dateFormat(newMessage.editedAt, modules.constObj.dateOutput)}`);
+    newMessage.guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
 };
 
 function onDevInfo(info, type) {

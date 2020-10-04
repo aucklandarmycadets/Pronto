@@ -5,6 +5,7 @@ const constObj = {
     serverID: '748336465465049230',
     devID: '192181901065322496',
     debugID: '758217147187986432',
+    logID: '755289400954454047',
     attendanceID: '748360212754464779',
     recruitingID: '748516417137278985',
     newMembersID: '749150106669940748',
