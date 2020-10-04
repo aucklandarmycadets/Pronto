@@ -14,7 +14,8 @@ module.exports = {
             msg.react(msg.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.successEmoji));
 
             restartEmbed = new Discord.MessageEmbed()
-                .setTitle('Restarting...')
+                .setAuthor(bot.user.tag, bot.user.avatarURL())
+                .setDescription('**Restarting...**')
                 .addField('Uptime', modules.formatAge(bot.uptime))
                 .setColor(modules.constObj.yellow)
                 .setFooter(`${dateFormat(msg.createdAt, modules.constObj.dateOutput)} | Pronto v${modules.constObj.version}`);

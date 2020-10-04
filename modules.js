@@ -13,7 +13,6 @@ const constObj = {
     tacticalID: '748342934880911371',
     classroomID: '748677930778886144',
     visitorID: '748411879923253259',
-    visitorID: '285284113655791617',
     successEmoji: 'success',
     errorEmoji: 'error',
     formations: ['761143813632294963', '748341753249136672', '748341787336376370', '748342048788316181'],
@@ -29,7 +28,7 @@ const constObj = {
     success: 0x45bb8a,
     error: 0xef4949,
     dateOutput: 'HHMM "h" ddd, dd mmm yy',
-    version: '1.6.4'
+    version: '1.6.5'
 };
 
 const cmdList = {
