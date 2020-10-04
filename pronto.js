@@ -22,6 +22,7 @@ bot.on('guildMemberAdd', member => onMemberAdd(member));
 bot.on('guildMemberRemove', member => onMemberRemove(member));
 bot.on('guildMemberUpdate', (oldMember, newMember) => onMemberUpdate(oldMember, newMember));
 bot.on('voiceStateUpdate', (oldState, newState) => onVoiceUpdate(oldState, newState));
+bot.on('invalidated', () => onDevInfo('null', 'Invalidated'));
 bot.on('messageDelete', msg => onMessageDelete(msg));
 bot.on('messageDeleteBulk', msgs => onBulkDelete(msgs));
 bot.on('messageUpdate', (oldMessage, newMessage) => onMessageUpdate(oldMessage, newMessage));
