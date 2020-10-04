@@ -15,6 +15,7 @@ A Discord bot developed for the City of Auckland Cadet Unit.
 - Notifies a recruitment channel when new members join
 - Applies a visitor role to new members
 - 'Channel pairing', displaying a text channel to the members connected to the paired voice channel only
+- A comprehensive logging feature set, such as tracking message edits and deletions
 
 ## Commands List
 

@@ -45,8 +45,6 @@ function onReady() {
         .setFooter(`${dateFormat(Date.now(), modules.constObj.dateOutput)} | Pronto v${modules.constObj.version}`);
     bot.channels.cache.get(modules.constObj.debugID).send(readyEmbed);
 
-    if (bot.user.discriminator == '7780') prefix = '-';
-
     bot.user.setActivity(`the radio net | ${prefix}${modules.cmdList.helpCmd}`, {type: 'LISTENING'});
 };
 
