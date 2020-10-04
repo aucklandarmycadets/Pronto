@@ -24,6 +24,7 @@ bot.on('guildMemberUpdate', (oldMember, newMember) => onMemberUpdate(oldMember, 
 bot.on('voiceStateUpdate', (oldState, newState) => onVoiceUpdate(oldState, newState));
 bot.on('messageDelete', msg => onMessageDelete(msg));
 bot.on('messageDeleteBulk', msgs => onBulkDelete(msgs));
+bot.on('messageUpdate', (oldMessage, newMessage) => onMessageUpdate(oldMessage, newMessage));
 bot.on('debug', info => onDevInfo(info, 'Debug'));
 bot.on('error', info => onDevInfo(info, 'Error'));
 bot.on('warn', info => onDevInfo(info, 'Warn'));
@@ -181,6 +182,19 @@ function onBulkDelete(msgs) {
     logEmbed.setColor(modules.constObj.error)
     logEmbed.setFooter(`${dateFormat(Date(), modules.constObj.dateOutput)}`);
     msgs.first().guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
+};
+
+function onMessageUpdate(oldMessage, newMessage) {
+    if (oldMessage.content === newMessage.content || newMessage.author.bot) return;
+
+    logEmbed = new Discord.MessageEmbed()
+        .setColor(modules.constObj.yellow)
+        .setAuthor(newMessage.author.tag, newMessage.author.displayAvatarURL())
+        .setDescription(`**Message edited in ${newMessage.channel}** [Jump to Message](${newMessage.url})`)
+        .addField('Before', oldMessage.content)
+        .addField('After', newMessage.content)
+        .setFooter(`Author: ${newMessage.author.id} | Message: ${newMessage.id} | ${dateFormat(newMessage.editedAt, modules.constObj.dateOutput)}`);
+    newMessage.guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
 };
 
 function onVoiceUpdate(oldState, newState) {
