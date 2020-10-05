@@ -19,6 +19,8 @@ A Discord bot developed for the City of Auckland Cadet Unit.
 
 ## Commands List
 
+- `!ping`
+- `!uptime`
 - `!help`
 - `!help (command)`
 - `!leave`
@@ -27,4 +29,3 @@ A Discord bot developed for the City of Auckland Cadet Unit.
 - `!connected`
 - `!archive`
 - `!purge`
-- `!ping`
