@@ -1,4 +1,5 @@
 const modules = require('../modules');
+const dateFormat = require('dateformat');
 const prefix = modules.constObj.prefix;
 var devTag;
 var devIcon;
@@ -92,7 +93,7 @@ module.exports = {
         
         if (!embedDM) msg.channel.send(helpEmbed);
 
-        else if (embedDM) msg.author.send(helpEmbed);
+        else if (embedDM) msg.author.send(helpEmbed).catch(error => modules.dmError(Discord, bot, msg));
 
         function createHelpEmbed(command, text) {
             helpEmbed = new Discord.MessageEmbed()

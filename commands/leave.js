@@ -41,7 +41,7 @@ module.exports = {
             );
 
             bot.channels.cache.get(modules.constObj.attendanceID).send(attendanceEmbed);
-            msg.author.send(dmEmbed);
+            msg.author.send(dmEmbed).catch(error => modules.dmError(Discord, bot, msg));
         }
     },
 };

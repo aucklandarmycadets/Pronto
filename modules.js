@@ -28,7 +28,7 @@ const constObj = {
     success: 0x45bb8a,
     error: 0xef4949,
     dateOutput: 'HHMM "h" ddd, dd mmm yy',
-    version: '1.6.5'
+    version: '1.6.6'
 };
 
 const cmdList = {
@@ -217,7 +217,7 @@ function errorText(helpTxt, cmd) {
     return '\n\n' + helpTxt + '\n' + helpText({
         'Help Command': `${constObj.prefix}${cmdList.helpCmd} ${cmd}`,
     }, '**', ':** ')
-}
+};
 
 function rolesOutput(array, skipFormat) {
     var rolesString = '';
@@ -251,7 +251,7 @@ function sendErrorEmbed(Discord, bot, msg, errMsg, cmdErr, footer) {
     if (footer) errorEmbed.setFooter(footer);
 
     msg.channel.send(errorEmbed);
-}
+};
 
 function formatAge(raw) {
     var years = 0;
@@ -274,7 +274,29 @@ function formatAge(raw) {
     else if (hours) return `${hours} hrs, ${minutes} min, ${seconds} sec`;
     else if (minutes) return `${minutes} min, ${seconds} sec`;
     else return `${seconds} sec`;
-}
+};
+
+function dmError(Discord, bot, msg, debug) {
+    errorEmbed = new Discord.MessageEmbed()
+        .setAuthor(bot.user.tag, bot.user.avatarURL())
+        .setColor(constObj.error)
+        .setDescription(`${msg.author} I cannot send direct messages to you!`)
+        .addField('More Information', '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)')
+        .setFooter(`${dateFormat(Date.now(), constObj.dateOutput)}`);
+    
+    if (debug) {
+        console.log('here');
+        errorEmbed = new Discord.MessageEmbed()
+            .setAuthor(bot.user.tag, bot.user.avatarURL())
+            .setColor(constObj.error)
+            .setDescription(`Failed sending direct message to ${msg.mentions.members.first()}.`)
+            .setFooter(`${dateFormat(Date.now(), constObj.dateOutput)}`);
+        bot.channels.cache.get(constObj.debugID).send(errorEmbed);
+        return;
+    }
+
+    msg.channel.send(errorEmbed);
+};
 
 exports.constObj = constObj;
 exports.cmdList = cmdList;
@@ -284,3 +306,4 @@ exports.rolesOutput = rolesOutput;
 exports.capitalise = capitalise;
 exports.sendErrorEmbed = sendErrorEmbed;
 exports.formatAge = formatAge;
+exports.dmError = dmError;

@@ -72,8 +72,8 @@ module.exports = {
                 .setFooter(`Reply with ${modules.constObj.prefix}${modules.cmdList.helpCmd} ${modules.cmdList.leaveCmd} to learn how to request leave for yourself.`);
 
             bot.channels.cache.get(modules.constObj.attendanceID).send(attendanceEmbed);
-            msg.author.send(dmEmbed);
-            msg.mentions.members.first().send(absenteeEmbed);
+            msg.author.send(dmEmbed).catch(error => modules.dmError(Discord, bot, msg));
+            msg.mentions.members.first().send(absenteeEmbed).catch(error => modules.dmError(Discord, bot, msg, true));
         }
     },
 };
