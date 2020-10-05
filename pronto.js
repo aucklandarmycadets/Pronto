@@ -31,7 +31,6 @@ bot.on('roleUpdate', (oldRole, newRole) => onRoleUpdate(oldRole, newRole));
 bot.on('messageDelete', msg => onMessageDelete(msg));
 bot.on('messageDeleteBulk', msgs => onBulkDelete(msgs));
 bot.on('messageUpdate', (oldMessage, newMessage) => onMessageUpdate(oldMessage, newMessage));
-bot.on('debug', info => onDevInfo(info, 'Debug'));
 bot.on('error', info => onDevInfo(info, 'Error'));
 bot.on('warn', info => onDevInfo(info, 'Warn'));
 
@@ -386,8 +385,6 @@ function onMessageUpdate(oldMessage, newMessage) {
 };
 
 function onDevInfo(info, type) {
-    if (info.includes('Heartbeat')) return;
-
     console.log(`${type}: ${info}`);
 
     if (type === 'Error') {
