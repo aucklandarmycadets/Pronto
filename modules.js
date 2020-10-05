@@ -28,7 +28,7 @@ const constObj = {
     success: 0x45bb8a,
     error: 0xef4949,
     dateOutput: 'HHMM "h" ddd, dd mmm yy',
-    version: '1.7'
+    version: '1.7.1'
 };
 
 const cmdList = {
@@ -289,7 +289,7 @@ function dmError(Discord, bot, msg, debug) {
         errorEmbed = new Discord.MessageEmbed()
             .setAuthor(bot.user.tag, bot.user.avatarURL())
             .setColor(constObj.error)
-            .setDescription(`Failed sending direct message to ${msg.mentions.members.first()}.`)
+            .setDescription(`Error sending direct message to ${msg.mentions.members.first()}.`)
             .setFooter(`${dateFormat(Date.now(), constObj.dateOutput)}`);
         bot.channels.cache.get(constObj.debugID).send(errorEmbed);
         return;

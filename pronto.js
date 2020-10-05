@@ -343,15 +343,22 @@ function onMessageDelete(msg) {
         .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
         .setDescription(`**Message sent by ${msg.author} deleted in ${msg.channel}**\n${msg.content}`)
         .setFooter(`Author: ${msg.author.id} | Message: ${msg.id} | ${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
+
+    if (msg.channel.lastMessage.content.includes(modules.cmdList.purgeCmd)) {
+        msg.channel.lastMessage.delete().catch(error => modules.debugError(Discord, bot, error, `Error deleting message in ${msg.channel}.`, 'Message', msg.content));
+        logEmbed.setDescription(`**Message sent by ${msg.author} deleted by ${msg.channel.lastMessage.author} in ${msg.channel}**\n${msg.content}`)
+    }
+
+    
     msg.guild.channels.cache.get(modules.constObj.logID).send(logEmbed);
 };
 
 function onBulkDelete(msgs) {
-    if (msgs.first().channel.lastMessage.content.includes('purge')) {
-        msgs.first().channel.lastMessage.delete().catch(error => modules.debugError(Discord, bot, error, `Error deleting message in ${msg.channel}.`, 'Message', msg.content));
+    if (msgs.first().channel.lastMessage.content.includes(modules.cmdList.purgeCmd)) {
+        msgs.first().channel.lastMessage.delete().catch(error => modules.debugError(Discord, bot, error, `Error deleting message in ${msgs.first().channel}.`, 'Message', msgs.first().channel.lastMessage.content));
         logEmbed = new Discord.MessageEmbed()
             .setAuthor(msgs.first().author.tag, msgs.first().author.displayAvatarURL())
-            .setDescription(`**${msgs.array().length} messages bulk deleted by ${msgs.first().author} in ${msgs.first().channel}**`);
+            .setDescription(`**${msgs.array().length} messages bulk deleted by ${msgs.first().channel.lastMessage.author} in ${msgs.first().channel}**`);
     }
 
     else {

@@ -66,7 +66,7 @@ module.exports = {
                             .setFooter(`${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
                         msg.channel.send(errorEmbed);
 
-                        modules.debugError(Discord, bot, error, `Error deleting ${purgeCount} messages in ${msg.channel}.`);
+                        modules.debugError(Discord, bot, error, `Error purging ${purgeCount} messages in ${msg.channel}.`);
                     });
             });
         }
