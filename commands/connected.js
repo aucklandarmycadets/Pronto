@@ -34,7 +34,8 @@ module.exports = {
                 return;
             }
 
-            msg.react(msg.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.successEmoji));
+            msg.react(msg.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.successEmoji))
+                .catch(error => modules.debugError(Discord, bot, error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
 
             connectedEmbed = new Discord.MessageEmbed()
                 .setTitle(`Members Connected to #${msg.mentions.channels.first().name}`)

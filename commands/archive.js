@@ -27,24 +27,38 @@ module.exports = {
         }
 
         else {
-            msg.react(msg.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.successEmoji));
-
             msg.mentions.channels.first().setParent(modules.constObj.archivedID, { lockPermissions: true })
-                .catch(console.error);
+                .then(() => {
+                    msg.react(msg.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.successEmoji))
+                        .catch(error => modules.debugError(Discord, bot, error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
 
-            archiveEmbed = new Discord.MessageEmbed()
-                .setTitle('Channel Archived 🔒')
-                .setColor(modules.constObj.error)
-                .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
-                .setFooter(`${dateFormat(msg.createdAt, modules.constObj.dateOutput)}`);
-            bot.channels.cache.get(msg.mentions.channels.first().id).send(archiveEmbed);
+                    archiveEmbed = new Discord.MessageEmbed()
+                        .setTitle('Channel Archived 🔒')
+                        .setColor(modules.constObj.error)
+                        .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
+                        .setFooter(`${dateFormat(msg.createdAt, modules.constObj.dateOutput)}`);
+                    bot.channels.cache.get(msg.mentions.channels.first().id).send(archiveEmbed);
 
-            logEmbed = new Discord.MessageEmbed()
-                .setColor(modules.constObj.yellow)
-                .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-                .setDescription(`**Channel ${msg.mentions.channels.first()} archived by ${msg.author}**`)
-                .setFooter(`User: ${msg.author.id} | Channel: ${msg.mentions.channels.first().id} | ${dateFormat(msg.createdAt, modules.constObj.dateOutput)}`);
-            bot.channels.cache.get(modules.constObj.logID).send(logEmbed);
+                    logEmbed = new Discord.MessageEmbed()
+                        .setColor(modules.constObj.yellow)
+                        .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+                        .setDescription(`**Channel ${msg.mentions.channels.first()} archived by ${msg.author}**`)
+                        .setFooter(`User: ${msg.author.id} | Channel: ${msg.mentions.channels.first().id} | ${dateFormat(msg.createdAt, modules.constObj.dateOutput)}`);
+                    bot.channels.cache.get(modules.constObj.logID).send(logEmbed);
+                })
+                .catch(error => {
+                    msg.react(msg.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.errorEmoji))
+                        .catch(error => modules.debugError(Discord, bot, error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
+
+                    errorEmbed = new Discord.MessageEmbed()
+                        .setAuthor(bot.user.tag, bot.user.avatarURL())
+                        .setColor(modules.constObj.error)
+                        .setDescription(`${msg.author} Error archiving ${msg.mentions.channels.first()}.`)
+                        .setFooter(`${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
+                    msg.channel.send(errorEmbed);
+                    
+                    modules.debugError(Discord, bot, error, `Error archiving ${msg.mentions.channels.first()}.`);
+                });
         }
     },
 };

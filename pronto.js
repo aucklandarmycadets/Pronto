@@ -49,7 +49,8 @@ function onReady() {
 };
 
 function onMessage(msg) {
-    if (msg.channel.type === 'news') msg.react('✅');
+    if (msg.channel.type === 'news') msg.react('✅')
+        .catch(error => modules.debugError(Discord, bot, error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
 
     if (msg.author.bot || !msg.content.startsWith(prefix)) return;
     
@@ -71,15 +72,7 @@ function onMessage(msg) {
     }
 
     catch (error) {
-        console.error(error);
-
-        errorEmbed = new Discord.MessageEmbed()
-            .setColor(modules.constObj.error)
-            .setAuthor(bot.user.tag, bot.user.avatarURL())
-            .setDescription(`**Error executing ${command} :c**`)
-            .setFooter(`${dateFormat(msg.createdAt, modules.constObj.dateOutput)}`);
-
-        bot.channels.cache.get(modules.constObj.debugID).send(errorEmbed);
+        modules.debugError(Discord, bot, error, `Error executing ${command} :c`);
     };
 };
 
@@ -115,7 +108,7 @@ function onMemberAdd(member) {
     if (member.user.bot) return;
     
     const visitorRole = member.guild.roles.cache.find(role => role.id === modules.constObj.visitorID);
-    member.roles.add(visitorRole);
+    member.roles.add(visitorRole).catch(error => modules.debugError(Discord, bot, error, `Error adding ${member} to ${visitorRole}.`));
 
     welcomeEmbed = new Discord.MessageEmbed()
         .setColor(modules.constObj.yellow)
@@ -204,7 +197,7 @@ function onVoiceUpdate(oldState, newState) {
     for (let i = 0; i < pairs.length; i++) {
         const textChannel = newState.guild.channels.cache.get(pairs[i].text);
         if (!textChannel) {
-            console.log('Invalid text channel ID in JSON.');
+            console.error('Invalid text channel ID in JSON.');
             continue;
         }
 
@@ -212,82 +205,90 @@ function onVoiceUpdate(oldState, newState) {
 
         if (oldID !== vcID && newID === vcID) {
             textChannel.updateOverwrite(newState.id, { VIEW_CHANNEL: true, SEND_MESSAGES: true })
-                .catch(console.error);
-
-            joinEmbed = new Discord.MessageEmbed()
-                .setColor(modules.constObj.success)
-                .setAuthor(newState.member.displayName, newState.member.user.displayAvatarURL())
-                .setDescription(`${newState.member} has joined the channel.`)
-                .setFooter(`${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
-            textChannel.send(joinEmbed);
+                .then(() => {
+                    joinEmbed = new Discord.MessageEmbed()
+                        .setColor(modules.constObj.success)
+                        .setAuthor(newState.member.displayName, newState.member.user.displayAvatarURL())
+                        .setDescription(`${newState.member} has joined the channel.`)
+                        .setFooter(`${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
+                    textChannel.send(joinEmbed);
+                })
+                .catch(error => {
+                    modules.debugError(Discord, bot, error, `Error giving ${newState.member} permissions to ${textChannel}.`);
+                });
         } 
 
         else if (oldID === vcID && newID !== vcID) {
             textChannel.updateOverwrite(newState.id, { VIEW_CHANNEL: false, SEND_MESSAGES: false })
-                .catch(console.error);
+                .then(() => {
+                    leaveEmbed = new Discord.MessageEmbed()
+                        .setColor(modules.constObj.error)
+                        .setAuthor(newState.member.displayName, newState.member.user.displayAvatarURL())
+                        .setDescription(`${newState.member} has left the channel.`)
+                        .setFooter(`${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
+                    textChannel.send(leaveEmbed);
 
-            leaveEmbed = new Discord.MessageEmbed()
-                .setColor(modules.constObj.error)
-                .setAuthor(newState.member.displayName, newState.member.user.displayAvatarURL())
-                .setDescription(`${newState.member} has left the channel.`)
-                .setFooter(`${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
-            textChannel.send(leaveEmbed);
+                    if (oldState.channel.members.size === 0) {
+                        purgeEmbed = new Discord.MessageEmbed()
+                            .setTitle('Purge Text Channel')
+                            .setColor(modules.constObj.success)
+                            .setDescription(`Click on the ${newState.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.successEmoji)} reaction to purge this channel.`);
+                        textChannel.send(purgeEmbed).then(msg => {
+                            msg.react(newState.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.successEmoji))
+                                .catch(error => modules.debugError(Discord, bot, error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
 
-            if (oldState.channel.members.size === 0) {
-                purgeEmbed = new Discord.MessageEmbed()
-                    .setTitle('Purge Text Channel')
-                    .setColor(modules.constObj.success)
-                    .setDescription(`Click on the ${newState.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.successEmoji)} reaction to purge this channel.`);
-                textChannel.send(purgeEmbed).then(msg => {
-                    msg.react(newState.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.successEmoji));
+                            const filter = (reaction, user) => {
+                                return reaction.emoji.name === modules.constObj.successEmoji;
+                            };
 
-                    const filter = (reaction, user) => {
-                        return reaction.emoji.name === modules.constObj.successEmoji;
-                    };
+                            const collector = msg.createReactionCollector(filter, { time: 90000, dispose: true });
 
-                    const collector = msg.createReactionCollector(filter, { time: 60000, dispose: true });
+                            collector.on('collect', (reaction, user) => {
+                                if (msg.guild.members.cache.get(user.id).roles.cache.some(roles=>modules.constObj.adjPlus.includes(roles.id))) {
+                                    msg.channel.messages.fetch({ limit: 100 })
+                                        .then((messages) => {
+                                            purgeChannel(messages, msg, collector);
+                                        })
+                                }
+                                
+                                else if (!user.bot) {
+                                    errorEmbed = new Discord.MessageEmbed()
+                                        .setColor(modules.constObj.error)
+                                        .setAuthor(newState.member.displayName, newState.member.user.displayAvatarURL())
+                                        .setDescription(`${user} Insufficient permissions. ${helpObj.errorPurge}`);
+                                    textChannel.send(errorEmbed);
+                                }
+                            });
 
-                    collector.on('collect', (reaction, user) => {
-                        if (msg.guild.members.cache.get(user.id).roles.cache.some(roles=>modules.constObj.adjPlus.includes(roles.id))) {
-                            msg.channel.messages.fetch({ limit: 100 })
-                                .then((messages) => {
-                                    msg.channel.bulkDelete(messages).catch(error => console.log(error.stack));
-                                    collector.stop();
-                                });
-                        }
-                        
-                        else if (!user.bot) {
-                            errorEmbed = new Discord.MessageEmbed()
-                                .setColor(modules.constObj.error)
-                                .setAuthor(newState.member.displayName, newState.member.user.displayAvatarURL())
-                                .setDescription(`${user} Insufficient permissions. ${helpObj.errorPurge}`);
-                            textChannel.send(errorEmbed);
-                        }
-                    });
+                            collector.on('remove', (reaction, user) => {
+                                if (msg.guild.members.cache.get(user.id).roles.cache.some(roles=>modules.constObj.adjPlus.includes(roles.id))) {
+                                    msg.channel.messages.fetch({ limit: 100 })
+                                        .then((messages) => {
+                                            purgeChannel(messages, msg, collector);
+                                        });
+                                }
+                            });
 
-                    collector.on('remove', (reaction, user) => {
-                        if (msg.guild.members.cache.get(user.id).roles.cache.some(roles=>modules.constObj.adjPlus.includes(roles.id))) {
-                            msg.channel.messages.fetch({ limit: 100 })
-                                .then((messages) => {
-                                    msg.channel.bulkDelete(messages).catch(error => console.log(error.stack));
-                                    collector.stop();
-                                });
-                        }
-                    });
+                            collector.on('end', (collected, reason) => {
+                                if (reason === 'time') {
+                                    msg.reactions.removeAll()
+                                        .catch(error => {
+                                            modules.debugError(Discord, bot, error, `Error removing reactions from [message](${msg.url}) in ${textChannel}.`);
+                                        });
 
-                    collector.on('end', (collected, reason) => {
-                        if (reason === 'time') {
-                            msg.reactions.removeAll();
-                            timeEmbed = new Discord.MessageEmbed()
-                                .setColor(modules.constObj.error)
-                                .setAuthor(bot.user.tag, bot.user.avatarURL())
-                                .setDescription(`Timed out. Type \`${modules.constObj.prefix}${cmdList.purgeCmd} 100\` to clear this channel manually.`);
-                            textChannel.send(timeEmbed);
-                        }
-                    });
+                                    timeEmbed = new Discord.MessageEmbed()
+                                        .setColor(modules.constObj.error)
+                                        .setAuthor(bot.user.tag, bot.user.avatarURL())
+                                        .setDescription(`Timed out. Type \`${modules.constObj.prefix}${modules.cmdList.purgeCmd} 100\` to clear this channel manually.`);
+                                    textChannel.send(timeEmbed);
+                                }
+                            });
+                        });
+                    }
+                })
+                .catch(error => {
+                    modules.debugError(Discord, bot, error, `Error removing ${newState.member}'s permissions to ${textChannel}.`);
                 });
-
-            }
         }
     }
 };
@@ -346,10 +347,11 @@ function onMessageDelete(msg) {
 };
 
 function onBulkDelete(msgs) {
-    if (msgs.first().content.includes('purge')) {
+    if (msgs.first().channel.lastMessage.content.includes('purge')) {
+        msgs.first().channel.lastMessage.delete().catch(error => modules.debugError(Discord, bot, error, `Error deleting message in ${msg.channel}.`, 'Message', msg.content));
         logEmbed = new Discord.MessageEmbed()
             .setAuthor(msgs.first().author.tag, msgs.first().author.displayAvatarURL())
-            .setDescription(`**${msgs.array().length - 1} messages bulk deleted by ${msgs.first().author} in ${msgs.first().channel}**`);
+            .setDescription(`**${msgs.array().length} messages bulk deleted by ${msgs.first().author} in ${msgs.first().channel}**`);
     }
 
     else {
@@ -389,4 +391,19 @@ function onDevInfo(info, type) {
             .setFooter(`${dateFormat(Date.now(), modules.constObj.dateOutput)} | Pronto v${modules.constObj.version}`);
         bot.users.cache.get(modules.constObj.devID).send(devEmbed);
     };
+};
+
+function purgeChannel(messages, msg, collector) {
+    msg.channel.bulkDelete(messages)
+        .catch(error => {
+            errorEmbed = new Discord.MessageEmbed()
+                .setAuthor(bot.user.tag, bot.user.avatarURL())
+                .setColor(modules.constObj.error)
+                .setDescription(`Error purging ${msg.channel}.`)
+                .setFooter(`${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
+            msg.channel.send(errorEmbed);
+
+            modules.debugError(Discord, bot, error, `Error purging ${msg.channel}.`);
+        });
+    collector.stop();
 };

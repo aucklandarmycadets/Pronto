@@ -29,7 +29,8 @@ module.exports = {
         }
 
         else {
-            msg.react(msg.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.successEmoji));
+            msg.react(msg.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.successEmoji))
+                .catch(error => modules.debugError(Discord, bot, error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
 
             mentionIndex = args.indexOf(`<@!${msg.mentions.members.first().user.id}>`);
 

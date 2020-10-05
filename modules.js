@@ -28,7 +28,7 @@ const constObj = {
     success: 0x45bb8a,
     error: 0xef4949,
     dateOutput: 'HHMM "h" ddd, dd mmm yy',
-    version: '1.6.6'
+    version: '1.7'
 };
 
 const cmdList = {
@@ -97,11 +97,11 @@ const helpObj = {
     },
 
     get helpDev() {
-        return this.helpAdjPlus + '\n' + helpText({
+        return helpText({
             [`${constObj.prefix}${cmdList.pingCmd}`]: cmdTxt.pingDesc,
             [`${constObj.prefix}${cmdList.uptimeCmd}`]: cmdTxt.uptimeDesc,
             [`${constObj.prefix}${cmdList.restartCmd}`]: cmdTxt.restartDesc,
-        }, '`', '` - ')
+        }, '`', '` - ') + '\n' + this.helpAdjPlus
     },
 
     helpPing: helpText({
@@ -242,7 +242,8 @@ function capitalise(string) {
 };
 
 function sendErrorEmbed(Discord, bot, msg, errMsg, cmdErr, footer) {
-    msg.react(msg.guild.emojis.cache.find(emoji => emoji.name === constObj.errorEmoji));
+    msg.react(msg.guild.emojis.cache.find(emoji => emoji.name === constObj.errorEmoji))
+        .catch(error => debugError(Discord, bot, error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
     errorEmbed = new Discord.MessageEmbed()
         .setColor(constObj.error)
         .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
@@ -280,12 +281,11 @@ function dmError(Discord, bot, msg, debug) {
     errorEmbed = new Discord.MessageEmbed()
         .setAuthor(bot.user.tag, bot.user.avatarURL())
         .setColor(constObj.error)
-        .setDescription(`${msg.author} I cannot send direct messages to you!`)
+        .setDescription(`${msg.author} I can't send direct messages to you!`)
         .addField('More Information', '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)')
         .setFooter(`${dateFormat(Date.now(), constObj.dateOutput)}`);
     
     if (debug) {
-        console.log('here');
         errorEmbed = new Discord.MessageEmbed()
             .setAuthor(bot.user.tag, bot.user.avatarURL())
             .setColor(constObj.error)
@@ -298,6 +298,21 @@ function dmError(Discord, bot, msg, debug) {
     msg.channel.send(errorEmbed);
 };
 
+function debugError(Discord, bot, error, errorMsg, fieldTitle, fieldContent) {
+    console.error(error.stack);
+    debugEmbed = new Discord.MessageEmbed()
+        .setAuthor(bot.user.tag, bot.user.avatarURL())
+        .setColor(constObj.error)
+        .setDescription(`${errorMsg}`)
+        .setFooter(`${dateFormat(Date.now(), constObj.dateOutput)}`);
+
+    if (fieldTitle) {
+        debugEmbed.addField(fieldTitle, fieldContent);
+    }
+
+    bot.channels.cache.get(constObj.debugID).send(debugEmbed);
+}
+
 exports.constObj = constObj;
 exports.cmdList = cmdList;
 exports.cmdTxt = cmdTxt;
@@ -307,3 +322,4 @@ exports.capitalise = capitalise;
 exports.sendErrorEmbed = sendErrorEmbed;
 exports.formatAge = formatAge;
 exports.dmError = dmError;
+exports.debugError = debugError;

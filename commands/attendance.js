@@ -15,7 +15,7 @@ module.exports = {
         }
 
         else {
-            msg.delete();
+            msg.delete().catch(error => modules.debugError(Discord, bot, error, `Error deleting message in ${msg.channel}.`, 'Message', msg.content));
 
             formationColour = modules.constObj.grey;
             formationName = msg.guild.name;

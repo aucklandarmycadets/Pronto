@@ -32,7 +32,7 @@ module.exports = {
             return;
         }
 
-        if (msg.guild) msg.delete();
+        if (msg.guild) msg.delete().catch(error => modules.debugError(Discord, bot, error, `Error deleting message in ${msg.channel}.`, 'Message', msg.content));
 
         commandList = modules.helpObj.helpAll;
 

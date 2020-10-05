@@ -1,3 +1,4 @@
+const dateFormat = require('dateformat');
 const modules = require('../modules');
 
 module.exports = {
@@ -27,7 +28,7 @@ module.exports = {
 
         const user = msg.mentions.users.first();
 
-        const purgeCount = (!!parseInt(msg.content.split(' ')[1]) ? parseInt(msg.content.split(' ')[1]) : parseInt(msg.content.split(' ')[2])) + 1
+        const purgeCount = (!!parseInt(msg.content.split(' ')[1]) ? parseInt(msg.content.split(' ')[1]) : parseInt(msg.content.split(' ')[2]))
         
         if (!purgeCount && !user) {
             modules.sendErrorEmbed(Discord, bot, msg, 'Invalid input.', modules.helpObj.errorPurge);
@@ -42,7 +43,7 @@ module.exports = {
         }
 
         else {
-            msg.channel.messages.fetch({ limit: 100 })
+            msg.channel.messages.fetch({ limit: 100, before: msg.id })
                 .then((messages) => {
                     if (user) {
                         const filterBy = user ? user.id : Client.user.id;
@@ -53,7 +54,20 @@ module.exports = {
                         messages = messages.array().slice(0, purgeCount);
                     };
 
-                msg.channel.bulkDelete(messages).catch(error => console.log(error.stack));
+                msg.channel.bulkDelete(messages)
+                    .catch(error => {
+                        msg.react(msg.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.errorEmoji))
+                            .catch(error => modules.debugError(Discord, bot, error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
+                        
+                        errorEmbed = new Discord.MessageEmbed()
+                            .setAuthor(bot.user.tag, bot.user.avatarURL())
+                            .setColor(modules.constObj.error)
+                            .setDescription(`${msg.author} Error purging ${purgeCount} messages.`)
+                            .setFooter(`${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
+                        msg.channel.send(errorEmbed);
+
+                        modules.debugError(Discord, bot, error, `Error deleting ${purgeCount} messages in ${msg.channel}.`);
+                    });
             });
         }
     },
