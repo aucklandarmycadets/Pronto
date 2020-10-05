@@ -53,7 +53,15 @@ function onMessage(msg) {
 
     if (msg.author.bot || !msg.content.startsWith(prefix)) return;
     
-    if (!msg.guild && msg.content !== `${prefix}${modules.cmdList.helpCmd} ${modules.cmdList.leaveCmd}`) return;
+    if (!msg.guild && !modules.dmCmds.includes(msg.content)) {
+        dmEmbed = new Discord.MessageEmbed()
+            .setAuthor(bot.user.tag, bot.user.avatarURL())
+            .setColor(modules.constObj.error)
+            .setDescription(`**Error: This command cannot be used in DMs!**`)
+            .setFooter(`${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
+        msg.author.send(dmEmbed);
+        return;
+    };
 
     const args = msg.content.split(/ +/);
     const command = args.shift().toLowerCase().replace(prefix, '');

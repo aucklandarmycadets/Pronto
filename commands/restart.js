@@ -5,7 +5,7 @@ module.exports = {
     name: modules.cmdList.restartCmd,
     description: modules.cmdTxt.restartDesc,
     execute(Discord, bot, msg, args) {
-        if (!msg.author.id === modules.constObj.devID) {
+        if (msg.author.id !== modules.constObj.devID) {
             bot.commands.get(modules.cmdList.helpCmd).execute(Discord, bot, msg, args);
             return;
         }

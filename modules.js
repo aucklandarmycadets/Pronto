@@ -42,7 +42,7 @@ const cmdList = {
     connectedCmd: 'connected',
     archiveCmd: 'archive',
     purgeCmd: 'purge',
-}
+};
 
 const cmdTxt = {
     pingDesc: 'Test the latency of the bot.',
@@ -58,6 +58,12 @@ const cmdTxt = {
     archiveDesc: 'Archive a text channel.',
     purgeDesc: 'Delete a number of messages from a channel.',
 };
+
+const dmCmds = [
+    `${constObj.prefix}${cmdList.pingCmd}`,
+    `${constObj.prefix}${cmdList.uptimeCmd}`,
+    `${constObj.prefix}${cmdList.helpCmd} ${cmdList.leaveCmd}`,
+];
 
 const helpObj = {
     helpAll: helpText({
@@ -316,6 +322,7 @@ function debugError(Discord, bot, error, errorMsg, fieldTitle, fieldContent) {
 exports.constObj = constObj;
 exports.cmdList = cmdList;
 exports.cmdTxt = cmdTxt;
+exports.dmCmds = dmCmds;
 exports.helpObj = helpObj;
 exports.rolesOutput = rolesOutput;
 exports.capitalise = capitalise;

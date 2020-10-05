@@ -5,7 +5,9 @@ module.exports = {
     name: modules.cmdList.pingCmd,
     description: modules.cmdTxt.pingDesc,
     execute(Discord, bot, msg, args) {
-        if (!msg.author.id === modules.constObj.devID) {
+        if (!msg.guild && msg.author.id !== modules.constObj.devID) return;
+
+        if (msg.author.id !== modules.constObj.devID) {
             bot.commands.get(modules.cmdList.helpCmd).execute(Discord, bot, msg, args);
             return;
         }
