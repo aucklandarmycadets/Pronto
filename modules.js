@@ -30,7 +30,7 @@ const constObj = {
     success: 0x45bb8a,
     error: 0xef4949,
     dateOutput: 'HHMM "h" ddd, dd mmm yy',
-    version: '1.8.0',
+    version: '1.8.1',
 };
 
 const cmdList = {
@@ -318,6 +318,15 @@ function debugError(Discord, bot, error, errorMsg, fieldTitle, fieldContent) {
     bot.channels.cache.get(constObj.debugID).send(debugEmbed);
 }
 
+function dmCmdError(Discord, bot, msg) {
+    const dmEmbed = new Discord.MessageEmbed()
+        .setAuthor(bot.user.tag, bot.user.avatarURL())
+        .setColor(constObj.error)
+        .setDescription(`That command cannot be used in DMs!`)
+        .setFooter(`${dateFormat(Date.now(), constObj.dateOutput)}`);
+    msg.author.send(dmEmbed);
+}
+
 exports.constObj = constObj;
 exports.cmdList = cmdList;
 exports.cmdTxt = cmdTxt;
@@ -329,3 +338,4 @@ exports.sendErrorEmbed = sendErrorEmbed;
 exports.formatAge = formatAge;
 exports.dmError = dmError;
 exports.debugError = debugError;
+exports.dmCmdError = dmCmdError;

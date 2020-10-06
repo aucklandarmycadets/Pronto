@@ -7,7 +7,10 @@ module.exports = {
     execute(Discord, bot, msg, args) {
         'use strict';
 
-        if (!msg.guild && msg.author.id !== modules.constObj.devID) return;
+        if (!msg.guild && msg.author.id !== modules.constObj.devID) {
+            modules.dmCmdError(Discord, bot, msg);
+            return;
+        }
 
         if (msg.author.id !== modules.constObj.devID) {
             bot.commands.get(modules.cmdList.helpCmd).execute(Discord, bot, msg, args);

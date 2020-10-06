@@ -56,12 +56,7 @@ function onMessage(msg) {
     if (msg.author.bot || !msg.content.startsWith(prefix)) return;
 
     if (!msg.guild && !modules.dmCmds.includes(msg.content)) {
-        const dmEmbed = new Discord.MessageEmbed()
-            .setAuthor(bot.user.tag, bot.user.avatarURL())
-            .setColor(modules.constObj.error)
-            .setDescription(`**Error: This command cannot be used in DMs!**`)
-            .setFooter(`${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
-        msg.author.send(dmEmbed);
+        modules.dmCmdError(Discord, bot, msg);
         return;
     }
 
