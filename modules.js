@@ -71,6 +71,7 @@ const cmdTxt = {
 const dmCmds = [
 	`${constObj.prefix}${cmdList.pingCmd}`,
 	`${constObj.prefix}${cmdList.uptimeCmd}`,
+	`${constObj.prefix}${cmdList.restartCmd}`,
 	`${constObj.prefix}${cmdList.helpCmd} ${cmdList.leaveCmd}`,
 ];
 

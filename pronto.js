@@ -35,6 +35,7 @@ const { constObj: {
 	adjPlus,
 } } = modules;
 
+let devDirectChannel;
 let debugChannel;
 let logChannel;
 let recruitingChannel;
@@ -63,6 +64,7 @@ bot.on('warn', info => onDevInfo(info, 'Warn'));
 function onReady() {
 	console.info(`Logged in as ${bot.user.tag}!`);
 	initialise(bot);
+	devDirectChannel = bot.users.cache.get(devID);
 	debugChannel = bot.channels.cache.get(debugID);
 	logChannel = bot.channels.cache.get(logID);
 	recruitingChannel = bot.channels.cache.get(recruitingID);
@@ -75,7 +77,7 @@ function onReady() {
 		.setAuthor(botUser.tag, botUser.avatarURL())
 		.setDescription('**Ready to go!**')
 		.setFooter(`${dateFormat(Date.now(), dateOutput)} | Pronto v${version}`);
-	debugChannel.send(readyEmbed);
+	devDirectChannel.send(readyEmbed);
 
 	botUser.setActivity(`the radio net | ${prefix}${helpCmd}`, { type: 'LISTENING' });
 

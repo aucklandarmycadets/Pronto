@@ -4,12 +4,12 @@ const dateFormat = require('dateformat');
 const modules = require('../modules');
 const { cmdList: { restartCmd, helpCmd } } = modules;
 const { cmdTxt: { restartDesc } } = modules;
-const { debugError, formatAge } = modules;
+const { debugError, formatAge, dmCmdError } = modules;
 const { constObj: {
 	version,
 	yellow,
 	devID,
-	debugID,
+	serverID,
 	dateOutput,
 	successEmoji,
 } } = modules;
@@ -21,15 +21,22 @@ module.exports = {
 		'use strict';
 
 		const { bot } = require('../pronto.js');
+		const authorID = msg.author.id;
 
-		if (msg.author.id !== devID) {
+		if (!msg.guild && authorID !== devID) {
+			dmCmdError(msg);
+			return;
+		}
+
+		if (authorID !== devID) {
 			bot.commands.get(helpCmd).execute(msg, args);
 			return;
 		}
 
 		else {
-			const debugChannel = bot.channels.cache.get(debugID);
-			const successEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === successEmoji);
+			const devDirectChannel = bot.users.cache.get(devID);
+			const server = bot.guilds.cache.get(serverID);
+			const successEmojiObj = server.emojis.cache.find(emoji => emoji.name === successEmoji);
 
 			msg.react(successEmojiObj).catch(error => debugError(error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
 
@@ -39,7 +46,7 @@ module.exports = {
 				.addField('Uptime', formatAge(bot.uptime))
 				.setColor(yellow)
 				.setFooter(`${dateFormat(msg.createdAt, dateOutput)} | Pronto v${version}`);
-			debugChannel.send(restartEmbed).then(() => process.exit());
+			devDirectChannel.send(restartEmbed).then(() => process.exit());
 		}
 	},
 };
