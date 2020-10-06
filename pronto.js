@@ -378,11 +378,18 @@ function onRoleChange(oldRole, newRole) {
 	logChannel.send(logEmbed);
 }
 
-function onMessageDelete(msg) {
+async function onMessageDelete(msg) {
+	if (msg.content.startsWith(prefix) || !msg.guild) return;
+
 	const messageAuthor = msg.author;
 	const lastMessage = msg.channel.lastMessage;
 
-	if (msg.content.startsWith(prefix)) return;
+	const fetchedLogs = await msg.guild.fetchAuditLogs({
+		limit: 1,
+		type: 'MESSAGE_DELETE',
+	});
+
+	const deletionLog = fetchedLogs.entries.first();
 
 	const logEmbed = new Discord.MessageEmbed()
 		.setColor(errorRed)
@@ -390,9 +397,17 @@ function onMessageDelete(msg) {
 		.setDescription(`**Message sent by ${messageAuthor} deleted in ${msg.channel}**\n${msg.content}`)
 		.setFooter(`Author: ${messageAuthor.id} | Message: ${msg.id} | ${dateFormat(Date.now(), dateOutput)}`);
 
-	if (lastMessage.content.includes(purgeCmd)) {
+	if (lastMessage && lastMessage.content.includes(purgeCmd)) {
 		lastMessage.delete().catch(error => debugError(error, `Error deleting message in ${msg.channel}.`, 'Message', msg.content));
 		logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted by ${lastMessage.author} in ${msg.channel}**\n${msg.content}`);
+	}
+
+	if (deletionLog) {
+		const { executor, target } = deletionLog;
+
+		if (target.id === messageAuthor.id) {
+			logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted by ${executor} in ${msg.channel}**\n${msg.content}`);
+		}
 	}
 
 	logChannel.send(logEmbed);
@@ -423,9 +438,9 @@ function onBulkDelete(msgs) {
 }
 
 function onMessageUpdate(oldMessage, newMessage) {
-	const messageAuthor = newMessage.author;
+	if (oldMessage.content === newMessage.content || messageAuthor.bot || !newMessage.guild) return;
 
-	if (oldMessage.content === newMessage.content || messageAuthor.bot) return;
+	const messageAuthor = newMessage.author;
 
 	const logEmbed = new Discord.MessageEmbed()
 		.setColor(yellow)
@@ -442,7 +457,6 @@ function onDevInfo(info, type) {
 
 	if (type === 'Error') {
 		const botUser = bot.user;
-		const devDirectChannel = bot.users.cache.get(devID);
 
 		const devEmbed = new Discord.MessageEmbed()
 			.setColor(errorRed)
