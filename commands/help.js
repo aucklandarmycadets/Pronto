@@ -19,13 +19,14 @@ const { constObj: {
 	prefix,
 	devID,
 	serverID,
-	grey,
 	yellow,
 	nonCadet,
 	tacPlus,
 	sgtPlus,
 	cqmsPlus,
 	adjPlus,
+	successEmoji,
+	errorEmoji,
 } } = modules;
 const { helpObj: {
 	helpAll,
@@ -63,6 +64,8 @@ module.exports = {
 			const server = bot.guilds.cache.get(serverID);
 
 			if (!server.available) {
+				const errorEmojiObj = server.emojis.cache.find(emoji => emoji.name === errorEmoji);
+				msg.react(errorEmojiObj).catch(error => debugError(error, `Error reacting to [message](${msg.url}) in DMs.`));
 				errorScaffold(messageAuthor, 'There was an error reaching the server, please try again later.', 'dm');
 				return;
 			}
@@ -70,13 +73,16 @@ module.exports = {
 			const memberRoles = server.members.cache.get(messageAuthor.id).roles.cache;
 
 			if (!memberRoles.some(roles => nonCadet.includes(roles.id))) {
+				const successEmojiObj = server.emojis.cache.find(emoji => emoji.name === successEmoji);
+				msg.react(successEmojiObj).catch(error => debugError(error, `Error reacting to [message](${msg.url}) in DMs.`));
+
 				helpEmbed.setTitle(`Command: ${prefix}${leaveCmd}`);
-				helpEmbed.setColor(grey);
+				helpEmbed.setColor(yellow);
 				helpEmbed.setDescription(helpLeave);
 				messageAuthor.send(helpEmbed);
 			}
 
-			else dmCmdError(msg, true);
+			else dmCmdError(msg);
 			return;
 		}
 
@@ -140,7 +146,7 @@ module.exports = {
 
 		function createHelpEmbed(command, text) {
 			helpEmbed.setTitle(`Command: ${prefix}${command}`);
-			helpEmbed.setColor(grey);
+			helpEmbed.setColor(yellow);
 			helpEmbed.setDescription(text);
 			helpEmbed.setFooter(`Requested by ${msg.member.displayName}`);
 			cmdHelp = true;

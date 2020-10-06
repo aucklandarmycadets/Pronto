@@ -10,7 +10,7 @@ function initialise(Client) {
 }
 
 const constObj = {
-	prefix: '-',
+	prefix: '!',
 	serverID: '285276130284404750',
 	devID: '192181901065322496',
 	debugID: '760745439225577482',
@@ -37,7 +37,7 @@ const constObj = {
 	success: 0x45bb8a,
 	error: 0xef4949,
 	dateOutput: 'HHMM "h" ddd, dd mmm yy',
-	version: '1.9.0',
+	version: '1.9.1',
 };
 
 const cmdList = {
@@ -297,15 +297,11 @@ function debugError(error, errorMsg, fieldTitle, fieldContent) {
 	embedScaffold(null, errorMsg, 'debug', fieldTitle, fieldContent);
 }
 
-function dmCmdError(msg, noPerms) {
-	for (const property in cmdList) {
-		if (msg.content.includes(cmdList[property]) && !noPerms) {
-			embedScaffold(msg.author, 'That command cannot be used in DMs!', 'dm');
-			return;
-		}
-	}
-
-	embedScaffold(msg.author, 'Invalid command.', 'dm');
+function dmCmdError(msg) {
+	const server = bot.guilds.cache.get(constObj.serverID);
+	const errorEmojiObj = server.emojis.cache.find(emoji => emoji.name === constObj.errorEmoji);
+	msg.react(errorEmojiObj).catch(error => debugError(error, `Error reacting to [message](${msg.url}) in DMs.`));
+	embedScaffold(msg.author, 'You either do not have access to that command, or it cannot be used in DMs.', 'dm');
 }
 
 function embedScaffold(destination, errorMsg, channel, fieldTitle, fieldContent) {
