@@ -7,7 +7,9 @@ module.exports = {
     name: modules.cmdList.leaveCmd,
     description: modules.cmdTxt.leaveDesc,
     execute(Discord, bot, msg, args) {
-        if (msg.member.roles.cache.some(roles=>modules.constObj.nonCadet.includes(roles.id))) {
+        'use strict';
+
+        if (msg.member.roles.cache.some(roles => modules.constObj.nonCadet.includes(roles.id))) {
             bot.commands.get(modules.cmdList.helpCmd).execute(Discord, bot, msg, args);
             return;
         }
@@ -20,17 +22,17 @@ module.exports = {
             msg.react(msg.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.successEmoji))
                 .catch(error => modules.debugError(Discord, bot, error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
 
-            attendanceEmbed = new Discord.MessageEmbed()
+            const attendanceEmbed = new Discord.MessageEmbed()
             .setTitle(leaveEmbedTitle)
             .setColor(modules.constObj.red)
             .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
             .setDescription(`${msg.author} has requested leave in ${msg.channel}`)
             .addFields(
                 { name: 'Date', value: dateFormat(msg.createdAt, modules.constObj.dateOutput) },
-                { name: 'Details', value: modules.capitalise(args.join(' ')) },
+                { name: 'Details', value: modules.capitalise(args.join(' ')) }
             );
 
-            dmEmbed = new Discord.MessageEmbed()
+            const dmEmbed = new Discord.MessageEmbed()
             .setTitle(leaveEmbedTitle)
             .setColor(modules.constObj.red)
             .setAuthor(msg.guild.name, msg.guild.iconURL())
@@ -38,7 +40,7 @@ module.exports = {
             .addFields(
                 { name: 'Date', value: dateFormat(msg.createdAt, modules.constObj.dateOutput) },
                 { name: 'Channel', value: msg.channel.toString() },
-                { name: 'Details', value: modules.capitalise(args.join(' ')) },
+                { name: 'Details', value: modules.capitalise(args.join(' ')) }
             );
 
             bot.channels.cache.get(modules.constObj.attendanceID).send(attendanceEmbed);

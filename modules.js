@@ -1,3 +1,5 @@
+'use strict';
+
 const dateFormat = require('dateformat');
 
 const constObj = {
@@ -28,7 +30,7 @@ const constObj = {
     success: 0x45bb8a,
     error: 0xef4949,
     dateOutput: 'HHMM "h" ddd, dd mmm yy',
-    version: '1.7.3'
+    version: '1.8.0',
 };
 
 const cmdList = {
@@ -74,32 +76,32 @@ const helpObj = {
     get helpCadet() {
         return this.helpAll + '\n' + helpText({
             [`${constObj.prefix}${cmdList.leaveCmd}`]: cmdTxt.leaveDesc,
-        }, '`', '` - ')
+        }, '`', '` - ');
     },
 
     get helpTacPlus() {
         return this.helpCadet + '\n' + helpText({
             [`${constObj.prefix}${cmdList.leaveForCmd}`]: cmdTxt.leaveForDesc,
             [`${constObj.prefix}${cmdList.attendanceCmd}`]: cmdTxt.attendanceDesc,
-        }, '`', '` - ')
+        }, '`', '` - ');
     },
 
     get helpSgtPlus() {
         return this.helpTacPlus + '\n' + helpText({
             [`${constObj.prefix}${cmdList.connectedCmd}`]: cmdTxt.connectedDesc,
-        }, '`', '` - ')
+        }, '`', '` - ');
     },
 
     get helpCqmsPlus() {
         return this.helpSgtPlus + '\n' + helpText({
             [`${constObj.prefix}${cmdList.archiveCmd}`]: cmdTxt.archiveDesc,
-        }, '`', '` - ')
+        }, '`', '` - ');
     },
 
     get helpAdjPlus() {
         return this.helpCqmsPlus + '\n' + helpText({
             [`${constObj.prefix}${cmdList.purgeCmd}`]: cmdTxt.purgeDesc,
-        }, '`', '` - ')
+        }, '`', '` - ');
     },
 
     get helpDev() {
@@ -107,7 +109,7 @@ const helpObj = {
             [`${constObj.prefix}${cmdList.pingCmd}`]: cmdTxt.pingDesc,
             [`${constObj.prefix}${cmdList.uptimeCmd}`]: cmdTxt.uptimeDesc,
             [`${constObj.prefix}${cmdList.restartCmd}`]: cmdTxt.restartDesc,
-        }, '`', '` - ') + '\n' + this.helpAdjPlus
+        }, '`', '` - ') + '\n' + this.helpAdjPlus;
     },
 
     helpPing: helpText({
@@ -197,18 +199,18 @@ const helpObj = {
 };
 
 function helpText(object, startFormat, endFormat) {
-    var helpString = '';
-    var objProperties = [];
-    var objValues = [];
+    let helpString = '';
+    let objProperties = [];
+    let objValues = [];
 
-    for (var property in object) {
-        var value = object[property];
-
-        objProperties.push(property);
-        objValues.push(value);
+    for (const property in object) {
+        if (object.hasOwnProperty(property)) {
+            objProperties.push(property);
+            objValues.push(object[property]);
+        }
     }
 
-    for (var i = 0; i < objProperties.length; i++) {
+    for (let i = 0; i < objProperties.length; i++) {
         helpString += `${startFormat}${objProperties[i]}${endFormat}${objValues[i]}`;
 
         if (i < (objProperties.length - 1)) {
@@ -217,40 +219,41 @@ function helpText(object, startFormat, endFormat) {
     }
 
     return helpString;
-};
+}
 
 function errorText(helpTxt, cmd) {
     return '\n\n' + helpTxt + '\n' + helpText({
         'Help Command': `${constObj.prefix}${cmdList.helpCmd} ${cmd}`,
-    }, '**', ':** ')
-};
+    }, '**', ':** ');
+}
 
 function rolesOutput(array, skipFormat) {
-    var rolesString = '';
-    var filteredArray = array.filter(function(role, index, arr) { 
-        return role !== constObj.administratorID && role.name !== '@everyone'; 
+    let rolesString = '';
+    const filteredArray = array.filter(function(role) {
+        return role !== constObj.administratorID && role.name !== '@everyone';
     });
 
-    for (index in filteredArray) {
-        if (index % 3 === 0) {
+    for (let i = 0; i < filteredArray.length; i++) {
+        if (i % 3 === 0) {
             rolesString += '\n';
         }
-        if (skipFormat) rolesString += `${filteredArray[index]} `;
-        else rolesString += `<@&${filteredArray[index]}> `;
+
+        if (skipFormat) rolesString += `${filteredArray[i]} `;
+        else rolesString += `<@&${filteredArray[i]}> `;
     }
 
     return rolesString;
-};
+}
 
 function capitalise(string) {
-    if (typeof string !== 'string') return ''
-    return string.charAt(0).toUpperCase() + string.slice(1)
-};
+    if (typeof string !== 'string') return '';
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 function sendErrorEmbed(Discord, bot, msg, errMsg, cmdErr, footer) {
     msg.react(msg.guild.emojis.cache.find(emoji => emoji.name === constObj.errorEmoji))
         .catch(error => debugError(Discord, bot, error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
-    errorEmbed = new Discord.MessageEmbed()
+    const errorEmbed = new Discord.MessageEmbed()
         .setColor(constObj.error)
         .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
         .setDescription(`${msg.author} ${errMsg} ${cmdErr}`);
@@ -258,15 +261,15 @@ function sendErrorEmbed(Discord, bot, msg, errMsg, cmdErr, footer) {
     if (footer) errorEmbed.setFooter(footer);
 
     msg.channel.send(errorEmbed);
-};
+}
 
 function formatAge(raw) {
-    var years = 0;
-    var months = 0;
-    var days = 0;
-    var hours = 0;
-    var minutes = 0;
-    var seconds = 0;
+    let years = 0;
+    let months = 0;
+    let days = 0;
+    let hours = 0;
+    let minutes = 0;
+    let seconds = 0;
 
     if (raw > 31556952000) years = Math.floor(raw / 31556952000);
     if ((raw - (years * 31556952000)) > 2629800000) months = Math.floor((raw - (years * 31556952000)) / 2629800000);
@@ -281,32 +284,28 @@ function formatAge(raw) {
     else if (hours) return `${hours} hrs, ${minutes} min, ${seconds} sec`;
     else if (minutes) return `${minutes} min, ${seconds} sec`;
     else return `${seconds} sec`;
-};
+}
 
 function dmError(Discord, bot, msg, debug) {
-    errorEmbed = new Discord.MessageEmbed()
+    const errorEmbed = new Discord.MessageEmbed()
         .setAuthor(bot.user.tag, bot.user.avatarURL())
         .setColor(constObj.error)
         .setDescription(`${msg.author} I can't send direct messages to you!`)
-        .addField('More Information', '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)')
         .setFooter(`${dateFormat(Date.now(), constObj.dateOutput)}`);
-    
+
     if (debug) {
-        errorEmbed = new Discord.MessageEmbed()
-            .setAuthor(bot.user.tag, bot.user.avatarURL())
-            .setColor(constObj.error)
-            .setDescription(`Error sending direct message to ${msg.mentions.members.first()}.`)
-            .setFooter(`${dateFormat(Date.now(), constObj.dateOutput)}`);
+        errorEmbed.setDescription(`Error sending direct message to ${msg.mentions.members.first()}.`);
         bot.channels.cache.get(constObj.debugID).send(errorEmbed);
         return;
     }
 
+    errorEmbed.addField('More Information', '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)');
     msg.channel.send(errorEmbed);
-};
+}
 
 function debugError(Discord, bot, error, errorMsg, fieldTitle, fieldContent) {
     console.error(error.stack);
-    debugEmbed = new Discord.MessageEmbed()
+    const debugEmbed = new Discord.MessageEmbed()
         .setAuthor(bot.user.tag, bot.user.avatarURL())
         .setColor(constObj.error)
         .setDescription(`${errorMsg}`)

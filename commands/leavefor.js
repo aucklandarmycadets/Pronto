@@ -7,7 +7,9 @@ module.exports = {
     name: modules.cmdList.leaveForCmd,
     description: modules.cmdTxt.leaveForDesc,
     execute(Discord, bot, msg, args) {
-        if (!msg.member.roles.cache.some(roles=>modules.constObj.tacPlus.includes(roles.id))) {
+        'use strict';
+
+        if (!msg.member.roles.cache.some(roles => modules.constObj.tacPlus.includes(roles.id))) {
             bot.commands.get(modules.cmdList.helpCmd).execute(Discord, bot, msg, args);
             return;
         }
@@ -32,13 +34,11 @@ module.exports = {
             msg.react(msg.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.successEmoji))
                 .catch(error => modules.debugError(Discord, bot, error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
 
-            mentionIndex = args.indexOf(`<@!${msg.mentions.members.first().user.id}>`);
+            const mentionIndex = args.indexOf(`<@!${msg.mentions.members.first().user.id}>`);
 
-            if (mentionIndex > -1) {
-                mention = args.splice(mentionIndex, 1);
-            }
+            if (mentionIndex > -1) args.splice(mentionIndex, 1);
 
-            attendanceEmbed = new Discord.MessageEmbed()
+            const attendanceEmbed = new Discord.MessageEmbed()
                 .setTitle(leaveForEmbedTitle)
                 .setColor(modules.constObj.red)
                 .setAuthor(msg.mentions.members.first().displayName, msg.mentions.members.first().user.displayAvatarURL())
@@ -46,10 +46,10 @@ module.exports = {
                 .addFields(
                     { name: 'Date', value: dateFormat(msg.createdAt, modules.constObj.dateOutput) },
                     { name: 'Absentee', value: msg.mentions.members.first() },
-                    { name: 'Details', value: modules.capitalise(args.join(' ')) },
+                    { name: 'Details', value: modules.capitalise(args.join(' ')) }
                 );
-            
-            dmEmbed = new Discord.MessageEmbed()
+
+            const dmEmbed = new Discord.MessageEmbed()
                 .setTitle(leaveForEmbedTitle)
                 .setColor(modules.constObj.red)
                 .setAuthor(msg.guild.name, msg.guild.iconURL())
@@ -57,10 +57,10 @@ module.exports = {
                 .addFields(
                     { name: 'Date', value: dateFormat(msg.createdAt, modules.constObj.dateOutput) },
                     { name: 'Channel', value: msg.channel.toString() },
-                    { name: 'Details', value: modules.capitalise(args.join(' ')) },
+                    { name: 'Details', value: modules.capitalise(args.join(' ')) }
                 );
 
-            absenteeEmbed = new Discord.MessageEmbed()
+            const absenteeEmbed = new Discord.MessageEmbed()
                 .setTitle(leaveForEmbedTitle)
                 .setColor(modules.constObj.red)
                 .setAuthor(msg.guild.name, msg.guild.iconURL())
@@ -68,7 +68,7 @@ module.exports = {
                 .addFields(
                     { name: 'Date', value: dateFormat(msg.createdAt, modules.constObj.dateOutput) },
                     { name: 'Channel', value: msg.channel.toString() },
-                    { name: 'Details', value: modules.capitalise(args.join(' ')) },
+                    { name: 'Details', value: modules.capitalise(args.join(' ')) }
                 )
                 .setFooter(`Reply with ${modules.constObj.prefix}${modules.cmdList.helpCmd} ${modules.cmdList.leaveCmd} to learn how to request leave for yourself.`);
 

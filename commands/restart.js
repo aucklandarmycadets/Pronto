@@ -5,6 +5,8 @@ module.exports = {
     name: modules.cmdList.restartCmd,
     description: modules.cmdTxt.restartDesc,
     execute(Discord, bot, msg, args) {
+        'use strict';
+
         if (msg.author.id !== modules.constObj.devID) {
             bot.commands.get(modules.cmdList.helpCmd).execute(Discord, bot, msg, args);
             return;
@@ -14,7 +16,7 @@ module.exports = {
             msg.react(msg.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.successEmoji))
                 .catch(error => modules.debugError(Discord, bot, error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
 
-            restartEmbed = new Discord.MessageEmbed()
+            const restartEmbed = new Discord.MessageEmbed()
                 .setAuthor(bot.user.tag, bot.user.avatarURL())
                 .setDescription('**Restarting...**')
                 .addField('Uptime', modules.formatAge(bot.uptime))
