@@ -217,8 +217,8 @@ function onVoiceUpdate(oldState, newState) {
         }
 
         else if (oldID === vcID && newID !== vcID) {
-            textChannel.updateOverwrite(newState.id, { VIEW_CHANNEL: false, SEND_MESSAGES: false })
-                .then((newState, oldState) => {
+            textChannel.permissionOverwrites.get(newState.id).delete()
+                .then(() => {
                     const leaveEmbed = new Discord.MessageEmbed()
                         .setColor(modules.constObj.error)
                         .setAuthor(newState.member.displayName, newState.member.user.displayAvatarURL())
@@ -354,16 +354,16 @@ function onMessageDelete(msg) {
 function onBulkDelete(msgs) {
     const logEmbed = new Discord.MessageEmbed();
 
-    if (msgs.first().channel.lastMessage.content.includes(modules.cmdList.purgeCmd)) {
+    if (!msgs.first().channel.lastMessage) {
+        logEmbed.setAuthor(msgs.first().guild.name, msgs.first().guild.iconURL());
+        logEmbed.setDescription(`**${msgs.array().length} messages bulk deleted in ${msgs.first().channel}**`);
+    }
+
+    else if (msgs.first().channel.lastMessage.content.includes(modules.cmdList.purgeCmd)) {
         msgs.first().channel.lastMessage.delete().catch(error => modules.debugError(Discord, bot, error, `Error deleting message in ${msgs.first().channel}.`, 'Message', msgs.first().channel.lastMessage.content));
         
         logEmbed.setAuthor(msgs.first().author.tag, msgs.first().author.displayAvatarURL());
         logEmbed.setDescription(`**${msgs.array().length} messages bulk deleted by ${msgs.first().channel.lastMessage.author} in ${msgs.first().channel}**`);
-    }
-
-    else {
-        logEmbed.setAuthor(msgs.first().guild.name, msgs.first().guild.iconURL());
-        logEmbed.setDescription(`**${msgs.array().length} messages bulk deleted in ${msgs.first().channel}**`);
     }
 
     logEmbed.setColor(modules.constObj.error);
