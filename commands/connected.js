@@ -5,7 +5,9 @@ module.exports = {
     name: modules.cmdList.connectedCmd,
     description: modules.cmdTxt.connectedDesc,
     execute(Discord, bot, msg, args) {
-        if (!msg.member.roles.cache.some(roles=>modules.constObj.sgtPlus.includes(roles.id))) {
+        'use strict';
+
+        if (!msg.member.roles.cache.some(roles => modules.constObj.sgtPlus.includes(roles.id))) {
             bot.commands.get(modules.cmdList.helpCmd).execute(Discord, bot, msg, args);
             return;
         }
@@ -23,9 +25,9 @@ module.exports = {
         }
 
         else {
-            connectedMembers = [];
+            let connectedMembers = [];
 
-            for (const [index, member] of Object.entries(msg.mentions.channels.first().members.array())) {
+            for (const [unused, member] of Object.entries(msg.mentions.channels.first().members.array())) {
                 connectedMembers.push(member.toString());
             }
 
@@ -37,7 +39,7 @@ module.exports = {
             msg.react(msg.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.successEmoji))
                 .catch(error => modules.debugError(Discord, bot, error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
 
-            connectedEmbed = new Discord.MessageEmbed()
+            const connectedEmbed = new Discord.MessageEmbed()
                 .setTitle(`Members Connected to #${msg.mentions.channels.first().name}`)
                 .setColor(modules.constObj.success)
                 .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())

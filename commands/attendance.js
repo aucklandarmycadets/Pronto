@@ -5,7 +5,9 @@ module.exports = {
     name: modules.cmdList.attendanceCmd,
     description: modules.cmdTxt.attendanceDesc,
     execute(Discord, bot, msg, args) {
-        if (!msg.member.roles.cache.some(roles=>modules.constObj.tacPlus.includes(roles.id))) {
+        'use strict';
+
+        if (!msg.member.roles.cache.some(roles => modules.constObj.tacPlus.includes(roles.id))) {
             bot.commands.get(modules.cmdList.helpCmd).execute(Discord, bot, msg, args);
             return;
         }
@@ -17,17 +19,17 @@ module.exports = {
         else {
             msg.delete().catch(error => modules.debugError(Discord, bot, error, `Error deleting message in ${msg.channel}.`, 'Message', msg.content));
 
-            formationColour = modules.constObj.grey;
-            formationName = msg.guild.name;
+            let formationColour = modules.constObj.grey;
+            let formationName = msg.guild.name;
 
-            for (const [index, role] of Object.entries(msg.member.roles.cache.array())) {
+            for (const [unused, role] of Object.entries(msg.member.roles.cache.array())) {
                 if (modules.constObj.formations.includes(role.id)) {
                     formationColour = role.color;
                     formationName = role.name;
                 }
             }
 
-            attendanceEmbed = new Discord.MessageEmbed()
+            const attendanceEmbed = new Discord.MessageEmbed()
                 .setColor(formationColour)
                 .setAuthor(`${formationName} (${msg.member.displayName})`, msg.guild.iconURL())
                 .setDescription(`${args.join(' ')}`)

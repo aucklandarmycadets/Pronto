@@ -5,6 +5,8 @@ module.exports = {
     name: modules.cmdList.uptimeCmd,
     description: modules.cmdTxt.uptimeDesc,
     execute(Discord, bot, msg, args) {
+        'use strict';
+
         if (!msg.guild && msg.author.id !== modules.constObj.devID) return;
 
         if (msg.author.id !== modules.constObj.devID) {
@@ -13,7 +15,7 @@ module.exports = {
         }
 
         else {
-            uptimeEmbed = new Discord.MessageEmbed()
+            const uptimeEmbed = new Discord.MessageEmbed()
                 .setColor(modules.constObj.success)
                 .setFooter(`${modules.formatAge(bot.uptime)} | ${dateFormat(msg.createdAt, modules.constObj.dateOutput)} | Pronto v${modules.constObj.version}`);
             msg.channel.send(uptimeEmbed);

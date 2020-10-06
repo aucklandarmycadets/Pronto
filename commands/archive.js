@@ -5,7 +5,9 @@ module.exports = {
     name: modules.cmdList.archiveCmd,
     description: modules.cmdTxt.archiveDesc,
     execute(Discord, bot, msg, args) {
-        if (!msg.member.roles.cache.some(roles=>modules.constObj.cqmsPlus.includes(roles.id))) {
+        'use strict';
+
+        if (!msg.member.roles.cache.some(roles => modules.constObj.cqmsPlus.includes(roles.id))) {
             bot.commands.get(modules.cmdList.helpCmd).execute(Discord, bot, msg, args);
             return;
         }
@@ -32,14 +34,14 @@ module.exports = {
                     msg.react(msg.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.successEmoji))
                         .catch(error => modules.debugError(Discord, bot, error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
 
-                    archiveEmbed = new Discord.MessageEmbed()
+                    const archiveEmbed = new Discord.MessageEmbed()
                         .setTitle('Channel Archived 🔒')
                         .setColor(modules.constObj.error)
                         .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
                         .setFooter(`${dateFormat(msg.createdAt, modules.constObj.dateOutput)}`);
                     bot.channels.cache.get(msg.mentions.channels.first().id).send(archiveEmbed);
 
-                    logEmbed = new Discord.MessageEmbed()
+                    const logEmbed = new Discord.MessageEmbed()
                         .setColor(modules.constObj.yellow)
                         .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
                         .setDescription(`**Channel ${msg.mentions.channels.first()} archived by ${msg.author}**`)
@@ -50,13 +52,13 @@ module.exports = {
                     msg.react(msg.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.errorEmoji))
                         .catch(error => modules.debugError(Discord, bot, error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
 
-                    errorEmbed = new Discord.MessageEmbed()
+                    const errorEmbed = new Discord.MessageEmbed()
                         .setAuthor(bot.user.tag, bot.user.avatarURL())
                         .setColor(modules.constObj.error)
                         .setDescription(`${msg.author} Error archiving ${msg.mentions.channels.first()}.`)
                         .setFooter(`${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
                     msg.channel.send(errorEmbed);
-                    
+
                     modules.debugError(Discord, bot, error, `Error archiving ${msg.mentions.channels.first()}.`);
                 });
         }
