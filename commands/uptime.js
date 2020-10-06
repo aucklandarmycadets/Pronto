@@ -8,7 +8,7 @@ module.exports = {
         'use strict';
 
         if (!msg.guild && msg.author.id !== modules.constObj.devID) {
-            modules.dmCmdError(Discord, bot, msg);
+            modules.dmCmdError(Discord, bot, msg, true);
             return;
         }
 

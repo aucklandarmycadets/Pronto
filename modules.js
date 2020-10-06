@@ -287,44 +287,38 @@ function formatAge(raw) {
 }
 
 function dmError(Discord, bot, msg, debug) {
-    const errorEmbed = new Discord.MessageEmbed()
-        .setAuthor(bot.user.tag, bot.user.avatarURL())
-        .setColor(constObj.error)
-        .setDescription(`${msg.author} I can't send direct messages to you!`)
-        .setFooter(`${dateFormat(Date.now(), constObj.dateOutput)}`);
-
-    if (debug) {
-        errorEmbed.setDescription(`Error sending direct message to ${msg.mentions.members.first()}.`);
-        bot.channels.cache.get(constObj.debugID).send(errorEmbed);
-        return;
-    }
-
-    errorEmbed.addField('More Information', '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)');
-    msg.channel.send(errorEmbed);
+    if (debug) embedScaffold(Discord, bot, msg, `Error sending direct message to ${msg.mentions.members.first()}.`, 'debug', 'More Information', '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)');
+    else embedScaffold(Discord, bot, msg, `${msg.author} I can't send direct messages to you!`, 'msg', 'More Information', '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)');
 }
 
 function debugError(Discord, bot, error, errorMsg, fieldTitle, fieldContent) {
     console.error(error.stack);
-    const debugEmbed = new Discord.MessageEmbed()
-        .setAuthor(bot.user.tag, bot.user.avatarURL())
-        .setColor(constObj.error)
-        .setDescription(`${errorMsg}`)
-        .setFooter(`${dateFormat(Date.now(), constObj.dateOutput)}`);
-
-    if (fieldTitle) {
-        debugEmbed.addField(fieldTitle, fieldContent);
-    }
-
-    bot.channels.cache.get(constObj.debugID).send(debugEmbed);
+    embedScaffold(Discord, bot, null, errorMsg, 'debug', fieldTitle, fieldContent);
 }
 
-function dmCmdError(Discord, bot, msg) {
-    const dmEmbed = new Discord.MessageEmbed()
+function dmCmdError(Discord, bot, msg, noPerms) {
+    for (const property in cmdList) {
+        if (msg.content.includes(cmdList[property]) && !noPerms) {
+            embedScaffold(Discord, bot, msg, 'That command cannot be used in DMs!', 'dm');
+            return;
+        }
+    }
+
+    embedScaffold(Discord, bot, msg, 'Invalid command.', 'dm');
+}
+
+function embedScaffold(Discord, bot, msg, errorMsg, channel, fieldTitle, fieldContent) {
+    const embed = new Discord.MessageEmbed()
         .setAuthor(bot.user.tag, bot.user.avatarURL())
         .setColor(constObj.error)
-        .setDescription(`That command cannot be used in DMs!`)
+        .setDescription(errorMsg)
         .setFooter(`${dateFormat(Date.now(), constObj.dateOutput)}`);
-    msg.author.send(dmEmbed);
+
+    if (fieldTitle) embed.addField(fieldTitle, fieldContent);
+
+    if (channel === 'dm') msg.author.send(embed);
+    else if (channel === 'debug') bot.channels.cache.get(constObj.debugID).send(embed);
+    else if (channel === 'msg') msg.channel.send(embed);
 }
 
 exports.constObj = constObj;
@@ -339,3 +333,4 @@ exports.formatAge = formatAge;
 exports.dmError = dmError;
 exports.debugError = debugError;
 exports.dmCmdError = dmCmdError;
+exports.errorScaffold = embedScaffold;

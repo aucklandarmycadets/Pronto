@@ -52,13 +52,7 @@ module.exports = {
                     msg.react(msg.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.errorEmoji))
                         .catch(error => modules.debugError(Discord, bot, error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
 
-                    const errorEmbed = new Discord.MessageEmbed()
-                        .setAuthor(bot.user.tag, bot.user.avatarURL())
-                        .setColor(modules.constObj.error)
-                        .setDescription(`${msg.author} Error archiving ${msg.mentions.channels.first()}.`)
-                        .setFooter(`${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
-                    msg.channel.send(errorEmbed);
-
+                    modules.errorScaffold(Discord, bot, msg, `${msg.author} Error archiving ${msg.mentions.channels.first()}.`, 'msg');
                     modules.debugError(Discord, bot, error, `Error archiving ${msg.mentions.channels.first()}.`);
                 });
         }

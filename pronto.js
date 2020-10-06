@@ -400,13 +400,7 @@ function onDevInfo(info, type) {
 function purgeChannel(messages, msg, collector) {
     msg.channel.bulkDelete(messages)
         .catch(error => {
-            const errorEmbed = new Discord.MessageEmbed()
-                .setAuthor(bot.user.tag, bot.user.avatarURL())
-                .setColor(modules.constObj.error)
-                .setDescription(`Error purging ${msg.channel}.`)
-                .setFooter(`${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
-            msg.channel.send(errorEmbed);
-
+            modules.errorScaffold(Discord, bot, msg, `Error purging ${msg.channel}.`, 'msg');
             modules.debugError(Discord, bot, error, `Error purging ${msg.channel}.`);
         });
     collector.stop();

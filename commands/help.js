@@ -1,4 +1,3 @@
-const dateFormat = require('dateformat');
 const modules = require('../modules');
 const prefix = modules.constObj.prefix;
 
@@ -19,12 +18,7 @@ module.exports = {
 
         if (!msg.guild && args[0] === modules.cmdList.leaveCmd) {
             if (!bot.guilds.cache.get(modules.constObj.serverID).available) {
-                const errorEmbed = new Discord.MessageEmbed()
-                    .setAuthor(bot.user.tag, bot.user.avatarURL())
-                    .setColor(modules.constObj.error)
-                    .setDescription(`There was an error reaching the server, please try again later.`)
-                    .setFooter(`${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
-                msg.author.send(errorEmbed);
+                modules.errorScaffold(Discord, bot, msg, `There was an error reaching the server, please try again later.`, 'dm');
                 return;
             }
 
@@ -37,8 +31,8 @@ module.exports = {
                 msg.author.send(helpEmbed);
             }
 
-            else modules.dmCmdError(Discord, bot, msg);
-            
+            else modules.dmCmdError(Discord, bot, msg, true);
+
             return;
         }
 
