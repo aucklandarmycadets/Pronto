@@ -28,7 +28,7 @@ const constObj = {
     success: 0x45bb8a,
     error: 0xef4949,
     dateOutput: 'HHMM "h" ddd, dd mmm yy',
-    version: '1.7.2'
+    version: '1.7.3'
 };
 
 const cmdList = {
@@ -68,7 +68,7 @@ const dmCmds = [
 const helpObj = {
     helpAll: helpText({
         [`${constObj.prefix}${cmdList.helpCmd}`]: cmdTxt.helpDesc,
-        [`${constObj.prefix}${cmdList.helpCmd} (command)`]: cmdTxt.helpArg,
+        [`${constObj.prefix}${cmdList.helpCmd} [command]`]: cmdTxt.helpArg,
     }, '`', '` - '),
 
     get helpCadet() {
@@ -127,47 +127,47 @@ const helpObj = {
 
     helpHelp: helpText({
         'Description': cmdTxt.helpGeneric,
-        'Usage': `${constObj.prefix}${cmdList.helpCmd} (command)`,
-        'Example': `${constObj.prefix}${cmdList.helpCmd}, ${constObj.prefix}${cmdList.helpCmd} ${cmdList.leaveCmd}`,
+        'Usage': `${constObj.prefix}${cmdList.helpCmd} [command]`,
+        'Examples': `\n${constObj.prefix}${cmdList.helpCmd}\n${constObj.prefix}${cmdList.helpCmd} ${cmdList.leaveCmd}`,
     }, '**', ':** '),
 
     helpLeave: helpText({
         'Description': cmdTxt.leaveDesc,
-        'Usage': `${constObj.prefix}${cmdList.leaveCmd} [dates] [activity] [reason] (additional remarks)`,
+        'Usage': `${constObj.prefix}${cmdList.leaveCmd} <dates> <activity> <reason> [additional remarks]`,
         'Example': `${constObj.prefix}${cmdList.leaveCmd} 01 Jan for Parade Night due to an appointment`,
     }, '**', ':** '),
 
     helpLeaveFor: helpText({
         'Description': cmdTxt.leaveForDesc,
-        'Usage': `${constObj.prefix}${cmdList.leaveForCmd} [user] [dates] [activity] [reason] (additional remarks)`,
+        'Usage': `${constObj.prefix}${cmdList.leaveForCmd} <user> <dates> <activity> <reason> [additional remarks]`,
         'Example': `${constObj.prefix}${cmdList.leaveForCmd} <@${constObj.devID}> 01 Jan for Parade Night due to an appointment`,
         'Allowed Roles': rolesOutput(constObj.tacPlus),
     }, '**', ':** '),
 
     helpAttendance: helpText({
         'Description': cmdTxt.attendanceDesc,
-        'Usage': `${constObj.prefix}${cmdList.attendanceCmd} [message]`,
+        'Usage': `${constObj.prefix}${cmdList.attendanceCmd} <message>`,
         'Allowed Roles': rolesOutput(constObj.tacPlus),
     }, '**', ':** '),
 
     helpConnected: helpText({
         'Description': cmdTxt.connectedDesc,
-        'Usage': `${constObj.prefix}${cmdList.connectedCmd} [voice channel]`,
+        'Usage': `${constObj.prefix}${cmdList.connectedCmd} <voice channel>`,
         'Example': `${constObj.prefix}${cmdList.connectedCmd} <#${constObj.classroomID}>`,
         'Allowed Roles': rolesOutput(constObj.sgtPlus),
     }, '**', ':** '),
 
     helpArchive: helpText({
         'Description': cmdTxt.archiveDesc,
-        'Usage': `${constObj.prefix}${cmdList.archiveCmd} [text channel]`,
+        'Usage': `${constObj.prefix}${cmdList.archiveCmd} <text channel>`,
         'Example': `${constObj.prefix}${cmdList.archiveCmd} <#${constObj.tacticalID}>`,
         'Allowed Roles': rolesOutput(constObj.cqmsPlus),
     }, '**', ':** '),
 
     helpPurge: helpText({
         'Description': cmdTxt.purgeDesc,
-        'Usage': `\n${constObj.prefix}${cmdList.purgeCmd} [count]\n!purge [user] [count]`,
-        'Example': `\n${constObj.prefix}${cmdList.purgeCmd} 10\n!purge <@${constObj.devID}> 5`,
+        'Usage': `${constObj.prefix}${cmdList.purgeCmd} <count> [user]`,
+        'Examples': `\n${constObj.prefix}${cmdList.purgeCmd} 10\n${constObj.prefix}${cmdList.purgeCmd} 5 <@${constObj.devID}>`,
         'Allowed Roles': rolesOutput(constObj.adjPlus),
     }, '**', ':** '),
 
