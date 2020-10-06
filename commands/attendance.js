@@ -1,29 +1,47 @@
+const Discord = require('discord.js');
 const dateFormat = require('dateformat');
+
 const modules = require('../modules');
+const { cmdList: { attendanceCmd, helpCmd } } = modules;
+const { cmdTxt: { attendanceDesc } } = modules;
+const { helpObj: { errorAttendance } } = modules;
+const { sendErrorEmbed, debugError } = modules;
+const { constObj: {
+	grey,
+	dateOutput,
+	attendanceID,
+	tacPlus,
+	formations,
+} } = modules;
 
 module.exports = {
-	name: modules.cmdList.attendanceCmd,
-	description: modules.cmdTxt.attendanceDesc,
-	execute(Discord, bot, msg, args) {
+	name: attendanceCmd,
+	description: attendanceDesc,
+	execute(msg, args) {
 		'use strict';
 
-		if (!msg.member.roles.cache.some(roles => modules.constObj.tacPlus.includes(roles.id))) {
-			bot.commands.get(modules.cmdList.helpCmd).execute(Discord, bot, msg, args);
+		const { bot } = require('../pronto.js');
+		const memberRoles = msg.member.roles.cache;
+
+		if (!memberRoles.some(roles => tacPlus.includes(roles.id))) {
+			bot.commands.get(helpCmd).execute(msg, args);
 			return;
 		}
 
 		if (args.length === 0) {
-			modules.sendErrorEmbed(Discord, bot, msg, 'You must enter a message.', modules.helpObj.errorAttendance);
+			sendErrorEmbed(msg, 'You must enter a message.', errorAttendance);
 		}
 
 		else {
-			msg.delete().catch(error => modules.debugError(Discord, bot, error, `Error deleting message in ${msg.channel}.`, 'Message', msg.content));
+			const attendanceChannel = bot.channels.cache.get(attendanceID);
 
-			let formationColour = modules.constObj.grey;
+			msg.delete().catch(error => debugError(error, `Error deleting message in ${msg.channel}.`, 'Message', msg.content));
+
+			let formationColour = grey;
 			let formationName = msg.guild.name;
 
-			for (const [, role] of Object.entries(msg.member.roles.cache.array())) {
-				if (modules.constObj.formations.includes(role.id)) {
+			for (const [, role] of Object.entries(memberRoles.array())) {
+				if (formations.includes(role.id)) {
 					formationColour = role.color;
 					formationName = role.name;
 				}
@@ -33,9 +51,9 @@ module.exports = {
 				.setColor(formationColour)
 				.setAuthor(`${formationName} (${msg.member.displayName})`, msg.guild.iconURL())
 				.setDescription(`${args.join(' ')}`)
-				.setFooter(`${dateFormat(msg.createdAt, modules.constObj.dateOutput)}`);
+				.setFooter(`${dateFormat(msg.createdAt, dateOutput)}`);
 
-			bot.channels.cache.get(modules.constObj.attendanceID).send(attendanceEmbed);
+			attendanceChannel.send(attendanceEmbed);
 			msg.channel.send(attendanceEmbed);
 		}
 	},

@@ -1,45 +1,54 @@
 const modules = require('../modules');
+const { cmdList: { purgeCmd, helpCmd } } = modules;
+const { cmdTxt: { purgeDesc } } = modules;
+const { helpObj: { errorPurge } } = modules;
+const { sendErrorEmbed, debugError, errorScaffold } = modules;
+const { constObj: { adjPlus, errorEmoji } } = modules;
 
 module.exports = {
-	name: modules.cmdList.purgeCmd,
-	description: modules.cmdTxt.purgeDesc,
-	execute(Discord, bot, msg, args) {
+	name: purgeCmd,
+	description: purgeDesc,
+	execute(msg, args) {
 		'use strict';
 
-		if (!msg.member.roles.cache.some(roles => modules.constObj.adjPlus.includes(roles.id))) {
-			bot.commands.get(modules.cmdList.helpCmd).execute(Discord, bot, msg, args);
+		const { bot } = require('../pronto.js');
+		const memberRoles = msg.member.roles.cache;
+		const userMentions = msg.mentions.users;
+
+		if (!memberRoles.some(roles => adjPlus.includes(roles.id))) {
+			bot.commands.get(helpCmd).execute(msg, args);
 			return;
 		}
 
 		if (args.length === 0) {
-			modules.sendErrorEmbed(Discord, bot, msg, 'Insufficient arguments.', modules.helpObj.errorPurge);
+			sendErrorEmbed(msg, 'Insufficient arguments.', errorPurge);
 			return;
 		}
 
-		else if (msg.mentions.members.size > 1) {
-			modules.sendErrorEmbed(Discord, bot, msg, 'You cannot purge multiple users simultaneously.', modules.helpObj.errorPurge);
+		else if (userMentions.size > 1) {
+			sendErrorEmbed(msg, 'You cannot purge multiple users simultaneously.', errorPurge);
 			return;
 		}
 
 
 		else if (args.length > 2) {
-			modules.sendErrorEmbed(Discord, bot, msg, 'Too many arguments.', modules.helpObj.errorPurge);
+			sendErrorEmbed(msg, 'Too many arguments.', errorPurge);
 			return;
 		}
 
-		const user = msg.mentions.users.first();
+		const user = userMentions.first();
 		const purgeCount = Number(args[0]) ? Number(args[0]) : Number(args[1]);
 
 		if (!purgeCount && !user) {
-			modules.sendErrorEmbed(Discord, bot, msg, 'Invalid input.', modules.helpObj.errorPurge);
+			sendErrorEmbed(msg, 'Invalid input.', errorPurge);
 		}
 
 		else if (!purgeCount) {
-			modules.sendErrorEmbed(Discord, bot, msg, 'You must specify an amount of messages to delete.', modules.helpObj.errorPurge);
+			sendErrorEmbed(msg, 'You must specify an amount of messages to delete.', errorPurge);
 		}
 
 		if (purgeCount > 100) {
-			modules.sendErrorEmbed(Discord, bot, msg, 'You cannot purge more than 100 messages at a time.', modules.helpObj.errorPurge);
+			sendErrorEmbed(msg, 'You cannot purge more than 100 messages at a time.', errorPurge);
 		}
 
 		else {
@@ -56,11 +65,13 @@ module.exports = {
 
 					msg.channel.bulkDelete(messages)
 						.catch(error => {
-							msg.react(msg.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.errorEmoji))
-								.catch(reactError => modules.debugError(Discord, bot, reactError, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
+							const errorEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === errorEmoji);
 
-							modules.errorScaffold(Discord, bot, msg, `${msg.author} Error purging ${purgeCount} messages.`, 'msg');
-							modules.debugError(Discord, bot, error, `Error purging ${purgeCount} messages in ${msg.channel}.`);
+							msg.react(errorEmojiObj)
+								.catch(reactError => debugError(reactError, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
+
+							errorScaffold(msg.channel, `${msg.author} Error purging ${purgeCount} messages.`, 'msg');
+							debugError(error, `Error purging ${purgeCount} messages in ${msg.channel}.`);
 						});
 				});
 		}

@@ -1,59 +1,85 @@
+const Discord = require('discord.js');
 const dateFormat = require('dateformat');
+
 const modules = require('../modules');
+const { cmdList: { archiveCmd, helpCmd } } = modules;
+const { cmdTxt: { archiveDesc } } = modules;
+const { helpObj: { errorArchive } } = modules;
+const { sendErrorEmbed, debugError, errorScaffold } = modules;
+const { constObj: {
+	error: errorRed,
+	yellow,
+	dateOutput,
+	archivedID,
+	logID,
+	cqmsPlus,
+	successEmoji,
+	errorEmoji,
+} } = modules;
 
 module.exports = {
-	name: modules.cmdList.archiveCmd,
-	description: modules.cmdTxt.archiveDesc,
-	execute(Discord, bot, msg, args) {
+	name: archiveCmd,
+	description: archiveDesc,
+	execute(msg, args) {
 		'use strict';
 
-		if (!msg.member.roles.cache.some(roles => modules.constObj.cqmsPlus.includes(roles.id))) {
-			bot.commands.get(modules.cmdList.helpCmd).execute(Discord, bot, msg, args);
+		const { bot } = require('../pronto.js');
+		const memberRoles = msg.member.roles.cache;
+		const channelMentions = msg.mentions.channels;
+		const numChannelMentions = channelMentions.size;
+		const channel = channelMentions.first();
+
+		if (!memberRoles.some(roles => cqmsPlus.includes(roles.id))) {
+			bot.commands.get(helpCmd).execute(msg, args);
 			return;
 		}
 
-		if (msg.mentions.channels.size === 0) {
-			modules.sendErrorEmbed(Discord, bot, msg, 'You must specify a text channel.', modules.helpObj.errorArchive);
+		if (numChannelMentions === 0) {
+			sendErrorEmbed(msg, 'You must specify a text channel.', errorArchive);
 		}
 
-		else if (msg.mentions.channels.some(mention => mention.type !== 'text')) {
-			modules.sendErrorEmbed(Discord, bot, msg, 'You can only archive text channels.', modules.helpObj.errorArchive);
+		else if (channelMentions.some(mention => mention.type !== 'text')) {
+			sendErrorEmbed(msg, 'You can only archive text channels.', errorArchive);
 		}
 
-		else if (msg.mentions.channels.size > 1) {
-			modules.sendErrorEmbed(Discord, bot, msg, 'You must archive channels individually.', modules.helpObj.errorArchive);
+		else if (numChannelMentions > 1) {
+			sendErrorEmbed(msg, 'You must archive channels individually.', errorArchive);
 		}
 
-		else if (bot.channels.cache.get(msg.mentions.channels.first().id).parentID === modules.constObj.archivedID) {
-			modules.sendErrorEmbed(Discord, bot, msg, 'Channel is already archived.', modules.helpObj.errorArchive);
+		else if (bot.channels.cache.get(channel.id).parentID === archivedID) {
+			sendErrorEmbed(msg, 'Channel is already archived.', errorArchive);
 		}
 
 		else {
-			msg.mentions.channels.first().setParent(modules.constObj.archivedID, { lockPermissions: true })
+			const logChannel = bot.channels.cache.get(logID);
+
+			channel.setParent(archivedID, { lockPermissions: true })
 				.then(() => {
-					msg.react(msg.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.successEmoji))
-						.catch(error => modules.debugError(Discord, bot, error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
+					const successEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === successEmoji);
+
+					msg.react(successEmojiObj).catch(error => debugError(error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
 
 					const archiveEmbed = new Discord.MessageEmbed()
 						.setTitle('Channel Archived 🔒')
-						.setColor(modules.constObj.error)
+						.setColor(errorRed)
 						.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
-						.setFooter(`${dateFormat(msg.createdAt, modules.constObj.dateOutput)}`);
-					bot.channels.cache.get(msg.mentions.channels.first().id).send(archiveEmbed);
+						.setFooter(`${dateFormat(msg.createdAt, dateOutput)}`);
+					channel.send(archiveEmbed);
 
 					const logEmbed = new Discord.MessageEmbed()
-						.setColor(modules.constObj.yellow)
+						.setColor(yellow)
 						.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-						.setDescription(`**Channel ${msg.mentions.channels.first()} archived by ${msg.author}**`)
-						.setFooter(`User: ${msg.author.id} | Channel: ${msg.mentions.channels.first().id} | ${dateFormat(msg.createdAt, modules.constObj.dateOutput)}`);
-					bot.channels.cache.get(modules.constObj.logID).send(logEmbed);
+						.setDescription(`**Channel ${channel} archived by ${msg.author}**`)
+						.setFooter(`User: ${msg.author.id} | Channel: ${channel.id} | ${dateFormat(msg.createdAt, dateOutput)}`);
+					logChannel.send(logEmbed);
 				})
 				.catch(error => {
-					msg.react(msg.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.errorEmoji))
-						.catch(reactError => modules.debugError(Discord, bot, reactError, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
+					const errorEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === errorEmoji);
 
-					modules.errorScaffold(Discord, bot, msg, `${msg.author} Error archiving ${msg.mentions.channels.first()}.`, 'msg');
-					modules.debugError(Discord, bot, error, `Error archiving ${msg.mentions.channels.first()}.`);
+					msg.react(errorEmojiObj).catch(reactError => debugError(reactError, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
+
+					errorScaffold(msg.channel, `${msg.author} Error archiving ${channel}.`, 'msg');
+					debugError(error, `Error archiving ${channel}.`);
 				});
 		}
 	},

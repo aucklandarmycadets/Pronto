@@ -1,6 +1,13 @@
 'use strict';
 
+const Discord = require('discord.js');
 const dateFormat = require('dateformat');
+
+let bot;
+
+function initialise(Client) {
+	bot = Client;
+}
 
 const constObj = {
 	prefix: '-',
@@ -30,7 +37,7 @@ const constObj = {
 	success: 0x45bb8a,
 	error: 0xef4949,
 	dateOutput: 'HHMM "h" ddd, dd mmm yy',
-	version: '1.8.1',
+	version: '1.9.0',
 };
 
 const cmdList = {
@@ -213,11 +220,8 @@ function helpText(object, startFormat, endFormat) {
 	for (let i = 0; i < objProperties.length; i++) {
 		helpString += `${startFormat}${objProperties[i]}${endFormat}${objValues[i]}`;
 
-		if (i < (objProperties.length - 1)) {
-			helpString += '\n';
-		}
+		if (i < (objProperties.length - 1)) helpString += '\n';
 	}
-
 	return helpString;
 }
 
@@ -229,19 +233,13 @@ function errorText(helpTxt, cmd) {
 
 function rolesOutput(array, skipFormat) {
 	let rolesString = '';
-	const filteredArray = array.filter(function(role) {
-		return role !== constObj.administratorID && role.name !== '@everyone';
-	});
+	const filteredArray = array.filter(role => role !== constObj.administratorID && role.name !== '@everyone');
 
 	for (let i = 0; i < filteredArray.length; i++) {
-		if (i % 3 === 0) {
-			rolesString += '\n';
-		}
-
+		if (i % 3 === 0) rolesString += '\n';
 		if (skipFormat) rolesString += `${filteredArray[i]} `;
 		else rolesString += `<@&${filteredArray[i]}> `;
 	}
-
 	return rolesString;
 }
 
@@ -250,9 +248,11 @@ function capitalise(string) {
 	return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function sendErrorEmbed(Discord, bot, msg, errMsg, cmdErr, footer) {
-	msg.react(msg.guild.emojis.cache.find(emoji => emoji.name === constObj.errorEmoji))
-		.catch(error => debugError(Discord, bot, error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
+function sendErrorEmbed(msg, errMsg, cmdErr, footer) {
+	const errorEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === constObj.errorEmoji);
+
+	msg.react(errorEmojiObj).catch(error => debugError(error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
+
 	const errorEmbed = new Discord.MessageEmbed()
 		.setColor(constObj.error)
 		.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
@@ -286,42 +286,45 @@ function formatAge(raw) {
 	else return `${seconds} sec`;
 }
 
-function dmError(Discord, bot, msg, error, debug) {
+function dmError(msg, error, debug) {
 	console.error(error.stack);
-	if (debug) embedScaffold(Discord, bot, msg, `Error sending direct message to ${msg.mentions.members.first()}.`, 'debug', 'More Information', '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)');
-	else embedScaffold(Discord, bot, msg, `${msg.author} I can't send direct messages to you!`, 'msg', 'More Information', '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)');
+	if (debug) embedScaffold(null, `Error sending direct message to ${msg.mentions.members.first()}.`, 'debug', 'More Information', '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)');
+	else embedScaffold(msg.channel, `${msg.author} I can't send direct messages to you!`, 'msg', 'More Information', '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)');
 }
 
-function debugError(Discord, bot, error, errorMsg, fieldTitle, fieldContent) {
+function debugError(error, errorMsg, fieldTitle, fieldContent) {
 	console.error(error.stack);
-	embedScaffold(Discord, bot, null, errorMsg, 'debug', fieldTitle, fieldContent);
+	embedScaffold(null, errorMsg, 'debug', fieldTitle, fieldContent);
 }
 
-function dmCmdError(Discord, bot, msg, noPerms) {
+function dmCmdError(msg, noPerms) {
 	for (const property in cmdList) {
 		if (msg.content.includes(cmdList[property]) && !noPerms) {
-			embedScaffold(Discord, bot, msg, 'That command cannot be used in DMs!', 'dm');
+			embedScaffold(msg.author, 'That command cannot be used in DMs!', 'dm');
 			return;
 		}
 	}
 
-	embedScaffold(Discord, bot, msg, 'Invalid command.', 'dm');
+	embedScaffold(msg.author, 'Invalid command.', 'dm');
 }
 
-function embedScaffold(Discord, bot, msg, errorMsg, channel, fieldTitle, fieldContent) {
+function embedScaffold(destination, errorMsg, channel, fieldTitle, fieldContent) {
+	const botUser = bot.user;
+
 	const embed = new Discord.MessageEmbed()
-		.setAuthor(bot.user.tag, bot.user.avatarURL())
+		.setAuthor(botUser.tag, botUser.avatarURL())
 		.setColor(constObj.error)
 		.setDescription(errorMsg)
 		.setFooter(`${dateFormat(Date.now(), constObj.dateOutput)}`);
 
 	if (fieldTitle) embed.addField(fieldTitle, fieldContent);
 
-	if (channel === 'dm') msg.author.send(embed);
+	if (channel === 'dm') destination.send(embed);
 	else if (channel === 'debug') bot.channels.cache.get(constObj.debugID).send(embed);
-	else if (channel === 'msg') msg.channel.send(embed);
+	else if (channel === 'msg') destination.send(embed);
 }
 
+exports.initialise = initialise;
 exports.constObj = constObj;
 exports.cmdList = cmdList;
 exports.cmdTxt = cmdTxt;

@@ -1,28 +1,45 @@
+const Discord = require('discord.js');
 const dateFormat = require('dateformat');
+
 const modules = require('../modules');
+const { cmdList: { restartCmd, helpCmd } } = modules;
+const { cmdTxt: { restartDesc } } = modules;
+const { debugError, formatAge } = modules;
+const { constObj: {
+	version,
+	yellow,
+	devID,
+	debugID,
+	dateOutput,
+	successEmoji,
+} } = modules;
 
 module.exports = {
-	name: modules.cmdList.restartCmd,
-	description: modules.cmdTxt.restartDesc,
-	execute(Discord, bot, msg, args) {
+	name: restartCmd,
+	description: restartDesc,
+	execute(msg, args) {
 		'use strict';
 
-		if (msg.author.id !== modules.constObj.devID) {
-			bot.commands.get(modules.cmdList.helpCmd).execute(Discord, bot, msg, args);
+		const { bot } = require('../pronto.js');
+
+		if (msg.author.id !== devID) {
+			bot.commands.get(helpCmd).execute(msg, args);
 			return;
 		}
 
 		else {
-			msg.react(msg.guild.emojis.cache.find(emoji => emoji.name === modules.constObj.successEmoji))
-				.catch(error => modules.debugError(Discord, bot, error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
+			const debugChannel = bot.channels.cache.get(debugID);
+			const successEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === successEmoji);
+
+			msg.react(successEmojiObj).catch(error => debugError(error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
 
 			const restartEmbed = new Discord.MessageEmbed()
 				.setAuthor(bot.user.tag, bot.user.avatarURL())
 				.setDescription('**Restarting...**')
-				.addField('Uptime', modules.formatAge(bot.uptime))
-				.setColor(modules.constObj.yellow)
-				.setFooter(`${dateFormat(msg.createdAt, modules.constObj.dateOutput)} | Pronto v${modules.constObj.version}`);
-			bot.channels.cache.get(modules.constObj.debugID).send(restartEmbed).then(() => process.exit());
+				.addField('Uptime', formatAge(bot.uptime))
+				.setColor(yellow)
+				.setFooter(`${dateFormat(msg.createdAt, dateOutput)} | Pronto v${version}`);
+			debugChannel.send(restartEmbed).then(() => process.exit());
 		}
 	},
 };
