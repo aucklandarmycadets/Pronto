@@ -1,102 +1,155 @@
+const Discord = require('discord.js');
+
 const modules = require('../modules');
-const prefix = modules.constObj.prefix;
+const { cmdTxt: { helpGeneric } } = modules;
+const { errorScaffold, debugError, dmCmdError, dmError } = modules;
+const { cmdList: {
+	helpCmd,
+	pingCmd,
+	uptimeCmd,
+	restartCmd,
+	leaveCmd,
+	leaveForCmd,
+	attendanceCmd,
+	connectedCmd,
+	archiveCmd,
+	purgeCmd,
+} } = modules;
+const { constObj: {
+	prefix,
+	devID,
+	serverID,
+	yellow,
+	nonCadet,
+	tacPlus,
+	sgtPlus,
+	cqmsPlus,
+	adjPlus,
+	successEmoji,
+	errorEmoji,
+} } = modules;
+const { helpObj: {
+	helpAll,
+	helpCadet,
+	helpTacPlus,
+	helpSgtPlus,
+	helpCqmsPlus,
+	helpAdjPlus,
+	helpDev,
+	helpPing,
+	helpUptime,
+	helpRestart,
+	helpHelp,
+	helpLeave,
+	helpLeaveFor,
+	helpAttendance,
+	helpConnected,
+	helpArchive,
+	helpPurge,
+} } = modules;
 
 module.exports = {
-    name: modules.cmdList.helpCmd,
-    description: modules.cmdTxt.helpGeneric,
-    execute(Discord, bot, msg, args) {
-        'use strict';
+	name: helpCmd,
+	description: helpGeneric,
+	execute(msg, args) {
+		'use strict';
 
-        const dev = bot.users.cache.get(modules.constObj.devID);
-        const devTag = dev.tag;
-        const devIcon = dev.avatarURL();
+		const { bot } = require('../pronto.js');
+		const messageAuthor = msg.author;
+		const helpEmbed = new Discord.MessageEmbed();
+		const cmd = args[0];
+		let cmdHelp;
 
-        const helpEmbed = new Discord.MessageEmbed();
+		if (!msg.guild && cmd === leaveCmd) {
+			const server = bot.guilds.cache.get(serverID);
 
-        const cmd = args[0];
-        let cmdHelp;
+			if (!server.available) {
+				const errorEmojiObj = server.emojis.cache.find(emoji => emoji.name === errorEmoji);
+				msg.react(errorEmojiObj).catch(error => debugError(error, `Error reacting to [message](${msg.url}) in DMs.`));
+				errorScaffold(messageAuthor, 'There was an error reaching the server, please try again later.', 'dm');
+				return;
+			}
 
-        if (!msg.guild && args[0] === modules.cmdList.leaveCmd) {
-            if (!bot.guilds.cache.get(modules.constObj.serverID).available) return;
+			const memberRoles = server.members.cache.get(messageAuthor.id).roles.cache;
 
-            const memberRoles = bot.guilds.cache.get(modules.constObj.serverID).members.cache.get(msg.author.id).roles.cache;
+			if (!memberRoles.some(roles => nonCadet.includes(roles.id))) {
+				const successEmojiObj = server.emojis.cache.find(emoji => emoji.name === successEmoji);
+				msg.react(successEmojiObj).catch(error => debugError(error, `Error reacting to [message](${msg.url}) in DMs.`));
 
-            if (!memberRoles.some(roles => modules.constObj.nonCadet.includes(roles.id))) {
-                helpEmbed.setTitle(`Command: ${prefix}${modules.cmdList.leaveCmd}`);
-                helpEmbed.setColor(modules.constObj.grey);
-                helpEmbed.setDescription(modules.helpObj.helpLeave);
-                msg.author.send(helpEmbed);
-            }
-            return;
-        }
+				helpEmbed.setTitle(`Command: ${prefix}${leaveCmd}`);
+				helpEmbed.setColor(yellow);
+				helpEmbed.setDescription(helpLeave);
+				messageAuthor.send(helpEmbed);
+			}
 
-        if (msg.guild) msg.delete().catch(error => modules.debugError(Discord, bot, error, `Error deleting message in ${msg.channel}.`, 'Message', msg.content));
+			else dmCmdError(msg);
+			return;
+		}
 
-        let commandList = modules.helpObj.helpAll;
+		if (msg.guild) msg.delete().catch(error => debugError(error, `Error deleting message in ${msg.channel}.`, 'Message', msg.content));
 
-        if (cmd === modules.cmdList.helpCmd) createHelpEmbed(modules.cmdList.helpCmd, modules.helpObj.helpHelp);
+		let commandList = helpAll;
+		const memberRoles = msg.member.roles.cache;
 
-        if (!msg.member.roles.cache.some(roles => modules.constObj.nonCadet.includes(roles.id))) {
-            commandList = modules.helpObj.helpCadet;
+		if (cmd === helpCmd) createHelpEmbed(helpCmd, helpHelp);
 
-            if (cmd === modules.cmdList.leaveCmd) createHelpEmbed(modules.cmdList.leaveCmd, modules.helpObj.helpLeave);
-        }
+		if (!memberRoles.some(roles => nonCadet.includes(roles.id))) {
+			commandList = helpCadet;
+			if (cmd === leaveCmd) createHelpEmbed(leaveCmd, helpLeave);
+		}
 
-        if (msg.member.roles.cache.some(roles => modules.constObj.tacPlus.includes(roles.id))) {
-            commandList = modules.helpObj.helpTacPlus;
+		if (memberRoles.some(roles => tacPlus.includes(roles.id))) {
+			commandList = helpTacPlus;
+			if (cmd === leaveForCmd) createHelpEmbed(leaveForCmd, helpLeaveFor);
+			else if (cmd === attendanceCmd) createHelpEmbed(attendanceCmd, helpAttendance);
+		}
 
-            if (cmd === modules.cmdList.leaveForCmd) createHelpEmbed(modules.cmdList.leaveForCmd, modules.helpObj.helpLeaveFor);
-            else if (cmd === modules.cmdList.attendanceCmd) createHelpEmbed(modules.cmdList.attendanceCmd, modules.helpObj.helpAttendance);
-        }
+		if (memberRoles.some(roles => sgtPlus.includes(roles.id))) {
+			commandList = helpSgtPlus;
+			if (cmd === connectedCmd) createHelpEmbed(connectedCmd, helpConnected);
+		}
 
-        if (msg.member.roles.cache.some(roles => modules.constObj.sgtPlus.includes(roles.id))) {
-            commandList = modules.helpObj.helpSgtPlus;
+		if (memberRoles.some(roles => cqmsPlus.includes(roles.id))) {
+			commandList = helpCqmsPlus;
+			if (cmd === archiveCmd) createHelpEmbed(archiveCmd, helpArchive);
+		}
 
-            if (cmd === modules.cmdList.connectedCmd) createHelpEmbed(modules.cmdList.connectedCmd, modules.helpObj.helpConnected);
-        }
+		if (memberRoles.some(roles => adjPlus.includes(roles.id))) {
+			commandList = helpAdjPlus;
+			if (cmd === purgeCmd) createHelpEmbed(purgeCmd, helpPurge);
+		}
 
-        if (msg.member.roles.cache.some(roles => modules.constObj.cqmsPlus.includes(roles.id))) {
-            commandList = modules.helpObj.helpCqmsPlus;
+		if (messageAuthor.id === devID) {
+			commandList = helpDev;
+			if (cmd === pingCmd) createHelpEmbed(pingCmd, helpPing);
+			else if (cmd === uptimeCmd) createHelpEmbed(uptimeCmd, helpUptime);
+			else if (cmd === restartCmd) createHelpEmbed(restartCmd, helpRestart);
+		}
 
-            if (cmd === modules.cmdList.archiveCmd) createHelpEmbed(modules.cmdList.archiveCmd, modules.helpObj.helpArchive);
-        }
+		if (!cmdHelp) {
+			const dev = bot.users.cache.get(devID);
 
-        if (msg.member.roles.cache.some(roles => modules.constObj.adjPlus.includes(roles.id))) {
-            commandList = modules.helpObj.helpAdjPlus;
+			helpEmbed.setTitle('Commands List');
+			helpEmbed.setThumbnail('https://i.imgur.com/EzmJVyV.png');
+			helpEmbed.setColor(yellow);
+			helpEmbed.setDescription(commandList);
+			helpEmbed.setFooter(`Developed by ${dev.tag}`, dev.avatarURL());
 
-            if (cmd === modules.cmdList.purgeCmd) createHelpEmbed(modules.cmdList.purgeCmd, modules.helpObj.helpPurge);
-        }
+			if (!memberRoles.some(roles => adjPlus.includes(roles.id)) && messageAuthor.id !== devID) {
+				helpEmbed.addField('Note', `Only displaying commands available to ${messageAuthor}.`);
+			}
 
-        if (msg.author.id === modules.constObj.devID) {
-            commandList = modules.helpObj.helpDev;
+			messageAuthor.send(helpEmbed).catch(error => dmError(msg, error));
+		}
 
-            if (cmd === modules.cmdList.pingCmd) createHelpEmbed(modules.cmdList.pingCmd, modules.helpObj.helpPing);
-            else if (cmd === modules.cmdList.uptimeCmd) createHelpEmbed(modules.cmdList.uptimeCmd, modules.helpObj.helpUptime);
-            else if (cmd === modules.cmdList.restartCmd) createHelpEmbed(modules.cmdList.restartCmd, modules.helpObj.helpRestart);
-        }
+		else msg.channel.send(helpEmbed);
 
-        if (!cmdHelp) {
-            helpEmbed.setTitle('Commands List');
-            helpEmbed.setThumbnail('https://i.imgur.com/EzmJVyV.png');
-            helpEmbed.setColor(modules.constObj.yellow);
-            helpEmbed.setDescription(commandList);
-            helpEmbed.setFooter('Developed by ' + devTag, devIcon);
-
-            if (!msg.member.roles.cache.some(roles => modules.constObj.adjPlus.includes(roles.id)) && msg.author.id !== modules.constObj.devID) {
-                helpEmbed.addField('Note', `Only displaying commands available to ${msg.author}.`);
-            }
-
-            msg.author.send(helpEmbed).catch(error => modules.dmError(Discord, bot, msg));
-        }
-
-        else msg.channel.send(helpEmbed);
-
-        function createHelpEmbed(command, text) {
-            helpEmbed.setTitle(`Command: ${prefix}${command}`);
-            helpEmbed.setColor(modules.constObj.grey);
-            helpEmbed.setDescription(text);
-            helpEmbed.setFooter(`Requested by ${msg.member.displayName}`);
-            cmdHelp = true;
-        }
-    },
+		function createHelpEmbed(command, text) {
+			helpEmbed.setTitle(`Command: ${prefix}${command}`);
+			helpEmbed.setColor(yellow);
+			helpEmbed.setDescription(text);
+			helpEmbed.setFooter(`Requested by ${msg.member.displayName}`);
+			cmdHelp = true;
+		}
+	},
 };

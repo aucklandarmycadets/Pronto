@@ -1,24 +1,36 @@
+const Discord = require('discord.js');
 const dateFormat = require('dateformat');
+
 const modules = require('../modules');
+const { cmdList: { uptimeCmd, helpCmd } } = modules;
+const { cmdTxt: { uptimeDesc } } = modules;
+const { dmCmdError, formatAge } = modules;
+const { constObj: { version, success: successGreen, devID, dateOutput } } = modules;
 
 module.exports = {
-    name: modules.cmdList.uptimeCmd,
-    description: modules.cmdTxt.uptimeDesc,
-    execute(Discord, bot, msg, args) {
-        'use strict';
+	name: uptimeCmd,
+	description: uptimeDesc,
+	execute(msg, args) {
+		'use strict';
 
-        if (!msg.guild && msg.author.id !== modules.constObj.devID) return;
+		const { bot } = require('../pronto.js');
+		const authorID = msg.author.id;
 
-        if (msg.author.id !== modules.constObj.devID) {
-            bot.commands.get(modules.cmdList.helpCmd).execute(Discord, bot, msg, args);
-            return;
-        }
+		if (!msg.guild && authorID !== devID) {
+			dmCmdError(msg);
+			return;
+		}
 
-        else {
-            const uptimeEmbed = new Discord.MessageEmbed()
-                .setColor(modules.constObj.success)
-                .setFooter(`${modules.formatAge(bot.uptime)} | ${dateFormat(msg.createdAt, modules.constObj.dateOutput)} | Pronto v${modules.constObj.version}`);
-            msg.channel.send(uptimeEmbed);
-        }
-    },
+		if (authorID !== devID) {
+			bot.commands.get(helpCmd).execute(msg, args);
+			return;
+		}
+
+		else {
+			const uptimeEmbed = new Discord.MessageEmbed()
+				.setColor(successGreen)
+				.setFooter(`${formatAge(bot.uptime)} | ${dateFormat(msg.createdAt, dateOutput)} | Pronto v${version}`);
+			msg.channel.send(uptimeEmbed);
+		}
+	},
 };
