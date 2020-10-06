@@ -22,7 +22,7 @@ module.exports = {
             let formationColour = modules.constObj.grey;
             let formationName = msg.guild.name;
 
-            for (const [unused, role] of Object.entries(msg.member.roles.cache.array())) {
+            for (const [, role] of Object.entries(msg.member.roles.cache.array())) {
                 if (modules.constObj.formations.includes(role.id)) {
                     formationColour = role.color;
                     formationName = role.name;

@@ -203,7 +203,7 @@ function onVoiceUpdate(oldState, newState) {
 
         if (oldID !== vcID && newID === vcID) {
             textChannel.updateOverwrite(newState.id, { VIEW_CHANNEL: true, SEND_MESSAGES: true })
-                .then(newState => {
+                .then(() => {
                     const joinEmbed = new Discord.MessageEmbed()
                         .setColor(modules.constObj.success)
                         .setAuthor(newState.member.displayName, newState.member.user.displayAvatarURL())
@@ -211,7 +211,7 @@ function onVoiceUpdate(oldState, newState) {
                         .setFooter(`${dateFormat(Date.now(), modules.constObj.dateOutput)}`);
                     textChannel.send(joinEmbed);
                 })
-                .catch((error, newState) => {
+                .catch(error => {
                     modules.debugError(Discord, bot, error, `Error giving ${newState.member} permissions to ${textChannel}.`);
                 });
         }
@@ -284,7 +284,7 @@ function onVoiceUpdate(oldState, newState) {
                         });
                     }
                 })
-                .catch((error, newState) => {
+                .catch(error => {
                     modules.debugError(Discord, bot, error, `Error removing ${newState.member}'s permissions to ${textChannel}.`);
                 });
         }

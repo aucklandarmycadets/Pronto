@@ -27,7 +27,7 @@ module.exports = {
         else {
             let connectedMembers = [];
 
-            for (const [unused, member] of Object.entries(msg.mentions.channels.first().members.array())) {
+            for (const [, member] of Object.entries(msg.mentions.channels.first().members.array())) {
                 connectedMembers.push(member.toString());
             }
 
