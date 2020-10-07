@@ -17,26 +17,26 @@ const TOKEN = process.env.TOKEN;
 const modules = require('./modules');
 const { cmdList: { helpCmd, purgeCmd } } = modules;
 const { helpObj: { errorPurge } } = modules;
-const { dmCmds, initialise, debugError, dmCmdError, formatAge, rolesOutput, errorScaffold } = modules;
+const { dmCmds, initialise, debugError, dmCmdError, formatAge, rolesOutput, embedScaffold } = modules;
 const { constObj: {
 	prefix,
+	permsInt,
 	dateOutput,
 	version,
 	success: successGreen,
 	error: errorRed,
 	yellow,
-	debugID,
 	logID,
 	recruitingID,
 	newMembersID,
 	visitorID,
 	devID,
+	serverID,
 	successEmoji,
 	adjPlus,
 } } = modules;
 
 let devDirectChannel;
-let debugChannel;
 let logChannel;
 let recruitingChannel;
 let newMembersChannel;
@@ -65,7 +65,6 @@ function onReady() {
 	console.info(`Logged in as ${bot.user.tag}!`);
 	initialise(bot);
 	devDirectChannel = bot.users.cache.get(devID);
-	debugChannel = bot.channels.cache.get(debugID);
 	logChannel = bot.channels.cache.get(logID);
 	recruitingChannel = bot.channels.cache.get(recruitingID);
 	newMembersChannel = bot.channels.cache.get(newMembersID);
@@ -82,6 +81,8 @@ function onReady() {
 	botUser.setActivity(`the radio net | ${prefix}${helpCmd}`, { type: 'LISTENING' });
 
 	exports.bot = bot;
+
+	checkBotPermissions();
 }
 
 function onMessage(msg) {
@@ -189,6 +190,11 @@ function onMemberUpdate(oldMember, newMember) {
 
 		else if (oldMember.roles.cache.some(role => role.id === roleDifference.id)) {
 			logEmbed.setDescription(`**${newMemberUser} was removed from** ${roleDifference}`);
+		}
+
+		if (newMember.id === bot.user.id) {
+			const changedPerms = permissionsUpdate(oldMember, newMember);
+			checkBotPermissions(changedPerms);
 		}
 	}
 
@@ -373,6 +379,29 @@ function onRoleChange(oldRole, newRole) {
 		logEmbed.addField('After', newRole.name);
 	}
 
+	else if (oldRole.permissions !== newRole.permissions) {
+		logEmbed.setColor(yellow);
+		logEmbed.setDescription(`**Role permissions ${newRole} changed**`);
+
+		const oldPerms = oldRole.permissions.toArray();
+		const changedPerms = permissionsUpdate(newRole, oldRole);
+
+		const removedPerms = [];
+		const addedPerms = [];
+
+		for (let i = 0; i < changedPerms.length; i++) {
+			if (oldPerms.includes(changedPerms[i])) removedPerms.push(changedPerms[i]);
+			else addedPerms.push(changedPerms[i]);
+		}
+
+		if (addedPerms.length > 0) logEmbed.addField('Added Permissions', addedPerms);
+		if (removedPerms.length > 0) logEmbed.addField('Removed Permissions', removedPerms);
+
+		const botRoles = newRole.guild.me.roles.cache;
+
+		if (botRoles.some(role => role.id === newRole.id)) checkBotPermissions(changedPerms);
+	}
+
 	else return;
 
 	logEmbed.setAuthor(newRole.guild.name, newRole.guild.iconURL());
@@ -472,8 +501,43 @@ function onDevInfo(info, type) {
 function purgeChannel(messages, msgChannel, collector) {
 	msgChannel.bulkDelete(messages)
 		.catch(error => {
-			errorScaffold(msgChannel, `Error purging ${msgChannel}.`, 'msg');
+			embedScaffold(msgChannel, `Error purging ${msgChannel}.`, errorRed, 'msg');
 			debugError(error, `Error purging ${msgChannel}.`);
 		});
 	collector.stop();
+}
+
+function permissionsUpdate(oldState, newState) {
+	const oldPerms = oldState.permissions.toArray();
+	const newPerms = newState.permissions.toArray();
+
+	const changedPerms = [ ...oldPerms.filter(value => newPerms.indexOf(value) === -1),
+		...newPerms.filter(value => oldPerms.indexOf(value) === -1) ];
+
+	return changedPerms;
+}
+
+function checkBotPermissions(changes) {
+	const requiredPermissions = new Discord.Permissions(permsInt);
+	const server = bot.guilds.cache.get(serverID);
+	const botPermissions = server.me.permissions;
+	const hasRequired = botPermissions.has(requiredPermissions);
+
+	console.log(changes);
+
+	const missingPermissions = [...new Set([...requiredPermissions].filter(value => !botPermissions.has(value)))];
+
+	if (!hasRequired) embedScaffold(null, 'I do not have my minimum permissions!', errorRed, 'debug', 'Missing Permissions', missingPermissions);
+
+	else if (changes) {
+		const requiredArray = requiredPermissions.toArray();
+		console.log('changes');
+
+		for (let i = 0; i < changes.length; i++) {
+			if (requiredArray.includes(changes[i])) {
+				embedScaffold(null, 'Permissions resolved.', successGreen, 'debug');
+				break;
+			}
+		}
+	}
 }

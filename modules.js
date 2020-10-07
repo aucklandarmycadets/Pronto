@@ -36,6 +36,7 @@ const constObj = {
 	yellow: 0xffd456,
 	success: 0x45bb8a,
 	error: 0xef4949,
+	permsInt: 1879141584,
 	dateOutput: 'HHMM "h" ddd, dd mmm yy',
 	version: '1.9.1',
 };
@@ -289,29 +290,29 @@ function formatAge(raw) {
 
 function dmError(msg, error, debug) {
 	console.error(error.stack);
-	if (debug) embedScaffold(null, `Error sending direct message to ${msg.mentions.members.first()}.`, 'debug', 'More Information', '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)');
+	if (debug) embedScaffold(null, `Error sending direct message to ${msg.mentions.members.first()}.`, constObj.error, 'debug', 'More Information', '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)');
 	else embedScaffold(msg.channel, `${msg.author} I can't send direct messages to you!`, 'msg', 'More Information', '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)');
 }
 
 function debugError(error, errorMsg, fieldTitle, fieldContent) {
 	console.error(error.stack);
-	embedScaffold(null, errorMsg, 'debug', fieldTitle, fieldContent);
+	embedScaffold(null, errorMsg, constObj.error, 'debug', fieldTitle, fieldContent);
 }
 
 function dmCmdError(msg) {
 	const server = bot.guilds.cache.get(constObj.serverID);
 	const errorEmojiObj = server.emojis.cache.find(emoji => emoji.name === constObj.errorEmoji);
 	msg.react(errorEmojiObj).catch(error => debugError(error, `Error reacting to [message](${msg.url}) in DMs.`));
-	embedScaffold(msg.author, 'You either do not have access to that command, or it cannot be used in DMs.', 'dm');
+	embedScaffold(msg.author, 'You either do not have access to that command, or it cannot be used in DMs.', constObj.error, 'dm');
 }
 
-function embedScaffold(destination, errorMsg, channel, fieldTitle, fieldContent) {
+function embedScaffold(destination, descMsg, colour, channel, fieldTitle, fieldContent) {
 	const botUser = bot.user;
 
 	const embed = new Discord.MessageEmbed()
 		.setAuthor(botUser.tag, botUser.avatarURL())
-		.setColor(constObj.error)
-		.setDescription(errorMsg)
+		.setColor(colour)
+		.setDescription(descMsg)
 		.setFooter(`${dateFormat(Date.now(), constObj.dateOutput)}`);
 
 	if (fieldTitle) embed.addField(fieldTitle, fieldContent);
@@ -334,4 +335,4 @@ exports.formatAge = formatAge;
 exports.dmError = dmError;
 exports.debugError = debugError;
 exports.dmCmdError = dmCmdError;
-exports.errorScaffold = embedScaffold;
+exports.embedScaffold = embedScaffold;
