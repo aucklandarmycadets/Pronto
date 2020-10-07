@@ -38,7 +38,7 @@ const constObj = {
 	error: 0xef4949,
 	permsInt: 1879141584,
 	dateOutput: 'HHMM "h" ddd, dd mmm yy',
-	version: '1.9.1',
+	version: '1.9.2',
 };
 
 const cmdList = {

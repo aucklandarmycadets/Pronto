@@ -5,7 +5,7 @@ const modules = require('../modules');
 const { cmdList: { archiveCmd, helpCmd } } = modules;
 const { cmdTxt: { archiveDesc } } = modules;
 const { helpObj: { errorArchive } } = modules;
-const { sendErrorEmbed, debugError, errorScaffold } = modules;
+const { sendErrorEmbed, debugError, embedScaffold } = modules;
 const { constObj: {
 	error: errorRed,
 	yellow,
@@ -78,7 +78,7 @@ module.exports = {
 
 					msg.react(errorEmojiObj).catch(reactError => debugError(reactError, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
 
-					errorScaffold(msg.channel, `${msg.author} Error archiving ${channel}.`, 'msg');
+					embedScaffold(msg.channel, `${msg.author} Error archiving ${channel}.`, errorRed, 'msg');
 					debugError(error, `Error archiving ${channel}.`);
 				});
 		}
