@@ -530,7 +530,6 @@ function checkBotPermissions(changes) {
 
 	else if (changes) {
 		const requiredArray = requiredPermissions.toArray();
-		console.log('changes');
 
 		for (let i = 0; i < changes.length; i++) {
 			if (requiredArray.includes(changes[i])) {
