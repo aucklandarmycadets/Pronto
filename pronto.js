@@ -523,8 +523,6 @@ function checkBotPermissions(changes) {
 	const botPermissions = server.me.permissions;
 	const hasRequired = botPermissions.has(requiredPermissions);
 
-	console.log(changes);
-
 	const missingPermissions = [...new Set([...requiredPermissions].filter(value => !botPermissions.has(value)))];
 
 	if (!hasRequired) embedScaffold(null, 'I do not have my minimum permissions!', errorRed, 'debug', 'Missing Permissions', missingPermissions);
