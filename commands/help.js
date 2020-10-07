@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 
 const modules = require('../modules');
 const { cmdTxt: { helpGeneric } } = modules;
-const { errorScaffold, debugError, dmCmdError, dmError } = modules;
+const { embedScaffold, debugError, dmCmdError, dmError } = modules;
 const { cmdList: {
 	helpCmd,
 	pingCmd,
@@ -19,6 +19,7 @@ const { constObj: {
 	prefix,
 	devID,
 	serverID,
+	error: errorRed,
 	yellow,
 	nonCadet,
 	tacPlus,
@@ -66,7 +67,7 @@ module.exports = {
 			if (!server.available) {
 				const errorEmojiObj = server.emojis.cache.find(emoji => emoji.name === errorEmoji);
 				msg.react(errorEmojiObj).catch(error => debugError(error, `Error reacting to [message](${msg.url}) in DMs.`));
-				errorScaffold(messageAuthor, 'There was an error reaching the server, please try again later.', 'dm');
+				embedScaffold(messageAuthor, 'There was an error reaching the server, please try again later.', errorRed, 'dm');
 				return;
 			}
 

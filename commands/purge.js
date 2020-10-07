@@ -2,8 +2,8 @@ const modules = require('../modules');
 const { cmdList: { purgeCmd, helpCmd } } = modules;
 const { cmdTxt: { purgeDesc } } = modules;
 const { helpObj: { errorPurge } } = modules;
-const { sendErrorEmbed, debugError, errorScaffold } = modules;
-const { constObj: { adjPlus, errorEmoji } } = modules;
+const { sendErrorEmbed, debugError, embedScaffold } = modules;
+const { constObj: { adjPlus, errorEmoji, error: errorRed } } = modules;
 
 module.exports = {
 	name: purgeCmd,
@@ -70,7 +70,7 @@ module.exports = {
 							msg.react(errorEmojiObj)
 								.catch(reactError => debugError(reactError, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
 
-							errorScaffold(msg.channel, `${msg.author} Error purging ${purgeCount} messages.`, 'msg');
+							embedScaffold(msg.channel, `${msg.author} Error purging ${purgeCount} messages.`, errorRed, 'msg');
 							debugError(error, `Error purging ${purgeCount} messages in ${msg.channel}.`);
 						});
 				});
