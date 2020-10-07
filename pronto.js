@@ -220,6 +220,7 @@ function onVoiceUpdate(oldState, newState) {
 
 	let oldID;
 	let newID;
+	
 	if (oldState.channel) oldID = oldState.channelID;
 	if (newState.channel) newID = newState.channelID;
 
@@ -469,7 +470,7 @@ function onBulkDelete(msgs) {
 }
 
 function onMessageUpdate(oldMessage, newMessage) {
-	if (oldMessage.content === newMessage.content || messageAuthor.bot || !newMessage.guild) return;
+	if (oldMessage.content === newMessage.content || newMessage.author.bot || !newMessage.guild) return;
 
 	const messageAuthor = newMessage.author;
 
