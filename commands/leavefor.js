@@ -1,23 +1,15 @@
 const Discord = require('discord.js');
 const dateFormat = require('dateformat');
 
-const modules = require('../modules');
-const { cmdList: { leaveForCmd, helpCmd, leaveCmd } } = modules;
-const { cmdTxt: { leaveForDesc } } = modules;
-const { helpObj: { errorLeaveFor } } = modules;
-const { sendErrorEmbed, debugError, capitalise, dmError } = modules;
-const { constObj: {
-	prefix,
-	red: leaveRed,
-	dateOutput,
-	attendanceID,
-	tacPlus,
-	successEmoji,
-} } = modules;
+const config = require('../config');
+const { config: { dateOutput }, ids: { attendanceID, tacPlus } } = config;
+const { emojis: { successEmoji }, colours } = config;
+const { cmds: { help, leave, leaveFor } } = require('../cmds');
+const { pCmd, capitalise, cmdError, dmError, debugError } = require('../modules');
 
 module.exports = {
-	name: leaveForCmd,
-	description: leaveForDesc,
+	name: leaveFor.cmd,
+	description: leaveFor.desc,
 	execute(msg, args) {
 		'use strict';
 
@@ -28,24 +20,24 @@ module.exports = {
 		const absentee = memberMentions.first();
 
 		if (!memberRoles.some(roles => tacPlus.includes(roles.id))) {
-			bot.commands.get(helpCmd).execute(msg, args);
+			bot.commands.get(help.cmd).execute(msg, args);
 			return;
 		}
 
 		if (numMemberMentions === 0) {
-			sendErrorEmbed(msg, 'You must tag a user.', errorLeaveFor);
+			cmdError(msg, 'You must tag a user.', leaveFor.error);
 		}
 
 		else if (memberMentions.some(mention => mention.user.bot)) {
-			sendErrorEmbed(msg, 'You cannot submit leave for a bot!', errorLeaveFor);
+			cmdError(msg, 'You cannot submit leave for a bot!', leaveFor.error);
 		}
 
 		else if (numMemberMentions > 1) {
-			sendErrorEmbed(msg, 'You must submit leave individually.', errorLeaveFor);
+			cmdError(msg, 'You must submit leave individually.', leaveFor.error);
 		}
 
 		else if (args.length < 2) {
-			sendErrorEmbed(msg, 'Insufficient arguments.', errorLeaveFor);
+			cmdError(msg, 'Insufficient arguments.', leaveFor.error);
 		}
 
 		else {
@@ -61,7 +53,7 @@ module.exports = {
 
 			const attendanceEmbed = new Discord.MessageEmbed()
 				.setTitle(leaveForEmbedTitle)
-				.setColor(leaveRed)
+				.setColor(colours.leave)
 				.setAuthor(absentee.displayName, absentee.user.displayAvatarURL())
 				.setDescription(`${messageAuthor} has submitted leave for ${absentee} in ${msg.channel}`)
 				.addFields(
@@ -72,7 +64,7 @@ module.exports = {
 
 			const dmEmbed = new Discord.MessageEmbed()
 				.setTitle(leaveForEmbedTitle)
-				.setColor(leaveRed)
+				.setColor(colours.leave)
 				.setAuthor(msg.guild.name, msg.guild.iconURL())
 				.setDescription(`Hi ${messageAuthor}, your submission of leave for ${absentee} has been received.`)
 				.addFields(
@@ -83,7 +75,7 @@ module.exports = {
 
 			const absenteeEmbed = new Discord.MessageEmbed()
 				.setTitle(leaveForEmbedTitle)
-				.setColor(leaveRed)
+				.setColor(colours.leave)
 				.setAuthor(msg.guild.name, msg.guild.iconURL())
 				.setDescription(`${messageAuthor} has submitted leave for you in ${msg.channel}.`)
 				.addFields(
@@ -91,7 +83,7 @@ module.exports = {
 					{ name: 'Channel', value: msg.channel.toString() },
 					{ name: 'Details', value: capitalise(args.join(' ')) },
 				)
-				.setFooter(`Reply with ${prefix}${helpCmd} ${leaveCmd} to learn how to request leave for yourself.`);
+				.setFooter(`Reply with ${pCmd(help)} ${leave.cmd} to learn how to request leave for yourself.`);
 
 			attendanceChannel.send(attendanceEmbed);
 			messageAuthor.send(dmEmbed).catch(error => dmError(msg, error));

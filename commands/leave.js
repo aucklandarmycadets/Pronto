@@ -1,22 +1,15 @@
 const Discord = require('discord.js');
 const dateFormat = require('dateformat');
 
-const modules = require('../modules');
-const { cmdList: { leaveCmd, helpCmd } } = modules;
-const { cmdTxt: { leaveDesc } } = modules;
-const { helpObj: { errorLeave } } = modules;
-const { sendErrorEmbed, debugError, capitalise, dmError } = modules;
-const { constObj: {
-	red: leaveRed,
-	dateOutput,
-	attendanceID,
-	nonCadet,
-	successEmoji,
-} } = modules;
+const config = require('../config');
+const { config: { dateOutput }, ids: { attendanceID, nonCadet } } = config;
+const { emojis: { successEmoji }, colours } = config;
+const { cmds: { help, leave } } = require('../cmds');
+const { capitalise, cmdError, dmError, debugError } = require('../modules');
 
 module.exports = {
-	name: leaveCmd,
-	description: leaveDesc,
+	name: leave.cmd,
+	description: leave.desc,
 	execute(msg, args) {
 		'use strict';
 
@@ -24,12 +17,12 @@ module.exports = {
 		const memberRoles = msg.member.roles.cache;
 
 		if (memberRoles.some(roles => nonCadet.includes(roles.id))) {
-			bot.commands.get(helpCmd).execute(msg, args);
+			bot.commands.get(help.cmd).execute(msg, args);
 			return;
 		}
 
 		if (args.length === 0) {
-			sendErrorEmbed(msg, 'Insufficient arguments.', errorLeave);
+			cmdError(msg, 'Insufficient arguments.', leave.error);
 		}
 
 		else {
@@ -42,7 +35,7 @@ module.exports = {
 
 			const attendanceEmbed = new Discord.MessageEmbed()
 				.setTitle(leaveEmbedTitle)
-				.setColor(leaveRed)
+				.setColor(colours.leave)
 				.setAuthor(msg.member.displayName, messageAuthor.displayAvatarURL())
 				.setDescription(`${messageAuthor} has requested leave in ${msg.channel}`)
 				.addFields(
@@ -52,7 +45,7 @@ module.exports = {
 
 			const dmEmbed = new Discord.MessageEmbed()
 				.setTitle(leaveEmbedTitle)
-				.setColor(leaveRed)
+				.setColor(colours.leave)
 				.setAuthor(msg.guild.name, msg.guild.iconURL())
 				.setDescription(`Hi ${messageAuthor}, your submission of leave has been received.`)
 				.addFields(

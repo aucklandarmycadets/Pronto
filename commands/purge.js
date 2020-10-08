@@ -1,13 +1,10 @@
-const modules = require('../modules');
-const { cmdList: { purgeCmd, helpCmd } } = modules;
-const { cmdTxt: { purgeDesc } } = modules;
-const { helpObj: { errorPurge } } = modules;
-const { sendErrorEmbed, debugError, embedScaffold } = modules;
-const { constObj: { adjPlus, errorEmoji, error: errorRed } } = modules;
+const { ids: { adjPlus }, emojis: { errorEmoji }, colours } = require('../config');
+const { cmds: { help, purge } } = require('../cmds');
+const { cmdError, debugError, embedScaffold } = require('../modules');
 
 module.exports = {
-	name: purgeCmd,
-	description: purgeDesc,
+	name: purge.cmd,
+	description: purge.desc,
 	execute(msg, args) {
 		'use strict';
 
@@ -16,23 +13,23 @@ module.exports = {
 		const userMentions = msg.mentions.users;
 
 		if (!memberRoles.some(roles => adjPlus.includes(roles.id))) {
-			bot.commands.get(helpCmd).execute(msg, args);
+			bot.commands.get(help.cmd).execute(msg, args);
 			return;
 		}
 
 		if (args.length === 0) {
-			sendErrorEmbed(msg, 'Insufficient arguments.', errorPurge);
+			cmdError(msg, 'Insufficient arguments.', purge.error);
 			return;
 		}
 
 		else if (userMentions.size > 1) {
-			sendErrorEmbed(msg, 'You cannot purge multiple users simultaneously.', errorPurge);
+			cmdError(msg, 'You cannot purge multiple users simultaneously.', purge.error);
 			return;
 		}
 
 
 		else if (args.length > 2) {
-			sendErrorEmbed(msg, 'Too many arguments.', errorPurge);
+			cmdError(msg, 'Too many arguments.', purge.error);
 			return;
 		}
 
@@ -40,15 +37,15 @@ module.exports = {
 		const purgeCount = Number(args[0]) ? Number(args[0]) : Number(args[1]);
 
 		if (!purgeCount && !user) {
-			sendErrorEmbed(msg, 'Invalid input.', errorPurge);
+			cmdError(msg, 'Invalid input.', purge.error);
 		}
 
 		else if (!purgeCount) {
-			sendErrorEmbed(msg, 'You must specify an amount of messages to delete.', errorPurge);
+			cmdError(msg, 'You must specify an amount of messages to delete.', purge.error);
 		}
 
 		if (purgeCount > 100) {
-			sendErrorEmbed(msg, 'You cannot purge more than 100 messages at a time.', errorPurge);
+			cmdError(msg, 'You cannot purge more than 100 messages at a time.', purge.error);
 		}
 
 		else {
@@ -70,7 +67,7 @@ module.exports = {
 							msg.react(errorEmojiObj)
 								.catch(reactError => debugError(reactError, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
 
-							embedScaffold(msg.channel, `${msg.author} Error purging ${purgeCount} messages.`, errorRed, 'msg');
+							embedScaffold(msg.channel, `${msg.author} Error purging ${purgeCount} messages.`, colours.error, 'msg');
 							debugError(error, `Error purging ${purgeCount} messages in ${msg.channel}.`);
 						});
 				});

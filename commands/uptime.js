@@ -1,15 +1,13 @@
 const Discord = require('discord.js');
 const dateFormat = require('dateformat');
 
-const modules = require('../modules');
-const { cmdList: { uptimeCmd, helpCmd } } = modules;
-const { cmdTxt: { uptimeDesc } } = modules;
-const { dmCmdError, formatAge } = modules;
-const { constObj: { version, success: successGreen, devID, dateOutput } } = modules;
+const { config: { dateOutput, version }, ids: { devID }, colours } = require('../config');
+const { cmds: { uptime, help } } = require('../cmds');
+const { formatAge, dmCmdError } = require('../modules');
 
 module.exports = {
-	name: uptimeCmd,
-	description: uptimeDesc,
+	name: uptime.cmd,
+	description: uptime.desc,
 	execute(msg, args) {
 		'use strict';
 
@@ -17,18 +15,18 @@ module.exports = {
 		const authorID = msg.author.id;
 
 		if (!msg.guild && authorID !== devID) {
-			dmCmdError(msg);
+			dmCmdError(msg, 'noPerms');
 			return;
 		}
 
 		if (authorID !== devID) {
-			bot.commands.get(helpCmd).execute(msg, args);
+			bot.commands.get(help.cmd).execute(msg, args);
 			return;
 		}
 
 		else {
 			const uptimeEmbed = new Discord.MessageEmbed()
-				.setColor(successGreen)
+				.setColor(colours.success)
 				.setFooter(`${formatAge(bot.uptime)} | ${dateFormat(msg.createdAt, dateOutput)} | Pronto v${version}`);
 			msg.channel.send(uptimeEmbed);
 		}
