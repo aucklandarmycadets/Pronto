@@ -1,22 +1,13 @@
 const Discord = require('discord.js');
 const dateFormat = require('dateformat');
 
-const modules = require('../modules');
-const { cmdList: { attendanceCmd, helpCmd } } = modules;
-const { cmdTxt: { attendanceDesc } } = modules;
-const { helpObj: { errorAttendance } } = modules;
-const { sendErrorEmbed, debugError } = modules;
-const { constObj: {
-	grey,
-	dateOutput,
-	attendanceID,
-	tacPlus,
-	formations,
-} } = modules;
+const { config: { dateOutput }, ids: { attendanceID, formations, tacPlus }, colours } = require('../config');
+const { cmds: { help, attendance } } = require('../cmds');
+const { cmdError, debugError } = require('../modules');
 
 module.exports = {
-	name: attendanceCmd,
-	description: attendanceDesc,
+	name: attendance.cmd,
+	description: attendance.desc,
 	execute(msg, args) {
 		'use strict';
 
@@ -24,12 +15,12 @@ module.exports = {
 		const memberRoles = msg.member.roles.cache;
 
 		if (!memberRoles.some(roles => tacPlus.includes(roles.id))) {
-			bot.commands.get(helpCmd).execute(msg, args);
+			bot.commands.get(help.cmd).execute(msg, args);
 			return;
 		}
 
 		if (args.length === 0) {
-			sendErrorEmbed(msg, 'You must enter a message.', errorAttendance);
+			cmdError(msg, 'You must enter a message.', attendance.error);
 		}
 
 		else {
@@ -37,10 +28,10 @@ module.exports = {
 
 			msg.delete().catch(error => debugError(error, `Error deleting message in ${msg.channel}.`, 'Message', msg.content));
 
-			let formationColour = grey;
+			let formationColour = colours.default;
 			let formationName = msg.guild.name;
 
-			for (const [, role] of Object.entries(memberRoles.array())) {
+			for (const role of Object.values(memberRoles.array())) {
 				if (formations.includes(role.id)) {
 					formationColour = role.color;
 					formationName = role.name;

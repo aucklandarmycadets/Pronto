@@ -1,22 +1,15 @@
 const Discord = require('discord.js');
 const dateFormat = require('dateformat');
 
-const modules = require('../modules');
-const { cmdList: { connectedCmd, helpCmd } } = modules;
-const { cmdTxt: { connectedDesc } } = modules;
-const { helpObj: { errorConnected } } = modules;
-const { sendErrorEmbed, debugError } = modules;
-const { constObj: {
-	success: successGreen,
-	dateOutput,
-	attendanceID,
-	sgtPlus,
-	successEmoji,
-} } = modules;
+const config = require('../config');
+const { config: { dateOutput }, ids: { attendanceID, sgtPlus } } = config;
+const { emojis: { successEmoji }, colours } = config;
+const { cmds: { help, connected } } = require('../cmds');
+const { cmdError, debugError } = require('../modules');
 
 module.exports = {
-	name: connectedCmd,
-	description: connectedDesc,
+	name: connected.cmd,
+	description: connected.desc,
 	execute(msg, args) {
 		'use strict';
 
@@ -27,20 +20,20 @@ module.exports = {
 		const channel = channelMentions.first();
 
 		if (!memberRoles.some(roles => sgtPlus.includes(roles.id))) {
-			bot.commands.get(helpCmd).execute(msg, args);
+			bot.commands.get(help.cmd).execute(msg, args);
 			return;
 		}
 
 		if (numChannelMentions === 0) {
-			sendErrorEmbed(msg, 'You must specify a voice channel.', errorConnected, 'Note: Use the <#channelID> syntax!');
+			cmdError(msg, 'You must specify a voice channel.', connected.error, 'Note: Use the <#channelID> syntax!');
 		}
 
 		else if (channelMentions.some(mention => mention.type !== 'voice')) {
-			sendErrorEmbed(msg, 'Input must be a voice channel.', errorConnected, 'Note: Use the <#channelID> syntax!');
+			cmdError(msg, 'Input must be a voice channel.', connected.error, 'Note: Use the <#channelID> syntax!');
 		}
 
 		else if (numChannelMentions > 1) {
-			sendErrorEmbed(msg, 'You can only display one channel at a time.', errorConnected, 'Note: Use the <#channelID> syntax!');
+			cmdError(msg, 'You can only display one channel at a time.', connected.error, 'Note: Use the <#channelID> syntax!');
 		}
 
 		else {
@@ -48,12 +41,12 @@ module.exports = {
 			const attendanceChannel = bot.channels.cache.get(attendanceID);
 			const successEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === successEmoji);
 
-			for (const [, member] of Object.entries(channel.members.array())) {
+			for (const member of Object.values(channel.members.array())) {
 				connectedMembers.push(member.toString());
 			}
 
 			if (connectedMembers.length === 0) {
-				sendErrorEmbed(msg, `There are no members connected to ${channel}.`, errorConnected);
+				cmdError(msg, `There are no members connected to ${channel}.`, connected.error);
 				return;
 			}
 
@@ -61,7 +54,7 @@ module.exports = {
 
 			const connectedEmbed = new Discord.MessageEmbed()
 				.setTitle(`Members Connected to #${channel.name}`)
-				.setColor(successGreen)
+				.setColor(colours.success)
 				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
 				.setDescription(connectedMembers.join('\n'))
 				.setFooter(`${dateFormat(msg.createdAt, dateOutput)}`);

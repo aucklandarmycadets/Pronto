@@ -1,22 +1,15 @@
 const Discord = require('discord.js');
 const dateFormat = require('dateformat');
 
-const modules = require('../modules');
-const { cmdList: { restartCmd, helpCmd } } = modules;
-const { cmdTxt: { restartDesc } } = modules;
-const { debugError, formatAge, dmCmdError } = modules;
-const { constObj: {
-	version,
-	yellow,
-	devID,
-	serverID,
-	dateOutput,
-	successEmoji,
-} } = modules;
+const config = require('../config');
+const { config: { dateOutput, version }, ids: { serverID, devID } } = config;
+const { emojis: { successEmoji }, colours } = config;
+const { cmds: { restart, help } } = require('../cmds');
+const { formatAge, debugError, dmCmdError } = require('../modules');
 
 module.exports = {
-	name: restartCmd,
-	description: restartDesc,
+	name: restart.cmd,
+	description: restart.desc,
 	execute(msg, args) {
 		'use strict';
 
@@ -29,7 +22,7 @@ module.exports = {
 		}
 
 		if (authorID !== devID) {
-			bot.commands.get(helpCmd).execute(msg, args);
+			bot.commands.get(help.cmd).execute(msg, args);
 			return;
 		}
 
@@ -44,7 +37,7 @@ module.exports = {
 				.setAuthor(bot.user.tag, bot.user.avatarURL())
 				.setDescription('**Restarting...**')
 				.addField('Uptime', formatAge(bot.uptime))
-				.setColor(yellow)
+				.setColor(colours.warn)
 				.setFooter(`${dateFormat(msg.createdAt, dateOutput)} | Pronto v${version}`);
 			devDirectChannel.send(restartEmbed).then(() => process.exit());
 		}
