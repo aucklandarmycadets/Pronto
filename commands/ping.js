@@ -15,7 +15,7 @@ module.exports = {
 		const authorID = msg.author.id;
 
 		if (!msg.guild && authorID !== devID) {
-			dmCmdError(msg);
+			dmCmdError(msg, 'noPerms');
 			return;
 		}
 

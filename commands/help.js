@@ -14,40 +14,26 @@ module.exports = {
 
 		const { bot } = require('../pronto.js');
 		const messageAuthor = msg.author;
+		const server = bot.guilds.cache.get(serverID);
 		const helpEmbed = new Discord.MessageEmbed();
 		const cmd = args[0];
-		let cmdHelp;
+		let memberRoles, cmdHelp;
 
-		if (!msg.guild && cmd === cmds.leave.cmd) {
-			const server = bot.guilds.cache.get(serverID);
-
+		if (!msg.guild) {
 			if (!server.available) {
 				const errorEmojiObj = server.emojis.cache.find(emoji => emoji.name === errorEmoji);
-				msg.react(errorEmojiObj).catch(error => debugError(error, `Error reacting to [message](${msg.url}) in DMs.`));
+				msg.react(errorEmojiObj).catch(error => debugError(error, `Error reacting to message in DMs.`));
 				embedScaffold(messageAuthor, 'There was an error reaching the server, please try again later.', colours.error, 'dm');
 				return;
 			}
-
-			const memberRoles = server.members.cache.get(messageAuthor.id).roles.cache;
-
-			if (!memberRoles.some(roles => nonCadet.includes(roles.id))) {
-				const successEmojiObj = server.emojis.cache.find(emoji => emoji.name === successEmoji);
-				msg.react(successEmojiObj).catch(error => debugError(error, `Error reacting to [message](${msg.url}) in DMs.`));
-
-				helpEmbed.setTitle(`Command: ${pCmd(cmds.leave)}`);
-				helpEmbed.setColor(colours.pronto);
-				helpEmbed.setDescription(cmds.leave.help);
-				messageAuthor.send(helpEmbed);
-			}
-
-			else dmCmdError(msg);
-			return;
+			memberRoles = server.members.cache.get(messageAuthor.id).roles.cache;
 		}
+
+		else if (msg.guild) memberRoles = msg.member.roles.cache;
 
 		if (msg.guild) msg.delete().catch(error => debugError(error, `Error deleting message in ${msg.channel}.`, 'Message', msg.content));
 
 		let commandList = cmdsList.all;
-		const memberRoles = msg.member.roles.cache;
 
 		if (cmd === cmds.help.cmd) createHelpEmbed(cmds.help);
 
@@ -87,6 +73,17 @@ module.exports = {
 		if (!cmdHelp) {
 			const dev = bot.users.cache.get(devID);
 
+			if (!msg.guild) {
+				if (cmd) {
+					const errorEmojiObj = server.emojis.cache.find(emoji => emoji.name === errorEmoji);
+					msg.react(errorEmojiObj).catch(error => debugError(error, `Error reacting to message in DMs.`));
+				}
+				else {
+					const successEmojiObj = server.emojis.cache.find(emoji => emoji.name === successEmoji);
+					msg.react(successEmojiObj).catch(error => debugError(error, `Error reacting to message in DMs.`));
+				}
+			}
+
 			helpEmbed.setTitle('Commands List');
 			helpEmbed.setThumbnail('https://i.imgur.com/EzmJVyV.png');
 			helpEmbed.setColor(colours.pronto);
@@ -100,13 +97,21 @@ module.exports = {
 			messageAuthor.send(helpEmbed).catch(error => dmError(msg, error));
 		}
 
-		else msg.channel.send(helpEmbed);
+		else if (msg.guild) msg.channel.send(helpEmbed);
+		
+		else if (!helpEmbed.description.includes('Allowed Roles')) {
+			const successEmojiObj = server.emojis.cache.find(emoji => emoji.name === successEmoji);
+			msg.react(successEmojiObj).catch(error => debugError(error, `Error reacting to message in DMs.`));
+			messageAuthor.send(helpEmbed).catch(error => dmError(msg, error));
+		}
+
+		else dmCmdError(msg, 'hasRole');
 
 		function createHelpEmbed(command) {
 			helpEmbed.setTitle(`Command: ${pCmd(command)}`);
 			helpEmbed.setColor(colours.pronto);
 			helpEmbed.setDescription(command.help);
-			helpEmbed.setFooter(`Requested by ${msg.member.displayName}`);
+			if (msg.guild) helpEmbed.setFooter(`Requested by ${msg.member.displayName}`);
 			cmdHelp = true;
 		}
 	},

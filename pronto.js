@@ -75,13 +75,14 @@ const onMessage = msg => {
 
 	if (msg.author.bot || !msg.content.startsWith(prefix)) return;
 
-	if (!msg.guild && !dmCmds.includes(msg.content)) {
-		dmCmdError(msg);
-		return;
-	}
-
 	const args = msg.content.split(/ +/);
 	const command = args.shift().toLowerCase().replace(prefix, '');
+
+	if (!msg.guild && !dmCmds.includes(command)) {
+		if (bot.commands.has(command)) dmCmdError(msg, 'noDM');
+		else dmCmdError(msg);
+		return;
+	}
 
 	if (!bot.commands.has(command)) {
 		const regExp = /[a-zA-Z]/g;
