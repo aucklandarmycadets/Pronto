@@ -22,7 +22,7 @@ module.exports = {
 		if (!msg.guild) {
 			if (!server.available) {
 				const errorEmojiObj = server.emojis.cache.find(emoji => emoji.name === errorEmoji);
-				msg.react(errorEmojiObj).catch(error => debugError(error, `Error reacting to message in DMs.`));
+				msg.react(errorEmojiObj).catch(error => debugError(error, 'Error reacting to message in DMs.'));
 				embedScaffold(messageAuthor, 'There was an error reaching the server, please try again later.', colours.error, 'dm');
 				return;
 			}
@@ -76,11 +76,11 @@ module.exports = {
 			if (!msg.guild) {
 				if (cmd) {
 					const errorEmojiObj = server.emojis.cache.find(emoji => emoji.name === errorEmoji);
-					msg.react(errorEmojiObj).catch(error => debugError(error, `Error reacting to message in DMs.`));
+					msg.react(errorEmojiObj).catch(error => debugError(error, 'Error reacting to message in DMs.'));
 				}
 				else {
 					const successEmojiObj = server.emojis.cache.find(emoji => emoji.name === successEmoji);
-					msg.react(successEmojiObj).catch(error => debugError(error, `Error reacting to message in DMs.`));
+					msg.react(successEmojiObj).catch(error => debugError(error, 'Error reacting to message in DMs.'));
 				}
 			}
 
@@ -98,10 +98,10 @@ module.exports = {
 		}
 
 		else if (msg.guild) msg.channel.send(helpEmbed);
-		
+
 		else if (!helpEmbed.description.includes('Allowed Roles')) {
 			const successEmojiObj = server.emojis.cache.find(emoji => emoji.name === successEmoji);
-			msg.react(successEmojiObj).catch(error => debugError(error, `Error reacting to message in DMs.`));
+			msg.react(successEmojiObj).catch(error => debugError(error, 'Error reacting to message in DMs.'));
 			messageAuthor.send(helpEmbed).catch(error => dmError(msg, error));
 		}
 

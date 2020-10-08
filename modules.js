@@ -6,7 +6,6 @@ const dateFormat = require('dateformat');
 const config = require('./config');
 const { config: { prefix: pref, dateOutput }, ids: { serverID, debugID, administratorID } } = config;
 const { emojis: { errorEmoji }, colours } = config;
-const { validCommands } = require('./pronto');
 
 let bot;
 
@@ -83,7 +82,7 @@ const debugError = (error, errorMsg, fieldTitle, fieldContent) => {
 const dmCmdError = (msg, type) => {
 	const server = bot.guilds.cache.get(serverID);
 	const errorEmojiObj = server.emojis.cache.find(emoji => emoji.name === errorEmoji);
-	msg.react(errorEmojiObj).catch(error => debugError(error, `Error reacting to message in DMs.`));
+	msg.react(errorEmojiObj).catch(error => debugError(error, 'Error reacting to message in DMs.'));
 	if (type === 'noPerms') embedScaffold(msg.author, 'You do not have access to that command.', colours.error, 'dm');
 	else if (type === 'hasRole') embedScaffold(msg.author, 'Please use a server channel for that command.', colours.error, 'dm');
 	else if (type === 'noDM') embedScaffold(msg.author, 'That command cannot be used in DMs, or you have insufficient permissions.', colours.error, 'dm');
