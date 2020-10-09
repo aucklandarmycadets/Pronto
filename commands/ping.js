@@ -6,6 +6,7 @@ const { cmds: { ping } } = require('../cmds');
 
 module.exports = {
 	name: ping.cmd,
+	aliases: ping.aliases,
 	description: ping.desc,
 	allowDM: ping.allowDM,
 	roles: ping.roles,

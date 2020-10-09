@@ -9,6 +9,7 @@ const { formatAge, debugError } = require('../modules');
 
 module.exports = {
 	name: restart.cmd,
+	aliases: restart.aliases,
 	description: restart.desc,
 	allowDM: restart.allowDM,
 	roles: restart.roles,

@@ -79,14 +79,14 @@ const onMessage = msg => {
 	const msgCmd = args.shift().toLowerCase().replace(prefix, '');
 	const helpCmd = bot.commands.get(help.cmd);
 
-	if (!bot.commands.has(msgCmd)) {
+	const cmd = bot.commands.get(msgCmd) || bot.commands.find(command => command.aliases && command.aliases.includes(msgCmd));
+
+	if (!cmd) {
 		const regExp = /[a-zA-Z]/g;
 		if (!regExp.test(msgCmd)) return;
 		else if (!msg.guild) return dmCmdError(msg);
 		else return helpCmd.execute(msg, args);
 	}
-
-	const cmd = bot.commands.get(msgCmd);
 
 	const hasPerms = cmdPermsCheck(msg, cmd);
 	if (msg.guild && !hasPerms) return helpCmd.execute(msg, args);

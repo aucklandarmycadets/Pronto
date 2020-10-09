@@ -9,6 +9,7 @@ const { cmdError, debugError } = require('../modules');
 
 module.exports = {
 	name: connected.cmd,
+	aliases: connected.aliases,
 	description: connected.desc,
 	allowDM: connected.allowDM,
 	roles: connected.roles,

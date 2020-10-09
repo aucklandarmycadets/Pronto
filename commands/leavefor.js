@@ -9,6 +9,7 @@ const { pCmd, capitalise, cmdError, dmError, debugError } = require('../modules'
 
 module.exports = {
 	name: leaveFor.cmd,
+	aliases: leaveFor.aliases,
 	description: leaveFor.desc,
 	allowDM: leaveFor.allowDM,
 	roles: leaveFor.roles,

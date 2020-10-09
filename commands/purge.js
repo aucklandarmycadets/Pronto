@@ -4,6 +4,7 @@ const { cmdError, debugError, embedScaffold } = require('../modules');
 
 module.exports = {
 	name: purge.cmd,
+	aliases: purge.aliases,
 	description: purge.desc,
 	allowDM: purge.allowDM,
 	roles: purge.roles,

@@ -9,6 +9,7 @@ const { cmdError, debugError, embedScaffold } = require('../modules');
 
 module.exports = {
 	name: archive.cmd,
+	aliases: archive.aliases,
 	description: archive.desc,
 	allowDM: archive.allowDM,
 	roles: archive.roles,

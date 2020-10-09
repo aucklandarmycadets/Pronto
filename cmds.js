@@ -33,7 +33,7 @@ const helpText = (object, forList) => {
 
 	for (let i = 0; i < objProperties.length; i++) {
 		helpString += `${startFormat}${objProperties[i]}${endFormat}${objValues[i]}`;
-		
+
 		if (i < (objProperties.length - 1)) helpString += '\n';
 	}
 	return helpString;
@@ -45,9 +45,16 @@ const errorText = (helpTxt, cmd) => {
 	});
 };
 
+const pAls = cmd => {
+	const als = [...cmd.aliases];
+	for (let i = 0; i < als.length; i++) als[i] = `${pref}${als[i]}`;
+	return als.join(', ');
+};
+
 const cmds = {
 	ping: {
 		cmd: 'ping',
+		aliases: ['p'],
 		desc: 'Test the latency of the bot.',
 		allowDM: true,
 		roles: [],
@@ -56,6 +63,7 @@ const cmds = {
 		get help() {
 			delete this.help;
 			return this.help = helpText({
+				'Aliases': pAls(this),
 				'Description': this.desc,
 				'Usage': pCmd(this),
 			});
@@ -63,6 +71,7 @@ const cmds = {
 	},
 	uptime: {
 		cmd: 'uptime',
+		aliases: ['up'],
 		desc: 'Time since last restart.',
 		allowDM: true,
 		roles: [],
@@ -71,6 +80,7 @@ const cmds = {
 		get help() {
 			delete this.help;
 			return this.help = helpText({
+				'Aliases': pAls(this),
 				'Description': this.desc,
 				'Usage': pCmd(this),
 			});
@@ -78,6 +88,7 @@ const cmds = {
 	},
 	restart: {
 		cmd: 'restart',
+		aliases: ['new', 'kill', 'update'],
 		desc: 'Restart the bot.',
 		allowDM: true,
 		roles: [],
@@ -86,6 +97,7 @@ const cmds = {
 		get help() {
 			delete this.help;
 			return this.help = helpText({
+				'Aliases': pAls(this),
 				'Description': this.desc,
 				'Usage': pCmd(this),
 			});
@@ -93,6 +105,7 @@ const cmds = {
 	},
 	help: {
 		cmd: 'help',
+		aliases: ['command', 'commands'],
 		desc: {
 			general: 'Get help with using Pronto.',
 			unqualified: 'List of the commands you can use.',
@@ -105,6 +118,7 @@ const cmds = {
 		get help() {
 			delete this.help;
 			return this.help = helpText({
+				'Aliases': pAls(this),
 				'Description': this.desc.general,
 				'Usage': `${pCmd(this)} [command]`,
 				'Examples': `\n${pCmd(this)}\n${pCmd(this)} ${cmds.leave.cmd}`,
@@ -113,6 +127,7 @@ const cmds = {
 	},
 	leave: {
 		cmd: 'leave',
+		aliases: ['lv'],
 		desc: 'Submit a leave request.',
 		allowDM: false,
 		roles: [],
@@ -121,6 +136,7 @@ const cmds = {
 		get help() {
 			delete this.help;
 			return this.help = helpText({
+				'Aliases': pAls(this),
 				'Description': this.desc,
 				'Usage': `${pCmd(this)} <dates> <activity> <reason> [additional remarks]`,
 				'Example': `${pCmd(this)} 01 Jan for Parade Night due to an appointment`,
@@ -130,6 +146,7 @@ const cmds = {
 	},
 	leaveFor: {
 		cmd: 'leavefor',
+		aliases: ['lv4'],
 		desc: 'Submit a leave request for another cadet.',
 		allowDM: false,
 		roles: tacPlus,
@@ -138,6 +155,7 @@ const cmds = {
 		get help() {
 			delete this.help;
 			return this.help = helpText({
+				'Aliases': pAls(this),
 				'Description': this.desc,
 				'Usage': `${pCmd(this)} <user> <dates> <activity> <reason> [additional remarks]`,
 				'Example': `${pCmd(this)} <@${devID}> 01 Jan for Parade Night due to an appointment`,
@@ -148,6 +166,7 @@ const cmds = {
 	},
 	attendance: {
 		cmd: 'attendance',
+		aliases: ['att', 'attdnce'],
 		desc: 'Submit an attendance register.',
 		allowDM: false,
 		roles: tacPlus,
@@ -156,6 +175,7 @@ const cmds = {
 		get help() {
 			delete this.help;
 			return this.help = helpText({
+				'Aliases': pAls(this),
 				'Description': this.desc,
 				'Usage': `${pCmd(this)} <message>`,
 				'Allowed Roles': rolesOutput(tacPlus),
@@ -165,6 +185,7 @@ const cmds = {
 	},
 	connected: {
 		cmd: 'connected',
+		aliases: ['cnnct', 'cnnctd'],
 		desc: 'List of members connected to a voice channel.',
 		allowDM: false,
 		roles: sgtPlus,
@@ -173,6 +194,7 @@ const cmds = {
 		get help() {
 			delete this.help;
 			return this.help = helpText({
+				'Aliases': pAls(this),
 				'Description': this.desc,
 				'Usage': `${pCmd(this)} <voice channel>`,
 				'Example': `${pCmd(this)} <#${classroomID}>`,
@@ -183,6 +205,7 @@ const cmds = {
 	},
 	archive: {
 		cmd: 'archive',
+		aliases: ['archv'],
 		desc: 'Archive a text channel.',
 		allowDM: false,
 		roles: cqmsPlus,
@@ -191,6 +214,7 @@ const cmds = {
 		get help() {
 			delete this.help;
 			return this.help = helpText({
+				'Aliases': pAls(this),
 				'Description': this.desc,
 				'Usage': `${pCmd(this)} <text channel>`,
 				'Example': `${pCmd(this)} <#${tacticalID}>`,
@@ -201,6 +225,7 @@ const cmds = {
 	},
 	purge: {
 		cmd: 'purge',
+		aliases: ['del', 'delete'],
 		desc: 'Delete a number of messages from a channel.',
 		allowDM: false,
 		roles: adjPlus,
@@ -209,6 +234,7 @@ const cmds = {
 		get help() {
 			delete this.help;
 			return this.help = helpText({
+				'Aliases': pAls(this),
 				'Description': this.desc,
 				'Usage': `${pCmd(this)} <count> [user]`,
 				'Examples': `\n${pCmd(this)} 10\n${pCmd(this)} 5 <@${devID}>`,

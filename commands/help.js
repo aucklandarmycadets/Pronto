@@ -8,6 +8,7 @@ const { cmdPermsCheck, dmError, debugError, dmCmdError, embedScaffold } = requir
 
 module.exports = {
 	name: help.cmd,
+	aliases: help.aliases,
 	description: help.desc.general,
 	allowDM: help.allowDM,
 	roles: help.roles,
@@ -32,15 +33,12 @@ module.exports = {
 
 		if (msg.guild) msg.delete().catch(error => debugError(error, `Error deleting message in ${msg.channel}.`, 'Message', msg.content));
 
-		if (bot.commands.has(msgCmd)) {
-			const cmd = bot.commands.get(msgCmd);
-			cmdPermsCheck(msg, cmd) ? sendHelpEmbed(cmd) : dmCmdError(msg, 'noPerms');
-		}
+		const cmd = bot.commands.get(msgCmd) || bot.commands.find(command => command.aliases && command.aliases.includes(msgCmd));
 
-		else if (!bot.commands.has(msgCmd)) {
+		if (cmd) cmdPermsCheck(msg, cmd) ? sendHelpEmbed(cmd) : dmCmdError(msg, 'noPerms');
+
+		else if (!cmd) {
 			let commandList;
-
-			console.log('here');
 
 			for (const values of Object.values(cmdsList)) {
 				if (!values.type) commandList = values.cmds;
