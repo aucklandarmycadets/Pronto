@@ -376,6 +376,7 @@ const onRoleChange = (oldRole, newRole) => {
 			(oldPerms.includes(changedPerms[i])) ? removedPerms.push(changedPerms[i]) : addedPerms.push(changedPerms[i]);
 		}
 
+		if (!addedPerms.length && !removedPerms.length) return;
 		if (addedPerms.length > 0) logEmbed.addField('Added Permissions', addedPerms);
 		if (removedPerms.length > 0) logEmbed.addField('Removed Permissions', removedPerms);
 
