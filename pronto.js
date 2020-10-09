@@ -46,19 +46,26 @@ bot.on('warn', info => onDevInfo(info, 'Warn'));
 const onReady = () => {
 	console.info(`Logged in as ${bot.user.tag}!`);
 	initialise(bot);
+	const botUser = bot.user;
 
 	devDirectChannel = bot.users.cache.get(devID);
+
+	const readyEmbed = new Discord.MessageEmbed()
+		.setAuthor(botUser.tag, botUser.avatarURL())
+		.setFooter(`${dateFormat(Date.now(), dateOutput)} | Pronto v${version}`);
+
+	if (!bot.guilds.cache.get(serverID)) {
+		readyEmbed.setColor(colours.error);
+		readyEmbed.setDescription('**Error reaching the server, check the IDs!**');
+		return devDirectChannel.send(readyEmbed);
+	}
+
 	logChannel = bot.channels.cache.get(logID);
 	recruitingChannel = bot.channels.cache.get(recruitingID);
 	newMembersChannel = bot.channels.cache.get(newMembersID);
 
-	const botUser = bot.user;
-
-	const readyEmbed = new Discord.MessageEmbed()
-		.setColor(colours.success)
-		.setAuthor(botUser.tag, botUser.avatarURL())
-		.setDescription('**Ready to go!**')
-		.setFooter(`${dateFormat(Date.now(), dateOutput)} | Pronto v${version}`);
+	readyEmbed.setColor(colours.success);
+	readyEmbed.setDescription('**Ready to go!**');
 	devDirectChannel.send(readyEmbed);
 
 	botUser.setActivity(`the radio net | ${pCmd(help)}`, { type: 'LISTENING' });
