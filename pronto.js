@@ -7,7 +7,7 @@ bot.commands = new Discord.Collection();
 const botCommands = require('./commands');
 const pairs = require('./channelPairs');
 const dateFormat = require('dateformat');
-const version = '2.1.0';
+const version = '2.1.1';
 
 Object.keys(botCommands).map(key => {
 	bot.commands.set(botCommands[key].cmd, botCommands[key]);
@@ -54,7 +54,7 @@ const onReady = () => {
 	recruiting = bot.channels.cache.get(recruitingID);
 	newMembers = bot.channels.cache.get(newMembersID);
 
-	if (!bot.guilds.cache.get(serverID)) embedScaffold(dev, '**Error reaching the server, check the IDs!**', colours.error, 'dev');
+	if (!bot.guilds.cache.get(serverID)) return embedScaffold(dev, '**Error reaching the server, check the IDs!**', colours.error, 'dev');
 	else embedScaffold(dev, '**Ready to go!**', colours.success, 'dev');
 
 	bot.user.setActivity(`the radio net | ${pCmd(help)}`, { type: 'LISTENING' });
