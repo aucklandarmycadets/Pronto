@@ -1,36 +1,32 @@
-const { ids: { adjPlus }, emojis: { errorEmoji }, colours } = require('../config');
-const { cmds: { help, purge } } = require('../cmds');
+const { emojis: { errorEmoji }, colours } = require('../config');
+const { cmds: { purge } } = require('../cmds');
 const { cmdError, debugError, embedScaffold } = require('../modules');
 
 module.exports = {
 	name: purge.cmd,
 	description: purge.desc,
+	allowDM: purge.allowDM,
+	roles: purge.roles,
+	noRoles: purge.noRoles,
+	devOnly: purge.devOnly,
+	help: purge.help,
 	execute(msg, args) {
 		'use strict';
 
 		const { bot } = require('../pronto.js');
-		const memberRoles = msg.member.roles.cache;
 		const userMentions = msg.mentions.users;
 
-		if (!memberRoles.some(roles => adjPlus.includes(roles.id))) {
-			bot.commands.get(help.cmd).execute(msg, args);
-			return;
-		}
-
 		if (args.length === 0) {
-			cmdError(msg, 'Insufficient arguments.', purge.error);
-			return;
+			return cmdError(msg, 'Insufficient arguments.', purge.error);
 		}
 
 		else if (userMentions.size > 1) {
-			cmdError(msg, 'You cannot purge multiple users simultaneously.', purge.error);
-			return;
+			return cmdError(msg, 'You cannot purge multiple users simultaneously.', purge.error);
 		}
 
 
 		else if (args.length > 2) {
-			cmdError(msg, 'Too many arguments.', purge.error);
-			return;
+			return cmdError(msg, 'Too many arguments.', purge.error);
 		}
 
 		const user = userMentions.first();

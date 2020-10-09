@@ -18,8 +18,8 @@ const config = require('./config');
 const { config: { prefix, permsInt, dateOutput, version } } = config;
 const { ids: { serverID, devID, logID, recruitingID, newMembersID, visitorID, adjPlus } } = config;
 const { emojis: { successEmoji }, colours } = config;
-const { cmds: { help, purge }, dmCmds } = require('./cmds');
-const { initialise, pCmd, rolesOutput, formatAge, debugError, dmCmdError, embedScaffold } = require('./modules');
+const { cmds: { help, purge } } = require('./cmds');
+const { initialise, pCmd, rolesOutput, cmdPermsCheck, formatAge, debugError, dmCmdError, embedScaffold } = require('./modules');
 
 let devDirectChannel, logChannel, recruitingChannel, newMembersChannel;
 
@@ -76,28 +76,29 @@ const onMessage = msg => {
 	if (msg.author.bot || !msg.content.startsWith(prefix)) return;
 
 	const args = msg.content.split(/ +/);
-	const command = args.shift().toLowerCase().replace(prefix, '');
+	const msgCmd = args.shift().toLowerCase().replace(prefix, '');
+	const helpCmd = bot.commands.get(help.cmd);
 
-	if (!msg.guild && !dmCmds.includes(command)) {
-		if (bot.commands.has(command)) dmCmdError(msg, 'noDM');
-		else dmCmdError(msg);
-		return;
-	}
-
-	if (!bot.commands.has(command)) {
+	if (!bot.commands.has(msgCmd)) {
 		const regExp = /[a-zA-Z]/g;
-
-		if (regExp.test(command)) bot.commands.get(help.cmd).execute(msg, args);
-
-		return;
+		if (!regExp.test(msgCmd)) return;
+		else if (!msg.guild) return dmCmdError(msg);
+		else return helpCmd.execute(msg, args);
 	}
+
+	const cmd = bot.commands.get(msgCmd);
+
+	const hasPerms = cmdPermsCheck(msg, cmd);
+	if (msg.guild && !hasPerms) return helpCmd.execute(msg, args);
+	else if (!msg.guild && !hasPerms) return dmCmdError(msg, 'noPerms');
+	else if (!msg.guild && !cmd.allowDM) return dmCmdError(msg, 'noDM');
 
 	try {
-		bot.commands.get(command).execute(msg, args);
+		cmd.execute(msg, args);
 	}
 
 	catch (error) {
-		debugError(error, `Error executing ${command} :c`);
+		debugError(error, `Error executing ${cmd} :c`);
 	}
 };
 
@@ -202,11 +203,8 @@ const onVoiceUpdate = (oldState, newState) => {
 	const logEmbed = new Discord.MessageEmbed()
 		.setAuthor(newMember.displayName, newMember.user.displayAvatarURL());
 
-	let oldID;
-	let newID;
-
-	if (oldState.channel) oldID = oldState.channelID;
-	if (newState.channel) newID = newState.channelID;
+	const oldID = (oldState.channel) ? oldState.channelID : null;
+	const newID = (newState.channel) ? newState.channelID : null;
 
 	if (oldID && newID) {
 		logEmbed.setColor(colours.warn);
@@ -375,8 +373,7 @@ const onRoleChange = (oldRole, newRole) => {
 		const addedPerms = [];
 
 		for (let i = 0; i < changedPerms.length; i++) {
-			if (oldPerms.includes(changedPerms[i])) removedPerms.push(changedPerms[i]);
-			else addedPerms.push(changedPerms[i]);
+			(oldPerms.includes(changedPerms[i])) ? removedPerms.push(changedPerms[i]) : addedPerms.push(changedPerms[i]);
 		}
 
 		if (addedPerms.length > 0) logEmbed.addField('Added Permissions', addedPerms);

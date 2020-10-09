@@ -1,5 +1,7 @@
+'use strict';
+
 const config = require('./config');
-const { ids: { devID, tacticalID, classroomID, tacPlus, sgtPlus, cqmsPlus, adjPlus } } = config;
+const { ids: { devID, tacticalID, classroomID, nonCadet, tacPlus, sgtPlus, cqmsPlus, adjPlus } } = config;
 const { config: { prefix: pref } } = config;
 const { pCmd, rolesOutput } = require('./modules');
 
@@ -19,12 +21,10 @@ const commandText = commands => {
 
 const helpText = (object, forList) => {
 	let helpString = '';
-	let startFormat, endFormat;
 	const objProperties = [];
 	const objValues = [];
 
-	if (forList) [startFormat, endFormat] = ['`', '` - '];
-	else [startFormat, endFormat] = ['**', ':** '];
+	const [startFormat, endFormat] = (forList) ? ['`', '` - '] : ['**', ':** '];
 
 	for (const [property, value] of Object.entries(object)) {
 		objProperties.push(property);
@@ -33,7 +33,7 @@ const helpText = (object, forList) => {
 
 	for (let i = 0; i < objProperties.length; i++) {
 		helpString += `${startFormat}${objProperties[i]}${endFormat}${objValues[i]}`;
-
+		
 		if (i < (objProperties.length - 1)) helpString += '\n';
 	}
 	return helpString;
@@ -49,6 +49,10 @@ const cmds = {
 	ping: {
 		cmd: 'ping',
 		desc: 'Test the latency of the bot.',
+		allowDM: true,
+		roles: [],
+		noRoles: [],
+		devOnly: true,
 		get help() {
 			delete this.help;
 			return this.help = helpText({
@@ -60,6 +64,10 @@ const cmds = {
 	uptime: {
 		cmd: 'uptime',
 		desc: 'Time since last restart.',
+		allowDM: true,
+		roles: [],
+		noRoles: [],
+		devOnly: true,
 		get help() {
 			delete this.help;
 			return this.help = helpText({
@@ -71,6 +79,10 @@ const cmds = {
 	restart: {
 		cmd: 'restart',
 		desc: 'Restart the bot.',
+		allowDM: true,
+		roles: [],
+		noRoles: [],
+		devOnly: true,
 		get help() {
 			delete this.help;
 			return this.help = helpText({
@@ -86,6 +98,10 @@ const cmds = {
 			unqualified: 'List of the commands you can use.',
 			qualified: 'Get help with a specific command.',
 		},
+		allowDM: true,
+		roles: [],
+		noRoles: [],
+		devOnly: false,
 		get help() {
 			delete this.help;
 			return this.help = helpText({
@@ -98,6 +114,10 @@ const cmds = {
 	leave: {
 		cmd: 'leave',
 		desc: 'Submit a leave request.',
+		allowDM: false,
+		roles: [],
+		noRoles: nonCadet,
+		devOnly: false,
 		get help() {
 			delete this.help;
 			return this.help = helpText({
@@ -111,6 +131,10 @@ const cmds = {
 	leaveFor: {
 		cmd: 'leavefor',
 		desc: 'Submit a leave request for another cadet.',
+		allowDM: false,
+		roles: tacPlus,
+		noRoles: [],
+		devOnly: false,
 		get help() {
 			delete this.help;
 			return this.help = helpText({
@@ -125,6 +149,10 @@ const cmds = {
 	attendance: {
 		cmd: 'attendance',
 		desc: 'Submit an attendance register.',
+		allowDM: false,
+		roles: tacPlus,
+		noRoles: [],
+		devOnly: false,
 		get help() {
 			delete this.help;
 			return this.help = helpText({
@@ -138,6 +166,10 @@ const cmds = {
 	connected: {
 		cmd: 'connected',
 		desc: 'List of members connected to a voice channel.',
+		allowDM: false,
+		roles: sgtPlus,
+		noRoles: [],
+		devOnly: false,
 		get help() {
 			delete this.help;
 			return this.help = helpText({
@@ -152,6 +184,10 @@ const cmds = {
 	archive: {
 		cmd: 'archive',
 		desc: 'Archive a text channel.',
+		allowDM: false,
+		roles: cqmsPlus,
+		noRoles: [],
+		devOnly: false,
 		get help() {
 			delete this.help;
 			return this.help = helpText({
@@ -166,6 +202,10 @@ const cmds = {
 	purge: {
 		cmd: 'purge',
 		desc: 'Delete a number of messages from a channel.',
+		allowDM: false,
+		roles: adjPlus,
+		noRoles: [],
+		devOnly: false,
 		get help() {
 			delete this.help;
 			return this.help = helpText({
@@ -179,44 +219,63 @@ const cmds = {
 	},
 };
 
-const dmCmds = [
-	cmds.ping.cmd,
-	cmds.uptime.cmd,
-	cmds.restart.cmd,
-	cmds.help.cmd,
-];
-
 const cmdsList = {
-	all: commandText(['help']),
-
-	get cdt() {
-		delete this.cdt;
-		return this.cdt = cmdsList.all + '\n' + commandText([cmds.leave]);
+	all: {
+		type: null,
+		ids: null,
+		cmds: commandText(['help']),
 	},
-	get tac() {
-		delete this.tac;
-		return this.tac = cmdsList.cdt + '\n' + commandText([cmds.leaveFor, cmds.attendance]);
+	nonCadet: {
+		type: 'noRole',
+		ids: nonCadet,
+		get cmds() {
+			delete this.cmds;
+			return this.cmds = cmdsList.all.cmds + '\n' + commandText([cmds.leave]);
+		},
 	},
-	get sgt() {
-		delete this.sgt;
-		return this.sgt = cmdsList.tac + '\n' + commandText([cmds.connected]);
+	tacPlus: {
+		type: 'role',
+		ids: tacPlus,
+		get cmds() {
+			delete this.cmds;
+			return this.cmds = cmdsList.nonCadet.cmds + '\n' + commandText([cmds.leaveFor, cmds.attendance]);
+		},
 	},
-	get cqms() {
-		delete this.cqms;
-		return this.cqms = cmdsList.sgt + '\n' + commandText([cmds.archive]);
+	sgtPlus: {
+		type: 'role',
+		ids: sgtPlus,
+		get cmds() {
+			delete this.cmds;
+			return this.cmds = cmdsList.tacPlus.cmds + '\n' + commandText([cmds.connected]);
+		},
 	},
-	get adj() {
-		delete this.adj;
-		return this.adj = cmdsList.cqms + '\n' + commandText([cmds.purge]);
+	cqmsPlus: {
+		type: 'role',
+		ids: cqmsPlus,
+		get cmds() {
+			delete this.cmds;
+			return this.cmds = cmdsList.sgtPlus.cmds + '\n' + commandText([cmds.archive]);
+		},
 	},
-	get dev() {
-		delete this.dev;
-		return this.dev = cmdsList.adj + '\n' + commandText([cmds.ping, cmds.uptime, cmds.restart]);
+	adjPlus: {
+		type: 'role',
+		ids: adjPlus,
+		get cmds() {
+			delete this.cmds;
+			return this.cmds = cmdsList.cqmsPlus.cmds + '\n' + commandText([cmds.purge]);
+		},
+	},
+	dev: {
+		type: 'user',
+		ids: devID,
+		get cmds() {
+			delete this.cmds;
+			return this.cmds = cmdsList.adjPlus.cmds + '\n' + commandText([cmds.ping, cmds.uptime, cmds.restart]);
+		},
 	},
 };
 
 module.exports = {
 	cmds: cmds,
-	dmCmds: dmCmds,
 	cmdsList: cmdsList,
 };
