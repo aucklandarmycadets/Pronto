@@ -4,7 +4,6 @@ const config = {
 	prefix: '!',
 	permsInt: 1879141584,
 	dateOutput: 'HHMM "h" ddd, dd mmm yy',
-	version: '2.0.5',
 };
 
 const ids = {

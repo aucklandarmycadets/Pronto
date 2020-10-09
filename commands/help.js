@@ -4,7 +4,7 @@ const config = require('../config');
 const { ids: { serverID, devID, adjPlus } } = config;
 const { emojis: { successEmoji, errorEmoji }, colours } = config;
 const { cmds: { help }, cmdsList } = require('../cmds');
-const { pCmd, cmdPermsCheck, dmError, debugError, dmCmdError, embedScaffold } = require('../modules');
+const { pCmd, cmdPermsCheck, sendMsg, dmError, debugError, dmCmdError, embedScaffold } = require('../modules');
 
 module.exports = {
 	cmd: help.cmd,
@@ -45,7 +45,7 @@ module.exports = {
 			helpEmbed.setDescription(command.help);
 			if (msg.guild) {
 				helpEmbed.setFooter(`Requested by ${msg.member.displayName}`);
-				return msg.channel.send(helpEmbed);
+				return sendMsg(msg.channel, helpEmbed);
 			}
 
 			else if (!helpEmbed.description.includes('Allowed Roles')) {

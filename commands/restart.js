@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const dateFormat = require('dateformat');
 
 const config = require('../config');
-const { config: { dateOutput, version }, ids: { serverID, devID } } = config;
+const { config: { dateOutput }, ids: { serverID, devID } } = config;
 const { emojis: { successEmoji }, colours } = config;
 const { cmds: { restart } } = require('../cmds');
 const { formatAge, debugError } = require('../modules');
@@ -19,9 +19,9 @@ module.exports = {
 	execute(msg) {
 		'use strict';
 
-		const { bot } = require('../pronto.js');
+		const { bot, version } = require('../pronto.js');
 
-		const devDirectChannel = bot.users.cache.get(devID);
+		const dev = bot.users.cache.get(devID);
 		const server = bot.guilds.cache.get(serverID);
 		const successEmojiObj = server.emojis.cache.find(emoji => emoji.name === successEmoji);
 
@@ -33,6 +33,9 @@ module.exports = {
 			.addField('Uptime', formatAge(bot.uptime))
 			.setColor(colours.warn)
 			.setFooter(`${dateFormat(msg.createdAt, dateOutput)} | Pronto v${version}`);
-		devDirectChannel.send(restartEmbed).then(() => process.exit());
+
+		dev.send(restartEmbed)
+			.then(() => process.exit())
+			.catch(error => debugError(error, `Error sending DM to ${dev}.`));
 	},
 };

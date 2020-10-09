@@ -1,9 +1,9 @@
 const Discord = require('discord.js');
 const dateFormat = require('dateformat');
 
-const { config: { dateOutput, version }, colours } = require('../config');
+const { config: { dateOutput }, colours } = require('../config');
 const { cmds: { uptime } } = require('../cmds');
-const { formatAge } = require('../modules');
+const { formatAge, sendMsg } = require('../modules');
 
 module.exports = {
 	cmd: uptime.cmd,
@@ -17,11 +17,12 @@ module.exports = {
 	execute(msg) {
 		'use strict';
 
-		const { bot } = require('../pronto.js');
+		const { bot, version } = require('../pronto.js');
 
 		const uptimeEmbed = new Discord.MessageEmbed()
 			.setColor(colours.success)
 			.setFooter(`${formatAge(bot.uptime)} | ${dateFormat(msg.createdAt, dateOutput)} | Pronto v${version}`);
-		msg.channel.send(uptimeEmbed);
+
+		sendMsg(msg.channel, uptimeEmbed);
 	},
 };
