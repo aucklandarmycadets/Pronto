@@ -35,9 +35,29 @@ module.exports = {
 
 		const cmd = bot.commands.get(msgCmd) || bot.commands.find(command => command.aliases && command.aliases.includes(msgCmd));
 
-		if (cmd) cmdPermsCheck(msg, cmd) ? sendHelpEmbed(cmd) : dmCmdError(msg, 'noPerms');
+		if (cmd) cmdPermsCheck(msg, cmd) ? sendHelpEmbed(cmd) : (msg.guild) ? sendCmdList() : dmCmdError(msg, 'noPerms');
 
-		else if (!cmd) {
+		else if (!cmd) sendCmdList();
+
+		function sendHelpEmbed(command) {
+			helpEmbed.setTitle(`Command: ${prefix}${command.name}`);
+			helpEmbed.setColor(colours.pronto);
+			helpEmbed.setDescription(command.help);
+			if (msg.guild) {
+				helpEmbed.setFooter(`Requested by ${msg.member.displayName}`);
+				return msg.channel.send(helpEmbed);
+			}
+
+			else if (!helpEmbed.description.includes('Allowed Roles')) {
+				const successEmojiObj = server.emojis.cache.find(emoji => emoji.name === successEmoji);
+				msg.react(successEmojiObj).catch(error => debugError(error, 'Error reacting to message in DMs.'));
+				return messageAuthor.send(helpEmbed).catch(error => dmError(msg, error));
+			}
+
+			else return dmCmdError(msg, 'hasRole');
+		}
+
+		function sendCmdList() {
 			let commandList;
 
 			for (const values of Object.values(cmdsList)) {
@@ -76,24 +96,6 @@ module.exports = {
 			}
 
 			messageAuthor.send(helpEmbed).catch(error => dmError(msg, error));
-		}
-
-		function sendHelpEmbed(command) {
-			helpEmbed.setTitle(`Command: ${prefix}${command.name}`);
-			helpEmbed.setColor(colours.pronto);
-			helpEmbed.setDescription(command.help);
-			if (msg.guild) {
-				helpEmbed.setFooter(`Requested by ${msg.member.displayName}`);
-				return msg.channel.send(helpEmbed);
-			}
-
-			else if (!helpEmbed.description.includes('Allowed Roles')) {
-				const successEmojiObj = server.emojis.cache.find(emoji => emoji.name === successEmoji);
-				msg.react(successEmojiObj).catch(error => debugError(error, 'Error reacting to message in DMs.'));
-				return messageAuthor.send(helpEmbed).catch(error => dmError(msg, error));
-			}
-
-			else return dmCmdError(msg, 'hasRole');
 		}
 	},
 };

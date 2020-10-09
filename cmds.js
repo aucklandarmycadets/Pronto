@@ -105,7 +105,7 @@ const cmds = {
 	},
 	help: {
 		cmd: 'help',
-		aliases: ['command', 'commands'],
+		aliases: ['cmd', 'cmds', 'command', 'commands'],
 		desc: {
 			general: 'Get help with using Pronto.',
 			unqualified: 'List of the commands you can use.',

@@ -83,13 +83,13 @@ const formatAge = raw => {
 
 const dmError = (msg, error, debug) => {
 	console.error(`\`\`\`${error.stack}\`\`\``);
-	if (debug) embedScaffold(null, `Error sending direct message to ${msg.mentions.members.first()}.`, error, 'debug', 'More Information', '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)');
-	else embedScaffold(msg.channel, `${msg.author} I can't send direct messages to you!`, 'msg', 'More Information', '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)');
+	if (debug) embedScaffold(null, `Error sending direct message to ${msg.mentions.members.first()}.`, colours.error, 'debug', 'More Information', '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)');
+	else embedScaffold(msg.channel, `${msg.author} I can't send direct messages to you!`, colours.error, 'msg', 'More Information', '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)');
 };
 
 const debugError = (error, errorMsg, fieldTitle, fieldContent) => {
 	console.error(`\`\`\`${error.stack}\`\`\``);
-	embedScaffold(null, errorMsg, error, 'debug', fieldTitle, fieldContent);
+	embedScaffold(null, errorMsg, colours.error, 'debug', fieldTitle, fieldContent);
 };
 
 const dmCmdError = (msg, type) => {
