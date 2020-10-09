@@ -2,27 +2,27 @@ const Discord = require('discord.js');
 const dateFormat = require('dateformat');
 
 const config = require('../config');
-const { config: { dateOutput }, ids: { attendanceID, sgtPlus } } = config;
+const { config: { dateOutput }, ids: { attendanceID } } = config;
 const { emojis: { successEmoji }, colours } = config;
-const { cmds: { help, connected } } = require('../cmds');
+const { cmds: { connected } } = require('../cmds');
 const { cmdError, debugError } = require('../modules');
 
 module.exports = {
 	name: connected.cmd,
+	aliases: connected.aliases,
 	description: connected.desc,
-	execute(msg, args) {
+	allowDM: connected.allowDM,
+	roles: connected.roles,
+	noRoles: connected.noRoles,
+	devOnly: connected.devOnly,
+	help: connected.help,
+	execute(msg) {
 		'use strict';
 
 		const { bot } = require('../pronto.js');
-		const memberRoles = msg.member.roles.cache;
 		const channelMentions = msg.mentions.channels;
 		const numChannelMentions = channelMentions.size;
 		const channel = channelMentions.first();
-
-		if (!memberRoles.some(roles => sgtPlus.includes(roles.id))) {
-			bot.commands.get(help.cmd).execute(msg, args);
-			return;
-		}
 
 		if (numChannelMentions === 0) {
 			cmdError(msg, 'You must specify a voice channel.', connected.error, 'Note: Use the <#channelID> syntax!');
@@ -46,8 +46,7 @@ module.exports = {
 			}
 
 			if (connectedMembers.length === 0) {
-				cmdError(msg, `There are no members connected to ${channel}.`, connected.error);
-				return;
+				return cmdError(msg, `There are no members connected to ${channel}.`, connected.error);
 			}
 
 			msg.react(successEmojiObj).catch(error => debugError(error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));

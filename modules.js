@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 const dateFormat = require('dateformat');
 
 const config = require('./config');
-const { config: { prefix: pref, dateOutput }, ids: { serverID, debugID, administratorID } } = config;
+const { config: { prefix: pref, dateOutput }, ids: { serverID, devID, debugID, administratorID } } = config;
 const { emojis: { errorEmoji }, colours } = config;
 
 let bot;
@@ -28,6 +28,19 @@ const rolesOutput = (array, skipFormat) => {
 const capitalise = string => {
 	if (typeof string !== 'string') return '';
 	return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
+const cmdPermsCheck = (msg, cmd) => {
+	const server = bot.guilds.cache.get(serverID);
+	const authorID = msg.author.id;
+	const memberRoles = (msg.guild) ? msg.member.roles.cache : server.members.cache.get(authorID).roles.cache;
+
+	if ((cmd.noRoles.length && memberRoles.some(roles => cmd.noRoles.includes(roles.id)))
+	|| (cmd.roles.length && !memberRoles.some(roles => cmd.roles.includes(roles.id)))
+	|| (cmd.devOnly && authorID !== devID)) {
+		return false;
+	}
+	return true;
 };
 
 const cmdError = (msg, errMsg, cmdErr, footer) => {
@@ -70,13 +83,13 @@ const formatAge = raw => {
 
 const dmError = (msg, error, debug) => {
 	console.error(`\`\`\`${error.stack}\`\`\``);
-	if (debug) embedScaffold(null, `Error sending direct message to ${msg.mentions.members.first()}.`, error, 'debug', 'More Information', '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)');
-	else embedScaffold(msg.channel, `${msg.author} I can't send direct messages to you!`, 'msg', 'More Information', '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)');
+	if (debug) embedScaffold(null, `Error sending direct message to ${msg.mentions.members.first()}.`, colours.error, 'debug', 'More Information', '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)');
+	else embedScaffold(msg.channel, `${msg.author} I can't send direct messages to you!`, colours.error, 'msg', 'More Information', '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)');
 };
 
 const debugError = (error, errorMsg, fieldTitle, fieldContent) => {
 	console.error(`\`\`\`${error.stack}\`\`\``);
-	embedScaffold(null, errorMsg, error, 'debug', fieldTitle, fieldContent);
+	embedScaffold(null, errorMsg, colours.error, 'debug', fieldTitle, fieldContent);
 };
 
 const dmCmdError = (msg, type) => {
@@ -85,7 +98,7 @@ const dmCmdError = (msg, type) => {
 	msg.react(errorEmojiObj).catch(error => debugError(error, 'Error reacting to message in DMs.'));
 	if (type === 'noPerms') embedScaffold(msg.author, 'You do not have access to that command.', colours.error, 'dm');
 	else if (type === 'hasRole') embedScaffold(msg.author, 'Please use a server channel for that command.', colours.error, 'dm');
-	else if (type === 'noDM') embedScaffold(msg.author, 'That command cannot be used in DMs, or you have insufficient permissions.', colours.error, 'dm');
+	else if (type === 'noDM') embedScaffold(msg.author, 'That command cannot be used in DMs.', colours.error, 'dm');
 	else embedScaffold(msg.author, 'Invalid command.', colours.error, 'dm');
 };
 
@@ -110,6 +123,7 @@ module.exports = {
 	pCmd: pCmd,
 	rolesOutput: rolesOutput,
 	capitalise: capitalise,
+	cmdPermsCheck: cmdPermsCheck,
 	cmdError: cmdError,
 	formatAge: formatAge,
 	dmError: dmError,

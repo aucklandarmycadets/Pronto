@@ -2,24 +2,24 @@ const Discord = require('discord.js');
 const dateFormat = require('dateformat');
 
 const config = require('../config');
-const { config: { dateOutput }, ids: { attendanceID, nonCadet } } = config;
+const { config: { dateOutput }, ids: { attendanceID } } = config;
 const { emojis: { successEmoji }, colours } = config;
-const { cmds: { help, leave } } = require('../cmds');
+const { cmds: { leave } } = require('../cmds');
 const { capitalise, cmdError, dmError, debugError } = require('../modules');
 
 module.exports = {
 	name: leave.cmd,
+	aliases: leave.aliases,
 	description: leave.desc,
+	allowDM: leave.allowDM,
+	roles: leave.roles,
+	noRoles: leave.noRoles,
+	devOnly: leave.devOnly,
+	help: leave.help,
 	execute(msg, args) {
 		'use strict';
 
 		const { bot } = require('../pronto.js');
-		const memberRoles = msg.member.roles.cache;
-
-		if (memberRoles.some(roles => nonCadet.includes(roles.id))) {
-			bot.commands.get(help.cmd).execute(msg, args);
-			return;
-		}
 
 		if (args.length === 0) {
 			cmdError(msg, 'Insufficient arguments.', leave.error);

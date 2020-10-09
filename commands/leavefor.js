@@ -2,27 +2,27 @@ const Discord = require('discord.js');
 const dateFormat = require('dateformat');
 
 const config = require('../config');
-const { config: { dateOutput }, ids: { attendanceID, tacPlus } } = config;
+const { config: { dateOutput }, ids: { attendanceID } } = config;
 const { emojis: { successEmoji }, colours } = config;
 const { cmds: { help, leave, leaveFor } } = require('../cmds');
 const { pCmd, capitalise, cmdError, dmError, debugError } = require('../modules');
 
 module.exports = {
 	name: leaveFor.cmd,
+	aliases: leaveFor.aliases,
 	description: leaveFor.desc,
+	allowDM: leaveFor.allowDM,
+	roles: leaveFor.roles,
+	noRoles: leaveFor.noRoles,
+	devOnly: leaveFor.devOnly,
+	help: leaveFor.help,
 	execute(msg, args) {
 		'use strict';
 
 		const { bot } = require('../pronto.js');
-		const memberRoles = msg.member.roles.cache;
 		const memberMentions = msg.mentions.members;
 		const numMemberMentions = memberMentions.size;
 		const absentee = memberMentions.first();
-
-		if (!memberRoles.some(roles => tacPlus.includes(roles.id))) {
-			bot.commands.get(help.cmd).execute(msg, args);
-			return;
-		}
 
 		if (numMemberMentions === 0) {
 			cmdError(msg, 'You must tag a user.', leaveFor.error);

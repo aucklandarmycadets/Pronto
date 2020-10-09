@@ -2,27 +2,27 @@ const Discord = require('discord.js');
 const dateFormat = require('dateformat');
 
 const config = require('../config');
-const { config: { dateOutput }, ids: { logID, archivedID, cqmsPlus } } = config;
+const { config: { dateOutput }, ids: { logID, archivedID } } = config;
 const { emojis: { successEmoji, errorEmoji }, colours } = config;
-const { cmds: { help, archive } } = require('../cmds');
+const { cmds: { archive } } = require('../cmds');
 const { cmdError, debugError, embedScaffold } = require('../modules');
 
 module.exports = {
 	name: archive.cmd,
+	aliases: archive.aliases,
 	description: archive.desc,
-	execute(msg, args) {
+	allowDM: archive.allowDM,
+	roles: archive.roles,
+	noRoles: archive.noRoles,
+	devOnly: archive.devOnly,
+	help: archive.help,
+	execute(msg) {
 		'use strict';
 
 		const { bot } = require('../pronto.js');
-		const memberRoles = msg.member.roles.cache;
 		const channelMentions = msg.mentions.channels;
 		const numChannelMentions = channelMentions.size;
 		const channel = channelMentions.first();
-
-		if (!memberRoles.some(roles => cqmsPlus.includes(roles.id))) {
-			bot.commands.get(help.cmd).execute(msg, args);
-			return;
-		}
 
 		if (numChannelMentions === 0) {
 			cmdError(msg, 'You must specify a text channel.', archive.error);

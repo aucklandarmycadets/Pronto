@@ -1,23 +1,24 @@
 const Discord = require('discord.js');
 const dateFormat = require('dateformat');
 
-const { config: { dateOutput }, ids: { attendanceID, formations, tacPlus }, colours } = require('../config');
-const { cmds: { help, attendance } } = require('../cmds');
+const { config: { dateOutput }, ids: { attendanceID, formations }, colours } = require('../config');
+const { cmds: { attendance } } = require('../cmds');
 const { cmdError, debugError } = require('../modules');
 
 module.exports = {
 	name: attendance.cmd,
+	aliases: attendance.aliases,
 	description: attendance.desc,
+	allowDM: attendance.allowDM,
+	roles: attendance.roles,
+	noRoles: attendance.noRoles,
+	devOnly: attendance.devOnly,
+	help: attendance.help,
 	execute(msg, args) {
 		'use strict';
 
 		const { bot } = require('../pronto.js');
 		const memberRoles = msg.member.roles.cache;
-
-		if (!memberRoles.some(roles => tacPlus.includes(roles.id))) {
-			bot.commands.get(help.cmd).execute(msg, args);
-			return;
-		}
 
 		if (args.length === 0) {
 			cmdError(msg, 'You must enter a message.', attendance.error);

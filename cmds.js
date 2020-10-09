@@ -1,5 +1,7 @@
+'use strict';
+
 const config = require('./config');
-const { ids: { devID, tacticalID, classroomID, tacPlus, sgtPlus, cqmsPlus, adjPlus } } = config;
+const { ids: { devID, tacticalID, classroomID, nonCadet, tacPlus, sgtPlus, cqmsPlus, adjPlus } } = config;
 const { config: { prefix: pref } } = config;
 const { pCmd, rolesOutput } = require('./modules');
 
@@ -19,12 +21,10 @@ const commandText = commands => {
 
 const helpText = (object, forList) => {
 	let helpString = '';
-	let startFormat, endFormat;
 	const objProperties = [];
 	const objValues = [];
 
-	if (forList) [startFormat, endFormat] = ['`', '` - '];
-	else [startFormat, endFormat] = ['**', ':** '];
+	const [startFormat, endFormat] = (forList) ? ['`', '` - '] : ['**', ':** '];
 
 	for (const [property, value] of Object.entries(object)) {
 		objProperties.push(property);
@@ -45,13 +45,25 @@ const errorText = (helpTxt, cmd) => {
 	});
 };
 
+const pAls = cmd => {
+	const als = [...cmd.aliases];
+	for (let i = 0; i < als.length; i++) als[i] = `${pref}${als[i]}`;
+	return als.join(', ');
+};
+
 const cmds = {
 	ping: {
 		cmd: 'ping',
+		aliases: ['p'],
 		desc: 'Test the latency of the bot.',
+		allowDM: true,
+		roles: [],
+		noRoles: [],
+		devOnly: true,
 		get help() {
 			delete this.help;
 			return this.help = helpText({
+				'Aliases': pAls(this),
 				'Description': this.desc,
 				'Usage': pCmd(this),
 			});
@@ -59,10 +71,16 @@ const cmds = {
 	},
 	uptime: {
 		cmd: 'uptime',
+		aliases: ['up'],
 		desc: 'Time since last restart.',
+		allowDM: true,
+		roles: [],
+		noRoles: [],
+		devOnly: true,
 		get help() {
 			delete this.help;
 			return this.help = helpText({
+				'Aliases': pAls(this),
 				'Description': this.desc,
 				'Usage': pCmd(this),
 			});
@@ -70,10 +88,16 @@ const cmds = {
 	},
 	restart: {
 		cmd: 'restart',
+		aliases: ['new', 'kill', 'update'],
 		desc: 'Restart the bot.',
+		allowDM: true,
+		roles: [],
+		noRoles: [],
+		devOnly: true,
 		get help() {
 			delete this.help;
 			return this.help = helpText({
+				'Aliases': pAls(this),
 				'Description': this.desc,
 				'Usage': pCmd(this),
 			});
@@ -81,14 +105,20 @@ const cmds = {
 	},
 	help: {
 		cmd: 'help',
+		aliases: ['cmd', 'cmds', 'command', 'commands'],
 		desc: {
 			general: 'Get help with using Pronto.',
 			unqualified: 'List of the commands you can use.',
 			qualified: 'Get help with a specific command.',
 		},
+		allowDM: true,
+		roles: [],
+		noRoles: [],
+		devOnly: false,
 		get help() {
 			delete this.help;
 			return this.help = helpText({
+				'Aliases': pAls(this),
 				'Description': this.desc.general,
 				'Usage': `${pCmd(this)} [command]`,
 				'Examples': `\n${pCmd(this)}\n${pCmd(this)} ${cmds.leave.cmd}`,
@@ -97,10 +127,16 @@ const cmds = {
 	},
 	leave: {
 		cmd: 'leave',
+		aliases: ['lv'],
 		desc: 'Submit a leave request.',
+		allowDM: false,
+		roles: [],
+		noRoles: nonCadet,
+		devOnly: false,
 		get help() {
 			delete this.help;
 			return this.help = helpText({
+				'Aliases': pAls(this),
 				'Description': this.desc,
 				'Usage': `${pCmd(this)} <dates> <activity> <reason> [additional remarks]`,
 				'Example': `${pCmd(this)} 01 Jan for Parade Night due to an appointment`,
@@ -110,10 +146,16 @@ const cmds = {
 	},
 	leaveFor: {
 		cmd: 'leavefor',
+		aliases: ['lv4'],
 		desc: 'Submit a leave request for another cadet.',
+		allowDM: false,
+		roles: tacPlus,
+		noRoles: [],
+		devOnly: false,
 		get help() {
 			delete this.help;
 			return this.help = helpText({
+				'Aliases': pAls(this),
 				'Description': this.desc,
 				'Usage': `${pCmd(this)} <user> <dates> <activity> <reason> [additional remarks]`,
 				'Example': `${pCmd(this)} <@${devID}> 01 Jan for Parade Night due to an appointment`,
@@ -124,10 +166,16 @@ const cmds = {
 	},
 	attendance: {
 		cmd: 'attendance',
+		aliases: ['att', 'attdnce'],
 		desc: 'Submit an attendance register.',
+		allowDM: false,
+		roles: tacPlus,
+		noRoles: [],
+		devOnly: false,
 		get help() {
 			delete this.help;
 			return this.help = helpText({
+				'Aliases': pAls(this),
 				'Description': this.desc,
 				'Usage': `${pCmd(this)} <message>`,
 				'Allowed Roles': rolesOutput(tacPlus),
@@ -137,10 +185,16 @@ const cmds = {
 	},
 	connected: {
 		cmd: 'connected',
+		aliases: ['cnnct', 'cnnctd'],
 		desc: 'List of members connected to a voice channel.',
+		allowDM: false,
+		roles: sgtPlus,
+		noRoles: [],
+		devOnly: false,
 		get help() {
 			delete this.help;
 			return this.help = helpText({
+				'Aliases': pAls(this),
 				'Description': this.desc,
 				'Usage': `${pCmd(this)} <voice channel>`,
 				'Example': `${pCmd(this)} <#${classroomID}>`,
@@ -151,10 +205,16 @@ const cmds = {
 	},
 	archive: {
 		cmd: 'archive',
+		aliases: ['archv'],
 		desc: 'Archive a text channel.',
+		allowDM: false,
+		roles: cqmsPlus,
+		noRoles: [],
+		devOnly: false,
 		get help() {
 			delete this.help;
 			return this.help = helpText({
+				'Aliases': pAls(this),
 				'Description': this.desc,
 				'Usage': `${pCmd(this)} <text channel>`,
 				'Example': `${pCmd(this)} <#${tacticalID}>`,
@@ -165,10 +225,16 @@ const cmds = {
 	},
 	purge: {
 		cmd: 'purge',
+		aliases: ['del', 'delete'],
 		desc: 'Delete a number of messages from a channel.',
+		allowDM: false,
+		roles: adjPlus,
+		noRoles: [],
+		devOnly: false,
 		get help() {
 			delete this.help;
 			return this.help = helpText({
+				'Aliases': pAls(this),
 				'Description': this.desc,
 				'Usage': `${pCmd(this)} <count> [user]`,
 				'Examples': `\n${pCmd(this)} 10\n${pCmd(this)} 5 <@${devID}>`,
@@ -179,44 +245,63 @@ const cmds = {
 	},
 };
 
-const dmCmds = [
-	cmds.ping.cmd,
-	cmds.uptime.cmd,
-	cmds.restart.cmd,
-	cmds.help.cmd,
-];
-
 const cmdsList = {
-	all: commandText(['help']),
-
-	get cdt() {
-		delete this.cdt;
-		return this.cdt = cmdsList.all + '\n' + commandText([cmds.leave]);
+	all: {
+		type: null,
+		ids: null,
+		cmds: commandText(['help']),
 	},
-	get tac() {
-		delete this.tac;
-		return this.tac = cmdsList.cdt + '\n' + commandText([cmds.leaveFor, cmds.attendance]);
+	nonCadet: {
+		type: 'noRole',
+		ids: nonCadet,
+		get cmds() {
+			delete this.cmds;
+			return this.cmds = cmdsList.all.cmds + '\n' + commandText([cmds.leave]);
+		},
 	},
-	get sgt() {
-		delete this.sgt;
-		return this.sgt = cmdsList.tac + '\n' + commandText([cmds.connected]);
+	tacPlus: {
+		type: 'role',
+		ids: tacPlus,
+		get cmds() {
+			delete this.cmds;
+			return this.cmds = cmdsList.nonCadet.cmds + '\n' + commandText([cmds.leaveFor, cmds.attendance]);
+		},
 	},
-	get cqms() {
-		delete this.cqms;
-		return this.cqms = cmdsList.sgt + '\n' + commandText([cmds.archive]);
+	sgtPlus: {
+		type: 'role',
+		ids: sgtPlus,
+		get cmds() {
+			delete this.cmds;
+			return this.cmds = cmdsList.tacPlus.cmds + '\n' + commandText([cmds.connected]);
+		},
 	},
-	get adj() {
-		delete this.adj;
-		return this.adj = cmdsList.cqms + '\n' + commandText([cmds.purge]);
+	cqmsPlus: {
+		type: 'role',
+		ids: cqmsPlus,
+		get cmds() {
+			delete this.cmds;
+			return this.cmds = cmdsList.sgtPlus.cmds + '\n' + commandText([cmds.archive]);
+		},
 	},
-	get dev() {
-		delete this.dev;
-		return this.dev = cmdsList.adj + '\n' + commandText([cmds.ping, cmds.uptime, cmds.restart]);
+	adjPlus: {
+		type: 'role',
+		ids: adjPlus,
+		get cmds() {
+			delete this.cmds;
+			return this.cmds = cmdsList.cqmsPlus.cmds + '\n' + commandText([cmds.purge]);
+		},
+	},
+	dev: {
+		type: 'user',
+		ids: devID,
+		get cmds() {
+			delete this.cmds;
+			return this.cmds = cmdsList.adjPlus.cmds + '\n' + commandText([cmds.ping, cmds.uptime, cmds.restart]);
+		},
 	},
 };
 
 module.exports = {
 	cmds: cmds,
-	dmCmds: dmCmds,
 	cmdsList: cmdsList,
 };
