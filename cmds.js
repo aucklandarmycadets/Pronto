@@ -5,16 +5,25 @@ const { ids: { devID, tacticalID, classroomID, nonCadet, tacPlus, sgtPlus, cqmsP
 const { config: { prefix: pref } } = config;
 const { pCmd, rolesOutput } = require('./modules');
 
-const commandText = commands => {
+const commandText = (tier, type) => {
+	const commands = [];
+
+	for (const obj of Object.values(cmds)) {
+		if (!type) commands.push('help');
+		else if ((type === 'role' && obj.roles === tier)
+		|| (type === 'noRole' && obj.noRoles === tier)
+		|| (type === 'dev' && obj.devOnly)) commands.push(obj);
+	}
+
 	const object = {};
 
 	for (let i = 0; i < commands.length; i++) {
 		if (commands[i] === 'help') {
-			object[`${pref}${cmds.help.cmd}`] = cmds.help.desc.unqualified;
-			object[`${pref}${cmds.help.cmd} [command]`] = cmds.help.desc.qualified;
+			object[`${pCmd(cmds.help)}`] = cmds.help.desc.unqualified;
+			object[`${pCmd(cmds.help)} [command]`] = cmds.help.desc.qualified;
 			continue;
 		}
-		object[`${pref}${commands[i].cmd}`] = commands[i].desc;
+		object[`${pCmd(commands[i])}`] = commands[i].desc;
 	}
 	return helpText(object, true);
 };
@@ -249,54 +258,54 @@ const cmdsList = {
 	all: {
 		type: null,
 		ids: null,
-		cmds: commandText(['help']),
+		cmds: commandText(this.ids, this.type),
 	},
-	nonCadet: {
+	cdt: {
 		type: 'noRole',
 		ids: nonCadet,
 		get cmds() {
 			delete this.cmds;
-			return this.cmds = cmdsList.all.cmds + '\n' + commandText([cmds.leave]);
+			return this.cmds = cmdsList.all.cmds + '\n' + commandText(this.ids, this.type);
 		},
 	},
-	tacPlus: {
+	tac: {
 		type: 'role',
 		ids: tacPlus,
 		get cmds() {
 			delete this.cmds;
-			return this.cmds = cmdsList.nonCadet.cmds + '\n' + commandText([cmds.leaveFor, cmds.attendance]);
+			return this.cmds = cmdsList.cdt.cmds + '\n' + commandText(this.ids, this.type);
 		},
 	},
-	sgtPlus: {
+	sgt: {
 		type: 'role',
 		ids: sgtPlus,
 		get cmds() {
 			delete this.cmds;
-			return this.cmds = cmdsList.tacPlus.cmds + '\n' + commandText([cmds.connected]);
+			return this.cmds = cmdsList.tac.cmds + '\n' + commandText(this.ids, this.type);
 		},
 	},
-	cqmsPlus: {
+	cqms: {
 		type: 'role',
 		ids: cqmsPlus,
 		get cmds() {
 			delete this.cmds;
-			return this.cmds = cmdsList.sgtPlus.cmds + '\n' + commandText([cmds.archive]);
+			return this.cmds = cmdsList.sgt.cmds + '\n' + commandText(this.ids, this.type);
 		},
 	},
-	adjPlus: {
+	adj: {
 		type: 'role',
 		ids: adjPlus,
 		get cmds() {
 			delete this.cmds;
-			return this.cmds = cmdsList.cqmsPlus.cmds + '\n' + commandText([cmds.purge]);
+			return this.cmds = cmdsList.cqms.cmds + '\n' + commandText(this.ids, this.type);
 		},
 	},
 	dev: {
-		type: 'user',
+		type: 'dev',
 		ids: devID,
 		get cmds() {
 			delete this.cmds;
-			return this.cmds = cmdsList.adjPlus.cmds + '\n' + commandText([cmds.ping, cmds.uptime, cmds.restart]);
+			return this.cmds = cmdsList.adj.cmds + '\n' + commandText(this.ids, this.type);
 		},
 	},
 };

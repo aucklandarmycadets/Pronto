@@ -8,7 +8,7 @@ const { cmds: { restart } } = require('../cmds');
 const { formatAge, debugError } = require('../modules');
 
 module.exports = {
-	name: restart.cmd,
+	cmd: restart.cmd,
 	aliases: restart.aliases,
 	description: restart.desc,
 	allowDM: restart.allowDM,

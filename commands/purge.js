@@ -3,7 +3,7 @@ const { cmds: { purge } } = require('../cmds');
 const { cmdError, debugError, embedScaffold } = require('../modules');
 
 module.exports = {
-	name: purge.cmd,
+	cmd: purge.cmd,
 	aliases: purge.aliases,
 	description: purge.desc,
 	allowDM: purge.allowDM,

@@ -1,13 +1,13 @@
 const Discord = require('discord.js');
 
 const config = require('../config');
-const { config: { prefix }, ids: { serverID, devID, adjPlus } } = config;
+const { ids: { serverID, devID, adjPlus } } = config;
 const { emojis: { successEmoji, errorEmoji }, colours } = config;
 const { cmds: { help }, cmdsList } = require('../cmds');
-const { cmdPermsCheck, dmError, debugError, dmCmdError, embedScaffold } = require('../modules');
+const { pCmd, cmdPermsCheck, dmError, debugError, dmCmdError, embedScaffold } = require('../modules');
 
 module.exports = {
-	name: help.cmd,
+	cmd: help.cmd,
 	aliases: help.aliases,
 	description: help.desc.general,
 	allowDM: help.allowDM,
@@ -40,7 +40,7 @@ module.exports = {
 		else if (!cmd) sendCmdList();
 
 		function sendHelpEmbed(command) {
-			helpEmbed.setTitle(`Command: ${prefix}${command.name}`);
+			helpEmbed.setTitle(`Command: ${pCmd(command)}`);
 			helpEmbed.setColor(colours.pronto);
 			helpEmbed.setDescription(command.help);
 			if (msg.guild) {
@@ -68,7 +68,7 @@ module.exports = {
 				else if (values.type === 'role') {
 					commandList = (memberRoles.some(roles => values.ids.includes(roles.id))) ? values.cmds : commandList;
 				}
-				else if (values.type === 'user') {
+				else if (values.type === 'dev') {
 					commandList = (messageAuthor.id === devID) ? values.cmds : commandList;
 				}
 			}

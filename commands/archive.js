@@ -8,7 +8,7 @@ const { cmds: { archive } } = require('../cmds');
 const { cmdError, debugError, embedScaffold } = require('../modules');
 
 module.exports = {
-	name: archive.cmd,
+	cmd: archive.cmd,
 	aliases: archive.aliases,
 	description: archive.desc,
 	allowDM: archive.allowDM,

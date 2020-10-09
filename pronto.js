@@ -9,7 +9,7 @@ const pairs = require('./channelPairs');
 const dateFormat = require('dateformat');
 
 Object.keys(botCommands).map(key => {
-	bot.commands.set(botCommands[key].name, botCommands[key]);
+	bot.commands.set(botCommands[key].cmd, botCommands[key]);
 });
 
 const TOKEN = process.env.TOKEN;
@@ -98,7 +98,7 @@ const onMessage = msg => {
 	}
 
 	catch (error) {
-		debugError(error, `Error executing ${cmd} :c`);
+		debugError(error, `Error executing ${pCmd(cmd)} :c`);
 	}
 };
 
@@ -376,6 +376,7 @@ const onRoleChange = (oldRole, newRole) => {
 			(oldPerms.includes(changedPerms[i])) ? removedPerms.push(changedPerms[i]) : addedPerms.push(changedPerms[i]);
 		}
 
+		if (!addedPerms.length && !removedPerms.length) return;
 		if (addedPerms.length > 0) logEmbed.addField('Added Permissions', addedPerms);
 		if (removedPerms.length > 0) logEmbed.addField('Removed Permissions', removedPerms);
 
@@ -410,9 +411,11 @@ const onMessageDelete = async msg => {
 		.setDescription(`**Message sent by ${messageAuthor} deleted in ${msg.channel}**\n${msg.content}`)
 		.setFooter(`Author: ${messageAuthor.id} | Message: ${msg.id} | ${dateFormat(Date.now(), dateOutput)}`);
 
-	if (lastMessage && lastMessage.content.includes(purge.cmd)) {
-		lastMessage.delete().catch(error => debugError(error, `Error deleting message in ${msg.channel}.`, 'Message', msg.content));
-		logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted by ${lastMessage.author} in ${msg.channel}**\n${msg.content}`);
+	if (lastMessage) {
+		if (lastMessage.content.includes(purge.cmd) || purge.aliases.some(alias => lastMessage.content.includes(alias))) {
+			lastMessage.delete().catch(error => debugError(error, `Error deleting message in ${msg.channel}.`, 'Message', msg.content));
+			logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted by ${lastMessage.author} in ${msg.channel}**\n${msg.content}`);
+		}
 	}
 
 	if (deletionLog) {
@@ -438,7 +441,7 @@ const onBulkDelete = msgs => {
 		logEmbed.setDescription(`**${deleteCount} messages bulk deleted in ${msg.channel}**`);
 	}
 
-	else if (lastMessage.content.includes(purge.cmd)) {
+	else if (lastMessage.content.includes(purge.cmd) || purge.aliases.some(alias => lastMessage.content.includes(alias))) {
 		lastMessage.delete().catch(error => debugError(error, `Error deleting message in ${msg.channel}.`, 'Message', lastMessage.content));
 
 		logEmbed.setAuthor(msg.author.tag, msg.author.displayAvatarURL());
