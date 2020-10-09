@@ -6,7 +6,7 @@ const { cmds: { attendance } } = require('../cmds');
 const { cmdError, debugError } = require('../modules');
 
 module.exports = {
-	name: attendance.cmd,
+	cmd: attendance.cmd,
 	aliases: attendance.aliases,
 	description: attendance.desc,
 	allowDM: attendance.allowDM,

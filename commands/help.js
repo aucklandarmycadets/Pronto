@@ -7,7 +7,7 @@ const { cmds: { help }, cmdsList } = require('../cmds');
 const { cmdPermsCheck, dmError, debugError, dmCmdError, embedScaffold } = require('../modules');
 
 module.exports = {
-	name: help.cmd,
+	cmd: help.cmd,
 	aliases: help.aliases,
 	description: help.desc.general,
 	allowDM: help.allowDM,

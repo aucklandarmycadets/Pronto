@@ -6,7 +6,7 @@ const { cmds: { uptime } } = require('../cmds');
 const { formatAge } = require('../modules');
 
 module.exports = {
-	name: uptime.cmd,
+	cmd: uptime.cmd,
 	aliases: uptime.aliases,
 	description: uptime.desc,
 	allowDM: uptime.allowDM,

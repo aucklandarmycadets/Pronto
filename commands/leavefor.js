@@ -8,7 +8,7 @@ const { cmds: { help, leave, leaveFor } } = require('../cmds');
 const { pCmd, capitalise, cmdError, dmError, debugError } = require('../modules');
 
 module.exports = {
-	name: leaveFor.cmd,
+	cmd: leaveFor.cmd,
 	aliases: leaveFor.aliases,
 	description: leaveFor.desc,
 	allowDM: leaveFor.allowDM,

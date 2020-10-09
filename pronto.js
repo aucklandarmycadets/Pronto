@@ -9,7 +9,7 @@ const pairs = require('./channelPairs');
 const dateFormat = require('dateformat');
 
 Object.keys(botCommands).map(key => {
-	bot.commands.set(botCommands[key].name, botCommands[key]);
+	bot.commands.set(botCommands[key].cmd, botCommands[key]);
 });
 
 const TOKEN = process.env.TOKEN;
@@ -98,7 +98,7 @@ const onMessage = msg => {
 	}
 
 	catch (error) {
-		debugError(error, `Error executing ${cmd} :c`);
+		debugError(error, `Error executing ${pCmd(cmd)} :c`);
 	}
 };
 

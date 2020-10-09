@@ -5,7 +5,7 @@ const { config: { dateOutput, version }, colours } = require('../config');
 const { cmds: { ping } } = require('../cmds');
 
 module.exports = {
-	name: ping.cmd,
+	cmd: ping.cmd,
 	aliases: ping.aliases,
 	description: ping.desc,
 	allowDM: ping.allowDM,

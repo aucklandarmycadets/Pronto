@@ -10,11 +10,11 @@ const commandText = commands => {
 
 	for (let i = 0; i < commands.length; i++) {
 		if (commands[i] === 'help') {
-			object[`${pref}${cmds.help.cmd}`] = cmds.help.desc.unqualified;
-			object[`${pref}${cmds.help.cmd} [command]`] = cmds.help.desc.qualified;
+			object[`${pCmd(cmds.help)}`] = cmds.help.desc.unqualified;
+			object[`${pCmd(cmds.help)} [command]`] = cmds.help.desc.qualified;
 			continue;
 		}
-		object[`${pref}${commands[i].cmd}`] = commands[i].desc;
+		object[`${pCmd(commands[i])}`] = commands[i].desc;
 	}
 	return helpText(object, true);
 };
