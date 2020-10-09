@@ -34,47 +34,51 @@ module.exports = {
 
 		if (bot.commands.has(msgCmd)) {
 			const cmd = bot.commands.get(msgCmd);
-			cmdPermsCheck(msg, cmd) ? sendHelpEmbed(cmd) : false;
+			cmdPermsCheck(msg, cmd) ? sendHelpEmbed(cmd) : dmCmdError(msg, 'noPerms');
 		}
 
-		let commandList;
+		else if (!bot.commands.has(msgCmd)) {
+			let commandList;
 
-		for (const values of Object.values(cmdsList)) {
-			if (!values.type) commandList = values.cmds;
-			if (values.type === 'noRole') {
-				commandList = (!memberRoles.some(roles => values.ids.includes(roles.id))) ? values.cmds : commandList;
+			console.log('here');
+
+			for (const values of Object.values(cmdsList)) {
+				if (!values.type) commandList = values.cmds;
+				if (values.type === 'noRole') {
+					commandList = (!memberRoles.some(roles => values.ids.includes(roles.id))) ? values.cmds : commandList;
+				}
+				else if (values.type === 'role') {
+					commandList = (memberRoles.some(roles => values.ids.includes(roles.id))) ? values.cmds : commandList;
+				}
+				else if (values.type === 'user') {
+					commandList = (messageAuthor.id === devID) ? values.cmds : commandList;
+				}
 			}
-			else if (values.type === 'role') {
-				commandList = (memberRoles.some(roles => values.ids.includes(roles.id))) ? values.cmds : commandList;
+
+			const dev = bot.users.cache.get(devID);
+
+			if (!msg.guild && msgCmd) {
+				const errorEmojiObj = server.emojis.cache.find(emoji => emoji.name === errorEmoji);
+				msg.react(errorEmojiObj).catch(error => debugError(error, 'Error reacting to message in DMs.'));
 			}
-			else if (values.type === 'user') {
-				commandList = (messageAuthor.id === devID) ? values.cmds : commandList;
+
+			else if (!msg.guild) {
+				const successEmojiObj = server.emojis.cache.find(emoji => emoji.name === successEmoji);
+				msg.react(successEmojiObj).catch(error => debugError(error, 'Error reacting to message in DMs.'));
 			}
+
+			helpEmbed.setTitle('Commands List');
+			helpEmbed.setThumbnail('https://i.imgur.com/EzmJVyV.png');
+			helpEmbed.setColor(colours.pronto);
+			helpEmbed.setDescription(commandList);
+			helpEmbed.setFooter(`Developed by ${dev.tag}`, dev.avatarURL());
+
+			if (!memberRoles.some(roles => adjPlus.includes(roles.id)) && messageAuthor.id !== devID) {
+				helpEmbed.addField('Note', `Only displaying commands available to ${messageAuthor}.`);
+			}
+
+			messageAuthor.send(helpEmbed).catch(error => dmError(msg, error));
 		}
-
-		const dev = bot.users.cache.get(devID);
-
-		if (!msg.guild && msgCmd) {
-			const errorEmojiObj = server.emojis.cache.find(emoji => emoji.name === errorEmoji);
-			msg.react(errorEmojiObj).catch(error => debugError(error, 'Error reacting to message in DMs.'));
-		}
-
-		else if (!msg.guild) {
-			const successEmojiObj = server.emojis.cache.find(emoji => emoji.name === successEmoji);
-			msg.react(successEmojiObj).catch(error => debugError(error, 'Error reacting to message in DMs.'));
-		}
-
-		helpEmbed.setTitle('Commands List');
-		helpEmbed.setThumbnail('https://i.imgur.com/EzmJVyV.png');
-		helpEmbed.setColor(colours.pronto);
-		helpEmbed.setDescription(commandList);
-		helpEmbed.setFooter(`Developed by ${dev.tag}`, dev.avatarURL());
-
-		if (!memberRoles.some(roles => adjPlus.includes(roles.id)) && messageAuthor.id !== devID) {
-			helpEmbed.addField('Note', `Only displaying commands available to ${messageAuthor}.`);
-		}
-
-		messageAuthor.send(helpEmbed).catch(error => dmError(msg, error));
 
 		function sendHelpEmbed(command) {
 			helpEmbed.setTitle(`Command: ${prefix}${command.name}`);
