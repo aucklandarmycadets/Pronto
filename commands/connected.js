@@ -5,7 +5,7 @@ const config = require('../config');
 const { config: { dateOutput }, ids: { attendanceID } } = config;
 const { emojis: { successEmoji }, colours } = config;
 const { cmds: { connected } } = require('../cmds');
-const { cmdError, debugError } = require('../modules');
+const { cmdError, sendMsg, debugError } = require('../modules');
 
 module.exports = {
 	cmd: connected.cmd,
@@ -57,7 +57,7 @@ module.exports = {
 				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
 				.setDescription(connectedMembers.join('\n'))
 				.setFooter(`${dateFormat(msg.createdAt, dateOutput)}`);
-			attendanceChannel.send(connectedEmbed);
+			sendMsg(attendanceChannel, connectedEmbed);
 		}
 	},
 };

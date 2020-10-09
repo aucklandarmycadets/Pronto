@@ -7,6 +7,7 @@ bot.commands = new Discord.Collection();
 const botCommands = require('./commands');
 const pairs = require('./channelPairs');
 const dateFormat = require('dateformat');
+const version = '2.1.0';
 
 Object.keys(botCommands).map(key => {
 	bot.commands.set(botCommands[key].cmd, botCommands[key]);
@@ -15,13 +16,13 @@ Object.keys(botCommands).map(key => {
 const TOKEN = process.env.TOKEN;
 
 const config = require('./config');
-const { config: { prefix, permsInt, dateOutput, version } } = config;
+const { config: { prefix, permsInt, dateOutput } } = config;
 const { ids: { serverID, devID, logID, recruitingID, newMembersID, visitorID, adjPlus } } = config;
 const { emojis: { successEmoji }, colours } = config;
 const { cmds: { help, purge } } = require('./cmds');
-const { initialise, pCmd, rolesOutput, cmdPermsCheck, formatAge, debugError, dmCmdError, embedScaffold } = require('./modules');
+const { initialise, pCmd, rolesOutput, cmdPermsCheck, formatAge, sendMsg, debugError, dmCmdError, embedScaffold } = require('./modules');
 
-let devDirectChannel, logChannel, recruitingChannel, newMembersChannel;
+let dev, log, recruiting, newMembers;
 
 bot.login(TOKEN);
 
@@ -33,44 +34,33 @@ bot.on('guildMemberAdd', member => onMemberAdd(member));
 bot.on('guildMemberRemove', member => onMemberRemove(member));
 bot.on('guildMemberUpdate', (oldMember, newMember) => onMemberUpdate(oldMember, newMember));
 bot.on('voiceStateUpdate', (oldState, newState) => onVoiceUpdate(oldState, newState));
-bot.on('invalidated', () => onDevInfo('null', 'Invalidated'));
+bot.on('invalidated', () => devInfo('null', 'Invalidated'));
 bot.on('roleCreate', role => onRoleUpdate(role, true));
 bot.on('roleDelete', role => onRoleUpdate(role));
 bot.on('roleUpdate', (oldRole, newRole) => onRoleChange(oldRole, newRole));
 bot.on('messageDelete', msg => onMessageDelete(msg));
 bot.on('messageDeleteBulk', msgs => onBulkDelete(msgs));
 bot.on('messageUpdate', (oldMessage, newMessage) => onMessageUpdate(oldMessage, newMessage));
-bot.on('error', info => onDevInfo(info, 'Error'));
-bot.on('warn', info => onDevInfo(info, 'Warn'));
+bot.on('error', error => devInfo('Error', error));
+bot.on('warn', warning => devInfo('Warning', warning));
+process.on('unhandledRejection', error => devInfo('Error', error));
 
 const onReady = () => {
 	console.info(`Logged in as ${bot.user.tag}!`);
-	initialise(bot);
-	const botUser = bot.user;
+	initialise(bot, version);
 
-	devDirectChannel = bot.users.cache.get(devID);
+	dev = bot.users.cache.get(devID);
+	log = bot.channels.cache.get(logID);
+	recruiting = bot.channels.cache.get(recruitingID);
+	newMembers = bot.channels.cache.get(newMembersID);
 
-	const readyEmbed = new Discord.MessageEmbed()
-		.setAuthor(botUser.tag, botUser.avatarURL())
-		.setFooter(`${dateFormat(Date.now(), dateOutput)} | Pronto v${version}`);
+	if (!bot.guilds.cache.get(serverID)) embedScaffold(dev, '**Error reaching the server, check the IDs!**', colours.error, 'dev');
+	else embedScaffold(dev, '**Ready to go!**', colours.success, 'dev');
 
-	if (!bot.guilds.cache.get(serverID)) {
-		readyEmbed.setColor(colours.error);
-		readyEmbed.setDescription('**Error reaching the server, check the IDs!**');
-		return devDirectChannel.send(readyEmbed);
-	}
-
-	logChannel = bot.channels.cache.get(logID);
-	recruitingChannel = bot.channels.cache.get(recruitingID);
-	newMembersChannel = bot.channels.cache.get(newMembersID);
-
-	readyEmbed.setColor(colours.success);
-	readyEmbed.setDescription('**Ready to go!**');
-	devDirectChannel.send(readyEmbed);
-
-	botUser.setActivity(`the radio net | ${pCmd(help)}`, { type: 'LISTENING' });
+	bot.user.setActivity(`the radio net | ${pCmd(help)}`, { type: 'LISTENING' });
 
 	exports.bot = bot;
+	exports.version = version;
 
 	checkBotPermissions();
 };
@@ -105,7 +95,7 @@ const onMessage = msg => {
 	}
 
 	catch (error) {
-		debugError(error, `Error executing ${pCmd(cmd)} :c`);
+		debugError(error, `Error executing ${pCmd(cmd)}`);
 	}
 };
 
@@ -125,7 +115,7 @@ const onMemberBan = (guild, member, banned) => {
 	logEmbed.setThumbnail(member.displayAvatarURL());
 	logEmbed.setDescription(`${member} ${member.tag}`);
 	logEmbed.setFooter(`ID: ${member.id} | ${dateFormat(Date.now(), dateOutput)}`);
-	logChannel.send(logEmbed);
+	sendMsg(log, logEmbed);
 };
 
 const onMemberAdd = member => {
@@ -138,7 +128,7 @@ const onMemberAdd = member => {
 		.setDescription(`${memberUser} ${memberUser.tag}`)
 		.addField('Account Age', formatAge(Date.now() - memberUser.createdAt))
 		.setFooter(`ID: ${memberUser.id} | ${dateFormat(member.joinedAt, dateOutput)}`);
-	logChannel.send(logEmbed);
+	sendMsg(log, logEmbed);
 
 	if (memberUser.bot) return;
 
@@ -148,9 +138,9 @@ const onMemberAdd = member => {
 	const welcomeEmbed = new Discord.MessageEmbed()
 		.setColor(colours.pronto)
 		.setAuthor(memberUser.tag, memberUser.displayAvatarURL())
-		.setDescription(`**${memberUser} has just entered ${newMembersChannel}.**\nMake them feel welcome!`)
+		.setDescription(`**${memberUser} has just entered ${newMembers}.**\nMake them feel welcome!`)
 		.setFooter(`${dateFormat(member.joinedAt, dateOutput)}`);
-	recruitingChannel.send(welcomeEmbed);
+	sendMsg(recruiting, welcomeEmbed);
 };
 
 const onMemberRemove = member => {
@@ -166,7 +156,7 @@ const onMemberRemove = member => {
 		.setDescription(`${memberUser} ${memberUser.tag}`)
 		.addField('Roles', rolesOutput(memberRoles, true))
 		.setFooter(`ID: ${memberUser.id} | ${dateFormat(Date.now(), dateOutput)}`);
-	logChannel.send(logEmbed);
+	sendMsg(log, logEmbed);
 };
 
 const onMemberUpdate = (oldMember, newMember) => {
@@ -201,7 +191,7 @@ const onMemberUpdate = (oldMember, newMember) => {
 	logEmbed.setAuthor(newMemberUser.tag, newMemberUser.displayAvatarURL());
 	logEmbed.setColor(colours.warn);
 	logEmbed.setFooter(`ID: ${newMemberUser.id} | ${dateFormat(Date.now(), dateOutput)}`);
-	logChannel.send(logEmbed);
+	sendMsg(log, logEmbed);
 };
 
 const onVoiceUpdate = (oldState, newState) => {
@@ -231,7 +221,7 @@ const onVoiceUpdate = (oldState, newState) => {
 		logEmbed.setFooter(`ID: ${newMember.id} | Channel: ${oldID} | ${dateFormat(Date.now(), dateOutput)}`);
 	}
 
-	logChannel.send(logEmbed);
+	sendMsg(log, logEmbed);
 
 	for (let i = 0; i < pairs.length; i++) {
 		const textChannel = newState.guild.channels.cache.get(pairs[i].text);
@@ -250,7 +240,7 @@ const onVoiceUpdate = (oldState, newState) => {
 						.setAuthor(newMember.displayName, newMember.user.displayAvatarURL())
 						.setDescription(`${newMember} has joined the channel.`)
 						.setFooter(`${dateFormat(Date.now(), dateOutput)}`);
-					textChannel.send(joinEmbed);
+					sendMsg(textChannel, joinEmbed);
 				})
 				.catch(error => {
 					debugError(error, `Error giving ${newMember} permissions to ${textChannel}.`);
@@ -265,7 +255,7 @@ const onVoiceUpdate = (oldState, newState) => {
 						.setAuthor(newMember.displayName, newMember.user.displayAvatarURL())
 						.setDescription(`${newMember} has left the channel.`)
 						.setFooter(`${dateFormat(Date.now(), dateOutput)}`);
-					textChannel.send(leaveEmbed);
+					sendMsg(textChannel, leaveEmbed);
 
 					if (oldState.channel.members.size === 0) {
 						const successEmojiObj = newState.guild.emojis.cache.find(emoji => emoji.name === successEmoji);
@@ -297,7 +287,7 @@ const onVoiceUpdate = (oldState, newState) => {
 										.setColor(colours.error)
 										.setAuthor(newMember.displayName, newMember.user.displayAvatarURL())
 										.setDescription(`${user} Insufficient permissions. ${purge.error}`);
-									textChannel.send(errorEmbed);
+									sendMsg(textChannel, errorEmbed);
 								}
 							});
 
@@ -321,7 +311,7 @@ const onVoiceUpdate = (oldState, newState) => {
 										.setColor(colours.error)
 										.setAuthor(bot.user.tag, bot.user.avatarURL())
 										.setDescription(`Timed out. Type \`${pCmd(purge)} 100\` to clear this channel manually.`);
-									textChannel.send(timeEmbed);
+									sendMsg(textChannel, timeEmbed);
 								}
 							});
 						});
@@ -349,7 +339,7 @@ const onRoleUpdate = (role, created) => {
 		logEmbed.setDescription(`**Role Deleted: ${role.name}**`);
 	}
 
-	logChannel.send(logEmbed);
+	sendMsg(log, logEmbed);
 };
 
 const onRoleChange = (oldRole, newRole) => {
@@ -396,7 +386,7 @@ const onRoleChange = (oldRole, newRole) => {
 
 	logEmbed.setAuthor(newRole.guild.name, newRole.guild.iconURL());
 	logEmbed.setFooter(`ID: ${newRole.id} | ${dateFormat(Date.now(), dateOutput)}`);
-	logChannel.send(logEmbed);
+	sendMsg(log, logEmbed);
 };
 
 const onMessageDelete = async msg => {
@@ -433,7 +423,7 @@ const onMessageDelete = async msg => {
 		}
 	}
 
-	logChannel.send(logEmbed);
+	sendMsg(log, logEmbed);
 };
 
 const onBulkDelete = msgs => {
@@ -457,7 +447,7 @@ const onBulkDelete = msgs => {
 
 	logEmbed.setColor(colours.error);
 	logEmbed.setFooter(`${dateFormat(Date.now(), dateOutput)}`);
-	logChannel.send(logEmbed);
+	sendMsg(log, logEmbed);
 };
 
 const onMessageUpdate = (oldMessage, newMessage) => {
@@ -472,22 +462,12 @@ const onMessageUpdate = (oldMessage, newMessage) => {
 		.addField('Before', oldMessage.content)
 		.addField('After', newMessage.content)
 		.setFooter(`Author: ${messageAuthor.id} | Message: ${newMessage.id} | ${dateFormat(newMessage.editedAt, dateOutput)}`);
-	logChannel.send(logEmbed);
+	sendMsg(log, logEmbed);
 };
 
-const onDevInfo = (info, type) => {
-	console.log(`${type}: ${info}`);
-
-	if (type === 'Error') {
-		const botUser = bot.user;
-
-		const devEmbed = new Discord.MessageEmbed()
-			.setColor(colours.error)
-			.setAuthor(botUser.tag, botUser.avatarURL())
-			.setDescription(`${type}: Check the logs!`)
-			.setFooter(`${dateFormat(Date.now(), dateOutput)} | Pronto v${version}`);
-		devDirectChannel.send(devEmbed);
-	}
+const devInfo = (type, info) => {
+	console.log(`${type}: `, info);
+	if (type === 'Error') return embedScaffold(null, 'An unknown error has occured!', colours.error, 'debug', null, null, `\`\`\`js\n${info.stack}\`\`\``);
 };
 
 const purgeChannel = (messages, msgChannel, collector) => {

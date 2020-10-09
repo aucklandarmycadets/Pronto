@@ -5,7 +5,7 @@ const config = require('../config');
 const { config: { dateOutput }, ids: { attendanceID } } = config;
 const { emojis: { successEmoji }, colours } = config;
 const { cmds: { leave } } = require('../cmds');
-const { capitalise, cmdError, dmError, debugError } = require('../modules');
+const { capitalise, cmdError, sendMsg, dmError, debugError } = require('../modules');
 
 module.exports = {
 	cmd: leave.cmd,
@@ -54,7 +54,7 @@ module.exports = {
 					{ name: 'Details', value: capitalise(args.join(' ')) },
 				);
 
-			attendanceChannel.send(attendanceEmbed);
+			sendMsg(attendanceChannel, attendanceEmbed);
 			messageAuthor.send(dmEmbed).catch(error => dmError(msg, error));
 		}
 	},

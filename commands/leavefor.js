@@ -5,7 +5,7 @@ const config = require('../config');
 const { config: { dateOutput }, ids: { attendanceID } } = config;
 const { emojis: { successEmoji }, colours } = config;
 const { cmds: { help, leave, leaveFor } } = require('../cmds');
-const { pCmd, capitalise, cmdError, dmError, debugError } = require('../modules');
+const { pCmd, capitalise, cmdError, sendMsg, dmError, debugError } = require('../modules');
 
 module.exports = {
 	cmd: leaveFor.cmd,
@@ -85,7 +85,7 @@ module.exports = {
 				)
 				.setFooter(`Reply with ${pCmd(help)} ${leave.cmd} to learn how to request leave for yourself.`);
 
-			attendanceChannel.send(attendanceEmbed);
+			sendMsg(attendanceChannel, attendanceEmbed);
 			messageAuthor.send(dmEmbed).catch(error => dmError(msg, error));
 			absentee.send(absenteeEmbed).catch(error => dmError(msg, error, true));
 		}

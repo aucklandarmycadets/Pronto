@@ -3,7 +3,7 @@ const dateFormat = require('dateformat');
 
 const { config: { dateOutput }, ids: { attendanceID, formations }, colours } = require('../config');
 const { cmds: { attendance } } = require('../cmds');
-const { cmdError, debugError } = require('../modules');
+const { cmdError, sendMsg, debugError } = require('../modules');
 
 module.exports = {
 	cmd: attendance.cmd,
@@ -45,8 +45,8 @@ module.exports = {
 				.setDescription(`${args.join(' ')}`)
 				.setFooter(`${dateFormat(msg.createdAt, dateOutput)}`);
 
-			attendanceChannel.send(attendanceEmbed);
-			msg.channel.send(attendanceEmbed);
+			sendMsg(attendanceChannel, attendanceEmbed);
+			sendMsg(msg.channel, attendanceEmbed);
 		}
 	},
 };

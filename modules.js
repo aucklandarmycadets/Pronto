@@ -7,9 +7,12 @@ const config = require('./config');
 const { config: { prefix: pref, dateOutput }, ids: { serverID, devID, debugID, administratorID } } = config;
 const { emojis: { errorEmoji }, colours } = config;
 
-let bot;
+let bot, version;
 
-const initialise = Client => bot = Client;
+const initialise = (Client, ver) => {
+	bot = Client;
+	version = ver;
+};
 
 const pCmd = cmd => `${pref}${cmd.cmd}`;
 
@@ -54,7 +57,7 @@ const cmdError = (msg, errMsg, cmdErr, footer) => {
 
 	if (footer) errorEmbed.setFooter(footer);
 
-	msg.channel.send(errorEmbed);
+	sendMsg(msg.channel, errorEmbed);
 };
 
 const formatAge = raw => {
@@ -80,15 +83,20 @@ const formatAge = raw => {
 	else return `${seconds} sec`;
 };
 
+const sendMsg = (dest, msg, isDM) => {
+	const type = (isDM) ? 'DM' : 'message';
+	dest.send(msg).catch(error => debugError(error, `Error sending ${type} to ${dest}.`));
+};
+
 const dmError = (msg, error, debug) => {
-	console.error(`${error.stack}`);
-	if (debug) embedScaffold(null, `Error sending direct message to ${msg.mentions.members.first()}.`, colours.error, 'debug', 'More Information', '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)');
+	console.error(error);
+	if (debug) embedScaffold(null, `Error sending direct message to ${msg.mentions.members.first()}.`, colours.error, 'debug', 'More Information', '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)', `\`\`\`js\n${error.stack}\`\`\``);
 	else embedScaffold(msg.channel, `${msg.author} I can't send direct messages to you!`, colours.error, 'msg', 'More Information', '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)');
 };
 
 const debugError = (error, errorMsg, fieldTitle, fieldContent) => {
-	console.error(`${error.stack}`);
-	embedScaffold(null, errorMsg, colours.error, 'debug', fieldTitle, fieldContent);
+	console.error(error);
+	embedScaffold(null, errorMsg, colours.error, 'debug', fieldTitle, fieldContent, `\`\`\`js\n${error.stack}\`\`\``);
 };
 
 const dmCmdError = (msg, type) => {
@@ -101,8 +109,9 @@ const dmCmdError = (msg, type) => {
 	else embedScaffold(msg.author, 'Invalid command.', colours.error, 'dm');
 };
 
-const embedScaffold = (destination, descMsg, colour, channel, fieldTitle, fieldContent) => {
+const embedScaffold = (dest, descMsg, colour, type, fieldTitle, fieldContent, errorField) => {
 	const botUser = bot.user;
+	const debugChannel = bot.channels.cache.get(debugID);
 
 	const embed = new Discord.MessageEmbed()
 		.setAuthor(botUser.tag, botUser.avatarURL())
@@ -111,10 +120,15 @@ const embedScaffold = (destination, descMsg, colour, channel, fieldTitle, fieldC
 		.setFooter(`${dateFormat(Date.now(), dateOutput)}`);
 
 	if (fieldTitle) embed.addField(fieldTitle, fieldContent);
+	if (errorField) embed.setDescription(`${descMsg}\n${errorField}`);
 
-	if (channel === 'dm') destination.send(embed);
-	else if (channel === 'debug') bot.channels.cache.get(debugID).send(embed);
-	else if (channel === 'msg') destination.send(embed);
+	if (type === 'dm') sendMsg(dest, embed, true);
+	else if (type === 'debug') debugChannel.send(embed).catch(error => console.error(error));
+	else if (type === 'msg') sendMsg(dest, embed);
+	else if (type === 'dev') {
+		embed.setFooter(`${dateFormat(Date.now(), dateOutput)} | Pronto v${version}`);
+		sendMsg(dest, embed, true);
+	}
 };
 
 module.exports = {
@@ -123,6 +137,7 @@ module.exports = {
 	rolesOutput: rolesOutput,
 	capitalise: capitalise,
 	cmdPermsCheck: cmdPermsCheck,
+	sendMsg: sendMsg,
 	cmdError: cmdError,
 	formatAge: formatAge,
 	dmError: dmError,
