@@ -24,70 +24,64 @@ module.exports = {
 		const numMemberMentions = memberMentions.size;
 		const absentee = memberMentions.first();
 
-		if (numMemberMentions === 0) {
-			cmdError(msg, 'You must tag a user.', leaveFor.error);
+		try {
+			if (numMemberMentions === 0) throw 'You must tag a user.';
+
+			else if (memberMentions.some(mention => mention.user.bot)) throw 'You cannot submit leave for a bot!';
+
+			else if (numMemberMentions > 1) throw 'You must submit leave individually.';
+
+			else if (args.length < 2) throw 'Insufficient arguments.';
 		}
 
-		else if (memberMentions.some(mention => mention.user.bot)) {
-			cmdError(msg, 'You cannot submit leave for a bot!', leaveFor.error);
-		}
+		catch(error) { return cmdError(msg, error, leaveFor.error); }
 
-		else if (numMemberMentions > 1) {
-			cmdError(msg, 'You must submit leave individually.', leaveFor.error);
-		}
+		const leaveForEmbedTitle = 'Leave Request (For)';
+		const messageAuthor = msg.author;
+		const attendanceChannel = bot.channels.cache.get(attendanceID);
+		const successEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === successEmoji);
 
-		else if (args.length < 2) {
-			cmdError(msg, 'Insufficient arguments.', leaveFor.error);
-		}
+		msg.react(successEmojiObj).catch(error => debugError(error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
 
-		else {
-			const leaveForEmbedTitle = 'Leave Request (For)';
-			const messageAuthor = msg.author;
-			const attendanceChannel = bot.channels.cache.get(attendanceID);
-			const successEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === successEmoji);
+		const mentionIndex = args.indexOf(`<@!${absentee.user.id}>`);
+		if (mentionIndex > -1) args.splice(mentionIndex, 1);
 
-			msg.react(successEmojiObj).catch(error => debugError(error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
+		const attendanceEmbed = new Discord.MessageEmbed()
+			.setTitle(leaveForEmbedTitle)
+			.setColor(colours.leave)
+			.setAuthor(absentee.displayName, absentee.user.displayAvatarURL())
+			.setDescription(`${messageAuthor} has submitted leave for ${absentee} in ${msg.channel}`)
+			.addFields(
+				{ name: 'Date', value: dateFormat(msg.createdAt, dateOutput) },
+				{ name: 'Absentee', value: absentee },
+				{ name: 'Details', value: capitalise(args.join(' ')) },
+			);
 
-			const mentionIndex = args.indexOf(`<@!${absentee.user.id}>`);
-			if (mentionIndex > -1) args.splice(mentionIndex, 1);
+		const dmEmbed = new Discord.MessageEmbed()
+			.setTitle(leaveForEmbedTitle)
+			.setColor(colours.leave)
+			.setAuthor(msg.guild.name, msg.guild.iconURL())
+			.setDescription(`Hi ${messageAuthor}, your submission of leave for ${absentee} has been received.`)
+			.addFields(
+				{ name: 'Date', value: dateFormat(msg.createdAt, dateOutput) },
+				{ name: 'Channel', value: msg.channel.toString() },
+				{ name: 'Details', value: capitalise(args.join(' ')) },
+			);
 
-			const attendanceEmbed = new Discord.MessageEmbed()
-				.setTitle(leaveForEmbedTitle)
-				.setColor(colours.leave)
-				.setAuthor(absentee.displayName, absentee.user.displayAvatarURL())
-				.setDescription(`${messageAuthor} has submitted leave for ${absentee} in ${msg.channel}`)
-				.addFields(
-					{ name: 'Date', value: dateFormat(msg.createdAt, dateOutput) },
-					{ name: 'Absentee', value: absentee },
-					{ name: 'Details', value: capitalise(args.join(' ')) },
-				);
+		const absenteeEmbed = new Discord.MessageEmbed()
+			.setTitle(leaveForEmbedTitle)
+			.setColor(colours.leave)
+			.setAuthor(msg.guild.name, msg.guild.iconURL())
+			.setDescription(`${messageAuthor} has submitted leave for you in ${msg.channel}.`)
+			.addFields(
+				{ name: 'Date', value: dateFormat(msg.createdAt, dateOutput) },
+				{ name: 'Channel', value: msg.channel.toString() },
+				{ name: 'Details', value: capitalise(args.join(' ')) },
+			)
+			.setFooter(`Reply with ${pCmd(help)} ${leave.cmd} to learn how to request leave for yourself.`);
 
-			const dmEmbed = new Discord.MessageEmbed()
-				.setTitle(leaveForEmbedTitle)
-				.setColor(colours.leave)
-				.setAuthor(msg.guild.name, msg.guild.iconURL())
-				.setDescription(`Hi ${messageAuthor}, your submission of leave for ${absentee} has been received.`)
-				.addFields(
-					{ name: 'Date', value: dateFormat(msg.createdAt, dateOutput) },
-					{ name: 'Channel', value: msg.channel.toString() },
-					{ name: 'Details', value: capitalise(args.join(' ')) },
-				);
-
-			const absenteeEmbed = new Discord.MessageEmbed()
-				.setTitle(leaveForEmbedTitle)
-				.setColor(colours.leave)
-				.setAuthor(msg.guild.name, msg.guild.iconURL())
-				.setDescription(`${messageAuthor} has submitted leave for you in ${msg.channel}.`)
-				.addFields(
-					{ name: 'Date', value: dateFormat(msg.createdAt, dateOutput) },
-					{ name: 'Channel', value: msg.channel.toString() },
-					{ name: 'Details', value: capitalise(args.join(' ')) },
-				)
-				.setFooter(`Reply with ${pCmd(help)} ${leave.cmd} to learn how to request leave for yourself.`);
-
-			sendMsg(attendanceChannel, attendanceEmbed);
-			messageAuthor.send(dmEmbed).catch(error => dmError(msg, error));
-			absentee.send(absenteeEmbed).catch(error => dmError(msg, error, true));
-		}
+		sendMsg(attendanceChannel, attendanceEmbed);
+		messageAuthor.send(dmEmbed).catch(error => dmError(msg, error));
+		absentee.send(absenteeEmbed).catch(error => dmError(msg, error, true));
 	},
 };

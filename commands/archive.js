@@ -24,51 +24,45 @@ module.exports = {
 		const numChannelMentions = channelMentions.size;
 		const channel = channelMentions.first();
 
-		if (numChannelMentions === 0) {
-			cmdError(msg, 'You must specify a text channel.', archive.error);
+		try {
+			if (numChannelMentions === 0) throw 'You must specify a text channel.';
+
+			else if (channelMentions.some(mention => mention.type !== 'text')) throw 'You can only archive text channels.';
+
+			else if (numChannelMentions > 1) throw 'You must archive channels individually.';
+
+			else if (bot.channels.cache.get(channel.id).parentID === archivedID) throw 'Channel is already archived.';
 		}
 
-		else if (channelMentions.some(mention => mention.type !== 'text')) {
-			cmdError(msg, 'You can only archive text channels.', archive.error);
-		}
+		catch(error) { return cmdError(msg, error, archive.error); }
 
-		else if (numChannelMentions > 1) {
-			cmdError(msg, 'You must archive channels individually.', archive.error);
-		}
+		const log = bot.channels.cache.get(logID);
 
-		else if (bot.channels.cache.get(channel.id).parentID === archivedID) {
-			cmdError(msg, 'Channel is already archived.', archive.error);
-		}
+		channel.setParent(archivedID, { lockPermissions: true })
+			.then(() => {
+				const successEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === successEmoji);
 
-		else {
-			const log = bot.channels.cache.get(logID);
+				msg.react(successEmojiObj).catch(error => debugError(error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
 
-			channel.setParent(archivedID, { lockPermissions: true })
-				.then(() => {
-					const successEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === successEmoji);
+				const archiveEmbed = new Discord.MessageEmbed()
+					.setTitle('Channel Archived 🔒')
+					.setColor(colours.error)
+					.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
+					.setFooter(`${dateFormat(msg.createdAt, dateOutput)}`);
+				sendMsg(channel, archiveEmbed);
 
-					msg.react(successEmojiObj).catch(error => debugError(error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
-
-					const archiveEmbed = new Discord.MessageEmbed()
-						.setTitle('Channel Archived 🔒')
-						.setColor(colours.error)
-						.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
-						.setFooter(`${dateFormat(msg.createdAt, dateOutput)}`);
-					sendMsg(channel, archiveEmbed);
-
-					const logEmbed = new Discord.MessageEmbed()
-						.setColor(colours.warn)
-						.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-						.setDescription(`**Channel ${channel} archived by ${msg.author}**`)
-						.setFooter(`User: ${msg.author.id} | Channel: ${channel.id} | ${dateFormat(msg.createdAt, dateOutput)}`);
-					sendMsg(log, logEmbed);
-				})
-				.catch(error => {
-					const errorEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === errorEmoji);
-					msg.react(errorEmojiObj).catch(reactError => debugError(reactError, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
-					embedScaffold(msg.channel, `${msg.author} Error archiving ${channel}.`, colours.error, 'msg');
-					debugError(error, `Error archiving ${channel}.`);
-				});
-		}
+				const logEmbed = new Discord.MessageEmbed()
+					.setColor(colours.warn)
+					.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+					.setDescription(`**Channel ${channel} archived by ${msg.author}**`)
+					.setFooter(`User: ${msg.author.id} | Channel: ${channel.id} | ${dateFormat(msg.createdAt, dateOutput)}`);
+				sendMsg(log, logEmbed);
+			})
+			.catch(error => {
+				const errorEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === errorEmoji);
+				msg.react(errorEmojiObj).catch(reactError => debugError(reactError, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
+				embedScaffold(msg.channel, `${msg.author} Error archiving ${channel}.`, colours.error, 'msg');
+				debugError(error, `Error archiving ${channel}.`);
+			});
 	},
 };

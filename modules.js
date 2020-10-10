@@ -22,9 +22,12 @@ const rolesOutput = (array, skipFormat) => {
 
 	for (let i = 0; i < filteredArray.length; i++) {
 		if (i % 3 === 0) rolesString += '\n';
-		if (skipFormat) rolesString += `${filteredArray[i]} `;
-		else rolesString += `<@&${filteredArray[i]}> `;
+
+		(skipFormat)
+			? rolesString += `${filteredArray[i]} `
+			: rolesString += `<@&${filteredArray[i]}> `;
 	}
+
 	return rolesString;
 };
 
@@ -36,18 +39,22 @@ const capitalise = string => {
 const cmdPermsCheck = (msg, cmd) => {
 	const server = bot.guilds.cache.get(serverID);
 	const authorID = msg.author.id;
-	const memberRoles = (msg.guild) ? msg.member.roles.cache : server.members.cache.get(authorID).roles.cache;
+
+	const memberRoles = (msg.guild)
+		? msg.member.roles.cache
+		: server.members.cache.get(authorID).roles.cache;
 
 	if ((cmd.noRoles.length && memberRoles.some(roles => cmd.noRoles.includes(roles.id)))
-	|| (cmd.roles.length && !memberRoles.some(roles => cmd.roles.includes(roles.id)))
-	|| (cmd.devOnly && authorID !== devID)) return false;
+		|| (cmd.roles.length && !memberRoles.some(roles => cmd.roles.includes(roles.id)))
+		|| (cmd.devOnly && authorID !== devID)) {
+		return false;
+	}
 
 	return true;
 };
 
 const cmdError = (msg, errMsg, cmdErr, footer) => {
 	const errorEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === errorEmoji);
-
 	msg.react(errorEmojiObj).catch(error => debugError(error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
 
 	const errorEmbed = new Discord.MessageEmbed()
@@ -84,14 +91,21 @@ const formatAge = raw => {
 };
 
 const sendMsg = (dest, msg, isDM) => {
-	const type = (isDM) ? 'DM' : 'message';
+	const type = (isDM)
+		? 'DM'
+		: 'message';
+
 	dest.send(msg).catch(error => debugError(error, `Error sending ${type} to ${dest}.`));
 };
 
 const dmError = (msg, error, debug) => {
+	const member = msg.mentions.members.first();
+	const support = '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)';
+
 	console.error(error);
-	if (debug) embedScaffold(null, `Error sending direct message to ${msg.mentions.members.first()}.`, colours.error, 'debug', 'More Information', '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)', `\`\`\`js\n${error.stack}\`\`\``);
-	else embedScaffold(msg.channel, `${msg.author} I can't send direct messages to you!`, colours.error, 'msg', 'More Information', '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)');
+
+	if (debug) embedScaffold(null, `Error sending direct message to ${member}.`, colours.error, 'debug', 'More Information', support, `\`\`\`js\n${error.stack}\`\`\``);
+	else embedScaffold(msg.channel, `${msg.author} I can't send direct messages to you!`, colours.error, 'msg', 'More Information', support);
 };
 
 const debugError = (error, errorMsg, fieldTitle, fieldContent) => {
@@ -103,32 +117,37 @@ const dmCmdError = (msg, type) => {
 	const server = bot.guilds.cache.get(serverID);
 	const errorEmojiObj = server.emojis.cache.find(emoji => emoji.name === errorEmoji);
 	msg.react(errorEmojiObj).catch(error => debugError(error, 'Error reacting to message in DMs.'));
-	if (type === 'noPerms') embedScaffold(msg.author, 'You do not have access to that command.', colours.error, 'dm');
-	else if (type === 'hasRole') embedScaffold(msg.author, 'Please use a server channel for that command.', colours.error, 'dm');
-	else if (type === 'noDM') embedScaffold(msg.author, 'That command cannot be used in DMs.', colours.error, 'dm');
-	else embedScaffold(msg.author, 'Invalid command.', colours.error, 'dm');
+
+	try {
+		if (type === 'noPerms') throw 'You do not have access to that command.';
+		else if (type === 'hasRole') throw 'Please use a server channel for that command.';
+		else if (type === 'noDM') throw 'That command cannot be used in DMs.';
+		else throw 'Invalid command.';
+	}
+
+	catch(error) { embedScaffold(msg.author, error, colours.error, 'dm'); }
 };
 
 const embedScaffold = (dest, descMsg, colour, type, fieldTitle, fieldContent, errorField) => {
 	const botUser = bot.user;
 	const debugChannel = bot.channels.cache.get(debugID);
+	const devFooter = (type === 'dev')
+		? ` | Pronto v${version}`
+		: '';
 
 	const embed = new Discord.MessageEmbed()
 		.setAuthor(botUser.tag, botUser.avatarURL())
 		.setColor(colour)
 		.setDescription(descMsg)
-		.setFooter(`${dateFormat(Date.now(), dateOutput)}`);
+		.setFooter(`${dateFormat(Date.now(), dateOutput)}${devFooter}`);
 
 	if (fieldTitle) embed.addField(fieldTitle, fieldContent);
 	if (errorField) embed.setDescription(`${descMsg}\n${errorField}`);
 
 	if (type === 'dm') sendMsg(dest, embed, true);
-	else if (type === 'debug') debugChannel.send(embed).catch(error => console.error(error));
+	else if (type === 'dev') sendMsg(dest, embed, true);
 	else if (type === 'msg') sendMsg(dest, embed);
-	else if (type === 'dev') {
-		embed.setFooter(`${dateFormat(Date.now(), dateOutput)} | Pronto v${version}`);
-		sendMsg(dest, embed, true);
-	}
+	else if (type === 'debug') debugChannel.send(embed).catch(error => console.error(error));
 };
 
 module.exports = {

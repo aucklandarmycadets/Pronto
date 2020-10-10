@@ -22,12 +22,16 @@ module.exports = {
 		const messageAuthor = msg.author;
 		const server = bot.guilds.cache.get(serverID);
 		const helpEmbed = new Discord.MessageEmbed();
-		const memberRoles = (msg.guild) ? msg.member.roles.cache : server.members.cache.get(messageAuthor.id).roles.cache;
 		const msgCmd = args[0];
+
+		const memberRoles = (msg.guild)
+			? msg.member.roles.cache
+			: server.members.cache.get(messageAuthor.id).roles.cache;
 
 		if (!msg.guild && !server.available) {
 			const errorEmojiObj = server.emojis.cache.find(emoji => emoji.name === errorEmoji);
 			msg.react(errorEmojiObj).catch(error => debugError(error, 'Error reacting to message in DMs.'));
+
 			return embedScaffold(messageAuthor, 'There was an error reaching the server, please try again later.', colours.error, 'dm');
 		}
 
@@ -35,14 +39,19 @@ module.exports = {
 
 		const cmd = bot.commands.get(msgCmd) || bot.commands.find(command => command.aliases && command.aliases.includes(msgCmd));
 
-		if (cmd) cmdPermsCheck(msg, cmd) ? sendHelpEmbed(cmd) : (msg.guild) ? sendCmdList() : dmCmdError(msg, 'noPerms');
-
-		else if (!cmd) sendCmdList();
+		(cmd)
+			? cmdPermsCheck(msg, cmd)
+				? sendHelpEmbed(cmd)
+				: (msg.guild)
+					? sendCmdList()
+					: dmCmdError(msg, 'noPerms')
+			: sendCmdList();
 
 		function sendHelpEmbed(command) {
 			helpEmbed.setTitle(`Command: ${pCmd(command)}`);
 			helpEmbed.setColor(colours.pronto);
 			helpEmbed.setDescription(command.help);
+
 			if (msg.guild) {
 				helpEmbed.setFooter(`Requested by ${msg.member.displayName}`);
 				return sendMsg(msg.channel, helpEmbed);
@@ -62,14 +71,23 @@ module.exports = {
 
 			for (const values of Object.values(cmdsList)) {
 				if (!values.type) commandList = values.cmds;
+
 				if (values.type === 'noRole') {
-					commandList = (!memberRoles.some(roles => values.ids.includes(roles.id))) ? values.cmds : commandList;
+					commandList = (!memberRoles.some(roles => values.ids.includes(roles.id)))
+						? values.cmds
+						: commandList;
 				}
+
 				else if (values.type === 'role') {
-					commandList = (memberRoles.some(roles => values.ids.includes(roles.id))) ? values.cmds : commandList;
+					commandList = (memberRoles.some(roles => values.ids.includes(roles.id)))
+						? values.cmds
+						: commandList;
 				}
+
 				else if (values.type === 'dev') {
-					commandList = (messageAuthor.id === devID) ? values.cmds : commandList;
+					commandList = (messageAuthor.id === devID)
+						? values.cmds
+						: commandList;
 				}
 			}
 

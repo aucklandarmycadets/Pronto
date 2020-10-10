@@ -10,9 +10,12 @@ const commandText = (tier, type) => {
 
 	for (const obj of Object.values(cmds)) {
 		if (!type) commands.push('help');
+
 		else if ((type === 'role' && obj.roles === tier)
-		|| (type === 'noRole' && obj.noRoles === tier)
-		|| (type === 'dev' && obj.devOnly)) commands.push(obj);
+			|| (type === 'noRole' && obj.noRoles === tier)
+			|| (type === 'dev' && obj.devOnly)) {
+			commands.push(obj);
+		}
 	}
 
 	const object = {};
@@ -33,7 +36,9 @@ const helpText = (object, forList) => {
 	const objProperties = [];
 	const objValues = [];
 
-	const [startFormat, endFormat] = (forList) ? ['`', '` - '] : ['**', ':** '];
+	const [startFormat, endFormat] = (forList)
+		? ['`', '` - ']
+		: ['**', ':** '];
 
 	for (const [property, value] of Object.entries(object)) {
 		objProperties.push(property);
