@@ -5,7 +5,7 @@ const { config: { dateOutput }, ids: { attendanceID, formations }, colours } = r
 const { cmds: { attendance } } = require('../cmds');
 const { cmdError, sendMsg, debugError } = require('../modules');
 
-module.exports = attendance;{
+module.exports = attendance;
 module.exports.execute = (msg, args) => {
 	'use strict';
 
