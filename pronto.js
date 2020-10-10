@@ -7,7 +7,7 @@ bot.commands = new Discord.Collection();
 const botCommands = require('./commands');
 const pairs = require('./channelPairs');
 const dateFormat = require('dateformat');
-const version = '2.1.1';
+const version = '2.1.3';
 
 Object.keys(botCommands).map(key => {
 	bot.commands.set(botCommands[key].cmd, botCommands[key]);
@@ -44,6 +44,8 @@ bot.on('messageUpdate', (oldMessage, newMessage) => onMessageUpdate(oldMessage, 
 bot.on('error', error => devInfo('Error', error));
 bot.on('warn', warning => devInfo('Warning', warning));
 process.on('unhandledRejection', error => devInfo('Error', error));
+process.on('uncaughtExceptionMonitor', error => devInfo('Error', error));
+process.on('exit', code => console.log(`Exiting with code ${code}`));
 
 const onReady = () => {
 	console.info(`Logged in as ${bot.user.tag}!`);
@@ -200,8 +202,13 @@ const onVoiceUpdate = (oldState, newState) => {
 	const logEmbed = new Discord.MessageEmbed()
 		.setAuthor(newMember.displayName, newMember.user.displayAvatarURL());
 
-	const oldID = (oldState.channel) ? oldState.channelID : null;
-	const newID = (newState.channel) ? newState.channelID : null;
+	const oldID = (oldState.channel)
+		? oldState.channelID
+		: null;
+
+	const newID = (newState.channel)
+		? newState.channelID
+		: null;
 
 	if (oldID && newID) {
 		logEmbed.setColor(colours.warn);
@@ -370,7 +377,9 @@ const onRoleChange = (oldRole, newRole) => {
 		const addedPerms = [];
 
 		for (let i = 0; i < changedPerms.length; i++) {
-			(oldPerms.includes(changedPerms[i])) ? removedPerms.push(changedPerms[i]) : addedPerms.push(changedPerms[i]);
+			(oldPerms.includes(changedPerms[i]))
+				? removedPerms.push(changedPerms[i])
+				: addedPerms.push(changedPerms[i]);
 		}
 
 		if (!addedPerms.length && !removedPerms.length) return;

@@ -7,57 +7,42 @@ const { emojis: { successEmoji }, colours } = config;
 const { cmds: { connected } } = require('../cmds');
 const { cmdError, sendMsg, debugError } = require('../modules');
 
-module.exports = {
-	cmd: connected.cmd,
-	aliases: connected.aliases,
-	description: connected.desc,
-	allowDM: connected.allowDM,
-	roles: connected.roles,
-	noRoles: connected.noRoles,
-	devOnly: connected.devOnly,
-	help: connected.help,
-	execute(msg) {
-		'use strict';
+module.exports = connected;
+module.exports.execute = msg => {
+	'use strict';
 
-		const { bot } = require('../pronto.js');
-		const channelMentions = msg.mentions.channels;
-		const numChannelMentions = channelMentions.size;
-		const channel = channelMentions.first();
+	const { bot } = require('../pronto.js');
+	const channelMentions = msg.mentions.channels;
+	const numChannelMentions = channelMentions.size;
+	const channel = channelMentions.first();
 
-		if (numChannelMentions === 0) {
-			cmdError(msg, 'You must specify a voice channel.', connected.error, 'Note: Use the <#channelID> syntax!');
-		}
+	try {
+		if (numChannelMentions === 0) throw 'You must specify a voice channel.';
 
-		else if (channelMentions.some(mention => mention.type !== 'voice')) {
-			cmdError(msg, 'Input must be a voice channel.', connected.error, 'Note: Use the <#channelID> syntax!');
-		}
+		else if (channelMentions.some(mention => mention.type !== 'voice')) throw 'Input must be a voice channel.';
 
-		else if (numChannelMentions > 1) {
-			cmdError(msg, 'You can only display one channel at a time.', connected.error, 'Note: Use the <#channelID> syntax!');
-		}
+		else if (numChannelMentions > 1) throw 'You can only display one channel at a time.';
+	}
 
-		else {
-			const connectedMembers = [];
-			const attendanceChannel = bot.channels.cache.get(attendanceID);
-			const successEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === successEmoji);
+	catch(error) { return cmdError(msg, error, connected.error, 'Note: Use the <#channelID> syntax!'); }
 
-			for (const member of Object.values(channel.members.array())) {
-				connectedMembers.push(member.toString());
-			}
+	const connectedMembers = [];
+	const attendanceChannel = bot.channels.cache.get(attendanceID);
+	const successEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === successEmoji);
 
-			if (connectedMembers.length === 0) {
-				return cmdError(msg, `There are no members connected to ${channel}.`, connected.error);
-			}
+	for (const member of Object.values(channel.members.array())) {
+		connectedMembers.push(member.toString());
+	}
 
-			msg.react(successEmojiObj).catch(error => debugError(error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
+	if (connectedMembers.length === 0) return cmdError(msg, `There are no members connected to ${channel}.`, connected.error, 'Note: Use the <#channelID> syntax!');
 
-			const connectedEmbed = new Discord.MessageEmbed()
-				.setTitle(`Members Connected to #${channel.name}`)
-				.setColor(colours.success)
-				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
-				.setDescription(connectedMembers.join('\n'))
-				.setFooter(`${dateFormat(msg.createdAt, dateOutput)}`);
-			sendMsg(attendanceChannel, connectedEmbed);
-		}
-	},
+	msg.react(successEmojiObj).catch(error => debugError(error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
+
+	const connectedEmbed = new Discord.MessageEmbed()
+		.setTitle(`Members Connected to #${channel.name}`)
+		.setColor(colours.success)
+		.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
+		.setDescription(connectedMembers.join('\n'))
+		.setFooter(`${dateFormat(msg.createdAt, dateOutput)}`);
+	sendMsg(attendanceChannel, connectedEmbed);
 };

@@ -4,6 +4,7 @@ const config = {
 	prefix: '!',
 	permsInt: 1879141584,
 	dateOutput: 'HHMM "h" ddd, dd mmm yy',
+	prontoLogo: 'https://i.imgur.com/EzmJVyV.png',
 };
 
 const ids = {
