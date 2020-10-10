@@ -139,6 +139,8 @@ const colours = {
 > - Highest tier (`devID`) 
 >> **NOTE:** This does *not* give the dev permissions to every command, they only have access to the commands as per their roles like everyone else. This just means they have access to dev-only commands like `!ping` :)
 
+For the emojis to work (and for the bot to not throw heaps of errors...), [add two emojis to the server](https://support.discord.com/hc/en-us/articles/360041139231-Adding-Emojis-and-Reactions#h_ac364eb7-4f4f-4e0a-b829-1ee247f9a094), one named 'success' and the other 'error' :)
+
 4. Follow [this guide](https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot) to create your own bot user and get your bot token (you can set your own picture and name also!)
 
 > The only location where 'Pronto' is actually named is in `cmds.js` and the dev only `ping.js`, `uptime.js` and `restart.js`:
