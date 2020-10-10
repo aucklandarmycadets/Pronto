@@ -200,7 +200,7 @@ const cmds = {
 	connected: {
 		cmd: 'connected',
 		aliases: ['cnnct', 'cnnctd'],
-		desc: 'List of members connected to a voice channel.',
+		desc: 'List the members connected to a voice channel.',
 		allowDM: false,
 		roles: sgtPlus,
 		noRoles: [],
