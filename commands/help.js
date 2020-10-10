@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 
 const config = require('../config');
-const { ids: { serverID, devID, adjPlus } } = config;
+const { config: { prontoLogo }, ids: { serverID, devID, adjPlus } } = config;
 const { emojis: { successEmoji, errorEmoji }, colours } = config;
 const { cmds: { help }, cmdsList } = require('../cmds');
 const { pCmd, cmdPermsCheck, sendMsg, dmError, debugError, dmCmdError, embedScaffold } = require('../modules');
@@ -96,7 +96,7 @@ module.exports.execute = (msg, args) => {
 		}
 
 		helpEmbed.setTitle('Commands List');
-		helpEmbed.setThumbnail('https://i.imgur.com/EzmJVyV.png');
+		helpEmbed.setThumbnail(prontoLogo);
 		helpEmbed.setColor(colours.pronto);
 		helpEmbed.setDescription(commandList);
 		helpEmbed.setFooter(`Developed by ${dev.tag}`, dev.avatarURL());
