@@ -48,6 +48,7 @@ const cmdPermsCheck = (msg, cmd) => {
 
 	if ((cmd.noRoles.length && !memberRoles.some(roles => cmd.noRoles.includes(roles.id)))
 		|| (cmd.roles.length && memberRoles.some(roles => cmd.roles.includes(roles.id)))
+		|| (!cmd.noRoles.length && !cmd.roles.length)
 		|| (cmd.devOnly && authorID === devID)) {
 		return true;
 	}
