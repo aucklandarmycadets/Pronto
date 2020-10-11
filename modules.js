@@ -44,7 +44,7 @@ const cmdPermsCheck = (msg, cmd) => {
 		? msg.member.roles.cache
 		: server.members.cache.get(authorID).roles.cache;
 
-	if (!memberRoles) embedScaffold(msg.author, 'There was an error verifying your permissions, please try again later.', colours.error, 'dm');
+	if (!memberRoles) return getRoleError(msg);
 
 	if ((cmd.noRoles.length && !memberRoles.some(roles => cmd.noRoles.includes(roles.id)))
 		|| (cmd.roles.length && memberRoles.some(roles => cmd.roles.includes(roles.id)))
@@ -54,6 +54,28 @@ const cmdPermsCheck = (msg, cmd) => {
 	}
 
 	return false;
+};
+
+const getRoleError = msg => {
+	const server = bot.guilds.cache.get(serverID);
+	const errorEmojiObj = server.emojis.cache.find(emoji => emoji.name === errorEmoji);
+
+	msg.react(errorEmojiObj).catch(error => {
+		try {
+			if (msg.guild) throw `Error reacting to [message](${msg.url}) in ${msg.channel}.`;
+			else throw 'Error reacting to message in DMs.';
+		}
+
+		catch(errorMsg) { debugError(error, errorMsg); }
+	});
+
+	const verifyErr = 'There was an error verifying permissions, please try again later.';
+
+	(msg.guild)
+		? embedScaffold(msg.channel, verifyErr, colours.error, 'msg')
+		: embedScaffold(msg.author, verifyErr, colours.error, 'dm');
+
+	return 'err';
 };
 
 const cmdError = (msg, errMsg, cmdErr, footer) => {
@@ -159,6 +181,7 @@ module.exports = {
 	rolesOutput: rolesOutput,
 	capitalise: capitalise,
 	cmdPermsCheck: cmdPermsCheck,
+	getRoleError: getRoleError,
 	sendMsg: sendMsg,
 	cmdError: cmdError,
 	formatAge: formatAge,

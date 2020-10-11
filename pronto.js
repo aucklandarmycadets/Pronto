@@ -7,7 +7,7 @@ bot.commands = new Discord.Collection();
 const botCommands = require('./commands');
 const pairs = require('./channelPairs');
 const dateFormat = require('dateformat');
-const version = '2.1.6';
+const version = '2.1.7';
 
 Object.keys(botCommands).map(key => {
 	bot.commands.set(botCommands[key].cmd, botCommands[key]);
@@ -21,8 +21,6 @@ const { ids: { serverID, devID, logID, recruitingID, newMembersID, visitorID, ad
 const { emojis: { successEmoji }, colours } = config;
 const { cmds: { help, purge } } = require('./cmds');
 const { initialise, pCmd, rolesOutput, cmdPermsCheck, formatAge, sendMsg, debugError, dmCmdError, embedScaffold } = require('./modules');
-
-let dev, log, recruiting, newMembers;
 
 bot.login(TOKEN);
 
@@ -51,10 +49,7 @@ const onReady = () => {
 	console.info(`Logged in as ${bot.user.tag}!`);
 	initialise(bot, version);
 
-	dev = bot.users.cache.get(devID);
-	log = bot.channels.cache.get(logID);
-	recruiting = bot.channels.cache.get(recruitingID);
-	newMembers = bot.channels.cache.get(newMembersID);
+	const dev = bot.users.cache.get(devID);
 
 	if (!bot.guilds.cache.get(serverID)) return embedScaffold(dev, '**Error reaching the server, check the IDs!**', colours.error, 'dev');
 	else embedScaffold(dev, '**Ready to go!**', colours.success, 'dev');
@@ -88,6 +83,9 @@ const onMessage = msg => {
 	}
 
 	const hasPerms = cmdPermsCheck(msg, cmd);
+
+	if (hasPerms === 'err') return;
+
 	if (msg.guild && !hasPerms) return helpCmd.execute(msg, args);
 	else if (!msg.guild && !hasPerms) return dmCmdError(msg, 'noPerms');
 	else if (!msg.guild && !cmd.allowDM) return dmCmdError(msg, 'noDM');
@@ -102,6 +100,7 @@ const onMessage = msg => {
 };
 
 const onMemberBan = (guild, member, banned) => {
+	const log = bot.channels.cache.get(logID);
 	const logEmbed = new Discord.MessageEmbed();
 
 	if (banned) {
@@ -121,6 +120,9 @@ const onMemberBan = (guild, member, banned) => {
 };
 
 const onMemberAdd = member => {
+	const log = bot.channels.cache.get(logID);
+	const newMembers = bot.channels.cache.get(newMembersID);
+	const recruiting = bot.channels.cache.get(recruitingID);
 	const memberUser = member.user;
 
 	const logEmbed = new Discord.MessageEmbed()
@@ -148,6 +150,7 @@ const onMemberAdd = member => {
 const onMemberRemove = member => {
 	if (member.deleted) return;
 
+	const log = bot.channels.cache.get(logID);
 	const memberUser = member.user;
 	const memberRoles = member.roles.cache.array();
 
@@ -162,6 +165,7 @@ const onMemberRemove = member => {
 };
 
 const onMemberUpdate = (oldMember, newMember) => {
+	const log = bot.channels.cache.get(logID);
 	const roleDifference = newMember.roles.cache.difference(oldMember.roles.cache).first();
 	const newMemberUser = newMember.user;
 
@@ -197,6 +201,7 @@ const onMemberUpdate = (oldMember, newMember) => {
 };
 
 const onVoiceUpdate = (oldState, newState) => {
+	const log = bot.channels.cache.get(logID);
 	const newMember = newState.member;
 
 	const logEmbed = new Discord.MessageEmbed()
@@ -332,6 +337,7 @@ const onVoiceUpdate = (oldState, newState) => {
 };
 
 const onRoleUpdate = (role, created) => {
+	const log = bot.channels.cache.get(logID);
 	const logEmbed = new Discord.MessageEmbed()
 		.setAuthor(role.guild.name, role.guild.iconURL())
 		.setFooter(`ID: ${role.id} | ${dateFormat(dateOutput)}`);
@@ -350,6 +356,7 @@ const onRoleUpdate = (role, created) => {
 };
 
 const onRoleChange = (oldRole, newRole) => {
+	const log = bot.channels.cache.get(logID);
 	const logEmbed = new Discord.MessageEmbed();
 
 	if (oldRole.color !== newRole.color) {
@@ -401,6 +408,7 @@ const onRoleChange = (oldRole, newRole) => {
 const onMessageDelete = async msg => {
 	if (msg.content.startsWith(prefix) || !msg.guild) return;
 
+	const log = bot.channels.cache.get(logID);
 	const messageAuthor = msg.author;
 	const lastMessage = msg.channel.lastMessage;
 
@@ -436,6 +444,7 @@ const onMessageDelete = async msg => {
 };
 
 const onBulkDelete = msgs => {
+	const log = bot.channels.cache.get(logID);
 	const msg = msgs.first();
 	const deleteCount = msgs.array().length;
 	const lastMessage = msg.channel.lastMessage;
@@ -462,6 +471,7 @@ const onBulkDelete = msgs => {
 const onMessageUpdate = (oldMessage, newMessage) => {
 	if (oldMessage.content === newMessage.content || newMessage.author.bot || !newMessage.guild) return;
 
+	const log = bot.channels.cache.get(logID);
 	const messageAuthor = newMessage.author;
 
 	const logEmbed = new Discord.MessageEmbed()
