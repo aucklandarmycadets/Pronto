@@ -85,7 +85,7 @@ module.exports.execute = (msg, args) => {
 			}
 		}
 
-		const dev = bot.users.cache.get(devID);
+		const james = bot.users.cache.get('192181901065322496');
 
 		if (!msg.guild && msgCmd) {
 			const errorEmojiObj = server.emojis.cache.find(emoji => emoji.name === errorEmoji);
@@ -101,7 +101,7 @@ module.exports.execute = (msg, args) => {
 		helpEmbed.setThumbnail(prontoLogo);
 		helpEmbed.setColor(colours.pronto);
 		helpEmbed.setDescription(commandList);
-		helpEmbed.setFooter(`Developed by ${dev.tag}`, dev.avatarURL());
+		helpEmbed.setFooter(`Developed by ${james.tag}`, james.avatarURL());
 
 		if (!memberRoles.some(roles => adjPlus.includes(roles.id)) && messageAuthor.id !== devID) {
 			helpEmbed.addField('Note', `Only displaying commands available to ${messageAuthor}.`);
