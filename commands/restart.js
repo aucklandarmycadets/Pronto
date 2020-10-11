@@ -24,7 +24,7 @@ module.exports.execute = msg => {
 		.setDescription('**Restarting...**')
 		.addField('Uptime', formatAge(bot.uptime))
 		.setColor(colours.warn)
-		.setFooter(`${dateFormat(msg.createdAt, dateOutput)} | Pronto v${version}`);
+		.setFooter(`${dateFormat(dateOutput)} | Pronto v${version}`);
 
 	dev.send(restartEmbed)
 		.then(() => process.exit())

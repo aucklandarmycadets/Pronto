@@ -32,7 +32,7 @@ module.exports.execute = (msg, args) => {
 		.setColor(formationColour)
 		.setAuthor(`${formationName} (${msg.member.displayName})`, msg.guild.iconURL())
 		.setDescription(`${args.join(' ')}`)
-		.setFooter(`${dateFormat(msg.createdAt, dateOutput)}`);
+		.setFooter(`${dateFormat(dateOutput)}`);
 
 	sendMsg(attendanceChannel, attendanceEmbed);
 	sendMsg(msg.channel, attendanceEmbed);

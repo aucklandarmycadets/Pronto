@@ -139,7 +139,7 @@ const embedScaffold = (dest, descMsg, colour, type, fieldTitle, fieldContent, er
 		.setAuthor(botUser.tag, botUser.avatarURL())
 		.setColor(colour)
 		.setDescription(descMsg)
-		.setFooter(`${dateFormat(Date.now(), dateOutput)}${devFooter}`);
+		.setFooter(`${dateFormat(dateOutput)}${devFooter}`);
 
 	if (fieldTitle) embed.addField(fieldTitle, fieldContent);
 	if (errorField) embed.setDescription(`${descMsg}\n${errorField}`);

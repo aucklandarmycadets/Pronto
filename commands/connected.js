@@ -43,6 +43,6 @@ module.exports.execute = msg => {
 		.setColor(colours.success)
 		.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
 		.setDescription(connectedMembers.join('\n'))
-		.setFooter(`${dateFormat(msg.createdAt, dateOutput)}`);
+		.setFooter(`${dateFormat(dateOutput)}`);
 	sendMsg(attendanceChannel, connectedEmbed);
 };

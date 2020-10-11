@@ -116,7 +116,7 @@ const onMemberBan = (guild, member, banned) => {
 
 	logEmbed.setThumbnail(member.displayAvatarURL());
 	logEmbed.setDescription(`${member} ${member.tag}`);
-	logEmbed.setFooter(`ID: ${member.id} | ${dateFormat(Date.now(), dateOutput)}`);
+	logEmbed.setFooter(`ID: ${member.id} | ${dateFormat(dateOutput)}`);
 	sendMsg(log, logEmbed);
 };
 
@@ -129,7 +129,7 @@ const onMemberAdd = member => {
 		.setThumbnail(memberUser.displayAvatarURL())
 		.setDescription(`${memberUser} ${memberUser.tag}`)
 		.addField('Account Age', formatAge(Date.now() - memberUser.createdAt))
-		.setFooter(`ID: ${memberUser.id} | ${dateFormat(member.joinedAt, dateOutput)}`);
+		.setFooter(`ID: ${memberUser.id} | ${dateFormat(dateOutput)}`);
 	sendMsg(log, logEmbed);
 
 	if (memberUser.bot) return;
@@ -141,7 +141,7 @@ const onMemberAdd = member => {
 		.setColor(colours.pronto)
 		.setAuthor(memberUser.tag, memberUser.displayAvatarURL())
 		.setDescription(`**${memberUser} has just entered ${newMembers}.**\nMake them feel welcome!`)
-		.setFooter(`${dateFormat(member.joinedAt, dateOutput)}`);
+		.setFooter(`${dateFormat(dateOutput)}`);
 	sendMsg(recruiting, welcomeEmbed);
 };
 
@@ -157,7 +157,7 @@ const onMemberRemove = member => {
 		.setThumbnail(memberUser.displayAvatarURL())
 		.setDescription(`${memberUser} ${memberUser.tag}`)
 		.addField('Roles', rolesOutput(memberRoles, true))
-		.setFooter(`ID: ${memberUser.id} | ${dateFormat(Date.now(), dateOutput)}`);
+		.setFooter(`ID: ${memberUser.id} | ${dateFormat(dateOutput)}`);
 	sendMsg(log, logEmbed);
 };
 
@@ -192,7 +192,7 @@ const onMemberUpdate = (oldMember, newMember) => {
 
 	logEmbed.setAuthor(newMemberUser.tag, newMemberUser.displayAvatarURL());
 	logEmbed.setColor(colours.warn);
-	logEmbed.setFooter(`ID: ${newMemberUser.id} | ${dateFormat(Date.now(), dateOutput)}`);
+	logEmbed.setFooter(`ID: ${newMemberUser.id} | ${dateFormat(dateOutput)}`);
 	sendMsg(log, logEmbed);
 };
 
@@ -213,19 +213,19 @@ const onVoiceUpdate = (oldState, newState) => {
 	if (oldID && newID) {
 		logEmbed.setColor(colours.warn);
 		logEmbed.setDescription(`**${newMember} changed voice channel ${oldState.channel} > ${newState.channel}**`);
-		logEmbed.setFooter(`ID: ${newMember.id} | ${dateFormat(Date.now(), dateOutput)}`);
+		logEmbed.setFooter(`ID: ${newMember.id} | ${dateFormat(dateOutput)}`);
 	}
 
 	else if (!oldID) {
 		logEmbed.setColor(colours.success);
 		logEmbed.setDescription(`**${newMember} joined voice channel ${newState.channel}**`);
-		logEmbed.setFooter(`ID: ${newMember.id} | Channel: ${newID} | ${dateFormat(Date.now(), dateOutput)}`);
+		logEmbed.setFooter(`ID: ${newMember.id} | Channel: ${newID} | ${dateFormat(dateOutput)}`);
 	}
 
 	else if (!newID) {
 		logEmbed.setColor(colours.error);
 		logEmbed.setDescription(`**${newMember} left voice channel ${oldState.channel}**`);
-		logEmbed.setFooter(`ID: ${newMember.id} | Channel: ${oldID} | ${dateFormat(Date.now(), dateOutput)}`);
+		logEmbed.setFooter(`ID: ${newMember.id} | Channel: ${oldID} | ${dateFormat(dateOutput)}`);
 	}
 
 	sendMsg(log, logEmbed);
@@ -246,7 +246,7 @@ const onVoiceUpdate = (oldState, newState) => {
 						.setColor(colours.success)
 						.setAuthor(newMember.displayName, newMember.user.displayAvatarURL())
 						.setDescription(`${newMember} has joined the channel.`)
-						.setFooter(`${dateFormat(Date.now(), dateOutput)}`);
+						.setFooter(`${dateFormat(dateOutput)}`);
 					sendMsg(textChannel, joinEmbed);
 				})
 				.catch(error => {
@@ -261,7 +261,7 @@ const onVoiceUpdate = (oldState, newState) => {
 						.setColor(colours.error)
 						.setAuthor(newMember.displayName, newMember.user.displayAvatarURL())
 						.setDescription(`${newMember} has left the channel.`)
-						.setFooter(`${dateFormat(Date.now(), dateOutput)}`);
+						.setFooter(`${dateFormat(dateOutput)}`);
 					sendMsg(textChannel, leaveEmbed);
 
 					if (oldState.channel.members.size === 0) {
@@ -334,7 +334,7 @@ const onVoiceUpdate = (oldState, newState) => {
 const onRoleUpdate = (role, created) => {
 	const logEmbed = new Discord.MessageEmbed()
 		.setAuthor(role.guild.name, role.guild.iconURL())
-		.setFooter(`ID: ${role.id} | ${dateFormat(role.createdAt, dateOutput)}`);
+		.setFooter(`ID: ${role.id} | ${dateFormat(dateOutput)}`);
 
 	if (created) {
 		logEmbed.setColor(colours.success);
@@ -394,7 +394,7 @@ const onRoleChange = (oldRole, newRole) => {
 	else return;
 
 	logEmbed.setAuthor(newRole.guild.name, newRole.guild.iconURL());
-	logEmbed.setFooter(`ID: ${newRole.id} | ${dateFormat(Date.now(), dateOutput)}`);
+	logEmbed.setFooter(`ID: ${newRole.id} | ${dateFormat(dateOutput)}`);
 	sendMsg(log, logEmbed);
 };
 
@@ -415,7 +415,7 @@ const onMessageDelete = async msg => {
 		.setColor(colours.error)
 		.setAuthor(messageAuthor.tag, messageAuthor.displayAvatarURL())
 		.setDescription(`**Message sent by ${messageAuthor} deleted in ${msg.channel}**\n${msg.content}`)
-		.setFooter(`Author: ${messageAuthor.id} | Message: ${msg.id} | ${dateFormat(Date.now(), dateOutput)}`);
+		.setFooter(`Author: ${messageAuthor.id} | Message: ${msg.id} | ${dateFormat(dateOutput)}`);
 
 	if (lastMessage) {
 		if (lastMessage.content.includes(purge.cmd) || purge.aliases.some(alias => lastMessage.content.includes(alias))) {
@@ -455,7 +455,7 @@ const onBulkDelete = msgs => {
 	}
 
 	logEmbed.setColor(colours.error);
-	logEmbed.setFooter(`${dateFormat(Date.now(), dateOutput)}`);
+	logEmbed.setFooter(`${dateFormat(dateOutput)}`);
 	sendMsg(log, logEmbed);
 };
 
@@ -470,7 +470,7 @@ const onMessageUpdate = (oldMessage, newMessage) => {
 		.setDescription(`**Message edited in ${newMessage.channel}** [Jump to Message](${newMessage.url})`)
 		.addField('Before', oldMessage.content)
 		.addField('After', newMessage.content)
-		.setFooter(`Author: ${messageAuthor.id} | Message: ${newMessage.id} | ${dateFormat(newMessage.editedAt, dateOutput)}`);
+		.setFooter(`Author: ${messageAuthor.id} | Message: ${newMessage.id} | ${dateFormat(dateOutput)}`);
 	sendMsg(log, logEmbed);
 };
 

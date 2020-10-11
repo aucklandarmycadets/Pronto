@@ -28,7 +28,7 @@ module.exports.execute = (msg, args) => {
 		.setAuthor(msg.member.displayName, messageAuthor.displayAvatarURL())
 		.setDescription(`${messageAuthor} has requested leave in ${msg.channel}`)
 		.addFields(
-			{ name: 'Date', value: dateFormat(msg.createdAt, dateOutput) },
+			{ name: 'Date', value: dateFormat(dateOutput) },
 			{ name: 'Details', value: capitalise(args.join(' ')) },
 		);
 
@@ -38,7 +38,7 @@ module.exports.execute = (msg, args) => {
 		.setAuthor(msg.guild.name, msg.guild.iconURL())
 		.setDescription(`Hi ${messageAuthor}, your submission of leave has been received.`)
 		.addFields(
-			{ name: 'Date', value: dateFormat(msg.createdAt, dateOutput) },
+			{ name: 'Date', value: dateFormat(dateOutput) },
 			{ name: 'Channel', value: msg.channel.toString() },
 			{ name: 'Details', value: capitalise(args.join(' ')) },
 		);
