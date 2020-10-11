@@ -13,7 +13,7 @@ module.exports.execute = msg => {
 
 	const uptimeEmbed = new Discord.MessageEmbed()
 		.setColor(colours.success)
-		.setFooter(`${formatAge(bot.uptime)} | ${dateFormat(msg.createdAt, dateOutput)} | Pronto v${version}`);
+		.setFooter(`${formatAge(bot.uptime)} | ${dateFormat(dateOutput)} | Pronto v${version}`);
 
 	sendMsg(msg.channel, uptimeEmbed);
 };

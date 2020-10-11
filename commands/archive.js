@@ -40,14 +40,14 @@ module.exports.execute = msg => {
 				.setTitle('Channel Archived 🔒')
 				.setColor(colours.error)
 				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
-				.setFooter(`${dateFormat(msg.createdAt, dateOutput)}`);
+				.setFooter(`${dateFormat(dateOutput)}`);
 			sendMsg(channel, archiveEmbed);
 
 			const logEmbed = new Discord.MessageEmbed()
 				.setColor(colours.warn)
 				.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
 				.setDescription(`**Channel ${channel} archived by ${msg.author}**`)
-				.setFooter(`User: ${msg.author.id} | Channel: ${channel.id} | ${dateFormat(msg.createdAt, dateOutput)}`);
+				.setFooter(`User: ${msg.author.id} | Channel: ${channel.id} | ${dateFormat(dateOutput)}`);
 			sendMsg(log, logEmbed);
 		})
 		.catch(error => {

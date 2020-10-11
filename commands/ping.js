@@ -18,7 +18,7 @@ module.exports.execute = msg => {
 			pingValue = reply.createdTimestamp - msg.createdTimestamp;
 			const pingEmbed = new Discord.MessageEmbed()
 				.setColor(colours.success)
-				.setFooter(`${pingValue} ms | ${dateFormat(msg.createdAt, dateOutput)} | Pronto v${version}`);
+				.setFooter(`${pingValue} ms | ${dateFormat(dateOutput)} | Pronto v${version}`);
 			reply.edit(pingEmbed);
 		})
 		.catch(error => debugError(error, `Error sending message to ${msg.channel}.`));
