@@ -7,7 +7,7 @@ bot.commands = new Discord.Collection();
 const botCommands = require('./commands');
 const pairs = require('./channelPairs');
 const dateFormat = require('dateformat');
-const version = '2.1.6';
+const version = '2.1.7';
 
 Object.keys(botCommands).map(key => {
 	bot.commands.set(botCommands[key].cmd, botCommands[key]);
@@ -83,6 +83,9 @@ const onMessage = msg => {
 	}
 
 	const hasPerms = cmdPermsCheck(msg, cmd);
+
+	if (hasPerms === 'err') return;
+
 	if (msg.guild && !hasPerms) return helpCmd.execute(msg, args);
 	else if (!msg.guild && !hasPerms) return dmCmdError(msg, 'noPerms');
 	else if (!msg.guild && !cmd.allowDM) return dmCmdError(msg, 'noDM');

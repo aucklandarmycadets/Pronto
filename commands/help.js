@@ -4,7 +4,7 @@ const config = require('../config');
 const { config: { prontoLogo }, ids: { serverID, devID, adjPlus } } = config;
 const { emojis: { successEmoji, errorEmoji }, colours } = config;
 const { cmds: { help }, cmdsList } = require('../cmds');
-const { pCmd, cmdPermsCheck, sendMsg, dmError, debugError, dmCmdError, embedScaffold } = require('../modules');
+const { pCmd, cmdPermsCheck, getRoleError, sendMsg, dmError, debugError, dmCmdError, embedScaffold } = require('../modules');
 
 module.exports = help;
 module.exports.execute = (msg, args) => {
@@ -19,6 +19,8 @@ module.exports.execute = (msg, args) => {
 	const memberRoles = (msg.guild)
 		? msg.member.roles.cache
 		: server.members.cache.get(messageAuthor.id).roles.cache;
+
+	if (!memberRoles) return getRoleError(msg);
 
 	if (!msg.guild && !server.available) {
 		const errorEmojiObj = server.emojis.cache.find(emoji => emoji.name === errorEmoji);
