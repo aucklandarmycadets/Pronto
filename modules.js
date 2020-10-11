@@ -44,13 +44,15 @@ const cmdPermsCheck = (msg, cmd) => {
 		? msg.member.roles.cache
 		: server.members.cache.get(authorID).roles.cache;
 
-	if ((cmd.noRoles.length && memberRoles.some(roles => cmd.noRoles.includes(roles.id)))
-		|| (cmd.roles.length && !memberRoles.some(roles => cmd.roles.includes(roles.id)))
-		|| (cmd.devOnly && authorID !== devID)) {
-		return false;
+	if (!memberRoles) embedScaffold(msg.author, 'There was an error verifying your permissions, please try again later.', colours.error, 'dm');
+
+	if ((cmd.noRoles.length && !memberRoles.some(roles => cmd.noRoles.includes(roles.id)))
+		|| (cmd.roles.length && memberRoles.some(roles => cmd.roles.includes(roles.id)))
+		|| (cmd.devOnly && authorID === devID)) {
+		return true;
 	}
 
-	return true;
+	return false;
 };
 
 const cmdError = (msg, errMsg, cmdErr, footer) => {
