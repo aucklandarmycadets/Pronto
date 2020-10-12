@@ -43,15 +43,11 @@ module.exports.execute = async (msg, args) => {
 		if (args.length === 0) return cmdError(msg, 'You must enter a message.', attendance.error);
 
 		const filterBy = message => {
-			try {
-				return message.embeds[0].author.name.includes(formationName);
-			}
-
-			catch {}
+			try { return message.embeds[0].author.name.includes(formationName); }
+			catch { null; }
 		};
 
 		const attendanceChannel = bot.channels.cache.get(attendanceID);
-
 		let chnlMsg, attMsg;
 
 		await msg.channel.messages.fetch()
@@ -78,7 +74,7 @@ module.exports.execute = async (msg, args) => {
 			.setDescription(register)
 			.setFooter('Use the reactions below to confirm or cancel.');
 
-		if (chnlMsg) attendanceEmbed.setAuthor(`${formationName} (Update)`, msg.guild.iconURL())
+		if (chnlMsg) attendanceEmbed.setAuthor(`${formationName} (Update)`, msg.guild.iconURL());
 
 		msg.author.send(attendanceEmbed)
 			.then(dm => {
@@ -103,7 +99,10 @@ module.exports.execute = async (msg, args) => {
 							updateEmbed.setDescription('**Confirmed.**');
 
 							attendanceEmbed.setAuthor(`${formationName} (${msg.member.displayName})`, msg.guild.iconURL());
-							attendanceEmbed.setFooter(dateFormat(dateOutput));
+
+							(chnlMsg)
+								? attendanceEmbed.setFooter(`Last updated at ${dateFormat(dateOutput)}`)
+								: attendanceEmbed.setFooter(dateFormat(dateOutput));
 
 							if (chnlMsg) {
 								chnlMsg.edit(attendanceEmbed);
