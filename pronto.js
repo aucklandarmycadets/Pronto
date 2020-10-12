@@ -7,7 +7,7 @@ bot.commands = new Discord.Collection();
 const botCommands = require('./commands');
 const pairs = require('./channelPairs');
 const dateFormat = require('dateformat');
-const version = '2.1.7';
+const version = '2.1.8';
 
 Object.keys(botCommands).map(key => {
 	bot.commands.set(botCommands[key].cmd, botCommands[key]);
@@ -276,57 +276,59 @@ const onVoiceUpdate = (oldState, newState) => {
 							.setTitle('Purge Text Channel')
 							.setColor(colours.success)
 							.setDescription(`Click on the ${successEmojiObj} reaction to purge this channel.`);
-						textChannel.send(purgeEmbed).then(msg => {
-							msg.react(successEmojiObj)
-								.catch(error => debugError(error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
+						textChannel.send(purgeEmbed)
+							.then(msg => {
+								msg.react(successEmojiObj)
+									.catch(error => debugError(error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
 
-							const filter = (reaction) => {
-								return reaction.emoji.name === successEmoji;
-							};
+								const filter = (reaction) => reaction.emoji.name === successEmoji;
 
-							const collector = msg.createReactionCollector(filter, { time: 90000, dispose: true });
+								const collector = msg.createReactionCollector(filter, { time: 90000, dispose: true });
 
-							collector.on('collect', (reaction, user) => {
-								if (msg.guild.members.cache.get(user.id).roles.cache.some(roles => adjPlus.includes(roles.id))) {
-									msg.channel.messages.fetch({ limit: 100 })
-										.then((messages) => {
-											purgeChannel(messages, msg.channel, collector);
-										});
-								}
+								collector.on('collect', (reaction, user) => {
+									if (!user.bot) {
+										if (msg.guild.members.cache.get(user.id).roles.cache.some(roles => adjPlus.includes(roles.id))) {
+											msg.channel.messages.fetch({ limit: 100 })
+												.then((messages) => {
+													purgeChannel(messages, msg.channel, collector);
+												});
+										}
 
-								else if (!user.bot) {
-									const errorEmbed = new Discord.MessageEmbed()
-										.setColor(colours.error)
-										.setAuthor(newMember.displayName, newMember.user.displayAvatarURL())
-										.setDescription(`${user} Insufficient permissions. ${purge.error}`);
-									sendMsg(textChannel, errorEmbed);
-								}
-							});
+										else {
+											const errorEmbed = new Discord.MessageEmbed()
+												.setColor(colours.error)
+												.setAuthor(newMember.displayName, newMember.user.displayAvatarURL())
+												.setDescription(`${user} Insufficient permissions. ${purge.error}`);
+											sendMsg(textChannel, errorEmbed);
+										}
+									}
+								});
 
-							collector.on('remove', (reaction, user) => {
-								if (msg.guild.members.cache.get(user.id).roles.cache.some(roles => adjPlus.includes(roles.id))) {
-									msg.channel.messages.fetch({ limit: 100 })
-										.then((messages) => {
-											purgeChannel(messages, msg.channel, collector);
-										});
-								}
-							});
+								collector.on('remove', (reaction, user) => {
+									if (msg.guild.members.cache.get(user.id).roles.cache.some(roles => adjPlus.includes(roles.id))) {
+										msg.channel.messages.fetch({ limit: 100 })
+											.then((messages) => {
+												purgeChannel(messages, msg.channel, collector);
+											});
+									}
+								});
 
-							collector.on('end', (collected, reason) => {
-								if (reason === 'time') {
-									msg.reactions.removeAll()
-										.catch(error => {
-											debugError(error, `Error removing reactions from [message](${msg.url}) in ${textChannel}.`);
-										});
+								collector.on('end', (collected, reason) => {
+									if (reason === 'time') {
+										msg.reactions.removeAll()
+											.catch(error => {
+												debugError(error, `Error removing reactions from [message](${msg.url}) in ${textChannel}.`);
+											});
 
-									const timeEmbed = new Discord.MessageEmbed()
-										.setColor(colours.error)
-										.setAuthor(bot.user.tag, bot.user.avatarURL())
-										.setDescription(`Timed out. Type \`${pCmd(purge)} 100\` to clear this channel manually.`);
-									sendMsg(textChannel, timeEmbed);
-								}
-							});
-						});
+										const timeEmbed = new Discord.MessageEmbed()
+											.setColor(colours.error)
+											.setAuthor(bot.user.tag, bot.user.avatarURL())
+											.setDescription(`Timed out. Type \`${pCmd(purge)} 100\` to clear this channel manually.`);
+										sendMsg(textChannel, timeEmbed);
+									}
+								});
+							})
+							.catch(error => debugError(error, `Error sending message to ${textChannel}.`));
 					}
 				})
 				.catch(error => {
@@ -459,7 +461,7 @@ const onBulkDelete = msgs => {
 	else if (lastMessage.content.includes(purge.cmd) || purge.aliases.some(alias => lastMessage.content.includes(alias))) {
 		lastMessage.delete().catch(error => debugError(error, `Error deleting message in ${msg.channel}.`, 'Message', lastMessage.content));
 
-		logEmbed.setAuthor(msg.author.tag, msg.author.displayAvatarURL());
+		logEmbed.setAuthor(lastMessage.author.tag, lastMessage	.author.displayAvatarURL());
 		logEmbed.setDescription(`**${deleteCount} messages bulk deleted by ${lastMessage.author} in ${msg.channel}**`);
 	}
 
