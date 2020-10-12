@@ -283,7 +283,7 @@ const onVoiceUpdate = (oldState, newState) => {
 
 								const filter = (reaction) => reaction.emoji.name === successEmoji;
 
-								const collector = msg.createReactionCollector(filter, { time: 90000, dispose: true });
+								const collector = msg.createReactionCollector(filter, { dispose: true });
 
 								collector.on('collect', (reaction, user) => {
 									if (!user.bot) {
