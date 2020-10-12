@@ -30,14 +30,12 @@ module.exports.execute = (msg, args) => {
 		if (purgeCount > 100) throw 'You cannot purge more than 100 messages at a time.';
 	}
 
-	catch(error) { return cmdError(msg, error, purge.error); }
+	catch (error) { return cmdError(msg, error, purge.error); }
 
 	msg.channel.messages.fetch({ limit: 100, before: msg.id })
 		.then((messages) => {
 			if (user) {
-				const filterBy = user
-					? user.id
-					: bot.user.id;
+				const filterBy = user.id;
 				messages = messages.filter(message => message.author.id === filterBy).array().slice(0, purgeCount);
 			}
 

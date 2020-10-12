@@ -26,7 +26,7 @@ module.exports.execute = msg => {
 		else if (bot.channels.cache.get(channel.id).parentID === archivedID) throw 'Channel is already archived.';
 	}
 
-	catch(error) { return cmdError(msg, error, archive.error); }
+	catch (error) { return cmdError(msg, error, archive.error); }
 
 	const log = bot.channels.cache.get(logID);
 

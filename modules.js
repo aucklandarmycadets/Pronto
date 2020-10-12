@@ -150,7 +150,7 @@ const dmCmdError = (msg, type) => {
 		else throw 'Invalid command.';
 	}
 
-	catch(error) { embedScaffold(msg.author, error, colours.error, 'dm'); }
+	catch (error) { embedScaffold(msg.author, error, colours.error, 'dm'); }
 };
 
 const embedScaffold = (dest, descMsg, colour, type, fieldTitle, fieldContent, errorField) => {

@@ -24,7 +24,7 @@ module.exports.execute = msg => {
 		else if (numChannelMentions > 1) throw 'You can only display one channel at a time.';
 	}
 
-	catch(error) { return cmdError(msg, error, connected.error, 'Note: Use the <#channelID> syntax!'); }
+	catch (error) { return cmdError(msg, error, connected.error, 'Note: Use the <#channelID> syntax!'); }
 
 	const connectedMembers = [];
 	const attendanceChannel = bot.channels.cache.get(attendanceID);
