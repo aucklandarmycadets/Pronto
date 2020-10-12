@@ -459,7 +459,7 @@ const onBulkDelete = msgs => {
 	else if (lastMessage.content.includes(purge.cmd) || purge.aliases.some(alias => lastMessage.content.includes(alias))) {
 		lastMessage.delete().catch(error => debugError(error, `Error deleting message in ${msg.channel}.`, 'Message', lastMessage.content));
 
-		logEmbed.setAuthor(msg.author.tag, msg.author.displayAvatarURL());
+		logEmbed.setAuthor(lastMessage.author.tag, lastMessage	.author.displayAvatarURL());
 		logEmbed.setDescription(`**${deleteCount} messages bulk deleted by ${lastMessage.author} in ${msg.channel}**`);
 	}
 
