@@ -286,19 +286,21 @@ const onVoiceUpdate = (oldState, newState) => {
 								const collector = msg.createReactionCollector(filter, { time: 90000, dispose: true });
 
 								collector.on('collect', (reaction, user) => {
-									if (msg.guild.members.cache.get(user.id).roles.cache.some(roles => adjPlus.includes(roles.id))) {
-										msg.channel.messages.fetch({ limit: 100 })
-											.then((messages) => {
-												purgeChannel(messages, msg.channel, collector);
-											});
-									}
+									if (!user.bot) {
+										if (msg.guild.members.cache.get(user.id).roles.cache.some(roles => adjPlus.includes(roles.id))) {
+											msg.channel.messages.fetch({ limit: 100 })
+												.then((messages) => {
+													purgeChannel(messages, msg.channel, collector);
+												});
+										}
 
-									else if (!user.bot) {
-										const errorEmbed = new Discord.MessageEmbed()
-											.setColor(colours.error)
-											.setAuthor(newMember.displayName, newMember.user.displayAvatarURL())
-											.setDescription(`${user} Insufficient permissions. ${purge.error}`);
-										sendMsg(textChannel, errorEmbed);
+										else {
+											const errorEmbed = new Discord.MessageEmbed()
+												.setColor(colours.error)
+												.setAuthor(newMember.displayName, newMember.user.displayAvatarURL())
+												.setDescription(`${user} Insufficient permissions. ${purge.error}`);
+											sendMsg(textChannel, errorEmbed);
+										}
 									}
 								});
 
