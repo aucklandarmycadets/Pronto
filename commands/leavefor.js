@@ -26,7 +26,7 @@ module.exports.execute = (msg, args) => {
 		else if (args.length < 2) throw 'Insufficient arguments.';
 	}
 
-	catch(error) { return cmdError(msg, error, leaveFor.error); }
+	catch (error) { return cmdError(msg, error, leaveFor.error); }
 
 	const leaveForEmbedTitle = 'Leave Request (For)';
 	const messageAuthor = msg.author;
