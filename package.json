@@ -1,16 +1,24 @@
 {
-  "name": "Pronto",
-  "version": "1.0.0",
-  "description": "Discord bot designed for the City of Auckland Cadet Unit",
+  "name": "pronto",
+  "version": "2.2.0",
+  "description": "A Discord bot developed for the City of Auckland Cadet Unit.",
   "main": "pronto.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JamesNZL/Pronto.git"
+  },
   "author": "James Bao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JamesNZL/Pronto/issues"
+  },
+  "homepage": "https://github.com/JamesNZL/Pronto#readme",
   "dependencies": {
     "dateformat": "^3.0.3",
     "discord.js": "^12.3.1",
-    "dotenv": "^8.2.0",
-    "eslint": "^7.10.0"
+    "dotenv": "^8.2.0"
   }
 }
