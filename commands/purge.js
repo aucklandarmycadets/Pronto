@@ -6,7 +6,6 @@ module.exports = purge;
 module.exports.execute = (msg, args) => {
 	'use strict';
 
-	const { bot } = require('../pronto.js');
 	const userMentions = msg.mentions.users;
 
 	let user, purgeCount;
