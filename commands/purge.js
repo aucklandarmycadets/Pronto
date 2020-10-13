@@ -53,5 +53,6 @@ module.exports.execute = (msg, args) => {
 					embedScaffold(msg.channel, `${msg.author} Error purging ${purgeCount} messages.`, colours.error, 'msg');
 					debugError(error, `Error purging ${purgeCount} messages in ${msg.channel}.`);
 				});
-		});
+		})
+		.catch(error => debugError(error, `Error fetching messages in ${msg.channel}.`));
 };

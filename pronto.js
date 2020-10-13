@@ -32,7 +32,8 @@ bot.on('guildMemberAdd', member => onMemberAdd(member));
 bot.on('guildMemberRemove', member => onMemberRemove(member));
 bot.on('guildMemberUpdate', (oldMember, newMember) => onMemberUpdate(oldMember, newMember));
 bot.on('voiceStateUpdate', (oldState, newState) => onVoiceUpdate(oldState, newState));
-bot.on('invalidated', () => devInfo('null', 'Invalidated'));
+bot.on('invalidated', () => devInfo(null, 'Invalidated'));
+bot.on('rateLimit', rateLimitInfo => devInfo('Rate Limit', rateLimitInfo));
 bot.on('roleCreate', role => onRoleUpdate(role, true));
 bot.on('roleDelete', role => onRoleUpdate(role));
 bot.on('roleUpdate', (oldRole, newRole) => onRoleChange(oldRole, newRole));
@@ -289,9 +290,8 @@ const onVoiceUpdate = (oldState, newState) => {
 									if (!user.bot) {
 										if (msg.guild.members.cache.get(user.id).roles.cache.some(roles => adjPlus.includes(roles.id))) {
 											msg.channel.messages.fetch({ limit: 100 })
-												.then((messages) => {
-													purgeChannel(messages, msg.channel, collector);
-												});
+												.then(messages => purgeChannel(messages, msg.channel, collector))
+												.catch(error => debugError(error, `Error fetching messages in ${msg.channel}.`));
 										}
 
 										else {
@@ -307,18 +307,15 @@ const onVoiceUpdate = (oldState, newState) => {
 								collector.on('remove', (reaction, user) => {
 									if (msg.guild.members.cache.get(user.id).roles.cache.some(roles => adjPlus.includes(roles.id))) {
 										msg.channel.messages.fetch({ limit: 100 })
-											.then((messages) => {
-												purgeChannel(messages, msg.channel, collector);
-											});
+											.then(messages => purgeChannel(messages, msg.channel, collector))
+											.catch(error => debugError(error, `Error fetching messages in ${msg.channel}.`));
 									}
 								});
 
 								collector.on('end', (collected, reason) => {
 									if (reason === 'time') {
 										msg.reactions.removeAll()
-											.catch(error => {
-												debugError(error, `Error removing reactions from [message](${msg.url}) in ${textChannel}.`);
-											});
+											.catch(error => debugError(error, `Error removing reactions from [message](${msg.url}) in ${textChannel}.`));
 
 										const timeEmbed = new Discord.MessageEmbed()
 											.setColor(colours.error)
@@ -421,16 +418,20 @@ const onMessageDelete = async msg => {
 
 	const deletionLog = fetchedLogs.entries.first();
 
+	const content = (msg.content === '')
+		? `>>> ${msg.embeds[0].description}`
+		: `>>> ${msg.content}`;
+
 	const logEmbed = new Discord.MessageEmbed()
 		.setColor(colours.error)
 		.setAuthor(messageAuthor.tag, messageAuthor.displayAvatarURL())
-		.setDescription(`**Message sent by ${messageAuthor} deleted in ${msg.channel}**\n${msg.content}`)
+		.setDescription(`**Message sent by ${messageAuthor} deleted in ${msg.channel}**\n${content}`)
 		.setFooter(`Author: ${messageAuthor.id} | Message: ${msg.id} | ${dateFormat(dateOutput)}`);
 
 	if (lastMessage) {
 		if (lastMessage.content.includes(purge.cmd) || purge.aliases.some(alias => lastMessage.content.includes(alias))) {
-			lastMessage.delete().catch(error => debugError(error, `Error deleting message in ${msg.channel}.`, 'Message', msg.content));
-			logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted by ${lastMessage.author} in ${msg.channel}**\n${msg.content}`);
+			lastMessage.delete().catch(error => debugError(error, `Error deleting message in ${msg.channel}.`, 'Message', content));
+			logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted by ${lastMessage.author} in ${msg.channel}**\n${content}`);
 		}
 	}
 
@@ -438,7 +439,7 @@ const onMessageDelete = async msg => {
 		const { executor, target } = deletionLog;
 
 		if (target.id === messageAuthor.id) {
-			logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted by ${executor} in ${msg.channel}**\n${msg.content}`);
+			logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted by ${executor} in ${msg.channel}**\n${content}`);
 		}
 	}
 

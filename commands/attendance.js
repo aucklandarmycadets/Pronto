@@ -53,12 +53,14 @@ module.exports.execute = async (msg, args) => {
 		await msg.channel.messages.fetch()
 			.then(messages => {
 				chnlMsg = messages.filter(filterBy).first();
-			});
+			})
+			.catch(error => debugError(error, `Error fetching messages in ${msg.channel}.`));
 
 		await attendanceChannel.messages.fetch()
 			.then(messages => {
 				attMsg = messages.filter(filterBy).first();
-			});
+			})
+			.catch(error => debugError(error, `Error fetching messages in ${msg.channel}.`));
 
 		createRegister(chnlMsg, attMsg);
 	}
