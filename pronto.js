@@ -2,12 +2,12 @@
 
 require('dotenv').config();
 const Discord = require('discord.js');
-const bot = new Discord.Client();
+const bot = new Discord.Client({ partials: ['MESSAGE'] });
 bot.commands = new Discord.Collection();
 const botCommands = require('./commands');
 const pairs = require('./channelPairs');
 const dateFormat = require('dateformat');
-const version = '2.1.9';
+const version = '2.2.0';
 
 Object.keys(botCommands).map(key => {
 	bot.commands.set(botCommands[key].cmd, botCommands[key]);
@@ -405,41 +405,55 @@ const onRoleChange = (oldRole, newRole) => {
 };
 
 const onMessageDelete = async msg => {
-	if (msg.content.startsWith(prefix) || !msg.guild) return;
-
 	const log = bot.channels.cache.get(logID);
-	const messageAuthor = msg.author;
-	const lastMessage = msg.channel.lastMessage;
-
-	const fetchedLogs = await msg.guild.fetchAuditLogs({
-		limit: 1,
-		type: 'MESSAGE_DELETE',
-	});
-
-	const deletionLog = fetchedLogs.entries.first();
-
-	const content = (msg.content === '')
-		? `>>> ${msg.embeds[0].description}`
-		: `>>> ${msg.content}`;
-
 	const logEmbed = new Discord.MessageEmbed()
-		.setColor(colours.error)
-		.setAuthor(messageAuthor.tag, messageAuthor.displayAvatarURL())
-		.setDescription(`**Message sent by ${messageAuthor} deleted in ${msg.channel}**\n${content}`)
-		.setFooter(`Author: ${messageAuthor.id} | Message: ${msg.id} | ${dateFormat(dateOutput)}`);
+		.setColor(colours.error);
 
-	if (lastMessage) {
-		if (lastMessage.content.includes(purge.cmd) || purge.aliases.some(alias => lastMessage.content.includes(alias))) {
-			lastMessage.delete().catch(error => debugError(error, `Error deleting message in ${msg.channel}.`, 'Message', content));
-			logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted by ${lastMessage.author} in ${msg.channel}**\n${content}`);
-		}
+	if (msg.partial) {
+		logEmbed.setAuthor(msg.guild.name, msg.guild.iconURL());
+		logEmbed.setDescription(`**Uncached message deleted in ${msg.channel}**`);
+		logEmbed.setFooter(`Message: ${msg.id} | ${dateFormat(dateOutput)}`);
 	}
 
-	if (deletionLog) {
-		const { executor, target } = deletionLog;
+	else {
+		if (msg.content.startsWith(prefix) || !msg.guild) return;
 
-		if (target.id === messageAuthor.id) {
-			logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted by ${executor} in ${msg.channel}**\n${content}`);
+		const messageAuthor = msg.author;
+		const lastMessage = msg.channel.lastMessage;
+
+		const fetchedLogs = await msg.guild.fetchAuditLogs({
+			limit: 1,
+			type: 'MESSAGE_DELETE',
+		})
+			.catch(error => debugError(error, 'Error fetching audit logs.'));
+
+		const deletionLog = fetchedLogs ? fetchedLogs.entries.first() : null;
+
+		const content = (msg.content === '')
+			? msg.embeds[0].description
+				? msg.embeds[0].description
+				: msg.embeds[0].title
+					? msg.embeds[0].title
+					: 'Message Embed'
+			: msg.content;
+
+		logEmbed.setAuthor(messageAuthor.tag, messageAuthor.displayAvatarURL());
+		logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted in ${msg.channel}**\n>>> ${content}`);
+		logEmbed.setFooter(`Author: ${messageAuthor.id} | Message: ${msg.id} | ${dateFormat(dateOutput)}`);
+
+		if (lastMessage) {
+			if (lastMessage.content.includes(purge.cmd) || purge.aliases.some(alias => lastMessage.content.includes(alias))) {
+				lastMessage.delete().catch(error => debugError(error, `Error deleting message in ${msg.channel}.`, 'Message', `>>> ${content}`));
+				logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted by ${lastMessage.author} in ${msg.channel}**\n>>> ${content}`);
+			}
+		}
+
+		if (deletionLog) {
+			const { executor, target } = deletionLog;
+
+			if (target.id === messageAuthor.id) {
+				logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted by ${executor} in ${msg.channel}**\n>>> ${content}`);
+			}
 		}
 	}
 
@@ -472,18 +486,29 @@ const onBulkDelete = msgs => {
 };
 
 const onMessageUpdate = (oldMessage, newMessage) => {
-	if (oldMessage.content === newMessage.content || newMessage.author.bot || !newMessage.guild) return;
-
 	const log = bot.channels.cache.get(logID);
-	const messageAuthor = newMessage.author;
-
 	const logEmbed = new Discord.MessageEmbed()
-		.setColor(colours.warn)
-		.setAuthor(messageAuthor.tag, messageAuthor.displayAvatarURL())
-		.setDescription(`**Message edited in ${newMessage.channel}** [Jump to Message](${newMessage.url})`)
-		.addField('Before', oldMessage.content)
-		.addField('After', newMessage.content)
-		.setFooter(`Author: ${messageAuthor.id} | Message: ${newMessage.id} | ${dateFormat(dateOutput)}`);
+		.setColor(colours.warn);
+
+	if (oldMessage.partial) {
+		logEmbed.setAuthor(newMessage.guild.name, newMessage.guild.iconURL());
+		logEmbed.setDescription(`**Uncached message edited in ${newMessage.channel}** [Jump to Message](${newMessage.url})`);
+		logEmbed.addField('After', newMessage.content);
+		logEmbed.setFooter(`Message: ${newMessage.id} | ${dateFormat(dateOutput)}`);
+	}
+	
+	else {
+		if (oldMessage.content === newMessage.content || newMessage.author.bot || !newMessage.guild) return;
+
+		const messageAuthor = newMessage.author;
+
+		logEmbed.setAuthor(messageAuthor.tag, messageAuthor.displayAvatarURL());
+		logEmbed.setDescription(`**Message edited in ${newMessage.channel}** [Jump to Message](${newMessage.url})`);
+		logEmbed.addField('Before', oldMessage.content);
+		logEmbed.addField('After', newMessage.content);
+		logEmbed.setFooter(`Author: ${messageAuthor.id} | Message: ${newMessage.id} | ${dateFormat(dateOutput)}`);
+	}
+
 	sendMsg(log, logEmbed);
 };
 

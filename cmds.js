@@ -173,7 +173,7 @@ const cmds = {
 				'Description': this.desc,
 				'Usage': `${pCmd(this)} <user> <dates> <activity> <reason> [additional remarks]`,
 				'Example': `${pCmd(this)} <@${devID}> 01 Jan for Parade Night due to an appointment`,
-				'Allowed Roles': rolesOutput(tacPlus),
+				'Allowed Roles': rolesOutput(this.roles),
 			});
 		},
 		get error() { return errorText(this.help, this.cmd); },
@@ -191,8 +191,8 @@ const cmds = {
 			return this.help = helpText({
 				'Aliases': pAls(this),
 				'Description': this.desc,
-				'Usage': `${pCmd(this)} <message>`,
-				'Allowed Roles': rolesOutput(tacPlus),
+				'Usage': `\n${pCmd(this)} <message>\n${pCmd(this)} update <message>`,
+				'Allowed Roles': rolesOutput(this.roles),
 			});
 		},
 		get error() { return errorText(this.help, this.cmd); },
@@ -212,7 +212,7 @@ const cmds = {
 				'Description': this.desc,
 				'Usage': `${pCmd(this)} <voice channel>`,
 				'Example': `${pCmd(this)} <#${classroomID}>`,
-				'Allowed Roles': rolesOutput(sgtPlus),
+				'Allowed Roles': rolesOutput(this.roles),
 			});
 		},
 		get error() { return errorText(this.help, this.cmd); },
@@ -232,7 +232,7 @@ const cmds = {
 				'Description': this.desc,
 				'Usage': `${pCmd(this)} <text channel>`,
 				'Example': `${pCmd(this)} <#${tacticalID}>`,
-				'Allowed Roles': rolesOutput(cqmsPlus),
+				'Allowed Roles': rolesOutput(this.roles),
 			});
 		},
 		get error() { return errorText(this.help, this.cmd); },
@@ -252,7 +252,7 @@ const cmds = {
 				'Description': this.desc,
 				'Usage': `${pCmd(this)} <count> [user]`,
 				'Examples': `\n${pCmd(this)} 10\n${pCmd(this)} 5 <@${devID}>`,
-				'Allowed Roles': rolesOutput(adjPlus),
+				'Allowed Roles': rolesOutput(this.roles),
 			});
 		},
 		get error() { return errorText(this.help, this.cmd); },
