@@ -93,7 +93,12 @@ const cmdError = (msg, errMsg, cmdErr, footer) => {
 };
 
 const formatAge = raw => {
-	let years, months, days, hours, minutes, seconds;
+	let years = 0;
+	let months = 0;
+	let days = 0;
+	let hours = 0;
+	let minutes = 0;
+	let seconds = 0;
 
 	if (raw > 31556952000) years = Math.floor(raw / 31556952000);
 	if ((raw - (years * 31556952000)) > 2629800000) months = Math.floor((raw - (years * 31556952000)) / 2629800000);
