@@ -412,7 +412,7 @@ const onMessageDelete = async msg => {
 	if (msg.partial) {
 		logEmbed.setAuthor(msg.guild.name, msg.guild.iconURL());
 		logEmbed.setDescription(`**Uncached message deleted in ${msg.channel}**`);
-		logEmbed.setFooter(`Message: ${msg.id} | ${dateFormat(dateOutput)}`);
+		logEmbed.setFooter(`ID: ${msg.id} | ${dateFormat(dateOutput)}`);
 	}
 
 	else {
@@ -494,7 +494,7 @@ const onMessageUpdate = (oldMessage, newMessage) => {
 		logEmbed.setAuthor(newMessage.guild.name, newMessage.guild.iconURL());
 		logEmbed.setDescription(`**Uncached message edited in ${newMessage.channel}** [Jump to Message](${newMessage.url})`);
 		logEmbed.addField('After', newMessage.content);
-		logEmbed.setFooter(`Message: ${newMessage.id} | ${dateFormat(dateOutput)}`);
+		logEmbed.setFooter(`ID: ${newMessage.id} | ${dateFormat(dateOutput)}`);
 	}
 
 	else {
