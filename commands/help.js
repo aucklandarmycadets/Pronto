@@ -14,7 +14,7 @@ module.exports.execute = (msg, args) => {
 	const messageAuthor = msg.author;
 	const server = bot.guilds.cache.get(serverID);
 	const helpEmbed = new Discord.MessageEmbed();
-	const msgCmd = args[0];
+	const msgCmd = args[0].toLowerCase();
 
 	const memberRoles = (msg.guild)
 		? msg.member.roles.cache

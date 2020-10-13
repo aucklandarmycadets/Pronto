@@ -7,7 +7,7 @@ bot.commands = new Discord.Collection();
 const botCommands = require('./commands');
 const pairs = require('./channelPairs');
 const dateFormat = require('dateformat');
-const version = '2.2.0';
+const version = '2.2.1';
 
 Object.keys(botCommands).map(key => {
 	bot.commands.set(botCommands[key].cmd, botCommands[key]);
@@ -33,7 +33,6 @@ bot.on('guildMemberRemove', member => onMemberRemove(member));
 bot.on('guildMemberUpdate', (oldMember, newMember) => onMemberUpdate(oldMember, newMember));
 bot.on('voiceStateUpdate', (oldState, newState) => onVoiceUpdate(oldState, newState));
 bot.on('invalidated', () => devInfo(null, 'Invalidated'));
-bot.on('rateLimit', rateLimitInfo => devInfo('Rate Limit', rateLimitInfo));
 bot.on('roleCreate', role => onRoleUpdate(role, true));
 bot.on('roleDelete', role => onRoleUpdate(role));
 bot.on('roleUpdate', (oldRole, newRole) => onRoleChange(oldRole, newRole));

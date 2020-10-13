@@ -15,7 +15,7 @@ module.exports.execute = async (msg, args) => {
 	try {
 		if (args.length === 0) throw '';
 
-		if (args[0] === 'update' && args.length === 1) throw '';
+		if (args[0].toLowerCase() === 'update' && args.length === 1) throw '';
 	}
 
 	catch (error) {
@@ -37,7 +37,7 @@ module.exports.execute = async (msg, args) => {
 	const successEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === successEmoji);
 	const errorEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === errorEmoji);
 
-	if (args[0] === 'update') {
+	if (args[0].toLowerCase() === 'update') {
 		args.splice(0, 1);
 
 		if (args.length === 0) return cmdError(msg, 'You must enter a message.', attendance.error);
