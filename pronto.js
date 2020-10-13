@@ -7,7 +7,7 @@ bot.commands = new Discord.Collection();
 const botCommands = require('./commands');
 const pairs = require('./channelPairs');
 const dateFormat = require('dateformat');
-const version = '2.2.0';
+const version = '2.2.1';
 
 Object.keys(botCommands).map(key => {
 	bot.commands.set(botCommands[key].cmd, botCommands[key]);
