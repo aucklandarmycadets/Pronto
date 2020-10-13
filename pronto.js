@@ -289,9 +289,8 @@ const onVoiceUpdate = (oldState, newState) => {
 									if (!user.bot) {
 										if (msg.guild.members.cache.get(user.id).roles.cache.some(roles => adjPlus.includes(roles.id))) {
 											msg.channel.messages.fetch({ limit: 100 })
-												.then((messages) => {
-													purgeChannel(messages, msg.channel, collector);
-												});
+												.then(messages => purgeChannel(messages, msg.channel, collector))
+												.catch(error => debugError(error, `Error fetching messages in ${msg.channel}.`));
 										}
 
 										else {
@@ -307,18 +306,15 @@ const onVoiceUpdate = (oldState, newState) => {
 								collector.on('remove', (reaction, user) => {
 									if (msg.guild.members.cache.get(user.id).roles.cache.some(roles => adjPlus.includes(roles.id))) {
 										msg.channel.messages.fetch({ limit: 100 })
-											.then((messages) => {
-												purgeChannel(messages, msg.channel, collector);
-											});
+											.then(messages => purgeChannel(messages, msg.channel, collector))
+											.catch(error => debugError(error, `Error fetching messages in ${msg.channel}.`));
 									}
 								});
 
 								collector.on('end', (collected, reason) => {
 									if (reason === 'time') {
 										msg.reactions.removeAll()
-											.catch(error => {
-												debugError(error, `Error removing reactions from [message](${msg.url}) in ${textChannel}.`);
-											});
+											.catch(error => debugError(error, `Error removing reactions from [message](${msg.url}) in ${textChannel}.`));
 
 										const timeEmbed = new Discord.MessageEmbed()
 											.setColor(colours.error)
