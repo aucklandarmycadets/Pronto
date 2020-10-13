@@ -496,7 +496,7 @@ const onMessageUpdate = (oldMessage, newMessage) => {
 		logEmbed.addField('After', newMessage.content);
 		logEmbed.setFooter(`Message: ${newMessage.id} | ${dateFormat(dateOutput)}`);
 	}
-	
+
 	else {
 		if (oldMessage.content === newMessage.content || newMessage.author.bot || !newMessage.guild) return;
 
