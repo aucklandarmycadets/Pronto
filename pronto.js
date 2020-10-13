@@ -421,16 +421,20 @@ const onMessageDelete = async msg => {
 
 	const deletionLog = fetchedLogs.entries.first();
 
+	const content = (msg.content === '')
+		? `>>> ${msg.embeds[0].description}`
+		: `>>> ${msg.content}`;
+
 	const logEmbed = new Discord.MessageEmbed()
 		.setColor(colours.error)
 		.setAuthor(messageAuthor.tag, messageAuthor.displayAvatarURL())
-		.setDescription(`**Message sent by ${messageAuthor} deleted in ${msg.channel}**\n${msg.content}`)
+		.setDescription(`**Message sent by ${messageAuthor} deleted in ${msg.channel}**\n${content}`)
 		.setFooter(`Author: ${messageAuthor.id} | Message: ${msg.id} | ${dateFormat(dateOutput)}`);
 
 	if (lastMessage) {
 		if (lastMessage.content.includes(purge.cmd) || purge.aliases.some(alias => lastMessage.content.includes(alias))) {
-			lastMessage.delete().catch(error => debugError(error, `Error deleting message in ${msg.channel}.`, 'Message', msg.content));
-			logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted by ${lastMessage.author} in ${msg.channel}**\n${msg.content}`);
+			lastMessage.delete().catch(error => debugError(error, `Error deleting message in ${msg.channel}.`, 'Message', content));
+			logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted by ${lastMessage.author} in ${msg.channel}**\n${content}`);
 		}
 	}
 
@@ -438,7 +442,7 @@ const onMessageDelete = async msg => {
 		const { executor, target } = deletionLog;
 
 		if (target.id === messageAuthor.id) {
-			logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted by ${executor} in ${msg.channel}**\n${msg.content}`);
+			logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted by ${executor} in ${msg.channel}**\n${content}`);
 		}
 	}
 
