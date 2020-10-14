@@ -27,21 +27,16 @@ module.exports.execute = (msg, args) => {
 		.setColor(colours.leave)
 		.setAuthor(msg.member.displayName, messageAuthor.displayAvatarURL())
 		.setDescription(`${messageAuthor} has requested leave in ${msg.channel}`)
-		.addFields(
-			{ name: 'Date', value: dateFormat(dateOutput) },
-			{ name: 'Details', value: capitalise(args.join(' ')) },
-		);
+		.addField('Details', capitalise(args.join(' ')))
+		.setFooter(dateFormat(dateOutput));
 
 	const dmEmbed = new Discord.MessageEmbed()
 		.setTitle(leaveEmbedTitle)
 		.setColor(colours.leave)
 		.setAuthor(msg.guild.name, msg.guild.iconURL())
 		.setDescription(`Hi ${messageAuthor}, your submission of leave has been received.`)
-		.addFields(
-			{ name: 'Date', value: dateFormat(dateOutput) },
-			{ name: 'Channel', value: msg.channel.toString() },
-			{ name: 'Details', value: capitalise(args.join(' ')) },
-		);
+		.addField('Details', capitalise(args.join(' ')))
+		.setFooter(dateFormat(dateOutput));
 
 	sendMsg(attendanceChannel, attendanceEmbed);
 	messageAuthor.send(dmEmbed).catch(error => dmError(msg, error));

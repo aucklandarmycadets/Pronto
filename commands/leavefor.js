@@ -44,32 +44,25 @@ module.exports.execute = (msg, args) => {
 		.setAuthor(absentee.displayName, absentee.user.displayAvatarURL())
 		.setDescription(`${messageAuthor} has submitted leave for ${absentee} in ${msg.channel}`)
 		.addFields(
-			{ name: 'Date', value: dateFormat(dateOutput) },
 			{ name: 'Absentee', value: absentee },
 			{ name: 'Details', value: capitalise(args.join(' ')) },
-		);
+		)
+		.setFooter(dateFormat(dateOutput));
 
 	const dmEmbed = new Discord.MessageEmbed()
 		.setTitle(leaveForEmbedTitle)
 		.setColor(colours.leave)
 		.setAuthor(msg.guild.name, msg.guild.iconURL())
 		.setDescription(`Hi ${messageAuthor}, your submission of leave for ${absentee} has been received.`)
-		.addFields(
-			{ name: 'Date', value: dateFormat(dateOutput) },
-			{ name: 'Channel', value: msg.channel.toString() },
-			{ name: 'Details', value: capitalise(args.join(' ')) },
-		);
+		.addField('Details', capitalise(args.join(' ')))
+		.setFooter(dateFormat(dateOutput));
 
 	const absenteeEmbed = new Discord.MessageEmbed()
 		.setTitle(leaveForEmbedTitle)
 		.setColor(colours.leave)
 		.setAuthor(msg.guild.name, msg.guild.iconURL())
 		.setDescription(`${messageAuthor} has submitted leave for you in ${msg.channel}.`)
-		.addFields(
-			{ name: 'Date', value: dateFormat(dateOutput) },
-			{ name: 'Channel', value: msg.channel.toString() },
-			{ name: 'Details', value: capitalise(args.join(' ')) },
-		)
+		.addField('Details', capitalise(args.join(' ')))
 		.setFooter(`Reply with ${pCmd(help)} ${leave.cmd} to learn how to request leave for yourself.`);
 
 	sendMsg(attendanceChannel, attendanceEmbed);
