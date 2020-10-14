@@ -19,7 +19,7 @@ module.exports.execute = msg => {
 	try {
 		if (numChannelMentions === 0) throw 'You must specify a text channel.';
 
-		else if (channelMentions.some(mention => mention.type !== 'text')) throw 'You can only archive text channels.';
+		else if (channelMentions.some(mention => mention.type !== 'text' && mention.type !== 'news')) throw 'You can only archive text channels.';
 
 		else if (numChannelMentions > 1) throw 'You must archive channels individually.';
 
