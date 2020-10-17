@@ -4,13 +4,45 @@ const Discord = require('discord.js');
 const dateFormat = require('dateformat');
 
 const config = require('./config');
-const { config: { prefix: pref, dateOutput }, ids: { serverID, devID, debugID, administratorID } } = config;
+const { config: { prefix: pref, permsInt, dateOutput }, ids: { serverID, devID, debugID, administratorID } } = config;
 const { emojis: { errorEmoji }, colours } = config;
 
 let bot, version;
 
 const init = () => {
 	({ bot, version } = require('./pronto'));
+};
+
+const permissionsUpdate = (oldState, newState) => {
+	const oldPerms = oldState.permissions.toArray();
+	const newPerms = newState.permissions.toArray();
+
+	const changedPerms = [ ...oldPerms.filter(value => newPerms.indexOf(value) === -1),
+		...newPerms.filter(value => oldPerms.indexOf(value) === -1) ];
+
+	return changedPerms;
+};
+
+const checkBotPermissions = changes => {
+	const requiredPermissions = new Discord.Permissions(permsInt);
+	const server = bot.guilds.cache.get(serverID);
+	const botPermissions = server.me.permissions;
+	const hasRequired = botPermissions.has(requiredPermissions);
+
+	const missingPermissions = [...new Set([...requiredPermissions].filter(value => !botPermissions.has(value)))];
+
+	if (!hasRequired) embedScaffold(null, 'I do not have my minimum permissions!', colours.error, 'debug', 'Missing Permissions', missingPermissions);
+
+	else if (changes) {
+		const requiredArray = requiredPermissions.toArray();
+
+		for (let i = 0; i < changes.length; i++) {
+			if (requiredArray.includes(changes[i])) {
+				embedScaffold(null, 'Permissions resolved.', colours.success, 'debug');
+				break;
+			}
+		}
+	}
 };
 
 const pCmd = cmd => `${pref}${cmd.cmd}`;
@@ -176,6 +208,8 @@ const embedScaffold = (dest, descMsg, colour, type, fieldTitle, fieldContent, er
 
 module.exports = {
 	init: init,
+	permissionsUpdate: permissionsUpdate,
+	checkBotPermissions: checkBotPermissions,
 	pCmd: pCmd,
 	rolesOutput: rolesOutput,
 	capitalise: capitalise,
