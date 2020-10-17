@@ -1,6 +1,7 @@
 module.exports = {
 	ping: require('./ping'),
 	uptime: require('./uptime'),
+	evaluate: require('./evaluate'),
 	restart: require('./restart'),
 	help: require('./help'),
 	leave: require('./leave'),

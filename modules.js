@@ -9,9 +9,7 @@ const { emojis: { errorEmoji }, colours } = config;
 
 let bot, version;
 
-const init = () => {
-	({ bot, version } = require('./pronto'));
-};
+const init = () => ({ bot, version } = require('./pronto'));
 
 const permissionsUpdate = (oldState, newState) => {
 	const oldPerms = oldState.permissions.toArray();

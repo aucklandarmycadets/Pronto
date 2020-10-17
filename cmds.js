@@ -100,6 +100,23 @@ const cmds = {
 			});
 		},
 	},
+	evaluate: {
+		cmd: 'evaluate',
+		aliases: ['eval'],
+		desc: 'Evaluate Javascript code.',
+		allowDM: true,
+		roles: [],
+		noRoles: [],
+		devOnly: true,
+		get help() {
+			delete this.help;
+			return this.help = helpText({
+				'Aliases': pAls(this),
+				'Description': this.desc,
+				'Usage': pCmd(this),
+			});
+		},
+	},
 	restart: {
 		cmd: 'restart',
 		aliases: ['new', 'kill', 'update'],
