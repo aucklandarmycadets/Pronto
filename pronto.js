@@ -20,7 +20,7 @@ const { config: { prefix, permsInt, dateOutput } } = config;
 const { ids: { serverID, devID, logID, recruitingID, newMembersID, visitorID, adjPlus } } = config;
 const { emojis: { successEmoji }, colours } = config;
 const { cmds: { help, purge } } = require('./cmds');
-const { initialise, pCmd, rolesOutput, cmdPermsCheck, formatAge, sendMsg, debugError, dmCmdError, embedScaffold } = require('./modules');
+const { init, pCmd, rolesOutput, cmdPermsCheck, formatAge, sendMsg, debugError, dmCmdError, embedScaffold } = require('./modules');
 
 bot.login(TOKEN);
 
@@ -47,7 +47,11 @@ process.on('exit', code => console.log(`Exiting with code ${code}`));
 
 const onReady = () => {
 	console.info(`Logged in as ${bot.user.tag}!`);
-	initialise(bot, version);
+
+	exports.bot = bot;
+	exports.version = version;
+
+	init();
 
 	const dev = bot.users.cache.get(devID);
 
@@ -55,9 +59,6 @@ const onReady = () => {
 	else embedScaffold(dev, '**Ready to go!**', colours.success, 'dev');
 
 	bot.user.setActivity(`the radio net | ${pCmd(help)}`, { type: 'LISTENING' });
-
-	exports.bot = bot;
-	exports.version = version;
 
 	checkBotPermissions();
 };

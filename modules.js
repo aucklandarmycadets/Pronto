@@ -9,9 +9,8 @@ const { emojis: { errorEmoji }, colours } = config;
 
 let bot, version;
 
-const initialise = (Client, ver) => {
-	bot = Client;
-	version = ver;
+const init = () => {
+	({ bot, version } = require('./pronto'));
 };
 
 const pCmd = cmd => `${pref}${cmd.cmd}`;
@@ -176,7 +175,7 @@ const embedScaffold = (dest, descMsg, colour, type, fieldTitle, fieldContent, er
 };
 
 module.exports = {
-	initialise: initialise,
+	init: init,
 	pCmd: pCmd,
 	rolesOutput: rolesOutput,
 	capitalise: capitalise,
