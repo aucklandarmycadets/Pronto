@@ -19,7 +19,7 @@ Object.keys(botCommands).map(key => {
 });
 
 const TOKEN = process.env.TOKEN;
-const version = '3.0.0';
+const version = '3.0.1';
 
 bot.login(TOKEN)
 	.then(() => module.exports = {
