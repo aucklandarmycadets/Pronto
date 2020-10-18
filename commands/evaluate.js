@@ -1,3 +1,5 @@
+const Discord = require('discord.js');
+
 const { cmds: { evaluate } } = require('../cmds');
 const { sendMsg, cmdError, debugError } = require('../modules');
 
