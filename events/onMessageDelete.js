@@ -35,22 +35,28 @@ module.exports = {
 
 			const deletionLog = fetchedLogs ? fetchedLogs.entries.first() : null;
 
-			const content = (msg.content === '')
-				? msg.embeds[0].description
+			let content = (msg.content === '')
+				? msg.embeds[0]
 					? msg.embeds[0].description
-					: msg.embeds[0].title
-						? msg.embeds[0].title
-						: 'Message Embed'
+						? msg.embeds[0].description
+						: msg.embeds[0].title
+							? msg.embeds[0].title
+							: 'Message Embed'
+					: null
 				: msg.content;
 
+			content = (!content)
+				? ''
+				: `>>> ${content}`;
+
 			logEmbed.setAuthor(messageAuthor.tag, messageAuthor.displayAvatarURL());
-			logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted in ${msg.channel}**\n>>> ${content}`);
+			logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted in ${msg.channel}**\n${content}`);
 			logEmbed.setFooter(`Author: ${messageAuthor.id} | Message: ${msg.id} | ${dateFormat(dateOutput)}`);
 
 			if (lastMessage) {
 				if (lastMessage.content.includes(purge.cmd) || purge.aliases.some(alias => lastMessage.content.includes(alias))) {
-					lastMessage.delete().catch(error => debugError(error, `Error deleting message in ${msg.channel}.`, 'Message', `>>> ${content}`));
-					logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted by ${lastMessage.author} in ${msg.channel}**\n>>> ${content}`);
+					lastMessage.delete().catch(error => debugError(error, `Error deleting message in ${msg.channel}.`, 'Message', `${content}`));
+					logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted by ${lastMessage.author} in ${msg.channel}**\n${content}`);
 				}
 			}
 
@@ -58,7 +64,7 @@ module.exports = {
 				const { executor, target } = deletionLog;
 
 				if (target.id === messageAuthor.id) {
-					logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted by ${executor} in ${msg.channel}**\n>>> ${content}`);
+					logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted by ${executor} in ${msg.channel}**\n${content}`);
 				}
 			}
 		}
