@@ -113,9 +113,10 @@ const cmds = {
 			return this.help = helpText({
 				'Aliases': pAls(this),
 				'Description': this.desc,
-				'Usage': pCmd(this),
+				'Usage': `${pCmd(this)} <code>`,
 			});
 		},
+		get error() { return errorText(this.help, this.cmd); },
 	},
 	restart: {
 		cmd: 'restart',

@@ -1,11 +1,14 @@
 const { cmds: { evaluate } } = require('../cmds');
-const { sendMsg, debugError } = require('../modules');
+const { sendMsg, cmdError, debugError } = require('../modules');
 
 module.exports = evaluate;
 module.exports.execute = (msg, args) => {
 	'use strict';
 
 	const { bot } = require('../pronto');
+	
+	if (args.length === 0) return cmdError(msg, 'You must enter something to evaluate.', evaluate.error);
+
 	const code = args.join(' ');
 
 	try {
