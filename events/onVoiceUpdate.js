@@ -26,13 +26,7 @@ module.exports = {
 			? newState.channelID
 			: null;
 
-		if (oldID && newID) {
-			logEmbed.setColor(colours.warn);
-			logEmbed.setDescription(`**${newMember} changed voice channel ${oldState.channel} > ${newState.channel}**`);
-			logEmbed.setFooter(`ID: ${newMember.id} | ${dateFormat(dateOutput)}`);
-		}
-
-		else if (!oldID) {
+		if (!oldID) {
 			logEmbed.setColor(colours.success);
 			logEmbed.setDescription(`**${newMember} joined voice channel ${newState.channel}**`);
 			logEmbed.setFooter(`ID: ${newMember.id} | Channel: ${newID} | ${dateFormat(dateOutput)}`);
@@ -43,6 +37,14 @@ module.exports = {
 			logEmbed.setDescription(`**${newMember} left voice channel ${oldState.channel}**`);
 			logEmbed.setFooter(`ID: ${newMember.id} | Channel: ${oldID} | ${dateFormat(dateOutput)}`);
 		}
+
+		else if (oldID !== newID) {
+			logEmbed.setColor(colours.warn);
+			logEmbed.setDescription(`**${newMember} changed voice channel ${oldState.channel} > ${newState.channel}**`);
+			logEmbed.setFooter(`ID: ${newMember.id} | ${dateFormat(dateOutput)}`);
+		}
+
+		else return;
 
 		sendMsg(log, logEmbed);
 
