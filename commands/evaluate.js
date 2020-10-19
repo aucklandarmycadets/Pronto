@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 
 const { cmds: { evaluate } } = require('../cmds');
-const { sendMsg, cmdError, debugError } = require('../modules');
+const { sendMsg, cmdError } = require('../modules');
 
 module.exports = evaluate;
 module.exports.execute = (msg, args) => {
@@ -18,24 +18,27 @@ module.exports.execute = (msg, args) => {
 
 		if (typeof evaled !== 'string') evaled = require('util').inspect(evaled);
 
-		const output = [evaled];
-		let string = last(output);
-
-		while (string.length > 2000) {
-			const breakAt = string.lastIndexOf(',', 1990) + 1;
-
-			output.pop();
-			splitOn(string, breakAt).forEach(str => output.push(str));
-
-			string = last(output);
-		}
-
-		output.forEach(str => sendMsg(msg.channel, `\`\`\`js\n${str}\`\`\``));
+		msgSplit([evaled], '},').forEach(str => sendMsg(msg.channel, `\`\`\`js\n${str}\`\`\``));
 	}
 
-	catch (error) { debugError(error, `Error evaluating \`${code}\``); }
+	catch (error) { msgSplit([error.stack], ')').forEach(str => sendMsg(msg.channel, `\`\`\`js\n${str}\`\`\``)); }
 };
 
 const last = arr => { return arr[arr.length - 1]; };
 
 const splitOn = (slicable, ...indices) => [0, ...indices].map((n, i, m) => slicable.slice(n, m[i + 1]));
+
+const msgSplit = (arr, char) => {
+	let string = last(arr);
+
+	while (string.length > 2000) {
+		const breakAt = string.lastIndexOf(char, 1990) + char.length;
+
+		arr.pop();
+		splitOn(string, breakAt).forEach(str => arr.push(str));
+
+		string = last(arr);
+	}
+
+	return arr;
+};
