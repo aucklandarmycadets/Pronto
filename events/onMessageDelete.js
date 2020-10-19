@@ -3,7 +3,7 @@ const dateFormat = require('dateformat');
 
 const { config: { prefix, dateOutput }, ids: { logID }, colours } = require('../config');
 const { cmds: { purge } } = require('../cmds');
-const { sendMsg, debugError } = require('../modules');
+const { charLimit, sendMsg, debugError } = require('../modules');
 
 module.exports = {
 	events: ['messageDelete'],
@@ -47,7 +47,7 @@ module.exports = {
 
 			content = (!content)
 				? ''
-				: `>>> ${content}`;
+				: charLimit(`>>> ${content}`, 2048);
 
 			logEmbed.setAuthor(messageAuthor.tag, messageAuthor.displayAvatarURL());
 			logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted in ${msg.channel}**\n${content}`);
