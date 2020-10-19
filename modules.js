@@ -65,6 +65,14 @@ const capitalise = string => {
 	return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
+const charLimit = (str, lim) => {
+	return (str.length > lim)
+		? (str.slice(-(str.length - lim)).includes('```'))
+			? `${str.slice(0, lim - 6)}...\`\`\``
+			: `${str.slice(0, lim - 3)}...`
+		: str;
+};
+
 const cmdPermsCheck = (msg, cmd) => {
 	const server = bot.guilds.cache.get(serverID);
 	const authorID = msg.author.id;
@@ -192,11 +200,11 @@ const embedScaffold = (dest, descMsg, colour, type, fieldTitle, fieldContent, er
 	const embed = new Discord.MessageEmbed()
 		.setAuthor(botUser.tag, botUser.avatarURL())
 		.setColor(colour)
-		.setDescription(descMsg)
+		.setDescription(charLimit(descMsg, 2048))
 		.setFooter(`${dateFormat(dateOutput)}${devFooter}`);
 
 	if (fieldTitle) embed.addField(fieldTitle, fieldContent);
-	if (errorField) embed.setDescription(`${descMsg}\n${errorField}`);
+	if (errorField) embed.setDescription(charLimit(`${descMsg}\n${errorField}`, 2048));
 
 	if (type === 'dm') sendMsg(dest, embed, true);
 	else if (type === 'dev') sendMsg(dest, embed, true);
@@ -211,6 +219,7 @@ module.exports = {
 	pCmd: pCmd,
 	rolesOutput: rolesOutput,
 	capitalise: capitalise,
+	charLimit: charLimit,
 	cmdPermsCheck: cmdPermsCheck,
 	getRoleError: getRoleError,
 	sendMsg: sendMsg,
