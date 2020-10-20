@@ -21,7 +21,7 @@ module.exports = {
 		}
 
 		else {
-			if (msg.content.startsWith(prefix) || !msg.guild) return;
+			if (cmdCheck(msg) || !msg.guild) return;
 
 			const messageAuthor = msg.author;
 			const lastMessage = msg.channel.lastMessage;
@@ -70,4 +70,16 @@ module.exports = {
 
 		sendMsg(log, logEmbed);
 	},
+};
+
+const cmdCheck = msg => {
+	const { cmds: { attendance, help } } = require('../cmds');
+	const autoDelCmds = [attendance, help, purge];
+
+	const args = msg.content.split(/ +/);
+	const msgCmd = args.shift().toLowerCase().replace(prefix, '');
+
+	if (autoDelCmds.some(cmd => cmd.cmd === msgCmd || cmd.aliases.includes(msgCmd))) return true;
+
+	return false;
 };
