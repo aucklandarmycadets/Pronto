@@ -10,6 +10,13 @@ module.exports.execute = (msg, args) => {
 
 	const { bot } = require('../pronto');
 
+	const codeBlock = (args.includes('-nocode'))
+		? false
+		: true;
+
+	const flagIndex = args.indexOf('-nocode');
+	if (flagIndex > -1) args.splice(flagIndex, 1);
+
 	if (args.length === 0) return cmdError(msg, 'You must enter something to evaluate.', evaluate.error);
 
 	const code = args.join(' ');
@@ -27,7 +34,9 @@ module.exports.execute = (msg, args) => {
 				: 1990;
 
 			(str !== 'Promise { <pending> }')
-				? sendMsg(msg.channel, `\`\`\`js\n${str.slice(0, breakAt)}\`\`\``)
+				? (codeBlock)
+					? sendMsg(msg.channel, `\`\`\`js\n${str.slice(0, breakAt)}\`\`\``)
+					: sendMsg(msg.channel, str.slice(0, breakAt))
 				: null;
 
 			str = str.slice(breakAt, str.length);
