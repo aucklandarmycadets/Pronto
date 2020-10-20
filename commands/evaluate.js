@@ -14,6 +14,24 @@ module.exports.execute = (msg, args) => {
 
 	const code = args.join(' ');
 
+	const msgSplit = (str, char) => {
+		const lim = Math.ceil(str.length / 1990);
+
+		for (let i = 0; i < lim; i++) {
+			const breakAt = (str.length > 1990)
+				? (str.lastIndexOf(char, 1990) !== -1)
+					? str.lastIndexOf(char, 1990) + char.length
+					: (str.lastIndexOf(' ', 1990) !== -1)
+						? str.lastIndexOf(' ', 1990) + 1
+						: 1990
+				: 1990;
+
+			sendMsg(msg.channel, `\`\`\`js\n${str.slice(0, breakAt)}\`\`\``);
+
+			str = str.slice(breakAt, str.length);
+		}
+	};
+
 	try {
 		const embed = new Discord.MessageEmbed();
 
@@ -21,27 +39,8 @@ module.exports.execute = (msg, args) => {
 
 		if (typeof evaled !== 'string') evaled = require('util').inspect(evaled);
 
-		msgSplit([evaled], '},').forEach(str => sendMsg(msg.channel, `\`\`\`js\n${str}\`\`\``));
+		msgSplit(evaled, '},');
 	}
 
-	catch (error) { msgSplit([error.stack], ')').forEach(str => sendMsg(msg.channel, `\`\`\`js\n${str}\`\`\``)); }
-};
-
-const last = arr => { return arr[arr.length - 1]; };
-
-const splitOn = (slicable, ...indices) => [0, ...indices].map((n, i, m) => slicable.slice(n, m[i + 1]));
-
-const msgSplit = (arr, char) => {
-	let string = last(arr);
-
-	while (string.length > 2000) {
-		const breakAt = string.lastIndexOf(char, 1990) + char.length;
-
-		arr.pop();
-		splitOn(string, breakAt).forEach(str => arr.push(str));
-
-		string = last(arr);
-	}
-
-	return arr;
+	catch (error) { msgSplit(error.stack, ')'); }
 };
