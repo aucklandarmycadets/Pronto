@@ -101,17 +101,17 @@ module.exports.execute = async (msg, args) => {
 
 							attendanceEmbed.setAuthor(`${formationName} (${msg.member.displayName})`, msg.guild.iconURL());
 
-							(chnlMsg)
-								? attendanceEmbed.setFooter(`Last updated at ${dtg()}`)
-								: attendanceEmbed.setFooter(dtg());
-
 							if (chnlMsg) {
+								attendanceEmbed.setFooter(`Last updated at ${dtg()}`);
+
 								chnlMsg.edit(attendanceEmbed);
 								attMsg.edit(attendanceEmbed);
 							}
 
 							else {
 								const attendanceChannel = bot.channels.cache.get(attendanceID);
+
+								attendanceEmbed.setFooter(dtg());
 
 								sendMsg(attendanceChannel, attendanceEmbed);
 								sendMsg(msg.channel, attendanceEmbed);
