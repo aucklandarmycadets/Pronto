@@ -1,7 +1,8 @@
 const Discord = require('discord.js');
 
-const { cmds: { evaluate } } = require('../cmds');
-const { sendMsg, cmdError } = require('../modules');
+const { colours, ...config } = require('../config');
+const { cmds: { evaluate, ...cmds }, ...cmdsList } = require('../cmds');
+const { dtg, sendMsg, cmdError, ...modules } = require('../modules');
 
 module.exports = evaluate;
 module.exports.execute = (msg, args) => {
@@ -14,6 +15,8 @@ module.exports.execute = (msg, args) => {
 	const code = args.join(' ');
 
 	try {
+		const embed = new Discord.MessageEmbed();
+
 		let evaled = eval(code);
 
 		if (typeof evaled !== 'string') evaled = require('util').inspect(evaled);
