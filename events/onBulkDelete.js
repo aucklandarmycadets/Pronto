@@ -1,9 +1,8 @@
 const Discord = require('discord.js');
-const dateFormat = require('dateformat');
 
-const { config: { dateOutput }, ids: { logID }, colours } = require('../config');
+const { ids: { logID }, colours } = require('../config');
 const { cmds: { purge } } = require('../cmds');
-const { sendMsg, debugError } = require('../modules');
+const { dtg, sendMsg, debugError } = require('../modules');
 
 module.exports = {
 	events: ['messageDeleteBulk'],
@@ -31,7 +30,7 @@ module.exports = {
 		}
 
 		logEmbed.setColor(colours.error);
-		logEmbed.setFooter(`${dateFormat(dateOutput)}`);
+		logEmbed.setFooter(`${dtg()}`);
 		sendMsg(log, logEmbed);
 	},
 };

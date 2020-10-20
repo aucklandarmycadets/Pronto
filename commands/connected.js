@@ -1,11 +1,8 @@
 const Discord = require('discord.js');
-const dateFormat = require('dateformat');
 
-const config = require('../config');
-const { config: { dateOutput }, ids: { attendanceID } } = config;
-const { emojis: { successEmoji }, colours } = config;
+const { ids: { attendanceID }, emojis: { successEmoji }, colours } = require('../config');
 const { cmds: { connected } } = require('../cmds');
-const { cmdError, sendMsg, debugError } = require('../modules');
+const { dtg, cmdError, sendMsg, debugError } = require('../modules');
 
 module.exports = connected;
 module.exports.execute = msg => {
@@ -43,6 +40,6 @@ module.exports.execute = msg => {
 		.setColor(colours.success)
 		.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
 		.setDescription(connectedMembers.join('\n'))
-		.setFooter(`${dateFormat(dateOutput)}`);
+		.setFooter(`${dtg()}`);
 	sendMsg(attendanceChannel, connectedEmbed);
 };

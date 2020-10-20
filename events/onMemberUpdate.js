@@ -1,8 +1,7 @@
 const Discord = require('discord.js');
-const dateFormat = require('dateformat');
 
-const { config: { dateOutput }, ids: { logID }, colours } = require('../config');
-const { permissionsUpdate, checkBotPermissions, sendMsg } = require('../modules');
+const { ids: { logID }, colours } = require('../config');
+const { permissionsUpdate, checkBotPermissions, dtg, sendMsg } = require('../modules');
 
 module.exports = {
 	events: ['guildMemberUpdate'],
@@ -41,7 +40,7 @@ module.exports = {
 
 		logEmbed.setAuthor(newMemberUser.tag, newMemberUser.displayAvatarURL());
 		logEmbed.setColor(colours.warn);
-		logEmbed.setFooter(`ID: ${newMemberUser.id} | ${dateFormat(dateOutput)}`);
+		logEmbed.setFooter(`ID: ${newMemberUser.id} | ${dtg()}`);
 		sendMsg(log, logEmbed);
 	},
 };

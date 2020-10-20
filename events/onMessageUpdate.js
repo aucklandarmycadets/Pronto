@@ -1,8 +1,7 @@
 const Discord = require('discord.js');
-const dateFormat = require('dateformat');
 
-const { config: { dateOutput }, ids: { logID }, colours } = require('../config');
-const { charLimit, sendMsg } = require('../modules');
+const { ids: { logID }, colours } = require('../config');
+const { charLimit, dtg, sendMsg } = require('../modules');
 
 module.exports = {
 	events: ['messageUpdate'],
@@ -18,7 +17,7 @@ module.exports = {
 			logEmbed.setAuthor(newMessage.guild.name, newMessage.guild.iconURL());
 			logEmbed.setDescription(`**Uncached message edited in ${newMessage.channel}** [Jump to Message](${newMessage.url})`);
 			logEmbed.addField('After', charLimit(newMessage.content, 1024));
-			logEmbed.setFooter(`ID: ${newMessage.id} | ${dateFormat(dateOutput)}`);
+			logEmbed.setFooter(`ID: ${newMessage.id} | ${dtg()}`);
 		}
 
 		else {
@@ -30,7 +29,7 @@ module.exports = {
 			logEmbed.setDescription(`**Message edited in ${newMessage.channel}** [Jump to Message](${newMessage.url})`);
 			logEmbed.addField('Before', charLimit(oldMessage.content, 1024));
 			logEmbed.addField('After', charLimit(newMessage.content, 1024));
-			logEmbed.setFooter(`Author: ${messageAuthor.id} | Message: ${newMessage.id} | ${dateFormat(dateOutput)}`);
+			logEmbed.setFooter(`Author: ${messageAuthor.id} | Message: ${newMessage.id} | ${dtg()}`);
 		}
 
 		sendMsg(log, logEmbed);

@@ -1,9 +1,8 @@
 const Discord = require('discord.js');
-const dateFormat = require('dateformat');
 
-const { config: { dateOutput }, ids: { attendanceID, formations }, emojis: { successEmoji, errorEmoji }, colours } = require('../config');
+const { ids: { attendanceID, formations }, emojis: { successEmoji, errorEmoji }, colours } = require('../config');
 const { cmds: { attendance } } = require('../cmds');
-const { cmdError, sendMsg, dmError, debugError } = require('../modules');
+const { dtg, cmdError, sendMsg, dmError, debugError } = require('../modules');
 
 module.exports = attendance;
 module.exports.execute = async (msg, args) => {
@@ -94,7 +93,7 @@ module.exports.execute = async (msg, args) => {
 							.setAuthor(bot.user.tag, bot.user.avatarURL())
 							.setColor(colours.error)
 							.setDescription('**Cancelled.**')
-							.setFooter(dateFormat(dateOutput));
+							.setFooter(dtg());
 
 						if (reaction.emoji.name === successEmoji) {
 							updateEmbed.setColor(colours.success);
@@ -103,8 +102,8 @@ module.exports.execute = async (msg, args) => {
 							attendanceEmbed.setAuthor(`${formationName} (${msg.member.displayName})`, msg.guild.iconURL());
 
 							(chnlMsg)
-								? attendanceEmbed.setFooter(`Last updated at ${dateFormat(dateOutput)}`)
-								: attendanceEmbed.setFooter(dateFormat(dateOutput));
+								? attendanceEmbed.setFooter(`Last updated at ${dtg()}`)
+								: attendanceEmbed.setFooter(dtg());
 
 							if (chnlMsg) {
 								chnlMsg.edit(attendanceEmbed);

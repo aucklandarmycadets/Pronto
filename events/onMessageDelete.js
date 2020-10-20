@@ -1,9 +1,8 @@
 const Discord = require('discord.js');
-const dateFormat = require('dateformat');
 
-const { config: { prefix, dateOutput }, ids: { logID }, colours } = require('../config');
+const { config: { prefix }, ids: { logID }, colours } = require('../config');
 const { cmds: { purge } } = require('../cmds');
-const { charLimit, sendMsg, debugError } = require('../modules');
+const { charLimit, dtg, sendMsg, debugError } = require('../modules');
 
 module.exports = {
 	events: ['messageDelete'],
@@ -18,7 +17,7 @@ module.exports = {
 		if (msg.partial) {
 			logEmbed.setAuthor(msg.guild.name, msg.guild.iconURL());
 			logEmbed.setDescription(`**Uncached message deleted in ${msg.channel}**`);
-			logEmbed.setFooter(`ID: ${msg.id} | ${dateFormat(dateOutput)}`);
+			logEmbed.setFooter(`ID: ${msg.id} | ${dtg()}`);
 		}
 
 		else {
@@ -51,7 +50,7 @@ module.exports = {
 
 			logEmbed.setAuthor(messageAuthor.tag, messageAuthor.displayAvatarURL());
 			logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted in ${msg.channel}**\n${content}`);
-			logEmbed.setFooter(`Author: ${messageAuthor.id} | Message: ${msg.id} | ${dateFormat(dateOutput)}`);
+			logEmbed.setFooter(`Author: ${messageAuthor.id} | Message: ${msg.id} | ${dtg()}`);
 
 			if (lastMessage) {
 				if (lastMessage.content.includes(purge.cmd) || purge.aliases.some(alias => lastMessage.content.includes(alias))) {

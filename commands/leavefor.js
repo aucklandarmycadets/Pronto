@@ -1,11 +1,8 @@
 const Discord = require('discord.js');
-const dateFormat = require('dateformat');
 
-const config = require('../config');
-const { config: { dateOutput }, ids: { attendanceID } } = config;
-const { emojis: { successEmoji }, colours } = config;
+const { ids: { attendanceID }, emojis: { successEmoji }, colours } = require('../config');
 const { cmds: { help, leave, leaveFor } } = require('../cmds');
-const { pCmd, capitalise, cmdError, sendMsg, dmError, debugError } = require('../modules');
+const { pCmd, capitalise, dtg, cmdError, sendMsg, dmError, debugError } = require('../modules');
 
 module.exports = leaveFor;
 module.exports.execute = (msg, args) => {
@@ -47,7 +44,7 @@ module.exports.execute = (msg, args) => {
 			{ name: 'Absentee', value: absentee },
 			{ name: 'Details', value: capitalise(args.join(' ')) },
 		)
-		.setFooter(dateFormat(dateOutput));
+		.setFooter(dtg());
 
 	const dmEmbed = new Discord.MessageEmbed()
 		.setTitle(leaveForEmbedTitle)
@@ -55,7 +52,7 @@ module.exports.execute = (msg, args) => {
 		.setAuthor(msg.guild.name, msg.guild.iconURL())
 		.setDescription(`Hi ${messageAuthor}, your submission of leave for ${absentee} has been received.`)
 		.addField('Details', capitalise(args.join(' ')))
-		.setFooter(dateFormat(dateOutput));
+		.setFooter(dtg());
 
 	const absenteeEmbed = new Discord.MessageEmbed()
 		.setTitle(leaveForEmbedTitle)

@@ -1,11 +1,8 @@
 const Discord = require('discord.js');
-const dateFormat = require('dateformat');
 
-const config = require('../config');
-const { config: { dateOutput }, ids: { logID, archivedID } } = config;
-const { emojis: { successEmoji, errorEmoji }, colours } = config;
+const { ids: { logID, archivedID }, emojis: { successEmoji, errorEmoji }, colours } = require('../config');
 const { cmds: { archive } } = require('../cmds');
-const { cmdError, sendMsg, debugError, embedScaffold } = require('../modules');
+const { dtg, cmdError, sendMsg, debugError, embedScaffold } = require('../modules');
 
 module.exports = archive;
 module.exports.execute = msg => {
@@ -40,14 +37,14 @@ module.exports.execute = msg => {
 				.setTitle('Channel Archived 🔒')
 				.setColor(colours.error)
 				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
-				.setFooter(`${dateFormat(dateOutput)}`);
+				.setFooter(`${dtg()}`);
 			sendMsg(channel, archiveEmbed);
 
 			const logEmbed = new Discord.MessageEmbed()
 				.setColor(colours.warn)
 				.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
 				.setDescription(`**Channel ${channel} archived by ${msg.author}**`)
-				.setFooter(`User: ${msg.author.id} | Channel: ${channel.id} | ${dateFormat(dateOutput)}`);
+				.setFooter(`User: ${msg.author.id} | Channel: ${channel.id} | ${dtg()}`);
 			sendMsg(log, logEmbed);
 		})
 		.catch(error => {

@@ -1,8 +1,7 @@
 const Discord = require('discord.js');
-const dateFormat = require('dateformat');
 
-const { config: { dateOutput }, ids: { logID }, colours } = require('../config');
-const { rolesOutput, sendMsg } = require('../modules');
+const { ids: { logID }, colours } = require('../config');
+const { rolesOutput, dtg, sendMsg } = require('../modules');
 
 module.exports = {
 	events: ['guildMemberRemove'],
@@ -22,7 +21,7 @@ module.exports = {
 			.setThumbnail(memberUser.displayAvatarURL())
 			.setDescription(`${memberUser} ${memberUser.tag}`)
 			.addField('Roles', rolesOutput(memberRoles, true))
-			.setFooter(`ID: ${memberUser.id} | ${dateFormat(dateOutput)}`);
+			.setFooter(`ID: ${memberUser.id} | ${dtg()}`);
 		sendMsg(log, logEmbed);
 	},
 };

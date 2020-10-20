@@ -1,11 +1,8 @@
 const Discord = require('discord.js');
-const dateFormat = require('dateformat');
 
-const config = require('../config');
-const { config: { dateOutput }, ids: { serverID, devID } } = config;
-const { emojis: { successEmoji }, colours } = config;
+const { ids: { serverID, devID }, emojis: { successEmoji }, colours } = require('../config');
 const { cmds: { restart } } = require('../cmds');
-const { formatAge, debugError } = require('../modules');
+const { dtg, formatAge, debugError } = require('../modules');
 
 module.exports = restart;
 module.exports.execute = msg => {
@@ -24,7 +21,7 @@ module.exports.execute = msg => {
 		.setDescription('**Restarting...**')
 		.addField('Uptime', formatAge(bot.uptime))
 		.setColor(colours.warn)
-		.setFooter(`${dateFormat(dateOutput)} | Pronto v${version}`);
+		.setFooter(`${dtg()} | Pronto v${version}`);
 
 	dev.send(restartEmbed)
 		.then(() => process.exit())
