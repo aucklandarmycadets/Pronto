@@ -72,10 +72,10 @@ const charLimit = (str, lim) => {
 		: str;
 };
 
-const dtg = () => {
+const dtg = date => {
 	const dateFormat = require('dateformat');
 	const { config: { dateOutput } } = require('./config');
-	return dateFormat(dateOutput);
+	return dateFormat(date, dateOutput);
 };
 
 const cmdPermsCheck = (msg, cmd) => {
