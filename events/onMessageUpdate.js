@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 
-const { ids: { logID }, colours } = require('../config');
+const { config: { prefix }, ids: { logID }, colours } = require('../config');
 const { charLimit, dtg, sendMsg } = require('../modules');
 
 module.exports = {
@@ -12,6 +12,8 @@ module.exports = {
 		const log = bot.channels.cache.get(logID);
 		const logEmbed = new Discord.MessageEmbed()
 			.setColor(colours.warn);
+
+		if (newMessage.content.startsWith(prefix)) bot.emit('message', newMessage);
 
 		if (oldMessage.partial) {
 			logEmbed.setAuthor(newMessage.guild.name, newMessage.guild.iconURL());
