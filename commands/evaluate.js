@@ -26,7 +26,9 @@ module.exports.execute = (msg, args) => {
 						: 1990
 				: 1990;
 
-			sendMsg(msg.channel, `\`\`\`js\n${str.slice(0, breakAt)}\`\`\``);
+			(str !== 'Promise { <pending> }')
+				? sendMsg(msg.channel, `\`\`\`js\n${str.slice(0, breakAt)}\`\`\``)
+				: null;
 
 			str = str.slice(breakAt, str.length);
 		}
