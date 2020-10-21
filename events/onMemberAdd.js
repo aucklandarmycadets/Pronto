@@ -1,8 +1,7 @@
 const Discord = require('discord.js');
-const dateFormat = require('dateformat');
 
-const { config: { dateOutput }, ids: { logID, recruitingID, newMembersID, visitorID }, colours } = require('../config');
-const { sendMsg, formatAge, debugError } = require('../modules');
+const { ids: { logID, recruitingID, newMembersID, visitorID }, colours } = require('../config');
+const { dtg, sendMsg, formatAge, debugError } = require('../modules');
 
 module.exports = {
 	events: ['guildMemberAdd'],
@@ -21,7 +20,7 @@ module.exports = {
 			.setThumbnail(memberUser.displayAvatarURL())
 			.setDescription(`${memberUser} ${memberUser.tag}`)
 			.addField('Account Age', formatAge(Date.now() - memberUser.createdAt))
-			.setFooter(`ID: ${memberUser.id} | ${dateFormat(dateOutput)}`);
+			.setFooter(`ID: ${memberUser.id} | ${dtg()}`);
 		sendMsg(log, logEmbed);
 
 		if (memberUser.bot) return;
@@ -33,7 +32,7 @@ module.exports = {
 			.setColor(colours.pronto)
 			.setAuthor(memberUser.tag, memberUser.displayAvatarURL())
 			.setDescription(`**${memberUser} has just entered ${newMembers}.**\nMake them feel welcome!`)
-			.setFooter(`${dateFormat(dateOutput)}`);
+			.setFooter(`${dtg()}`);
 		sendMsg(recruiting, welcomeEmbed);
 	},
 };

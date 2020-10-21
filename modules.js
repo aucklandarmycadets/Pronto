@@ -1,10 +1,9 @@
 'use strict';
 
 const Discord = require('discord.js');
-const dateFormat = require('dateformat');
 
 const config = require('./config');
-const { config: { prefix: pref, permsInt, dateOutput }, ids: { serverID, devID, debugID, administratorID } } = config;
+const { config: { prefix: pref, permsInt }, ids: { serverID, devID, debugID, administratorID } } = config;
 const { emojis: { errorEmoji }, colours } = config;
 
 let bot, version;
@@ -71,6 +70,12 @@ const charLimit = (str, lim) => {
 			? `${str.slice(0, lim - 6)}...\`\`\``
 			: `${str.slice(0, lim - 3)}...`
 		: str;
+};
+
+const dtg = date => {
+	const dateFormat = require('dateformat');
+	const { config: { dateOutput } } = require('./config');
+	return dateFormat(date, dateOutput);
 };
 
 const cmdPermsCheck = (msg, cmd) => {
@@ -201,7 +206,7 @@ const embedScaffold = (dest, descMsg, colour, type, fieldTitle, fieldContent, er
 		.setAuthor(botUser.tag, botUser.avatarURL())
 		.setColor(colour)
 		.setDescription(charLimit(descMsg, 2048))
-		.setFooter(`${dateFormat(dateOutput)}${devFooter}`);
+		.setFooter(`${dtg()}${devFooter}`);
 
 	if (fieldTitle) embed.addField(fieldTitle, fieldContent);
 	if (errorField) embed.setDescription(charLimit(`${descMsg}\n${errorField}`, 2048));
@@ -220,6 +225,7 @@ module.exports = {
 	rolesOutput: rolesOutput,
 	capitalise: capitalise,
 	charLimit: charLimit,
+	dtg: dtg,
 	cmdPermsCheck: cmdPermsCheck,
 	getRoleError: getRoleError,
 	sendMsg: sendMsg,

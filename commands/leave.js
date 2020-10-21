@@ -1,17 +1,14 @@
 const Discord = require('discord.js');
-const dateFormat = require('dateformat');
 
-const config = require('../config');
-const { config: { dateOutput }, ids: { attendanceID } } = config;
-const { emojis: { successEmoji }, colours } = config;
+const { ids: { attendanceID }, emojis: { successEmoji }, colours } = require('../config');
 const { cmds: { leave } } = require('../cmds');
-const { capitalise, cmdError, sendMsg, dmError, debugError } = require('../modules');
+const { capitalise, dtg, cmdError, sendMsg, dmError, debugError } = require('../modules');
 
 module.exports = leave;
 module.exports.execute = (msg, args) => {
 	'use strict';
 
-	const { bot } = require('../pronto.js');
+	const { bot } = require('../pronto');
 
 	if (args.length === 0) return cmdError(msg, 'Insufficient arguments.', leave.error);
 
@@ -28,7 +25,7 @@ module.exports.execute = (msg, args) => {
 		.setAuthor(msg.member.displayName, messageAuthor.displayAvatarURL())
 		.setDescription(`${messageAuthor} has requested leave in ${msg.channel}`)
 		.addField('Details', capitalise(args.join(' ')))
-		.setFooter(dateFormat(dateOutput));
+		.setFooter(dtg());
 
 	const dmEmbed = new Discord.MessageEmbed()
 		.setTitle(leaveEmbedTitle)
@@ -36,7 +33,7 @@ module.exports.execute = (msg, args) => {
 		.setAuthor(msg.guild.name, msg.guild.iconURL())
 		.setDescription(`Hi ${messageAuthor}, your submission of leave has been received.`)
 		.addField('Details', capitalise(args.join(' ')))
-		.setFooter(dateFormat(dateOutput));
+		.setFooter(dtg());
 
 	sendMsg(attendanceChannel, attendanceEmbed);
 	messageAuthor.send(dmEmbed).catch(error => dmError(msg, error));

@@ -1,8 +1,7 @@
 const Discord = require('discord.js');
-const dateFormat = require('dateformat');
 
-const { config: { dateOutput }, ids: { logID }, colours } = require('../config');
-const { sendMsg } = require('../modules');
+const { ids: { logID }, colours } = require('../config');
+const { dtg, sendMsg } = require('../modules');
 
 module.exports = {
 	events: ['roleCreate', 'roleDelete'],
@@ -13,7 +12,7 @@ module.exports = {
 		const log = bot.channels.cache.get(logID);
 		const logEmbed = new Discord.MessageEmbed()
 			.setAuthor(role.guild.name, role.guild.iconURL())
-			.setFooter(`ID: ${role.id} | ${dateFormat(dateOutput)}`);
+			.setFooter(`ID: ${role.id} | ${dtg()}`);
 
 		if (event === 'roleCreate') {
 			logEmbed.setColor(colours.success);

@@ -6,55 +6,41 @@ const { config: { prefix: pref } } = config;
 const { pCmd, rolesOutput } = require('./modules');
 
 const commandText = (tier, type) => {
-	const commands = [];
-
-	for (const obj of Object.values(cmds)) {
-		if (!type) commands.push('help');
-
-		else if ((type === 'role' && obj.roles === tier)
-			|| (type === 'noRole' && obj.noRoles === tier)
-			|| (type === 'dev' && obj.devOnly)) {
-			commands.push(obj);
-		}
-	}
-
 	const object = {};
 
-	for (let i = 0; i < commands.length; i++) {
-		if (commands[i] === 'help') {
+	for (const cmd of Object.values(cmds)) {
+		if (!type) {
 			object[`${pCmd(cmds.help)}`] = cmds.help.desc.unqualified;
 			object[`${pCmd(cmds.help)} [command]`] = cmds.help.desc.qualified;
 			continue;
 		}
-		object[`${pCmd(commands[i])}`] = commands[i].desc;
+
+		else if ((type === 'role' && cmd.roles === tier)
+			|| (type === 'noRole' && cmd.noRoles === tier)
+			|| (type === 'dev' && cmd.devOnly)) {
+			object[`${pCmd(cmd)}`] = cmd.desc;
+		}
 	}
+
 	return helpText(object, true);
 };
 
 const helpText = (object, forList) => {
 	let helpString = '';
-	const objProperties = [];
-	const objValues = [];
 
 	const [startFormat, endFormat] = (forList)
 		? ['`', '` - ']
 		: ['**', ':** '];
 
 	for (const [property, value] of Object.entries(object)) {
-		objProperties.push(property);
-		objValues.push(value);
+		helpString += `${startFormat}${property}${endFormat}${value}\n`;
 	}
 
-	for (let i = 0; i < objProperties.length; i++) {
-		helpString += `${startFormat}${objProperties[i]}${endFormat}${objValues[i]}`;
-
-		if (i < (objProperties.length - 1)) helpString += '\n';
-	}
 	return helpString;
 };
 
 const errorText = (helpTxt, cmd) => {
-	return '\n\n' + helpTxt + '\n' + helpText({
+	return '\n\n' + helpTxt + helpText({
 		'Help Command': `${pCmd(cmds.help)} ${cmd}`,
 	});
 };

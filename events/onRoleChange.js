@@ -1,8 +1,7 @@
 const Discord = require('discord.js');
-const dateFormat = require('dateformat');
 
-const { config: { dateOutput }, ids: { logID }, colours } = require('../config');
-const { permissionsUpdate, checkBotPermissions, sendMsg } = require('../modules');
+const { ids: { logID }, colours } = require('../config');
+const { permissionsUpdate, checkBotPermissions, dtg, sendMsg } = require('../modules');
 
 module.exports = {
 	events: ['roleUpdate'],
@@ -55,7 +54,7 @@ module.exports = {
 		else return;
 
 		logEmbed.setAuthor(newRole.guild.name, newRole.guild.iconURL());
-		logEmbed.setFooter(`ID: ${newRole.id} | ${dateFormat(dateOutput)}`);
+		logEmbed.setFooter(`ID: ${newRole.id} | ${dtg()}`);
 		sendMsg(log, logEmbed);
 	},
 };

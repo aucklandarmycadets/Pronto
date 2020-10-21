@@ -1,9 +1,8 @@
 const Discord = require('discord.js');
-const dateFormat = require('dateformat');
 
-const { config: { dateOutput }, ids: { logID, adjPlus }, emojis: { successEmoji }, colours } = require('../config');
+const { ids: { logID, adjPlus }, emojis: { successEmoji }, colours } = require('../config');
 const { cmds: { purge } } = require('../cmds');
-const { pCmd, sendMsg, debugError, embedScaffold } = require('../modules');
+const { pCmd, dtg, sendMsg, debugError, embedScaffold } = require('../modules');
 const pairs = require('../channelPairs');
 
 module.exports = {
@@ -29,19 +28,19 @@ module.exports = {
 		if (!oldID) {
 			logEmbed.setColor(colours.success);
 			logEmbed.setDescription(`**${newMember} joined voice channel ${newState.channel}**`);
-			logEmbed.setFooter(`ID: ${newMember.id} | Channel: ${newID} | ${dateFormat(dateOutput)}`);
+			logEmbed.setFooter(`ID: ${newMember.id} | Channel: ${newID} | ${dtg()}`);
 		}
 
 		else if (!newID) {
 			logEmbed.setColor(colours.error);
 			logEmbed.setDescription(`**${newMember} left voice channel ${oldState.channel}**`);
-			logEmbed.setFooter(`ID: ${newMember.id} | Channel: ${oldID} | ${dateFormat(dateOutput)}`);
+			logEmbed.setFooter(`ID: ${newMember.id} | Channel: ${oldID} | ${dtg()}`);
 		}
 
 		else if (oldID !== newID) {
 			logEmbed.setColor(colours.warn);
 			logEmbed.setDescription(`**${newMember} changed voice channel ${oldState.channel} > ${newState.channel}**`);
-			logEmbed.setFooter(`ID: ${newMember.id} | ${dateFormat(dateOutput)}`);
+			logEmbed.setFooter(`ID: ${newMember.id} | ${dtg()}`);
 		}
 
 		else return;
@@ -64,7 +63,7 @@ module.exports = {
 							.setColor(colours.success)
 							.setAuthor(newMember.displayName, newMember.user.displayAvatarURL())
 							.setDescription(`${newMember} has joined the channel.`)
-							.setFooter(`${dateFormat(dateOutput)}`);
+							.setFooter(`${dtg()}`);
 						sendMsg(textChannel, joinEmbed);
 					})
 					.catch(error => {
@@ -79,7 +78,7 @@ module.exports = {
 							.setColor(colours.error)
 							.setAuthor(newMember.displayName, newMember.user.displayAvatarURL())
 							.setDescription(`${newMember} has left the channel.`)
-							.setFooter(`${dateFormat(dateOutput)}`);
+							.setFooter(`${dtg()}`);
 						sendMsg(textChannel, leaveEmbed);
 
 						if (oldState.channel.members.size === 0) {

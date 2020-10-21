@@ -10,7 +10,7 @@ module.exports = help;
 module.exports.execute = (msg, args) => {
 	'use strict';
 
-	const { bot } = require('../pronto.js');
+	const { bot } = require('../pronto');
 	const messageAuthor = msg.author;
 	const server = bot.guilds.cache.get(serverID);
 	const helpEmbed = new Discord.MessageEmbed();
