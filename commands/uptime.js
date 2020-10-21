@@ -8,7 +8,7 @@ module.exports = uptime;
 module.exports.execute = msg => {
 	'use strict';
 
-	const { bot, version } = require('../pronto.js');
+	const { bot, version } = require('../pronto');
 
 	const uptimeEmbed = new Discord.MessageEmbed()
 		.setColor(colours.success)

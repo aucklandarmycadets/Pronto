@@ -8,7 +8,7 @@ module.exports = archive;
 module.exports.execute = msg => {
 	'use strict';
 
-	const { bot } = require('../pronto.js');
+	const { bot } = require('../pronto');
 	const channelMentions = msg.mentions.channels;
 	const numChannelMentions = channelMentions.size;
 	const channel = channelMentions.first();

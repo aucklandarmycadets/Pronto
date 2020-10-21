@@ -8,7 +8,7 @@ module.exports = attendance;
 module.exports.execute = async (msg, args) => {
 	'use strict';
 
-	const { bot } = require('../pronto.js');
+	const { bot } = require('../pronto');
 	const memberRoles = msg.member.roles.cache;
 
 	try {

@@ -8,7 +8,7 @@ module.exports = leaveFor;
 module.exports.execute = (msg, args) => {
 	'use strict';
 
-	const { bot } = require('../pronto.js');
+	const { bot } = require('../pronto');
 	const memberMentions = msg.mentions.members;
 	const numMemberMentions = memberMentions.size;
 	const absentee = memberMentions.first();

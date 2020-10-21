@@ -8,7 +8,7 @@ module.exports = leave;
 module.exports.execute = (msg, args) => {
 	'use strict';
 
-	const { bot } = require('../pronto.js');
+	const { bot } = require('../pronto');
 
 	if (args.length === 0) return cmdError(msg, 'Insufficient arguments.', leave.error);
 

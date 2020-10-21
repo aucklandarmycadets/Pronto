@@ -9,7 +9,7 @@ module.exports = {
 	execute() {
 		'use strict';
 
-		const { bot, version } = require('../pronto.js');
+		const { bot, version } = require('../pronto');
 
 		const dev = bot.users.cache.get(devID);
 
