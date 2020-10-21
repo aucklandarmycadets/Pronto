@@ -10,5 +10,5 @@ module.exports.execute = msg => {
 
 	msg.react(successEmojiObj).catch(error => debugError(error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
 
-	process.exit();
+	process.emit('SIGINT');
 };

@@ -6,8 +6,10 @@ const { dtg, formatAge, sendMsg } = require('../modules');
 module.exports = {
 	events: [],
 	process: ['exit', 'SIGINT'],
-	execute() {
+	execute(event, code) {
 		'use strict';
+
+		if (event === 'exit') console.log(`Exiting with code ${code}`);
 
 		const { bot, version } = require('../pronto');
 
@@ -21,5 +23,9 @@ module.exports = {
 			.setFooter(`${dtg()} | Pronto v${version}`);
 
 		sendMsg(dev, restartEmbed, true);
+
+		setTimeout(() => {
+			process.exit();
+		}, 500);
 	},
 };
