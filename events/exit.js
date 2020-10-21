@@ -9,9 +9,9 @@ module.exports = {
 	execute(event, code) {
 		'use strict';
 
-		if (event === 'exit') console.log(`Exiting with code ${code}`);
-
 		const { bot, version } = require('../pronto');
+
+		if (event === 'exit') console.log(`Exiting with code ${code}, uptime of ${formatAge(bot.uptime)}`);
 
 		const dev = bot.users.cache.get(devID);
 
