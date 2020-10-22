@@ -98,7 +98,7 @@ const cmdPermsCheck = (msg, cmd) => {
 	return false;
 };
 
-const getRoleError = msg => {
+const errorReact = msg => {
 	const server = bot.guilds.cache.get(serverID);
 	const errorEmojiObj = server.emojis.cache.find(emoji => emoji.name === errorEmoji);
 
@@ -108,8 +108,12 @@ const getRoleError = msg => {
 			else throw 'Error reacting to message in DMs.';
 		}
 
-		catch(errorMsg) { debugError(error, errorMsg); }
+		catch (errorMsg) { debugError(error, errorMsg); }
 	});
+};
+
+const getRoleError = msg => {
+	errorReact(msg);
 
 	const verifyErr = 'There was an error verifying permissions, please try again later.';
 
@@ -121,12 +125,15 @@ const getRoleError = msg => {
 };
 
 const cmdError = (msg, errMsg, cmdErr, footer) => {
-	const errorEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === errorEmoji);
-	msg.react(errorEmojiObj).catch(error => debugError(error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
+	errorReact(msg);
+
+	const authName = (msg.member)
+		? msg.member.displayName
+		: msg.author.username;
 
 	const errorEmbed = new Discord.MessageEmbed()
 		.setColor(colours.error)
-		.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
+		.setAuthor(authName, msg.author.displayAvatarURL())
 		.setDescription(`${msg.author} ${errMsg} ${cmdErr}`);
 
 	if (footer) errorEmbed.setFooter(footer);
@@ -181,9 +188,7 @@ const debugError = (error, errorMsg, fieldTitle, fieldContent) => {
 };
 
 const dmCmdError = (msg, type) => {
-	const server = bot.guilds.cache.get(serverID);
-	const errorEmojiObj = server.emojis.cache.find(emoji => emoji.name === errorEmoji);
-	msg.react(errorEmojiObj).catch(error => debugError(error, 'Error reacting to message in DMs.'));
+	errorReact(msg);
 
 	try {
 		if (type === 'noPerms') throw 'You do not have access to that command.';
