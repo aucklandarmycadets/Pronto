@@ -8,11 +8,11 @@ bot.commands = new Discord.Collection();
 const botCommands = require('./commands');
 
 Object.keys(botCommands).map(key => {
-	bot.commands.set(key, botCommands[key]);
+	bot.commands.set(botCommands[key].cmd, botCommands[key]);
 });
 
 const TOKEN = process.env.TOKEN;
-const version = '3.1.0';
+const version = '3.1.1';
 
 bot.login(TOKEN)
 	.then(() => module.exports = {
