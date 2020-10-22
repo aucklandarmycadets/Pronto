@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 
 const { ids: { attendanceID, formations }, emojis: { successEmoji, errorEmoji }, colours } = require('../config');
 const { cmds: { attendance } } = require('../cmds');
-const { dtg, cmdError, sendMsg, dmError, debugError } = require('../modules');
+const { dtg, cmdError, sendMsg, dmError, debugError, embedScaffold } = require('../modules');
 
 module.exports = attendance;
 module.exports.execute = async (msg, args) => {
@@ -89,20 +89,26 @@ module.exports.execute = async (msg, args) => {
 
 				collector.on('collect', (reaction, user) => {
 					if (!user.bot) {
-						const updateEmbed = new Discord.MessageEmbed()
+						const confirmEmbed = new Discord.MessageEmbed()
 							.setAuthor(bot.user.tag, bot.user.avatarURL())
 							.setColor(colours.error)
 							.setDescription('**Cancelled.**')
 							.setFooter(dtg());
 
 						if (reaction.emoji.name === successEmoji) {
-							updateEmbed.setColor(colours.success);
-							updateEmbed.setDescription('**Confirmed.**');
+							confirmEmbed.setColor(colours.success);
+							confirmEmbed.setDescription('**Confirmed.**');
 
 							attendanceEmbed.setAuthor(`${formationName} (${msg.member.displayName})`, msg.guild.iconURL());
 
 							if (chnlMsg) {
 								attendanceEmbed.setFooter(`Last updated at ${dtg()}`);
+
+								const formationDisplay = (msg.guild.roles.cache.find(role => role.name === formationName))
+									? (msg.guild.roles.cache.find(role => role.name === formationName))
+									: `**${formationName}**`
+
+								embedScaffold(msg.channel, `${msg.author} Successfully updated attendance for ${formationDisplay}.`, colours.success, 'msg');
 
 								chnlMsg.edit(attendanceEmbed);
 								attMsg.edit(attendanceEmbed);
@@ -118,7 +124,7 @@ module.exports.execute = async (msg, args) => {
 							}
 						}
 
-						dm.edit(updateEmbed);
+						dm.edit(confirmEmbed);
 						collector.stop();
 					}
 				});
