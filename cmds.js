@@ -36,11 +36,11 @@ const helpText = (object, forList) => {
 		helpString += `${startFormat}${property}${endFormat}${value}\n`;
 	}
 
-	return helpString;
+	return helpString.slice(0, helpString.length - 2);
 };
 
 const errorText = (helpTxt, cmd) => {
-	return '\n\n' + helpTxt + helpText({
+	return '\n\n' + helpTxt + '\n' + helpText({
 		'Help Command': `${pCmd(cmds.help)} ${cmd}`,
 	});
 };
