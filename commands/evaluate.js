@@ -14,8 +14,7 @@ module.exports.execute = (msg, args) => {
 		? false
 		: true;
 
-	const flagIndex = args.indexOf('-nocode');
-	if (flagIndex > -1) args.splice(flagIndex, 1);
+	args = args.filter(arg => !arg.startsWith('-'));
 
 	if (args.length === 0) return cmdError(msg, 'You must enter something to evaluate.', evaluate.error);
 
@@ -50,7 +49,9 @@ module.exports.execute = (msg, args) => {
 
 		if (typeof evaled !== 'string') evaled = require('util').inspect(evaled);
 
-		msgSplit(evaled, '},');
+		(code.includes('embed'))
+			? sendMsg(msg.channel, embed)
+			: msgSplit(evaled, '},');
 	}
 
 	catch (error) { msgSplit(error.stack, ')'); }
