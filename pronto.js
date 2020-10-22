@@ -8,7 +8,7 @@ bot.commands = new Discord.Collection();
 const botCommands = require('./commands');
 
 Object.keys(botCommands).map(key => {
-	bot.commands.set(key, botCommands[key]);
+	bot.commands.set(botCommands[key].cmd, botCommands[key]);
 });
 
 const TOKEN = process.env.TOKEN;
