@@ -49,7 +49,9 @@ module.exports.execute = (msg, args) => {
 
 		if (typeof evaled !== 'string') evaled = require('util').inspect(evaled);
 
-		msgSplit(evaled, '},');
+		(code.includes('embed'))
+			? sendMsg(msg.channel, embed)
+			: msgSplit(evaled, '},');
 	}
 
 	catch (error) { msgSplit(error.stack, ')'); }
