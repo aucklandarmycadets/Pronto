@@ -5,7 +5,7 @@ const { cmds: { evaluate, ...cmds }, ...cmdsList } = require('../cmds');
 const { dtg, sendMsg, cmdError, ...modules } = require('../modules');
 
 module.exports = evaluate;
-module.exports.execute = (msg, args) => {
+module.exports.execute = async (msg, args) => {
 	'use strict';
 
 	const { bot } = require('../pronto');
@@ -45,7 +45,7 @@ module.exports.execute = (msg, args) => {
 	try {
 		const embed = new Discord.MessageEmbed();
 
-		let evaled = eval(code);
+		let evaled = await eval(code);
 
 		if (typeof evaled !== 'string') evaled = require('util').inspect(evaled);
 
