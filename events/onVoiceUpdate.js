@@ -88,7 +88,7 @@ module.exports = {
 								.setTitle('Purge Text Channel')
 								.setColor(colours.success)
 								.setDescription(`Click on the ${successEmojiObj} reaction to purge this channel.`);
-							textChannel.send(purgeEmbed)
+							sendMsg(textChannel, purgeEmbed)
 								.then(msg => {
 									msg.react(successEmojiObj)
 										.catch(error => debugError(error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
@@ -135,8 +135,7 @@ module.exports = {
 											sendMsg(textChannel, timeEmbed);
 										}
 									});
-								})
-								.catch(error => debugError(error, `Error sending message to ${textChannel}.`));
+								});
 						}
 					})
 					.catch(error => {

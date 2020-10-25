@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 
 const { ids: { attendanceID, formations }, emojis: { successEmoji, errorEmoji }, colours } = require('../config');
 const { cmds: { attendance } } = require('../cmds');
-const { dtg, cmdError, sendMsg, dmError, debugError, embedScaffold } = require('../modules');
+const { dtg, cmdError, sendMsg, sendDM, debugError, embedScaffold } = require('../modules');
 
 module.exports = attendance;
 module.exports.execute = async (msg, args) => {
@@ -77,7 +77,7 @@ module.exports.execute = async (msg, args) => {
 
 		if (chnlMsg) attendanceEmbed.setAuthor(`${formationName} (Update)`, msg.guild.iconURL());
 
-		msg.author.send(attendanceEmbed)
+		sendDM(msg.author, attendanceEmbed)
 			.then(dm => {
 				dm.react(successEmojiObj)
 					.then(() => dm.react(errorEmojiObj))
@@ -148,10 +148,9 @@ module.exports.execute = async (msg, args) => {
 							.setColor(colours.error)
 							.setAuthor(bot.user.tag, bot.user.avatarURL())
 							.setDescription('Timed out. Please action the command again.');
-						sendMsg(msg.author, timeEmbed, true);
+						sendDM(msg.author, timeEmbed, true);
 					}
 				});
-			})
-			.catch(error => dmError(msg, error));
+			});
 	}
 };

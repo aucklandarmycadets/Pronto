@@ -22,7 +22,7 @@ module.exports = {
 			.setColor(colours.warn)
 			.setFooter(`${dtg()} | Pronto v${version}`);
 
-		sendMsg(dev, restartEmbed, true);
+		sendDM(dev, restartEmbed, true);
 
 		setTimeout(() => {
 			process.exit();

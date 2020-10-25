@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 
 const { ids: { attendanceID }, emojis: { successEmoji }, colours } = require('../config');
 const { cmds: { leave } } = require('../cmds');
-const { capitalise, dtg, cmdError, sendMsg, dmError, debugError } = require('../modules');
+const { capitalise, dtg, cmdError, sendMsg, sendDM, debugError } = require('../modules');
 
 module.exports = leave;
 module.exports.execute = (msg, args) => {
@@ -35,5 +35,5 @@ module.exports.execute = (msg, args) => {
 		.setFooter(dtg());
 
 	sendMsg(attendanceChannel, attendanceEmbed);
-	messageAuthor.send(dmEmbed).catch(error => dmError(msg, error));
+	sendDM(msg.author, dmEmbed);
 };

@@ -164,22 +164,21 @@ const formatAge = raw => {
 	else return `${seconds} sec`;
 };
 
-const sendMsg = (dest, msg, isDM) => {
-	const type = (isDM)
-		? 'DM'
-		: 'message';
-
-	dest.send(msg).catch(error => debugError(error, `Error sending ${type} to ${dest}.`));
+const sendMsg = (dest, msg) => {
+	return dest.send(msg).catch(error => debugError(error, `Error sending message to ${dest}.`));
 };
 
-const dmError = (msg, error, debug) => {
-	const member = msg.mentions.members.first();
-	const support = '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)';
+const sendDM = (dest, msg, debug) => {
+	return dest.send(msg)
+		.catch(error => {
+			const member = msg.mentions.members.first();
+			const support = '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)';
 
-	console.error(error);
+			console.error(error);
 
-	if (debug) embedScaffold(null, `Error sending direct message to ${member}.`, colours.error, 'debug', 'More Information', support, `\`\`\`js\n${error.stack}\`\`\``);
-	else embedScaffold(msg.channel, `${msg.author} I can't send direct messages to you!`, colours.error, 'msg', 'More Information', support);
+			if (debug) embedScaffold(null, `Error sending direct message to ${member}.`, colours.error, 'debug', 'More Information', support, `\`\`\`js\n${error.stack}\`\`\``);
+			else embedScaffold(msg.channel, `${msg.author} I can't send direct messages to you!`, colours.error, 'msg', 'More Information', support);
+		});
 };
 
 const debugError = (error, errorMsg, fieldTitle, fieldContent) => {
@@ -216,8 +215,8 @@ const embedScaffold = (dest, descMsg, colour, type, fieldTitle, fieldContent, er
 	if (fieldTitle) embed.addField(fieldTitle, fieldContent);
 	if (errorField) embed.setDescription(charLimit(`${descMsg}\n${errorField}`, 2048));
 
-	if (type === 'dm') sendMsg(dest, embed, true);
-	else if (type === 'dev') sendMsg(dest, embed, true);
+	if (type === 'dm') sendDM(dest, embed, true);
+	else if (type === 'dev') sendDM(dest, embed, true);
 	else if (type === 'msg') sendMsg(dest, embed);
 	else if (type === 'debug') debugChannel.send(embed).catch(error => console.error(error));
 };
@@ -233,10 +232,10 @@ module.exports = {
 	dtg: dtg,
 	cmdPermsCheck: cmdPermsCheck,
 	getRoleError: getRoleError,
-	sendMsg: sendMsg,
 	cmdError: cmdError,
 	formatAge: formatAge,
-	dmError: dmError,
+	sendMsg: sendMsg,
+	sendDM: sendDM,
 	debugError: debugError,
 	dmCmdError: dmCmdError,
 	embedScaffold: embedScaffold,

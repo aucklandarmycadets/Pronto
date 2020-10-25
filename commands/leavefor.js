@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 
 const { ids: { attendanceID }, emojis: { successEmoji }, colours } = require('../config');
 const { cmds: { help, leave, leaveFor } } = require('../cmds');
-const { pCmd, capitalise, dtg, cmdError, sendMsg, dmError, debugError } = require('../modules');
+const { pCmd, capitalise, dtg, cmdError, sendMsg, sendDM, debugError } = require('../modules');
 
 module.exports = leaveFor;
 module.exports.execute = (msg, args) => {
@@ -62,6 +62,6 @@ module.exports.execute = (msg, args) => {
 		.setFooter(`Reply with ${pCmd(help)} ${leave.cmd} to learn how to request leave for yourself.`);
 
 	sendMsg(attendanceChannel, attendanceEmbed);
-	messageAuthor.send(dmEmbed).catch(error => dmError(msg, error));
-	absentee.send(absenteeEmbed).catch(error => dmError(msg, error, true));
+	sendDM(msg.author, dmEmbed);
+	sendDM(absentee, absenteeEmbed, true);
 };

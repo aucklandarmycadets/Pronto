@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 
 const { colours } = require('../config');
 const { cmds: { ping } } = require('../cmds');
-const { dtg, debugError } = require('../modules');
+const { dtg, sendMsg } = require('../modules');
 
 module.exports = ping;
 module.exports.execute = msg => {
@@ -12,7 +12,7 @@ module.exports.execute = msg => {
 
 	let pingValue = 'Pinging...';
 
-	msg.channel.send('**Pong!**')
+	sendMsg(msg.channel, '**Pong!**')
 		.then(reply => {
 			const pingTimestamp = (msg.editedTimestamp - msg.createdTimestamp > 0)
 				? msg.editedTimestamp
@@ -23,6 +23,5 @@ module.exports.execute = msg => {
 				.setColor(colours.success)
 				.setFooter(`${pingValue} ms | ${dtg()} | Pronto v${version}`);
 			reply.edit(pingEmbed);
-		})
-		.catch(error => debugError(error, `Error sending message to ${msg.channel}.`));
+		});
 };

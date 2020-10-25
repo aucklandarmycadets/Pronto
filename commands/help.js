@@ -4,7 +4,7 @@ const config = require('../config');
 const { config: { prontoLogo }, ids: { serverID, devID, adjPlus } } = config;
 const { emojis: { successEmoji, errorEmoji }, colours } = config;
 const { cmds: { help }, cmdsList } = require('../cmds');
-const { pCmd, cmdPermsCheck, getRoleError, sendMsg, dmError, debugError, dmCmdError, embedScaffold } = require('../modules');
+const { pCmd, cmdPermsCheck, getRoleError, sendMsg, sendDM, debugError, dmCmdError, embedScaffold } = require('../modules');
 
 module.exports = help;
 module.exports.execute = (msg, args) => {
@@ -55,7 +55,7 @@ module.exports.execute = (msg, args) => {
 		else if (!helpEmbed.description.includes('Allowed Roles')) {
 			const successEmojiObj = server.emojis.cache.find(emoji => emoji.name === successEmoji);
 			msg.react(successEmojiObj).catch(error => debugError(error, 'Error reacting to message in DMs.'));
-			return messageAuthor.send(helpEmbed).catch(error => dmError(msg, error));
+			return sendDM(msg.author, helpEmbed);
 		}
 
 		else return dmCmdError(msg, 'hasRole');
@@ -108,6 +108,6 @@ module.exports.execute = (msg, args) => {
 			helpEmbed.addField('Note', `Only displaying commands available to ${msg.author}.`);
 		}
 
-		messageAuthor.send(helpEmbed).catch(error => dmError(msg, error));
+		sendDM(msg.author, helpEmbed);
 	}
 };
