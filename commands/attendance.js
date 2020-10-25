@@ -106,7 +106,7 @@ module.exports.execute = async (msg, args) => {
 
 								const formationDisplay = (msg.guild.roles.cache.find(role => role.name === formationName))
 									? (msg.guild.roles.cache.find(role => role.name === formationName))
-									: `**${formationName}**`
+									: `**${formationName}**`;
 
 								embedScaffold(msg.channel, `${msg.author} Successfully updated attendance for ${formationDisplay}.`, colours.success, 'msg');
 

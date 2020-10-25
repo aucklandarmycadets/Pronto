@@ -26,7 +26,6 @@ module.exports.execute = (msg, args) => {
 	catch (error) { return cmdError(msg, error, leaveFor.error); }
 
 	const leaveForEmbedTitle = 'Leave Request (For)';
-	const messageAuthor = msg.author;
 	const attendanceChannel = bot.channels.cache.get(attendanceID);
 	const successEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === successEmoji);
 
@@ -39,7 +38,7 @@ module.exports.execute = (msg, args) => {
 		.setTitle(leaveForEmbedTitle)
 		.setColor(colours.leave)
 		.setAuthor(absentee.displayName, absentee.user.displayAvatarURL())
-		.setDescription(`${messageAuthor} has submitted leave for ${absentee} in ${msg.channel}`)
+		.setDescription(`${msg.author} has submitted leave for ${absentee} in ${msg.channel}`)
 		.addFields(
 			{ name: 'Absentee', value: absentee },
 			{ name: 'Details', value: capitalise(args.join(' ')) },
@@ -50,7 +49,7 @@ module.exports.execute = (msg, args) => {
 		.setTitle(leaveForEmbedTitle)
 		.setColor(colours.leave)
 		.setAuthor(msg.guild.name, msg.guild.iconURL())
-		.setDescription(`Hi ${messageAuthor}, your submission of leave for ${absentee} has been received.`)
+		.setDescription(`Hi ${msg.author}, your submission of leave for ${absentee} has been received.`)
 		.addField('Details', capitalise(args.join(' ')))
 		.setFooter(dtg());
 
@@ -58,7 +57,7 @@ module.exports.execute = (msg, args) => {
 		.setTitle(leaveForEmbedTitle)
 		.setColor(colours.leave)
 		.setAuthor(msg.guild.name, msg.guild.iconURL())
-		.setDescription(`${messageAuthor} has submitted leave for you in ${msg.channel}.`)
+		.setDescription(`${msg.author} has submitted leave for you in ${msg.channel}.`)
 		.addField('Details', capitalise(args.join(' ')))
 		.setFooter(`Reply with ${pCmd(help)} ${leave.cmd} to learn how to request leave for yourself.`);
 

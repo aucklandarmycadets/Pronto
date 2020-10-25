@@ -11,7 +11,6 @@ module.exports.execute = (msg, args) => {
 	'use strict';
 
 	const { bot } = require('../pronto');
-	const messageAuthor = msg.author;
 	const server = bot.guilds.cache.get(serverID);
 	const helpEmbed = new Discord.MessageEmbed();
 	const msgCmd = args[0]
@@ -20,7 +19,7 @@ module.exports.execute = (msg, args) => {
 
 	const memberRoles = (msg.guild)
 		? msg.member.roles.cache
-		: server.members.cache.get(messageAuthor.id).roles.cache;
+		: server.members.cache.get(msg.author.id).roles.cache;
 
 	if (!memberRoles) return getRoleError(msg);
 
@@ -28,7 +27,7 @@ module.exports.execute = (msg, args) => {
 		const errorEmojiObj = server.emojis.cache.find(emoji => emoji.name === errorEmoji);
 		msg.react(errorEmojiObj).catch(error => debugError(error, 'Error reacting to message in DMs.'));
 
-		return embedScaffold(messageAuthor, 'There was an error reaching the server, please try again later.', colours.error, 'dm');
+		return embedScaffold(msg.author, 'There was an error reaching the server, please try again later.', colours.error, 'dm');
 	}
 
 	if (msg.guild) msg.delete().catch(error => debugError(error, `Error deleting message in ${msg.channel}.`, 'Message', msg.content));
@@ -81,7 +80,7 @@ module.exports.execute = (msg, args) => {
 			}
 
 			else if (values.type === 'dev') {
-				commandList = (messageAuthor.id === devID)
+				commandList = (msg.author.id === devID)
 					? values.cmds
 					: commandList;
 			}
@@ -105,8 +104,8 @@ module.exports.execute = (msg, args) => {
 		helpEmbed.setDescription(commandList);
 		helpEmbed.setFooter(`Developed by ${james.tag}`, james.avatarURL());
 
-		if (!memberRoles.some(roles => adjPlus.includes(roles.id)) && messageAuthor.id !== devID) {
-			helpEmbed.addField('Note', `Only displaying commands available to ${messageAuthor}.`);
+		if (!memberRoles.some(roles => adjPlus.includes(roles.id)) && msg.author.id !== devID) {
+			helpEmbed.addField('Note', `Only displaying commands available to ${msg.author}.`);
 		}
 
 		messageAuthor.send(helpEmbed).catch(error => dmError(msg, error));
