@@ -12,7 +12,7 @@ Object.keys(botCommands).map(key => {
 });
 
 const TOKEN = process.env.TOKEN;
-const version = '3.2.2';
+const version = '3.2.3';
 
 bot.login(TOKEN)
 	.then(() => module.exports = {
