@@ -14,7 +14,11 @@ module.exports.execute = msg => {
 
 	msg.channel.send('**Pong!**')
 		.then(reply => {
-			pingValue = reply.createdTimestamp - msg.createdTimestamp;
+			const pingTimestamp = (msg.editedTimestamp - msg.createdTimestamp > 0)
+				? msg.editedTimestamp
+				: msg.createdTimestamp;
+
+			pingValue = reply.createdTimestamp - pingTimestamp;
 			const pingEmbed = new Discord.MessageEmbed()
 				.setColor(colours.success)
 				.setFooter(`${pingValue} ms | ${dtg()} | Pronto v${version}`);
