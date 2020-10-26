@@ -29,8 +29,8 @@ exports.ids = {
 };
 
 exports.emojis = {
-	successEmoji: 'success',
-	errorEmoji: 'error',
+	success: 'success',
+	error: 'error',
 };
 
 exports.colours = {
