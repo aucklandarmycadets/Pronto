@@ -1,16 +1,10 @@
-module.exports = {
-	devInfo: require('./devInfo'),
-	exit: require('./exit'),
-	onBulkDelete: require('./onBulkDelete'),
-	onMemberAdd: require('./onMemberAdd'),
-	onMemberBan: require('./onMemberBan'),
-	onMemberRemove: require('./onMemberRemove'),
-	onMemberUpdate: require('./onMemberUpdate'),
-	onMessage: require('./onMessage'),
-	onMessageDelete: require('./onMessageDelete'),
-	onMessageUpdate: require('./onMessageUpdate'),
-	onReady: require('./onReady'),
-	onRoleChange: require('./onRoleChange'),
-	onRoleUpdate: require('./onRoleUpdate'),
-	onVoiceUpdate: require('./onVoiceUpdate'),
-};
+'use strict';
+
+const fs = require('fs');
+
+const events = fs.readdirSync('./events').filter(file => file.endsWith('.js') && file !== 'index.js');
+
+for (const file of events) {
+	const eventName = file.replace('.js', '');
+	exports[eventName] = require(`./${eventName}`);
+}

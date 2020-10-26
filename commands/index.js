@@ -1,13 +1,10 @@
-module.exports = {
-	ping: require('./ping'),
-	uptime: require('./uptime'),
-	evaluate: require('./evaluate'),
-	restart: require('./restart'),
-	help: require('./help'),
-	leave: require('./leave'),
-	leaveFor: require('./leavefor'),
-	attendance: require('./attendance'),
-	purge: require('./purge'),
-	archive: require('./archive'),
-	connected: require('./connected'),
-};
+'use strict';
+
+const fs = require('fs');
+
+const commands = fs.readdirSync('./commands').filter(file => file.endsWith('.js') && file !== 'index.js');
+
+for (const file of commands) {
+	const commandName = file.replace('.js', '');
+	exports[commandName] = require(`./${commandName}`);
+}
