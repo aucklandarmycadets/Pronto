@@ -3,7 +3,7 @@
 const Discord = require('discord.js');
 
 const { ids: { logID }, colours } = require('../config');
-const { updatedPermissions, verifyBotPermissions, dtg, sendMsg } = require('../modules');
+const { dtg, sendMsg, updatedPermissions, verifyBotPermissions } = require('../modules');
 
 module.exports = {
 	events: ['guildMemberUpdate'],

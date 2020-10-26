@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 
 const { ids: { adjPlus }, emojis, colours } = require('../config');
 const { cmds: { purge } } = require('../cmds');
-const { pCmd, dtg, sendMsg, debugError, successReact, purgeChannel } = require('../modules');
+const { debugError, dtg, pCmd, purgeChannel, sendMsg, successReact } = require('../modules');
 const pairs = require('../channelPairs');
 
 module.exports = (oldState, newState) => {

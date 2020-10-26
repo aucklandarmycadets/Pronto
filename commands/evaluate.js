@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 
 const { colours, ...config } = require('../config');
 const { cmds: { evaluate, ...cmds }, ...cmdsList } = require('../cmds');
-const { dtg, sendMsg, cmdError, ...modules } = require('../modules');
+const { cmdError, dtg, sendMsg, ...modules } = require('../modules');
 
 module.exports = evaluate;
 module.exports.execute = async (msg, args) => {

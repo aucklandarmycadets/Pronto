@@ -2,7 +2,7 @@
 
 const { colours } = require('../config');
 const { cmds: { purge } } = require('../cmds');
-const { cmdError, debugError, errorReact, embedScaffold } = require('../modules');
+const { cmdError, debugError, embedScaffold, errorReact } = require('../modules');
 
 module.exports = purge;
 module.exports.execute = (msg, args) => {

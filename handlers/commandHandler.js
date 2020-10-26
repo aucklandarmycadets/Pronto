@@ -2,7 +2,7 @@
 
 const { config: { prefix } } = require('../config');
 const { cmds: { help } } = require('../cmds');
-const { pCmd, cmdPermsCheck, debugError, dmCmdError } = require('../modules');
+const { cmdPermsCheck, debugError, dmCmdError, pCmd } = require('../modules');
 
 module.exports = msg => {
 	const { bot } = require('../pronto');

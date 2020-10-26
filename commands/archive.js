@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 
 const { ids: { logID, archivedID }, colours } = require('../config');
 const { cmds: { archive } } = require('../cmds');
-const { dtg, cmdError, sendMsg, debugError, errorReact, embedScaffold, successReact } = require('../modules');
+const { cmdError, debugError, dtg, embedScaffold, errorReact, sendMsg, successReact } = require('../modules');
 
 module.exports = archive;
 module.exports.execute = msg => {

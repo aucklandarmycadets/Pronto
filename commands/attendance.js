@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 
 const { ids: { attendanceID, formations }, emojis, colours } = require('../config');
 const { cmds: { attendance } } = require('../cmds');
-const { dtg, cmdError, sendMsg, sendDM, delMsg, debugError, errorReact, embedScaffold, successReact } = require('../modules');
+const { cmdError, debugError, delMsg, dtg, embedScaffold, errorReact, sendDM, sendMsg, successReact } = require('../modules');
 
 module.exports = attendance;
 module.exports.execute = async (msg, args) => {

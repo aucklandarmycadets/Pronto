@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 
 const { config: { prontoLogo }, ids: { serverID, devID, adjPlus }, colours } = require('../config');
 const { cmds: { help }, cmdsList } = require('../cmds');
-const { pCmd, cmdPermsCheck, getRoleError, sendMsg, sendDM, delMsg, dmCmdError, embedScaffold, errorReact, successReact } = require('../modules');
+const { cmdPermsCheck, delMsg, dmCmdError, embedScaffold, errorReact, getRoleError, pCmd, sendDM, sendMsg, successReact } = require('../modules');
 
 module.exports = help;
 module.exports.execute = (msg, args) => {

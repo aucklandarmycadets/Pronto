@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 
 const { config: { prefix }, ids: { logID }, colours } = require('../config');
 const { cmds: { help, attendance, purge } } = require('../cmds');
-const { charLimit, dtg, sendMsg, delMsg, debugError } = require('../modules');
+const { charLimit, debugError, delMsg, dtg, sendMsg } = require('../modules');
 
 module.exports = {
 	events: ['messageDelete'],
