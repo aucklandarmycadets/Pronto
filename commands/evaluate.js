@@ -1,3 +1,5 @@
+'use strict';
+
 const Discord = require('discord.js');
 
 const { colours, ...config } = require('../config');
@@ -6,8 +8,6 @@ const { dtg, sendMsg, cmdError, ...modules } = require('../modules');
 
 module.exports = evaluate;
 module.exports.execute = async (msg, args) => {
-	'use strict';
-
 	const { bot } = require('../pronto');
 
 	const codeBlock = (args.includes('-nocode'))

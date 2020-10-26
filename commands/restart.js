@@ -1,3 +1,5 @@
+'use strict';
+
 const { ids: { serverID }, emojis: { successEmoji } } = require('../config');
 const { cmds: { restart } } = require('../cmds');
 const { debugError } = require('../modules');

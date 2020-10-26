@@ -1,11 +1,11 @@
+'use strict';
+
 const { emojis: { errorEmoji }, colours } = require('../config');
 const { cmds: { purge } } = require('../cmds');
 const { cmdError, debugError, embedScaffold } = require('../modules');
 
 module.exports = purge;
 module.exports.execute = (msg, args) => {
-	'use strict';
-
 	const userMentions = msg.mentions.users;
 
 	let user, purgeCount;

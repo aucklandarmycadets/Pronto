@@ -1,3 +1,5 @@
+'use strict';
+
 const Discord = require('discord.js');
 
 const { ids: { attendanceID }, emojis: { successEmoji }, colours } = require('../config');
@@ -6,9 +8,8 @@ const { dtg, cmdError, sendMsg, debugError } = require('../modules');
 
 module.exports = connected;
 module.exports.execute = msg => {
-	'use strict';
-
 	const { bot } = require('../pronto');
+
 	const channelMentions = msg.mentions.channels;
 	const numChannelMentions = channelMentions.size;
 	const channel = channelMentions.first();

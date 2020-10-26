@@ -1,3 +1,5 @@
+'use strict';
+
 const Discord = require('discord.js');
 
 const config = require('../config');
@@ -8,9 +10,8 @@ const { pCmd, cmdPermsCheck, getRoleError, sendMsg, sendDM, debugError, dmCmdErr
 
 module.exports = help;
 module.exports.execute = (msg, args) => {
-	'use strict';
-
 	const { bot } = require('../pronto');
+
 	const server = bot.guilds.cache.get(serverID);
 	const helpEmbed = new Discord.MessageEmbed();
 	const msgCmd = args[0]

@@ -1,3 +1,5 @@
+'use strict';
+
 const { config: { prefix } } = require('../config');
 const { cmds: { help } } = require('../cmds');
 const { pCmd, cmdPermsCheck, debugError, dmCmdError } = require('../modules');

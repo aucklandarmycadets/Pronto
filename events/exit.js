@@ -1,14 +1,14 @@
+'use strict';
+
 const Discord = require('discord.js');
 
 const { ids: { devID }, colours } = require('../config');
-const { dtg, formatAge, sendMsg } = require('../modules');
+const { dtg, formatAge, sendDM } = require('../modules');
 
 module.exports = {
 	events: [],
 	process: ['exit', 'SIGINT'],
 	execute(event, code) {
-		'use strict';
-
 		const { bot, version } = require('../pronto');
 
 		if (event === 'exit') console.log(`Exiting with code ${code}, uptime of ${formatAge(bot.uptime)}`);

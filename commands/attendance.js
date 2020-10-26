@@ -1,3 +1,5 @@
+'use strict';
+
 const Discord = require('discord.js');
 
 const { ids: { attendanceID, formations }, emojis: { successEmoji, errorEmoji }, colours } = require('../config');
@@ -6,9 +8,8 @@ const { dtg, cmdError, sendMsg, sendDM, debugError, embedScaffold } = require('.
 
 module.exports = attendance;
 module.exports.execute = async (msg, args) => {
-	'use strict';
-
 	const { bot } = require('../pronto');
+
 	const memberRoles = msg.member.roles.cache;
 
 	try {

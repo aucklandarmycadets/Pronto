@@ -1,3 +1,5 @@
+'use strict';
+
 const Discord = require('discord.js');
 
 const { config: { prefix }, ids: { logID }, colours } = require('../config');

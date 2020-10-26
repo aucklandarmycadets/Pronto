@@ -1,3 +1,5 @@
+'use strict';
+
 const Discord = require('discord.js');
 
 const { ids: { logID, adjPlus }, emojis: { successEmoji }, colours } = require('../config');

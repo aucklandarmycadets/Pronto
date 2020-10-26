@@ -1,3 +1,5 @@
+'use strict';
+
 const Discord = require('discord.js');
 
 const { ids: { attendanceID }, emojis: { successEmoji }, colours } = require('../config');
@@ -6,8 +8,6 @@ const { capitalise, dtg, cmdError, sendMsg, sendDM, debugError } = require('../m
 
 module.exports = leave;
 module.exports.execute = (msg, args) => {
-	'use strict';
-
 	const { bot } = require('../pronto');
 
 	if (args.length === 0) return cmdError(msg, 'Insufficient arguments.', leave.error);

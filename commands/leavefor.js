@@ -1,3 +1,5 @@
+'use strict';
+
 const Discord = require('discord.js');
 
 const { ids: { attendanceID }, emojis: { successEmoji }, colours } = require('../config');
@@ -6,9 +8,8 @@ const { pCmd, capitalise, dtg, cmdError, sendMsg, sendDM, debugError } = require
 
 module.exports = leaveFor;
 module.exports.execute = (msg, args) => {
-	'use strict';
-
 	const { bot } = require('../pronto');
+
 	const memberMentions = msg.mentions.members;
 	const numMemberMentions = memberMentions.size;
 	const absentee = memberMentions.first();

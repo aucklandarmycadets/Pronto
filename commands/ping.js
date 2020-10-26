@@ -1,3 +1,5 @@
+'use strict';
+
 const Discord = require('discord.js');
 
 const { colours } = require('../config');
@@ -6,8 +8,6 @@ const { dtg, sendMsg } = require('../modules');
 
 module.exports = ping;
 module.exports.execute = msg => {
-	'use strict';
-
 	const { version } = require('../pronto');
 
 	let pingValue = 'Pinging...';

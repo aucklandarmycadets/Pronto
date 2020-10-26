@@ -1,3 +1,5 @@
+'use strict';
+
 const { ids: { serverID, devID }, colours } = require('../config');
 const { cmds: { help } } = require('../cmds');
 const { verifyBotPermissions, pCmd, embedScaffold } = require('../modules');
