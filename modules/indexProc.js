@@ -9,7 +9,7 @@ module.exports = dir => {
 
 	for (const file of files) {
 		const key = file.replace('.js', '');
-		procObj[key] = require(`./${key}`);
+		procObj[key] = require(`.${dir}/${key}`);
 	}
 
 	return procObj;
