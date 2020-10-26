@@ -2,7 +2,7 @@
 
 require('dotenv').config();
 const Discord = require('discord.js');
-const version = '3.3.0';
+const version = '3.3.1';
 const bot = new Discord.Client({ partials: ['MESSAGE'] });
 
 bot.commands = new Discord.Collection();
