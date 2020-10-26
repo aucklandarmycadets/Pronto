@@ -2,9 +2,9 @@
 
 const Discord = require('discord.js');
 
-const { ids: { attendanceID }, emojis: { successEmoji }, colours } = require('../config');
+const { ids: { attendanceID }, colours } = require('../config');
 const { cmds: { help, leave, leaveFor } } = require('../cmds');
-const { pCmd, capitalise, dtg, cmdError, sendMsg, sendDM, debugError } = require('../modules');
+const { pCmd, capitalise, dtg, cmdError, sendMsg, sendDM, successReact } = require('../modules');
 
 module.exports = leaveFor;
 module.exports.execute = (msg, args) => {
@@ -28,9 +28,8 @@ module.exports.execute = (msg, args) => {
 
 	const leaveForEmbedTitle = 'Leave Request (For)';
 	const attendanceChannel = bot.channels.cache.get(attendanceID);
-	const successEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === successEmoji);
 
-	msg.react(successEmojiObj).catch(error => debugError(error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
+	successReact(msg);
 
 	const mentionIndex = args.indexOf(`<@!${absentee.user.id}>`);
 	if (mentionIndex > -1) args.splice(mentionIndex, 1);

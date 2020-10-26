@@ -2,9 +2,9 @@
 
 const Discord = require('discord.js');
 
-const { ids: { attendanceID }, emojis: { successEmoji }, colours } = require('../config');
+const { ids: { attendanceID }, colours } = require('../config');
 const { cmds: { leave } } = require('../cmds');
-const { capitalise, dtg, cmdError, sendMsg, sendDM, debugError } = require('../modules');
+const { capitalise, dtg, cmdError, sendMsg, sendDM, successReact } = require('../modules');
 
 module.exports = leave;
 module.exports.execute = (msg, args) => {
@@ -14,9 +14,8 @@ module.exports.execute = (msg, args) => {
 
 	const leaveEmbedTitle = 'Leave Request';
 	const attendanceChannel = bot.channels.cache.get(attendanceID);
-	const successEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === successEmoji);
 
-	msg.react(successEmojiObj).catch(error => debugError(error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
+	successReact(msg);
 
 	const attendanceEmbed = new Discord.MessageEmbed()
 		.setTitle(leaveEmbedTitle)

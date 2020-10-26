@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 
 const { ids: { attendanceID, formations }, emojis: { successEmoji, errorEmoji }, colours } = require('../config');
 const { cmds: { attendance } } = require('../cmds');
-const { dtg, cmdError, sendMsg, sendDM, debugError, embedScaffold } = require('../modules');
+const { dtg, cmdError, sendMsg, sendDM, debugError, errorReact, embedScaffold, successReact } = require('../modules');
 
 module.exports = attendance;
 module.exports.execute = async (msg, args) => {
@@ -33,9 +33,6 @@ module.exports.execute = async (msg, args) => {
 			formationName = role.name;
 		}
 	}
-
-	const successEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === successEmoji);
-	const errorEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === errorEmoji);
 
 	if (args[0].toLowerCase() === 'update') {
 		args.splice(0, 1);
@@ -79,10 +76,9 @@ module.exports.execute = async (msg, args) => {
 		if (chnlMsg) attendanceEmbed.setAuthor(`${formationName} (Update)`, msg.guild.iconURL());
 
 		sendDM(msg.author, attendanceEmbed)
-			.then(dm => {
-				dm.react(successEmojiObj)
-					.then(() => dm.react(errorEmojiObj))
-					.catch(error => debugError(error, 'Error reacting to message in DMs.'));
+			.then(async dm => {
+				await successReact(dm);
+				await errorReact(dm);
 
 				const filter = (reaction) => reaction.emoji.name === successEmoji || reaction.emoji.name === errorEmoji;
 

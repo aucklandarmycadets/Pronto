@@ -2,11 +2,9 @@
 
 const Discord = require('discord.js');
 
-const config = require('../config');
-const { config: { prontoLogo }, ids: { serverID, devID, adjPlus } } = config;
-const { emojis: { successEmoji, errorEmoji }, colours } = config;
+const { config: { prontoLogo }, ids: { serverID, devID, adjPlus }, colours } = require('../config');
 const { cmds: { help }, cmdsList } = require('../cmds');
-const { pCmd, cmdPermsCheck, getRoleError, sendMsg, sendDM, debugError, dmCmdError, embedScaffold } = require('../modules');
+const { pCmd, cmdPermsCheck, getRoleError, sendMsg, sendDM, debugError, dmCmdError, embedScaffold, errorReact, successReact } = require('../modules');
 
 module.exports = help;
 module.exports.execute = (msg, args) => {
@@ -18,18 +16,16 @@ module.exports.execute = (msg, args) => {
 		? args[0].toLowerCase()
 		: null;
 
+	if (!msg.guild && !server.available) {
+		errorReact(msg);
+		return embedScaffold(msg.author, 'There was an error reaching the server, please try again later.', colours.error, 'dm');
+	}
+
 	const memberRoles = (msg.guild)
 		? msg.member.roles.cache
 		: server.members.cache.get(msg.author.id).roles.cache;
 
 	if (!memberRoles) return getRoleError(msg);
-
-	if (!msg.guild && !server.available) {
-		const errorEmojiObj = server.emojis.cache.find(emoji => emoji.name === errorEmoji);
-		msg.react(errorEmojiObj).catch(error => debugError(error, 'Error reacting to message in DMs.'));
-
-		return embedScaffold(msg.author, 'There was an error reaching the server, please try again later.', colours.error, 'dm');
-	}
 
 	if (msg.guild) msg.delete().catch(error => debugError(error, `Error deleting message in ${msg.channel}.`, 'Message', msg.content));
 
@@ -54,8 +50,7 @@ module.exports.execute = (msg, args) => {
 		}
 
 		else if (!helpEmbed.description.includes('Allowed Roles')) {
-			const successEmojiObj = server.emojis.cache.find(emoji => emoji.name === successEmoji);
-			msg.react(successEmojiObj).catch(error => debugError(error, 'Error reacting to message in DMs.'));
+			successReact(msg);
 			return sendDM(msg.author, helpEmbed);
 		}
 
@@ -90,13 +85,11 @@ module.exports.execute = (msg, args) => {
 		const james = bot.users.cache.get('192181901065322496');
 
 		if (!msg.guild && msgCmd) {
-			const errorEmojiObj = server.emojis.cache.find(emoji => emoji.name === errorEmoji);
-			msg.react(errorEmojiObj).catch(error => debugError(error, 'Error reacting to message in DMs.'));
+			errorReact(msg);
 		}
 
 		else if (!msg.guild) {
-			const successEmojiObj = server.emojis.cache.find(emoji => emoji.name === successEmoji);
-			msg.react(successEmojiObj).catch(error => debugError(error, 'Error reacting to message in DMs.'));
+			successReact(msg);
 		}
 
 		helpEmbed.setTitle('Commands List');

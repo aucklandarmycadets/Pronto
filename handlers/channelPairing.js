@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 
 const { ids: { adjPlus }, emojis: { successEmoji }, colours } = require('../config');
 const { cmds: { purge } } = require('../cmds');
-const { pCmd, dtg, sendMsg, debugError, purgeChannel } = require('../modules');
+const { pCmd, dtg, sendMsg, debugError, successReact, purgeChannel } = require('../modules');
 const pairs = require('../channelPairs');
 
 module.exports = (oldState, newState) => {
@@ -63,8 +63,7 @@ module.exports = (oldState, newState) => {
 							.setDescription(`Click on the ${successEmojiObj} reaction to purge this channel.`);
 						sendMsg(textChannel, purgeEmbed)
 							.then(msg => {
-								msg.react(successEmojiObj)
-									.catch(error => debugError(error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
+								successReact(msg);
 
 								const filter = (reaction) => reaction.emoji.name === successEmoji;
 

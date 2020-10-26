@@ -1,8 +1,8 @@
 'use strict';
 
-const { emojis: { errorEmoji }, colours } = require('../config');
+const { colours } = require('../config');
 const { cmds: { purge } } = require('../cmds');
-const { cmdError, debugError, embedScaffold } = require('../modules');
+const { cmdError, debugError, errorReact, embedScaffold } = require('../modules');
 
 module.exports = purge;
 module.exports.execute = (msg, args) => {
@@ -44,11 +44,7 @@ module.exports.execute = (msg, args) => {
 
 			msg.channel.bulkDelete(messages)
 				.catch(error => {
-					const errorEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === errorEmoji);
-
-					msg.react(errorEmojiObj)
-						.catch(reactError => debugError(reactError, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
-
+					errorReact(msg);
 					embedScaffold(msg.channel, `${msg.author} Error purging ${purgeCount} messages.`, colours.error, 'msg');
 					debugError(error, `Error purging ${purgeCount} messages in ${msg.channel}.`);
 				});
