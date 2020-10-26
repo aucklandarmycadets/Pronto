@@ -1,8 +1,6 @@
 'use strict';
 
-const config = require('./config');
-const { ids: { devID, tacticalID, classroomID, nonCadet, tacPlus, sgtPlus, cqmsPlus, adjPlus } } = config;
-const { config: { prefix: pref } } = config;
+const { config: { prefix }, ids } = require('./config');
 const { pCmd, rolesOutput } = require('./modules');
 
 const cmds = {
@@ -103,7 +101,7 @@ const cmds = {
 		desc: 'Submit a leave request.',
 		allowDM: false,
 		roles: [],
-		noRoles: nonCadet,
+		noRoles: ids.nonCadet,
 		devOnly: false,
 		get help() {
 			delete this.help;
@@ -121,7 +119,7 @@ const cmds = {
 		aliases: ['lv4'],
 		desc: 'Submit a leave request for another cadet.',
 		allowDM: false,
-		roles: tacPlus,
+		roles: ids.tacPlus,
 		noRoles: [],
 		devOnly: false,
 		get help() {
@@ -130,7 +128,7 @@ const cmds = {
 				'Aliases': pAls(this),
 				'Description': this.desc,
 				'Usage': `${pCmd(this)} <user> <dates> <activity> <reason> [additional remarks]`,
-				'Example': `${pCmd(this)} <@${devID}> 01 Jan for Parade Night due to an appointment`,
+				'Example': `${pCmd(this)} <@${ids.devID}> 01 Jan for Parade Night due to an appointment`,
 				'Allowed Roles': rolesOutput(this.roles),
 			});
 		},
@@ -141,7 +139,7 @@ const cmds = {
 		aliases: ['att', 'attdnce'],
 		desc: 'Submit an attendance register.',
 		allowDM: false,
-		roles: tacPlus,
+		roles: ids.tacPlus,
 		noRoles: [],
 		devOnly: false,
 		get help() {
@@ -160,7 +158,7 @@ const cmds = {
 		aliases: ['cnnct', 'cnnctd'],
 		desc: 'List the members connected to a voice channel.',
 		allowDM: false,
-		roles: sgtPlus,
+		roles: ids.sgtPlus,
 		noRoles: [],
 		devOnly: false,
 		get help() {
@@ -169,7 +167,7 @@ const cmds = {
 				'Aliases': pAls(this),
 				'Description': this.desc,
 				'Usage': `${pCmd(this)} <voice channel>`,
-				'Example': `${pCmd(this)} <#${classroomID}>`,
+				'Example': `${pCmd(this)} <#${ids.classroomID}>`,
 				'Allowed Roles': rolesOutput(this.roles),
 			});
 		},
@@ -180,7 +178,7 @@ const cmds = {
 		aliases: ['archv'],
 		desc: 'Archive a text channel.',
 		allowDM: false,
-		roles: cqmsPlus,
+		roles: ids.cqmsPlus,
 		noRoles: [],
 		devOnly: false,
 		get help() {
@@ -189,7 +187,7 @@ const cmds = {
 				'Aliases': pAls(this),
 				'Description': this.desc,
 				'Usage': `${pCmd(this)} <text channel>`,
-				'Example': `${pCmd(this)} <#${tacticalID}>`,
+				'Example': `${pCmd(this)} <#${ids.tacticalID}>`,
 				'Allowed Roles': rolesOutput(this.roles),
 			});
 		},
@@ -200,7 +198,7 @@ const cmds = {
 		aliases: ['del', 'delete', 'clear'],
 		desc: 'Delete a number of messages from a channel.',
 		allowDM: false,
-		roles: adjPlus,
+		roles: ids.adjPlus,
 		noRoles: [],
 		devOnly: false,
 		get help() {
@@ -209,7 +207,7 @@ const cmds = {
 				'Aliases': pAls(this),
 				'Description': this.desc,
 				'Usage': `${pCmd(this)} <count> [user]`,
-				'Examples': `\n${pCmd(this)} 10\n${pCmd(this)} 5 <@${devID}>`,
+				'Examples': `\n${pCmd(this)} 10\n${pCmd(this)} 5 <@${ids.devID}>`,
 				'Allowed Roles': rolesOutput(this.roles),
 			});
 		},
@@ -225,7 +223,7 @@ const cmdsList = {
 	},
 	cdt: {
 		type: 'noRole',
-		ids: nonCadet,
+		ids: ids.nonCadet,
 		get cmds() {
 			delete this.cmds;
 			return this.cmds = cmdsList.all.cmds + '\n' + commandText(this.ids, this.type);
@@ -233,7 +231,7 @@ const cmdsList = {
 	},
 	tac: {
 		type: 'role',
-		ids: tacPlus,
+		ids: ids.tacPlus,
 		get cmds() {
 			delete this.cmds;
 			return this.cmds = cmdsList.cdt.cmds + '\n' + commandText(this.ids, this.type);
@@ -241,7 +239,7 @@ const cmdsList = {
 	},
 	sgt: {
 		type: 'role',
-		ids: sgtPlus,
+		ids: ids.sgtPlus,
 		get cmds() {
 			delete this.cmds;
 			return this.cmds = cmdsList.tac.cmds + '\n' + commandText(this.ids, this.type);
@@ -249,7 +247,7 @@ const cmdsList = {
 	},
 	cqms: {
 		type: 'role',
-		ids: cqmsPlus,
+		ids: ids.cqmsPlus,
 		get cmds() {
 			delete this.cmds;
 			return this.cmds = cmdsList.sgt.cmds + '\n' + commandText(this.ids, this.type);
@@ -257,7 +255,7 @@ const cmdsList = {
 	},
 	adj: {
 		type: 'role',
-		ids: adjPlus,
+		ids: ids.adjPlus,
 		get cmds() {
 			delete this.cmds;
 			return this.cmds = cmdsList.cqms.cmds + '\n' + commandText(this.ids, this.type);
@@ -265,7 +263,7 @@ const cmdsList = {
 	},
 	dev: {
 		type: 'dev',
-		ids: devID,
+		ids: ids.devID,
 		get cmds() {
 			delete this.cmds;
 			return this.cmds = cmdsList.adj.cmds + '\n' + commandText(this.ids, this.type);
@@ -315,7 +313,7 @@ function errorText(helpTxt, cmd) {
 
 function pAls(cmd) {
 	const als = [...cmd.aliases];
-	for (let i = 0; i < als.length; i++) als[i] = `${pref}${als[i]}`;
+	for (let i = 0; i < als.length; i++) als[i] = `${prefix}${als[i]}`;
 	return als.join(', ');
 }
 
