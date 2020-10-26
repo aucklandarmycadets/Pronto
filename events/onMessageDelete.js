@@ -3,7 +3,7 @@
 const Discord = require('discord.js');
 
 const { config: { prefix }, ids: { logID }, colours } = require('../config');
-const { cmds: { purge } } = require('../cmds');
+const { cmds: { help, attendance, purge } } = require('../cmds');
 const { charLimit, dtg, sendMsg, debugError } = require('../modules');
 
 module.exports = {
@@ -74,8 +74,7 @@ module.exports = {
 	},
 };
 
-const cmdCheck = msg => {
-	const { cmds: { attendance, help } } = require('../cmds');
+function cmdCheck(msg) {
 	const autoDelCmds = [attendance, help, purge];
 
 	const args = msg.content.split(/ +/);
@@ -84,4 +83,4 @@ const cmdCheck = msg => {
 	if (autoDelCmds.some(cmd => cmd.cmd === msgCmd || cmd.aliases.includes(msgCmd))) return true;
 
 	return false;
-};
+}
