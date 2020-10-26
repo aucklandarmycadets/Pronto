@@ -9,7 +9,7 @@ module.exports = {
 	execute(event, info) {
 		const errorEvents = ['error', 'unhandledRejection', 'uncaughtExceptionMonitor'];
 
-		console.log(`${capitalise(event)}: `, info);
+		console.error(`${capitalise(event)}: \n${info}`);
 		if (errorEvents.includes(event)) return embedScaffold(null, 'An unknown error has occured!', colours.error, 'debug', null, null, `\`\`\`js\n${info.stack}\`\`\``);
 	},
 };
