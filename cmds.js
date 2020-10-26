@@ -5,52 +5,6 @@ const { ids: { devID, tacticalID, classroomID, nonCadet, tacPlus, sgtPlus, cqmsP
 const { config: { prefix: pref } } = config;
 const { pCmd, rolesOutput } = require('./modules');
 
-const commandText = (tier, type) => {
-	const object = {};
-
-	for (const cmd of Object.values(cmds)) {
-		if (!type) {
-			object[`${pCmd(cmds.help)}`] = cmds.help.desc.unqualified;
-			object[`${pCmd(cmds.help)} [command]`] = cmds.help.desc.qualified;
-			continue;
-		}
-
-		else if ((type === 'role' && cmd.roles === tier)
-			|| (type === 'noRole' && cmd.noRoles === tier)
-			|| (type === 'dev' && cmd.devOnly)) {
-			object[`${pCmd(cmd)}`] = cmd.desc;
-		}
-	}
-
-	return helpText(object, true);
-};
-
-const helpText = (object, forList) => {
-	let helpString = '';
-
-	const [startFormat, endFormat] = (forList)
-		? ['`', '` - ']
-		: ['**', ':** '];
-
-	for (const [property, value] of Object.entries(object)) {
-		helpString += `${startFormat}${property}${endFormat}${value}\n`;
-	}
-
-	return helpString.slice(0, helpString.length - 2);
-};
-
-const errorText = (helpTxt, cmd) => {
-	return '\n\n' + helpTxt + '\n' + helpText({
-		'Help Command': `${pCmd(cmds.help)} ${cmd}`,
-	});
-};
-
-const pAls = cmd => {
-	const als = [...cmd.aliases];
-	for (let i = 0; i < als.length; i++) als[i] = `${pref}${als[i]}`;
-	return als.join(', ');
-};
-
 const cmds = {
 	ping: {
 		cmd: 'ping',
@@ -318,6 +272,52 @@ const cmdsList = {
 		},
 	},
 };
+
+function commandText(tier, type) {
+	const object = {};
+
+	for (const cmd of Object.values(cmds)) {
+		if (!type) {
+			object[`${pCmd(cmds.help)}`] = cmds.help.desc.unqualified;
+			object[`${pCmd(cmds.help)} [command]`] = cmds.help.desc.qualified;
+			continue;
+		}
+
+		else if ((type === 'role' && cmd.roles === tier)
+			|| (type === 'noRole' && cmd.noRoles === tier)
+			|| (type === 'dev' && cmd.devOnly)) {
+			object[`${pCmd(cmd)}`] = cmd.desc;
+		}
+	}
+
+	return helpText(object, true);
+}
+
+function helpText(object, forList) {
+	let helpString = '';
+
+	const [startFormat, endFormat] = (forList)
+		? ['`', '` - ']
+		: ['**', ':** '];
+
+	for (const [property, value] of Object.entries(object)) {
+		helpString += `${startFormat}${property}${endFormat}${value}\n`;
+	}
+
+	return helpString.slice(0, helpString.length - 2);
+}
+
+function errorText(helpTxt, cmd) {
+	return '\n\n' + helpTxt + '\n' + helpText({
+		'Help Command': `${pCmd(cmds.help)} ${cmd}`,
+	});
+}
+
+function pAls(cmd) {
+	const als = [...cmd.aliases];
+	for (let i = 0; i < als.length; i++) als[i] = `${pref}${als[i]}`;
+	return als.join(', ');
+}
 
 module.exports = {
 	cmds: cmds,

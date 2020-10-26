@@ -20,7 +20,21 @@ module.exports.execute = async (msg, args) => {
 
 	const code = args.join(' ');
 
-	const msgSplit = (str, char) => {
+	try {
+		const embed = new Discord.MessageEmbed();
+
+		let evaled = await eval(code);
+
+		if (typeof evaled !== 'string') evaled = require('util').inspect(evaled);
+
+		(code.includes('embed'))
+			? sendMsg(msg.channel, embed)
+			: msgSplit(evaled, '},');
+	}
+
+	catch (error) { msgSplit(error.stack, ')'); }
+
+	function msgSplit(str, char) {
 		const lim = Math.ceil(str.length / 1990);
 
 		for (let i = 0; i < lim; i++) {
@@ -40,19 +54,5 @@ module.exports.execute = async (msg, args) => {
 
 			str = str.slice(breakAt, str.length);
 		}
-	};
-
-	try {
-		const embed = new Discord.MessageEmbed();
-
-		let evaled = await eval(code);
-
-		if (typeof evaled !== 'string') evaled = require('util').inspect(evaled);
-
-		(code.includes('embed'))
-			? sendMsg(msg.channel, embed)
-			: msgSplit(evaled, '},');
 	}
-
-	catch (error) { msgSplit(error.stack, ')'); }
 };
