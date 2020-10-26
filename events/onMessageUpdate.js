@@ -19,9 +19,7 @@ module.exports = {
 		if (oldMessage.partial) {
 			newMessage = await newMessage.fetch();
 
-			const msgAuthor = newMessage.author;
-
-			logEmbed.setAuthor(msgAuthor.tag, msgAuthor.displayAvatarURL());
+			logEmbed.setAuthor(newMessage.author.tag, newMessage.author.displayAvatarURL());
 			logEmbed.setDescription(`**Uncached message edited in ${newMessage.channel}** [Jump to Message](${newMessage.url})`);
 			logEmbed.addField('After', charLimit(newMessage.content, 1024));
 			logEmbed.setFooter(`ID: ${newMessage.id} | ${dtg()}`);
@@ -30,13 +28,11 @@ module.exports = {
 		else {
 			if (oldMessage.content === newMessage.content || newMessage.author.bot || !newMessage.guild) return;
 
-			const msgAuthor = newMessage.author;
-
-			logEmbed.setAuthor(msgAuthor.tag, msgAuthor.displayAvatarURL());
+			logEmbed.setAuthor(newMessage.author.tag, newMessage.author.displayAvatarURL());
 			logEmbed.setDescription(`**Message edited in ${newMessage.channel}** [Jump to Message](${newMessage.url})`);
 			logEmbed.addField('Before', charLimit(oldMessage.content, 1024));
 			logEmbed.addField('After', charLimit(newMessage.content, 1024));
-			logEmbed.setFooter(`Author: ${msgAuthor.id} | Message: ${newMessage.id} | ${dtg()}`);
+			logEmbed.setFooter(`Author: ${newMessage.author.id} | Message: ${newMessage.id} | ${dtg()}`);
 		}
 
 		commandHandler(newMessage);
