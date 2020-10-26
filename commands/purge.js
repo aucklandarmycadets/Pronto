@@ -32,7 +32,7 @@ module.exports.execute = (msg, args) => {
 	catch (error) { return cmdError(msg, error, purge.error); }
 
 	msg.channel.messages.fetch({ limit: 100, before: msg.id })
-		.then((messages) => {
+		.then(messages => {
 			if (user) {
 				const filterBy = user.id;
 				messages = messages.filter(message => message.author.id === filterBy).array().slice(0, purgeCount);
