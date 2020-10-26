@@ -167,7 +167,7 @@ const cmds = {
 				'Aliases': pAls(this),
 				'Description': this.desc,
 				'Usage': `${pCmd(this)} <voice channel>`,
-				'Example': `${pCmd(this)} <#${ids.classroomID}>`,
+				'Example': `${pCmd(this)} <#${ids.exampleVoiceID}>`,
 				'Allowed Roles': rolesOutput(this.roles),
 			});
 		},
@@ -187,7 +187,7 @@ const cmds = {
 				'Aliases': pAls(this),
 				'Description': this.desc,
 				'Usage': `${pCmd(this)} <text channel>`,
-				'Example': `${pCmd(this)} <#${ids.tacticalID}>`,
+				'Example': `${pCmd(this)} <#${ids.exampleTextID}>`,
 				'Allowed Roles': rolesOutput(this.roles),
 			});
 		},
