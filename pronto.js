@@ -2,6 +2,7 @@
 
 require('dotenv').config();
 const Discord = require('discord.js');
+const version = '3.3.0';
 const bot = new Discord.Client({ partials: ['MESSAGE'] });
 
 bot.commands = new Discord.Collection();
@@ -12,7 +13,6 @@ Object.keys(botCommands).map(key => {
 });
 
 const TOKEN = process.env.TOKEN;
-const version = '3.2.4';
 
 bot.login(TOKEN)
 	.then(() => module.exports = {
