@@ -1,6 +1,6 @@
 const { ids: { serverID, devID }, colours } = require('../config');
 const { cmds: { help } } = require('../cmds');
-const { init, checkBotPermissions, pCmd, embedScaffold } = require('../modules');
+const { init, verifyBotPermissions, pCmd, embedScaffold } = require('../modules');
 
 module.exports = {
 	events: ['ready'],
@@ -19,6 +19,6 @@ module.exports = {
 
 		bot.user.setActivity(`the radio net | ${pCmd(help)}`, { type: 'LISTENING' });
 
-		checkBotPermissions();
+		verifyBotPermissions();
 	},
 };

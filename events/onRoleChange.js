@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 
 const { ids: { logID }, colours } = require('../config');
-const { permissionsUpdate, checkBotPermissions, dtg, sendMsg } = require('../modules');
+const { updatedPermissions, verifyBotPermissions, dtg, sendMsg } = require('../modules');
 
 module.exports = {
 	events: ['roleUpdate'],
@@ -31,7 +31,7 @@ module.exports = {
 			logEmbed.setDescription(`**Role permissions ${newRole} changed**`);
 
 			const oldPerms = oldRole.permissions.toArray();
-			const changedPerms = permissionsUpdate(newRole, oldRole);
+			const changedPerms = updatedPermissions(newRole, oldRole);
 
 			const removedPerms = [];
 			const addedPerms = [];
@@ -48,7 +48,7 @@ module.exports = {
 
 			const botRoles = newRole.guild.me.roles.cache;
 
-			if (botRoles.some(role => role.id === newRole.id)) checkBotPermissions(changedPerms);
+			if (botRoles.some(role => role.id === newRole.id)) verifyBotPermissions(changedPerms);
 		}
 
 		else return;
