@@ -64,14 +64,14 @@ A Discord bot developed for the City of Auckland Cadet Unit.
 2. Install required packages by running `$ npm install` in the repository's folder
 3. Open `config.js` and change the IDs:
 ```js
-const config = {
+exports.config = {
 	prefix: '!',
 	permsInt: 1879141584,
 	dateOutput: 'HHMM "h" ddd, dd mmm yy',
 	prontoLogo: 'https://i.imgur.com/EzmJVyV.png',
 };
 
-const ids = {
+exports.ids = {
 	serverID: '748336465465049230',
 	devID: '192181901065322496',
 	debugID: '758217147187986432',
@@ -92,12 +92,12 @@ const ids = {
 	adjPlus: ['748338095446949908', '748337933194625104', '748346409853517896'],
 };
 
-const emojis = {
-	successEmoji: 'success',
-	errorEmoji: 'error',
+exports.emojis = {
+	success: 'success',
+	error: 'error',
 };
 
-const colours = {
+exports.colours = {
 	default: 0x1b1b1b,
 	pronto: 0xffd456,
 	leave: 0xd31145,
