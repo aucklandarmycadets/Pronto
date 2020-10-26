@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 
 const { config: { prontoLogo }, ids: { serverID, devID, adjPlus }, colours } = require('../config');
 const { cmds: { help }, cmdsList } = require('../cmds');
-const { pCmd, cmdPermsCheck, getRoleError, sendMsg, sendDM, debugError, dmCmdError, embedScaffold, errorReact, successReact } = require('../modules');
+const { pCmd, cmdPermsCheck, getRoleError, sendMsg, sendDM, delMsg, dmCmdError, embedScaffold, errorReact, successReact } = require('../modules');
 
 module.exports = help;
 module.exports.execute = (msg, args) => {
@@ -27,7 +27,7 @@ module.exports.execute = (msg, args) => {
 
 	if (!memberRoles) return getRoleError(msg);
 
-	if (msg.guild) msg.delete().catch(error => debugError(error, `Error deleting message in ${msg.channel}.`, 'Message', msg.content));
+	if (msg.guild) delMsg(msg);
 
 	const cmd = bot.commands.get(msgCmd) || bot.commands.find(command => command.aliases && command.aliases.includes(msgCmd));
 

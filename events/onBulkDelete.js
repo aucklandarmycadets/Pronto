@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 
 const { ids: { logID }, colours } = require('../config');
 const { cmds: { purge } } = require('../cmds');
-const { dtg, sendMsg, debugError } = require('../modules');
+const { dtg, sendMsg, delMsg } = require('../modules');
 
 module.exports = {
 	events: ['messageDeleteBulk'],
@@ -15,20 +15,20 @@ module.exports = {
 		const log = bot.channels.cache.get(logID);
 		const msg = msgs.first();
 		const deleteCount = msgs.array().length;
-		const lastMessage = msg.channel.lastMessage;
+		const lastMsg = msg.channel.lastMessage;
 
 		const logEmbed = new Discord.MessageEmbed();
 
-		if (!lastMessage) {
+		if (!lastMsg) {
 			logEmbed.setAuthor(msg.guild.name, msg.guild.iconURL());
 			logEmbed.setDescription(`**${deleteCount} messages bulk deleted in ${msg.channel}**`);
 		}
 
-		else if (lastMessage.content.includes(purge.cmd) || purge.aliases.some(alias => lastMessage.content.includes(alias))) {
-			lastMessage.delete().catch(error => debugError(error, `Error deleting message in ${msg.channel}.`, 'Message', lastMessage.content));
+		else if (lastMsg.content.includes(purge.cmd) || purge.aliases.some(alias => lastMsg.content.includes(alias))) {
+			delMsg(lastMsg);
 
-			logEmbed.setAuthor(lastMessage.author.tag, lastMessage	.author.displayAvatarURL());
-			logEmbed.setDescription(`**${deleteCount} messages bulk deleted by ${lastMessage.author} in ${msg.channel}**`);
+			logEmbed.setAuthor(lastMsg.author.tag, lastMsg	.author.displayAvatarURL());
+			logEmbed.setDescription(`**${deleteCount} messages bulk deleted by ${lastMsg.author} in ${msg.channel}**`);
 		}
 
 		logEmbed.setColor(colours.error);

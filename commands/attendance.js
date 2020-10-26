@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 
 const { ids: { attendanceID, formations }, emojis, colours } = require('../config');
 const { cmds: { attendance } } = require('../cmds');
-const { dtg, cmdError, sendMsg, sendDM, debugError, errorReact, embedScaffold, successReact } = require('../modules');
+const { dtg, cmdError, sendMsg, sendDM, delMsg, debugError, errorReact, embedScaffold, successReact } = require('../modules');
 
 module.exports = attendance;
 module.exports.execute = async (msg, args) => {
@@ -22,7 +22,7 @@ module.exports.execute = async (msg, args) => {
 		return cmdError(msg, 'You must enter a message.', attendance.error);
 	}
 
-	msg.delete().catch(error => debugError(error, `Error deleting message in ${msg.channel}.`, 'Message', msg.content));
+	delMsg(msg);
 
 	let formationColour = colours.default;
 	let formationName = msg.guild.name;
@@ -139,7 +139,7 @@ module.exports.execute = async (msg, args) => {
 					}
 
 					if (reason === 'time') {
-						dm.delete().catch(error => debugError(error, 'Error deleting message in DMs.'));
+						delMsg(dm);
 
 						const timeEmbed = new Discord.MessageEmbed()
 							.setColor(colours.error)
