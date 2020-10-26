@@ -65,7 +65,7 @@ module.exports = (oldState, newState) => {
 							.then(msg => {
 								successReact(msg);
 
-								const filter = (reaction) => reaction.emoji.name === emojis.success;
+								const filter = reaction => reaction.emoji.name === emojis.success;
 
 								const collector = msg.createReactionCollector(filter, { dispose: true });
 
