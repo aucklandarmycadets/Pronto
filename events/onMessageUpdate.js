@@ -2,8 +2,9 @@
 
 const Discord = require('discord.js');
 
-const { config: { prefix }, ids: { logID }, colours } = require('../config');
+const { ids: { logID }, colours } = require('../config');
 const { charLimit, dtg, sendMsg } = require('../modules');
+const { commandHandler } = require('../handlers');
 
 module.exports = {
 	events: ['messageUpdate'],
@@ -38,8 +39,7 @@ module.exports = {
 			logEmbed.setFooter(`Author: ${msgAuthor.id} | Message: ${newMessage.id} | ${dtg()}`);
 		}
 
-		if (newMessage.content.startsWith(prefix)) bot.emit('message', newMessage);
-
+		commandHandler(newMessage);
 		sendMsg(log, logEmbed);
 	},
 };
