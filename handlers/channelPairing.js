@@ -2,7 +2,7 @@
 
 const Discord = require('discord.js');
 
-const { ids: { adjPlus }, emojis: { successEmoji }, colours } = require('../config');
+const { ids: { adjPlus }, emojis, colours } = require('../config');
 const { cmds: { purge } } = require('../cmds');
 const { pCmd, dtg, sendMsg, debugError, successReact, purgeChannel } = require('../modules');
 const pairs = require('../channelPairs');
@@ -55,17 +55,17 @@ module.exports = (oldState, newState) => {
 					sendMsg(textChannel, leaveEmbed);
 
 					if (oldState.channel.members.size === 0) {
-						const successEmojiObj = newState.guild.emojis.cache.find(emoji => emoji.name === successEmoji);
+						const successEmoji = newState.guild.emojis.cache.find(emoji => emoji.name === emojis.success);
 
 						const purgeEmbed = new Discord.MessageEmbed()
 							.setTitle('Purge Text Channel')
 							.setColor(colours.success)
-							.setDescription(`Click on the ${successEmojiObj} reaction to purge this channel.`);
+							.setDescription(`Click on the ${successEmoji} reaction to purge this channel.`);
 						sendMsg(textChannel, purgeEmbed)
 							.then(msg => {
 								successReact(msg);
 
-								const filter = (reaction) => reaction.emoji.name === successEmoji;
+								const filter = (reaction) => reaction.emoji.name === emojis.success;
 
 								const collector = msg.createReactionCollector(filter, { dispose: true });
 
