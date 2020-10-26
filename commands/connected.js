@@ -1,14 +1,15 @@
+'use strict';
+
 const Discord = require('discord.js');
 
-const { ids: { attendanceID }, emojis: { successEmoji }, colours } = require('../config');
+const { ids: { attendanceID }, colours } = require('../config');
 const { cmds: { connected } } = require('../cmds');
-const { dtg, cmdError, sendMsg, debugError } = require('../modules');
+const { cmdError, dtg, sendMsg, successReact } = require('../modules');
 
 module.exports = connected;
 module.exports.execute = msg => {
-	'use strict';
-
 	const { bot } = require('../pronto');
+
 	const channelMentions = msg.mentions.channels;
 	const numChannelMentions = channelMentions.size;
 	const channel = channelMentions.first();
@@ -25,7 +26,6 @@ module.exports.execute = msg => {
 
 	const connectedMembers = [];
 	const attendanceChannel = bot.channels.cache.get(attendanceID);
-	const successEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === successEmoji);
 
 	for (const member of Object.values(channel.members.array())) {
 		connectedMembers.push(member.toString());
@@ -33,7 +33,7 @@ module.exports.execute = msg => {
 
 	if (connectedMembers.length === 0) return cmdError(msg, `There are no members connected to ${channel}.`, connected.error, 'Note: Use the <#channelID> syntax!');
 
-	msg.react(successEmojiObj).catch(error => debugError(error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
+	successReact(msg);
 
 	const connectedEmbed = new Discord.MessageEmbed()
 		.setTitle(`Members Connected to #${channel.name}`)

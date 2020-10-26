@@ -1,16 +1,5 @@
-module.exports = {
-	devInfo: require('./devInfo'),
-	exit: require('./exit'),
-	onBulkDelete: require('./onBulkDelete'),
-	onMemberAdd: require('./onMemberAdd'),
-	onMemberBan: require('./onMemberBan'),
-	onMemberRemove: require('./onMemberRemove'),
-	onMemberUpdate: require('./onMemberUpdate'),
-	onMessage: require('./onMessage'),
-	onMessageDelete: require('./onMessageDelete'),
-	onMessageUpdate: require('./onMessageUpdate'),
-	onReady: require('./onReady'),
-	onRoleChange: require('./onRoleChange'),
-	onRoleUpdate: require('./onRoleUpdate'),
-	onVoiceUpdate: require('./onVoiceUpdate'),
-};
+'use strict';
+
+const indexProc = require('../modules/indexProc');
+
+module.exports = indexProc('./events');

@@ -1,14 +1,15 @@
+'use strict';
+
 const Discord = require('discord.js');
 
-const { ids: { logID, archivedID }, emojis: { successEmoji, errorEmoji }, colours } = require('../config');
+const { ids: { logID, archivedID }, colours } = require('../config');
 const { cmds: { archive } } = require('../cmds');
-const { dtg, cmdError, sendMsg, debugError, embedScaffold } = require('../modules');
+const { cmdError, debugError, dtg, embedScaffold, errorReact, sendMsg, successReact } = require('../modules');
 
 module.exports = archive;
 module.exports.execute = msg => {
-	'use strict';
-
 	const { bot } = require('../pronto');
+
 	const channelMentions = msg.mentions.channels;
 	const numChannelMentions = channelMentions.size;
 	const channel = channelMentions.first();
@@ -29,9 +30,7 @@ module.exports.execute = msg => {
 
 	channel.setParent(archivedID, { lockPermissions: true })
 		.then(() => {
-			const successEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === successEmoji);
-
-			msg.react(successEmojiObj).catch(error => debugError(error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
+			successReact(msg);
 
 			const archiveEmbed = new Discord.MessageEmbed()
 				.setTitle('Channel Archived 🔒')
@@ -48,8 +47,7 @@ module.exports.execute = msg => {
 			sendMsg(log, logEmbed);
 		})
 		.catch(error => {
-			const errorEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === errorEmoji);
-			msg.react(errorEmojiObj).catch(reactError => debugError(reactError, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
+			errorReact(msg);
 			embedScaffold(msg.channel, `${msg.author} Error archiving ${channel}.`, colours.error, 'msg');
 			debugError(error, `Error archiving ${channel}.`);
 		});

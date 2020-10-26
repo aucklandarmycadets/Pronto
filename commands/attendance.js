@@ -1,14 +1,15 @@
+'use strict';
+
 const Discord = require('discord.js');
 
-const { ids: { attendanceID, formations }, emojis: { successEmoji, errorEmoji }, colours } = require('../config');
+const { ids: { attendanceID, formations }, emojis, colours } = require('../config');
 const { cmds: { attendance } } = require('../cmds');
-const { dtg, cmdError, sendMsg, dmError, debugError, embedScaffold } = require('../modules');
+const { cmdError, debugError, delMsg, dtg, embedScaffold, errorReact, sendDM, sendMsg, successReact } = require('../modules');
 
 module.exports = attendance;
 module.exports.execute = async (msg, args) => {
-	'use strict';
-
 	const { bot } = require('../pronto');
+
 	const memberRoles = msg.member.roles.cache;
 
 	try {
@@ -21,7 +22,7 @@ module.exports.execute = async (msg, args) => {
 		return cmdError(msg, 'You must enter a message.', attendance.error);
 	}
 
-	msg.delete().catch(error => debugError(error, `Error deleting message in ${msg.channel}.`, 'Message', msg.content));
+	delMsg(msg);
 
 	let formationColour = colours.default;
 	let formationName = msg.guild.name;
@@ -32,9 +33,6 @@ module.exports.execute = async (msg, args) => {
 			formationName = role.name;
 		}
 	}
-
-	const successEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === successEmoji);
-	const errorEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === errorEmoji);
 
 	if (args[0].toLowerCase() === 'update') {
 		args.splice(0, 1);
@@ -77,13 +75,12 @@ module.exports.execute = async (msg, args) => {
 
 		if (chnlMsg) attendanceEmbed.setAuthor(`${formationName} (Update)`, msg.guild.iconURL());
 
-		msg.author.send(attendanceEmbed)
-			.then(dm => {
-				dm.react(successEmojiObj)
-					.then(() => dm.react(errorEmojiObj))
-					.catch(error => debugError(error, 'Error reacting to message in DMs.'));
+		sendDM(msg.author, attendanceEmbed)
+			.then(async dm => {
+				await successReact(dm);
+				await errorReact(dm);
 
-				const filter = (reaction) => reaction.emoji.name === successEmoji || reaction.emoji.name === errorEmoji;
+				const filter = reaction => reaction.emoji.name === emojis.success || reaction.emoji.name === emojis.error;
 
 				const collector = dm.createReactionCollector(filter, { dispose: true });
 
@@ -95,7 +92,7 @@ module.exports.execute = async (msg, args) => {
 							.setDescription('**Cancelled.**')
 							.setFooter(dtg());
 
-						if (reaction.emoji.name === successEmoji) {
+						if (reaction.emoji.name === emojis.success) {
 							confirmEmbed.setColor(colours.success);
 							confirmEmbed.setDescription('**Confirmed.**');
 
@@ -106,7 +103,7 @@ module.exports.execute = async (msg, args) => {
 
 								const formationDisplay = (msg.guild.roles.cache.find(role => role.name === formationName))
 									? (msg.guild.roles.cache.find(role => role.name === formationName))
-									: `**${formationName}**`
+									: `**${formationName}**`;
 
 								embedScaffold(msg.channel, `${msg.author} Successfully updated attendance for ${formationDisplay}.`, colours.success, 'msg');
 
@@ -142,16 +139,15 @@ module.exports.execute = async (msg, args) => {
 					}
 
 					if (reason === 'time') {
-						dm.delete().catch(error => debugError(error, 'Error deleting message in DMs.'));
+						delMsg(dm);
 
 						const timeEmbed = new Discord.MessageEmbed()
 							.setColor(colours.error)
 							.setAuthor(bot.user.tag, bot.user.avatarURL())
 							.setDescription('Timed out. Please action the command again.');
-						sendMsg(msg.author, timeEmbed, true);
+						sendDM(msg.author, timeEmbed, true);
 					}
 				});
-			})
-			.catch(error => dmError(msg, error));
+			});
 	}
 };

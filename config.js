@@ -1,13 +1,13 @@
 'use strict';
 
-const config = {
+exports.config = {
 	prefix: '!',
 	permsInt: 1879141584,
 	dateOutput: 'HHMM "h" ddd, dd mmm yy',
 	prontoLogo: 'https://i.imgur.com/EzmJVyV.png',
 };
 
-const ids = {
+exports.ids = {
 	serverID: '748336465465049230',
 	devID: '192181901065322496',
 	debugID: '758217147187986432',
@@ -28,23 +28,16 @@ const ids = {
 	adjPlus: ['748338095446949908', '748337933194625104', '748346409853517896'],
 };
 
-const emojis = {
-	successEmoji: 'success',
-	errorEmoji: 'error',
+exports.emojis = {
+	success: 'success',
+	error: 'error',
 };
 
-const colours = {
+exports.colours = {
 	default: 0x1b1b1b,
 	pronto: 0xffd456,
 	leave: 0xd31145,
 	success: 0x45bb8a,
 	warn: 0xffcc4d,
 	error: 0xef4949,
-};
-
-module.exports = {
-	config: config,
-	ids: ids,
-	emojis: emojis,
-	colours: colours,
 };

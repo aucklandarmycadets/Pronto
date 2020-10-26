@@ -1,3 +1,5 @@
+'use strict';
+
 const Discord = require('discord.js');
 
 const { colours } = require('../config');
@@ -6,8 +8,6 @@ const { dtg, formatAge, sendMsg } = require('../modules');
 
 module.exports = uptime;
 module.exports.execute = msg => {
-	'use strict';
-
 	const { bot, version } = require('../pronto');
 
 	const uptimeEmbed = new Discord.MessageEmbed()

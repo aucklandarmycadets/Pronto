@@ -61,3 +61,6 @@ typings/
 .next
 devConstObj.js
 .eslintrc.json
+execProcess.js
+updateVersion.js
+updateVersion.sh

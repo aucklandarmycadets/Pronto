@@ -1,22 +1,25 @@
+'use strict';
+
 const Discord = require('discord.js');
 
-const { config: { prefix }, ids: { logID }, colours } = require('../config');
+const { ids: { logID }, colours } = require('../config');
 const { charLimit, dtg, sendMsg } = require('../modules');
+const { commandHandler } = require('../handlers');
 
 module.exports = {
 	events: ['messageUpdate'],
 	process: [],
-	execute(event, oldMessage, newMessage) {
+	async execute(event, oldMessage, newMessage) {
 		const { bot } = require('../pronto');
 
 		const log = bot.channels.cache.get(logID);
 		const logEmbed = new Discord.MessageEmbed()
 			.setColor(colours.warn);
 
-		if (newMessage.content.startsWith(prefix)) bot.emit('message', newMessage);
-
 		if (oldMessage.partial) {
-			logEmbed.setAuthor(newMessage.guild.name, newMessage.guild.iconURL());
+			newMessage = await newMessage.fetch();
+
+			logEmbed.setAuthor(newMessage.author.tag, newMessage.author.displayAvatarURL());
 			logEmbed.setDescription(`**Uncached message edited in ${newMessage.channel}** [Jump to Message](${newMessage.url})`);
 			logEmbed.addField('After', charLimit(newMessage.content, 1024));
 			logEmbed.setFooter(`ID: ${newMessage.id} | ${dtg()}`);
@@ -25,15 +28,14 @@ module.exports = {
 		else {
 			if (oldMessage.content === newMessage.content || newMessage.author.bot || !newMessage.guild) return;
 
-			const messageAuthor = newMessage.author;
-
-			logEmbed.setAuthor(messageAuthor.tag, messageAuthor.displayAvatarURL());
+			logEmbed.setAuthor(newMessage.author.tag, newMessage.author.displayAvatarURL());
 			logEmbed.setDescription(`**Message edited in ${newMessage.channel}** [Jump to Message](${newMessage.url})`);
 			logEmbed.addField('Before', charLimit(oldMessage.content, 1024));
 			logEmbed.addField('After', charLimit(newMessage.content, 1024));
-			logEmbed.setFooter(`Author: ${messageAuthor.id} | Message: ${newMessage.id} | ${dtg()}`);
+			logEmbed.setFooter(`Author: ${newMessage.author.id} | Message: ${newMessage.id} | ${dtg()}`);
 		}
 
+		commandHandler(newMessage);
 		sendMsg(log, logEmbed);
 	},
 };

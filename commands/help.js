@@ -1,37 +1,33 @@
+'use strict';
+
 const Discord = require('discord.js');
 
-const config = require('../config');
-const { config: { prontoLogo }, ids: { serverID, devID, adjPlus } } = config;
-const { emojis: { successEmoji, errorEmoji }, colours } = config;
+const { config: { prontoLogo }, ids: { serverID, devID, adjPlus }, colours } = require('../config');
 const { cmds: { help }, cmdsList } = require('../cmds');
-const { pCmd, cmdPermsCheck, getRoleError, sendMsg, dmError, debugError, dmCmdError, embedScaffold } = require('../modules');
+const { cmdPermsCheck, delMsg, dmCmdError, embedScaffold, errorReact, getRoleError, pCmd, sendDM, sendMsg, successReact } = require('../modules');
 
 module.exports = help;
 module.exports.execute = (msg, args) => {
-	'use strict';
-
 	const { bot } = require('../pronto');
-	const messageAuthor = msg.author;
+
 	const server = bot.guilds.cache.get(serverID);
 	const helpEmbed = new Discord.MessageEmbed();
 	const msgCmd = args[0]
 		? args[0].toLowerCase()
 		: null;
 
+	if (!msg.guild && !server.available) {
+		errorReact(msg);
+		return embedScaffold(msg.author, 'There was an error reaching the server, please try again later.', colours.error, 'dm');
+	}
+
 	const memberRoles = (msg.guild)
 		? msg.member.roles.cache
-		: server.members.cache.get(messageAuthor.id).roles.cache;
+		: server.members.cache.get(msg.author.id).roles.cache;
 
 	if (!memberRoles) return getRoleError(msg);
 
-	if (!msg.guild && !server.available) {
-		const errorEmojiObj = server.emojis.cache.find(emoji => emoji.name === errorEmoji);
-		msg.react(errorEmojiObj).catch(error => debugError(error, 'Error reacting to message in DMs.'));
-
-		return embedScaffold(messageAuthor, 'There was an error reaching the server, please try again later.', colours.error, 'dm');
-	}
-
-	if (msg.guild) msg.delete().catch(error => debugError(error, `Error deleting message in ${msg.channel}.`, 'Message', msg.content));
+	if (msg.guild) delMsg(msg);
 
 	const cmd = bot.commands.get(msgCmd) || bot.commands.find(command => command.aliases && command.aliases.includes(msgCmd));
 
@@ -54,9 +50,8 @@ module.exports.execute = (msg, args) => {
 		}
 
 		else if (!helpEmbed.description.includes('Allowed Roles')) {
-			const successEmojiObj = server.emojis.cache.find(emoji => emoji.name === successEmoji);
-			msg.react(successEmojiObj).catch(error => debugError(error, 'Error reacting to message in DMs.'));
-			return messageAuthor.send(helpEmbed).catch(error => dmError(msg, error));
+			successReact(msg);
+			return sendDM(msg.author, helpEmbed);
 		}
 
 		else return dmCmdError(msg, 'hasRole');
@@ -81,7 +76,7 @@ module.exports.execute = (msg, args) => {
 			}
 
 			else if (values.type === 'dev') {
-				commandList = (messageAuthor.id === devID)
+				commandList = (msg.author.id === devID)
 					? values.cmds
 					: commandList;
 			}
@@ -90,13 +85,11 @@ module.exports.execute = (msg, args) => {
 		const james = bot.users.cache.get('192181901065322496');
 
 		if (!msg.guild && msgCmd) {
-			const errorEmojiObj = server.emojis.cache.find(emoji => emoji.name === errorEmoji);
-			msg.react(errorEmojiObj).catch(error => debugError(error, 'Error reacting to message in DMs.'));
+			errorReact(msg);
 		}
 
 		else if (!msg.guild) {
-			const successEmojiObj = server.emojis.cache.find(emoji => emoji.name === successEmoji);
-			msg.react(successEmojiObj).catch(error => debugError(error, 'Error reacting to message in DMs.'));
+			successReact(msg);
 		}
 
 		helpEmbed.setTitle('Commands List');
@@ -105,10 +98,10 @@ module.exports.execute = (msg, args) => {
 		helpEmbed.setDescription(commandList);
 		helpEmbed.setFooter(`Developed by ${james.tag}`, james.avatarURL());
 
-		if (!memberRoles.some(roles => adjPlus.includes(roles.id)) && messageAuthor.id !== devID) {
-			helpEmbed.addField('Note', `Only displaying commands available to ${messageAuthor}.`);
+		if (!memberRoles.some(roles => adjPlus.includes(roles.id)) && msg.author.id !== devID) {
+			helpEmbed.addField('Note', `Only displaying commands available to ${msg.author}.`);
 		}
 
-		messageAuthor.send(helpEmbed).catch(error => dmError(msg, error));
+		sendDM(msg.author, helpEmbed);
 	}
 };

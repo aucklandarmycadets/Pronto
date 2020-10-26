@@ -1,11 +1,11 @@
-const { emojis: { errorEmoji }, colours } = require('../config');
+'use strict';
+
+const { colours } = require('../config');
 const { cmds: { purge } } = require('../cmds');
-const { cmdError, debugError, embedScaffold } = require('../modules');
+const { cmdError, debugError, embedScaffold, errorReact } = require('../modules');
 
 module.exports = purge;
 module.exports.execute = (msg, args) => {
-	'use strict';
-
 	const userMentions = msg.mentions.users;
 
 	let user, purgeCount;
@@ -32,7 +32,7 @@ module.exports.execute = (msg, args) => {
 	catch (error) { return cmdError(msg, error, purge.error); }
 
 	msg.channel.messages.fetch({ limit: 100, before: msg.id })
-		.then((messages) => {
+		.then(messages => {
 			if (user) {
 				const filterBy = user.id;
 				messages = messages.filter(message => message.author.id === filterBy).array().slice(0, purgeCount);
@@ -44,11 +44,7 @@ module.exports.execute = (msg, args) => {
 
 			msg.channel.bulkDelete(messages)
 				.catch(error => {
-					const errorEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === errorEmoji);
-
-					msg.react(errorEmojiObj)
-						.catch(reactError => debugError(reactError, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
-
+					errorReact(msg);
 					embedScaffold(msg.channel, `${msg.author} Error purging ${purgeCount} messages.`, colours.error, 'msg');
 					debugError(error, `Error purging ${purgeCount} messages in ${msg.channel}.`);
 				});

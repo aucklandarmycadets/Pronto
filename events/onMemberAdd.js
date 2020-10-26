@@ -1,7 +1,9 @@
+'use strict';
+
 const Discord = require('discord.js');
 
 const { ids: { logID, recruitingID, newMembersID, visitorID }, colours } = require('../config');
-const { dtg, sendMsg, formatAge, debugError } = require('../modules');
+const { debugError, dtg, formatAge, sendMsg } = require('../modules');
 
 module.exports = {
 	events: ['guildMemberAdd'],

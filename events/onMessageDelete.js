@@ -1,8 +1,10 @@
+'use strict';
+
 const Discord = require('discord.js');
 
 const { config: { prefix }, ids: { logID }, colours } = require('../config');
-const { cmds: { purge } } = require('../cmds');
-const { charLimit, dtg, sendMsg, debugError } = require('../modules');
+const { cmds: { help, attendance, purge } } = require('../cmds');
+const { charLimit, debugError, delMsg, dtg, sendMsg } = require('../modules');
 
 module.exports = {
 	events: ['messageDelete'],
@@ -24,7 +26,7 @@ module.exports = {
 			if (cmdCheck(msg) || !msg.guild) return;
 
 			const messageAuthor = msg.author;
-			const lastMessage = msg.channel.lastMessage;
+			const lastMsg = msg.channel.lastMessage;
 
 			const fetchedLogs = await msg.guild.fetchAuditLogs({
 				limit: 1,
@@ -52,10 +54,10 @@ module.exports = {
 			logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted in ${msg.channel}**\n${content}`);
 			logEmbed.setFooter(`Author: ${messageAuthor.id} | Message: ${msg.id} | ${dtg()}`);
 
-			if (lastMessage) {
-				if (lastMessage.content.includes(purge.cmd) || purge.aliases.some(alias => lastMessage.content.includes(alias))) {
-					lastMessage.delete().catch(error => debugError(error, `Error deleting message in ${msg.channel}.`, 'Message', `${content}`));
-					logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted by ${lastMessage.author} in ${msg.channel}**\n${content}`);
+			if (lastMsg) {
+				if (lastMsg.content.includes(purge.cmd) || purge.aliases.some(alias => lastMsg.content.includes(alias))) {
+					delMsg(lastMsg);
+					logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted by ${lastMsg.author} in ${msg.channel}**\n${content}`);
 				}
 			}
 
@@ -72,8 +74,7 @@ module.exports = {
 	},
 };
 
-const cmdCheck = msg => {
-	const { cmds: { attendance, help } } = require('../cmds');
+function cmdCheck(msg) {
 	const autoDelCmds = [attendance, help, purge];
 
 	const args = msg.content.split(/ +/);
@@ -82,4 +83,4 @@ const cmdCheck = msg => {
 	if (autoDelCmds.some(cmd => cmd.cmd === msgCmd || cmd.aliases.includes(msgCmd))) return true;
 
 	return false;
-};
+}

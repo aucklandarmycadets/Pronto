@@ -1,3 +1,5 @@
+'use strict';
+
 const { colours } = require('../config');
 const { capitalise, embedScaffold } = require('../modules');
 

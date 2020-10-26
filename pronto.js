@@ -6,13 +6,13 @@ const bot = new Discord.Client({ partials: ['MESSAGE'] });
 
 bot.commands = new Discord.Collection();
 const botCommands = require('./commands');
+const version = '3.4.0';
 
 Object.keys(botCommands).map(key => {
 	bot.commands.set(botCommands[key].cmd, botCommands[key]);
 });
 
 const TOKEN = process.env.TOKEN;
-const version = '3.2.3';
 
 bot.login(TOKEN)
 	.then(() => module.exports = {

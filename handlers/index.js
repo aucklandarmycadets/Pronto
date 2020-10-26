@@ -2,4 +2,4 @@
 
 const indexProc = require('../modules/indexProc');
 
-module.exports = indexProc('./commands');
+module.exports = indexProc('./handlers');

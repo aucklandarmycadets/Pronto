@@ -1,29 +1,27 @@
+'use strict';
+
 const Discord = require('discord.js');
 
-const { ids: { attendanceID }, emojis: { successEmoji }, colours } = require('../config');
+const { ids: { attendanceID }, colours } = require('../config');
 const { cmds: { leave } } = require('../cmds');
-const { capitalise, dtg, cmdError, sendMsg, dmError, debugError } = require('../modules');
+const { capitalise, cmdError, dtg, sendDM, sendMsg, successReact } = require('../modules');
 
 module.exports = leave;
 module.exports.execute = (msg, args) => {
-	'use strict';
-
 	const { bot } = require('../pronto');
 
 	if (args.length === 0) return cmdError(msg, 'Insufficient arguments.', leave.error);
 
 	const leaveEmbedTitle = 'Leave Request';
-	const messageAuthor = msg.author;
 	const attendanceChannel = bot.channels.cache.get(attendanceID);
-	const successEmojiObj = msg.guild.emojis.cache.find(emoji => emoji.name === successEmoji);
 
-	msg.react(successEmojiObj).catch(error => debugError(error, `Error reacting to [message](${msg.url}) in ${msg.channel}.`));
+	successReact(msg);
 
 	const attendanceEmbed = new Discord.MessageEmbed()
 		.setTitle(leaveEmbedTitle)
 		.setColor(colours.leave)
-		.setAuthor(msg.member.displayName, messageAuthor.displayAvatarURL())
-		.setDescription(`${messageAuthor} has requested leave in ${msg.channel}`)
+		.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
+		.setDescription(`${msg.author} has requested leave in ${msg.channel}`)
 		.addField('Details', capitalise(args.join(' ')))
 		.setFooter(dtg());
 
@@ -31,10 +29,10 @@ module.exports.execute = (msg, args) => {
 		.setTitle(leaveEmbedTitle)
 		.setColor(colours.leave)
 		.setAuthor(msg.guild.name, msg.guild.iconURL())
-		.setDescription(`Hi ${messageAuthor}, your submission of leave has been received.`)
+		.setDescription(`Hi ${msg.author}, your submission of leave has been received.`)
 		.addField('Details', capitalise(args.join(' ')))
 		.setFooter(dtg());
 
 	sendMsg(attendanceChannel, attendanceEmbed);
-	messageAuthor.send(dmEmbed).catch(error => dmError(msg, error));
+	sendDM(msg.author, dmEmbed);
 };
