@@ -18,6 +18,7 @@ exports.ids = {
 	archivedID: '765767942730022912',
 	exampleTextID: '765768009670721556',
 	exampleVoiceID: '765768380317433916',
+	everyoneID: '765758073942966272',
 	visitorID: '765768798972018698',
 	administratorID: '765768990823809127',
 	formations: ['765769247245860914'],

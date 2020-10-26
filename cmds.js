@@ -82,7 +82,7 @@ const cmds = {
 			qualified: 'Get help with a specific command.',
 		},
 		allowDM: true,
-		roles: [],
+		roles: [ids.everyoneID],
 		noRoles: [],
 		devOnly: false,
 		get help() {
