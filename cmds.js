@@ -243,7 +243,7 @@ const cmds = {
 	},
 	purge: {
 		cmd: 'purge',
-		aliases: ['del', 'delete'],
+		aliases: ['del', 'delete', 'clear'],
 		desc: 'Delete a number of messages from a channel.',
 		allowDM: false,
 		roles: adjPlus,
