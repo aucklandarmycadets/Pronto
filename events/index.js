@@ -1,10 +1,5 @@
 'use strict';
 
-const fs = require('fs');
+const { indexProc } = require('../modules');
 
-const events = fs.readdirSync('./events').filter(file => file.endsWith('.js') && file !== 'index.js');
-
-for (const file of events) {
-	const eventName = file.replace('.js', '');
-	exports[eventName] = require(`./${eventName}`);
-}
+module.exports = indexProc('./events');

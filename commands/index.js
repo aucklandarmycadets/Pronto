@@ -1,10 +1,5 @@
 'use strict';
 
-const fs = require('fs');
+const { indexProc } = require('../modules');
 
-const commands = fs.readdirSync('./commands').filter(file => file.endsWith('.js') && file !== 'index.js');
-
-for (const file of commands) {
-	const commandName = file.replace('.js', '');
-	exports[commandName] = require(`./${commandName}`);
-}
+module.exports = indexProc('./commands');
