@@ -1,9 +1,10 @@
 'use strict';
 
 const { colours } = require('../config');
-const { embedScaffold, errorReact } = require('./');
 
 module.exports = (msg, type) => {
+	const { embedScaffold, errorReact } = require('./');
+
 	errorReact(msg);
 
 	try {

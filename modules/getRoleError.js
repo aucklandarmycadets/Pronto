@@ -1,9 +1,10 @@
 'use strict';
 
 const { colours } = require('../config');
-const { embedScaffold, errorReact } = require('./');
 
 module.exports = msg => {
+	const { embedScaffold, errorReact } = require('./');
+
 	errorReact(msg);
 
 	const verifyErr = 'There was an error verifying permissions, please try again later.';

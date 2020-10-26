@@ -2,10 +2,9 @@
 
 const Discord = require('discord.js');
 const { colours } = require('../config');
-const { errorReact, sendMsg } = require('./');
 
 module.exports = (msg, errMsg, cmdErr, footer) => {
-	errorReact(msg);
+	const { errorReact, sendMsg } = require('./');
 
 	const authName = (msg.member)
 		? msg.member.displayName
@@ -18,5 +17,6 @@ module.exports = (msg, errMsg, cmdErr, footer) => {
 
 	if (footer) errorEmbed.setFooter(footer);
 
+	errorReact(msg);
 	sendMsg(msg.channel, errorEmbed);
 };

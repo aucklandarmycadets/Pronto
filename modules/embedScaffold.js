@@ -2,10 +2,10 @@
 
 const Discord = require('discord.js');
 const { ids: { debugID } } = require('../config');
-const { charLimit, dtg, sendDM, sendMsg } = require('./');
 
 module.exports = (dest, descMsg, colour, type, fieldTitle, fieldContent, errorField) => {
 	const { bot, version } = require('../pronto');
+	const { charLimit, dtg, sendDM, sendMsg } = require('./');
 
 	const debugChannel = bot.channels.cache.get(debugID);
 	const devFooter = (type === 'dev')

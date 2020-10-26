@@ -1,10 +1,10 @@
 'use strict';
 
 const { ids: { serverID }, emojis: { errorEmoji } } = require('../config');
-const { debugError } = require('./');
 
 module.exports = msg => {
 	const { bot } = require('../pronto');
+	const { debugError } = require('./');
 
 	const server = bot.guilds.cache.get(serverID);
 	const errorEmojiObj = server.emojis.cache.find(emoji => emoji.name === errorEmoji);

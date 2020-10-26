@@ -1,9 +1,10 @@
 'use strict';
 
 const { colours } = require('../config');
-const { embedScaffold } = require('./');
 
 module.exports = (dest, msg, debug) => {
+	const { embedScaffold } = require('./');
+
 	return dest.send(msg)
 		.catch(error => {
 			const member = msg.mentions.members.first();
