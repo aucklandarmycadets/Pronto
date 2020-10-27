@@ -1,13 +1,11 @@
 'use strict';
 
-const Guild = require('../models/guild');
+const { removeGuild } = require('../handlers');
 
 module.exports = {
 	events: ['guildDelete'],
 	process: [],
-	async execute(event, guild) {
-		Guild.findOneAndDelete({ guildID: guild.id }, error => {
-			if (error) console.error(error);
-		});
+	execute(event, guild) {
+		return removeGuild(guild);
 	},
 };
