@@ -1,5 +1,5 @@
 'use strict';
 
-const indexProc = require('../modules/indexProc');
+const indexProc = require('./indexProc');
 
 module.exports = indexProc('./handlers');

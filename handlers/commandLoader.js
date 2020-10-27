@@ -9,9 +9,7 @@ module.exports = async (dir, guild) => {
 
 	for (const file of files) {
 		const key = file.replace('.js', '');
-		procObj[key] = (guild)
-			? await require(`.${dir}/${key}`)(guild)
-			: require(`.${dir}/${key}`);
+		procObj[key] = await require(`.${dir}/${key}`)(guild);
 	}
 
 	return procObj;
