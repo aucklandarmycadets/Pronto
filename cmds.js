@@ -302,11 +302,11 @@ function helpText(object, forList) {
 		? ['`', '` - ']
 		: ['**', ':** '];
 
-	for (const [property, value] of Object.entries(object)) {
-		helpString += `${startFormat}${property}${endFormat}${value}\n`;
+	for (const [key, value] of Object.entries(object)) {
+		helpString += `${startFormat}${key}${endFormat}${value}\n`;
 	}
 
-	return helpString.slice(0, helpString.length - 2);
+	return helpString.replace(/\n+$/, '');
 }
 
 function errorText(helpTxt, cmd) {
