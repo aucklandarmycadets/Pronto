@@ -19,6 +19,7 @@
   "dependencies": {
     "dateformat": "^3.0.3",
     "discord.js": "^12.4.1",
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "mongoose": "^5.10.10"
   }
 }
