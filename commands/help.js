@@ -9,7 +9,7 @@ module.exports = async guild => {
 	const { cmds: { help }, cmdsList } = await require('../cmds')(guild);
 	const { config: { prontoLogo }, ids: { serverID, adjPlus }, colours } = await require('../handlers/database')(guild);
 
-	help.execute = (msg, args) => {
+	help.execute = async (msg, args) => {
 		const { bot } = require('../pronto');
 
 		const server = bot.guilds.cache.get(serverID);
@@ -25,7 +25,7 @@ module.exports = async guild => {
 
 		const memberRoles = (msg.guild)
 			? msg.member.roles.cache
-			: server.members.cache.get(msg.author.id).roles.cache;
+			: await server.members.fetch(msg.author.id).then(member => member.roles.cache);
 
 		if (!memberRoles) return getRoleError(msg);
 

@@ -8,17 +8,16 @@ module.exports = async (msg, cmd) => {
 	const { ids: { serverID } } = await require('../handlers/database')(msg.guild);
 
 	const server = bot.guilds.cache.get(serverID);
-	const authorID = msg.author.id;
 
 	const memberRoles = (msg.guild)
 		? msg.member.roles.cache
-		: server.members.cache.get(authorID).roles.cache;
+		: await server.members.fetch(msg.author.id).then(member => member.roles.cache);
 
 	if (!memberRoles) return getRoleError(msg);
 
 	if ((cmd.noRoles.length && !memberRoles.some(roles => cmd.noRoles.includes(roles.id)))
 		|| (cmd.roles.length && memberRoles.some(roles => cmd.roles.includes(roles.id)))
-		|| (cmd.devOnly && authorID === devID)) {
+		|| (cmd.devOnly && msg.author.id === devID)) {
 		return true;
 	}
 
