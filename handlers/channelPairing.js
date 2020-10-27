@@ -102,7 +102,7 @@ module.exports = async (oldState, newState) => {
 										const timeEmbed = new Discord.MessageEmbed()
 											.setColor(colours.error)
 											.setAuthor(bot.user.tag, bot.user.avatarURL())
-											.setDescription(`Timed out. Type \`${pCmd(purge)} 100\` to clear this channel manually.`);
+											.setDescription(`Timed out. Type \`${pCmd(purge, newState.guild)} 100\` to clear this channel manually.`);
 										sendMsg(textChannel, timeEmbed);
 									}
 								});

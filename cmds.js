@@ -20,7 +20,7 @@ module.exports = async guild => {
 				return this.help = helpText({
 					'Aliases': pAls(this),
 					'Description': this.desc,
-					'Usage': pCmd(this),
+					'Usage': pCmd(this, guild),
 				});
 			},
 		},
@@ -37,7 +37,7 @@ module.exports = async guild => {
 				return this.help = helpText({
 					'Aliases': pAls(this),
 					'Description': this.desc,
-					'Usage': pCmd(this),
+					'Usage': pCmd(this, guild),
 				});
 			},
 		},
@@ -54,7 +54,7 @@ module.exports = async guild => {
 				return this.help = helpText({
 					'Aliases': pAls(this),
 					'Description': this.desc,
-					'Usage': `${pCmd(this)} <code>`,
+					'Usage': `${pCmd(this, guild)} <code>`,
 				});
 			},
 			get error() { return errorText(this.help, this.cmd); },
@@ -72,7 +72,7 @@ module.exports = async guild => {
 				return this.help = helpText({
 					'Aliases': pAls(this),
 					'Description': this.desc,
-					'Usage': pCmd(this),
+					'Usage': pCmd(this, guild),
 				});
 			},
 		},
@@ -93,8 +93,8 @@ module.exports = async guild => {
 				return this.help = helpText({
 					'Aliases': pAls(this),
 					'Description': this.desc.general,
-					'Usage': `${pCmd(this)} [command]`,
-					'Examples': `\n${pCmd(this)}\n${pCmd(this)} ${cmds.leave.cmd}`,
+					'Usage': `${pCmd(this, guild)} [command]`,
+					'Examples': `\n${pCmd(this, guild)}\n${pCmd(this, guild)} ${cmds.leave.cmd}`,
 				});
 			},
 		},
@@ -111,8 +111,8 @@ module.exports = async guild => {
 				return this.help = helpText({
 					'Aliases': pAls(this),
 					'Description': this.desc,
-					'Usage': `${pCmd(this)} <dates> <activity> <reason> [additional remarks]`,
-					'Example': `${pCmd(this)} 01 Jan for Parade Night due to an appointment`,
+					'Usage': `${pCmd(this, guild)} <dates> <activity> <reason> [additional remarks]`,
+					'Example': `${pCmd(this, guild)} 01 Jan for Parade Night due to an appointment`,
 				});
 			},
 			get error() { return errorText(this.help, this.cmd); },
@@ -130,8 +130,8 @@ module.exports = async guild => {
 				return this.help = helpText({
 					'Aliases': pAls(this),
 					'Description': this.desc,
-					'Usage': `${pCmd(this)} <user> <dates> <activity> <reason> [additional remarks]`,
-					'Example': `${pCmd(this)} <@${devID}> 01 Jan for Parade Night due to an appointment`,
+					'Usage': `${pCmd(this, guild)} <user> <dates> <activity> <reason> [additional remarks]`,
+					'Example': `${pCmd(this, guild)} <@${devID}> 01 Jan for Parade Night due to an appointment`,
 					'Allowed Roles': rolesOutput(this.roles),
 				});
 			},
@@ -150,7 +150,7 @@ module.exports = async guild => {
 				return this.help = helpText({
 					'Aliases': pAls(this),
 					'Description': this.desc,
-					'Usage': `\n${pCmd(this)} <message>\n${pCmd(this)} update <message>`,
+					'Usage': `\n${pCmd(this, guild)} <message>\n${pCmd(this, guild)} update <message>`,
 					'Allowed Roles': rolesOutput(this.roles),
 				});
 			},
@@ -169,8 +169,8 @@ module.exports = async guild => {
 				return this.help = helpText({
 					'Aliases': pAls(this),
 					'Description': this.desc,
-					'Usage': `${pCmd(this)} <voice channel>`,
-					'Example': `${pCmd(this)} <#${ids.exampleVoiceID}>`,
+					'Usage': `${pCmd(this, guild)} <voice channel>`,
+					'Example': `${pCmd(this, guild)} <#${ids.exampleVoiceID}>`,
 					'Allowed Roles': rolesOutput(this.roles),
 				});
 			},
@@ -189,8 +189,8 @@ module.exports = async guild => {
 				return this.help = helpText({
 					'Aliases': pAls(this),
 					'Description': this.desc,
-					'Usage': `${pCmd(this)} <text channel>`,
-					'Example': `${pCmd(this)} <#${ids.exampleTextID}>`,
+					'Usage': `${pCmd(this, guild)} <text channel>`,
+					'Example': `${pCmd(this, guild)} <#${ids.exampleTextID}>`,
 					'Allowed Roles': rolesOutput(this.roles),
 				});
 			},
@@ -209,8 +209,8 @@ module.exports = async guild => {
 				return this.help = helpText({
 					'Aliases': pAls(this),
 					'Description': this.desc,
-					'Usage': `${pCmd(this)} <count> [user]`,
-					'Examples': `\n${pCmd(this)} 10\n${pCmd(this)} 5 <@${devID}>`,
+					'Usage': `${pCmd(this, guild)} <count> [user]`,
+					'Examples': `\n${pCmd(this, guild)} 10\n${pCmd(this, guild)} 5 <@${devID}>`,
 					'Allowed Roles': rolesOutput(this.roles),
 				});
 			},
@@ -288,12 +288,12 @@ module.exports = async guild => {
 				|| (type === 'dev' && cmd.devOnly)) {
 
 				if (cmd === cmds.help) {
-					object[`${pCmd(cmds.help)}`] = cmds.help.desc.unqualified;
-					object[`${pCmd(cmds.help)} [command]`] = cmds.help.desc.qualified;
+					object[`${pCmd(cmds.help, guild)}`] = cmds.help.desc.unqualified;
+					object[`${pCmd(cmds.help, guild)} [command]`] = cmds.help.desc.qualified;
 					continue;
 				}
 
-				object[`${pCmd(cmd)}`] = cmd.desc;
+				object[`${pCmd(cmd, guild)}`] = cmd.desc;
 			}
 		}
 
@@ -316,7 +316,7 @@ module.exports = async guild => {
 
 	function errorText(helpTxt, cmd) {
 		return '\n\n' + helpTxt + '\n' + helpText({
-			'Help Command': `${pCmd(cmds.help)} ${cmd}`,
+			'Help Command': `${pCmd(cmds.help, guild)} ${cmd}`,
 		});
 	}
 

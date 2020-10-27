@@ -44,6 +44,6 @@ module.exports = async msg => {
 	}
 
 	catch (error) {
-		debugError(error, `Error executing ${pCmd(cmd)}`);
+		debugError(error, `Error executing ${pCmd(cmd, msg.guild)}`);
 	}
 };

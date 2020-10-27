@@ -42,7 +42,7 @@ module.exports = async guild => {
 			: sendCmdList();
 
 		function sendHelpEmbed(command) {
-			helpEmbed.setTitle(`Command: ${pCmd(command)}`);
+			helpEmbed.setTitle(`Command: ${pCmd(command, guild)}`);
 			helpEmbed.setColor(colours.pronto);
 			helpEmbed.setDescription(command.help);
 
