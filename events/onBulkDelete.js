@@ -33,7 +33,7 @@ module.exports = {
 		}
 
 		logEmbed.setColor(colours.error);
-		logEmbed.setFooter(`${dtg()}`);
+		logEmbed.setFooter(await dtg());
 		sendMsg(log, logEmbed);
 	},
 };

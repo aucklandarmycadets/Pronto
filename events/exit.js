@@ -23,7 +23,7 @@ module.exports = {
 			.setDescription('**Restarting...**')
 			.addField('Uptime', formatAge(bot.uptime))
 			.setColor(colours.warn)
-			.setFooter(`${dtg()} | Pronto v${version}`);
+			.setFooter(`${await dtg()} | Pronto v${version}`);
 
 		await sendDM(dev, restartEmbed, null, true);
 

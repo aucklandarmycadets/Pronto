@@ -103,7 +103,7 @@ async function findChannel(channel, guild, type) {
 		}
 
 		await debugChannel.messages.fetch()
-			.then(msgs => {
+			.then(async msgs => {
 				const filterBy = msg => {
 					try { return msg.embeds[0].description.includes('Initialised channel(s)'); }
 					catch { null; }
@@ -117,7 +117,7 @@ async function findChannel(channel, guild, type) {
 						.setColor(colours.pronto)
 						.setDescription(`Initialised channel(s) in **${prontoCategory.name}**, feel free to move and/or rename them!`)
 						.addField('More Information', 'To see a full list of linked channels or change my configuration, please visit my dashboard.')
-						.setFooter(dtg());
+						.setFooter(await dtg());
 
 					sendMsg(debugChannel, embed);
 				}

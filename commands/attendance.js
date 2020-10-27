@@ -84,13 +84,13 @@ module.exports = async guild => {
 
 					const collector = dm.createReactionCollector(filter, { dispose: true });
 
-					collector.on('collect', (reaction, user) => {
+					collector.on('collect', async (reaction, user) => {
 						if (!user.bot) {
 							const confirmEmbed = new Discord.MessageEmbed()
 								.setAuthor(bot.user.tag, bot.user.avatarURL())
 								.setColor(colours.error)
 								.setDescription('**Cancelled.**')
-								.setFooter(dtg());
+								.setFooter(await dtg());
 
 							if (reaction.emoji.name === emojis.success) {
 								confirmEmbed.setColor(colours.success);
@@ -99,7 +99,7 @@ module.exports = async guild => {
 								attendanceEmbed.setAuthor(`${formationName} (${msg.member.displayName})`, msg.guild.iconURL());
 
 								if (chnlMsg) {
-									attendanceEmbed.setFooter(`Last updated at ${dtg()}`);
+									attendanceEmbed.setFooter(`Last updated at ${await dtg()}`);
 
 									const formationDisplay = (msg.guild.roles.cache.find(role => role.name === formationName))
 										? (msg.guild.roles.cache.find(role => role.name === formationName))
@@ -114,7 +114,7 @@ module.exports = async guild => {
 								else {
 									const attendanceChannel = bot.channels.cache.get(attendanceID);
 
-									attendanceEmbed.setFooter(dtg());
+									attendanceEmbed.setFooter(await dtg());
 
 									sendMsg(attendanceChannel, attendanceEmbed);
 									sendMsg(msg.channel, attendanceEmbed);

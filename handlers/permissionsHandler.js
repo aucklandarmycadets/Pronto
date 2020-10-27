@@ -13,7 +13,7 @@ module.exports = async (msg, cmd) => {
 		? msg.member.roles.cache
 		: await server.members.fetch(msg.author.id).then(member => member.roles.cache);
 
-	if (!memberRoles) return getRoleError(msg);
+	if (!memberRoles) return await getRoleError(msg);
 
 	if ((cmd.noRoles.length && !memberRoles.some(roles => cmd.noRoles.includes(roles.id)))
 		|| (cmd.roles.length && memberRoles.some(roles => cmd.roles.includes(roles.id)))

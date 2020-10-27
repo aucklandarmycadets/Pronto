@@ -16,7 +16,7 @@ module.exports = async (dest, descMsg, colour, type, fieldTitle, fieldContent, e
 		.setAuthor(bot.user.tag, bot.user.avatarURL())
 		.setColor(colour)
 		.setDescription(charLimit(descMsg, 2048))
-		.setFooter(`${dtg()}${devFooter}`);
+		.setFooter(`${await dtg()}${devFooter}`);
 
 	if (fieldTitle) embed.addField(fieldTitle, fieldContent);
 	if (errorField) embed.setDescription(charLimit(`${descMsg}\n${errorField}`, 2048));

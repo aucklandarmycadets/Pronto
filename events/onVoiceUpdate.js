@@ -28,19 +28,19 @@ module.exports = {
 		if (!oldID) {
 			logEmbed.setColor(colours.success);
 			logEmbed.setDescription(`**${newMember} joined voice channel ${newState.channel}**`);
-			logEmbed.setFooter(`ID: ${newMember.id} | Channel: ${newID} | ${dtg()}`);
+			logEmbed.setFooter(`ID: ${newMember.id} | Channel: ${newID} | ${await dtg()}`);
 		}
 
 		else if (!newID) {
 			logEmbed.setColor(colours.error);
 			logEmbed.setDescription(`**${newMember} left voice channel ${oldState.channel}**`);
-			logEmbed.setFooter(`ID: ${newMember.id} | Channel: ${oldID} | ${dtg()}`);
+			logEmbed.setFooter(`ID: ${newMember.id} | Channel: ${oldID} | ${await dtg()}`);
 		}
 
 		else if (oldID !== newID) {
 			logEmbed.setColor(colours.warn);
 			logEmbed.setDescription(`**${newMember} changed voice channel ${oldState.channel} > ${newState.channel}**`);
-			logEmbed.setFooter(`ID: ${newMember.id} | ${dtg()}`);
+			logEmbed.setFooter(`ID: ${newMember.id} | ${await dtg()}`);
 		}
 
 		else return;

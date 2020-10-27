@@ -13,7 +13,7 @@ module.exports = {
 		const log = bot.channels.cache.get(logID);
 		const logEmbed = new Discord.MessageEmbed()
 			.setAuthor(role.guild.name, role.guild.iconURL())
-			.setFooter(`ID: ${role.id} | ${dtg()}`);
+			.setFooter(`ID: ${role.id} | ${await dtg()}`);
 
 		if (event === 'roleCreate') {
 			logEmbed.setColor(colours.success);

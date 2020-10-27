@@ -21,7 +21,7 @@ module.exports = {
 			.setThumbnail(memberUser.displayAvatarURL())
 			.setDescription(`${memberUser} ${memberUser.tag}`)
 			.addField('Account Age', formatAge(Date.now() - memberUser.createdAt))
-			.setFooter(`ID: ${memberUser.id} | ${dtg()}`);
+			.setFooter(`ID: ${memberUser.id} | ${await dtg()}`);
 		sendMsg(log, logEmbed);
 
 		if (memberUser.bot) return;
@@ -33,7 +33,7 @@ module.exports = {
 			.setColor(colours.pronto)
 			.setAuthor(memberUser.tag, memberUser.displayAvatarURL())
 			.setDescription(`**${memberUser} has just entered ${newMembers}.**\nMake them feel welcome!`)
-			.setFooter(`${dtg()}`);
+			.setFooter(await dtg());
 		sendMsg(recruiting, welcomeEmbed);
 	},
 };

@@ -7,7 +7,7 @@ module.exports = async guild => {
 	const { cmds: { help, leave, leaveFor } } = await require('../cmds')(guild);
 	const { ids: { attendanceID }, colours } = await require('../handlers/database')(guild);
 
-	leaveFor.execute = (msg, args) => {
+	leaveFor.execute = async (msg, args) => {
 		const { bot } = require('../pronto');
 
 		const memberMentions = msg.mentions.members;
@@ -43,7 +43,7 @@ module.exports = async guild => {
 				{ name: 'Absentee', value: absentee },
 				{ name: 'Details', value: capitalise(args.join(' ')) },
 			)
-			.setFooter(dtg());
+			.setFooter(await dtg());
 
 		const dmEmbed = new Discord.MessageEmbed()
 			.setTitle(leaveForEmbedTitle)
@@ -51,7 +51,7 @@ module.exports = async guild => {
 			.setAuthor(msg.guild.name, msg.guild.iconURL())
 			.setDescription(`Hi ${msg.author}, your submission of leave for ${absentee} has been received.`)
 			.addField('Details', capitalise(args.join(' ')))
-			.setFooter(dtg());
+			.setFooter(await dtg());
 
 		const absenteeEmbed = new Discord.MessageEmbed()
 			.setTitle(leaveForEmbedTitle)
@@ -59,7 +59,7 @@ module.exports = async guild => {
 			.setAuthor(msg.guild.name, msg.guild.iconURL())
 			.setDescription(`${msg.author} has submitted leave for you in ${msg.channel}.`)
 			.addField('Details', capitalise(args.join(' ')))
-			.setFooter(`Reply with ${pCmd(help)} ${leave.cmd} to learn how to request leave for yourself.`);
+			.setFooter(`Reply with ${await pCmd(help)} ${leave.cmd} to learn how to request leave for yourself.`);
 
 		sendMsg(attendanceChannel, attendanceEmbed);
 		sendDM(msg.author, dmEmbed, msg.channel);

@@ -18,7 +18,7 @@ module.exports = {
 		if (msg.partial) {
 			logEmbed.setAuthor(msg.guild.name, msg.guild.iconURL());
 			logEmbed.setDescription(`**Uncached message deleted in ${msg.channel}**`);
-			logEmbed.setFooter(`ID: ${msg.id} | ${dtg()}`);
+			logEmbed.setFooter(`ID: ${msg.id} | ${await dtg()}`);
 		}
 
 		else {
@@ -51,7 +51,7 @@ module.exports = {
 
 			logEmbed.setAuthor(messageAuthor.tag, messageAuthor.displayAvatarURL());
 			logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted in ${msg.channel}**\n${content}`);
-			logEmbed.setFooter(`Author: ${messageAuthor.id} | Message: ${msg.id} | ${dtg()}`);
+			logEmbed.setFooter(`Author: ${messageAuthor.id} | Message: ${msg.id} | ${await dtg()}`);
 
 			if (lastMsg) {
 				if (lastMsg.content.includes(purge.cmd) || purge.aliases.some(alias => lastMsg.content.includes(alias))) {

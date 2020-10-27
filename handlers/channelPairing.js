@@ -30,12 +30,12 @@ module.exports = async (oldState, newState) => {
 
 		if (oldID !== vcID && newID === vcID) {
 			textChannel.updateOverwrite(newState.id, { VIEW_CHANNEL: true, SEND_MESSAGES: true })
-				.then(() => {
+				.then(async () => {
 					const joinEmbed = new Discord.MessageEmbed()
 						.setColor(colours.success)
 						.setAuthor(newMember.displayName, newMember.user.displayAvatarURL())
 						.setDescription(`${newMember} has joined the channel.`)
-						.setFooter(`${dtg()}`);
+						.setFooter(await dtg());
 					sendMsg(textChannel, joinEmbed);
 				})
 				.catch(error => {
@@ -45,12 +45,12 @@ module.exports = async (oldState, newState) => {
 
 		else if (oldID === vcID && newID !== vcID) {
 			textChannel.permissionOverwrites.get(newState.id).delete()
-				.then(() => {
+				.then(async () => {
 					const leaveEmbed = new Discord.MessageEmbed()
 						.setColor(colours.error)
 						.setAuthor(newMember.displayName, newMember.user.displayAvatarURL())
 						.setDescription(`${newMember} has left the channel.`)
-						.setFooter(`${dtg()}`);
+						.setFooter(await dtg());
 					sendMsg(textChannel, leaveEmbed);
 
 					if (oldState.channel.members.size === 0) {
@@ -94,7 +94,7 @@ module.exports = async (oldState, newState) => {
 									}
 								});
 
-								collector.on('end', (collected, reason) => {
+								collector.on('end', async (collected, reason) => {
 									if (reason === 'time') {
 										msg.reactions.removeAll()
 											.catch(error => debugError(error, `Error removing reactions from [message](${msg.url}) in ${textChannel}.`));
@@ -102,7 +102,7 @@ module.exports = async (oldState, newState) => {
 										const timeEmbed = new Discord.MessageEmbed()
 											.setColor(colours.error)
 											.setAuthor(bot.user.tag, bot.user.avatarURL())
-											.setDescription(`Timed out. Type \`${pCmd(purge, newState.guild)} 100\` to clear this channel manually.`);
+											.setDescription(`Timed out. Type \`${await pCmd(purge, newState.guild)} 100\` to clear this channel manually.`);
 										sendMsg(textChannel, timeEmbed);
 									}
 								});

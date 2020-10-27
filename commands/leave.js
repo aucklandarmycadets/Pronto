@@ -7,7 +7,7 @@ module.exports = async guild => {
 	const { cmds: { leave } } = await require('../cmds')(guild);
 	const { ids: { attendanceID }, colours } = await require('../handlers/database')(guild);
 
-	leave.execute = (msg, args) => {
+	leave.execute = async (msg, args) => {
 		const { bot } = require('../pronto');
 
 		if (args.length === 0) return cmdError(msg, 'Insufficient arguments.', leave.error);
@@ -23,7 +23,7 @@ module.exports = async guild => {
 			.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
 			.setDescription(`${msg.author} has requested leave in ${msg.channel}`)
 			.addField('Details', capitalise(args.join(' ')))
-			.setFooter(dtg());
+			.setFooter(await dtg());
 
 		const dmEmbed = new Discord.MessageEmbed()
 			.setTitle(leaveEmbedTitle)
@@ -31,7 +31,7 @@ module.exports = async guild => {
 			.setAuthor(msg.guild.name, msg.guild.iconURL())
 			.setDescription(`Hi ${msg.author}, your submission of leave has been received.`)
 			.addField('Details', capitalise(args.join(' ')))
-			.setFooter(dtg());
+			.setFooter(await dtg());
 
 		sendMsg(attendanceChannel, attendanceEmbed);
 		sendDM(msg.author, dmEmbed, msg.channel);

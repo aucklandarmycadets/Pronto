@@ -41,8 +41,8 @@ module.exports = async guild => {
 					: dmCmdError(msg, 'noPerms')
 			: sendCmdList();
 
-		function sendHelpEmbed(command) {
-			helpEmbed.setTitle(`Command: ${pCmd(command, guild)}`);
+		async function sendHelpEmbed(command) {
+			helpEmbed.setTitle(`Command: ${await pCmd(command, guild)}`);
 			helpEmbed.setColor(colours.pronto);
 			helpEmbed.setDescription(command.help);
 

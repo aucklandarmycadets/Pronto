@@ -42,7 +42,7 @@ module.exports = {
 
 		logEmbed.setAuthor(newMemberUser.tag, newMemberUser.displayAvatarURL());
 		logEmbed.setColor(colours.warn);
-		logEmbed.setFooter(`ID: ${newMemberUser.id} | ${dtg()}`);
+		logEmbed.setFooter(`ID: ${newMemberUser.id} | ${await dtg()}`);
 		sendMsg(log, logEmbed);
 	},
 };

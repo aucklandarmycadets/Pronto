@@ -7,12 +7,12 @@ module.exports = async guild => {
 	const { cmds: { uptime } } = await require('../cmds')(guild);
 	const { colours } = await require('../handlers/database')(guild);
 
-	uptime.execute = msg => {
+	uptime.execute = async msg => {
 		const { bot, version } = require('../pronto');
 
 		const uptimeEmbed = new Discord.MessageEmbed()
 			.setColor(colours.success)
-			.setFooter(`${formatAge(bot.uptime)} | ${dtg()} | Pronto v${version}`);
+			.setFooter(`${formatAge(bot.uptime)} | ${await dtg()} | Pronto v${version}`);
 
 		sendMsg(msg.channel, uptimeEmbed);
 	};

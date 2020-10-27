@@ -29,21 +29,21 @@ module.exports = async guild => {
 		const log = bot.channels.cache.get(logID);
 
 		channel.setParent(archivedID, { lockPermissions: true })
-			.then(() => {
+			.then(async () => {
 				successReact(msg);
 
 				const archiveEmbed = new Discord.MessageEmbed()
 					.setTitle('Channel Archived 🔒')
 					.setColor(colours.error)
 					.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
-					.setFooter(`${dtg()}`);
+					.setFooter(await dtg());
 				sendMsg(channel, archiveEmbed);
 
 				const logEmbed = new Discord.MessageEmbed()
 					.setColor(colours.warn)
 					.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
 					.setDescription(`**Channel ${channel} archived by ${msg.author}**`)
-					.setFooter(`User: ${msg.author.id} | Channel: ${channel.id} | ${dtg()}`);
+					.setFooter(`User: ${msg.author.id} | Channel: ${channel.id} | ${await dtg()}`);
 				sendMsg(log, logEmbed);
 			})
 			.catch(error => {

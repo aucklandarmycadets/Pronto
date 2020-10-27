@@ -21,7 +21,7 @@ module.exports = {
 			logEmbed.setAuthor(newMessage.author.tag, newMessage.author.displayAvatarURL());
 			logEmbed.setDescription(`**Uncached message edited in ${newMessage.channel}** [Jump to Message](${newMessage.url})`);
 			logEmbed.addField('After', charLimit(newMessage.content, 1024));
-			logEmbed.setFooter(`ID: ${newMessage.id} | ${dtg()}`);
+			logEmbed.setFooter(`ID: ${newMessage.id} | ${await dtg()}`);
 		}
 
 		else {
@@ -31,7 +31,7 @@ module.exports = {
 			logEmbed.setDescription(`**Message edited in ${newMessage.channel}** [Jump to Message](${newMessage.url})`);
 			logEmbed.addField('Before', charLimit(oldMessage.content, 1024));
 			logEmbed.addField('After', charLimit(newMessage.content, 1024));
-			logEmbed.setFooter(`Author: ${newMessage.author.id} | Message: ${newMessage.id} | ${dtg()}`);
+			logEmbed.setFooter(`Author: ${newMessage.author.id} | Message: ${newMessage.id} | ${await dtg()}`);
 		}
 
 		commandHandler(newMessage);

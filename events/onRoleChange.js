@@ -56,7 +56,7 @@ module.exports = {
 		else return;
 
 		logEmbed.setAuthor(newRole.guild.name, newRole.guild.iconURL());
-		logEmbed.setFooter(`ID: ${newRole.id} | ${dtg()}`);
+		logEmbed.setFooter(`ID: ${newRole.id} | ${await dtg()}`);
 		sendMsg(log, logEmbed);
 	},
 };

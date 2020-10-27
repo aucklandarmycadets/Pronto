@@ -7,7 +7,7 @@ module.exports = async guild => {
 	const { cmds: { connected } } = await require('../cmds')(guild);
 	const { ids: { attendanceID }, colours } = await require('../handlers/database')(guild);
 
-	connected.execute = msg => {
+	connected.execute = async msg => {
 		const { bot } = require('../pronto');
 
 		const channelMentions = msg.mentions.channels;
@@ -40,7 +40,7 @@ module.exports = async guild => {
 			.setColor(colours.success)
 			.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
 			.setDescription(connectedMembers.join('\n'))
-			.setFooter(`${dtg()}`);
+			.setFooter(await dtg());
 		sendMsg(attendanceChannel, connectedEmbed);
 	};
 

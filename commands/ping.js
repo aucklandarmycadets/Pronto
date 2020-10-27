@@ -13,7 +13,7 @@ module.exports = async guild => {
 		let pingValue = 'Pinging...';
 
 		sendMsg(msg.channel, '**Pong!**')
-			.then(reply => {
+			.then(async reply => {
 				const pingTimestamp = (msg.editedTimestamp - msg.createdTimestamp > 0)
 					? msg.editedTimestamp
 					: msg.createdTimestamp;
@@ -21,7 +21,7 @@ module.exports = async guild => {
 				pingValue = reply.createdTimestamp - pingTimestamp;
 				const pingEmbed = new Discord.MessageEmbed()
 					.setColor(colours.success)
-					.setFooter(`${pingValue} ms | ${dtg()} | Pronto v${version}`);
+					.setFooter(`${pingValue} ms | ${await dtg()} | Pronto v${version}`);
 				reply.edit(pingEmbed);
 			});
 	};

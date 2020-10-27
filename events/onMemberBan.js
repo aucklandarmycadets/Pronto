@@ -25,7 +25,7 @@ module.exports = {
 
 		logEmbed.setThumbnail(member.displayAvatarURL());
 		logEmbed.setDescription(`${member} ${member.tag}`);
-		logEmbed.setFooter(`ID: ${member.id} | ${dtg()}`);
+		logEmbed.setFooter(`ID: ${member.id} | ${await dtg()}`);
 		sendMsg(log, logEmbed);
 	},
 };

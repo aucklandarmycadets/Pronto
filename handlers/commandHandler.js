@@ -31,7 +31,7 @@ module.exports = async msg => {
 		else return helpCmd.execute(msg, args);
 	}
 
-	const hasPerms = permissionsHandler(msg, cmd);
+	const hasPerms = await permissionsHandler(msg, cmd);
 
 	if (hasPerms === 'err') return;
 
@@ -44,6 +44,6 @@ module.exports = async msg => {
 	}
 
 	catch (error) {
-		debugError(error, `Error executing ${pCmd(cmd, msg.guild)}`);
+		debugError(error, `Error executing ${await pCmd(cmd, msg.guild)}`);
 	}
 };
