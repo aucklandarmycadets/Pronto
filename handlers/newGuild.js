@@ -27,7 +27,7 @@ module.exports = async guild => {
 			exampleVoiceID: await findChannel(names.exampleVoice, guild, 'voice'),
 			everyoneID: guild.roles.everyone.id,
 			visitorID: findRole(names.visitor, guild),
-			administratorID: findRole(names.administrator, guild),
+			administratorID: '',
 			formations: [],
 			nonCadet: [],
 			tacPlus: [],
