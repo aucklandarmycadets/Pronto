@@ -132,7 +132,7 @@ module.exports = async guild => {
 					'Description': this.desc,
 					'Usage': `${pCmd(this, guild)} <user> <dates> <activity> <reason> [additional remarks]`,
 					'Example': `${pCmd(this, guild)} <@${devID}> 01 Jan for Parade Night due to an appointment`,
-					'Allowed Roles': rolesOutput(this.roles),
+					'Allowed Roles': rolesOutput(this.roles, guild),
 				});
 			},
 			get error() { return errorText(this.help, this.cmd); },
@@ -151,7 +151,7 @@ module.exports = async guild => {
 					'Aliases': pAls(this),
 					'Description': this.desc,
 					'Usage': `\n${pCmd(this, guild)} <message>\n${pCmd(this, guild)} update <message>`,
-					'Allowed Roles': rolesOutput(this.roles),
+					'Allowed Roles': rolesOutput(this.roles, guild),
 				});
 			},
 			get error() { return errorText(this.help, this.cmd); },
@@ -171,7 +171,7 @@ module.exports = async guild => {
 					'Description': this.desc,
 					'Usage': `${pCmd(this, guild)} <voice channel>`,
 					'Example': `${pCmd(this, guild)} <#${ids.exampleVoiceID}>`,
-					'Allowed Roles': rolesOutput(this.roles),
+					'Allowed Roles': rolesOutput(this.roles, guild),
 				});
 			},
 			get error() { return errorText(this.help, this.cmd); },
@@ -191,7 +191,7 @@ module.exports = async guild => {
 					'Description': this.desc,
 					'Usage': `${pCmd(this, guild)} <text channel>`,
 					'Example': `${pCmd(this, guild)} <#${ids.exampleTextID}>`,
-					'Allowed Roles': rolesOutput(this.roles),
+					'Allowed Roles': rolesOutput(this.roles, guild),
 				});
 			},
 			get error() { return errorText(this.help, this.cmd); },
@@ -211,7 +211,7 @@ module.exports = async guild => {
 					'Description': this.desc,
 					'Usage': `${pCmd(this, guild)} <count> [user]`,
 					'Examples': `\n${pCmd(this, guild)} 10\n${pCmd(this, guild)} 5 <@${devID}>`,
-					'Allowed Roles': rolesOutput(this.roles),
+					'Allowed Roles': rolesOutput(this.roles, guild),
 				});
 			},
 			get error() { return errorText(this.help, this.cmd); },
