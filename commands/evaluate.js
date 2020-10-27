@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 
 const { colours, ...config } = require('../config');
 const { cmds: { evaluate, ...cmds }, ...cmdsList } = require('../cmds');
-const { cmdError, dtg, sendMsg, ...modules } = require('../modules');
+const { cmdError, dtg, js, sendMsg, ...modules } = require('../modules');
 
 module.exports = evaluate;
 module.exports.execute = async (msg, args) => {
@@ -48,7 +48,7 @@ module.exports.execute = async (msg, args) => {
 
 			(str !== 'Promise { <pending> }')
 				? (codeBlock)
-					? sendMsg(msg.channel, `\`\`\`js\n${str.slice(0, breakAt)}\`\`\``)
+					? sendMsg(msg.channel, js(str.slice(0, breakAt)))
 					: sendMsg(msg.channel, str.slice(0, breakAt))
 				: null;
 
