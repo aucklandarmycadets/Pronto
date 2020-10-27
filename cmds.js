@@ -217,9 +217,12 @@ const cmds = {
 
 const cmdsList = {
 	all: {
-		type: null,
-		ids: null,
-		cmds: commandText(this.ids, this.type),
+		type: 'role',
+		ids: [ids.everyoneID],
+		get cmds() {
+			delete this.cmds;
+			return this.cmds = commandText(this.ids, this.type);
+		},
 	},
 	cdt: {
 		type: 'noRole',
@@ -275,15 +278,16 @@ function commandText(tier, type) {
 	const object = {};
 
 	for (const cmd of Object.values(cmds)) {
-		if (!type) {
-			object[`${pCmd(cmds.help)}`] = cmds.help.desc.unqualified;
-			object[`${pCmd(cmds.help)} [command]`] = cmds.help.desc.qualified;
-			continue;
-		}
-
 		else if ((type === 'role' && cmd.roles === tier)
 			|| (type === 'noRole' && cmd.noRoles === tier)
 			|| (type === 'dev' && cmd.devOnly)) {
+
+			if (cmd === cmds.help) {
+				object[`${pCmd(cmds.help)}`] = cmds.help.desc.unqualified;
+				object[`${pCmd(cmds.help)} [command]`] = cmds.help.desc.qualified;
+				continue;
+			}
+
 			object[`${pCmd(cmd)}`] = cmd.desc;
 		}
 	}
