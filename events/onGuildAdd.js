@@ -26,8 +26,8 @@ module.exports = {
 			exampleTextID: await findChannel(names.exampleText, guild),
 			exampleVoiceID: await findChannel(names.exampleVoice, guild, 'voice'),
 			everyoneID: guild.roles.everyone.id,
-			visitorID: guild.roles.cache.find(role => role.name.includes('Visitor')).id || '',
-			administratorID: guild.roles.cache.find(role => role.name.includes('Adminisatrator')).id || '',
+			visitorID: findRole(names.visitor, guild),
+			administratorID: findRole(names.administrator, guild),
 			formations: [],
 			nonCadet: [],
 			tacPlus: [],
@@ -123,4 +123,9 @@ async function findChannel(channel, guild, type) {
 	catch (error) { console.log(error); }
 
 	return newChannel.id;
+}
+
+function findRole(name, guild) {
+	try { return guild.roles.cache.find(role => role.name.toLowerCase().includes(name.toLowerCase())).id; }
+	catch { return ''; }
 }

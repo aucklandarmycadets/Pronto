@@ -38,6 +38,8 @@ exports.names = {
 	archived: 'Archived',
 	exampleText: 'example-text',
 	exampleVoice: 'example-voice',
+	visitor: 'visitor',
+	administrator: 'administrator',
 };
 
 exports.emojis = {
