@@ -1,14 +1,23 @@
 'use strict';
 
+const Discord = require('discord.js');
+
 const { config: { prefix } } = require('../config');
-const { cmds: { help } } = require('../cmds');
 const { debugError, dmCmdError, pCmd } = require('../modules');
 
-module.exports = msg => {
+module.exports = async msg => {
 	const { bot } = require('../pronto');
 	const { permissionsHandler } = require('./');
+	const { cmds: { help } } = await require('../cmds')(msg.guild);
 
 	if (msg.author.bot || !msg.content.startsWith(prefix)) return;
+
+	bot.commands = new Discord.Collection();
+	const botCommands = await require('../commands')(msg.guild);
+
+	Object.keys(botCommands).map(key => {
+		bot.commands.set(botCommands[key].cmd, botCommands[key]);
+	});
 
 	const args = msg.content.split(/ +/);
 	const msgCmd = args.shift().toLowerCase().replace(prefix, '');

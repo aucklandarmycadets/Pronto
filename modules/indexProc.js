@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = dir => {
+module.exports = async (dir, guild) => {
 	const fs = require('fs');
 
 	const files = fs.readdirSync(dir).filter(file => file.endsWith('.js') && file !== 'index.js');
@@ -9,7 +9,7 @@ module.exports = dir => {
 
 	for (const file of files) {
 		const key = file.replace('.js', '');
-		procObj[key] = require(`.${dir}/${key}`);
+		procObj[key] = await require(`.${dir}/${key}`)(guild);
 	}
 
 	return procObj;

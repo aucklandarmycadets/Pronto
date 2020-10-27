@@ -15,13 +15,6 @@ bot.login(TOKEN)
 
 mongoose.login(MONGOURI);
 
-bot.commands = new Discord.Collection();
-const botCommands = require('./commands');
-
-Object.keys(botCommands).map(key => {
-	bot.commands.set(botCommands[key].cmd, botCommands[key]);
-});
-
 const eventHandler = (proc, event, mod) => proc.on(event, (...args) => mod.execute(event, ...args));
 
 const botEvents = require('./events');

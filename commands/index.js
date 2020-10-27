@@ -1,5 +1,5 @@
 'use strict';
 
-const indexProc = require('../modules/indexProc');
+const { indexProc } = require('../modules');
 
-module.exports = indexProc('./commands');
+module.exports = async guild => await indexProc('./commands', guild);
