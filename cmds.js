@@ -82,7 +82,7 @@ const cmds = {
 			qualified: 'Get help with a specific command.',
 		},
 		allowDM: true,
-		roles: [],
+		roles: [ids.everyoneID],
 		noRoles: [],
 		devOnly: false,
 		get help() {
@@ -167,7 +167,7 @@ const cmds = {
 				'Aliases': pAls(this),
 				'Description': this.desc,
 				'Usage': `${pCmd(this)} <voice channel>`,
-				'Example': `${pCmd(this)} <#${ids.classroomID}>`,
+				'Example': `${pCmd(this)} <#${ids.exampleVoiceID}>`,
 				'Allowed Roles': rolesOutput(this.roles),
 			});
 		},
@@ -187,7 +187,7 @@ const cmds = {
 				'Aliases': pAls(this),
 				'Description': this.desc,
 				'Usage': `${pCmd(this)} <text channel>`,
-				'Example': `${pCmd(this)} <#${ids.tacticalID}>`,
+				'Example': `${pCmd(this)} <#${ids.exampleTextID}>`,
 				'Allowed Roles': rolesOutput(this.roles),
 			});
 		},
@@ -217,9 +217,12 @@ const cmds = {
 
 const cmdsList = {
 	all: {
-		type: null,
-		ids: null,
-		cmds: commandText(this.ids, this.type),
+		type: 'role',
+		ids: [ids.everyoneID],
+		get cmds() {
+			delete this.cmds;
+			return this.cmds = commandText(this.ids, this.type);
+		},
 	},
 	cdt: {
 		type: 'noRole',
@@ -275,15 +278,16 @@ function commandText(tier, type) {
 	const object = {};
 
 	for (const cmd of Object.values(cmds)) {
-		if (!type) {
-			object[`${pCmd(cmds.help)}`] = cmds.help.desc.unqualified;
-			object[`${pCmd(cmds.help)} [command]`] = cmds.help.desc.qualified;
-			continue;
-		}
-
-		else if ((type === 'role' && cmd.roles === tier)
-			|| (type === 'noRole' && cmd.noRoles === tier)
+		if ((type === 'role' && equals(cmd.roles, tier))
+			|| (type === 'noRole' && equals(cmd.noRoles, tier))
 			|| (type === 'dev' && cmd.devOnly)) {
+
+			if (cmd === cmds.help) {
+				object[`${pCmd(cmds.help)}`] = cmds.help.desc.unqualified;
+				object[`${pCmd(cmds.help)} [command]`] = cmds.help.desc.qualified;
+				continue;
+			}
+
 			object[`${pCmd(cmd)}`] = cmd.desc;
 		}
 	}
@@ -298,11 +302,11 @@ function helpText(object, forList) {
 		? ['`', '` - ']
 		: ['**', ':** '];
 
-	for (const [property, value] of Object.entries(object)) {
-		helpString += `${startFormat}${property}${endFormat}${value}\n`;
+	for (const [key, value] of Object.entries(object)) {
+		helpString += `${startFormat}${key}${endFormat}${value}\n`;
 	}
 
-	return helpString.slice(0, helpString.length - 2);
+	return helpString.replace(/\n+$/, '');
 }
 
 function errorText(helpTxt, cmd) {
@@ -315,6 +319,18 @@ function pAls(cmd) {
 	const als = [...cmd.aliases];
 	for (let i = 0; i < als.length; i++) als[i] = `${prefix}${als[i]}`;
 	return als.join(', ');
+}
+
+function equals(arr1, arr2) {
+	if (arr1 === arr2) return true;
+	if (arr1 === null || arr2 === null) return false;
+	if (arr1.length !== arr2.length) return false;
+
+	for (let i = 0; i < arr1.length; i++) {
+		if (arr1[i] !== arr2[i]) return false;
+	}
+
+	return true;
 }
 
 module.exports = {
