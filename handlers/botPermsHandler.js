@@ -2,10 +2,10 @@
 
 const Discord = require('discord.js');
 const { config: { permsInt }, ids: { serverID }, colours } = require('../config');
+const { embedScaffold } = require('../modules');
 
 module.exports = changes => {
 	const { bot } = require('../pronto');
-	const { embedScaffold } = require('./');
 
 	const requiredPermissions = new Discord.Permissions(permsInt);
 	const server = bot.guilds.cache.get(serverID);
