@@ -1,12 +1,13 @@
 'use strict';
 
 const Discord = require('discord.js');
+const { ids: { devID } } = require('../config');
 const { delMsg, dmCmdError, embedScaffold, errorReact, getRoleError, pCmd, sendDM, sendMsg, successReact } = require('../modules');
 const { permissionsHandler } = require('../handlers');
 
 module.exports = async guild => {
 	const { cmds: { help }, cmdsList } = await require('../cmds')(guild);
-	const { config: { prontoLogo }, ids: { serverID, devID, adjPlus }, colours } = await require('../handlers/database')(guild);
+	const { config: { prontoLogo }, ids: { serverID, adjPlus }, colours } = await require('../handlers/database')(guild);
 
 	help.execute = (msg, args) => {
 		const { bot } = require('../pronto');

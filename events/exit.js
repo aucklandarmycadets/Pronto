@@ -3,7 +3,7 @@
 const Discord = require('discord.js');
 const mongoose = require('mongoose');
 
-const { ids: { devID }, colours } = require('../config');
+const { ids: { devID } } = require('../config');
 const { dtg, formatAge, sendDM } = require('../modules');
 
 module.exports = {
@@ -13,6 +13,8 @@ module.exports = {
 		const { bot, version } = require('../pronto');
 
 		if (event === 'exit') console.log(`Exiting with code ${code}, uptime of ${formatAge(bot.uptime)}`);
+
+		const { colours } = await require('../handlers/database')();
 
 		const dev = bot.users.cache.get(devID);
 
