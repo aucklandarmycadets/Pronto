@@ -4,7 +4,8 @@ const Discord = require('discord.js');
 
 const { config: { prontoLogo }, ids: { serverID, devID, adjPlus }, colours } = require('../config');
 const { cmds: { help }, cmdsList } = require('../cmds');
-const { cmdPermsCheck, delMsg, dmCmdError, embedScaffold, errorReact, getRoleError, pCmd, sendDM, sendMsg, successReact } = require('../modules');
+const { delMsg, dmCmdError, embedScaffold, errorReact, getRoleError, pCmd, sendDM, sendMsg, successReact } = require('../modules');
+const { permissionsHandler } = require('../handlers');
 
 module.exports = help;
 module.exports.execute = (msg, args) => {
@@ -32,7 +33,7 @@ module.exports.execute = (msg, args) => {
 	const cmd = bot.commands.get(msgCmd) || bot.commands.find(command => command.aliases && command.aliases.includes(msgCmd));
 
 	(cmd)
-		? cmdPermsCheck(msg, cmd)
+		? permissionsHandler(msg, cmd)
 			? sendHelpEmbed(cmd)
 			: (msg.guild)
 				? sendCmdList()

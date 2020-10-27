@@ -3,7 +3,8 @@
 const Discord = require('discord.js');
 
 const { ids: { logID }, colours } = require('../config');
-const { dtg, sendMsg, updatedPermissions, verifyBotPermissions } = require('../modules');
+const { dtg, sendMsg, updatedPermissions } = require('../modules');
+const { botPermsHandler } = require('../handlers');
 
 module.exports = {
 	events: ['guildMemberUpdate'],
@@ -28,7 +29,7 @@ module.exports = {
 
 			if (newMember.id === bot.user.id) {
 				const changedPerms = updatedPermissions(oldMember, newMember);
-				verifyBotPermissions(changedPerms);
+				botPermsHandler(changedPerms);
 			}
 		}
 

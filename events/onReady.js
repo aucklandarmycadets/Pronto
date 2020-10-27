@@ -2,7 +2,8 @@
 
 const { ids: { serverID, devID }, colours } = require('../config');
 const { cmds: { help } } = require('../cmds');
-const { embedScaffold, pCmd, verifyBotPermissions } = require('../modules');
+const { embedScaffold, pCmd } = require('../modules');
+const { botPermsHandler } = require('../handlers');
 
 module.exports = {
 	events: ['ready'],
@@ -17,6 +18,6 @@ module.exports = {
 		if (!bot.guilds.cache.get(serverID)) return embedScaffold(dev, '**Error reaching the server, check the IDs!**', colours.error, 'dev');
 		else embedScaffold(dev, '**Ready to go!**', colours.success, 'dev');
 
-		verifyBotPermissions();
+		botPermsHandler();
 	},
 };

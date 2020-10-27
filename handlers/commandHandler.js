@@ -2,10 +2,11 @@
 
 const { config: { prefix } } = require('../config');
 const { cmds: { help } } = require('../cmds');
-const { cmdPermsCheck, debugError, dmCmdError, pCmd } = require('../modules');
+const { debugError, dmCmdError, pCmd } = require('../modules');
 
 module.exports = msg => {
 	const { bot } = require('../pronto');
+	const { permissionsHandler } = require('./');
 
 	if (msg.author.bot || !msg.content.startsWith(prefix)) return;
 
@@ -22,7 +23,7 @@ module.exports = msg => {
 		else return helpCmd.execute(msg, args);
 	}
 
-	const hasPerms = cmdPermsCheck(msg, cmd);
+	const hasPerms = permissionsHandler(msg, cmd);
 
 	if (hasPerms === 'err') return;
 
