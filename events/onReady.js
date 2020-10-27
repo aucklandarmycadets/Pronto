@@ -1,7 +1,6 @@
 'use strict';
 
-const { ids: { serverID, devID }, colours } = require('../config');
-const { cmds: { help } } = require('../cmds');
+const { ids: { devID } } = require('../config');
 const { embedScaffold, pCmd } = require('../modules');
 const { botPermsHandler } = require('../handlers');
 
@@ -10,6 +9,9 @@ module.exports = {
 	process: [],
 	async execute() {
 		const { bot } = require('../pronto');
+		const { ids: { serverID }, colours } = await require('../handlers/database')();
+		const { cmds: { help } } = await require('../cmds')();
+
 		const dev = await bot.users.fetch(devID);
 
 		console.info(`Logged in as ${bot.user.tag}!`);

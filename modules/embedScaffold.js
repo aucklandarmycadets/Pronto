@@ -1,11 +1,11 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { ids: { debugID } } = require('../config');
 
-module.exports = (dest, descMsg, colour, type, fieldTitle, fieldContent, errorField) => {
+module.exports = async (dest, descMsg, colour, type, fieldTitle, fieldContent, errorField) => {
 	const { bot, version } = require('../pronto');
 	const { charLimit, dtg, sendDM, sendMsg } = require('./');
+	const { ids: { debugID } } = await require('../handlers/database')();
 
 	const debugChannel = bot.channels.cache.get(debugID);
 	const devFooter = (type === 'dev')

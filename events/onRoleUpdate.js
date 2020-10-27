@@ -1,15 +1,14 @@
 'use strict';
 
 const Discord = require('discord.js');
-
-const { ids: { logID }, colours } = require('../config');
 const { dtg, sendMsg } = require('../modules');
 
 module.exports = {
 	events: ['roleCreate', 'roleDelete'],
 	process: [],
-	execute(event, role) {
+	async execute(event, role) {
 		const { bot } = require('../pronto');
+		const { ids: { logID }, colours } = await require('../handlers/database')(role.guild);
 
 		const log = bot.channels.cache.get(logID);
 		const logEmbed = new Discord.MessageEmbed()

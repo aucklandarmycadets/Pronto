@@ -1,16 +1,15 @@
 'use strict';
 
 const Discord = require('discord.js');
-
-const { ids: { logID }, colours } = require('../config');
 const { dtg, sendMsg } = require('../modules');
 const { channelPairing } = require('../handlers');
 
 module.exports = {
 	events: ['voiceStateUpdate'],
 	process: [],
-	execute(event, oldState, newState) {
+	async execute(event, oldState, newState) {
 		const { bot } = require('../pronto');
+		const { ids: { logID }, colours } = await require('../handlers/database')(newState.guild);
 
 		const log = bot.channels.cache.get(logID);
 		const newMember = newState.member;

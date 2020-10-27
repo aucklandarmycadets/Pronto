@@ -1,15 +1,14 @@
 'use strict';
 
 const Discord = require('discord.js');
-
-const { ids: { logID }, colours } = require('../config');
 const { dtg, sendMsg } = require('../modules');
 
 module.exports = {
 	events: ['guildBanAdd', 'guildBanRemove'],
 	process: [],
-	execute(event, guild, member) {
+	async execute(event, guild, member) {
 		const { bot } = require('../pronto');
+		const { ids: { logID }, colours } = await require('../handlers/database')(guild);
 
 		const log = bot.channels.cache.get(logID);
 		const logEmbed = new Discord.MessageEmbed();

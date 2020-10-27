@@ -1,8 +1,8 @@
 'use strict';
 
-const { ids: { administratorID } } = require('../config');
+module.exports = async (array, guild, skipFormat) => {
+	const { ids: { administratorID } } = await require('../handlers/database')(guild);
 
-module.exports = (array, skipFormat) => {
 	let rolesString = '';
 	const filteredArray = array.filter(role => role !== administratorID && role.name !== '@everyone');
 

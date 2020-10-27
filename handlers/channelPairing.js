@@ -1,14 +1,13 @@
 'use strict';
 
 const Discord = require('discord.js');
-
-const { ids: { adjPlus }, emojis, colours } = require('../config');
-const { cmds: { purge } } = require('../cmds');
 const { debugError, dtg, pCmd, purgeChannel, sendMsg, successReact } = require('../modules');
 const pairs = require('../channelPairs');
 
-module.exports = (oldState, newState) => {
+module.exports = async (oldState, newState) => {
 	const { bot } = require('../pronto');
+	const { ids: { adjPlus }, emojis, colours } = await require('./database')(newState.guild);
+	const { cmds: { purge } } = await require('../cmds')(newState.guild);
 
 	const newMember = newState.member;
 

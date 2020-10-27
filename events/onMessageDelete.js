@@ -1,9 +1,6 @@
 'use strict';
 
 const Discord = require('discord.js');
-
-const { config: { prefix }, ids: { logID }, colours } = require('../config');
-const { cmds: { help, attendance, purge } } = require('../cmds');
 const { charLimit, debugError, delMsg, dtg, sendMsg } = require('../modules');
 
 module.exports = {
@@ -11,6 +8,8 @@ module.exports = {
 	process: [],
 	async execute(event, msg) {
 		const { bot } = require('../pronto');
+		const { config: { prefix }, ids: { logID }, colours } = await require('../handlers/database')(msg.guild);
+		const { cmds: { help, attendance, purge } } = await require('../cmds')(msg.guild);
 
 		const log = bot.channels.cache.get(logID);
 		const logEmbed = new Discord.MessageEmbed()
@@ -23,7 +22,7 @@ module.exports = {
 		}
 
 		else {
-			if (cmdCheck(msg) || !msg.guild) return;
+			if (cmdCheck() || !msg.guild) return;
 
 			const messageAuthor = msg.author;
 			const lastMsg = msg.channel.lastMessage;
@@ -71,16 +70,16 @@ module.exports = {
 		}
 
 		sendMsg(log, logEmbed);
+
+		function cmdCheck() {
+			const autoDelCmds = [attendance, help, purge];
+
+			const args = msg.content.split(/ +/);
+			const msgCmd = args.shift().toLowerCase().replace(prefix, '');
+
+			if (autoDelCmds.some(cmd => cmd.cmd === msgCmd || cmd.aliases.includes(msgCmd))) return true;
+
+			return false;
+		}
 	},
 };
-
-function cmdCheck(msg) {
-	const autoDelCmds = [attendance, help, purge];
-
-	const args = msg.content.split(/ +/);
-	const msgCmd = args.shift().toLowerCase().replace(prefix, '');
-
-	if (autoDelCmds.some(cmd => cmd.cmd === msgCmd || cmd.aliases.includes(msgCmd))) return true;
-
-	return false;
-}

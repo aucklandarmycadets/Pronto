@@ -1,11 +1,12 @@
 'use strict';
 
-const { newGuild } = require('../handlers');
+const { botPermsHandler, newGuild } = require('../handlers');
 
 module.exports = {
 	events: ['guildCreate'],
 	process: [],
 	execute(event, guild) {
+		botPermsHandler(guild);
 		return newGuild(guild);
 	},
 };

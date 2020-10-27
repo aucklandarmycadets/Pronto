@@ -1,16 +1,15 @@
 'use strict';
 
 const Discord = require('discord.js');
-
-const { ids: { logID }, colours } = require('../config');
 const { dtg, sendMsg, updatedPermissions } = require('../modules');
 const { botPermsHandler } = require('../handlers');
 
 module.exports = {
 	events: ['guildMemberUpdate'],
 	process: [],
-	execute(event, oldMember, newMember) {
+	async execute(event, oldMember, newMember) {
 		const { bot } = require('../pronto');
+		const { ids: { logID }, colours } = await require('../handlers/database')(newMember.guild);
 
 		const log = bot.channels.cache.get(logID);
 		const roleDifference = newMember.roles.cache.difference(oldMember.roles.cache).first();

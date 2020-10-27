@@ -1,10 +1,10 @@
 'use strict';
 
-const { ids: { serverID, devID } } = require('../config');
 const { getRoleError } = require('../modules');
 
-module.exports = (msg, cmd) => {
+module.exports = async (msg, cmd) => {
 	const { bot } = require('../pronto');
+	const { ids: { serverID, devID } } = await require('../handlers/database')(msg.guild);
 
 	const server = bot.guilds.cache.get(serverID);
 	const authorID = msg.author.id;

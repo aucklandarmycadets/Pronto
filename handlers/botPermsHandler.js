@@ -1,11 +1,12 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { config: { permsInt }, ids: { serverID }, colours } = require('../config');
+const { config: { permsInt } } = require('../config');
 const { embedScaffold } = require('../modules');
 
-module.exports = changes => {
+module.exports = async (guild, changes) => {
 	const { bot } = require('../pronto');
+	const { ids: { serverID }, colours } = await require('./database')(guild);
 
 	const requiredPermissions = new Discord.Permissions(permsInt);
 	const server = bot.guilds.cache.get(serverID);

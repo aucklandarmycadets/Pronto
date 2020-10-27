@@ -1,15 +1,14 @@
 'use strict';
 
 const Discord = require('discord.js');
-
-const { ids: { logID }, colours } = require('../config');
 const { dtg, rolesOutput, sendMsg } = require('../modules');
 
 module.exports = {
 	events: ['guildMemberRemove'],
 	process: [],
-	execute(event, member) {
+	async execute(event, member) {
 		const { bot } = require('../pronto');
+		const { ids: { logID }, colours } = await require('../handlers/database')(member.guild);
 
 		if (member.deleted) return;
 

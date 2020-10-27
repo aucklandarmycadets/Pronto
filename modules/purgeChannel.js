@@ -1,9 +1,8 @@
 'use strict';
 
-const { colours } = require('../config');
-
-module.exports = (msgs, chnl, collector) => {
+module.exports = async (msgs, chnl, collector) => {
 	const { debugError, embedScaffold } = require('./');
+	const { colours } = await require('../handlers/database')(chnl.guild);
 
 	chnl.bulkDelete(msgs)
 		.catch(error => {

@@ -1,13 +1,12 @@
 'use strict';
 
 const Discord = require('discord.js');
-
-const { config: { prefix } } = require('../config');
 const { debugError, dmCmdError, pCmd } = require('../modules');
 
 module.exports = async msg => {
 	const { bot } = require('../pronto');
 	const { permissionsHandler } = require('./');
+	const { config: { prefix } } = await require('./database')(msg.guild);
 	const { cmds: { help } } = await require('../cmds')(msg.guild);
 
 	if (msg.author.bot || !msg.content.startsWith(prefix)) return;
