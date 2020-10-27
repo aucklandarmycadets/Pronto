@@ -5,7 +5,6 @@ exports.config = {
 	permsInt: 1879141584,
 	dateOutput: 'HHMM "h" ddd, dd mmm yy',
 	prontoLogo: 'https://i.imgur.com/EzmJVyV.png',
-	devID: '192181901065322496',
 };
 
 exports.ids = {

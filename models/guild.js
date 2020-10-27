@@ -11,7 +11,6 @@ const guildSchema = mongoose.Schema({
 	},
 	ids: {
 		serverID: String,
-		devID: String,
 		debugID: String,
 		logID: String,
 		attendanceID: String,

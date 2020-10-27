@@ -17,7 +17,6 @@ module.exports = async guild => {
 		},
 		ids: {
 			serverID: guild.id,
-			devID: config.devID,
 			debugID: await findChannel(names.debug, guild),
 			logID: await findChannel(names.log, guild),
 			attendanceID: await findChannel(names.attendance, guild),
