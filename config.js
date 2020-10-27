@@ -9,6 +9,7 @@ exports.config = {
 
 exports.ids = {
 	serverID: '765758073942966272',
+	defaultServer: '765758073942966272',
 	devID: '192181901065322496',
 	debugID: '765767054111539240',
 	logID: '765767003993538570',
