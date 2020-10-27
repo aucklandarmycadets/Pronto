@@ -57,7 +57,7 @@ module.exports.execute = (msg, args) => {
 		else return dmCmdError(msg, 'hasRole');
 	}
 
-	function sendCmdList() {
+	async function sendCmdList() {
 		let commandList;
 
 		for (const values of Object.values(cmdsList)) {
@@ -82,15 +82,11 @@ module.exports.execute = (msg, args) => {
 			}
 		}
 
-		const james = bot.users.cache.get('192181901065322496');
+		const james = await bot.users.fetch('192181901065322496');
 
-		if (!msg.guild && msgCmd) {
-			errorReact(msg);
-		}
+		if (!msg.guild && msgCmd) errorReact(msg);
 
-		else if (!msg.guild) {
-			successReact(msg);
-		}
+		else if (!msg.guild) successReact(msg);
 
 		helpEmbed.setTitle('Commands List');
 		helpEmbed.setThumbnail(prontoLogo);

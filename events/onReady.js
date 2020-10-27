@@ -7,9 +7,9 @@ const { embedScaffold, pCmd, verifyBotPermissions } = require('../modules');
 module.exports = {
 	events: ['ready'],
 	process: [],
-	execute() {
+	async execute() {
 		const { bot } = require('../pronto');
-		const dev = bot.users.cache.get(devID);
+		const dev = await bot.users.fetch(devID);
 
 		console.info(`Logged in as ${bot.user.tag}!`);
 		bot.user.setActivity(`the radio net | ${pCmd(help)}`, { type: 'LISTENING' });
