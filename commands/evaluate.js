@@ -2,6 +2,7 @@
 
 const Discord = require('discord.js');
 const { cmdError, dtg, js, sendMsg, ...modules } = require('../modules');
+const handlers = require('../handlers');
 
 module.exports = async guild => {
 	const { cmds: { evaluate, ...cmds }, ...cmdsList } = await require('../cmds')(guild);
