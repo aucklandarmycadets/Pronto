@@ -1,12 +1,14 @@
 const Discord = require('discord.js');
+const dateFormat = require('dateformat');
 const mongoose = require('mongoose');
 const Guild = require('../models/guild');
 
 const { config, names, emojis, colours } = require('../config');
-const { dtg, sendMsg } = require('../modules');
 
 module.exports = async guild => {
-	guild = new Guild({
+	if (!guild) return;
+
+	guild = await new Guild({
 		_id: mongoose.Types.ObjectId(),
 		guildID: guild.id,
 		guildName: guild.name,
@@ -50,6 +52,8 @@ module.exports = async guild => {
 	});
 
 	guild.save().catch(error => console.error(error));
+
+	return guild;
 };
 
 async function findChannel(channel, guild, type) {
@@ -58,18 +62,23 @@ async function findChannel(channel, guild, type) {
 	const channels = guild.channels;
 	const everyone = guild.roles.everyone;
 	const minPerms = ['VIEW_CHANNEL', 'SEND_MESSAGES'];
-	const reqMinPerms = [names.debug];
 
-	const foundChannel = channels.cache.find(chnl => chnl.name === channel);
+	const foundFilter = chnl => chnl.name === channel && chnl.guild === guild && chnl.permissionsFor(bot.user).has(minPerms);
+
+	const server = await bot.guilds.fetch(guild.id, true, true);
+
+	const foundChannel = (server.channels.cache.find(foundFilter))
+		? server.channels.cache.find(foundFilter)
+		: server.channels.cache.find(chnl => chnl.name === channel && chnl.guild === guild);
 
 	try {
-		if (foundChannel && !reqMinPerms.includes(channel)) return foundChannel.id;
+		if (foundChannel && !channel === names.debug) return foundChannel.id;
 		else if (foundChannel.permissionsFor(bot.user).has(minPerms)) return foundChannel.id;
 	}
 
 	catch { null; }
 
-	let prontoCategory = channels.cache.find(chnl => chnl.type === 'category' && chnl.name === 'Pronto');
+	let prontoCategory = bot.channels.cache.find(chnl => chnl.type === 'category' && chnl.name === 'Pronto' && chnl.guild === guild);
 
 	if (!prontoCategory) {
 		await channels.create('Pronto', { type: 'category' })
@@ -99,7 +108,8 @@ async function findChannel(channel, guild, type) {
 				.setColor(colours.error)
 				.setDescription(`\n\nI created this channel because I cannot access ${foundChannel}!`);
 
-			sendMsg(debugChannel, createdEmbed);
+			debugChannel.send(createdEmbed)
+				.catch(error => console.error(error));
 		}
 
 		await debugChannel.messages.fetch()
@@ -117,9 +127,10 @@ async function findChannel(channel, guild, type) {
 						.setColor(colours.pronto)
 						.setDescription(`Initialised channel(s) in **${prontoCategory.name}**, feel free to move and/or rename them!`)
 						.addField('More Information', 'To see a full list of linked channels or change my configuration, please visit my dashboard.')
-						.setFooter(await dtg());
+						.setFooter(dateFormat(config.dateOutput));
 
-					sendMsg(debugChannel, embed);
+					debugChannel.send(embed)
+						.catch(error => console.error(error));
 				}
 			});
 	}
