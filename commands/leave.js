@@ -34,7 +34,7 @@ module.exports = async guild => {
 			.setFooter(dtg());
 
 		sendMsg(attendanceChannel, attendanceEmbed);
-		sendDM(msg.author, dmEmbed);
+		sendDM(msg.author, dmEmbed, msg.channel);
 	};
 
 	return leave;

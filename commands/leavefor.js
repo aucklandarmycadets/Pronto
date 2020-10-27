@@ -62,8 +62,8 @@ module.exports = async guild => {
 			.setFooter(`Reply with ${pCmd(help)} ${leave.cmd} to learn how to request leave for yourself.`);
 
 		sendMsg(attendanceChannel, attendanceEmbed);
-		sendDM(msg.author, dmEmbed);
-		sendDM(absentee, absenteeEmbed, true);
+		sendDM(msg.author, dmEmbed, msg.channel);
+		sendDM(absentee, absenteeEmbed, msg.channel, true);
 	};
 
 	return leaveFor;

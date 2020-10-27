@@ -53,7 +53,7 @@ module.exports = async guild => {
 
 			else if (!helpEmbed.description.includes('Allowed Roles')) {
 				successReact(msg);
-				return sendDM(msg.author, helpEmbed);
+				return sendDM(msg.author, helpEmbed, msg.channel);
 			}
 
 			else return dmCmdError(msg, 'hasRole');
@@ -100,7 +100,7 @@ module.exports = async guild => {
 				helpEmbed.addField('Note', `Only displaying commands available to ${msg.author}.`);
 			}
 
-			sendDM(msg.author, helpEmbed);
+			sendDM(msg.author, helpEmbed, msg.channel);
 		}
 	};
 

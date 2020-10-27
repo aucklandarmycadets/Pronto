@@ -75,7 +75,7 @@ module.exports = async guild => {
 
 			if (chnlMsg) attendanceEmbed.setAuthor(`${formationName} (Update)`, msg.guild.iconURL());
 
-			sendDM(msg.author, attendanceEmbed)
+			sendDM(msg.author, attendanceEmbed, msg.channel)
 				.then(async dm => {
 					await successReact(dm);
 					await errorReact(dm);
@@ -145,7 +145,7 @@ module.exports = async guild => {
 								.setColor(colours.error)
 								.setAuthor(bot.user.tag, bot.user.avatarURL())
 								.setDescription('Timed out. Please action the command again.');
-							sendDM(msg.author, timeEmbed, true);
+							sendDM(msg.author, timeEmbed, msg.channel, true);
 						}
 					});
 				});

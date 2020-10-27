@@ -21,8 +21,8 @@ module.exports = async (dest, descMsg, colour, type, fieldTitle, fieldContent, e
 	if (fieldTitle) embed.addField(fieldTitle, fieldContent);
 	if (errorField) embed.setDescription(charLimit(`${descMsg}\n${errorField}`, 2048));
 
-	if (type === 'dm') sendDM(dest, embed, true);
-	else if (type === 'dev') sendDM(dest, embed, true);
+	if (type === 'dm') sendDM(dest, embed, null, true);
+	else if (type === 'dev') sendDM(dest, embed, null, true);
 	else if (type === 'msg') sendMsg(dest, embed);
 	else if (type === 'debug') debugChannel.send(embed).catch(error => console.error(error));
 };
