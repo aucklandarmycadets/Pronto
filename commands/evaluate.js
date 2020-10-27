@@ -5,7 +5,7 @@ const { cmdError, dtg, js, sendMsg, ...modules } = require('../modules');
 
 module.exports = async guild => {
 	const { cmds: { evaluate, ...cmds }, ...cmdsList } = await require('../cmds')(guild);
-	const { colours, ...config } = await require('../handlers/database')(guild);
+	const { colours, _doc: config, ...db } = await require('../handlers/database')(guild);
 
 	evaluate.execute = async (msg, args) => {
 		const { bot } = require('../pronto');
