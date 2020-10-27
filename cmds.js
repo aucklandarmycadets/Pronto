@@ -278,8 +278,8 @@ function commandText(tier, type) {
 	const object = {};
 
 	for (const cmd of Object.values(cmds)) {
-		else if ((type === 'role' && cmd.roles === tier)
-			|| (type === 'noRole' && cmd.noRoles === tier)
+		if ((type === 'role' && equals(cmd.roles, tier))
+			|| (type === 'noRole' && equals(cmd.noRoles, tier))
 			|| (type === 'dev' && cmd.devOnly)) {
 
 			if (cmd === cmds.help) {
@@ -319,6 +319,18 @@ function pAls(cmd) {
 	const als = [...cmd.aliases];
 	for (let i = 0; i < als.length; i++) als[i] = `${prefix}${als[i]}`;
 	return als.join(', ');
+}
+
+function equals(arr1, arr2) {
+	if (arr1 === arr2) return true;
+	if (arr1 === null || arr2 === null) return false;
+	if (arr1.length !== arr2.length) return false;
+
+	for (let i = 0; i < arr1.length; i++) {
+		if (arr1[i] !== arr2[i]) return false;
+	}
+
+	return true;
 }
 
 module.exports = {
