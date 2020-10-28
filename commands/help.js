@@ -34,7 +34,7 @@ module.exports = async guild => {
 		const cmd = bot.commands.get(msgCmd) || bot.commands.find(command => command.aliases && command.aliases.includes(msgCmd));
 
 		(cmd)
-			? permissionsHandler(msg, cmd)
+			? await permissionsHandler(msg, cmd)
 				? sendHelpEmbed(cmd)
 				: (msg.guild)
 					? sendCmdList()
