@@ -110,7 +110,7 @@ module.exports = async guild => {
 				return this.help = helpText({
 					'Aliases': pAls(this),
 					'Description': this.desc,
-					'Usage': `${pCmd(this, guild)} <dates> <activity> <reason> [additional remarks]`,
+					'Usage': `${pCmd(this, guild)} <date(s)> <activity> <reason> [additional remarks]`,
 					'Example': `${pCmd(this, guild)} 01 Jan for Parade Night due to an appointment`,
 				});
 			},
@@ -129,7 +129,7 @@ module.exports = async guild => {
 				return this.help = helpText({
 					'Aliases': pAls(this),
 					'Description': this.desc,
-					'Usage': `${pCmd(this, guild)} <user> <dates> <activity> <reason> [additional remarks]`,
+					'Usage': `${pCmd(this, guild)} <user> <date(s)> <activity> <reason> [additional remarks]`,
 					'Example': `${pCmd(this, guild)} <@${devID}> 01 Jan for Parade Night due to an appointment`,
 					'Allowed Roles': rolesOutput(this.roles),
 				});
