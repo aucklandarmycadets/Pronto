@@ -1,3 +1,5 @@
+'use strict';
+
 const Discord = require('discord.js');
 const dateFormat = require('dateformat');
 const mongoose = require('mongoose');
