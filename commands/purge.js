@@ -19,9 +19,7 @@ module.exports = async guild => {
 			else if (args.length > 2) throw 'Too many arguments.';
 
 			user = userMentions.first();
-			purgeCount = Number(args[0])
-				? Number(args[0])
-				: Number(args[1]);
+			purgeCount = Number(args[0]) || Number(args[1]);
 
 			if (!purgeCount && !user) throw 'Invalid input.';
 

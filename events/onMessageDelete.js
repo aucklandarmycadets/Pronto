@@ -33,7 +33,9 @@ module.exports = {
 			})
 				.catch(error => debugError(error, 'Error fetching audit logs.'));
 
-			const deletionLog = fetchedLogs ? fetchedLogs.entries.first() : null;
+			const deletionLog = (fetchedLogs)
+				? fetchedLogs.entries.first()
+				: null;
 
 			let content = (msg.content === '')
 				? msg.embeds[0]

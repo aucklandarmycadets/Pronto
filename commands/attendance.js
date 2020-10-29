@@ -101,9 +101,8 @@ module.exports = async guild => {
 								if (chnlMsg) {
 									attendanceEmbed.setFooter(`Last updated at ${await dtg()}`);
 
-									const formationDisplay = (msg.guild.roles.cache.find(role => role.name === formationName))
-										? (msg.guild.roles.cache.find(role => role.name === formationName))
-										: `**${formationName}**`;
+									const findFormation = role => role.name === formationName;
+									const formationDisplay = msg.guild.roles.cache.find(findFormation) || `**${formationName}**`;
 
 									embedScaffold(msg.channel, `${msg.author} Successfully updated attendance for ${formationDisplay}.`, colours.success, 'msg');
 
