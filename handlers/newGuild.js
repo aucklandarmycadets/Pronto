@@ -23,7 +23,7 @@ module.exports = async guild => {
 	recentlyCreated.add(guild.id);
 	setTimeout(() => {
 		recentlyCreated.delete(guild.id);
-	}, 30000);
+	}, 15000);
 
 	guild = await new Guild({
 		_id: mongoose.Types.ObjectId(),
