@@ -10,10 +10,10 @@ module.exports = async guild => {
 		? guild.id
 		: defaultServer;
 
-	const database = await Guild.findOne({ guildID: id }, async (error, found) => {
+	const foundGuild = await Guild.findOne({ guildID: id }, error => {
 		if (error) console.error(error);
-		if (!found) return await newGuild(guild);
 	});
 
-	return await Guild.findOne({ guildID: id });
+	if (foundGuild) return foundGuild;
+	else return await newGuild(guild);
 };

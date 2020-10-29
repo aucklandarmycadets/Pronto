@@ -7,8 +7,25 @@ const Guild = require('../models/guild');
 
 const { config, names, emojis, colours } = require('../config');
 
+const recentlyCreated = new Set();
+
 module.exports = async guild => {
-	if (!guild) return;
+	if (!guild) return require('../config');
+
+	const existingGuild = await Guild.findOne({ guildID: guild.id }, error => {
+		if (error) console.error(error);
+	});
+
+	if (existingGuild) return existingGuild;
+
+	if (recentlyCreated.has(guild.id)) return require('../config');
+
+	recentlyCreated.add(guild.id);
+	setTimeout(() => {
+		recentlyCreated.delete(guild.id);
+	}, 30000);
+
+	console.log('Creating');
 
 	guild = await new Guild({
 		_id: mongoose.Types.ObjectId(),
