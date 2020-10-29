@@ -3,7 +3,7 @@
 exports.config = {
 	prefix: '!',
 	permsInt: 1879141584,
-	dateOutput: 'HHMM "h" ddd, dd mmm yy',
+	dateOutput: 'HHMM "h" ddd, d mmm yy',
 	prontoLogo: 'https://i.imgur.com/EzmJVyV.png',
 };
 
