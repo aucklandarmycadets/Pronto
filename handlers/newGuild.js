@@ -25,8 +25,6 @@ module.exports = async guild => {
 		recentlyCreated.delete(guild.id);
 	}, 30000);
 
-	console.log('Creating');
-
 	guild = await new Guild({
 		_id: mongoose.Types.ObjectId(),
 		guildID: guild.id,
