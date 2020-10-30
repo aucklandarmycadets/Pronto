@@ -1,13 +1,13 @@
 'use strict';
 
 const Discord = require('discord.js');
-const dateFormat = require('dateformat');
 const mongoose = require('mongoose');
 const Guild = require('../models/guild');
 
 const { config, names, emojis, colours } = require('../config');
 
 const recentlyCreated = new Set();
+const createdChannels = new Discord.Collection();
 
 module.exports = async guild => {
 	if (!guild) return require('../config');
@@ -17,13 +17,10 @@ module.exports = async guild => {
 	});
 
 	if (existingGuild) return existingGuild;
-
 	if (recentlyCreated.has(guild.id)) return require('../config');
 
 	recentlyCreated.add(guild.id);
-	setTimeout(() => {
-		recentlyCreated.delete(guild.id);
-	}, 15000);
+	setTimeout(() => recentlyCreated.delete(guild.guildID), 15000);
 
 	guild = await new Guild({
 		_id: mongoose.Types.ObjectId(),
@@ -68,7 +65,25 @@ module.exports = async guild => {
 		},
 	});
 
-	guild.save().catch(error => console.error(error));
+	await guild.save().catch(error => console.error(error));
+
+	if (createdChannels.some(chnlGuild => chnlGuild === guild.guildID)) {
+		const { bot } = require('../pronto');
+		const { dtg } = require('../modules');
+
+		const prontoCategory = bot.channels.cache.find(chnl => chnl.type === 'category' && chnl.name === 'Pronto');
+		const debugChannel = bot.channels.cache.get(guild.ids.debugID);
+
+		const createdEmbed = new Discord.MessageEmbed()
+			.setAuthor(bot.user.tag, bot.user.avatarURL())
+			.setColor(colours.pronto)
+			.setDescription(`Initialised channel(s) in **${prontoCategory}**, feel free to move and/or rename them!`)
+			.addField('Created Channels', channelsOutput(createdChannels, guild))
+			.addField('More Information', 'To modify my configuration, please visit my dashboard.')
+			.setFooter(await dtg());
+
+		debugChannel.send(createdEmbed).catch(error => console.error(error));
+	}
 
 	return guild;
 };
@@ -76,33 +91,26 @@ module.exports = async guild => {
 async function findChannel(channel, guild, type) {
 	const { bot } = require('../pronto');
 
-	const channels = guild.channels;
 	const everyone = guild.roles.everyone;
 	const minPerms = ['VIEW_CHANNEL', 'SEND_MESSAGES'];
 
-	const foundFilter = chnl => chnl.name === channel && chnl.guild === guild && chnl.permissionsFor(bot.user).has(minPerms);
+	const hasMinPerms = chnl => chnl.name === channel && chnl.permissionsFor(bot.user).has(minPerms);
+	const hasChannel = chnl => chnl.name === channel;
 
-	const server = await bot.guilds.fetch(guild.id, true, true);
+	const foundChannel = guild.channels.cache.find(hasMinPerms) || guild.channels.cache.find(hasChannel);
 
-	const foundChannel = (server.channels.cache.find(foundFilter))
-		? server.channels.cache.find(foundFilter)
-		: server.channels.cache.find(chnl => chnl.name === channel && chnl.guild === guild);
-
-	try {
-		if (foundChannel && !channel === names.debug) return foundChannel.id;
-		else if (foundChannel.permissionsFor(bot.user).has(minPerms)) return foundChannel.id;
+	if (foundChannel) {
+		if (foundChannel.permissionsFor(bot.user).has(minPerms) || channel !== names.debug) return foundChannel.id;
 	}
 
-	catch { null; }
-
-	let prontoCategory = bot.channels.cache.find(chnl => chnl.type === 'category' && chnl.name === 'Pronto' && chnl.guild === guild);
+	let prontoCategory = guild.channels.cache.find(chnl => chnl.type === 'category' && chnl.name === 'Pronto');
 
 	if (!prontoCategory) {
-		await channels.create('Pronto', { type: 'category' })
+		await guild.channels.create('Pronto', { type: 'category' })
 			.then(async chnl => {
-				await chnl.setPosition(0);
 				await chnl.createOverwrite(bot.user.id, { 'VIEW_CHANNEL': true });
 				await chnl.createOverwrite(everyone, { 'VIEW_CHANNEL': false });
+				await chnl.setPosition(0);
 				prontoCategory = chnl;
 			})
 			.catch(error => console.error(`Error creating category 'Pronto' in ${guild.name} \n${error}`));
@@ -112,47 +120,21 @@ async function findChannel(channel, guild, type) {
 		? { type: type }
 		: { parent: prontoCategory, type: type };
 
-	const newChannel = await channels.create(channel, chnlOptions)
+	const newChannel = await guild.channels.create(channel, chnlOptions)
 		.catch(error => console.error(`Error creating ${channel} in ${guild.name} \n${error}`));
 
-	try {
-		const debugChannel = (newChannel.name === names.debug)
-			? newChannel
-			: bot.channels.cache.find(chnl => chnl.name === names.debug && chnl.guild.id === guild.id);
+	createdChannels.set(newChannel.id, guild.id);
+	setTimeout(() => createdChannels.delete(newChannel.id), 5000);
 
-		if (foundChannel) {
-			const createdEmbed = new Discord.MessageEmbed()
+	if (foundChannel) {
+		if (foundChannel.name === names.debug) {
+			const debugEmbed = new Discord.MessageEmbed()
 				.setColor(colours.error)
 				.setDescription(`\n\nI created this channel because I cannot access ${foundChannel}!`);
 
-			debugChannel.send(createdEmbed)
-				.catch(error => console.error(error));
+			newChannel.send(debugEmbed).catch(error => console.error(error));
 		}
-
-		await debugChannel.messages.fetch()
-			.then(async msgs => {
-				const filterBy = msg => {
-					try { return msg.embeds[0].description.includes('Initialised channel(s)'); }
-					catch { null; }
-				};
-
-				msgs = msgs.filter(filterBy).size;
-
-				if (!msgs) {
-					const embed = new Discord.MessageEmbed()
-						.setAuthor(bot.user.tag, bot.user.avatarURL())
-						.setColor(colours.pronto)
-						.setDescription(`Initialised channel(s) in **${prontoCategory.name}**, feel free to move and/or rename them!`)
-						.addField('More Information', 'To see a full list of linked channels or change my configuration, please visit my dashboard.')
-						.setFooter(dateFormat(config.dateOutput));
-
-					debugChannel.send(embed)
-						.catch(error => console.error(error));
-				}
-			});
 	}
-
-	catch (error) { console.log(error); }
 
 	return newChannel.id;
 }
@@ -160,4 +142,16 @@ async function findChannel(channel, guild, type) {
 function findRole(name, guild) {
 	try { return guild.roles.cache.find(role => role.name.toLowerCase().includes(name.toLowerCase())).id; }
 	catch { return ''; }
+}
+
+function channelsOutput(collection, guild) {
+	let chnlsList = '';
+
+	const chnls = [...collection.filter(chnlGuild => chnlGuild === guild.guildID).keys()];
+
+	for (let i = 0; i < chnls.length; i++) {
+		chnlsList += `<#${chnls[i]}>\n`;
+	}
+
+	return chnlsList;
 }
