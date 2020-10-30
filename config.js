@@ -42,7 +42,7 @@ exports.defaults = {
 		get desc() {
 			const { bot } = require('./pronto');
 			delete this.desc;
-			return this.desc = `Example **text channel** for <@!${bot.user.id}>'s command descriptions.`;
+			return this.desc = `Example **text channel** used in <@!${bot.user.id}>'s command descriptions.`;
 		},
 	},
 	exampleVoice: {
