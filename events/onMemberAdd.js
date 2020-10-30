@@ -1,15 +1,14 @@
 'use strict';
 
 const Discord = require('discord.js');
-
-const { ids: { logID, recruitingID, newMembersID, visitorID }, colours } = require('../config');
 const { debugError, dtg, formatAge, sendMsg } = require('../modules');
 
 module.exports = {
 	events: ['guildMemberAdd'],
 	process: [],
-	execute(event, member) {
+	async execute(event, member) {
 		const { bot } = require('../pronto');
+		const { ids: { logID, recruitingID, newMembersID, visitorID }, colours } = await require('../handlers/database')(member.guild);
 
 		const log = bot.channels.cache.get(logID);
 		const newMembers = bot.channels.cache.get(newMembersID);
@@ -22,7 +21,7 @@ module.exports = {
 			.setThumbnail(memberUser.displayAvatarURL())
 			.setDescription(`${memberUser} ${memberUser.tag}`)
 			.addField('Account Age', formatAge(Date.now() - memberUser.createdAt))
-			.setFooter(`ID: ${memberUser.id} | ${dtg()}`);
+			.setFooter(`ID: ${memberUser.id} | ${await dtg()}`);
 		sendMsg(log, logEmbed);
 
 		if (memberUser.bot) return;
@@ -34,7 +33,7 @@ module.exports = {
 			.setColor(colours.pronto)
 			.setAuthor(memberUser.tag, memberUser.displayAvatarURL())
 			.setDescription(`**${memberUser} has just entered ${newMembers}.**\nMake them feel welcome!`)
-			.setFooter(`${dtg()}`);
+			.setFooter(await dtg());
 		sendMsg(recruiting, welcomeEmbed);
 	},
 };

@@ -1,13 +1,22 @@
 'use strict';
 
-const { config: { prefix } } = require('../config');
-const { cmds: { help } } = require('../cmds');
-const { cmdPermsCheck, debugError, dmCmdError, pCmd } = require('../modules');
+const Discord = require('discord.js');
+const { debugError, dmCmdError, pCmd } = require('../modules');
 
-module.exports = msg => {
+module.exports = async msg => {
 	const { bot } = require('../pronto');
+	const { permissionsHandler } = require('./');
+	const { config: { prefix } } = await require('./database')(msg.guild);
+	const { cmds: { help } } = await require('../cmds')(msg.guild);
 
 	if (msg.author.bot || !msg.content.startsWith(prefix)) return;
+
+	bot.commands = new Discord.Collection();
+	const botCommands = await require('../commands')(msg.guild);
+
+	Object.keys(botCommands).map(key => {
+		bot.commands.set(botCommands[key].cmd, botCommands[key]);
+	});
 
 	const args = msg.content.split(/ +/);
 	const msgCmd = args.shift().toLowerCase().replace(prefix, '');
@@ -22,7 +31,7 @@ module.exports = msg => {
 		else return helpCmd.execute(msg, args);
 	}
 
-	const hasPerms = cmdPermsCheck(msg, cmd);
+	const hasPerms = await permissionsHandler(msg, cmd);
 
 	if (hasPerms === 'err') return;
 
@@ -35,6 +44,6 @@ module.exports = msg => {
 	}
 
 	catch (error) {
-		debugError(error, `Error executing ${pCmd(cmd)}`);
+		debugError(error, `Error executing ${await pCmd(cmd, msg.guild)}`);
 	}
 };

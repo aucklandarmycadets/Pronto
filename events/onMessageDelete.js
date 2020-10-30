@@ -1,9 +1,6 @@
 'use strict';
 
 const Discord = require('discord.js');
-
-const { config: { prefix }, ids: { logID }, colours } = require('../config');
-const { cmds: { help, attendance, purge } } = require('../cmds');
 const { charLimit, debugError, delMsg, dtg, sendMsg } = require('../modules');
 
 module.exports = {
@@ -11,6 +8,8 @@ module.exports = {
 	process: [],
 	async execute(event, msg) {
 		const { bot } = require('../pronto');
+		const { config: { prefix }, ids: { logID }, colours } = await require('../handlers/database')(msg.guild);
+		const { cmds: { help, attendance, purge } } = await require('../cmds')(msg.guild);
 
 		const log = bot.channels.cache.get(logID);
 		const logEmbed = new Discord.MessageEmbed()
@@ -19,11 +18,11 @@ module.exports = {
 		if (msg.partial) {
 			logEmbed.setAuthor(msg.guild.name, msg.guild.iconURL());
 			logEmbed.setDescription(`**Uncached message deleted in ${msg.channel}**`);
-			logEmbed.setFooter(`ID: ${msg.id} | ${dtg()}`);
+			logEmbed.setFooter(`ID: ${msg.id} | ${await dtg()}`);
 		}
 
 		else {
-			if (cmdCheck(msg) || !msg.guild) return;
+			if (cmdCheck() || !msg.guild) return;
 
 			const messageAuthor = msg.author;
 			const lastMsg = msg.channel.lastMessage;
@@ -34,7 +33,9 @@ module.exports = {
 			})
 				.catch(error => debugError(error, 'Error fetching audit logs.'));
 
-			const deletionLog = fetchedLogs ? fetchedLogs.entries.first() : null;
+			const deletionLog = (fetchedLogs)
+				? fetchedLogs.entries.first()
+				: null;
 
 			let content = (msg.content === '')
 				? msg.embeds[0]
@@ -52,7 +53,7 @@ module.exports = {
 
 			logEmbed.setAuthor(messageAuthor.tag, messageAuthor.displayAvatarURL());
 			logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted in ${msg.channel}**\n${content}`);
-			logEmbed.setFooter(`Author: ${messageAuthor.id} | Message: ${msg.id} | ${dtg()}`);
+			logEmbed.setFooter(`Author: ${messageAuthor.id} | Message: ${msg.id} | ${await dtg()}`);
 
 			if (lastMsg) {
 				if (lastMsg.content.includes(purge.cmd) || purge.aliases.some(alias => lastMsg.content.includes(alias))) {
@@ -71,16 +72,16 @@ module.exports = {
 		}
 
 		sendMsg(log, logEmbed);
+
+		function cmdCheck() {
+			const autoDelCmds = [attendance, help, purge];
+
+			const args = msg.content.split(/ +/);
+			const msgCmd = args.shift().toLowerCase().replace(prefix, '');
+
+			const hasCmd = cmd => cmd.cmd === msgCmd || cmd.aliases.includes(msgCmd);
+
+			return autoDelCmds.some(hasCmd);
+		}
 	},
 };
-
-function cmdCheck(msg) {
-	const autoDelCmds = [attendance, help, purge];
-
-	const args = msg.content.split(/ +/);
-	const msgCmd = args.shift().toLowerCase().replace(prefix, '');
-
-	if (autoDelCmds.some(cmd => cmd.cmd === msgCmd || cmd.aliases.includes(msgCmd))) return true;
-
-	return false;
-}

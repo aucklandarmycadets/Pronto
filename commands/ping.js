@@ -1,27 +1,30 @@
 'use strict';
 
 const Discord = require('discord.js');
-
-const { colours } = require('../config');
-const { cmds: { ping } } = require('../cmds');
 const { dtg, sendMsg } = require('../modules');
 
-module.exports = ping;
-module.exports.execute = msg => {
-	const { version } = require('../pronto');
+module.exports = async guild => {
+	const { cmds: { ping } } = await require('../cmds')(guild);
+	const { colours } = await require('../handlers/database')(guild);
 
-	let pingValue = 'Pinging...';
+	ping.execute = msg => {
+		const { version } = require('../pronto');
 
-	sendMsg(msg.channel, '**Pong!**')
-		.then(reply => {
-			const pingTimestamp = (msg.editedTimestamp - msg.createdTimestamp > 0)
-				? msg.editedTimestamp
-				: msg.createdTimestamp;
+		let pingValue = 'Pinging...';
 
-			pingValue = reply.createdTimestamp - pingTimestamp;
-			const pingEmbed = new Discord.MessageEmbed()
-				.setColor(colours.success)
-				.setFooter(`${pingValue} ms | ${dtg()} | Pronto v${version}`);
-			reply.edit(pingEmbed);
-		});
+		sendMsg(msg.channel, '**Pong!**')
+			.then(async reply => {
+				const pingTimestamp = (msg.editedTimestamp - msg.createdTimestamp > 0)
+					? msg.editedTimestamp
+					: msg.createdTimestamp;
+
+				pingValue = reply.createdTimestamp - pingTimestamp;
+				const pingEmbed = new Discord.MessageEmbed()
+					.setColor(colours.success)
+					.setFooter(`${pingValue} ms | ${await dtg()} | Pronto v${version}`);
+				reply.edit(pingEmbed);
+			});
+	};
+
+	return ping;
 };

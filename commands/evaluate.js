@@ -1,58 +1,62 @@
 'use strict';
 
 const Discord = require('discord.js');
-
-const { colours, ...config } = require('../config');
-const { cmds: { evaluate, ...cmds }, ...cmdsList } = require('../cmds');
 const { cmdError, dtg, js, sendMsg, ...modules } = require('../modules');
+const handlers = require('../handlers');
 
-module.exports = evaluate;
-module.exports.execute = async (msg, args) => {
-	const { bot } = require('../pronto');
+module.exports = async guild => {
+	const { cmds: { evaluate, ...cmds }, ...cmdsList } = await require('../cmds')(guild);
+	const { colours, _doc: config, ...db } = await require('../handlers/database')(guild);
 
-	const codeBlock = (args.includes('-nocode'))
-		? false
-		: true;
+	evaluate.execute = async (msg, args) => {
+		const { bot } = require('../pronto');
 
-	args = args.filter(arg => !arg.startsWith('-'));
+		const codeBlock = (args.includes('-nocode'))
+			? false
+			: true;
 
-	if (args.length === 0) return cmdError(msg, 'You must enter something to evaluate.', evaluate.error);
+		args = args.filter(arg => !arg.startsWith('-'));
 
-	const code = args.join(' ');
+		if (args.length === 0) return cmdError(msg, 'You must enter something to evaluate.', evaluate.error);
 
-	try {
-		const embed = new Discord.MessageEmbed();
+		const code = args.join(' ');
 
-		let evaled = await eval(code);
+		try {
+			const embed = new Discord.MessageEmbed();
 
-		if (typeof evaled !== 'string') evaled = require('util').inspect(evaled);
+			let evaled = await eval(code);
 
-		(code.includes('embed'))
-			? sendMsg(msg.channel, embed)
-			: msgSplit(evaled, '},');
-	}
+			if (typeof evaled !== 'string') evaled = require('util').inspect(evaled);
 
-	catch (error) { msgSplit(error.stack, ')'); }
-
-	function msgSplit(str, char) {
-		const lim = Math.ceil(str.length / 1990);
-
-		for (let i = 0; i < lim; i++) {
-			const breakAt = (str.length > 1990)
-				? (str.lastIndexOf(char, 1990) !== -1)
-					? str.lastIndexOf(char, 1990) + char.length
-					: (str.lastIndexOf(' ', 1990) !== -1)
-						? str.lastIndexOf(' ', 1990) + 1
-						: 1990
-				: 1990;
-
-			(str !== 'Promise { <pending> }')
-				? (codeBlock)
-					? sendMsg(msg.channel, js(str.slice(0, breakAt)))
-					: sendMsg(msg.channel, str.slice(0, breakAt))
-				: null;
-
-			str = str.slice(breakAt, str.length);
+			(code.includes('embed'))
+				? sendMsg(msg.channel, embed)
+				: msgSplit(evaled, '},');
 		}
-	}
+
+		catch (error) { msgSplit(error.stack, ')'); }
+
+		function msgSplit(str, char) {
+			const lim = Math.ceil(str.length / 1990);
+
+			for (let i = 0; i < lim; i++) {
+				const breakAt = (str.length > 1990)
+					? (str.lastIndexOf(char, 1990) !== -1)
+						? str.lastIndexOf(char, 1990) + char.length
+						: (str.lastIndexOf(' ', 1990) !== -1)
+							? str.lastIndexOf(' ', 1990) + 1
+							: 1990
+					: 1990;
+
+				(str !== 'Promise { <pending> }')
+					? (codeBlock)
+						? sendMsg(msg.channel, js(str.slice(0, breakAt)))
+						: sendMsg(msg.channel, str.slice(0, breakAt))
+					: null;
+
+				str = str.slice(breakAt, str.length);
+			}
+		}
+	};
+
+	return evaluate;
 };

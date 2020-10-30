@@ -1,45 +1,48 @@
 'use strict';
 
 const Discord = require('discord.js');
-
-const { ids: { attendanceID }, colours } = require('../config');
-const { cmds: { connected } } = require('../cmds');
 const { cmdError, dtg, sendMsg, successReact } = require('../modules');
 
-module.exports = connected;
-module.exports.execute = msg => {
-	const { bot } = require('../pronto');
+module.exports = async guild => {
+	const { cmds: { connected } } = await require('../cmds')(guild);
+	const { ids: { attendanceID }, colours } = await require('../handlers/database')(guild);
 
-	const channelMentions = msg.mentions.channels;
-	const numChannelMentions = channelMentions.size;
-	const channel = channelMentions.first();
+	connected.execute = async msg => {
+		const { bot } = require('../pronto');
 
-	try {
-		if (numChannelMentions === 0) throw 'You must specify a voice channel.';
+		const channelMentions = msg.mentions.channels;
+		const numChannelMentions = channelMentions.size;
+		const channel = channelMentions.first();
 
-		else if (channelMentions.some(mention => mention.type !== 'voice')) throw 'Input must be a voice channel.';
+		try {
+			if (numChannelMentions === 0) throw 'You must specify a voice channel.';
 
-		else if (numChannelMentions > 1) throw 'You can only display one channel at a time.';
-	}
+			else if (channelMentions.some(mention => mention.type !== 'voice')) throw 'Input must be a voice channel.';
 
-	catch (error) { return cmdError(msg, error, connected.error, 'Note: Use the <#channelID> syntax!'); }
+			else if (numChannelMentions > 1) throw 'You can only display one channel at a time.';
+		}
 
-	const connectedMembers = [];
-	const attendanceChannel = bot.channels.cache.get(attendanceID);
+		catch (error) { return cmdError(msg, error, connected.error, 'Note: Use the <#channelID> syntax!'); }
 
-	for (const member of Object.values(channel.members.array())) {
-		connectedMembers.push(member.toString());
-	}
+		const connectedMembers = [];
+		const attendanceChannel = bot.channels.cache.get(attendanceID);
 
-	if (connectedMembers.length === 0) return cmdError(msg, `There are no members connected to ${channel}.`, connected.error, 'Note: Use the <#channelID> syntax!');
+		for (const member of Object.values(channel.members.array())) {
+			connectedMembers.push(member.toString());
+		}
 
-	successReact(msg);
+		if (connectedMembers.length === 0) return cmdError(msg, `There are no members connected to ${channel}.`, connected.error, 'Note: Use the <#channelID> syntax!');
 
-	const connectedEmbed = new Discord.MessageEmbed()
-		.setTitle(`Members Connected to #${channel.name}`)
-		.setColor(colours.success)
-		.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
-		.setDescription(connectedMembers.join('\n'))
-		.setFooter(`${dtg()}`);
-	sendMsg(attendanceChannel, connectedEmbed);
+		successReact(msg);
+
+		const connectedEmbed = new Discord.MessageEmbed()
+			.setTitle(`Members Connected to #${channel.name}`)
+			.setColor(colours.success)
+			.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
+			.setDescription(connectedMembers.join('\n'))
+			.setFooter(await dtg());
+		sendMsg(attendanceChannel, connectedEmbed);
+	};
+
+	return connected;
 };

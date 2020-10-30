@@ -1,15 +1,15 @@
 'use strict';
 
 const Discord = require('discord.js');
-
-const { ids: { logID }, colours } = require('../config');
-const { dtg, sendMsg, updatedPermissions, verifyBotPermissions } = require('../modules');
+const { dtg, sendMsg, updatedPermissions } = require('../modules');
+const { botPermsHandler } = require('../handlers');
 
 module.exports = {
 	events: ['roleUpdate'],
 	process: [],
-	execute(event, oldRole, newRole) {
+	async execute(event, oldRole, newRole) {
 		const { bot } = require('../pronto');
+		const { ids: { logID }, colours } = await require('../handlers/database')(newRole.guild);
 
 		const log = bot.channels.cache.get(logID);
 		const logEmbed = new Discord.MessageEmbed();
@@ -50,13 +50,13 @@ module.exports = {
 
 			const botRoles = newRole.guild.me.roles.cache;
 
-			if (botRoles.some(role => role.id === newRole.id)) verifyBotPermissions(changedPerms);
+			if (botRoles.some(role => role.id === newRole.id)) botPermsHandler(newRole.guild, changedPerms);
 		}
 
 		else return;
 
 		logEmbed.setAuthor(newRole.guild.name, newRole.guild.iconURL());
-		logEmbed.setFooter(`ID: ${newRole.id} | ${dtg()}`);
+		logEmbed.setFooter(`ID: ${newRole.id} | ${await dtg()}`);
 		sendMsg(log, logEmbed);
 	},
 };

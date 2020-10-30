@@ -1,5 +1,5 @@
 'use strict';
 
-const indexProc = require('../modules/indexProc');
+const commandLoader = require('../handlers/commandLoader');
 
-module.exports = indexProc('./commands');
+module.exports = async guild => await commandLoader('./commands', guild);

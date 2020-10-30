@@ -64,3 +64,4 @@ devConstObj.js
 execProcess.js
 updateVersion.js
 updateVersion.sh
+.vscode/

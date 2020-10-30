@@ -1,153 +1,155 @@
 'use strict';
 
 const Discord = require('discord.js');
-
-const { ids: { attendanceID, formations }, emojis, colours } = require('../config');
-const { cmds: { attendance } } = require('../cmds');
 const { cmdError, debugError, delMsg, dtg, embedScaffold, errorReact, sendDM, sendMsg, successReact } = require('../modules');
 
-module.exports = attendance;
-module.exports.execute = async (msg, args) => {
-	const { bot } = require('../pronto');
+module.exports = async guild => {
+	const { cmds: { attendance } } = await require('../cmds')(guild);
+	const { ids: { attendanceID, formations }, emojis, colours } = await require('../handlers/database')(guild);
 
-	const memberRoles = msg.member.roles.cache;
+	attendance.execute = async (msg, args) => {
+		const { bot } = require('../pronto');
 
-	try {
-		if (args.length === 0) throw '';
+		const memberRoles = msg.member.roles.cache;
 
-		if (args[0].toLowerCase() === 'update' && args.length === 1) throw '';
-	}
+		try {
+			if (args.length === 0) throw '';
 
-	catch (error) {
-		return cmdError(msg, 'You must enter a message.', attendance.error);
-	}
-
-	delMsg(msg);
-
-	let formationColour = colours.default;
-	let formationName = msg.guild.name;
-
-	for (const role of Object.values(memberRoles.array())) {
-		if (formations.includes(role.id)) {
-			formationColour = role.color;
-			formationName = role.name;
+			if (args[0].toLowerCase() === 'update' && args.length === 1) throw '';
 		}
-	}
 
-	if (args[0].toLowerCase() === 'update') {
-		args.splice(0, 1);
+		catch (error) {
+			return cmdError(msg, 'You must enter a message.', attendance.error);
+		}
 
-		if (args.length === 0) return cmdError(msg, 'You must enter a message.', attendance.error);
+		delMsg(msg);
 
-		const filterBy = message => {
-			try { return message.embeds[0].author.name.includes(formationName); }
-			catch { null; }
-		};
+		let formationColour = colours.default;
+		let formationName = msg.guild.name;
 
-		const attendanceChannel = bot.channels.cache.get(attendanceID);
-		let chnlMsg, attMsg;
+		for (const role of Object.values(memberRoles.array())) {
+			if (formations.includes(role.id)) {
+				formationColour = role.color;
+				formationName = role.name;
+			}
+		}
 
-		await msg.channel.messages.fetch()
-			.then(messages => {
-				chnlMsg = messages.filter(filterBy).first();
-			})
-			.catch(error => debugError(error, `Error fetching messages in ${msg.channel}.`));
+		if (args[0].toLowerCase() === 'update') {
+			args.splice(0, 1);
 
-		await attendanceChannel.messages.fetch()
-			.then(messages => {
-				attMsg = messages.filter(filterBy).first();
-			})
-			.catch(error => debugError(error, `Error fetching messages in ${msg.channel}.`));
+			if (args.length === 0) return cmdError(msg, 'You must enter a message.', attendance.error);
 
-		createRegister(chnlMsg, attMsg);
-	}
+			const filterBy = message => {
+				try { return message.embeds[0].author.name.includes(formationName); }
+				catch { null; }
+			};
 
-	else createRegister();
+			const attendanceChannel = bot.channels.cache.get(attendanceID);
+			let chnlMsg, attMsg;
 
-	function createRegister(chnlMsg, attMsg) {
-		const register = args.join(' ');
+			await msg.channel.messages.fetch()
+				.then(messages => {
+					chnlMsg = messages.filter(filterBy).first();
+				})
+				.catch(error => debugError(error, `Error fetching messages in ${msg.channel}.`));
 
-		const attendanceEmbed = new Discord.MessageEmbed()
-			.setColor(formationColour)
-			.setAuthor(formationName, msg.guild.iconURL())
-			.setDescription(register)
-			.setFooter('Use the reactions below to confirm or cancel.');
+			await attendanceChannel.messages.fetch()
+				.then(messages => {
+					attMsg = messages.filter(filterBy).first();
+				})
+				.catch(error => debugError(error, `Error fetching messages in ${msg.channel}.`));
 
-		if (chnlMsg) attendanceEmbed.setAuthor(`${formationName} (Update)`, msg.guild.iconURL());
+			createRegister(chnlMsg, attMsg);
+		}
 
-		sendDM(msg.author, attendanceEmbed)
-			.then(async dm => {
-				await successReact(dm);
-				await errorReact(dm);
+		else createRegister();
 
-				const filter = reaction => reaction.emoji.name === emojis.success || reaction.emoji.name === emojis.error;
+		function createRegister(chnlMsg, attMsg) {
+			const register = args.join(' ');
 
-				const collector = dm.createReactionCollector(filter, { dispose: true });
+			const attendanceEmbed = new Discord.MessageEmbed()
+				.setColor(formationColour)
+				.setAuthor(formationName, msg.guild.iconURL())
+				.setDescription(register)
+				.setFooter('Use the reactions below to confirm or cancel.');
 
-				collector.on('collect', (reaction, user) => {
-					if (!user.bot) {
-						const confirmEmbed = new Discord.MessageEmbed()
-							.setAuthor(bot.user.tag, bot.user.avatarURL())
-							.setColor(colours.error)
-							.setDescription('**Cancelled.**')
-							.setFooter(dtg());
+			if (chnlMsg) attendanceEmbed.setAuthor(`${formationName} (Update)`, msg.guild.iconURL());
 
-						if (reaction.emoji.name === emojis.success) {
-							confirmEmbed.setColor(colours.success);
-							confirmEmbed.setDescription('**Confirmed.**');
+			sendDM(msg.author, attendanceEmbed, msg.channel)
+				.then(async dm => {
+					await successReact(dm);
+					await errorReact(dm);
 
-							attendanceEmbed.setAuthor(`${formationName} (${msg.member.displayName})`, msg.guild.iconURL());
+					const filter = reaction => reaction.emoji.name === emojis.success || reaction.emoji.name === emojis.error;
 
-							if (chnlMsg) {
-								attendanceEmbed.setFooter(`Last updated at ${dtg()}`);
+					const collector = dm.createReactionCollector(filter, { dispose: true });
 
-								const formationDisplay = (msg.guild.roles.cache.find(role => role.name === formationName))
-									? (msg.guild.roles.cache.find(role => role.name === formationName))
-									: `**${formationName}**`;
+					collector.on('collect', async (reaction, user) => {
+						if (!user.bot) {
+							const confirmEmbed = new Discord.MessageEmbed()
+								.setAuthor(bot.user.tag, bot.user.avatarURL())
+								.setColor(colours.error)
+								.setDescription('**Cancelled.**')
+								.setFooter(await dtg());
 
-								embedScaffold(msg.channel, `${msg.author} Successfully updated attendance for ${formationDisplay}.`, colours.success, 'msg');
+							if (reaction.emoji.name === emojis.success) {
+								confirmEmbed.setColor(colours.success);
+								confirmEmbed.setDescription('**Confirmed.**');
 
-								chnlMsg.edit(attendanceEmbed);
-								attMsg.edit(attendanceEmbed);
+								attendanceEmbed.setAuthor(`${formationName} (${msg.member.displayName})`, msg.guild.iconURL());
+
+								if (chnlMsg) {
+									attendanceEmbed.setFooter(`Last updated at ${await dtg()}`);
+
+									const findFormation = role => role.name === formationName;
+									const formationDisplay = msg.guild.roles.cache.find(findFormation) || `**${formationName}**`;
+
+									embedScaffold(msg.channel, `${msg.author} Successfully updated attendance for ${formationDisplay}.`, colours.success, 'msg');
+
+									chnlMsg.edit(attendanceEmbed);
+									attMsg.edit(attendanceEmbed);
+								}
+
+								else {
+									const attendanceChannel = bot.channels.cache.get(attendanceID);
+
+									attendanceEmbed.setFooter(await dtg());
+
+									sendMsg(attendanceChannel, attendanceEmbed);
+									sendMsg(msg.channel, attendanceEmbed);
+								}
 							}
 
-							else {
-								const attendanceChannel = bot.channels.cache.get(attendanceID);
+							dm.edit(confirmEmbed);
+							collector.stop();
+						}
+					});
 
-								attendanceEmbed.setFooter(dtg());
-
-								sendMsg(attendanceChannel, attendanceEmbed);
-								sendMsg(msg.channel, attendanceEmbed);
+					collector.on('end', async (collected, reason) => {
+						const userReactions = dm.reactions.cache.filter(reaction => reaction.users.cache.has(bot.user.id));
+						try {
+							for (const reaction of userReactions.values()) {
+								await reaction.users.remove(bot.user.id);
 							}
 						}
 
-						dm.edit(confirmEmbed);
-						collector.stop();
-					}
-				});
-
-				collector.on('end', async (collected, reason) => {
-					const userReactions = dm.reactions.cache.filter(reaction => reaction.users.cache.has(bot.user.id));
-					try {
-						for (const reaction of userReactions.values()) {
-							await reaction.users.remove(bot.user.id);
+						catch (error) {
+							debugError(error, 'Error removing reactions from message in DMs.');
 						}
-					}
 
-					catch (error) {
-						debugError(error, 'Error removing reactions from message in DMs.');
-					}
+						if (reason === 'time') {
+							delMsg(dm);
 
-					if (reason === 'time') {
-						delMsg(dm);
-
-						const timeEmbed = new Discord.MessageEmbed()
-							.setColor(colours.error)
-							.setAuthor(bot.user.tag, bot.user.avatarURL())
-							.setDescription('Timed out. Please action the command again.');
-						sendDM(msg.author, timeEmbed, true);
-					}
+							const timeEmbed = new Discord.MessageEmbed()
+								.setColor(colours.error)
+								.setAuthor(bot.user.tag, bot.user.avatarURL())
+								.setDescription('Timed out. Please action the command again.');
+							sendDM(msg.author, timeEmbed, msg.channel, true);
+						}
+					});
 				});
-			});
-	}
+		}
+	};
+
+	return attendance;
 };

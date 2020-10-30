@@ -1,16 +1,17 @@
 'use strict';
 
 const Discord = require('discord.js');
-
-const { ids: { logID }, colours } = require('../config');
-const { cmds: { purge } } = require('../cmds');
 const { delMsg, dtg, sendMsg } = require('../modules');
 
 module.exports = {
 	events: ['messageDeleteBulk'],
 	process: [],
-	execute(event, msgs) {
+	async execute(event, msgs) {
+		const guild = msgs.first().guild;
+
 		const { bot } = require('../pronto');
+		const { ids: { logID }, colours } = await require('../handlers/database')(guild);
+		const { cmds: { purge } } = await require('../cmds')(guild);
 
 		const log = bot.channels.cache.get(logID);
 		const msg = msgs.first();
@@ -32,7 +33,7 @@ module.exports = {
 		}
 
 		logEmbed.setColor(colours.error);
-		logEmbed.setFooter(`${dtg()}`);
+		logEmbed.setFooter(await dtg());
 		sendMsg(log, logEmbed);
 	},
 };

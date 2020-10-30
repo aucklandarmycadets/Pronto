@@ -1,10 +1,9 @@
 'use strict';
 
-const { colours } = require('../config');
-
-module.exports = (error, errorMsg, fieldTitle, fieldContent) => {
+module.exports = async (error, errorMsg, fieldTitle, fieldContent) => {
 	const { embedScaffold, js } = require('./');
-	
+	const { colours } = await require('../handlers/database')();
+
 	console.error(error);
 	embedScaffold(null, errorMsg, colours.error, 'debug', fieldTitle, fieldContent, js(error.stack));
 };
