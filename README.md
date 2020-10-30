@@ -57,6 +57,7 @@ A Discord bot developed for the City of Auckland Cadet Unit.
 - [discord.js](https://www.npmjs.com/package/discord.js)
 - [dotenv](https://www.npmjs.com/package/dotenv)
 - [dateformat](https://www.npmjs.com/package/dateformat)
+- [Mongoose](https://www.npmjs.com/package/mongoose)
 
 ### Instructions
 
