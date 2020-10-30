@@ -84,7 +84,6 @@ exports.ids = {
 | `dateOutput`    | This is the formatting string used with dateformat, find their docs [here](https://www.npmjs.com/package/dateformat#mask-options).                                                                                                           |
 | `defaultServer` | This is the ID of the default server to look for in the database if a guild is not specified. Refer to [this](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-) to find out how to get it |
 | `devID`         | ID of the user who is looking after the bot (i.e. probably you)                                                                                                                                                                              |
-| `adjPlus`       | Role IDs of the next tier                                                                                                                                                                                                                    |
 
 > There are currently 7 effective command tiers:
 > - Visitors (`nonCadet`) that are **EXCLUDED** from commands
@@ -113,7 +112,7 @@ exports.ids = {
 
 For the emojis to work (and for the bot to not throw heaps of errors...), [add two emojis to the server](https://support.discord.com/hc/en-us/articles/360041139231-Adding-Emojis-and-Reactions#h_ac364eb7-4f4f-4e0a-b829-1ee247f9a094), one named 'success' and the other 'error' :)
 
-5. Follow [this guide](https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot) to create your own bot user and get your bot token (you can set your own picture and name also!)
+1. Follow [this guide](https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot) to create your own bot user and get your bot token (you can set your own picture and name also!)
 
 > The only location where 'Pronto' is actually named is in `cmds.js`, `config.js` and the dev only `ping.js`, `uptime.js` and `restart.js`:
 > ```js
