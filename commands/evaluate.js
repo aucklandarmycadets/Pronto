@@ -15,6 +15,10 @@ module.exports = async guild => {
 			? false
 			: true;
 
+		const silent = (args.includes('-silent'))
+			? true
+			: false;
+
 		args = args.filter(arg => !arg.startsWith('-'));
 
 		if (args.length === 0) return cmdError(msg, 'You must enter something to evaluate.', evaluate.error);
@@ -25,6 +29,8 @@ module.exports = async guild => {
 			const embed = new Discord.MessageEmbed();
 
 			let evaled = await eval(code);
+
+			if (silent) return;
 
 			if (typeof evaled !== 'string') evaled = require('util').inspect(evaled);
 
