@@ -1,6 +1,6 @@
 {
   "name": "pronto",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "description": "A Discord bot developed for the City of Auckland Cadet Unit.",
   "main": "pronto.js",
   "scripts": {
