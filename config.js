@@ -12,17 +12,45 @@ exports.ids = {
 	devID: '192181901065322496',
 };
 
-exports.names = {
-	debug: 'debugging',
-	log: 'log-channel',
-	attendance: 'attendance',
-	recruiting: 'recruiting',
-	newMembers: 'new-members',
-	archived: 'Archived',
-	exampleText: 'example-text',
-	exampleVoice: 'example-voice',
-	visitor: 'visitor',
-	administrator: 'administrator',
+exports.defaults = bot => {
+	return {
+		debug: {
+			name: 'debugging',
+			desc: `For debugging <@!${bot.user.id}>`,
+		},
+		log: {
+			name: 'log-channel',
+			desc: 'Log channel.',
+		},
+		attendance: {
+			name: 'attendance',
+			desc: 'To assist in **recording attendance** and **monitoring leave**; leave tickets will be sent here.',
+		},
+		recruiting: {
+			name: 'recruiting',
+			desc: 'For everything related to **recruitment**.',
+		},
+		newMembers: {
+			name: 'new-members',
+			desc: '**Introduce yourself!** You can ask us any questions you might have here, or just say hello!',
+		},
+		exampleText: {
+			name: 'example-text',
+			desc: `Example **text channel** for <@!${bot.user.id}>'s command descriptions.`,
+		},
+		exampleVoice: {
+			name: 'example-voice',
+		},
+		archived: {
+			name: 'Archived',
+		},
+		visitor: {
+			name: 'visitor',
+		},
+		administrator: {
+			name: 'administrator',
+		},
+	};
 };
 
 exports.emojis = {
