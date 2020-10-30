@@ -56,7 +56,10 @@ module.exports = async guild => {
 					'Usage': `${pCmd(this, guild)} <code>`,
 				});
 			},
-			get error() { return errorText(this.help, this.cmd); },
+			get error() {
+				delete this.error;
+				return this.error = errorText(this.help, this.cmd);
+			},
 		},
 		restart: {
 			cmd: 'restart',
@@ -114,7 +117,10 @@ module.exports = async guild => {
 					'Example': `${pCmd(this, guild)} 01 Jan for Parade Night due to an appointment`,
 				});
 			},
-			get error() { return errorText(this.help, this.cmd); },
+			get error() {
+				delete this.error;
+				return this.error = errorText(this.help, this.cmd);
+			},
 		},
 		leaveFor: {
 			cmd: 'leavefor',
@@ -134,7 +140,10 @@ module.exports = async guild => {
 					'Allowed Roles': rolesOutput(this.roles),
 				});
 			},
-			get error() { return errorText(this.help, this.cmd); },
+			get error() {
+				delete this.error;
+				return this.error = errorText(this.help, this.cmd);
+			},
 		},
 		attendance: {
 			cmd: 'attendance',
@@ -153,7 +162,10 @@ module.exports = async guild => {
 					'Allowed Roles': rolesOutput(this.roles),
 				});
 			},
-			get error() { return errorText(this.help, this.cmd); },
+			get error() {
+				delete this.error;
+				return this.error = errorText(this.help, this.cmd);
+			},
 		},
 		connected: {
 			cmd: 'connected',
@@ -173,7 +185,10 @@ module.exports = async guild => {
 					'Allowed Roles': rolesOutput(this.roles),
 				});
 			},
-			get error() { return errorText(this.help, this.cmd); },
+			get error() {
+				delete this.error;
+				return this.error = errorText(this.help, this.cmd);
+			},
 		},
 		archive: {
 			cmd: 'archive',
@@ -193,7 +208,10 @@ module.exports = async guild => {
 					'Allowed Roles': rolesOutput(this.roles),
 				});
 			},
-			get error() { return errorText(this.help, this.cmd); },
+			get error() {
+				delete this.error;
+				return this.error = errorText(this.help, this.cmd);
+			},
 		},
 		purge: {
 			cmd: 'purge',
@@ -213,7 +231,10 @@ module.exports = async guild => {
 					'Allowed Roles': rolesOutput(this.roles),
 				});
 			},
-			get error() { return errorText(this.help, this.cmd); },
+			get error() {
+				delete this.error;
+				return this.error = errorText(this.help, this.cmd);
+			},
 		},
 	};
 
@@ -345,6 +366,7 @@ module.exports = async guild => {
 	function equals(arr1, arr2) {
 		if (arr1 === arr2) return true;
 		if (arr1 === null || arr2 === null) return false;
+		if (!arr1.length) return false;
 		if (arr1.length !== arr2.length) return false;
 
 		for (let i = 0; i < arr1.length; i++) {

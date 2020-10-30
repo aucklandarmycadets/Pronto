@@ -15,8 +15,8 @@ module.exports = async (msg, cmd) => {
 
 	if (!memberRoles) return await getRoleError(msg);
 
-	if ((cmd.noRoles.length && !memberRoles.some(roles => cmd.noRoles.includes(roles.id)))
-		|| (cmd.roles.length && memberRoles.some(roles => cmd.roles.includes(roles.id)))
+	if (((cmd.noRoles.length && !memberRoles.some(roles => cmd.noRoles.includes(roles.id)))
+		&& (cmd.roles.length && memberRoles.some(roles => cmd.roles.includes(roles.id))))
 		|| (cmd.devOnly && msg.author.id === devID)) {
 		return true;
 	}

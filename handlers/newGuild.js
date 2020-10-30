@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 const mongoose = require('mongoose');
 const Guild = require('../models/guild');
 
-const { config, names, emojis, colours } = require('../config');
+const { config, defaults, emojis, colours } = require('../config');
 
 const recentlyCreated = new Set();
 const createdChannels = new Discord.Collection();
@@ -22,6 +22,8 @@ module.exports = async guild => {
 	recentlyCreated.add(guild.id);
 	setTimeout(() => recentlyCreated.delete(guild.guildID), 15000);
 
+	const { bot } = require('../pronto');
+
 	guild = await new Guild({
 		_id: mongoose.Types.ObjectId(),
 		guildID: guild.id,
@@ -33,16 +35,16 @@ module.exports = async guild => {
 		},
 		ids: {
 			serverID: guild.id,
-			debugID: await findChannel(names.debug, guild),
-			logID: await findChannel(names.log, guild),
-			attendanceID: await findChannel(names.attendance, guild),
-			recruitingID: await findChannel(names.recruiting, guild),
-			newMembersID: await findChannel(names.newMembers, guild),
-			archivedID: await findChannel(names.archived, guild, 'category'),
-			exampleTextID: await findChannel(names.exampleText, guild),
-			exampleVoiceID: await findChannel(names.exampleVoice, guild, 'voice'),
+			debugID: await findChannel(defaults.debug, guild),
+			logID: await findChannel(defaults.log, guild),
+			attendanceID: await findChannel(defaults.attendance, guild),
+			recruitingID: await findChannel(defaults.recruiting, guild),
+			newMembersID: await findChannel(defaults.newMembers, guild),
+			archivedID: await findChannel(defaults.archived, guild, 'category'),
+			exampleTextID: await findChannel(defaults.exampleText, guild),
+			exampleVoiceID: await findChannel(defaults.exampleVoice, guild, 'voice'),
 			everyoneID: guild.roles.everyone.id,
-			visitorID: findRole(names.visitor, guild),
+			visitorID: findRole(defaults.visitor, guild),
 			administratorID: '',
 			formations: [],
 			nonCadet: [],
@@ -68,10 +70,9 @@ module.exports = async guild => {
 	await guild.save().catch(error => console.error(error));
 
 	if (createdChannels.some(chnlGuild => chnlGuild === guild.guildID)) {
-		const { bot } = require('../pronto');
 		const { dtg } = require('../modules');
 
-		const prontoCategory = bot.channels.cache.find(chnl => chnl.type === 'category' && chnl.name === 'Pronto');
+		const prontoCategory = bot.channels.cache.find(chnl => chnl.type === 'category' && chnl.name === defaults.pronto.name);
 		const debugChannel = bot.channels.cache.get(guild.ids.debugID);
 
 		const createdEmbed = new Discord.MessageEmbed()
@@ -94,40 +95,42 @@ async function findChannel(channel, guild, type) {
 	const everyone = guild.roles.everyone;
 	const minPerms = ['VIEW_CHANNEL', 'SEND_MESSAGES'];
 
-	const hasMinPerms = chnl => chnl.name === channel && chnl.permissionsFor(bot.user).has(minPerms);
-	const hasChannel = chnl => chnl.name === channel;
+	const hasMinPerms = chnl => chnl.name === channel.name && chnl.permissionsFor(bot.user).has(minPerms);
+	const hasChannel = chnl => chnl.name === channel.name;
 
 	const foundChannel = guild.channels.cache.find(hasMinPerms) || guild.channels.cache.find(hasChannel);
 
 	if (foundChannel) {
-		if (foundChannel.permissionsFor(bot.user).has(minPerms) || channel !== names.debug) return foundChannel.id;
+		if (foundChannel.permissionsFor(bot.user).has(minPerms) || channel.name !== defaults.debug.name) return foundChannel.id;
 	}
 
-	let prontoCategory = guild.channels.cache.find(chnl => chnl.type === 'category' && chnl.name === 'Pronto');
+	let prontoCategory = guild.channels.cache.find(chnl => chnl.type === 'category' && chnl.name === defaults.pronto.name);
 
 	if (!prontoCategory) {
-		await guild.channels.create('Pronto', { type: 'category' })
+		await guild.channels.create(defaults.pronto.name, { type: 'category' })
 			.then(async chnl => {
 				await chnl.createOverwrite(bot.user.id, { 'VIEW_CHANNEL': true });
 				await chnl.createOverwrite(everyone, { 'VIEW_CHANNEL': false });
 				await chnl.setPosition(0);
 				prontoCategory = chnl;
 			})
-			.catch(error => console.error(`Error creating category 'Pronto' in ${guild.name} \n${error}`));
+			.catch(error => console.error(`Error creating category '${defaults.pronto.name}' in ${guild.name} \n${error}`));
 	}
 
 	const chnlOptions = (type === 'category')
 		? { type: type }
-		: { parent: prontoCategory, type: type };
+		: (channel.desc)
+			? { topic: channel.desc, parent: prontoCategory, type: type }
+			: { parent: prontoCategory, type: type };
 
-	const newChannel = await guild.channels.create(channel, chnlOptions)
-		.catch(error => console.error(`Error creating ${channel} in ${guild.name} \n${error}`));
+	const newChannel = await guild.channels.create(channel.name, chnlOptions)
+		.catch(error => console.error(`Error creating ${channel.name} in ${guild.name} \n${error}`));
 
 	createdChannels.set(newChannel.id, guild.id);
 	setTimeout(() => createdChannels.delete(newChannel.id), 5000);
 
 	if (foundChannel) {
-		if (foundChannel.name === names.debug) {
+		if (foundChannel.name === defaults.debug.name) {
 			const debugEmbed = new Discord.MessageEmbed()
 				.setColor(colours.error)
 				.setDescription(`\n\nI created this channel because I cannot access ${foundChannel}!`);
