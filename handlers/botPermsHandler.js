@@ -8,6 +8,8 @@ module.exports = async (guild, changes) => {
 	const { bot } = require('../pronto');
 	const { ids: { serverID }, colours } = await require('./database')(guild);
 
+	if (!serverID) return;
+
 	const requiredPermissions = new Discord.Permissions(permsInt);
 	const server = bot.guilds.cache.get(serverID);
 	const botPermissions = server.me.permissions;
