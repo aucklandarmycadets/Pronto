@@ -35,16 +35,16 @@ module.exports = async guild => {
 		},
 		ids: {
 			serverID: guild.id,
-			debugID: await findChannel(defaults(bot).debug, guild),
-			logID: await findChannel(defaults(bot).log, guild),
-			attendanceID: await findChannel(defaults(bot).attendance, guild),
-			recruitingID: await findChannel(defaults(bot).recruiting, guild),
-			newMembersID: await findChannel(defaults(bot).newMembers, guild),
-			archivedID: await findChannel(defaults(bot).archived, guild, 'category'),
-			exampleTextID: await findChannel(defaults(bot).exampleText, guild),
-			exampleVoiceID: await findChannel(defaults(bot).exampleVoice, guild, 'voice'),
+			debugID: await findChannel(defaults.debug, guild),
+			logID: await findChannel(defaults.log, guild),
+			attendanceID: await findChannel(defaults.attendance, guild),
+			recruitingID: await findChannel(defaults.recruiting, guild),
+			newMembersID: await findChannel(defaults.newMembers, guild),
+			archivedID: await findChannel(defaults.archived, guild, 'category'),
+			exampleTextID: await findChannel(defaults.exampleText, guild),
+			exampleVoiceID: await findChannel(defaults.exampleVoice, guild, 'voice'),
 			everyoneID: guild.roles.everyone.id,
-			visitorID: findRole(defaults(bot).visitor, guild),
+			visitorID: findRole(defaults.visitor, guild),
 			administratorID: '',
 			formations: [],
 			nonCadet: [],
@@ -101,7 +101,7 @@ async function findChannel(channel, guild, type) {
 	const foundChannel = guild.channels.cache.find(hasMinPerms) || guild.channels.cache.find(hasChannel);
 
 	if (foundChannel) {
-		if (foundChannel.permissionsFor(bot.user).has(minPerms) || channel.name !== defaults(bot).debug.name) return foundChannel.id;
+		if (foundChannel.permissionsFor(bot.user).has(minPerms) || channel.name !== defaults.debug.name) return foundChannel.id;
 	}
 
 	let prontoCategory = guild.channels.cache.find(chnl => chnl.type === 'category' && chnl.name === 'Pronto');
@@ -130,7 +130,7 @@ async function findChannel(channel, guild, type) {
 	setTimeout(() => createdChannels.delete(newChannel.id), 5000);
 
 	if (foundChannel) {
-		if (foundChannel.name === defaults(bot).debug.name) {
+		if (foundChannel.name === defaults.debug.name) {
 			const debugEmbed = new Discord.MessageEmbed()
 				.setColor(colours.error)
 				.setDescription(`\n\nI created this channel because I cannot access ${foundChannel}!`);

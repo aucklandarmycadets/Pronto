@@ -12,45 +12,51 @@ exports.ids = {
 	devID: '192181901065322496',
 };
 
-exports.defaults = bot => {
-	return {
-		debug: {
-			name: 'debugging',
-			desc: `For debugging <@!${bot.user.id}>`,
+exports.defaults = {
+	debug: {
+		name: 'debugging',
+		get desc() {
+			const { bot } = require('./pronto');
+			delete this.desc;
+			return this.desc = `For debugging <@!${bot.user.id}>`;
 		},
-		log: {
-			name: 'log-channel',
-			desc: 'Log channel.',
+	},
+	log: {
+		name: 'log-channel',
+		desc: 'Log channel.',
+	},
+	attendance: {
+		name: 'attendance',
+		desc: 'To assist in **recording attendance** and **monitoring leave**; leave tickets will be sent here.',
+	},
+	recruiting: {
+		name: 'recruiting',
+		desc: 'For everything related to **recruitment**.',
+	},
+	newMembers: {
+		name: 'new-members',
+		desc: '**Introduce yourself!** You can ask us any questions you might have here, or just say hello!',
+	},
+	exampleText: {
+		name: 'example-text',
+		get desc() {
+			const { bot } = require('./pronto');
+			delete this.desc;
+			return this.desc = `Example **text channel** for <@!${bot.user.id}>'s command descriptions.`;
 		},
-		attendance: {
-			name: 'attendance',
-			desc: 'To assist in **recording attendance** and **monitoring leave**; leave tickets will be sent here.',
-		},
-		recruiting: {
-			name: 'recruiting',
-			desc: 'For everything related to **recruitment**.',
-		},
-		newMembers: {
-			name: 'new-members',
-			desc: '**Introduce yourself!** You can ask us any questions you might have here, or just say hello!',
-		},
-		exampleText: {
-			name: 'example-text',
-			desc: `Example **text channel** for <@!${bot.user.id}>'s command descriptions.`,
-		},
-		exampleVoice: {
-			name: 'example-voice',
-		},
-		archived: {
-			name: 'Archived',
-		},
-		visitor: {
-			name: 'visitor',
-		},
-		administrator: {
-			name: 'administrator',
-		},
-	};
+	},
+	exampleVoice: {
+		name: 'example-voice',
+	},
+	archived: {
+		name: 'Archived',
+	},
+	visitor: {
+		name: 'visitor',
+	},
+	administrator: {
+		name: 'administrator',
+	},
 };
 
 exports.emojis = {
