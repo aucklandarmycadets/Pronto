@@ -79,9 +79,9 @@ module.exports = {
 			const args = msg.content.split(/ +/);
 			const msgCmd = args.shift().toLowerCase().replace(prefix, '');
 
-			if (autoDelCmds.some(cmd => cmd.cmd === msgCmd || cmd.aliases.includes(msgCmd))) return true;
+			const hasCmd = cmd => cmd.cmd === msgCmd || cmd.aliases.includes(msgCmd);
 
-			return false;
+			return autoDelCmds.some(hasCmd);
 		}
 	},
 };

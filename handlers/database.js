@@ -14,6 +14,5 @@ module.exports = async guild => {
 		if (error) console.error(error);
 	});
 
-	if (foundGuild) return foundGuild;
-	else return await newGuild(guild);
+	return foundGuild || await newGuild(guild);
 };
