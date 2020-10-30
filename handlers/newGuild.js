@@ -72,7 +72,7 @@ module.exports = async guild => {
 	if (createdChannels.some(chnlGuild => chnlGuild === guild.guildID)) {
 		const { dtg } = require('../modules');
 
-		const prontoCategory = bot.channels.cache.find(chnl => chnl.type === 'category' && chnl.name === 'Pronto');
+		const prontoCategory = bot.channels.cache.find(chnl => chnl.type === 'category' && chnl.name === defaults.pronto.name);
 		const debugChannel = bot.channels.cache.get(guild.ids.debugID);
 
 		const createdEmbed = new Discord.MessageEmbed()
@@ -104,17 +104,17 @@ async function findChannel(channel, guild, type) {
 		if (foundChannel.permissionsFor(bot.user).has(minPerms) || channel.name !== defaults.debug.name) return foundChannel.id;
 	}
 
-	let prontoCategory = guild.channels.cache.find(chnl => chnl.type === 'category' && chnl.name === 'Pronto');
+	let prontoCategory = guild.channels.cache.find(chnl => chnl.type === 'category' && chnl.name === defaults.pronto.name);
 
 	if (!prontoCategory) {
-		await guild.channels.create('Pronto', { type: 'category' })
+		await guild.channels.create(defaults.pronto.name, { type: 'category' })
 			.then(async chnl => {
 				await chnl.createOverwrite(bot.user.id, { 'VIEW_CHANNEL': true });
 				await chnl.createOverwrite(everyone, { 'VIEW_CHANNEL': false });
 				await chnl.setPosition(0);
 				prontoCategory = chnl;
 			})
-			.catch(error => console.error(`Error creating category 'Pronto' in ${guild.name} \n${error}`));
+			.catch(error => console.error(`Error creating category '${defaults.pronto.name}' in ${guild.name} \n${error}`));
 	}
 
 	const chnlOptions = (type === 'category')

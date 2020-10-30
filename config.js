@@ -48,6 +48,9 @@ exports.defaults = {
 	exampleVoice: {
 		name: 'example-voice',
 	},
+	pronto: {
+		name: 'Pronto',
+	},
 	archived: {
 		name: 'Archived',
 	},
