@@ -4,7 +4,9 @@ const { ids: { devID } } = require('./config');
 const { formatList } = require('./modules');
 
 module.exports = async guild => {
-	const { config: { prefix }, ids } = await require('./handlers/database')(guild);
+	const { config: { prefix }, ids } = (guild !== 'break')
+		? await require('./handlers/database')(guild)
+		: require('./config');
 
 	const cmds = {
 		ping: {

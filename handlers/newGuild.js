@@ -10,7 +10,11 @@ const recentlyCreated = new Set();
 const createdChannels = new Discord.Collection();
 
 module.exports = async guild => {
-	if (!guild) return require('../config');
+	if (!guild) {
+		const returnObj = require('../config');
+		returnObj.cmds = await require('../cmds')('break');
+		return returnObj;
+	}
 
 	const existingGuild = await Guild.findOne({ guildID: guild.id }, error => {
 		if (error) console.error(error);
