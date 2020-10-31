@@ -95,9 +95,9 @@ exports.ids = {
 > - Highest tier (`devID`) 
 >> **NOTE:** This does *not* give the dev permissions to every command, they only have access to the commands as per their roles like everyone else. This just means they have access to dev-only commands like `!ping` :)
 
-> To assign these values in v4.0.4, use the following command in a server channel:
+> To assign these values in v4.0.5, use the following command in a server channel:
 > ```js
-> !eval require('../handlers/database)(msg.guild, {
+> !eval database(msg.guild, {
 > 	ids: {
 > 		formations: ['<role1>', '<role2>'...],
 > 		nonCadet: ['<role1>', '<role2>'...],
