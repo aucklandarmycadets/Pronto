@@ -21,7 +21,7 @@ module.exports = async guild => {
 				return formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
-					'Usage': pCmd(this, guild, prefix),
+					'Usage': pCmd(this),
 				});
 			},
 			set help(obj) {
@@ -40,7 +40,7 @@ module.exports = async guild => {
 				return formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
-					'Usage': pCmd(this, guild),
+					'Usage': pCmd(this),
 				});
 			},
 			set help(obj) {
@@ -59,7 +59,7 @@ module.exports = async guild => {
 				return formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
-					'Usage': `${pCmd(this, guild)} <code>`,
+					'Usage': `${pCmd(this)} <code>`,
 				});
 			},
 			set help(obj) {
@@ -84,7 +84,7 @@ module.exports = async guild => {
 				return formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
-					'Usage': pCmd(this, guild),
+					'Usage': pCmd(this),
 				});
 			},
 			set help(obj) {
@@ -113,8 +113,8 @@ module.exports = async guild => {
 				return formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc.general,
-					'Usage': `${pCmd(this, guild)} [command]`,
-					'Examples': `\n${pCmd(this, guild)}\n${pCmd(this, guild)} ${cmds.leave.cmd}`,
+					'Usage': `${pCmd(this)} [command]`,
+					'Examples': `\n${pCmd(this)}\n${pCmd(this)} ${cmds.leave.cmd}`,
 				});
 			},
 			set help(obj) {
@@ -139,8 +139,8 @@ module.exports = async guild => {
 				return formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
-					'Usage': `${pCmd(this, guild)} <date(s)> <activity> <reason> [additional remarks]`,
-					'Example': `${pCmd(this, guild)} 01 Jan for Parade Night due to an appointment`,
+					'Usage': `${pCmd(this)} <date(s)> <activity> <reason> [additional remarks]`,
+					'Example': `${pCmd(this)} 01 Jan for Parade Night due to an appointment`,
 				});
 			},
 			set help(obj) {
@@ -165,8 +165,8 @@ module.exports = async guild => {
 				return formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
-					'Usage': `${pCmd(this, guild)} <user> <date(s)> <activity> <reason> [additional remarks]`,
-					'Example': `${pCmd(this, guild)} <@${devID}> 01 Jan for Parade Night due to an appointment`,
+					'Usage': `${pCmd(this)} <user> <date(s)> <activity> <reason> [additional remarks]`,
+					'Example': `${pCmd(this)} <@${devID}> 01 Jan for Parade Night due to an appointment`,
 					'Allowed Roles': rolesOutput(this.roles),
 				});
 			},
@@ -192,7 +192,7 @@ module.exports = async guild => {
 				return formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
-					'Usage': `\n${pCmd(this, guild)} <message>\n${pCmd(this, guild)} update <message>`,
+					'Usage': `\n${pCmd(this)} <message>\n${pCmd(this)} update <message>`,
 					'Allowed Roles': rolesOutput(this.roles),
 				});
 			},
@@ -218,8 +218,8 @@ module.exports = async guild => {
 				return formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
-					'Usage': `${pCmd(this, guild)} <voice channel>`,
-					'Example': `${pCmd(this, guild)} <#${ids.exampleVoiceID}>`,
+					'Usage': `${pCmd(this)} <voice channel>`,
+					'Example': `${pCmd(this)} <#${ids.exampleVoiceID}>`,
 					'Allowed Roles': rolesOutput(this.roles),
 				});
 			},
@@ -245,8 +245,8 @@ module.exports = async guild => {
 				return formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
-					'Usage': `${pCmd(this, guild)} <text channel>`,
-					'Example': `${pCmd(this, guild)} <#${ids.exampleTextID}>`,
+					'Usage': `${pCmd(this)} <text channel>`,
+					'Example': `${pCmd(this)} <#${ids.exampleTextID}>`,
 					'Allowed Roles': rolesOutput(this.roles),
 				});
 			},
@@ -272,8 +272,8 @@ module.exports = async guild => {
 				return formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
-					'Usage': `${pCmd(this, guild)} <count> [user]`,
-					'Examples': `\n${pCmd(this, guild)} 10\n${pCmd(this, guild)} 5 <@${devID}>`,
+					'Usage': `${pCmd(this)} <count> [user]`,
+					'Examples': `\n${pCmd(this)} 10\n${pCmd(this)} 5 <@${devID}>`,
 					'Allowed Roles': rolesOutput(this.roles),
 				});
 			},
@@ -309,7 +309,7 @@ module.exports = async guild => {
 
 	function errorText(helpTxt, cmd) {
 		return '\n\n' + helpTxt + '\n' + formatList({
-			'Help Command': `${pCmd(cmds.help, guild)} ${cmd}`,
+			'Help Command': `${pCmd(cmds.help)} ${cmd}`,
 		});
 	}
 
