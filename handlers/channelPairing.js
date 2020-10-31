@@ -54,7 +54,7 @@ module.exports = async (oldState, newState) => {
 					sendMsg(textChannel, leaveEmbed);
 
 					if (oldState.channel.members.size === 0) {
-						const successEmoji = newState.guild.emojis.cache.find(emoji => emoji.name === emojis.success);
+						const successEmoji = newState.guild.emojis.cache.find(emoji => emoji.name === emojis.success.name);
 
 						const purgeEmbed = new Discord.MessageEmbed()
 							.setTitle('Purge Text Channel')
@@ -64,7 +64,7 @@ module.exports = async (oldState, newState) => {
 							.then(msg => {
 								successReact(msg);
 
-								const filter = reaction => reaction.emoji.name === emojis.success;
+								const filter = reaction => reaction.emoji.name === emojis.success.name;
 
 								const collector = msg.createReactionCollector(filter, { dispose: true });
 

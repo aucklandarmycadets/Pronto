@@ -79,7 +79,7 @@ module.exports = async guild => {
 					await successReact(dm);
 					await errorReact(dm);
 
-					const filter = reaction => reaction.emoji.name === emojis.success || reaction.emoji.name === emojis.error;
+					const filter = reaction => reaction.emoji.name === emojis.success.name || reaction.emoji.name === emojis.error.name;
 
 					const collector = dm.createReactionCollector(filter, { dispose: true });
 
@@ -91,7 +91,7 @@ module.exports = async guild => {
 								.setDescription('**Cancelled.**')
 								.setFooter(await dtg());
 
-							if (reaction.emoji.name === emojis.success) {
+							if (reaction.emoji.name === emojis.success.name) {
 								confirmEmbed.setColor(colours.success);
 								confirmEmbed.setDescription('**Confirmed.**');
 

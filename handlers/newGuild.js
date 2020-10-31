@@ -79,8 +79,8 @@ async function createGuild(guild) {
 		},
 		cmds: {},
 		emojis: {
-			success: emojis.success,
-			error: emojis.error,
+			success: emojis.success.name,
+			error: emojis.error.name,
 		},
 		colours: {
 			default: colours.default,

@@ -6,7 +6,7 @@ module.exports = async msg => {
 	const { ids: { serverID }, emojis } = await require('../handlers/database')(msg.guild);
 
 	const server = bot.guilds.cache.get(serverID);
-	const successEmoji = server.emojis.cache.find(emoji => emoji.name === emojis.success);
+	const successEmoji = server.emojis.cache.find(emoji => emoji.name === emojis.success.name);
 
 	msg.react(successEmoji).catch(error => {
 		try {
