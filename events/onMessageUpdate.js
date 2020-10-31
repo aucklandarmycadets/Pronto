@@ -34,6 +34,8 @@ module.exports = {
 			logEmbed.setFooter(`Author: ${newMessage.author.id} | Message: ${newMessage.id} | ${await dtg()}`);
 		}
 
+		else return;
+
 		commandHandler(newMessage);
 		sendMsg(log, logEmbed);
 	},
