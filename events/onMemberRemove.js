@@ -21,7 +21,7 @@ module.exports = {
 			.setAuthor('Member Left', memberUser.displayAvatarURL())
 			.setThumbnail(memberUser.displayAvatarURL())
 			.setDescription(`${memberUser} ${memberUser.tag}`)
-			.addField('Roles', rolesOutput(memberRoles))
+			.addField('Roles', rolesOutput(memberRoles, true))
 			.setFooter(`ID: ${memberUser.id} | ${await dtg()}`);
 		sendMsg(log, logEmbed);
 	},
