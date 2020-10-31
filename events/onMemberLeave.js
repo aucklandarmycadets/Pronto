@@ -14,6 +14,16 @@ module.exports = {
 		const memberUser = member.user;
 		const memberRoles = member.roles.cache.array();
 
+		const fetchedLogs = await member.guild.fetchAuditLogs({
+			limit: 1,
+			type: 'MEMBER_KICK',
+		})
+			.catch(error => debugError(error, 'Error fetching audit logs.'));
+
+		const kickLog = (fetchedLogs)
+			? fetchedLogs.entries.first()
+			: null;
+
 		const logEmbed = new Discord.MessageEmbed()
 			.setColor(colours.error)
 			.setAuthor('Member Left', memberUser.displayAvatarURL())
@@ -21,6 +31,16 @@ module.exports = {
 			.setDescription(`${memberUser} ${memberUser.tag}`)
 			.addField('Roles', rolesOutput(memberRoles, true))
 			.setFooter(`ID: ${memberUser.id} | ${await dtg()}`);
+
+		if (kickLog) {
+			const { executor, target } = kickLog;
+
+			if (target.id === member.id) {
+				logEmbed.setAuthor('Member Kicked', memberUser.displayAvatarURL());
+				logEmbed.addField('Kicked By', executor);
+			}
+		}
+
 		sendMsg(log, logEmbed);
 	},
 };
