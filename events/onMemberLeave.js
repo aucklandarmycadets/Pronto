@@ -1,7 +1,7 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { dtg, rolesOutput, sendMsg } = require('../modules');
+const { debugError, dtg, rolesOutput, sendMsg } = require('../modules');
 
 module.exports = {
 	events: ['guildMemberRemove'],
@@ -9,8 +9,6 @@ module.exports = {
 	async execute(event, member) {
 		const { bot } = require('../pronto');
 		const { ids: { logID }, colours } = await require('../handlers/database')(member.guild);
-
-		if (member.deleted) return;
 
 		const log = bot.channels.cache.get(logID);
 		const memberUser = member.user;
@@ -23,6 +21,28 @@ module.exports = {
 			.setDescription(`${memberUser} ${memberUser.tag}`)
 			.addField('Roles', rolesOutput(memberRoles, true))
 			.setFooter(`ID: ${memberUser.id} | ${await dtg()}`);
-		sendMsg(log, logEmbed);
+
+		const fetchedLogs = await member.guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_KICK' })
+			.catch(error => debugError(error, 'Error fetching audit logs.'));
+
+		const kickLog = (fetchedLogs)
+			? fetchedLogs.entries.first()
+			: null;
+
+		if (kickLog) {
+			const { executor, target } = kickLog;
+
+			if (target.id === member.id) {
+				logEmbed.setAuthor('Member Kicked', memberUser.displayAvatarURL());
+				logEmbed.addField('Kicked By', executor);
+			}
+		}
+
+		let isBan;
+
+		try { isBan = await member.guild.fetchBan(member); }
+		catch { null; }
+
+		if (!isBan) sendMsg(log, logEmbed);
 	},
 };

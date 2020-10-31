@@ -9,8 +9,12 @@ module.exports = (array, mention) => {
 	for (let i = 0; i < filteredArray.length; i++) {
 		if (i % 3 === 0) rolesString += '\n';
 
+		const id = (typeof filteredArray[i] === 'string')
+			? filteredArray[i]
+			: filteredArray[i].id;
+
 		bot.guilds.cache.find(guild => {
-			const roleObj = guild.roles.cache.find(role => role.id === filteredArray[i]);
+			const roleObj = guild.roles.cache.find(role => role.id === id);
 
 			if (roleObj) {
 				rolesString += (mention)

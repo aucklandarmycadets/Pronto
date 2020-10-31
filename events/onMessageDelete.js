@@ -26,16 +26,6 @@ module.exports = {
 			const messageAuthor = msg.author;
 			const lastMsg = msg.channel.lastMessage;
 
-			const fetchedLogs = await msg.guild.fetchAuditLogs({
-				limit: 1,
-				type: 'MESSAGE_DELETE',
-			})
-				.catch(error => debugError(error, 'Error fetching audit logs.'));
-
-			const deletionLog = (fetchedLogs)
-				? fetchedLogs.entries.first()
-				: null;
-
 			let content = (msg.content === '')
 				? msg.embeds[0]
 					? msg.embeds[0].description
@@ -66,6 +56,13 @@ module.exports = {
 					logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted by ${lastMsg.author} in ${msg.channel}**\n${content}`);
 				}
 			}
+
+			const fetchedLogs = await msg.guild.fetchAuditLogs({ limit: 1, type: 'MESSAGE_DELETE' })
+				.catch(error => debugError(error, 'Error fetching audit logs.'));
+
+			const deletionLog = (fetchedLogs)
+				? fetchedLogs.entries.first()
+				: null;
 
 			if (deletionLog) {
 				const { executor, target } = deletionLog;

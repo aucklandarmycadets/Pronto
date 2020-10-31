@@ -1,31 +1,51 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { dtg, sendMsg } = require('../modules');
+const { debugError, dtg, sendMsg } = require('../modules');
 
 module.exports = {
 	events: ['guildBanAdd', 'guildBanRemove'],
 	process: [],
-	async execute(event, guild, member) {
+	async execute(event, guild, user) {
 		const { bot } = require('../pronto');
 		const { ids: { logID }, colours } = await require('../handlers/database')(guild);
 
 		const log = bot.channels.cache.get(logID);
 		const logEmbed = new Discord.MessageEmbed();
 
+		let fetchedLogs, type;
+
 		if (event === 'guildBanAdd') {
 			logEmbed.setColor(colours.error);
-			logEmbed.setAuthor('Member Banned', member.displayAvatarURL());
+			logEmbed.setAuthor('Member Banned', user.displayAvatarURL());
+
+			type = 'Banned';
+			fetchedLogs = await guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_BAN_ADD' })
+				.catch(error => debugError(error, 'Error fetching audit logs.'));
 		}
 
 		else {
 			logEmbed.setColor(colours.success);
-			logEmbed.setAuthor('Member Unbanned', member.displayAvatarURL());
+			logEmbed.setAuthor('Member Unbanned', user.displayAvatarURL());
+
+			type = 'Unbanned';
+			fetchedLogs = await guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_BAN_REMOVE' })
+				.catch(error => debugError(error, 'Error fetching audit logs.'));
 		}
 
-		logEmbed.setThumbnail(member.displayAvatarURL());
-		logEmbed.setDescription(`${member} ${member.tag}`);
-		logEmbed.setFooter(`ID: ${member.id} | ${await dtg()}`);
+		logEmbed.setThumbnail(user.displayAvatarURL());
+		logEmbed.setDescription(`${user} ${user.tag}`);
+		logEmbed.setFooter(`ID: ${user.id} | ${await dtg()}`);
+
+		const banLog = (fetchedLogs)
+			? fetchedLogs.entries.first()
+			: null;
+
+		if (banLog) {
+			const { executor, target } = banLog;
+			if (target.id === user.id) logEmbed.addField(`${type} By`, executor);
+		}
+
 		sendMsg(log, logEmbed);
 	},
 };
