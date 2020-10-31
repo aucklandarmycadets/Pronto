@@ -18,12 +18,14 @@ module.exports = async guild => {
 			noRoles: [],
 			devOnly: true,
 			get help() {
-				delete this.help;
-				return this.help = formatList({
+				return formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
 					'Usage': pCmd(this, guild, prefix),
 				});
+			},
+			set help(obj) {
+				formatList(obj);
 			},
 		},
 		uptime: {
@@ -35,12 +37,14 @@ module.exports = async guild => {
 			noRoles: [],
 			devOnly: true,
 			get help() {
-				delete this.help;
-				return this.help = formatList({
+				return formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
 					'Usage': pCmd(this, guild),
 				});
+			},
+			set help(obj) {
+				formatList(obj);
 			},
 		},
 		evaluate: {
@@ -52,16 +56,20 @@ module.exports = async guild => {
 			noRoles: [],
 			devOnly: true,
 			get help() {
-				delete this.help;
-				return this.help = formatList({
+				return formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
 					'Usage': `${pCmd(this, guild)} <code>`,
 				});
 			},
+			set help(obj) {
+				formatList(obj);
+			},
 			get error() {
-				delete this.error;
-				return this.error = errorText(this.help, this.cmd);
+				return errorText(this.help, this.cmd);
+			},
+			set error(value) {
+				errorText(this.help, this.cmd);
 			},
 		},
 		restart: {
@@ -73,12 +81,20 @@ module.exports = async guild => {
 			noRoles: [],
 			devOnly: true,
 			get help() {
-				delete this.help;
-				return this.help = formatList({
+				return formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
 					'Usage': pCmd(this, guild),
 				});
+			},
+			set help(obj) {
+				formatList(obj);
+			},
+			get error() {
+				return errorText(this.help, this.cmd);
+			},
+			set error(value) {
+				errorText(this.help, this.cmd);
 			},
 		},
 		help: {
@@ -94,13 +110,21 @@ module.exports = async guild => {
 			noRoles: [],
 			devOnly: false,
 			get help() {
-				delete this.help;
-				return this.help = formatList({
+				return formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc.general,
 					'Usage': `${pCmd(this, guild)} [command]`,
 					'Examples': `\n${pCmd(this, guild)}\n${pCmd(this, guild)} ${cmds.leave.cmd}`,
 				});
+			},
+			set help(obj) {
+				formatList(obj);
+			},
+			get error() {
+				return errorText(this.help, this.cmd);
+			},
+			set error(value) {
+				errorText(this.help, this.cmd);
 			},
 		},
 		leave: {
@@ -112,17 +136,21 @@ module.exports = async guild => {
 			noRoles: [],
 			devOnly: false,
 			get help() {
-				delete this.help;
-				return this.help = formatList({
+				return formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
 					'Usage': `${pCmd(this, guild)} <date(s)> <activity> <reason> [additional remarks]`,
 					'Example': `${pCmd(this, guild)} 01 Jan for Parade Night due to an appointment`,
 				});
 			},
+			set help(obj) {
+				formatList(obj);
+			},
 			get error() {
-				delete this.error;
-				return this.error = errorText(this.help, this.cmd);
+				return errorText(this.help, this.cmd);
+			},
+			set error(value) {
+				errorText(this.help, this.cmd);
 			},
 		},
 		leaveFor: {
@@ -134,8 +162,7 @@ module.exports = async guild => {
 			noRoles: [],
 			devOnly: false,
 			get help() {
-				delete this.help;
-				return this.help = formatList({
+				return formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
 					'Usage': `${pCmd(this, guild)} <user> <date(s)> <activity> <reason> [additional remarks]`,
@@ -143,9 +170,14 @@ module.exports = async guild => {
 					'Allowed Roles': rolesOutput(this.roles),
 				});
 			},
+			set help(obj) {
+				formatList(obj);
+			},
 			get error() {
-				delete this.error;
-				return this.error = errorText(this.help, this.cmd);
+				return errorText(this.help, this.cmd);
+			},
+			set error(value) {
+				errorText(this.help, this.cmd);
 			},
 		},
 		attendance: {
@@ -157,17 +189,21 @@ module.exports = async guild => {
 			noRoles: [],
 			devOnly: false,
 			get help() {
-				delete this.help;
-				return this.help = formatList({
+				return formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
 					'Usage': `\n${pCmd(this, guild)} <message>\n${pCmd(this, guild)} update <message>`,
 					'Allowed Roles': rolesOutput(this.roles),
 				});
 			},
+			set help(obj) {
+				formatList(obj);
+			},
 			get error() {
-				delete this.error;
-				return this.error = errorText(this.help, this.cmd);
+				return errorText(this.help, this.cmd);
+			},
+			set error(value) {
+				errorText(this.help, this.cmd);
 			},
 		},
 		connected: {
@@ -179,8 +215,7 @@ module.exports = async guild => {
 			noRoles: [],
 			devOnly: false,
 			get help() {
-				delete this.help;
-				return this.help = formatList({
+				return formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
 					'Usage': `${pCmd(this, guild)} <voice channel>`,
@@ -188,9 +223,14 @@ module.exports = async guild => {
 					'Allowed Roles': rolesOutput(this.roles),
 				});
 			},
+			set help(obj) {
+				formatList(obj);
+			},
 			get error() {
-				delete this.error;
-				return this.error = errorText(this.help, this.cmd);
+				return errorText(this.help, this.cmd);
+			},
+			set error(value) {
+				errorText(this.help, this.cmd);
 			},
 		},
 		archive: {
@@ -202,8 +242,7 @@ module.exports = async guild => {
 			noRoles: [],
 			devOnly: false,
 			get help() {
-				delete this.help;
-				return this.help = formatList({
+				return formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
 					'Usage': `${pCmd(this, guild)} <text channel>`,
@@ -211,9 +250,14 @@ module.exports = async guild => {
 					'Allowed Roles': rolesOutput(this.roles),
 				});
 			},
+			set help(obj) {
+				formatList(obj);
+			},
 			get error() {
-				delete this.error;
-				return this.error = errorText(this.help, this.cmd);
+				return errorText(this.help, this.cmd);
+			},
+			set error(value) {
+				errorText(this.help, this.cmd);
 			},
 		},
 		purge: {
@@ -225,8 +269,7 @@ module.exports = async guild => {
 			noRoles: [],
 			devOnly: false,
 			get help() {
-				delete this.help;
-				return this.help = formatList({
+				return formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
 					'Usage': `${pCmd(this, guild)} <count> [user]`,
@@ -234,9 +277,14 @@ module.exports = async guild => {
 					'Allowed Roles': rolesOutput(this.roles),
 				});
 			},
+			set help(obj) {
+				formatList(obj);
+			},
 			get error() {
-				delete this.error;
-				return this.error = errorText(this.help, this.cmd);
+				return errorText(this.help, this.cmd);
+			},
+			set error(value) {
+				errorText(this.help, this.cmd);
 			},
 		},
 	};
