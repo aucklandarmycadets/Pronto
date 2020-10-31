@@ -1,6 +1,7 @@
 'use strict';
 
 const { ids: { devID } } = require('./config');
+const { formatList } = require('./modules');
 
 module.exports = async guild => {
 	const { config: { prefix }, ids } = await require('./handlers/database')(guild);
@@ -16,7 +17,7 @@ module.exports = async guild => {
 			devOnly: true,
 			get help() {
 				delete this.help;
-				return this.help = helpText({
+				return this.help = formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
 					'Usage': pCmd(this, guild, prefix),
@@ -33,7 +34,7 @@ module.exports = async guild => {
 			devOnly: true,
 			get help() {
 				delete this.help;
-				return this.help = helpText({
+				return this.help = formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
 					'Usage': pCmd(this, guild),
@@ -50,7 +51,7 @@ module.exports = async guild => {
 			devOnly: true,
 			get help() {
 				delete this.help;
-				return this.help = helpText({
+				return this.help = formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
 					'Usage': `${pCmd(this, guild)} <code>`,
@@ -71,7 +72,7 @@ module.exports = async guild => {
 			devOnly: true,
 			get help() {
 				delete this.help;
-				return this.help = helpText({
+				return this.help = formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
 					'Usage': pCmd(this, guild),
@@ -92,7 +93,7 @@ module.exports = async guild => {
 			devOnly: false,
 			get help() {
 				delete this.help;
-				return this.help = helpText({
+				return this.help = formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc.general,
 					'Usage': `${pCmd(this, guild)} [command]`,
@@ -106,11 +107,11 @@ module.exports = async guild => {
 			desc: 'Submit a leave request.',
 			allowDM: false,
 			roles: [],
-			noRoles: [],
+			noRoles: ids.nonCadet,
 			devOnly: false,
 			get help() {
 				delete this.help;
-				return this.help = helpText({
+				return this.help = formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
 					'Usage': `${pCmd(this, guild)} <date(s)> <activity> <reason> [additional remarks]`,
@@ -127,12 +128,12 @@ module.exports = async guild => {
 			aliases: ['lv4'],
 			desc: 'Submit a leave request for another cadet.',
 			allowDM: false,
-			roles: [],
+			roles: ids.tacPlus,
 			noRoles: [],
 			devOnly: false,
 			get help() {
 				delete this.help;
-				return this.help = helpText({
+				return this.help = formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
 					'Usage': `${pCmd(this, guild)} <user> <date(s)> <activity> <reason> [additional remarks]`,
@@ -150,12 +151,12 @@ module.exports = async guild => {
 			aliases: ['att', 'attdnce'],
 			desc: 'Submit an attendance register.',
 			allowDM: false,
-			roles: [],
+			roles: ids.tacPlus,
 			noRoles: [],
 			devOnly: false,
 			get help() {
 				delete this.help;
-				return this.help = helpText({
+				return this.help = formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
 					'Usage': `\n${pCmd(this, guild)} <message>\n${pCmd(this, guild)} update <message>`,
@@ -172,12 +173,12 @@ module.exports = async guild => {
 			aliases: ['cnnct', 'cnnctd'],
 			desc: 'List the members connected to a voice channel.',
 			allowDM: false,
-			roles: [],
+			roles: ids.sgtPlus,
 			noRoles: [],
 			devOnly: false,
 			get help() {
 				delete this.help;
-				return this.help = helpText({
+				return this.help = formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
 					'Usage': `${pCmd(this, guild)} <voice channel>`,
@@ -195,12 +196,12 @@ module.exports = async guild => {
 			aliases: ['archv'],
 			desc: 'Archive a text channel.',
 			allowDM: false,
-			roles: [],
+			roles: ids.cqmsPlus,
 			noRoles: [],
 			devOnly: false,
 			get help() {
 				delete this.help;
-				return this.help = helpText({
+				return this.help = formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
 					'Usage': `${pCmd(this, guild)} <text channel>`,
@@ -218,12 +219,12 @@ module.exports = async guild => {
 			aliases: ['del', 'delete', 'clear'],
 			desc: 'Delete a number of messages from a channel.',
 			allowDM: false,
-			roles: [],
+			roles: ids.adjPlus,
 			noRoles: [],
 			devOnly: false,
 			get help() {
 				delete this.help;
-				return this.help = helpText({
+				return this.help = formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
 					'Usage': `${pCmd(this, guild)} <count> [user]`,
@@ -238,101 +239,7 @@ module.exports = async guild => {
 		},
 	};
 
-	/* const cmdsList = {
-		all: {
-			type: 'role',
-			ids: [ids.everyoneID],
-			get cmds() {
-				delete this.cmds;
-				return this.cmds = commandText(this.ids, this.type);
-			},
-		},
-		cdt: {
-			type: 'noRole',
-			ids: ids.nonCadet,
-			get cmds() {
-				delete this.cmds;
-				return this.cmds = cmdsList.all.cmds + '\n' + commandText(this.ids, this.type);
-			},
-		},
-		tac: {
-			type: 'role',
-			ids: ids.tacPlus,
-			get cmds() {
-				delete this.cmds;
-				return this.cmds = cmdsList.cdt.cmds + '\n' + commandText(this.ids, this.type);
-			},
-		},
-		sgt: {
-			type: 'role',
-			ids: ids.sgtPlus,
-			get cmds() {
-				delete this.cmds;
-				return this.cmds = cmdsList.tac.cmds + '\n' + commandText(this.ids, this.type);
-			},
-		},
-		cqms: {
-			type: 'role',
-			ids: ids.cqmsPlus,
-			get cmds() {
-				delete this.cmds;
-				return this.cmds = cmdsList.sgt.cmds + '\n' + commandText(this.ids, this.type);
-			},
-		},
-		adj: {
-			type: 'role',
-			ids: ids.adjPlus,
-			get cmds() {
-				delete this.cmds;
-				return this.cmds = cmdsList.cqms.cmds + '\n' + commandText(this.ids, this.type);
-			},
-		},
-		dev: {
-			type: 'dev',
-			ids: devID,
-			get cmds() {
-				delete this.cmds;
-				return this.cmds = cmdsList.adj.cmds + '\n' + commandText(this.ids, this.type);
-			},
-		},
-	}; */
-
-	return { cmds: cmds }; // , cmdsList: cmdsList };
-
-	function commandText(tier, type) {
-		const object = {};
-
-		for (const cmd of Object.values(cmds)) {
-			if ((type === 'role' && equals(cmd.roles, tier))
-				|| (type === 'noRole' && equals(cmd.noRoles, tier))
-				|| (type === 'dev' && cmd.devOnly)) {
-
-				if (cmd === cmds.help) {
-					object[`${pCmd(cmds.help, guild)}`] = cmds.help.desc.unqualified;
-					object[`${pCmd(cmds.help, guild)} [command]`] = cmds.help.desc.qualified;
-					continue;
-				}
-
-				object[`${pCmd(cmd, guild)}`] = cmd.desc;
-			}
-		}
-
-		return helpText(object, true);
-	}
-
-	function helpText(object, forList) {
-		let helpString = '';
-
-		const [startFormat, endFormat] = (forList)
-			? ['`', '` - ']
-			: ['**', ':** '];
-
-		for (const [key, value] of Object.entries(object)) {
-			helpString += `${startFormat}${key}${endFormat}${value}\n`;
-		}
-
-		return helpString.replace(/\n+$/, '');
-	}
+	return { cmds: cmds };
 
 	function rolesOutput(array) {
 		let rolesString = '';
@@ -351,7 +258,7 @@ module.exports = async guild => {
 	}
 
 	function errorText(helpTxt, cmd) {
-		return '\n\n' + helpTxt + '\n' + helpText({
+		return '\n\n' + helpTxt + '\n' + formatList({
 			'Help Command': `${pCmd(cmds.help, guild)} ${cmd}`,
 		});
 	}
