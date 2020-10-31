@@ -1,12 +1,17 @@
 'use strict';
 
+const { ids: { defaultServer } } = require('../config');
 const { difference, merge } = require('../modules');
 
 module.exports = async guild => {
 	const Guild = require('../models/guild');
 	const cmds = await require('../cmds')(guild);
 
-	const database = await Guild.findOne({ guildID: guild.id }, error => {
+	const id = (guild)
+		? guild.id
+		: defaultServer;
+
+	const database = await Guild.findOne({ guildID: id }, error => {
 		if (error) console.error(error);
 	});
 
