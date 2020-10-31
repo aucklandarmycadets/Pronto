@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = string => {
-	if (typeof string !== 'string') return string;
-	return string.charAt(0).toUpperCase() + string.slice(1);
+	return (typeof string === 'string')
+		? string.charAt(0).toUpperCase() + string.slice(1)
+		: string;
 };

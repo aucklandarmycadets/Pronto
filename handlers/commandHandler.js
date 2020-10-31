@@ -27,9 +27,11 @@ module.exports = async msg => {
 
 	if (!cmd) {
 		const regExp = /[a-zA-Z]/g;
-		if (!regExp.test(msgCmd)) return;
-		else if (!msg.guild) return dmCmdError(msg);
-		else return helpCmd.execute(msg, args);
+		return (regExp.test(msgCmd))
+			? (!msg.guild)
+				? dmCmdError(msg)
+				: helpCmd.execute(msg, args)
+			: null;
 	}
 
 	const hasPerms = await permissionsHandler(msg, cmd);
