@@ -7,7 +7,7 @@ const { permissionsHandler } = require('../handlers');
 
 module.exports = async guild => {
 	const { help, ...cmds } = await require('../cmds')(guild);
-	const { config: { prontoLogo }, ids: { serverID, adjPlus }, colours } = await require('../handlers/database')(guild);
+	const { config: { prontoLogo }, ids: { serverID }, colours } = await require('../handlers/database')(guild);
 
 	help.execute = async (msg, args) => {
 		const { bot } = require('../pronto');
@@ -83,7 +83,7 @@ module.exports = async guild => {
 			helpEmbed.setDescription(commandsList);
 			helpEmbed.setFooter(`Developed by ${james.tag}`, james.avatarURL());
 
-			if (!memberRoles.some(roles => adjPlus.includes(roles.id)) && msg.author.id !== devID) {
+			if (msg.author.id !== devID) {
 				helpEmbed.addField('Note', `Only displaying commands available to ${msg.author}.`);
 			}
 

@@ -25,11 +25,6 @@ const guildSchema = mongoose.Schema({
 		visitorID: String,
 		administratorID: String,
 		formations: Array,
-		nonCadet: Array,
-		tacPlus: Array,
-		sgtPlus: Array,
-		cqmsPlus: Array,
-		adjPlus: Array,
 	},
 	cmds: Object,
 	emojis: {
