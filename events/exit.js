@@ -12,7 +12,7 @@ module.exports = {
 	async execute(event, code) {
 		const { bot, version } = require('../pronto');
 
-		if (event === 'exit') console.log(`Exiting with code ${code}, uptime of ${formatAge(bot.uptime)}`);
+		if (event === 'exit') console.log(`Exiting with code ${code}, uptime of ${formatAge(bot.uptime, true)}`);
 
 		const { colours } = await require('../handlers/database')();
 
@@ -21,7 +21,7 @@ module.exports = {
 		const restartEmbed = new Discord.MessageEmbed()
 			.setAuthor(bot.user.tag, bot.user.avatarURL())
 			.setDescription('**Restarting...**')
-			.addField('Uptime', formatAge(bot.uptime))
+			.addField('Uptime', formatAge(bot.uptime, true))
 			.setColor(colours.warn)
 			.setFooter(`${await dtg()} | Pronto v${version}`);
 

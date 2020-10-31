@@ -1,12 +1,14 @@
 'use strict';
 
-module.exports = raw => {
+module.exports = (raw, elapsed) => {
 	let years = 0;
 	let months = 0;
 	let days = 0;
 	let hours = 0;
 	let minutes = 0;
 	let seconds = 0;
+
+	if (!elapsed) raw = Date.now() - raw;
 
 	if (raw > 31556952000) years = Math.floor(raw / 31556952000);
 	if ((raw - (years * 31556952000)) > 2629800000) months = Math.floor((raw - (years * 31556952000)) / 2629800000);

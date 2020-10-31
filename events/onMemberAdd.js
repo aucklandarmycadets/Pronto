@@ -20,7 +20,7 @@ module.exports = {
 			.setAuthor('Member Joined', memberUser.displayAvatarURL())
 			.setThumbnail(memberUser.displayAvatarURL())
 			.setDescription(`${memberUser} ${memberUser.tag}`)
-			.addField('Account Age', formatAge(Date.now() - memberUser.createdAt))
+			.addField('Account Age', formatAge(memberUser.createdAt))
 			.setFooter(`ID: ${memberUser.id} | ${await dtg()}`);
 		sendMsg(log, logEmbed);
 
