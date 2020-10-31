@@ -32,18 +32,18 @@ A Discord bot developed for the City of Auckland Cadet Unit.
 
 | Command           | Description                                   | Default Permissions                                             |
 | ----------------- | --------------------------------------------- | --------------------------------------------------------------- |
-| `!ping`           | Test the latency of the bot                   | dev                                                             |
-| `!uptime`         | Time since last restart                       | dev                                                             |
-| `!evaluate`       | Evaluate Javascript code                      | dev                                                             |
-| `!restart`        | Restart the bot                               | dev                                                             |
+| `!ping`           | Test the latency of the bot                   | Dev                                                             |
+| `!uptime`         | Time since last restart                       | Dev                                                             |
+| `!evaluate`       | Evaluate Javascript code                      | Dev                                                             |
+| `!restart`        | Restart the bot                               | Dev                                                             |
 | `!help`           | Get help with using Pronto                    | All                                                             |
 | `!help (command)` | Get help with a specific command              | All (user must have permissions to use the sub-command however) |
-| `!leave`          | Submit a leave request                        | NOT nonCadet                                                    |
-| `!leavefor`       | Submit a leave request for another cadet      | tacPlus                                                         |
-| `!attendance`     | Submit an attendance register                 | tacPlus                                                         |
-| `!connected`      | List the members connected to a voice channel | sgtPlus                                                         |
-| `!archive`        | Archive a text channel                        | cqmsPlus                                                        |
-| `!purge`          | Delete a number of messages from a channel    | adjPlus                                                         |
+| `!leave`          | Submit a leave request                        | None                                                            |
+| `!leavefor`       | Submit a leave request for another cadet      | None                                                            |
+| `!attendance`     | Submit an attendance register                 | None                                                            |
+| `!connected`      | List the members connected to a voice channel | None                                                            |
+| `!archive`        | Archive a text channel                        | None                                                            |
+| `!purge`          | Delete a number of messages from a channel    | None                                                            |
 
 ## Installation
 
@@ -85,36 +85,67 @@ exports.ids = {
 | `defaultServer` | This is the ID of the default server to look for in the database if a guild is not specified. Refer to [this](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-) to find out how to get it |
 | `devID`         | ID of the user who is looking after the bot (i.e. probably you)                                                                                                                                                                              |
 
-> There are currently 7 effective command tiers:
-> - Visitors (`nonCadet`) that are **EXCLUDED** from commands
-> - Regular members who **DON'T** have any of `nonCadet`
-> - Next tier who have any of `tacPlus`
-> - Next tier who have any of `sgtPlus`
-> - Next tier who have any of `cqmsPlus`
-> - Next tier who have any of `adjPlus`
-> - Highest tier (`devID`) 
->> **NOTE:** This does *not* give the dev permissions to every command, they only have access to the commands as per their roles like everyone else. This just means they have access to dev-only commands like `!ping` :)
-
-> To assign these values in v4.0.5, use the following command in a server channel:
+> To assign command permissions in v4.0.8, use the following command in a server channel:
 > ```js
 > !eval database(msg.guild, {
-> 	ids: {
-> 		formations: ['<role1>', '<role2>'...],
-> 		nonCadet: ['<role1>', '<role2>'...],
-> 		tacPlus: ['<role1>', '<role2>'...],
-> 		sgtPlus: ['<role1>', '<role2>'...],
-> 		cqmsPlus: ['<role1>', '<role2>'...],
-> 		adjPlus: ['<role1>', '<role2>'...],
-> 	}
-> })
+>	ids: {
+>		formations: ['<role1ID>', '<role2ID>'...],
+>	},
+>	cmds: {
+>		leave: {
+>			roles: ['<role1ID>', '<role2ID>'...],
+>			noRoles: ['<role1ID>', '<role2ID>'...],
+>		},
+>		leaveFor: {
+>			roles: ['<role1ID>', '<role2ID>'...],
+>			noRoles: ['<role1ID>', '<role2ID>'...],
+>		},
+>		attendance: {
+>			roles: ['<role1ID>', '<role2ID>'...],
+>			noRoles: ['<role1ID>', '<role2ID>'...],
+>		},
+>		connected: {
+>			roles: ['<role1ID>', '<role2ID>'...],
+>			noRoles: ['<role1ID>', '<role2ID>'...],
+>		},
+>		archive: {
+>			roles: ['<role1ID>', '<role2ID>'...],
+>			noRoles: ['<role1ID>', '<role2ID>'...],
+>		},
+>		purge: {
+>			roles: ['<role1ID>', '<role2ID>'...],
+>			noRoles: ['<role1ID>', '<role2ID>'...],
+>		}
+>	}
+> }) -silent
 > ```
-> A dashboard is coming soon!
 
-For the emojis to work (and for the bot to not throw heaps of errors...), [add two emojis to the server](https://support.discord.com/hc/en-us/articles/360041139231-Adding-Emojis-and-Reactions#h_ac364eb7-4f4f-4e0a-b829-1ee247f9a094), one named 'success' and the other 'error' :)
+> To set up channel linking, use the following:
+> ```js
+> !eval const func = async () => {
+>	const Guild = require('../models/guild');
+>
+>	const database = await Guild.findOne({ guildID: msg.guild.id }, error => {
+>		if (error) console.error(error);
+>	});
+>
+>	database.ids.channelPairs = [
+>		{ voice: 'voice1ID', text: 'text1ID' },
+>		{ voice: 'voice2ID', text: 'text2ID' },
+>		{ voice: 'voice3ID', text: 'text3ID' },
+>	  ];
+>	database.markModified('ids')
+>
+>	return await database.save().catch(error => console.error(error));
+> }
+> func() -silent
+> ```
+
+> A dashboard is coming soon!
 
 1. Follow [this guide](https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot) to create your own bot user and get your bot token (you can set your own picture and name also!)
 
-> The only location where 'Pronto' is actually named is in `cmds.js`, `config.js` and the dev only `ping.js`, `uptime.js` and `restart.js`:
+> The only location where 'Pronto' is actually named is in `cmds.js`, `config.js` and the dev only `commands\ping.js`, `commands\uptime.js` and `commands\restart.js`:
 > ```js
 > help: {
 > 	cmd: 'help',
@@ -132,17 +163,17 @@ For the emojis to work (and for the bot to not throw heaps of errors...), [add t
 > ```
 > You can rename the bot here (in the '' marks), and everything will still work! Basically, just don't change file names :)
 
-> To change the bot's status message, look in `pronto.js`:
+> To change the bot's status message, look in `events\onReady.js`:
 > ```js
-> bot.user.setActivity(`the radio net | ${pCmd(help)}`, { type: 'LISTENING' });
+> bot.user.setActivity(`the radio net | ${await pCmd(help)}`, { type: 'LISTENING' });
 > ```
 > More information can be found [here](https://discordjs.guide/popular-topics/common-questions.html#how-do-i-set-my-playing-status).
 
-6. Create a file named `.env` in the top-level folder (i.e. in the same folder as `pronto.js`) and enter:
+7. Create a file named `.env` in the top-level folder (i.e. in the same folder as `pronto.js`) and enter:
 ```
 TOKEN=<YOURTOKENHERE>
 MONGOURI=mongodb://localhost/pronto
 ```
-7. Start the bot with `$ node pronto.js` in the repository's folder
-8. Done! The bot should now be online, however now you run into the problem of hosting...
-9. Read [this](https://www.writebots.com/discord-bot-hosting/) document for more on hosting :)
+8. Start the bot with `$ node pronto.js` in the repository's folder
+9. Done! The bot should now be online, however now you run into the problem of hosting...
+10. Read [this](https://www.writebots.com/discord-bot-hosting/) document for more on hosting :)
