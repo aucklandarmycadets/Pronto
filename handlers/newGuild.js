@@ -10,7 +10,11 @@ const recentlyCreated = new Set();
 const createdChannels = new Discord.Collection();
 
 module.exports = async guild => {
-	if (!guild) return require('../config');
+	if (!guild) {
+		const returnObj = require('../config');
+		returnObj.cmds = await require('../cmds')('break');
+		return returnObj;
+	}
 
 	const existingGuild = await Guild.findOne({ guildID: guild.id }, error => {
 		if (error) console.error(error);
@@ -23,7 +27,32 @@ module.exports = async guild => {
 	setTimeout(() => recentlyCreated.delete(guild.guildID), 15000);
 
 	const { bot } = require('../pronto');
+	const { overwriteCommands } = require('./');
 
+	guild = await createGuild(guild);
+	guild = await overwriteCommands({ id: guild.guildID });
+
+	if (createdChannels.some(chnlGuild => chnlGuild === guild.guildID)) {
+		const { dtg } = require('../modules');
+
+		const prontoCategory = bot.channels.cache.find(chnl => chnl.type === 'category' && chnl.name === defaults.pronto.name);
+		const debugChannel = bot.channels.cache.get(guild.ids.debugID);
+
+		const createdEmbed = new Discord.MessageEmbed()
+			.setAuthor(bot.user.tag, bot.user.avatarURL())
+			.setColor(colours.pronto)
+			.setDescription(`Initialised channel(s) in **${prontoCategory}**, feel free to move and/or rename them!`)
+			.addField('Created Channels', channelsOutput(createdChannels, guild))
+			.addField('More Information', 'To modify my configuration, please visit my dashboard.')
+			.setFooter(await dtg());
+
+		debugChannel.send(createdEmbed).catch(error => console.error(error));
+	}
+
+	return guild;
+};
+
+async function createGuild(guild) {
 	guild = await new Guild({
 		_id: mongoose.Types.ObjectId(),
 		guildID: guild.id,
@@ -47,15 +76,18 @@ module.exports = async guild => {
 			visitorID: findRole(defaults.visitor, guild),
 			administratorID: '',
 			formations: [],
-			nonCadet: [],
-			tacPlus: [],
-			sgtPlus: [],
-			cqmsPlus: [],
-			adjPlus: [],
+			channelPairs: [],
 		},
+		cmds: {},
 		emojis: {
-			success: emojis.success,
-			error: emojis.error,
+			success: {
+				name: emojis.success.name,
+				URL: emojis.success.URL,
+			},
+			error: {
+				name: emojis.error.name,
+				URL: emojis.error.URL,
+			},
 		},
 		colours: {
 			default: colours.default,
@@ -67,27 +99,8 @@ module.exports = async guild => {
 		},
 	});
 
-	await guild.save().catch(error => console.error(error));
-
-	if (createdChannels.some(chnlGuild => chnlGuild === guild.guildID)) {
-		const { dtg } = require('../modules');
-
-		const prontoCategory = bot.channels.cache.find(chnl => chnl.type === 'category' && chnl.name === defaults.pronto.name);
-		const debugChannel = bot.channels.cache.get(guild.ids.debugID);
-
-		const createdEmbed = new Discord.MessageEmbed()
-			.setAuthor(bot.user.tag, bot.user.avatarURL())
-			.setColor(colours.pronto)
-			.setDescription(`Initialised channel(s) in **${prontoCategory}**, feel free to move and/or rename them!`)
-			.addField('Created Channels', channelsOutput(createdChannels, guild))
-			.addField('More Information', 'To modify my configuration, please visit my dashboard.')
-			.setFooter(await dtg());
-
-		debugChannel.send(createdEmbed).catch(error => console.error(error));
-	}
-
-	return guild;
-};
+	return await guild.save().catch(error => console.error(error));
+}
 
 async function findChannel(channel, guild, type) {
 	const { bot } = require('../pronto');

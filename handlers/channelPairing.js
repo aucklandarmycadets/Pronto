@@ -1,13 +1,12 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { debugError, dtg, pCmd, purgeChannel, sendMsg, successReact } = require('../modules');
-const pairs = require('../channelPairs');
+const { debugError, dtg, embedScaffold, js, pCmd, purgeChannel, sendMsg, successReact } = require('../modules');
 
 module.exports = async (oldState, newState) => {
 	const { bot } = require('../pronto');
-	const { ids: { adjPlus }, emojis, colours } = await require('./database')(newState.guild);
-	const { cmds: { purge } } = await require('../cmds')(newState.guild);
+	const { permissionsCheck } = require('./');
+	const { ids: { channelPairs }, cmds: { purge }, emojis, colours } = await require('./database')(newState.guild);
 
 	const newMember = newState.member;
 
@@ -19,14 +18,14 @@ module.exports = async (oldState, newState) => {
 		? newState.channelID
 		: null;
 
-	for (let i = 0; i < pairs.length; i++) {
-		const textChannel = newState.guild.channels.cache.get(pairs[i].text);
+	for (let i = 0; i < channelPairs.length; i++) {
+		const textChannel = newState.guild.channels.cache.get(channelPairs[i].text);
 		if (!textChannel) {
-			console.error('Invalid text channel ID in JSON.');
+			embedScaffold(null, 'Invalid text channel ID', colours.error, 'debug', null, null, js(`#${channelPairs[i].text}`));
 			continue;
 		}
 
-		const vcID = pairs[i].voice;
+		const vcID = channelPairs[i].voice;
 
 		if (oldID !== vcID && newID === vcID) {
 			textChannel.updateOverwrite(newState.id, { VIEW_CHANNEL: true, SEND_MESSAGES: true })
@@ -54,7 +53,7 @@ module.exports = async (oldState, newState) => {
 					sendMsg(textChannel, leaveEmbed);
 
 					if (oldState.channel.members.size === 0) {
-						const successEmoji = newState.guild.emojis.cache.find(emoji => emoji.name === emojis.success);
+						const successEmoji = newState.guild.emojis.cache.find(emoji => emoji.name === emojis.success.name);
 
 						const purgeEmbed = new Discord.MessageEmbed()
 							.setTitle('Purge Text Channel')
@@ -64,13 +63,13 @@ module.exports = async (oldState, newState) => {
 							.then(msg => {
 								successReact(msg);
 
-								const filter = reaction => reaction.emoji.name === emojis.success;
+								const filter = reaction => reaction.emoji.name === emojis.success.name;
 
 								const collector = msg.createReactionCollector(filter, { dispose: true });
 
 								collector.on('collect', (reaction, user) => {
 									if (!user.bot) {
-										if (msg.guild.members.cache.get(user.id).roles.cache.some(roles => adjPlus.includes(roles.id))) {
+										if (permissionsCheck(msg.guild.members.cache.get(user.id).roles.cache, user.id, purge)) {
 											msg.channel.messages.fetch({ limit: 100 })
 												.then(messages => purgeChannel(messages, msg.channel, collector))
 												.catch(error => debugError(error, `Error fetching messages in ${msg.channel}.`));
@@ -87,7 +86,7 @@ module.exports = async (oldState, newState) => {
 								});
 
 								collector.on('remove', (reaction, user) => {
-									if (msg.guild.members.cache.get(user.id).roles.cache.some(roles => adjPlus.includes(roles.id))) {
+									if (permissionsCheck(msg.guild.members.cache.get(user.id).roles.cache, user.id, purge)) {
 										msg.channel.messages.fetch({ limit: 100 })
 											.then(messages => purgeChannel(messages, msg.channel, collector))
 											.catch(error => debugError(error, `Error fetching messages in ${msg.channel}.`));

@@ -2,12 +2,11 @@
 
 const Discord = require('discord.js');
 const { ids: { devID } } = require('../config');
-const { delMsg, dmCmdError, embedScaffold, errorReact, getRoleError, pCmd, sendDM, sendMsg, successReact } = require('../modules');
+const { delMsg, dmCmdError, embedScaffold, errorReact, formatList, getRoleError, pCmd, sendDM, sendMsg, successReact } = require('../modules');
 const { permissionsHandler } = require('../handlers');
 
 module.exports = async guild => {
-	const { cmds: { help }, cmdsList } = await require('../cmds')(guild);
-	const { config: { prontoLogo }, ids: { serverID, adjPlus }, colours } = await require('../handlers/database')(guild);
+	const { config: { prontoLogo }, ids: { serverID }, cmds: { help, ...cmds }, colours } = await require('../handlers/database')(guild);
 
 	help.execute = async (msg, args) => {
 		const { bot } = require('../pronto');
@@ -60,29 +59,16 @@ module.exports = async guild => {
 		}
 
 		async function sendCmdList() {
-			let commandList;
+			const obj = {
+				[await pCmd(help, guild)]: help.desc.unqualified,
+				[`${await pCmd(help, guild)} [command]`]: help.desc.qualified,
+			};
 
-			for (const values of Object.values(cmdsList)) {
-				if (!values.type) commandList = values.cmds;
-
-				if (values.type === 'noRole') {
-					commandList = (!memberRoles.some(roles => values.ids.includes(roles.id)))
-						? values.cmds
-						: commandList;
-				}
-
-				else if (values.type === 'role') {
-					commandList = (memberRoles.some(roles => values.ids.includes(roles.id)))
-						? values.cmds
-						: commandList;
-				}
-
-				else if (values.type === 'dev') {
-					commandList = (msg.author.id === devID)
-						? values.cmds
-						: commandList;
-				}
+			for (const command of Object.values(cmds)) {
+				if (await permissionsHandler(msg, command)) obj[`${await pCmd(command, guild)}`] = command.desc;
 			}
+
+			const commandsList = formatList(obj, true);
 
 			const james = await bot.users.fetch('192181901065322496');
 
@@ -93,10 +79,10 @@ module.exports = async guild => {
 			helpEmbed.setTitle('Commands List');
 			helpEmbed.setThumbnail(prontoLogo);
 			helpEmbed.setColor(colours.pronto);
-			helpEmbed.setDescription(commandList);
+			helpEmbed.setDescription(commandsList);
 			helpEmbed.setFooter(`Developed by ${james.tag}`, james.avatarURL());
 
-			if (!memberRoles.some(roles => adjPlus.includes(roles.id)) && msg.author.id !== devID) {
+			if (msg.author.id !== devID) {
 				helpEmbed.addField('Note', `Only displaying commands available to ${msg.author}.`);
 			}
 

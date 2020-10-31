@@ -9,8 +9,7 @@ module.exports = {
 	process: [],
 	async execute() {
 		const { bot } = require('../pronto');
-		const { colours } = await require('../handlers/database')();
-		const { cmds: { help } } = await require('../cmds')();
+		const { cmds: { help }, colours } = await require('../handlers/database')();
 
 		const dev = await bot.users.fetch(devID);
 

@@ -6,8 +6,7 @@ const { cmdError, dtg, js, sendMsg, ...modules } = require('../modules');
 const handlers = require('../handlers');
 
 module.exports = async guild => {
-	const { cmds: { evaluate, ...cmds }, ...cmdsList } = await require('../cmds')(guild);
-	const { colours, _doc: config, ...db } = await require('../handlers/database')(guild);
+	const { cmds: { evaluate, ...cmds }, colours, _doc: config, ...db } = await require('../handlers/database')(guild);
 	const database = await require('../handlers/database');
 
 	evaluate.execute = async (msg, args) => {

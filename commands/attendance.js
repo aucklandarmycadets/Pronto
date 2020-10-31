@@ -4,8 +4,7 @@ const Discord = require('discord.js');
 const { cmdError, debugError, delMsg, dtg, embedScaffold, errorReact, sendDM, sendMsg, successReact } = require('../modules');
 
 module.exports = async guild => {
-	const { cmds: { attendance } } = await require('../cmds')(guild);
-	const { ids: { attendanceID, formations }, emojis, colours } = await require('../handlers/database')(guild);
+	const { ids: { attendanceID, formations }, cmds: { attendance }, emojis, colours } = await require('../handlers/database')(guild);
 
 	attendance.execute = async (msg, args) => {
 		const { bot } = require('../pronto');
@@ -80,7 +79,7 @@ module.exports = async guild => {
 					await successReact(dm);
 					await errorReact(dm);
 
-					const filter = reaction => reaction.emoji.name === emojis.success || reaction.emoji.name === emojis.error;
+					const filter = reaction => reaction.emoji.name === emojis.success.name || reaction.emoji.name === emojis.error.name;
 
 					const collector = dm.createReactionCollector(filter, { dispose: true });
 
@@ -92,7 +91,7 @@ module.exports = async guild => {
 								.setDescription('**Cancelled.**')
 								.setFooter(await dtg());
 
-							if (reaction.emoji.name === emojis.success) {
+							if (reaction.emoji.name === emojis.success.name) {
 								confirmEmbed.setColor(colours.success);
 								confirmEmbed.setDescription('**Confirmed.**');
 

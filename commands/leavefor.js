@@ -1,11 +1,10 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { capitalise, cmdError, dtg, pCmd, sendDM, sendMsg, successReact } = require('../modules');
+const { capitalise, cmdError, dtg, pCmd, remove, sendDM, sendMsg, successReact } = require('../modules');
 
 module.exports = async guild => {
-	const { cmds: { help, leave, leaveFor } } = await require('../cmds')(guild);
-	const { ids: { attendanceID }, colours } = await require('../handlers/database')(guild);
+	const { ids: { attendanceID }, cmds: { leaveFor }, colours } = await require('../handlers/database')(guild);
 
 	leaveFor.execute = async (msg, args) => {
 		const { bot } = require('../pronto');
@@ -31,8 +30,7 @@ module.exports = async guild => {
 
 		successReact(msg);
 
-		const mentionIndex = args.indexOf(`<@!${absentee.user.id}>`);
-		if (mentionIndex > -1) args.splice(mentionIndex, 1);
+		args = remove(args, `<@!${absentee.user.id}>`);
 
 		const attendanceEmbed = new Discord.MessageEmbed()
 			.setTitle(leaveForEmbedTitle)

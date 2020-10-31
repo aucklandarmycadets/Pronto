@@ -63,8 +63,14 @@ exports.defaults = {
 };
 
 exports.emojis = {
-	success: 'success',
-	error: 'error',
+	success: {
+		name: 'success',
+		URL: 'https://i.imgur.com/OMi5RLT.png',
+	},
+	error: {
+		name: 'error',
+		URL: 'https://i.imgur.com/DW8EJJ7.png',
+	},
 };
 
 exports.colours = {
