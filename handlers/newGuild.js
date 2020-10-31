@@ -76,6 +76,7 @@ async function createGuild(guild) {
 			visitorID: findRole(defaults.visitor, guild),
 			administratorID: '',
 			formations: [],
+			channelPairs: [],
 		},
 		cmds: {},
 		emojis: {

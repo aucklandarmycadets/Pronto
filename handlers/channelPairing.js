@@ -1,13 +1,12 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { debugError, dtg, pCmd, purgeChannel, sendMsg, successReact } = require('../modules');
-const pairs = require('../channelPairs');
+const { debugError, dtg, embedScaffold, js, pCmd, purgeChannel, sendMsg, successReact } = require('../modules');
 
 module.exports = async (oldState, newState) => {
 	const { bot } = require('../pronto');
 	const { permissionsCheck } = require('./');
-	const { cmds: { purge }, emojis, colours } = await require('./database')(newState.guild);
+	const { ids: { channelPairs }, cmds: { purge }, emojis, colours } = await require('./database')(newState.guild);
 
 	const newMember = newState.member;
 
@@ -19,14 +18,14 @@ module.exports = async (oldState, newState) => {
 		? newState.channelID
 		: null;
 
-	for (let i = 0; i < pairs.length; i++) {
-		const textChannel = newState.guild.channels.cache.get(pairs[i].text);
+	for (let i = 0; i < channelPairs.length; i++) {
+		const textChannel = newState.guild.channels.cache.get(channelPairs[i].text);
 		if (!textChannel) {
-			console.error('Invalid text channel ID in JSON.');
+			embedScaffold(null, 'Invalid text channel ID', colours.error, 'debug', null, null, js(`#${channelPairs[i].text}`));
 			continue;
 		}
 
-		const vcID = pairs[i].voice;
+		const vcID = channelPairs[i].voice;
 
 		if (oldID !== vcID && newID === vcID) {
 			textChannel.updateOverwrite(newState.id, { VIEW_CHANNEL: true, SEND_MESSAGES: true })
