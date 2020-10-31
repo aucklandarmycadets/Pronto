@@ -107,7 +107,7 @@ module.exports = async guild => {
 			desc: 'Submit a leave request.',
 			allowDM: false,
 			roles: [],
-			noRoles: ids.nonCadet,
+			noRoles: [],
 			devOnly: false,
 			get help() {
 				delete this.help;
@@ -128,7 +128,7 @@ module.exports = async guild => {
 			aliases: ['lv4'],
 			desc: 'Submit a leave request for another cadet.',
 			allowDM: false,
-			roles: ids.tacPlus,
+			roles: [],
 			noRoles: [],
 			devOnly: false,
 			get help() {
@@ -151,7 +151,7 @@ module.exports = async guild => {
 			aliases: ['att', 'attdnce'],
 			desc: 'Submit an attendance register.',
 			allowDM: false,
-			roles: ids.tacPlus,
+			roles: [],
 			noRoles: [],
 			devOnly: false,
 			get help() {
@@ -173,7 +173,7 @@ module.exports = async guild => {
 			aliases: ['cnnct', 'cnnctd'],
 			desc: 'List the members connected to a voice channel.',
 			allowDM: false,
-			roles: ids.sgtPlus,
+			roles: [],
 			noRoles: [],
 			devOnly: false,
 			get help() {
@@ -196,7 +196,7 @@ module.exports = async guild => {
 			aliases: ['archv'],
 			desc: 'Archive a text channel.',
 			allowDM: false,
-			roles: ids.cqmsPlus,
+			roles: [],
 			noRoles: [],
 			devOnly: false,
 			get help() {
@@ -219,7 +219,7 @@ module.exports = async guild => {
 			aliases: ['del', 'delete', 'clear'],
 			desc: 'Delete a number of messages from a channel.',
 			allowDM: false,
-			roles: ids.adjPlus,
+			roles: [],
 			noRoles: [],
 			devOnly: false,
 			get help() {
@@ -239,7 +239,7 @@ module.exports = async guild => {
 		},
 	};
 
-	return { cmds: cmds };
+	return cmds;
 
 	function rolesOutput(array) {
 		let rolesString = '';

@@ -3,7 +3,7 @@
 const { cmdError, debugError, embedScaffold, errorReact } = require('../modules');
 
 module.exports = async guild => {
-	const { cmds: { purge } } = await require('../cmds')(guild);
+	const { purge } = await require('../cmds')(guild);
 	const { colours } = await require('../handlers/database')(guild);
 
 	purge.execute = (msg, args) => {

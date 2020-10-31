@@ -4,7 +4,7 @@ const { difference, merge } = require('../modules');
 
 module.exports = async guild => {
 	const Guild = require('../models/guild');
-	const { cmds: cmds } = await require('../cmds')(guild);
+	const cmds = await require('../cmds')(guild);
 
 	const database = await Guild.findOne({ guildID: guild.id }, error => {
 		if (error) console.error(error);

@@ -9,7 +9,7 @@ module.exports = {
 	async execute(event, msg) {
 		const { bot } = require('../pronto');
 		const { config: { prefix }, ids: { logID }, colours } = await require('../handlers/database')(msg.guild);
-		const { cmds: { help, attendance, purge } } = await require('../cmds')(msg.guild);
+		const { help, attendance, purge } = await require('../cmds')(msg.guild);
 
 		const log = bot.channels.cache.get(logID);
 		const logEmbed = new Discord.MessageEmbed()

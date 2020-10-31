@@ -11,7 +11,7 @@ module.exports = {
 
 		const { bot } = require('../pronto');
 		const { ids: { logID }, colours } = await require('../handlers/database')(guild);
-		const { cmds: { purge } } = await require('../cmds')(guild);
+		const { purge } = await require('../cmds')(guild);
 
 		const log = bot.channels.cache.get(logID);
 		const msg = msgs.first();

@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 const { dtg, formatAge, sendMsg } = require('../modules');
 
 module.exports = async guild => {
-	const { cmds: { uptime } } = await require('../cmds')(guild);
+	const { uptime } = await require('../cmds')(guild);
 	const { colours } = await require('../handlers/database')(guild);
 
 	uptime.execute = async msg => {
