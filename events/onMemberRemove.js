@@ -10,8 +10,6 @@ module.exports = {
 		const { bot } = require('../pronto');
 		const { ids: { logID }, colours } = await require('../handlers/database')(member.guild);
 
-		if (member.deleted) return;
-
 		const log = bot.channels.cache.get(logID);
 		const memberUser = member.user;
 		const memberRoles = member.roles.cache.array();
