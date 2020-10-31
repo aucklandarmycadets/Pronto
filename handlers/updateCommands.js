@@ -2,7 +2,7 @@
 
 const { difference, merge } = require('../modules');
 
-module.exports = async (guild, cmd) => {
+module.exports = async guild => {
 	const Guild = require('../models/guild');
 	const { cmds: cmds } = await require('../cmds')(guild);
 
