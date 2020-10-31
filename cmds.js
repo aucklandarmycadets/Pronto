@@ -106,7 +106,7 @@ module.exports = async guild => {
 			desc: 'Submit a leave request.',
 			allowDM: false,
 			roles: [],
-			noRoles: ids.nonCadet,
+			noRoles: [],
 			devOnly: false,
 			get help() {
 				delete this.help;
@@ -127,7 +127,7 @@ module.exports = async guild => {
 			aliases: ['lv4'],
 			desc: 'Submit a leave request for another cadet.',
 			allowDM: false,
-			roles: ids.tacPlus,
+			roles: [],
 			noRoles: [],
 			devOnly: false,
 			get help() {
@@ -150,7 +150,7 @@ module.exports = async guild => {
 			aliases: ['att', 'attdnce'],
 			desc: 'Submit an attendance register.',
 			allowDM: false,
-			roles: ids.tacPlus,
+			roles: [],
 			noRoles: [],
 			devOnly: false,
 			get help() {
@@ -172,7 +172,7 @@ module.exports = async guild => {
 			aliases: ['cnnct', 'cnnctd'],
 			desc: 'List the members connected to a voice channel.',
 			allowDM: false,
-			roles: ids.sgtPlus,
+			roles: [],
 			noRoles: [],
 			devOnly: false,
 			get help() {
@@ -195,7 +195,7 @@ module.exports = async guild => {
 			aliases: ['archv'],
 			desc: 'Archive a text channel.',
 			allowDM: false,
-			roles: ids.cqmsPlus,
+			roles: [],
 			noRoles: [],
 			devOnly: false,
 			get help() {
@@ -218,7 +218,7 @@ module.exports = async guild => {
 			aliases: ['del', 'delete', 'clear'],
 			desc: 'Delete a number of messages from a channel.',
 			allowDM: false,
-			roles: ids.adjPlus,
+			roles: [],
 			noRoles: [],
 			devOnly: false,
 			get help() {
@@ -238,7 +238,7 @@ module.exports = async guild => {
 		},
 	};
 
-	const cmdsList = {
+	/* const cmdsList = {
 		all: {
 			type: 'role',
 			ids: [ids.everyoneID],
@@ -295,9 +295,9 @@ module.exports = async guild => {
 				return this.cmds = cmdsList.adj.cmds + '\n' + commandText(this.ids, this.type);
 			},
 		},
-	};
+	}; */
 
-	return { cmds: cmds, cmdsList: cmdsList };
+	return { cmds: cmds }; // , cmdsList: cmdsList };
 
 	function commandText(tier, type) {
 		const object = {};
@@ -336,6 +336,9 @@ module.exports = async guild => {
 
 	function rolesOutput(array) {
 		let rolesString = '';
+
+		if (!array) return rolesString;
+
 		const filteredArray = array.filter(role => role !== ids.administratorID && role.name !== '@everyone');
 
 		for (let i = 0; i < filteredArray.length; i++) {

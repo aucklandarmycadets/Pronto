@@ -31,6 +31,7 @@ const guildSchema = mongoose.Schema({
 		cqmsPlus: Array,
 		adjPlus: Array,
 	},
+	cmds: Object,
 	emojis: {
 		success: String,
 		error: String,
