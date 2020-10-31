@@ -2,6 +2,7 @@
 
 module.exports = (arr, str) => {
 	const index = arr.indexOf(str);
-	if (index > -1) return arr.splice(index, 1);
-	return arr;
+	return (index > -1)
+		? arr.splice(index, 1)
+		: arr;
 };

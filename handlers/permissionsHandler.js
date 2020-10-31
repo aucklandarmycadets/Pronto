@@ -1,6 +1,5 @@
 'use strict';
 
-const { ids: { devID } } = require('../config');
 const { getRoleError } = require('../modules');
 
 module.exports = async (msg, cmd) => {
@@ -14,7 +13,7 @@ module.exports = async (msg, cmd) => {
 		? msg.member.roles.cache
 		: await server.members.fetch(msg.author.id).then(member => member.roles.cache);
 
-	if (!memberRoles) return await getRoleError(msg);
-
-	return permissionsCheck(memberRoles, msg.author.id, cmd);
+	return (memberRoles)
+		? permissionsCheck(memberRoles, msg.author.id, cmd)
+		: await getRoleError(msg);
 };
