@@ -15,14 +15,14 @@ module.exports = {
 		const logEmbed = new Discord.MessageEmbed()
 			.setColor(colours.error);
 
-		if (msg.partial) {
+		if (msg.partial && msg.guild) {
 			logEmbed.setAuthor(msg.guild.name, msg.guild.iconURL());
 			logEmbed.setDescription(`**Uncached message deleted in ${msg.channel}**`);
 			logEmbed.setFooter(`ID: ${msg.id} | ${await dtg()}`);
 		}
 
-		else {
-			if (cmdCheck() || !msg.guild) return;
+		else if (msg.guild) {
+			if (cmdCheck()) return;
 
 			const messageAuthor = msg.author;
 			const lastMsg = msg.channel.lastMessage;
@@ -51,9 +51,15 @@ module.exports = {
 				? ''
 				: charLimit(`>>> ${content}`, 2048);
 
+			const attachment = (msg.attachments)
+				? msg.attachments.first()
+				: null;
+
 			logEmbed.setAuthor(messageAuthor.tag, messageAuthor.displayAvatarURL());
 			logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted in ${msg.channel}**\n${content}`);
 			logEmbed.setFooter(`Author: ${messageAuthor.id} | Message: ${msg.id} | ${await dtg()}`);
+
+			if (attachment) logEmbed.addField('Attachment', Discord.escapeMarkdown(attachment.name));
 
 			if (lastMsg) {
 				if (lastMsg.content.includes(purge.cmd) || purge.aliases.some(alias => lastMsg.content.includes(alias))) {
@@ -70,6 +76,8 @@ module.exports = {
 				}
 			}
 		}
+
+		else return;
 
 		sendMsg(log, logEmbed);
 

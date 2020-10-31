@@ -15,7 +15,7 @@ module.exports = {
 		const logEmbed = new Discord.MessageEmbed()
 			.setColor(colours.warn);
 
-		if (oldMessage.partial) {
+		if (oldMessage.partial && oldMessage.guild) {
 			newMessage = await newMessage.fetch();
 
 			logEmbed.setAuthor(newMessage.author.tag, newMessage.author.displayAvatarURL());
@@ -24,8 +24,8 @@ module.exports = {
 			logEmbed.setFooter(`ID: ${newMessage.id} | ${await dtg()}`);
 		}
 
-		else {
-			if (oldMessage.content === newMessage.content || newMessage.author.bot || !newMessage.guild) return;
+		else if (newMessage.guild) {
+			if (oldMessage.content === newMessage.content || newMessage.author.bot) return;
 
 			logEmbed.setAuthor(newMessage.author.tag, newMessage.author.displayAvatarURL());
 			logEmbed.setDescription(`**Message edited in ${newMessage.channel}** [Jump to Message](${newMessage.url})`);
@@ -33,6 +33,8 @@ module.exports = {
 			logEmbed.addField('After', charLimit(newMessage.content, 1024));
 			logEmbed.setFooter(`Author: ${newMessage.author.id} | Message: ${newMessage.id} | ${await dtg()}`);
 		}
+
+		else return;
 
 		commandHandler(newMessage);
 		sendMsg(log, logEmbed);
