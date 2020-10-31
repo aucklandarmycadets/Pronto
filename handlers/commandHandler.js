@@ -6,8 +6,7 @@ const { debugError, dmCmdError, pCmd } = require('../modules');
 module.exports = async msg => {
 	const { bot } = require('../pronto');
 	const { updateCommands, permissionsHandler } = require('./');
-	const { config: { prefix } } = await require('./database')(msg.guild);
-	const { help } = await require('../cmds')(msg.guild);
+	const { config: { prefix }, cmds: { help } } = await require('./database')(msg.guild);
 
 	if (msg.author.bot || !msg.content.startsWith(prefix)) return;
 

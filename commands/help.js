@@ -6,8 +6,7 @@ const { delMsg, dmCmdError, embedScaffold, errorReact, formatList, getRoleError,
 const { permissionsHandler } = require('../handlers');
 
 module.exports = async guild => {
-	const { help, ...cmds } = await require('../cmds')(guild);
-	const { config: { prontoLogo }, ids: { serverID }, colours } = await require('../handlers/database')(guild);
+	const { config: { prontoLogo }, ids: { serverID }, cmds: { help, ...cmds }, colours } = await require('../handlers/database')(guild);
 
 	help.execute = async (msg, args) => {
 		const { bot } = require('../pronto');

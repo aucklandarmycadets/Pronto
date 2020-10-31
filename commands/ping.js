@@ -4,8 +4,7 @@ const Discord = require('discord.js');
 const { dtg, sendMsg } = require('../modules');
 
 module.exports = async guild => {
-	const { ping } = await require('../cmds')(guild);
-	const { colours } = await require('../handlers/database')(guild);
+	const { cmds: { ping }, colours } = await require('../handlers/database')(guild);
 
 	ping.execute = msg => {
 		const { version } = require('../pronto');

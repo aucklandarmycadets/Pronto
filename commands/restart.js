@@ -3,7 +3,7 @@
 const { successReact } = require('../modules');
 
 module.exports = async guild => {
-	const { restart } = await require('../cmds')(guild);
+	const { cmds: { restart } } = await require('../handlers/database')(guild);
 
 	restart.execute = msg => {
 		successReact(msg);

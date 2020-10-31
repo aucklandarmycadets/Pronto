@@ -7,8 +7,7 @@ const pairs = require('../channelPairs');
 module.exports = async (oldState, newState) => {
 	const { bot } = require('../pronto');
 	const { permissionsCheck } = require('./');
-	const { emojis, colours } = await require('./database')(newState.guild);
-	const { purge } = await require('../cmds')(newState.guild);
+	const { cmds: { purge }, emojis, colours } = await require('./database')(newState.guild);
 
 	const newMember = newState.member;
 
