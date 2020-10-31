@@ -18,6 +18,7 @@ module.exports = async (guild, changes) => {
 	if (!changes) return database || await newGuild(guild);
 
 	if (changes instanceof Object) database = merge(database, changes);
+	Object.keys(changes).forEach(key => database.markModified(key));
 
 	return await database.save().catch(error => console.error(error));
 };
