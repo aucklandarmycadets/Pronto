@@ -70,6 +70,8 @@ async function createGuild(guild) {
 			recruitingID: await findChannel(defaults.recruiting, guild),
 			newMembersID: await findChannel(defaults.newMembers, guild),
 			archivedID: await findChannel(defaults.archived, guild, 'category'),
+			lessonsID: await findChannel(defaults.lessons, guild, 'category'),
+			lessonPlansID: await findChannel(defaults.lessonPlans, guild),
 			exampleTextID: await findChannel(defaults.exampleText, guild),
 			exampleVoiceID: await findChannel(defaults.exampleVoice, guild, 'voice'),
 			everyoneID: guild.roles.everyone.id,
