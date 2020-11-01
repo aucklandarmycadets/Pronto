@@ -77,6 +77,7 @@ async function createGuild(guild) {
 			everyoneID: guild.roles.everyone.id,
 			visitorID: findRole(defaults.visitor, guild),
 			administratorID: '',
+			trainingIDs: '',
 			formations: [],
 			channelPairs: [],
 		},
