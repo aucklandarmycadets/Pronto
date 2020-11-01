@@ -15,6 +15,8 @@ module.exports = {
 		const logEmbed = new Discord.MessageEmbed()
 			.setColor(colours.warn);
 
+		commandHandler(newMessage);
+
 		if (oldMessage.partial && oldMessage.guild) {
 			newMessage = await newMessage.fetch();
 
@@ -36,7 +38,6 @@ module.exports = {
 
 		else return;
 
-		commandHandler(newMessage);
 		sendMsg(log, logEmbed);
 	},
 };
