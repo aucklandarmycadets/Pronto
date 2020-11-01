@@ -159,6 +159,60 @@ module.exports = async guild => {
 				errorText(this.help, this.cmd);
 			},
 		},
+		submit: {
+			cmd: 'submit',
+			aliases: ['sub'],
+			desc: 'Submit a lesson plan.',
+			allowDM: false,
+			roles: [],
+			noRoles: [],
+			devOnly: false,
+			showList: false,
+			get help() {
+				return formatList({
+					'Aliases': pAls(this),
+					'Description': this.desc,
+					'Usage': pCmd(this),
+					'Allowed Categories': `<#${ids.lessonsID}>`,
+				});
+			},
+			set help(obj) {
+				formatList(obj);
+			},
+			get error() {
+				return errorText(this.help, this.cmd);
+			},
+			set error(value) {
+				errorText(this.help, this.cmd);
+			},
+		},
+		seen: {
+			cmd: 'seen',
+			aliases: ['ack'],
+			desc: 'Acknowledge receipt of a lesson warning.',
+			allowDM: false,
+			roles: [],
+			noRoles: [],
+			devOnly: false,
+			showList: false,
+			get help() {
+				return formatList({
+					'Aliases': pAls(this),
+					'Description': this.desc,
+					'Usage': pCmd(this),
+					'Allowed Categories': `<#${ids.lessonsID}>`,
+				});
+			},
+			set help(obj) {
+				formatList(obj);
+			},
+			get error() {
+				return errorText(this.help, this.cmd);
+			},
+			set error(value) {
+				errorText(this.help, this.cmd);
+			},
+		},
 		leaveFor: {
 			cmd: 'leavefor',
 			aliases: ['lv4'],
@@ -230,6 +284,63 @@ module.exports = async guild => {
 					'Usage': `${pCmd(this)} <voice channel>`,
 					'Example': `${pCmd(this)} <#${ids.exampleVoiceID}>`,
 					'Allowed Roles': rolesOutput(this.roles),
+				});
+			},
+			set help(obj) {
+				formatList(obj);
+			},
+			get error() {
+				return errorText(this.help, this.cmd);
+			},
+			set error(value) {
+				errorText(this.help, this.cmd);
+			},
+		},
+		assign: {
+			cmd: 'assign',
+			aliases: ['give'],
+			desc: 'Assign a lesson to an instructor.',
+			allowDM: false,
+			roles: [],
+			noRoles: [],
+			devOnly: false,
+			showList: true,
+			get help() {
+				return formatList({
+					'Aliases': pAls(this),
+					'Description': this.desc,
+					'Usage': `${pCmd(this)} <user>`,
+					'Example': `${pCmd(this)} <@${devID}>`,
+					'Allowed Roles': rolesOutput(this.roles),
+					'Allowed Categories': `<#${ids.lessonsID}>`,
+				});
+			},
+			set help(obj) {
+				formatList(obj);
+			},
+			get error() {
+				return errorText(this.help, this.cmd);
+			},
+			set error(value) {
+				errorText(this.help, this.cmd);
+			},
+		},
+		accept: {
+			cmd: 'accept',
+			aliases: ['acc'],
+			desc: 'Accept a lesson plan.',
+			allowDM: false,
+			roles: [],
+			noRoles: [],
+			devOnly: false,
+			showList: true,
+			get help() {
+				return formatList({
+					'Aliases': pAls(this),
+					'Description': this.desc,
+					'Usage': pCmd(this),
+					'Allowed Roles': rolesOutput(this.roles),
+					'Allowed Categories': `<#${ids.lessonsID}>`,
 				});
 			},
 			set help(obj) {
