@@ -65,7 +65,7 @@ module.exports = async guild => {
 			};
 
 			for (const command of Object.values(cmds)) {
-				if (await permissionsHandler(msg, command)) obj[`${await pCmd(command, guild)}`] = command.desc;
+				if (await permissionsHandler(msg, command) && command.showList) obj[`${await pCmd(command, guild)}`] = command.desc;
 			}
 
 			const commandsList = formatList(obj, true);

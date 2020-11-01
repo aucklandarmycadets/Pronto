@@ -127,7 +127,7 @@ async function findChannel(channel, guild, type) {
 				await chnl.setPosition(0);
 				prontoCategory = chnl;
 			})
-			.catch(error => console.error(`Error creating category '${defaults.pronto.name}' in ${guild.name} \n${error}`));
+			.catch(error => console.error(`Error creating category '${defaults.pronto.name}' in ${guild.name}\n`, error));
 	}
 
 	const chnlOptions = (type === 'category')
@@ -137,7 +137,7 @@ async function findChannel(channel, guild, type) {
 			: { parent: prontoCategory, type: type };
 
 	const newChannel = await guild.channels.create(channel.name, chnlOptions)
-		.catch(error => console.error(`Error creating ${channel.name} in ${guild.name} \n${error}`));
+		.catch(error => console.error(`Error creating ${channel.name} in ${guild.name}\n`, error));
 
 	createdChannels.set(newChannel.id, guild.id);
 	setTimeout(() => createdChannels.delete(newChannel.id), 5000);
