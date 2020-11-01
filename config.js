@@ -37,6 +37,15 @@ exports.defaults = {
 		name: 'new-members',
 		desc: '**Introduce yourself!** You can ask us any questions you might have here, or just say hello!',
 	},
+	lessonPlans: {
+		name: 'lesson-plans',
+		desc: 'An archive of completed and approved **lesson plans**.',
+		get parent() {
+			const { defaults } = require('./config');
+			delete this.parent;
+			return this.parent = defaults.lessons.name;
+		},
+	},
 	exampleText: {
 		name: 'example-text',
 		get desc() {
@@ -53,6 +62,9 @@ exports.defaults = {
 	},
 	archived: {
 		name: 'Archived',
+	},
+	lessons: {
+		name: 'Lesson Plans',
 	},
 	visitor: {
 		name: 'visitor',
