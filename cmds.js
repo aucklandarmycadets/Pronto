@@ -17,6 +17,7 @@ module.exports = async guild => {
 			roles: [],
 			noRoles: [],
 			devOnly: true,
+			showList: true,
 			get help() {
 				return formatList({
 					'Aliases': pAls(this),
@@ -36,6 +37,7 @@ module.exports = async guild => {
 			roles: [],
 			noRoles: [],
 			devOnly: true,
+			showList: true,
 			get help() {
 				return formatList({
 					'Aliases': pAls(this),
@@ -55,6 +57,7 @@ module.exports = async guild => {
 			roles: [],
 			noRoles: [],
 			devOnly: true,
+			showList: true,
 			get help() {
 				return formatList({
 					'Aliases': pAls(this),
@@ -80,6 +83,7 @@ module.exports = async guild => {
 			roles: [],
 			noRoles: [],
 			devOnly: true,
+			showList: true,
 			get help() {
 				return formatList({
 					'Aliases': pAls(this),
@@ -109,6 +113,7 @@ module.exports = async guild => {
 			roles: [ids.everyoneID],
 			noRoles: [],
 			devOnly: false,
+			showList: true,
 			get help() {
 				return formatList({
 					'Aliases': pAls(this),
@@ -135,6 +140,7 @@ module.exports = async guild => {
 			roles: [],
 			noRoles: [],
 			devOnly: false,
+			showList: true,
 			get help() {
 				return formatList({
 					'Aliases': pAls(this),
@@ -161,6 +167,7 @@ module.exports = async guild => {
 			roles: [],
 			noRoles: [],
 			devOnly: false,
+			showList: true,
 			get help() {
 				return formatList({
 					'Aliases': pAls(this),
@@ -188,6 +195,7 @@ module.exports = async guild => {
 			roles: [],
 			noRoles: [],
 			devOnly: false,
+			showList: true,
 			get help() {
 				return formatList({
 					'Aliases': pAls(this),
@@ -214,6 +222,7 @@ module.exports = async guild => {
 			roles: [],
 			noRoles: [],
 			devOnly: false,
+			showList: true,
 			get help() {
 				return formatList({
 					'Aliases': pAls(this),
@@ -241,6 +250,7 @@ module.exports = async guild => {
 			roles: [],
 			noRoles: [],
 			devOnly: false,
+			showList: true,
 			get help() {
 				return formatList({
 					'Aliases': pAls(this),
@@ -268,6 +278,7 @@ module.exports = async guild => {
 			roles: [],
 			noRoles: [],
 			devOnly: false,
+			showList: true,
 			get help() {
 				return formatList({
 					'Aliases': pAls(this),
