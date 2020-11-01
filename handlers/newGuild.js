@@ -133,11 +133,15 @@ async function findChannel(channel, guild, type) {
 			.catch(error => console.error(`Error creating category '${defaults.pronto.name}' in ${guild.name}\n`, error));
 	}
 
+	const parent = (channel.parent)
+		? guild.channels.cache.find(chnl => chnl.type === 'category' && chnl.name === channel.parent)
+		: null;
+
 	const chnlOptions = (type === 'category')
 		? { type: type }
-		: (channel.desc)
-			? { topic: channel.desc, parent: prontoCategory, type: type }
-			: { parent: prontoCategory, type: type };
+		: (parent)
+			? { topic: channel.desc, parent: parent, type: type }
+			: { topic: channel.desc, parent: prontoCategory, type: type };
 
 	const newChannel = await guild.channels.create(channel.name, chnlOptions)
 		.catch(error => console.error(`Error creating ${channel.name} in ${guild.name}\n`, error));
