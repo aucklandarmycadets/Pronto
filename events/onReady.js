@@ -1,6 +1,6 @@
 'use strict';
 
-const { ids: { devID } } = require('../config');
+const { ids: { defaultServer, devID } } = require('../config');
 const { embedScaffold, pCmd } = require('../modules');
 const { botPermsHandler } = require('../handlers');
 
@@ -16,6 +16,7 @@ module.exports = {
 		console.info(`Logged in as ${bot.user.tag}!`);
 		bot.user.setActivity(`the radio net | ${await pCmd(help)}`, { type: 'LISTENING' });
 
+		if (!bot.guilds.cache.get(defaultServer)) return embedScaffold(dev, '**Error reaching the default server, check the config!**', colours.error, 'dev', 'Server ID', defaultServer);
 		embedScaffold(dev, '**Ready to go!**', colours.success, 'dev');
 
 		botPermsHandler();
