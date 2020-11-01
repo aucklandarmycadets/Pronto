@@ -43,16 +43,16 @@ module.exports = async guild => {
 		catch (error) { msgSplit(error.stack, ')'); }
 
 		function msgSplit(str, char) {
-			const lim = Math.ceil(str.length / 1990);
+			const lim = Math.ceil(str.length / 1985);
 
 			for (let i = 0; i < lim; i++) {
-				const breakAt = (str.length > 1990)
-					? (str.lastIndexOf(char, 1990) !== -1)
-						? str.lastIndexOf(char, 1990) + char.length
-						: (str.lastIndexOf(' ', 1990) !== -1)
-							? str.lastIndexOf(' ', 1990) + 1
-							: 1990
-					: 1990;
+				const breakAt = (str.length > 1985)
+					? (str.lastIndexOf(char, 1985) !== -1)
+						? str.lastIndexOf(char, 1985) + char.length
+						: (str.lastIndexOf(' ', 1985) !== -1)
+							? str.lastIndexOf(' ', 1985) + 1
+							: 1985
+					: 1985;
 
 				(str !== 'Promise { <pending> }')
 					? (codeBlock)
