@@ -324,10 +324,10 @@ module.exports = async guild => {
 				errorText(this.help, this.cmd);
 			},
 		},
-		accept: {
-			cmd: 'accept',
-			aliases: ['acc'],
-			desc: 'Accept a lesson plan.',
+		approve: {
+			cmd: 'approve',
+			aliases: ['app', 'apprv', 'acc', 'accept'],
+			desc: 'Approve a lesson plan.',
 			allowDM: false,
 			roles: [],
 			noRoles: [],
