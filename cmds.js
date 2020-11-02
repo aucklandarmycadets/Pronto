@@ -312,7 +312,6 @@ module.exports = async guild => {
 					'Usage': `${pCmd(this)} <user(s)>`,
 					'Example': `${pCmd(this)} <@${devID}>`,
 					'Allowed Roles': rolesOutput(this.roles),
-					'Allowed Categories': `<#${ids.lessonsID}>`,
 				});
 			},
 			set help(obj) {
