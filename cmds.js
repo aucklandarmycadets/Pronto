@@ -309,7 +309,7 @@ module.exports = async guild => {
 				return formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
-					'Usage': `${pCmd(this)} <user>`,
+					'Usage': `${pCmd(this)} <user(s)>`,
 					'Example': `${pCmd(this)} <@${devID}>`,
 					'Allowed Roles': rolesOutput(this.roles),
 					'Allowed Categories': `<#${ids.lessonsID}>`,
