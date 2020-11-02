@@ -126,8 +126,8 @@ async function findChannel(channel, guild, type) {
 		await guild.channels.create(defaults.pronto.name, { type: 'category' })
 			.then(async chnl => {
 				await chnl.createOverwrite(bot.user.id, { 'VIEW_CHANNEL': true });
-				await chnl.createOverwrite(everyone, { 'VIEW_CHANNEL': false });
-				await chnl.setPosition(0);
+				chnl.createOverwrite(everyone, { 'VIEW_CHANNEL': false });
+				chnl.setPosition(0);
 				prontoCategory = chnl;
 			})
 			.catch(error => console.error(`Error creating category '${defaults.pronto.name}' in ${guild.name}\n`, error));
