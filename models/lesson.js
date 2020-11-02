@@ -13,6 +13,7 @@ const lessonSchema = mongoose.Schema({
 	submittedResources: Array,
 	submitted: Boolean,
 	approved: Boolean,
+	changed: Boolean,
 });
 
 module.exports = mongoose.model('lesson', lessonSchema, 'lessons');
