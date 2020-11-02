@@ -192,6 +192,8 @@ module.exports = async guild => {
 				lessonDate: lessonDate,
 				assignedResources: outputResources(resources),
 				submittedResources: [],
+				submitted: false,
+				approved: false,
 			});
 
 			return await lesson.save().catch(error => console.error(error));

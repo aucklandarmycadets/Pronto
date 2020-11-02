@@ -11,6 +11,8 @@ const lessonSchema = mongoose.Schema({
 	lessonDate: String,
 	assignedResources: Array,
 	submittedResources: Array,
+	submitted: Boolean,
+	approved: Boolean,
 });
 
 module.exports = mongoose.model('lesson', lessonSchema, 'lessons');
