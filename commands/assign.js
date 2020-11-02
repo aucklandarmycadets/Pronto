@@ -312,15 +312,21 @@ function processResources(att, URLs) {
 }
 
 function outputResources(arr) {
+	let procArr = [];
 	const linksArr = [];
 	const outputArr = [];
 	let count = 1;
+
 	for (let i = 0; i < arr.length; i++) {
-		if (arr[i].substr(0, 6) === '[Link]') {
-			linksArr.push(`[Link ${count}]${arr[i].substring(6)}`);
+		procArr = procArr.concat(arr[i].split('\n'));
+	}
+
+	for (let i = 0; i < procArr.length; i++) {
+		if (procArr[i].substr(0, 6) === '[Link]') {
+			linksArr.push(`[Link ${count}]${procArr[i].substring(6)}`);
 			count++;
 		}
-		else outputArr.push(`${arr[i]}`);
+		else outputArr.push(`${procArr[i]}`);
 	}
 	return outputArr.concat(linksArr);
 }
