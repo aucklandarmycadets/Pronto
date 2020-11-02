@@ -1,10 +1,11 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { cmdError, debugError, delMsg, dtg, embedScaffold, errorReact, sendDM, sendMsg, successReact } = require('../modules');
+const confirmation = require('../handlers/confirmation');
+const { cmdError, debugError, delMsg, dtg, embedScaffold, sendDM, sendMsg } = require('../modules');
 
 module.exports = async guild => {
-	const { ids: { attendanceID, formations }, cmds: { attendance }, emojis, colours } = await require('../handlers/database')(guild);
+	const { ids: { attendanceID, formations }, cmds: { attendance }, colours } = await require('../handlers/database')(guild);
 
 	attendance.execute = async (msg, args) => {
 		const { bot } = require('../pronto');
@@ -75,77 +76,33 @@ module.exports = async guild => {
 			if (chnlMsg) attendanceEmbed.setAuthor(`${formationName} (Update)`, msg.guild.iconURL());
 
 			sendDM(msg.author, attendanceEmbed, msg.channel)
-				.then(async dm => {
-					await successReact(dm);
-					await errorReact(dm);
+				.then(dm => {
+					const sendAttendance = async () => {
+						attendanceEmbed.setAuthor(`${formationName} (${msg.member.displayName})`, msg.guild.iconURL());
 
-					const filter = reaction => reaction.emoji.name === emojis.success.name || reaction.emoji.name === emojis.error.name;
+						if (chnlMsg) {
+							attendanceEmbed.setFooter(`Last updated at ${await dtg()}`);
 
-					const collector = dm.createReactionCollector(filter, { dispose: true });
+							const findFormation = role => role.name === formationName;
+							const formationDisplay = msg.guild.roles.cache.find(findFormation) || `**${formationName}**`;
 
-					collector.on('collect', async (reaction, user) => {
-						if (!user.bot) {
-							const confirmEmbed = new Discord.MessageEmbed()
-								.setAuthor(bot.user.tag, bot.user.avatarURL())
-								.setColor(colours.error)
-								.setDescription('**Cancelled.**')
-								.setFooter(await dtg());
+							embedScaffold(msg.channel, `${msg.author} Successfully updated attendance for ${formationDisplay}.`, colours.success, 'msg');
 
-							if (reaction.emoji.name === emojis.success.name) {
-								confirmEmbed.setColor(colours.success);
-								confirmEmbed.setDescription('**Confirmed.**');
-
-								attendanceEmbed.setAuthor(`${formationName} (${msg.member.displayName})`, msg.guild.iconURL());
-
-								if (chnlMsg) {
-									attendanceEmbed.setFooter(`Last updated at ${await dtg()}`);
-
-									const findFormation = role => role.name === formationName;
-									const formationDisplay = msg.guild.roles.cache.find(findFormation) || `**${formationName}**`;
-
-									embedScaffold(msg.channel, `${msg.author} Successfully updated attendance for ${formationDisplay}.`, colours.success, 'msg');
-
-									chnlMsg.edit(attendanceEmbed);
-									attMsg.edit(attendanceEmbed);
-								}
-
-								else {
-									const attendanceChannel = bot.channels.cache.get(attendanceID);
-
-									attendanceEmbed.setFooter(await dtg());
-
-									sendMsg(attendanceChannel, attendanceEmbed);
-									sendMsg(msg.channel, attendanceEmbed);
-								}
-							}
-
-							dm.edit(confirmEmbed);
-							collector.stop();
-						}
-					});
-
-					collector.on('end', async (collected, reason) => {
-						const userReactions = dm.reactions.cache.filter(reaction => reaction.users.cache.has(bot.user.id));
-						try {
-							for (const reaction of userReactions.values()) {
-								await reaction.users.remove(bot.user.id);
-							}
+							chnlMsg.edit(attendanceEmbed);
+							attMsg.edit(attendanceEmbed);
 						}
 
-						catch (error) {
-							debugError(error, 'Error removing reactions from message in DMs.');
-						}
+						else {
+							const attendanceChannel = bot.channels.cache.get(attendanceID);
 
-						if (reason === 'time') {
-							delMsg(dm);
+							attendanceEmbed.setFooter(await dtg());
 
-							const timeEmbed = new Discord.MessageEmbed()
-								.setColor(colours.error)
-								.setAuthor(bot.user.tag, bot.user.avatarURL())
-								.setDescription('Timed out. Please action the command again.');
-							sendDM(msg.author, timeEmbed, msg.channel, true);
+							sendMsg(attendanceChannel, attendanceEmbed);
+							sendMsg(msg.channel, attendanceEmbed);
 						}
-					});
+					};
+
+					confirmation(msg, dm, sendAttendance);
 				});
 		}
 	};
