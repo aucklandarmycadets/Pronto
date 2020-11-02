@@ -96,7 +96,7 @@ module.exports = async guild => {
 							trainingIDs.forEach(staff => chnl.createOverwrite(staff, { 'VIEW_CHANNEL': true }));
 							memberMentions.each(instructor => chnl.createOverwrite(instructor, { 'VIEW_CHANNEL': true }));
 
-							saveLesson(chnl.id);
+							const lesson = await saveLesson(chnl.id);
 
 							lessonEmbed.setTitle(`Lesson Warning - ${lessonName}`);
 							lessonEmbed.setDescription('You have been assigned a lesson, use this channel to organise yourself.');
@@ -121,18 +121,39 @@ module.exports = async guild => {
 									const collector = seenMsg.createReactionCollector(filter, { dispose: true });
 
 									collector.on('collect', async (reaction, user) => {
-										const seenEmbed = new Discord.MessageEmbed()
-											.setColor(colours.success)
-											.setDescription(`${user} has confirmed receipt of this lesson warning.`)
-											.setFooter(await dtg());
+										console.log(lesson);
+										console.log(lesson.instructors);
+										if (lesson.instructors[user.id].seen === false) {
+											const seenEmbed = new Discord.MessageEmbed()
+												.setColor(colours.success)
+												.setDescription(`${user} has confirmed receipt of this lesson warning.`)
+												.setFooter(await dtg());
+											sendMsg(chnl, seenEmbed);
 
-										sendMsg(chnl, seenEmbed);
-										collector.stop();
+											lesson.instructors[user.id].seen = true;
+											await lesson.save().catch(error => console.error(error));
+
+											let allSeen = true;
+
+											for (const value of Object.values(lesson.instructors)) {
+												if (!value.seen) allSeen = false;
+											}
+
+											if (allSeen) collector.stop();
+										}
 									});
 
 									collector.on('end', async () => {
 										const userReactions = seenMsg.reactions.cache.filter(reaction => reaction.users.cache.has(bot.user.id));
+										await lesson.save().catch(error => console.error(error));
+
 										try {
+											const seenEmbed = new Discord.MessageEmbed()
+												.setColor(colours.success)
+												.setDescription('All instructors have acknowledged this lesson warning.')
+												.setFooter(await dtg());
+											sendMsg(chnl, seenEmbed);
+
 											for (const reaction of userReactions.values()) {
 												await reaction.users.remove(bot.user.id);
 											}
@@ -151,18 +172,25 @@ module.exports = async guild => {
 			});
 
 		async function saveLesson(channelID) {
+			const instructors = {};
+
+			memberMentions.each(mention => instructors[mention.id] = {
+				id: mention.id,
+				seen: false,
+			});
+
 			const lesson = await new Lesson({
 				_id: mongoose.Types.ObjectId(),
 				lessonID: channelID,
 				lessonName: lessonName,
-				instructors: [...memberMentions.values()],
+				instructors: instructors,
 				dueDate: dueDate,
 				lessonDate: lessonDate,
 				assignedResources: outputResources(resources),
 				submittedResources: [],
 			});
 
-			await lesson.save().catch(error => console.error(error));
+			return await lesson.save().catch(error => console.error(error));
 		}
 	};
 
