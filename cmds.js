@@ -159,10 +159,10 @@ module.exports = async guild => {
 				errorText(this.help, this.cmd);
 			},
 		},
-		submit: {
-			cmd: 'submit',
-			aliases: ['sub'],
-			desc: 'Submit a lesson plan.',
+		lesson: {
+			cmd: 'lesson',
+			aliases: ['submit', 'add'],
+			desc: 'Add resources to, or submit an assigned lesson.',
 			allowDM: false,
 			roles: [],
 			noRoles: [],
