@@ -96,7 +96,7 @@ module.exports = async guild => {
 							trainingIDs.forEach(staff => chnl.createOverwrite(staff, { 'VIEW_CHANNEL': true }));
 							memberMentions.each(instructor => chnl.createOverwrite(instructor, { 'VIEW_CHANNEL': true }));
 
-							const lesson = await saveLesson(chnl.id);
+							saveLesson(chnl.id);
 
 							lessonEmbed.setTitle(`Lesson Warning - ${lessonName}`);
 							lessonEmbed.setDescription('You have been assigned a lesson, use this channel to organise yourself.');
@@ -121,9 +121,13 @@ module.exports = async guild => {
 									const collector = seenMsg.createReactionCollector(filter, { dispose: true });
 
 									collector.on('collect', async (reaction, user) => {
+										const lesson = await Lesson.findOne({ lessonID: chnl.id }, error => {
+											if (error) console.error(error);
+										});
+
 										console.log(lesson);
-										console.log(lesson.instructors);
-										if (lesson.instructors[user.id].seen === false) {
+
+										if (!lesson.instructors[user.id].seen) {
 											const seenEmbed = new Discord.MessageEmbed()
 												.setColor(colours.success)
 												.setDescription(`${user} has confirmed receipt of this lesson warning.`)
@@ -131,6 +135,7 @@ module.exports = async guild => {
 											sendMsg(chnl, seenEmbed);
 
 											lesson.instructors[user.id].seen = true;
+											lesson.markModified('instructors');
 											await lesson.save().catch(error => console.error(error));
 
 											let allSeen = true;
@@ -145,12 +150,11 @@ module.exports = async guild => {
 
 									collector.on('end', async () => {
 										const userReactions = seenMsg.reactions.cache.filter(reaction => reaction.users.cache.has(bot.user.id));
-										await lesson.save().catch(error => console.error(error));
 
 										try {
 											const seenEmbed = new Discord.MessageEmbed()
 												.setColor(colours.success)
-												.setDescription('All instructors have acknowledged this lesson warning.')
+												.setDescription('All instructors have acknowledged receipt of this lesson warning.')
 												.setFooter(await dtg());
 											sendMsg(chnl, seenEmbed);
 
