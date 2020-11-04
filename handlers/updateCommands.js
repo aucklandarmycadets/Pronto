@@ -39,7 +39,7 @@ async function process(cmds, database) {
 
 	for (const [key, value] of Object.entries(cmds)) {
 		for (let i = 0; i < uniqueKeys.length; i++) {
-			delete value[uniqueKeys[i]];
+			if (database.cmds[value]) delete value[uniqueKeys[i]];
 		}
 		procCmds[key] = value;
 	}
