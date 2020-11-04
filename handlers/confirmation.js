@@ -3,7 +3,7 @@
 const Discord = require('discord.js');
 const { debugError, dtg, errorReact, successReact } = require('../modules');
 
-module.exports = async (msg, dm, callback) => {
+module.exports = async (msg, dm, success, cancel) => {
 	const { bot } = require('../pronto');
 	const { colours, emojis } = await require('./database')(msg.guild);
 
@@ -25,8 +25,10 @@ module.exports = async (msg, dm, callback) => {
 				confirmEmbed.setColor(colours.success);
 				confirmEmbed.setDescription('**Confirmed.**');
 
-				callback();
+				success();
 			}
+
+			else cancel();
 
 			dm.edit(confirmEmbed);
 			collector.stop();
