@@ -57,7 +57,7 @@ module.exports = async guild => {
 			.setAuthor(msg.guild.name, msg.guild.iconURL())
 			.setDescription(`${msg.author} has submitted leave for you in ${msg.channel}.`)
 			.addField('Details', capitalise(args.join(' ')))
-			.setFooter(`Reply with ${await pCmd(help)} ${leave.cmd} to learn how to request leave for yourself.`);
+			.setFooter(`Reply with '${await pCmd(help)} ${leave.cmd}' to learn how to request leave for yourself.`);
 
 		sendMsg(attendanceChannel, attendanceEmbed);
 		sendDM(msg.author, dmEmbed, msg.channel);
