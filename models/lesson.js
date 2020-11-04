@@ -11,6 +11,7 @@ const lessonSchema = mongoose.Schema({
 	lessonDate: String,
 	assignedResources: Array,
 	submittedResources: Array,
+	archiveID: String,
 	submitted: Boolean,
 	approved: Boolean,
 	changed: Boolean,
