@@ -200,6 +200,7 @@ module.exports = async guild => {
 				lessonDate: lessonDate,
 				assignedResources: outputResources(resources),
 				submittedResources: [],
+				archiveID: '',
 				submitted: false,
 				approved: false,
 				changed: false,
