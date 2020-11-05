@@ -1,13 +1,13 @@
 'use strict';
 
-module.exports = (array, mention) => {
+module.exports = (array, mention, breakAt) => {
 	const { bot } = require('../pronto');
 
 	let rolesString = '';
 	const filteredArray = array.filter(role => role.name !== '@everyone');
 
 	for (let i = 0; i < filteredArray.length; i++) {
-		if (i % 3 === 0) rolesString += '\n';
+		if (i % breakAt === 0) rolesString += '\n';
 
 		const id = (typeof filteredArray[i] === 'string')
 			? filteredArray[i]

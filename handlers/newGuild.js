@@ -70,11 +70,14 @@ async function createGuild(guild) {
 			recruitingID: await findChannel(defaults.recruiting, guild),
 			newMembersID: await findChannel(defaults.newMembers, guild),
 			archivedID: await findChannel(defaults.archived, guild, 'category'),
+			lessonsID: await findChannel(defaults.lessons, guild, 'category'),
+			lessonPlansID: await findChannel(defaults.lessonPlans, guild),
 			exampleTextID: await findChannel(defaults.exampleText, guild),
 			exampleVoiceID: await findChannel(defaults.exampleVoice, guild, 'voice'),
 			everyoneID: guild.roles.everyone.id,
 			visitorID: findRole(defaults.visitor, guild),
 			administratorID: '',
+			trainingIDs: '',
 			formations: [],
 			channelPairs: [],
 		},
@@ -123,18 +126,22 @@ async function findChannel(channel, guild, type) {
 		await guild.channels.create(defaults.pronto.name, { type: 'category' })
 			.then(async chnl => {
 				await chnl.createOverwrite(bot.user.id, { 'VIEW_CHANNEL': true });
-				await chnl.createOverwrite(everyone, { 'VIEW_CHANNEL': false });
-				await chnl.setPosition(0);
+				chnl.createOverwrite(everyone, { 'VIEW_CHANNEL': false });
+				chnl.setPosition(0);
 				prontoCategory = chnl;
 			})
 			.catch(error => console.error(`Error creating category '${defaults.pronto.name}' in ${guild.name}\n`, error));
 	}
 
+	const parent = (channel.parent)
+		? guild.channels.cache.find(chnl => chnl.type === 'category' && chnl.name === channel.parent)
+		: null;
+
 	const chnlOptions = (type === 'category')
 		? { type: type }
-		: (channel.desc)
-			? { topic: channel.desc, parent: prontoCategory, type: type }
-			: { parent: prontoCategory, type: type };
+		: (parent)
+			? { topic: channel.desc, parent: parent, type: type }
+			: { topic: channel.desc, parent: prontoCategory, type: type };
 
 	const newChannel = await guild.channels.create(channel.name, chnlOptions)
 		.catch(error => console.error(`Error creating ${channel.name} in ${guild.name}\n`, error));

@@ -43,7 +43,7 @@ module.exports = async msg => {
 	else if (!msg.guild && !cmd.allowDM) return dmCmdError(msg, 'noDM');
 
 	try {
-		cmd.execute(msg, args);
+		cmd.execute(msg, args, msgCmd);
 	}
 
 	catch (error) {

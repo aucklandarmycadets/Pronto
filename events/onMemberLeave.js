@@ -19,7 +19,7 @@ module.exports = {
 			.setAuthor('Member Left', memberUser.displayAvatarURL())
 			.setThumbnail(memberUser.displayAvatarURL())
 			.setDescription(`${memberUser} ${memberUser.tag}`)
-			.addField('Roles', rolesOutput(memberRoles, true))
+			.addField('Roles', rolesOutput(memberRoles, true, 3))
 			.setFooter(`ID: ${memberUser.id} | ${await dtg()}`);
 
 		const fetchedLogs = await member.guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_KICK' })

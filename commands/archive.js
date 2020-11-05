@@ -1,6 +1,8 @@
 'use strict';
 
 const Discord = require('discord.js');
+const Lesson = require('../models/lesson');
+
 const { cmdError, debugError, dtg, embedScaffold, errorReact, sendMsg, successReact } = require('../modules');
 
 module.exports = async guild => {
@@ -24,6 +26,10 @@ module.exports = async guild => {
 		}
 
 		catch (error) { return cmdError(msg, error, archive.error); }
+
+		Lesson.findOneAndDelete({ lessonID: msg.channel.id }, error => {
+			if (error) console.error(error);
+		});
 
 		const log = bot.channels.cache.get(logID);
 
