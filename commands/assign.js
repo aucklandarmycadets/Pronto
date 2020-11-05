@@ -178,7 +178,7 @@ module.exports = async guild => {
 						.catch(error => console.error(`Error creating ${lessonName} in ${guild.name}\n`, error));
 				};
 
-				confirmation(msg, dm, assignLesson);
+				return confirmation(msg, dm, assignLesson);
 			});
 
 		async function saveLesson(channelID) {
