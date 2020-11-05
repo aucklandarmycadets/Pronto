@@ -70,6 +70,8 @@ module.exports = async guild => {
 				.setDescription('**Cancelled.**')
 				.setFooter(await dtg());
 
+			recentlyAssigned.delete(msg.author.id);
+
 			return sendDM(msg.author, cancelEmbed, null, true);
 		}
 
@@ -178,7 +180,9 @@ module.exports = async guild => {
 						.catch(error => console.error(`Error creating ${lessonName} in ${guild.name}\n`, error));
 				};
 
-				return confirmation(msg, dm, assignLesson);
+				const assignCancelled = () => recentlyAssigned.delete(msg.author.id);
+
+				return confirmation(msg, dm, assignLesson, assignCancelled);
 			});
 
 		async function saveLesson(channelID) {
