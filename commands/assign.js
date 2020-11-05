@@ -133,8 +133,6 @@ module.exports = async guild => {
 											if (error) console.error(error);
 										});
 
-										console.log(lesson);
-
 										if (!lesson.instructors[user.id].seen) {
 											const seenEmbed = new Discord.MessageEmbed()
 												.setColor(colours.success)
