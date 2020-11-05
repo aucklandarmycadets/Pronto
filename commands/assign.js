@@ -23,7 +23,7 @@ module.exports = async guild => {
 
 			else if (memberMentions.some(mention => mention.user.bot)) throw 'You cannot assign a lesson to a bot!';
 
-			else if (recentlyAssigned.has(msg.author.id)) throw 'You are already assigning a lesson, please complete or cancel before assigning another.';
+			else if (recentlyAssigned.has(msg.author.id)) throw 'You are already assigning a lesson!';
 		}
 
 		catch (error) { return cmdError(msg, error, assign.error); }
