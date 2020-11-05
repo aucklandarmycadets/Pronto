@@ -110,10 +110,6 @@ module.exports = async guild => {
 			lessonDB.changed = true;
 			lessonDB.approved = false;
 
-			lessonDB.markModified('submittedResources');
-			lessonDB.markModified('changed');
-			lessonDB.markModified('approved');
-
 			await lessonDB.save().catch(error => console.error(error));
 
 			const updatedEmbed = new Discord.MessageEmbed()
@@ -146,10 +142,6 @@ module.exports = async guild => {
 			lessonDB.submittedResources = remove(lessonDB.submittedResources, null, Number(delIndex) - 1);
 			lessonDB.changed = true;
 			lessonDB.approved = false;
-
-			lessonDB.markModified('submittedResources');
-			lessonDB.markModified('changed');
-			lessonDB.markModified('approved');
 
 			lessonDB.save().catch(error => console.error(error));
 
@@ -186,9 +178,6 @@ module.exports = async guild => {
 					const lessonSubmit = async () => {
 						lessonDB.changed = false;
 						lessonDB.submitted = true;
-
-						lessonDB.markModified('changed');
-						lessonDB.markModified('submitted');
 
 						lessonDB.save().catch(error => console.error(error));
 
@@ -242,7 +231,6 @@ module.exports = async guild => {
 											sendMsg(lessonPlansChnl, submitEmbed)
 												.then(async archiveMsg => {
 													lessonDB.archiveID = archiveMsg.id;
-													lessonDB.markModified('archiveID');
 													await lessonDB.save().catch(error => console.error(error));
 												});
 										}
@@ -267,8 +255,6 @@ module.exports = async guild => {
 										sendMsg(msg.channel, approvedEmbed);
 
 										lessonDB.approved = true;
-										lessonDB.markModified('approved');
-
 										await lessonDB.save().catch(error => console.error(error));
 
 										collector.stop();
@@ -336,7 +322,6 @@ function removeResources(db) {
 	}
 
 	db.submittedResources = attArr.concat(dbArr);
-	db.markModified('submittedResources');
 	db.save().catch(error => console.error(error));
 
 	const outputArr = attArr.concat(linksArr);
