@@ -39,7 +39,7 @@ exports.defaults = {
 	},
 	lessonPlans: {
 		name: 'lesson-plans',
-		desc: 'An archive of completed and approved **lesson plans**.',
+		desc: 'An archive of **completed** and **approved** lesson plans.',
 		get parent() {
 			const { defaults } = require('./config');
 			delete this.parent;

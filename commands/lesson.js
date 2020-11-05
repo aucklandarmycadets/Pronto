@@ -227,7 +227,11 @@ module.exports = async guild => {
 									const lessonPlansChnl = msg.guild.channels.cache.get(lessonPlansID);
 
 									if (!lessonDB.approved && !lessonDB.changed) {
+										submitEmbed.setTitle(`Lesson Plan - ${lessonDB.lessonName}`);
+
 										if (!lessonDB.archiveID) {
+											submitEmbed.setFooter(`Last updated at ${await dtg()}`);
+
 											sendMsg(lessonPlansChnl, submitEmbed)
 												.then(async archiveMsg => {
 													lessonDB.archiveID = archiveMsg.id;
