@@ -19,9 +19,11 @@ module.exports = async guild => {
 				throw `You can only use that command in **${lessonsCategory}**.`;
 			}
 
-			if (!lesson.instructors[msg.author.id]) throw 'You are not an instructor for this lesson!';
+			else if (!lesson) throw 'Invalid lesson channel.';
 
-			if (lesson.instructors[msg.author.id].seen) throw 'You have already acknowledged this lesson warning.';
+			else if (!lesson.instructors[msg.author.id]) throw 'You are not an instructor for this lesson!';
+
+			else if (lesson.instructors[msg.author.id].seen) throw 'You have already acknowledged this lesson warning.';
 		}
 
 		catch (error) { return cmdError(msg, error, seen.error); }
