@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 const mongoose = require('mongoose');
 const Lesson = require('../models/lesson');
 
-const { checkURL, cmdError, debugError, delMsg, dtg, sendDM, sendMsg, successReact, titleCase } = require('../modules');
+const { checkURL, cmdError, debugError, delMsg, dtg, outputResources, processResources, sendDM, sendMsg, successReact, titleCase } = require('../modules');
 const { confirmation } = require('../handlers');
 
 const recentlyAssigned = new Set();
@@ -308,33 +308,4 @@ function processMentions(obj) {
 	let mentions = '';
 	obj.each(mention => mentions += `${mention}\n`);
 	return mentions.replace(/\n+$/, '');
-}
-
-function processResources(att, URLs) {
-	let linkString = '';
-
-	if (att) linkString += `[${Discord.escapeMarkdown(att.name)}](${att.url})\n`;
-	for (let i = 0; i < URLs.length; i++) linkString += `[Link](${URLs[i]})\n`;
-
-	return linkString.replace(/\n+$/, '');
-}
-
-function outputResources(arr) {
-	let procArr = [];
-	const linksArr = [];
-	const outputArr = [];
-	let count = 1;
-
-	for (let i = 0; i < arr.length; i++) {
-		procArr = procArr.concat(arr[i].split('\n'));
-	}
-
-	for (let i = 0; i < procArr.length; i++) {
-		if (procArr[i].substr(0, 6) === '[Link]') {
-			linksArr.push(`[Link ${count}]${procArr[i].substring(6)}`);
-			count++;
-		}
-		else outputArr.push(`${procArr[i]}`);
-	}
-	return outputArr.concat(linksArr);
 }
