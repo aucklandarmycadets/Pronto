@@ -7,6 +7,8 @@ const Lesson = require('../models/lesson');
 const { checkURL, cmdError, debugError, delMsg, dtg, sendDM, sendMsg, successReact, titleCase } = require('../modules');
 const { confirmation } = require('../handlers');
 
+const recentlyAssigned = new Set();
+
 module.exports = async guild => {
 	const { ids: { lessonsID, trainingIDs }, cmds: { assign }, colours, emojis } = await require('../handlers/database')(guild);
 
@@ -20,11 +22,15 @@ module.exports = async guild => {
 			if (numMemberMentions === 0) throw 'You must tag a user.';
 
 			else if (memberMentions.some(mention => mention.user.bot)) throw 'You cannot assign a lesson to a bot!';
+
+			else if (recentlyAssigned.has(msg.author.id)) throw 'You are already assigning a lesson, please complete or cancel before assigning another.';
 		}
 
 		catch (error) { return cmdError(msg, error, assign.error); }
 
 		delMsg(msg);
+
+		recentlyAssigned.add(msg.author.id);
 
 		const assignEmbed = new Discord.MessageEmbed()
 			.setTitle('Assigning Lesson...')
@@ -97,6 +103,8 @@ module.exports = async guild => {
 							memberMentions.each(instructor => chnl.createOverwrite(instructor, { 'VIEW_CHANNEL': true }));
 
 							saveLesson(chnl.id);
+
+							recentlyAssigned.delete(msg.author.id);
 
 							lessonEmbed.setTitle(`Lesson Warning - ${lessonName}`);
 							lessonEmbed.setDescription('You have been assigned a lesson, use this channel to organise yourself.');
