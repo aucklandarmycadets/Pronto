@@ -161,7 +161,7 @@ module.exports = async guild => {
 		},
 		lesson: {
 			cmd: 'lesson',
-			aliases: ['add', 'remove', 'submit'],
+			aliases: ['view', 'add', 'remove', 'submit'],
 			desc: 'Commands to help action an assigned lesson.',
 			allowDM: false,
 			roles: [],
