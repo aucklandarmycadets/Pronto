@@ -1,14 +1,18 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { debugError, dmCmdError, pCmd } = require('../modules');
+const { debugError, dmCmdError, pCmd, stripID } = require('../modules');
 
 module.exports = async msg => {
 	const { bot } = require('../pronto');
 	const { updateCommands, permissionsHandler } = require('./');
 	const { config: { prefix }, cmds: { help } } = await require('./database')(msg.guild);
 
-	if (msg.author.bot || !msg.content.startsWith(prefix)) return;
+	if (msg.author.bot) return;
+
+	const args = msg.content.split(/ +/);
+
+	if (!msg.content.startsWith(prefix) && stripID(args[0]) !== bot.user.id) return;
 
 	await updateCommands(msg.guild);
 
@@ -19,8 +23,10 @@ module.exports = async msg => {
 		bot.commands.set(botCommands[key].cmd, botCommands[key]);
 	});
 
-	const args = msg.content.split(/ +/);
-	const msgCmd = args.shift().toLowerCase().replace(prefix, '');
+	const msgCmd = (stripID(args[0]) === bot.user.id)
+		? args.splice(0, 2)[1].toLowerCase()
+		: args.shift().toLowerCase().replace(prefix, '');
+
 	const helpCmd = bot.commands.get(help.cmd);
 
 	const cmd = bot.commands.get(msgCmd) || bot.commands.find(command => command.aliases && command.aliases.includes(msgCmd));

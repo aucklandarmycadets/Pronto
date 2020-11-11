@@ -25,10 +25,10 @@ module.exports = async (msg, dm, success, cancel) => {
 				confirmEmbed.setColor(colours.success);
 				confirmEmbed.setDescription('**Confirmed.**');
 
-				success();
+				if (success && typeof (success) === 'function') success();
 			}
 
-			else cancel();
+			else if (cancel && typeof (cancel) === 'function') cancel();
 
 			dm.edit(confirmEmbed);
 			collector.stop();
