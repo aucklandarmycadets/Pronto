@@ -12,7 +12,7 @@ module.exports = async msg => {
 
 	const args = msg.content.split(/ +/);
 
-	if (!msg.content.startsWith(prefix) && stripID(args[0]) !== bot.user.id) return;
+	if (!msg.content.startsWith(prefix) && (stripID(args[0]) !== bot.user.id || args.length === 1)) return;
 
 	await updateCommands(msg.guild);
 
