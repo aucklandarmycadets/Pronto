@@ -4,12 +4,13 @@ const Discord = require('discord.js');
 const { capitalise, cmdError, dtg, sendDM, sendMsg, successReact } = require('../modules');
 
 module.exports = async guild => {
-	const { ids: { attendanceID }, cmds: { leave }, colours } = await require('../handlers/database')(guild);
+	const { ids: { attendanceID }, cmds: { leave, leaveFor }, colours } = await require('../handlers/database')(guild);
 
 	leave.execute = async (msg, args) => {
 		const { bot } = require('../pronto');
 
 		if (args.length === 0) return cmdError(msg, 'Insufficient arguments.', leave.error);
+		if (args[0].toLowerCase() === 'for') return bot.commands.get(leaveFor.cmd).execute(msg, args.slice(1));
 
 		const leaveEmbedTitle = 'Leave Request';
 		const attendanceChannel = bot.channels.cache.get(attendanceID);
