@@ -15,7 +15,7 @@ module.exports = {
 		const logEmbed = new Discord.MessageEmbed()
 			.setColor(colours.warn);
 
-		commandHandler(newMessage);
+		commandHandler(await newMessage.fetch());
 
 		if (oldMessage.partial && oldMessage.guild) {
 			newMessage = await newMessage.fetch();
