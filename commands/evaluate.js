@@ -2,7 +2,7 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { cmdError, dtg, js, sendMsg, ...modules } = require('../modules');
+const { cmdError, delMsg, dtg, js, sendMsg, ...modules } = require('../modules');
 const handlers = require('../handlers');
 
 module.exports = async guild => {
@@ -12,13 +12,15 @@ module.exports = async guild => {
 	evaluate.execute = async (msg, args) => {
 		const { bot } = require('../pronto');
 
-		const codeBlock = (args.includes('-nocode'))
+		const codeBlock = (args.includes('-nocode') || args.includes('-nc'))
 			? false
 			: true;
 
-		const silent = (args.includes('-silent'))
+		const silent = (args.includes('-silent') || args.includes('-s'))
 			? true
 			: false;
+
+		if (args.includes('-delete') || args.includes('-del')) delMsg(msg);
 
 		args = args.filter(arg => !arg.startsWith('-'));
 
