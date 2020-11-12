@@ -34,7 +34,7 @@ module.exports = async guild => {
 
 		const assignEmbed = new Discord.MessageEmbed()
 			.setTitle('Assigning Lesson...')
-			.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
+			.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
 			.setColor(colours.success)
 			.setDescription('Type `restart` to start again, or `cancel` to exit.')
 			.addField('Instructor(s)', processMentions(memberMentions))
@@ -65,7 +65,7 @@ module.exports = async guild => {
 
 		if (input === 'cancel') {
 			const cancelEmbed = new Discord.MessageEmbed()
-				.setAuthor(bot.user.tag, bot.user.avatarURL())
+				.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }))
 				.setColor(colours.error)
 				.setDescription('**Cancelled.**')
 				.setFooter(await dtg());
@@ -79,7 +79,7 @@ module.exports = async guild => {
 
 		const lessonEmbed = new Discord.MessageEmbed()
 			.setTitle(`Lesson Assignment - ${lessonName}`)
-			.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
+			.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
 			.setColor(colours.warn)
 			.addField('Instructor(s)', processMentions(memberMentions))
 			.addField('Lesson', lessonName)
@@ -110,8 +110,8 @@ module.exports = async guild => {
 							lessonEmbed.setDescription('You have been assigned a lesson, use this channel to organise yourself.');
 							lessonEmbed.setFooter(await dtg());
 
-							if (numMemberMentions === 1) lessonEmbed.setAuthor(memberMentions.first().displayName, memberMentions.first().user.displayAvatarURL());
-							else lessonEmbed.setAuthor(bot.user.tag, bot.user.avatarURL());
+							if (numMemberMentions === 1) lessonEmbed.setAuthor(memberMentions.first().displayName, memberMentions.first().user.displayAvatarURL({ dynamic: true }));
+							else lessonEmbed.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }));
 
 							sendMsg(chnl, lessonEmbed);
 

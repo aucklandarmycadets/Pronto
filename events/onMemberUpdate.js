@@ -40,7 +40,7 @@ module.exports = {
 
 		else return;
 
-		logEmbed.setAuthor(newMemberUser.tag, newMemberUser.displayAvatarURL());
+		logEmbed.setAuthor(newMemberUser.tag, newMemberUser.displayAvatarURL({ dynamic: true }));
 		logEmbed.setColor(colours.warn);
 		logEmbed.setFooter(`ID: ${newMemberUser.id} | ${await dtg()}`);
 		sendMsg(log, logEmbed);

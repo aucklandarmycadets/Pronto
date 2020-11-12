@@ -35,7 +35,7 @@ module.exports = async guild => {
 		const attendanceEmbed = new Discord.MessageEmbed()
 			.setTitle(leaveForEmbedTitle)
 			.setColor(colours.leave)
-			.setAuthor(absentee.displayName, absentee.user.displayAvatarURL())
+			.setAuthor(absentee.displayName, absentee.user.displayAvatarURL({ dynamic: true }))
 			.setDescription(`${msg.author} has submitted leave for ${absentee} in ${msg.channel}`)
 			.addFields(
 				{ name: 'Absentee', value: absentee },

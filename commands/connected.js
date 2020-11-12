@@ -37,7 +37,7 @@ module.exports = async guild => {
 		const connectedEmbed = new Discord.MessageEmbed()
 			.setTitle(`Members Connected to #${channel.name}`)
 			.setColor(colours.success)
-			.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
+			.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
 			.setDescription(connectedMembers.join('\n'))
 			.setFooter(await dtg());
 		sendMsg(attendanceChannel, connectedEmbed);

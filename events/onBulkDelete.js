@@ -27,7 +27,7 @@ module.exports = {
 		else if (lastMsg.content.includes(purge.cmd) || purge.aliases.some(alias => lastMsg.content.includes(alias))) {
 			delMsg(lastMsg);
 
-			logEmbed.setAuthor(lastMsg.author.tag, lastMsg	.author.displayAvatarURL());
+			logEmbed.setAuthor(lastMsg.author.tag, lastMsg	.author.displayAvatarURL({ dynamic: true }));
 			logEmbed.setDescription(`**${deleteCount} messages bulk deleted by ${lastMsg.author} in ${msg.channel}**`);
 		}
 

@@ -19,7 +19,7 @@ module.exports = {
 		const dev = bot.users.cache.get(devID);
 
 		const restartEmbed = new Discord.MessageEmbed()
-			.setAuthor(bot.user.tag, bot.user.avatarURL())
+			.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }))
 			.setDescription('**Restarting...**')
 			.addField('Uptime', formatAge(bot.uptime, true))
 			.setColor(colours.warn)

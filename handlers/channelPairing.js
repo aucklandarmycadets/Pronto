@@ -32,7 +32,7 @@ module.exports = async (oldState, newState) => {
 				.then(async () => {
 					const joinEmbed = new Discord.MessageEmbed()
 						.setColor(colours.success)
-						.setAuthor(newMember.displayName, newMember.user.displayAvatarURL())
+						.setAuthor(newMember.displayName, newMember.user.displayAvatarURL({ dynamic: true }))
 						.setDescription(`${newMember} has joined the channel.`)
 						.setFooter(await dtg());
 					sendMsg(textChannel, joinEmbed);
@@ -47,7 +47,7 @@ module.exports = async (oldState, newState) => {
 				.then(async () => {
 					const leaveEmbed = new Discord.MessageEmbed()
 						.setColor(colours.error)
-						.setAuthor(newMember.displayName, newMember.user.displayAvatarURL())
+						.setAuthor(newMember.displayName, newMember.user.displayAvatarURL({ dynamic: true }))
 						.setDescription(`${newMember} has left the channel.`)
 						.setFooter(await dtg());
 					sendMsg(textChannel, leaveEmbed);
@@ -78,7 +78,7 @@ module.exports = async (oldState, newState) => {
 										else {
 											const errorEmbed = new Discord.MessageEmbed()
 												.setColor(colours.error)
-												.setAuthor(newMember.displayName, newMember.user.displayAvatarURL())
+												.setAuthor(newMember.displayName, newMember.user.displayAvatarURL({ dynamic: true }))
 												.setDescription(`${user} Insufficient permissions. ${purge.error}`);
 											sendMsg(textChannel, errorEmbed);
 										}
@@ -100,7 +100,7 @@ module.exports = async (oldState, newState) => {
 
 										const timeEmbed = new Discord.MessageEmbed()
 											.setColor(colours.error)
-											.setAuthor(bot.user.tag, bot.user.avatarURL())
+											.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }))
 											.setDescription(`Timed out. Type \`${await pCmd(purge, newState.guild)} 100\` to clear this channel manually.`);
 										sendMsg(textChannel, timeEmbed);
 									}

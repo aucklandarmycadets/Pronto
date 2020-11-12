@@ -39,7 +39,7 @@ module.exports = async guild => {
 		const debugChannel = bot.channels.cache.get(guild.ids.debugID);
 
 		const createdEmbed = new Discord.MessageEmbed()
-			.setAuthor(bot.user.tag, bot.user.avatarURL())
+			.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }))
 			.setColor(colours.pronto)
 			.setDescription(`Initialised channel(s) in **${prontoCategory}**, feel free to move and/or rename them!`)
 			.addField('Created Channels', channelsOutput(createdChannels, guild))

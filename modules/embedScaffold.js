@@ -13,7 +13,7 @@ module.exports = async (dest, descMsg, colour, type, fieldTitle, fieldContent, e
 		: '';
 
 	const embed = new Discord.MessageEmbed()
-		.setAuthor(bot.user.tag, bot.user.avatarURL())
+		.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }))
 		.setColor(colour)
 		.setDescription(charLimit(descMsg, 2048))
 		.setFooter(`${await dtg()}${devFooter}`);

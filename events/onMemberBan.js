@@ -17,7 +17,7 @@ module.exports = {
 
 		if (event === 'guildBanAdd') {
 			logEmbed.setColor(colours.error);
-			logEmbed.setAuthor('Member Banned', user.displayAvatarURL());
+			logEmbed.setAuthor('Member Banned', user.displayAvatarURL({ dynamic: true }));
 
 			type = 'Banned';
 			fetchedLogs = await guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_BAN_ADD' })
@@ -26,14 +26,14 @@ module.exports = {
 
 		else {
 			logEmbed.setColor(colours.success);
-			logEmbed.setAuthor('Member Unbanned', user.displayAvatarURL());
+			logEmbed.setAuthor('Member Unbanned', user.displayAvatarURL({ dynamic: true }));
 
 			type = 'Unbanned';
 			fetchedLogs = await guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_BAN_REMOVE' })
 				.catch(error => debugError(error, 'Error fetching audit logs.'));
 		}
 
-		logEmbed.setThumbnail(user.displayAvatarURL());
+		logEmbed.setThumbnail(user.displayAvatarURL({ dynamic: true }));
 		logEmbed.setDescription(`${user} ${user.tag}`);
 		logEmbed.setFooter(`ID: ${user.id} | ${await dtg()}`);
 
