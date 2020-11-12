@@ -34,7 +34,7 @@ module.exports = async guild => {
 
 			else if (!_lesson.instructors[msg.author.id]) throw 'You are not an instructor for this lesson!';
 
-			else if (!_lesson.instructors[msg.author.id].seen) _lesson = bot.commands.get(seen.cmd).execute(msg, msg.author);
+			else if (!_lesson.instructors[msg.author.id].seen) _lesson = await bot.commands.get(seen.cmd).execute(msg, msg.author);
 
 			if (cmd === 'add') {
 				for (let i = 0; i < args.length; i++) { if (checkURL(args[i])) URLs.push(args[i]); }
@@ -194,7 +194,7 @@ module.exports = async guild => {
 
 								const collector = approveMsg.createReactionCollector(filter, { dispose: true });
 
-								collector.on('collect', async (_, user) => _lesson = bot.commands.get(approve.cmd).execute(msg, user));
+								collector.on('collect', async (_, user) => bot.commands.get(approve.cmd).execute(msg, user));
 
 								collector.on('end', async () => {
 									const userReactions = approveMsg.reactions.cache.filter(reaction => reaction.users.cache.has(bot.user.id));
