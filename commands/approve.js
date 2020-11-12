@@ -1,17 +1,15 @@
 'use strict';
 
 const Discord = require('discord.js');
-const Lesson = require('../models/lesson');
 
 const { cmdError, debugError, dtg, outputResources, sendMsg } = require('../modules');
+const { findLesson } = require('../handlers');
 
 module.exports = async guild => {
 	const { ids: { lessonsID, lessonPlansID }, cmds: { approve }, colours } = await require('../handlers/database')(guild);
 
-	approve.execute = async msg => {
-		const lesson = await Lesson.findOne({ lessonID: msg.channel.id }, error => {
-			if (error) console.error(error);
-		});
+	approve.execute = async (msg, user) => {
+		const lesson = await findLesson(msg.channel.id);
 
 		try {
 			if (msg.channel.parentID !== lessonsID) {
@@ -33,7 +31,7 @@ module.exports = async guild => {
 		const submitEmbed = new Discord.MessageEmbed()
 			.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
 			.setColor(colours.success)
-			.setTitle(`Lesson Plan Submitted - ${lesson.lessonName}`)
+			.setTitle(`Lesson Plan - ${lesson.lessonName}`)
 			.addField('Instructor(s)', processMentions(lesson.instructors))
 			.addField('Lesson', lesson.lessonName)
 			.addField('Lesson Plan Due', lesson.dueDate)
@@ -51,25 +49,29 @@ module.exports = async guild => {
 
 		else {
 			let archiveMsg;
-			const filterBy = message => message.id === lesson.archiveID;
+			const filterBy = _msg => _msg.id === lesson.archiveID;
 
 			await lessonPlansChnl.messages.fetch()
-				.then(messages => {
-					archiveMsg = messages.filter(filterBy).first();
+				.then(msgs => {
+					archiveMsg = msgs.filter(filterBy).first();
 				})
 				.catch(error => debugError(error, `Error fetching messages in ${lessonPlansChnl}.`));
 
 			archiveMsg.edit(submitEmbed);
 		}
 
+		const approver = (user.id)
+			? user
+			: msg.author;
+
 		const approvedEmbed = new Discord.MessageEmbed()
 			.setColor(colours.success)
-			.setDescription(`${msg.author} has approved this lesson plan.`)
+			.setDescription(`${approver} has approved this lesson plan.`)
 			.setFooter(await dtg());
 		sendMsg(msg.channel, approvedEmbed);
 
 		lesson.approved = true;
-		await lesson.save().catch(error => console.error(error));
+		return await lesson.save().catch(error => console.error(error));
 	};
 
 	return approve;

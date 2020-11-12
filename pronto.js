@@ -6,7 +6,7 @@ const { mongoose } = require('./handlers');
 
 const TOKEN = process.env.TOKEN;
 const MONGOURI = process.env.MONGOURI;
-exports.version = '4.1.3';
+exports.version = '4.1.4';
 
 const bot = new Discord.Client({ partials: ['MESSAGE'] });
 

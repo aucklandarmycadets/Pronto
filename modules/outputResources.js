@@ -17,5 +17,8 @@ module.exports = arr => {
 		}
 		else outputArr.push(`${procArr[i]}`);
 	}
-	return outputArr.concat(linksArr);
+
+	return (outputArr.concat(linksArr).length)
+		? outputArr.concat(linksArr)
+		: ['N/A'];
 };

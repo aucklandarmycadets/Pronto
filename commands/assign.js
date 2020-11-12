@@ -4,13 +4,13 @@ const Discord = require('discord.js');
 const mongoose = require('mongoose');
 const Lesson = require('../models/lesson');
 
-const { checkURL, cmdError, debugError, delMsg, dtg, outputResources, processResources, sendDM, sendMsg, successReact, titleCase } = require('../modules');
+const { checkURL, cmdError, debugError, delMsg, dtg, outputResources, processResources, promptEmbed, sendDM, sendMsg, successReact, titleCase } = require('../modules');
 const { confirmation } = require('../handlers');
 
 const recentlyAssigned = new Set();
 
 module.exports = async guild => {
-	const { ids: { lessonsID, trainingIDs }, cmds: { assign }, colours, emojis } = await require('../handlers/database')(guild);
+	const { ids: { lessonsID, trainingIDs }, cmds: { seen, assign }, colours, emojis } = await require('../handlers/database')(guild);
 
 	assign.execute = async msg => {
 		const { bot } = require('../pronto');
@@ -77,8 +77,6 @@ module.exports = async guild => {
 
 		const { lessonName, dueDate, lessonDate, resources } = input;
 
-		if (!resources.length) resources.push('N/A');
-
 		const lessonEmbed = new Discord.MessageEmbed()
 			.setTitle(`Lesson Assignment - ${lessonName}`)
 			.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
@@ -130,31 +128,7 @@ module.exports = async guild => {
 									const filter = (reaction, user) => reaction.emoji.name === emojis.success.name && memberMentions.has(user.id);
 									const collector = seenMsg.createReactionCollector(filter, { dispose: true });
 
-									collector.on('collect', async (reaction, user) => {
-										const lesson = await Lesson.findOne({ lessonID: chnl.id }, error => {
-											if (error) console.error(error);
-										});
-
-										if (!lesson.instructors[user.id].seen) {
-											const seenEmbed = new Discord.MessageEmbed()
-												.setColor(colours.success)
-												.setDescription(`${user} has confirmed receipt of this lesson warning.`)
-												.setFooter(await dtg());
-											sendMsg(chnl, seenEmbed);
-
-											lesson.instructors[user.id].seen = true;
-											lesson.markModified('instructors');
-											await lesson.save().catch(error => console.error(error));
-
-											let allSeen = true;
-
-											for (const value of Object.values(lesson.instructors)) {
-												if (!value.seen) allSeen = false;
-											}
-
-											if (allSeen) collector.stop();
-										}
-									});
+									collector.on('collect', async (_, user) => bot.commands.get(seen.cmd).execute(seenMsg, user));
 
 									collector.on('end', async () => {
 										const userReactions = seenMsg.reactions.cache.filter(reaction => reaction.users.cache.has(bot.user.id));
@@ -232,12 +206,6 @@ async function inputs(msg, needed, colours) {
 	return input;
 }
 
-function promptEmbed(prompt, colour) {
-	return new Discord.MessageEmbed()
-		.setColor(colour)
-		.setDescription(prompt);
-}
-
 async function msgPrompt(prompt, msg, type, colours) {
 	const promises = [];
 	const filter = message => message.author.id === msg.author.id;
@@ -305,7 +273,6 @@ async function whileLoop(prompt, msg, type, colours) {
 
 	return await loop();
 }
-
 
 function processMentions(obj) {
 	let mentions = '';

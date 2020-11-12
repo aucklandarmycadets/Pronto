@@ -1,26 +1,25 @@
 'use strict';
 
 const Discord = require('discord.js');
-const Lesson = require('../models/lesson');
 
-const { checkURL, cmdError, debugError, delMsg, dtg, outputResources, processResources, remove, rolesOutput, sendDM, sendMsg, successReact } = require('../modules');
-const { confirmation } = require('../handlers');
+const { checkURL, cmdError, debugError, delMsg, dtg, outputResources, processResources, promptEmbed, remove, rolesOutput, sendDM, sendMsg, successReact } = require('../modules');
+const { confirmation, findLesson } = require('../handlers');
 
 const awaitingConfirm = new Set();
 
 module.exports = async guild => {
-	const { ids: { lessonsID, lessonPlansID, trainingIDs }, cmds: { lesson }, colours, emojis } = await require('../handlers/database')(guild);
+	const { ids: { lessonsID, trainingIDs }, cmds: { lesson, seen, approve }, colours, emojis } = await require('../handlers/database')(guild);
 
 	lesson.execute = async (msg, args, msgCmd) => {
 		const { bot } = require('../pronto');
 
-		let lessonDB = await Lesson.findOne({ lessonID: msg.channel.id }, error => {
-			if (error) console.error(error);
-		});
+		let _lesson = await findLesson(msg.channel.id);
 
 		const cmd = (lesson.aliases.includes(msgCmd))
 			? msgCmd
-			: args.shift().toLowerCase();
+			: (args.length)
+				? args.shift().toLowerCase()
+				: null;
 
 		const att = msg.attachments.first();
 		const URLs = [];
@@ -31,35 +30,11 @@ module.exports = async guild => {
 				throw `You can only use that command in **${lessonsCategory}**.`;
 			}
 
-			else if (!lessonDB) throw 'Invalid lesson channel.';
+			else if (!_lesson) throw 'Invalid lesson channel.';
 
-			else if (!lessonDB.instructors[msg.author.id]) throw 'You are not an instructor for this lesson!';
+			else if (!_lesson.instructors[msg.author.id]) throw 'You are not an instructor for this lesson!';
 
-			else if (!lessonDB.instructors[msg.author.id].seen) {
-				const seenEmbed = new Discord.MessageEmbed()
-					.setColor(colours.success)
-					.setDescription(`${msg.author} has confirmed receipt of this lesson warning.`)
-					.setFooter(await dtg());
-				sendMsg(msg.channel, seenEmbed);
-
-				lessonDB.instructors[msg.author.id].seen = true;
-				lessonDB.markModified('instructors');
-				await lessonDB.save().catch(error => console.error(error));
-
-				let allSeen = true;
-
-				for (const value of Object.values(lessonDB.instructors)) {
-					if (!value.seen) allSeen = false;
-				}
-
-				if (allSeen) {
-					const allSeenEmbed = new Discord.MessageEmbed()
-						.setColor(colours.success)
-						.setDescription('All instructors have acknowledged receipt of this lesson warning.')
-						.setFooter(await dtg());
-					sendMsg(msg.channel, allSeenEmbed);
-				}
-			}
+			else if (!_lesson.instructors[msg.author.id].seen) _lesson = await bot.commands.get(seen.cmd).execute(msg, msg.author);
 
 			if (cmd === 'add') {
 				for (let i = 0; i < args.length; i++) { if (checkURL(args[i])) URLs.push(args[i]); }
@@ -68,15 +43,15 @@ module.exports = async guild => {
 			}
 
 			else if (cmd === 'remove') {
-				if (!lessonDB.submittedResources.length) throw 'There are no resources to remove.';
+				if (!_lesson.submittedResources.length) throw 'There are no resources to remove.';
 			}
 
 			else if (cmd === 'submit') {
-				if (!lessonDB.changed && !lessonDB.submitted) throw 'There is nothing to submit!';
+				if (!_lesson.changed && !_lesson.submitted) throw 'There is nothing to submit!';
 
-				else if (!lessonDB.changed && lessonDB.submitted) throw 'There are no changes to submit.';
+				else if (!_lesson.changed && _lesson.submitted) throw 'There are no changes to submit.';
 
-				else if (awaitingConfirm.has(lessonDB.lessonID)) throw 'This lesson has already been submitted and is pending confirmation in DMs.';
+				else if (awaitingConfirm.has(_lesson.lessonID)) throw 'This lesson has already been submitted and is pending confirmation in DMs.';
 			}
 
 			else if (!lesson.aliases.includes(cmd)) throw 'Invalid input.';
@@ -90,12 +65,12 @@ module.exports = async guild => {
 			const lessonEmbed = new Discord.MessageEmbed()
 				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
 				.setColor(colours.pronto)
-				.setTitle(`Lesson Preview - ${lessonDB.lessonName}`)
-				.addField('Instructor(s)', processMentions(lessonDB.instructors))
-				.addField('Lesson', lessonDB.lessonName)
-				.addField('Lesson Plan Due', lessonDB.dueDate)
-				.addField('Lesson Date', lessonDB.lessonDate)
-				.addField('Resources', outputResources(lessonDB.submittedResources), 1024)
+				.setTitle(`Lesson Preview - ${_lesson.lessonName}`)
+				.addField('Instructor(s)', processMentions(_lesson.instructors))
+				.addField('Lesson', _lesson.lessonName)
+				.addField('Lesson Plan Due', _lesson.dueDate)
+				.addField('Lesson Date', _lesson.lessonDate)
+				.addField('Resources', outputResources(_lesson.submittedResources), 1024)
 				.setFooter(await dtg());
 
 			sendMsg(msg.channel, lessonEmbed);
@@ -104,34 +79,34 @@ module.exports = async guild => {
 		else if (cmd === 'add') {
 			successReact(msg);
 
-			if (lessonDB.submittedResources.includes(processResources(att, URLs))) return;
+			if (_lesson.submittedResources.includes(processResources(att, URLs))) return;
 
-			lessonDB.submittedResources.push(processResources(att, URLs));
-			lessonDB.changed = true;
-			lessonDB.approved = false;
+			_lesson.submittedResources.push(processResources(att, URLs));
+			_lesson.changed = true;
+			_lesson.approved = false;
 
-			await lessonDB.save().catch(error => console.error(error));
+			await _lesson.save().catch(error => console.error(error));
 
 			const updatedEmbed = new Discord.MessageEmbed()
 				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
 				.setColor(colours.success)
 				.setTitle('Lesson Resources Updated')
 				.setDescription(`${msg.author} has added a new resource to this lesson.`)
-				.addField('Lesson', lessonDB.lessonName)
-				.addField('Resources', outputResources(lessonDB.submittedResources))
+				.addField('Lesson', _lesson.lessonName)
+				.addField('Resources', outputResources(_lesson.submittedResources))
 				.setFooter(await dtg());
 
 			sendMsg(msg.channel, updatedEmbed);
 		}
 
 		else if (cmd === 'remove') {
-			const { resources, range } = removeResources(lessonDB);
+			const { resources, range } = removeResources(_lesson);
 
 			const resourcesEmbed = new Discord.MessageEmbed()
 				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
 				.setColor(colours.error)
 				.setTitle('Remove a Lesson Resource')
-				.addField('Lesson', lessonDB.lessonName)
+				.addField('Lesson', _lesson.lessonName)
 				.addField('Resources', resources)
 				.setFooter('Enter the corresponding serial for the resource you wish to remove, or \'cancel\' to exit.');
 
@@ -139,19 +114,19 @@ module.exports = async guild => {
 
 			const delIndex = await msgPrompt(msg, range, colours);
 
-			lessonDB.submittedResources = remove(lessonDB.submittedResources, null, Number(delIndex) - 1);
-			lessonDB.changed = true;
-			lessonDB.approved = false;
+			_lesson.submittedResources = remove(_lesson.submittedResources, null, Number(delIndex) - 1);
+			_lesson.changed = true;
+			_lesson.approved = false;
 
-			lessonDB.save().catch(error => console.error(error));
+			_lesson.save().catch(error => console.error(error));
 
 			const updatedEmbed = new Discord.MessageEmbed()
 				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
 				.setColor(colours.success)
 				.setTitle('Lesson Resources Updated')
 				.setDescription(`${msg.author} has removed a resource from this lesson.`)
-				.addField('Lesson', lessonDB.lessonName)
-				.addField('Resources', outputResources(lessonDB.submittedResources))
+				.addField('Lesson', _lesson.lessonName)
+				.addField('Resources', outputResources(_lesson.submittedResources))
 				.setFooter(await dtg());
 
 			sendMsg(msg.channel, updatedEmbed);
@@ -160,30 +135,30 @@ module.exports = async guild => {
 		else if (cmd === 'submit') {
 			delMsg(msg);
 
-			awaitingConfirm.add(lessonDB.lessonID);
+			awaitingConfirm.add(_lesson.lessonID);
 
 			const submitEmbed = new Discord.MessageEmbed()
 				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
 				.setColor(colours.warn)
-				.setTitle(`Lesson Submission - ${lessonDB.lessonName}`)
-				.addField('Instructor(s)', processMentions(lessonDB.instructors))
-				.addField('Lesson', lessonDB.lessonName)
-				.addField('Lesson Plan Due', lessonDB.dueDate)
-				.addField('Lesson Date', lessonDB.lessonDate)
-				.addField('Resources', outputResources(lessonDB.submittedResources), 1024)
+				.setTitle(`Lesson Submission - ${_lesson.lessonName}`)
+				.addField('Instructor(s)', processMentions(_lesson.instructors))
+				.addField('Lesson', _lesson.lessonName)
+				.addField('Lesson Plan Due', _lesson.dueDate)
+				.addField('Lesson Date', _lesson.lessonDate)
+				.addField('Resources', outputResources(_lesson.submittedResources), 1024)
 				.setFooter('Use the reactions below to confirm or cancel.');
 
 			sendDM(msg.author, submitEmbed)
 				.then(dm => {
 					const lessonSubmit = async () => {
-						lessonDB.changed = false;
-						lessonDB.submitted = true;
+						_lesson.changed = false;
+						_lesson.submitted = true;
 
-						lessonDB.save().catch(error => console.error(error));
+						_lesson.save().catch(error => console.error(error));
 
-						awaitingConfirm.delete(lessonDB.lessonID);
+						awaitingConfirm.delete(_lesson.lessonID);
 
-						submitEmbed.setTitle(`Lesson Plan Submitted - ${lessonDB.lessonName}`);
+						submitEmbed.setTitle(`Lesson Plan Submitted - ${_lesson.lessonName}`);
 						submitEmbed.setColor(colours.success);
 						submitEmbed.setFooter(await dtg());
 
@@ -195,7 +170,7 @@ module.exports = async guild => {
 						const promises = [];
 
 						promises.push(
-							outputResources(lessonDB.submittedResources).forEach(res => {
+							outputResources(_lesson.submittedResources).forEach(res => {
 								if (!linkTest.test(res)) promises.push(sendMsg(msg.channel, new Discord.MessageAttachment(res.match(attFilter)[2], res.match(attFilter)[1].replace(/\\/g, ''))));
 							}),
 						);
@@ -219,59 +194,7 @@ module.exports = async guild => {
 
 								const collector = approveMsg.createReactionCollector(filter, { dispose: true });
 
-								collector.on('collect', async (reaction, user) => {
-									lessonDB = await Lesson.findOne({ lessonID: msg.channel.id }, error => {
-										if (error) console.error(error);
-									});
-
-									const lessonPlansChnl = msg.guild.channels.cache.get(lessonPlansID);
-
-									if (!lessonDB.approved && !lessonDB.changed) {
-										submitEmbed.setTitle(`Lesson Plan - ${lessonDB.lessonName}`);
-
-										if (!lessonDB.archiveID) {
-											submitEmbed.setFooter(`Last updated at ${await dtg()}`);
-
-											sendMsg(lessonPlansChnl, submitEmbed)
-												.then(async archiveMsg => {
-													lessonDB.archiveID = archiveMsg.id;
-													await lessonDB.save().catch(error => console.error(error));
-												});
-										}
-
-										else {
-											let archiveMsg;
-											const filterBy = message => message.id === lessonDB.archiveID;
-
-											await lessonPlansChnl.messages.fetch()
-												.then(messages => {
-													archiveMsg = messages.filter(filterBy).first();
-												})
-												.catch(error => debugError(error, `Error fetching messages in ${lessonPlansChnl}.`));
-
-											archiveMsg.edit(submitEmbed);
-										}
-
-										const approvedEmbed = new Discord.MessageEmbed()
-											.setColor(colours.success)
-											.setDescription(`${user} has approved this lesson plan.`)
-											.setFooter(await dtg());
-										sendMsg(msg.channel, approvedEmbed);
-
-										lessonDB.approved = true;
-										await lessonDB.save().catch(error => console.error(error));
-
-										collector.stop();
-									}
-
-									else if (!lessonDB.approved && lessonDB.changed) {
-										const errorEmbed = new Discord.MessageEmbed()
-											.setColor(colours.error)
-											.setDescription(`${user} there are currently outstanding changes, please wait for the lesson to be submitted again.`)
-											.setFooter(await dtg());
-										sendMsg(msg.channel, errorEmbed);
-									}
-								});
+								collector.on('collect', async (_, user) => bot.commands.get(approve.cmd).execute(msg, user));
 
 								collector.on('end', async () => {
 									const userReactions = approveMsg.reactions.cache.filter(reaction => reaction.users.cache.has(bot.user.id));
@@ -289,7 +212,7 @@ module.exports = async guild => {
 							});
 					};
 
-					const lessonCancelled = () => awaitingConfirm.delete(lessonDB.lessonID);
+					const lessonCancelled = () => awaitingConfirm.delete(_lesson.lessonID);
 
 					return confirmation(msg, dm, lessonSubmit, lessonCancelled);
 				});
@@ -337,12 +260,6 @@ function removeResources(db) {
 	}
 
 	return { resources: outputArr, range: range };
-}
-
-function promptEmbed(prompt, colour) {
-	return new Discord.MessageEmbed()
-		.setColor(colour)
-		.setDescription(prompt);
 }
 
 async function msgPrompt(msg, range, colours) {
