@@ -19,7 +19,7 @@ module.exports = (array, mention, breakAt) => {
 			if (roleObj) {
 				rolesString += (mention)
 					? `${roleObj} `
-					: `@${roleObj.name} `;
+					: `@\u200b${roleObj.name.replace('@', '')} `;
 			}
 		});
 	}
