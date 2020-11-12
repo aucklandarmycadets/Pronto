@@ -5,5 +5,7 @@ module.exports = msg => {
 
 	(msg.guild)
 		? msg.delete().catch(error => debugError(error, `Error deleting message in ${msg.channel}.`, 'Message', msg.content))
-		: msg.delete().catch(error => debugError(error, 'Error deleting message in DMs'));
+		: (msg.author.bot)
+			? msg.delete().catch(error => debugError(error, 'Error deleting message in DMs'))
+			: null;
 };
