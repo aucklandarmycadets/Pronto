@@ -2,7 +2,7 @@
 
 const Discord = require('discord.js');
 
-const { checkURL, cmdError, debugError, delMsg, dtg, outputResources, processMentions, processResources, promptEmbed, remove, rolesOutput, sendDM, sendMsg, successReact } = require('../modules');
+const { checkURL, cmdError, debugError, delMsg, dtg, outputResources, processResources, promptEmbed, remove, rolesOutput, sendDM, sendMsg, successReact } = require('../modules');
 const { confirmation, findLesson } = require('../handlers');
 
 const awaitingConfirm = new Set();
@@ -34,7 +34,7 @@ module.exports = async guild => {
 
 			else if (!_lesson.instructors[msg.author.id]) throw 'You are not an instructor for this lesson!';
 
-			else if (!_lesson.instructors[msg.author.id].seen) _lesson = bot.commands.get(seen.cmd).execute(msg);
+			else if (!_lesson.instructors[msg.author.id].seen) _lesson = bot.commands.get(seen.cmd).execute(msg, msg.author);
 
 			if (cmd === 'add') {
 				for (let i = 0; i < args.length; i++) { if (checkURL(args[i])) URLs.push(args[i]); }
@@ -221,6 +221,12 @@ module.exports = async guild => {
 
 	return lesson;
 };
+
+function processMentions(obj) {
+	let mentions = '';
+	for (const mention of Object.values(obj)) { mentions += `<@!${mention.id}>\n`; }
+	return mentions.replace(/\n+$/, '');
+}
 
 function removeResources(db) {
 	let procArr = [];

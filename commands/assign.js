@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 const mongoose = require('mongoose');
 const Lesson = require('../models/lesson');
 
-const { checkURL, cmdError, debugError, delMsg, dtg, outputResources, processMentions, processResources, promptEmbed, sendDM, sendMsg, successReact, titleCase } = require('../modules');
+const { checkURL, cmdError, debugError, delMsg, dtg, outputResources, processResources, promptEmbed, sendDM, sendMsg, successReact, titleCase } = require('../modules');
 const { confirmation } = require('../handlers');
 
 const recentlyAssigned = new Set();
@@ -272,4 +272,10 @@ async function whileLoop(prompt, msg, type, colours) {
 	}
 
 	return await loop();
+}
+
+function processMentions(obj) {
+	let mentions = '';
+	obj.each(mention => mentions += `${mention}\n`);
+	return mentions.replace(/\n+$/, '');
 }
