@@ -44,7 +44,7 @@ module.exports = {
 				? msg.attachments.first()
 				: null;
 
-			logEmbed.setAuthor(messageAuthor.tag, messageAuthor.displayAvatarURL());
+			logEmbed.setAuthor(messageAuthor.tag, messageAuthor.displayAvatarURL({ dynamic: true }));
 			logEmbed.setDescription(`**Message sent by ${messageAuthor} deleted in ${msg.channel}**\n${content}`);
 			logEmbed.setFooter(`Author: ${messageAuthor.id} | Message: ${msg.id} | ${await dtg()}`);
 

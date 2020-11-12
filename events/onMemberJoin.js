@@ -17,8 +17,8 @@ module.exports = {
 
 		const logEmbed = new Discord.MessageEmbed()
 			.setColor(colours.success)
-			.setAuthor('Member Joined', memberUser.displayAvatarURL())
-			.setThumbnail(memberUser.displayAvatarURL())
+			.setAuthor('Member Joined', memberUser.displayAvatarURL({ dynamic: true }))
+			.setThumbnail(memberUser.displayAvatarURL({ dynamic: true }))
 			.setDescription(`${memberUser} ${memberUser.tag}`)
 			.addField('Account Age', formatAge(memberUser.createdAt))
 			.setFooter(`ID: ${memberUser.id} | ${await dtg()}`);
@@ -31,7 +31,7 @@ module.exports = {
 
 		const welcomeEmbed = new Discord.MessageEmbed()
 			.setColor(colours.pronto)
-			.setAuthor(memberUser.tag, memberUser.displayAvatarURL())
+			.setAuthor(memberUser.tag, memberUser.displayAvatarURL({ dynamic: true }))
 			.setDescription(`**${memberUser} has just entered ${newMembers}.**\nMake them feel welcome!`)
 			.setFooter(await dtg());
 		sendMsg(recruiting, welcomeEmbed);

@@ -16,8 +16,8 @@ module.exports = {
 
 		const logEmbed = new Discord.MessageEmbed()
 			.setColor(colours.error)
-			.setAuthor('Member Left', memberUser.displayAvatarURL())
-			.setThumbnail(memberUser.displayAvatarURL())
+			.setAuthor('Member Left', memberUser.displayAvatarURL({ dynamic: true }))
+			.setThumbnail(memberUser.displayAvatarURL({ dynamic: true }))
 			.setDescription(`${memberUser} ${memberUser.tag}`)
 			.addField('Roles', rolesOutput(memberRoles, true, 3))
 			.setFooter(`ID: ${memberUser.id} | ${await dtg()}`);
@@ -33,7 +33,7 @@ module.exports = {
 			const { executor, target } = kickLog;
 
 			if (target.id === member.id) {
-				logEmbed.setAuthor('Member Kicked', memberUser.displayAvatarURL());
+				logEmbed.setAuthor('Member Kicked', memberUser.displayAvatarURL({ dynamic: true }));
 				logEmbed.addField('Kicked By', executor);
 			}
 		}

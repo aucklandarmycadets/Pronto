@@ -16,7 +16,7 @@ module.exports = async (msg, dm, success, cancel) => {
 	collector.on('collect', async (reaction, user) => {
 		if (!user.bot) {
 			const confirmEmbed = new Discord.MessageEmbed()
-				.setAuthor(bot.user.tag, bot.user.avatarURL())
+				.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }))
 				.setColor(colours.error)
 				.setDescription('**Cancelled.**')
 				.setFooter(await dtg());

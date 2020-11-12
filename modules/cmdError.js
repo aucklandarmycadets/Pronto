@@ -12,7 +12,7 @@ module.exports = async (msg, errMsg, cmdErr, footer) => {
 
 	const errorEmbed = new Discord.MessageEmbed()
 		.setColor(colours.error)
-		.setAuthor(authName, msg.author.displayAvatarURL())
+		.setAuthor(authName, msg.author.displayAvatarURL({ dynamic: true }))
 		.setDescription(`${msg.author} ${errMsg} ${cmdErr}`);
 
 	if (footer) errorEmbed.setFooter(footer);

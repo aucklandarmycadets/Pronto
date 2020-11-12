@@ -80,7 +80,7 @@ module.exports = async guild => {
 			helpEmbed.setThumbnail(prontoLogo);
 			helpEmbed.setColor(colours.pronto);
 			helpEmbed.setDescription(commandsList);
-			helpEmbed.setFooter(`Developed by ${james.tag}`, james.avatarURL());
+			helpEmbed.setFooter(`Developed by ${james.tag}`, james.avatarURL({ dynamic: true }));
 
 			if (msg.author.id !== devID) {
 				helpEmbed.addField('Note', `Only displaying commands available to ${msg.author}.`);

@@ -15,7 +15,7 @@ module.exports = {
 		const newMember = newState.member;
 
 		const logEmbed = new Discord.MessageEmbed()
-			.setAuthor(newMember.displayName, newMember.user.displayAvatarURL());
+			.setAuthor(newMember.displayName, newMember.user.displayAvatarURL({ dynamic: true }));
 
 		const oldID = (oldState.channel)
 			? oldState.channelID

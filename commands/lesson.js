@@ -63,7 +63,7 @@ module.exports = async guild => {
 			successReact(msg);
 
 			const lessonEmbed = new Discord.MessageEmbed()
-				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
+				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
 				.setColor(colours.pronto)
 				.setTitle(`Lesson Preview - ${_lesson.lessonName}`)
 				.addField('Instructor(s)', processMentions(_lesson.instructors))
@@ -88,7 +88,7 @@ module.exports = async guild => {
 			await _lesson.save().catch(error => console.error(error));
 
 			const updatedEmbed = new Discord.MessageEmbed()
-				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
+				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
 				.setColor(colours.success)
 				.setTitle('Lesson Resources Updated')
 				.setDescription(`${msg.author} has added a new resource to this lesson.`)
@@ -103,7 +103,7 @@ module.exports = async guild => {
 			const { resources, range } = removeResources(_lesson);
 
 			const resourcesEmbed = new Discord.MessageEmbed()
-				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
+				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
 				.setColor(colours.error)
 				.setTitle('Remove a Lesson Resource')
 				.addField('Lesson', _lesson.lessonName)
@@ -121,7 +121,7 @@ module.exports = async guild => {
 			_lesson.save().catch(error => console.error(error));
 
 			const updatedEmbed = new Discord.MessageEmbed()
-				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
+				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
 				.setColor(colours.success)
 				.setTitle('Lesson Resources Updated')
 				.setDescription(`${msg.author} has removed a resource from this lesson.`)
@@ -138,7 +138,7 @@ module.exports = async guild => {
 			awaitingConfirm.add(_lesson.lessonID);
 
 			const submitEmbed = new Discord.MessageEmbed()
-				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
+				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
 				.setColor(colours.warn)
 				.setTitle(`Lesson Submission - ${_lesson.lessonName}`)
 				.addField('Instructor(s)', processMentions(_lesson.instructors))

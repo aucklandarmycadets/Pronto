@@ -20,7 +20,7 @@ module.exports = {
 		if (oldMessage.partial && oldMessage.guild) {
 			newMessage = await newMessage.fetch();
 
-			logEmbed.setAuthor(newMessage.author.tag, newMessage.author.displayAvatarURL());
+			logEmbed.setAuthor(newMessage.author.tag, newMessage.author.displayAvatarURL({ dynamic: true }));
 			logEmbed.setDescription(`**Uncached message edited in ${newMessage.channel}** [Jump to Message](${newMessage.url})`);
 			logEmbed.addField('After', charLimit(newMessage.content, 1024));
 			logEmbed.setFooter(`ID: ${newMessage.id} | ${await dtg()}`);
@@ -29,7 +29,7 @@ module.exports = {
 		else if (newMessage.guild) {
 			if (oldMessage.content === newMessage.content || newMessage.author.bot) return;
 
-			logEmbed.setAuthor(newMessage.author.tag, newMessage.author.displayAvatarURL());
+			logEmbed.setAuthor(newMessage.author.tag, newMessage.author.displayAvatarURL({ dynamic: true }));
 			logEmbed.setDescription(`**Message edited in ${newMessage.channel}** [Jump to Message](${newMessage.url})`);
 			logEmbed.addField('Before', charLimit(oldMessage.content, 1024));
 			logEmbed.addField('After', charLimit(newMessage.content, 1024));

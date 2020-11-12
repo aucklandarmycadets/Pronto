@@ -29,7 +29,7 @@ module.exports = async guild => {
 		const lessonPlansChnl = msg.guild.channels.cache.get(lessonPlansID);
 
 		const submitEmbed = new Discord.MessageEmbed()
-			.setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
+			.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
 			.setColor(colours.success)
 			.setTitle(`Lesson Plan - ${lesson.lessonName}`)
 			.addField('Instructor(s)', processMentions(lesson.instructors))
