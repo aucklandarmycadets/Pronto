@@ -1,17 +1,19 @@
 'use strict';
 
 const Discord = require('discord.js');
-const Lesson = require('../models/lesson');
 
 const { cmdError, dtg, sendMsg } = require('../modules');
+const { findLesson } = require('../handlers');
 
 module.exports = async guild => {
 	const { ids: { lessonsID }, cmds: { seen }, colours } = await require('../handlers/database')(guild);
 
-	seen.execute = async msg => {
-		const lesson = await Lesson.findOne({ lessonID: msg.channel.id }, error => {
-			if (error) console.error(error);
-		});
+	seen.execute = async (msg, user) => {
+		const lesson = await findLesson(msg.channel.id);
+
+		const instructor = (user.id)
+			? user
+			: msg.author;
 
 		try {
 			if (msg.channel.parentID !== lessonsID) {
@@ -21,22 +23,21 @@ module.exports = async guild => {
 
 			else if (!lesson) throw 'Invalid lesson channel.';
 
-			else if (!lesson.instructors[msg.author.id]) throw 'You are not an instructor for this lesson!';
+			else if (!lesson.instructors[instructor.id]) throw 'You are not an instructor for this lesson!';
 
-			else if (lesson.instructors[msg.author.id].seen) throw 'You have already acknowledged this lesson warning.';
+			else if (lesson.instructors[instructor.id].seen) throw 'You have already acknowledged this lesson warning.';
 		}
 
 		catch (error) { return cmdError(msg, error, seen.error); }
 
 		const seenEmbed = new Discord.MessageEmbed()
 			.setColor(colours.success)
-			.setDescription(`${msg.author} has confirmed receipt of this lesson warning.`)
+			.setDescription(`${instructor} has confirmed receipt of this lesson warning.`)
 			.setFooter(await dtg());
 		sendMsg(msg.channel, seenEmbed);
 
-		lesson.instructors[msg.author.id].seen = true;
+		lesson.instructors[instructor.id].seen = true;
 		lesson.markModified('instructors');
-		await lesson.save().catch(error => console.error(error));
 
 		let allSeen = true;
 
@@ -51,6 +52,8 @@ module.exports = async guild => {
 				.setFooter(await dtg());
 			sendMsg(msg.channel, allSeenEmbed);
 		}
+
+		return await lesson.save().catch(error => console.error(error));
 	};
 
 	return seen;
