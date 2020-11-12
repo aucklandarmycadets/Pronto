@@ -37,7 +37,7 @@ module.exports = async guild => {
 
 			if (typeof evaled !== 'string') evaled = require('util').inspect(evaled);
 
-			(code.includes('embed'))
+			(code.includes('embed.'))
 				? sendMsg(msg.channel, embed)
 				: msgSplit(evaled, '},');
 		}
