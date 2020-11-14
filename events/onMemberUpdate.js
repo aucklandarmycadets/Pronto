@@ -13,17 +13,18 @@ module.exports = {
 
 		const log = bot.channels.cache.get(logID);
 		const roleDifference = newMember.roles.cache.difference(oldMember.roles.cache).first();
-		const newMemberUser = newMember.user;
 
 		const logEmbed = new Discord.MessageEmbed();
 
+		let fetchedLogs;
+
 		if (roleDifference) {
 			if (newMember.roles.cache.some(role => role.id === roleDifference.id)) {
-				logEmbed.setDescription(`**${newMemberUser} was added to** ${roleDifference}`);
+				logEmbed.setDescription(`**${newMember.user} was added to** ${roleDifference}`);
 			}
 
 			else if (oldMember.roles.cache.some(role => role.id === roleDifference.id)) {
-				logEmbed.setDescription(`**${newMemberUser} was removed from** ${roleDifference}`);
+				logEmbed.setDescription(`**${newMember.user} was removed from** ${roleDifference}`);
 			}
 
 			if (newMember.id === bot.user.id) {
@@ -31,31 +32,34 @@ module.exports = {
 				botPermsHandler(newMember.guild, changedPerms);
 			}
 
-			const fetchedLogs = await newMember.guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_ROLE_UPDATE' })
+			fetchedLogs = await newMember.guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_ROLE_UPDATE' })
 				.catch(error => debugError(error, 'Error fetching audit logs.'));
-
-			const roleUpdateLog = (fetchedLogs)
-				? fetchedLogs.entries.first()
-				: null;
-
-			if (roleUpdateLog) {
-				const { executor, target } = roleUpdateLog;
-
-				if (target.id === newMember.id) logEmbed.setDescription(`${logEmbed.description} by ${executor}`);
-			}
 		}
 
 		else if (newMember.displayName !== oldMember.displayName) {
-			logEmbed.setDescription(`**Nickname for ${newMemberUser} changed**`);
+			logEmbed.setDescription(`**Nickname for ${newMember.user} changed**`);
 			logEmbed.addField('Before', oldMember.displayName);
 			logEmbed.addField('After', newMember.displayName);
+
+			fetchedLogs = await newMember.guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_UPDATE' })
+				.catch(error => debugError(error, 'Error fetching audit logs.'));
 		}
 
 		else return;
 
-		logEmbed.setAuthor(newMemberUser.tag, newMemberUser.displayAvatarURL({ dynamic: true }));
+		const roleUpdateLog = (fetchedLogs)
+			? fetchedLogs.entries.first()
+			: null;
+
+		if (roleUpdateLog) {
+			const { executor, target } = roleUpdateLog;
+
+			if (target.id === newMember.id) logEmbed.setDescription(`${logEmbed.description} **by** ${executor}`);
+		}
+
+		logEmbed.setAuthor(newMember.user.tag, newMember.user.displayAvatarURL({ dynamic: true }));
 		logEmbed.setColor(colours.warn);
-		logEmbed.setFooter(`ID: ${newMemberUser.id} | ${await dtg()}`);
+		logEmbed.setFooter(`ID: ${newMember.user.id} | ${await dtg()}`);
 		sendMsg(log, logEmbed);
 	},
 };
