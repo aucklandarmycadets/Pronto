@@ -1,7 +1,7 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { dtg, sendMsg, updatedPermissions } = require('../modules');
+const { dtg, debugError, sendMsg, updatedPermissions } = require('../modules');
 const { botPermsHandler } = require('../handlers');
 
 module.exports = {
@@ -28,7 +28,20 @@ module.exports = {
 
 			if (newMember.id === bot.user.id) {
 				const changedPerms = updatedPermissions(oldMember, newMember);
-				botPermsHandler(changedPerms);
+				botPermsHandler(newMember.guild, changedPerms);
+			}
+
+			const fetchedLogs = await newMember.guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_ROLE_UPDATE' })
+				.catch(error => debugError(error, 'Error fetching audit logs.'));
+
+			const roleUpdateLog = (fetchedLogs)
+				? fetchedLogs.entries.first()
+				: null;
+
+			if (roleUpdateLog) {
+				const { executor, target } = roleUpdateLog;
+
+				if (target.id === newMember.id) logEmbed.setDescription(`${logEmbed.description} by ${executor}`);
 			}
 		}
 
