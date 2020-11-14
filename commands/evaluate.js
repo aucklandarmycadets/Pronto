@@ -33,13 +33,13 @@ module.exports = async guild => {
 
 			let evaled = await eval(code);
 
+			if (code.includes('embed.')) sendMsg(msg.channel, embed);
+
 			if (silent) return;
 
 			if (typeof evaled !== 'string') evaled = require('util').inspect(evaled);
 
-			(code.includes('embed.'))
-				? sendMsg(msg.channel, embed)
-				: msgSplit(evaled, '},');
+			msgSplit(evaled, '},');
 		}
 
 		catch (error) { msgSplit(error.stack, ')'); }
