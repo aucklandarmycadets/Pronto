@@ -282,7 +282,7 @@ module.exports = async guild => {
 					'Aliases': pAls(this),
 					'Description': this.desc,
 					'Usage': `${pCmd(this)} <voice channel>`,
-					'Example': `${pCmd(this)} <#${ids.exampleVoiceID}>`,
+					'Example': `${pCmd(this)} #example-voice`,
 					'Allowed Roles': rolesOutput(this.roles),
 				});
 			},
@@ -366,7 +366,7 @@ module.exports = async guild => {
 					'Aliases': pAls(this),
 					'Description': this.desc,
 					'Usage': `${pCmd(this)} <text channel>`,
-					'Example': `${pCmd(this)} <#${ids.exampleTextID}>`,
+					'Example': `${pCmd(this)} #example-text`,
 					'Allowed Roles': rolesOutput(this.roles),
 				});
 			},
@@ -417,7 +417,7 @@ module.exports = async guild => {
 
 		if (!array) return rolesString;
 
-		const filteredArray = array.filter(role => role !== ids.administratorID && role.name !== '@everyone');
+		const filteredArray = array.filter(id => id !== ids.administratorID && id !== ids.everyoneID);
 
 		for (let i = 0; i < filteredArray.length; i++) {
 			if (i % 3 === 0) rolesString += '\n';

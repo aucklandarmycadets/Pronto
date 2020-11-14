@@ -55,16 +55,6 @@ exports.defaults = {
 			return defaults.lessons.name;
 		},
 	},
-	exampleText: {
-		name: 'example-text',
-		get desc() {
-			const { bot } = require('./pronto');
-			return `Example **text channel** used in <@!${bot.user.id}>'s command descriptions.`;
-		},
-	},
-	exampleVoice: {
-		name: 'example-voice',
-	},
 	pronto: {
 		name: 'Pronto',
 	},
