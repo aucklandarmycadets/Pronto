@@ -12,7 +12,7 @@ module.exports = async msg => {
 
 	const args = msg.content.split(/ +/);
 
-	if (!msg.content.startsWith(prefix) && (stripID(args[0]) !== bot.user.id || args.length === 1)) return;
+	if (!msg.content.toLowerCase().startsWith(prefix.toLowerCase()) && (stripID(args[0]) !== bot.user.id || args.length === 1)) return;
 
 	await updateCommands(msg.guild);
 
@@ -25,7 +25,7 @@ module.exports = async msg => {
 
 	const msgCmd = (stripID(args[0]) === bot.user.id)
 		? args.splice(0, 2)[1].toLowerCase()
-		: args.shift().toLowerCase().replace(prefix, '');
+		: args.shift().toLowerCase().replace(prefix.toLowerCase(), '');
 
 	const helpCmd = bot.commands.get(help.cmd);
 
