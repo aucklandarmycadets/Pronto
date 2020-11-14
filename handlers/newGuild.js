@@ -1,10 +1,9 @@
 'use strict';
 
 const Discord = require('discord.js');
-const mongoose = require('mongoose');
 const Guild = require('../models/guild');
 
-const { config, defaults, emojis, colours } = require('../config');
+const { ids, defaults, colours } = require('../config');
 
 const recentlyCreated = new Set();
 const createdChannels = new Discord.Collection();
@@ -27,100 +26,81 @@ module.exports = async guild => {
 	setTimeout(() => recentlyCreated.delete(guild.guildID), 15000);
 
 	const { bot } = require('../pronto');
-	const { overwriteCommands } = require('./');
+	const { lessonInstructions, overwriteCommands } = require('./');
 
-	guild = await createGuild(guild);
-	guild = await overwriteCommands({ id: guild.guildID });
+	let _guild = await createGuild(guild);
+	_guild = await overwriteCommands(guild);
 
-	if (createdChannels.some(chnlGuild => chnlGuild === guild.guildID)) {
+	lessonInstructions(_guild.ids.lessonInstructionsID, guild);
+
+	if (createdChannels.some(guildID => guildID === guild.id)) {
 		const { dtg } = require('../modules');
 
 		const prontoCategory = bot.channels.cache.find(chnl => chnl.type === 'category' && chnl.name === defaults.pronto.name);
-		const debugChannel = bot.channels.cache.get(guild.ids.debugID);
+		const logChannel = bot.channels.cache.get(_guild.ids.logID);
 
 		const createdEmbed = new Discord.MessageEmbed()
 			.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }))
 			.setColor(colours.pronto)
 			.setDescription(`Initialised channel(s) in **${prontoCategory}**, feel free to move and/or rename them!`)
-			.addField('Created Channels', channelsOutput(createdChannels, guild))
+			.addField('Created Channels', channelsOutput(createdChannels, _guild))
 			.addField('More Information', 'To modify my configuration, please visit my dashboard.')
 			.setFooter(await dtg());
 
-		debugChannel.send(createdEmbed).catch(error => console.error(error));
+		logChannel.send(createdEmbed).catch(error => console.error(error));
 	}
 
-	return guild;
+	return _guild;
 };
 
 async function createGuild(guild) {
 	guild = await new Guild({
-		_id: mongoose.Types.ObjectId(),
 		guildID: guild.id,
 		guildName: guild.name,
-		config: {
-			prefix: config.prefix,
-			dateOutput: config.dateOutput,
-			prontoLogo: config.prontoLogo,
-		},
 		ids: {
 			serverID: guild.id,
-			debugID: await findChannel(defaults.debug, guild),
-			logID: await findChannel(defaults.log, guild),
-			attendanceID: await findChannel(defaults.attendance, guild),
-			recruitingID: await findChannel(defaults.recruiting, guild),
-			newMembersID: await findChannel(defaults.newMembers, guild),
-			archivedID: await findChannel(defaults.archived, guild, 'category'),
-			lessonsID: await findChannel(defaults.lessons, guild, 'category'),
-			lessonPlansID: await findChannel(defaults.lessonPlans, guild),
-			exampleTextID: await findChannel(defaults.exampleText, guild),
-			exampleVoiceID: await findChannel(defaults.exampleVoice, guild, 'voice'),
+			debugID: await initChannel(defaults.debug, guild),
+			logID: await initChannel(defaults.log, guild),
+			attendanceID: await initChannel(defaults.attendance, guild),
+			recruitingID: await initChannel(defaults.recruiting, guild),
+			newMembersID: await initChannel(defaults.newMembers, guild),
+			archivedID: await initChannel(defaults.archived, guild, 'category'),
+			lessonsID: await initChannel(defaults.lessons, guild, 'category'),
+			lessonInstructionsID: await initChannel(defaults.instructions, guild),
+			lessonPlansID: await initChannel(defaults.lessonPlans, guild),
+			exampleTextID: await initChannel(defaults.exampleText, guild),
+			exampleVoiceID: await initChannel(defaults.exampleVoice, guild, 'voice'),
 			everyoneID: guild.roles.everyone.id,
 			visitorID: findRole(defaults.visitor, guild),
-			administratorID: '',
-			trainingIDs: '',
-			formations: [],
-			channelPairs: [],
-		},
-		cmds: {},
-		emojis: {
-			success: {
-				name: emojis.success.name,
-				URL: emojis.success.URL,
-			},
-			error: {
-				name: emojis.error.name,
-				URL: emojis.error.URL,
-			},
-		},
-		colours: {
-			default: colours.default,
-			pronto: colours.pronto,
-			leave: colours.leave,
-			success: colours.success,
-			warn: colours.warn,
-			error: colours.error,
 		},
 	});
 
 	return await guild.save().catch(error => console.error(error));
 }
 
-async function findChannel(channel, guild, type) {
+async function initChannel(channel, guild, type) {
 	const { bot } = require('../pronto');
 
+	if (channel === defaults.debug && guild.id !== ids.defaultServer) return '';
+
+	const chnls = guild.channels.cache;
 	const everyone = guild.roles.everyone;
 	const minPerms = ['VIEW_CHANNEL', 'SEND_MESSAGES'];
 
-	const hasMinPerms = chnl => chnl.name === channel.name && chnl.permissionsFor(bot.user).has(minPerms);
 	const hasChannel = chnl => chnl.name === channel.name;
+	const hasMinPerms = chnl => chnl.permissionsFor(bot.user).has(minPerms);
 
-	const foundChannel = guild.channels.cache.find(hasMinPerms) || guild.channels.cache.find(hasChannel);
+	const foundChannel = chnls.find(chnl => hasChannel(chnl) && hasMinPerms(chnl)) || chnls.find(hasChannel);
 
 	if (foundChannel) {
-		if (foundChannel.permissionsFor(bot.user).has(minPerms) || channel.name !== defaults.debug.name) return foundChannel.id;
+		const isLogChannel = channel.name === defaults.log.name;
+
+		if (hasMinPerms(foundChannel) || !isLogChannel) return foundChannel.id;
 	}
 
-	let prontoCategory = guild.channels.cache.find(chnl => chnl.type === 'category' && chnl.name === defaults.pronto.name);
+	const findProntoCategory = chnl => chnl.type === 'category' && chnl.name === defaults.pronto.name;
+
+	let prontoCategory = chnls.find(chnl => findProntoCategory(chnl) && hasMinPerms(chnl));
 
 	if (!prontoCategory) {
 		await guild.channels.create(defaults.pronto.name, { type: 'category' })
@@ -134,7 +114,7 @@ async function findChannel(channel, guild, type) {
 	}
 
 	const parent = (channel.parent)
-		? guild.channels.cache.find(chnl => chnl.type === 'category' && chnl.name === channel.parent)
+		? chnls.find(chnl => chnl.type === 'category' && chnl.name === channel.parent)
 		: null;
 
 	const chnlOptions = (type === 'category')
@@ -150,12 +130,12 @@ async function findChannel(channel, guild, type) {
 	setTimeout(() => createdChannels.delete(newChannel.id), 5000);
 
 	if (foundChannel) {
-		if (foundChannel.name === defaults.debug.name) {
-			const debugEmbed = new Discord.MessageEmbed()
+		if (foundChannel.name === defaults.log.name) {
+			const logEmbed = new Discord.MessageEmbed()
 				.setColor(colours.error)
 				.setDescription(`\n\nI created this channel because I cannot access ${foundChannel}!`);
 
-			newChannel.send(debugEmbed).catch(error => console.error(error));
+			newChannel.send(logEmbed).catch(error => console.error(error));
 		}
 	}
 

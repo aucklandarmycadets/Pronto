@@ -5,7 +5,7 @@ const { removeGuild } = require('../handlers');
 module.exports = {
 	events: ['guildDelete'],
 	process: [],
-	execute(event, guild) {
+	execute(_, guild) {
 		return removeGuild(guild);
 	},
 };

@@ -67,7 +67,7 @@ module.exports = async (oldState, newState) => {
 
 								const collector = msg.createReactionCollector(filter, { dispose: true });
 
-								collector.on('collect', (reaction, user) => {
+								collector.on('collect', (_, user) => {
 									if (!user.bot) {
 										if (permissionsCheck(msg.guild.members.cache.get(user.id).roles.cache, user.id, purge)) {
 											msg.channel.messages.fetch({ limit: 100 })
@@ -85,7 +85,7 @@ module.exports = async (oldState, newState) => {
 									}
 								});
 
-								collector.on('remove', (reaction, user) => {
+								collector.on('remove', (_, user) => {
 									if (permissionsCheck(msg.guild.members.cache.get(user.id).roles.cache, user.id, purge)) {
 										msg.channel.messages.fetch({ limit: 100 })
 											.then(messages => purgeChannel(messages, msg.channel, collector))
@@ -93,7 +93,7 @@ module.exports = async (oldState, newState) => {
 									}
 								});
 
-								collector.on('end', async (collected, reason) => {
+								collector.on('end', async (_, reason) => {
 									if (reason === 'time') {
 										msg.reactions.removeAll()
 											.catch(error => debugError(error, `Error removing reactions from [message](${msg.url}) in ${textChannel}.`));

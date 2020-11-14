@@ -7,7 +7,7 @@ const { botPermsHandler } = require('../handlers');
 module.exports = {
 	events: ['guildMemberUpdate'],
 	process: [],
-	async execute(event, oldMember, newMember) {
+	async execute(_, oldMember, newMember) {
 		const { bot } = require('../pronto');
 		const { ids: { logID }, colours } = await require('../handlers/database')(newMember.guild);
 

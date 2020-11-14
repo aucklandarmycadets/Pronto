@@ -16,7 +16,7 @@ module.exports = {
 
 		const { colours } = await require('../handlers/database')();
 
-		const dev = bot.users.cache.get(devID);
+		const dev = await bot.users.fetch(devID);
 
 		const restartEmbed = new Discord.MessageEmbed()
 			.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }))

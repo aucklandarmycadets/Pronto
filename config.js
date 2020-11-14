@@ -17,8 +17,7 @@ exports.defaults = {
 		name: 'debugging',
 		get desc() {
 			const { bot } = require('./pronto');
-			delete this.desc;
-			return this.desc = `For debugging <@!${bot.user.id}>`;
+			return `For debugging <@!${bot.user.id}>.`;
 		},
 	},
 	log: {
@@ -37,21 +36,30 @@ exports.defaults = {
 		name: 'new-members',
 		desc: '**Introduce yourself!** You can ask us any questions you might have here, or just say hello!',
 	},
+	instructions: {
+		name: 'instructions',
+		get desc() {
+			const { bot } = require('./pronto');
+			return `Instructions on how to use <@!${bot.user.id}> to manage and action **lesson plans**.`;
+		},
+		get parent() {
+			const { defaults } = require('./config');
+			return defaults.lessons.name;
+		},
+	},
 	lessonPlans: {
 		name: 'lesson-plans',
 		desc: 'An archive of **completed** and **approved** lesson plans.',
 		get parent() {
 			const { defaults } = require('./config');
-			delete this.parent;
-			return this.parent = defaults.lessons.name;
+			return defaults.lessons.name;
 		},
 	},
 	exampleText: {
 		name: 'example-text',
 		get desc() {
 			const { bot } = require('./pronto');
-			delete this.desc;
-			return this.desc = `Example **text channel** used in <@!${bot.user.id}>'s command descriptions.`;
+			return `Example **text channel** used in <@!${bot.user.id}>'s command descriptions.`;
 		},
 	},
 	exampleVoice: {
