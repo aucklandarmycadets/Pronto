@@ -36,7 +36,7 @@ module.exports = async guild => {
 		const { dtg } = require('../modules');
 
 		const prontoCategory = bot.channels.cache.find(chnl => chnl.type === 'category' && chnl.name === defaults.pronto.name);
-		const debugChannel = bot.channels.cache.get(guild.ids.debugID);
+		const logChannel = bot.channels.cache.get(guild.ids.logID);
 
 		const createdEmbed = new Discord.MessageEmbed()
 			.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }))
@@ -46,7 +46,7 @@ module.exports = async guild => {
 			.addField('More Information', 'To modify my configuration, please visit my dashboard.')
 			.setFooter(await dtg());
 
-		debugChannel.send(createdEmbed).catch(error => console.error(error));
+		logChannel.send(createdEmbed).catch(error => console.error(error));
 	}
 
 	return guild;
@@ -108,6 +108,9 @@ async function createGuild(guild) {
 async function findChannel(channel, guild, type) {
 	const { bot } = require('../pronto');
 
+	if (channel === defaults.debug && guild.id !== ids.defaultServer) return '';
+
+	const chnls = guild.channels.cache;
 	const everyone = guild.roles.everyone;
 	const minPerms = ['VIEW_CHANNEL', 'SEND_MESSAGES'];
 
@@ -117,7 +120,9 @@ async function findChannel(channel, guild, type) {
 	const foundChannel = guild.channels.cache.find(hasMinPerms) || guild.channels.cache.find(hasChannel);
 
 	if (foundChannel) {
-		if (foundChannel.permissionsFor(bot.user).has(minPerms) || channel.name !== defaults.debug.name) return foundChannel.id;
+		const isLogChannel = channel.name === defaults.log.name;
+
+		if (hasMinPerms(foundChannel) || !isLogChannel) return foundChannel.id;
 	}
 
 	let prontoCategory = guild.channels.cache.find(chnl => chnl.type === 'category' && chnl.name === defaults.pronto.name);
@@ -150,12 +155,12 @@ async function findChannel(channel, guild, type) {
 	setTimeout(() => createdChannels.delete(newChannel.id), 5000);
 
 	if (foundChannel) {
-		if (foundChannel.name === defaults.debug.name) {
-			const debugEmbed = new Discord.MessageEmbed()
+		if (foundChannel.name === defaults.log.name) {
+			const logEmbed = new Discord.MessageEmbed()
 				.setColor(colours.error)
 				.setDescription(`\n\nI created this channel because I cannot access ${foundChannel}!`);
 
-			newChannel.send(debugEmbed).catch(error => console.error(error));
+			newChannel.send(logEmbed).catch(error => console.error(error));
 		}
 	}
 
