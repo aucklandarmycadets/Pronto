@@ -84,10 +84,10 @@ async function findChannel(channel, guild, type) {
 	const everyone = guild.roles.everyone;
 	const minPerms = ['VIEW_CHANNEL', 'SEND_MESSAGES'];
 
-	const hasMinPerms = chnl => chnl.name === channel.name && chnl.permissionsFor(bot.user).has(minPerms);
 	const hasChannel = chnl => chnl.name === channel.name;
+	const hasMinPerms = chnl => chnl.permissionsFor(bot.user).has(minPerms);
 
-	const foundChannel = guild.channels.cache.find(hasMinPerms) || guild.channels.cache.find(hasChannel);
+	const foundChannel = chnls.find(chnl => hasChannel(chnl) && hasMinPerms(chnl)) || chnls.find(hasChannel);
 
 	if (foundChannel) {
 		const isLogChannel = channel.name === defaults.log.name;
@@ -95,7 +95,9 @@ async function findChannel(channel, guild, type) {
 		if (hasMinPerms(foundChannel) || !isLogChannel) return foundChannel.id;
 	}
 
-	let prontoCategory = guild.channels.cache.find(chnl => chnl.type === 'category' && chnl.name === defaults.pronto.name);
+	const findProntoCategory = chnl => chnl.type === 'category' && chnl.name === defaults.pronto.name;
+
+	let prontoCategory = chnls.find(chnl => findProntoCategory(chnl) && hasMinPerms(chnl));
 
 	if (!prontoCategory) {
 		await guild.channels.create(defaults.pronto.name, { type: 'category' })
@@ -109,7 +111,7 @@ async function findChannel(channel, guild, type) {
 	}
 
 	const parent = (channel.parent)
-		? guild.channels.cache.find(chnl => chnl.type === 'category' && chnl.name === channel.parent)
+		? chnls.find(chnl => chnl.type === 'category' && chnl.name === channel.parent)
 		: null;
 
 	const chnlOptions = (type === 'category')
