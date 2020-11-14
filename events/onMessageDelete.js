@@ -6,9 +6,9 @@ const { charLimit, debugError, delMsg, dtg, sendMsg } = require('../modules');
 module.exports = {
 	events: ['messageDelete'],
 	process: [],
-	async execute(event, msg) {
+	async execute(_, msg) {
 		const { bot } = require('../pronto');
-		const { config: { prefix }, ids: { logID }, cmds: { help, attendance, purge }, colours } = await require('../handlers/database')(msg.guild);
+		const { config: { prefix }, ids: { logID }, cmds: { evaluate, help, lesson, attendance, assign, purge }, colours } = await require('../handlers/database')(msg.guild);
 
 		const log = bot.channels.cache.get(logID);
 		const logEmbed = new Discord.MessageEmbed()
@@ -78,7 +78,7 @@ module.exports = {
 		sendMsg(log, logEmbed);
 
 		function cmdCheck() {
-			const autoDelCmds = [attendance, help, purge];
+			const autoDelCmds = [evaluate, help, lesson, attendance, assign, purge];
 
 			const args = msg.content.split(/ +/);
 			const msgCmd = args.shift().toLowerCase().replace(prefix, '');

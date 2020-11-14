@@ -18,7 +18,7 @@ exports.defaults = {
 		get desc() {
 			const { bot } = require('./pronto');
 			delete this.desc;
-			return this.desc = `For debugging <@!${bot.user.id}>`;
+			return this.desc = `For debugging <@!${bot.user.id}>.`;
 		},
 	},
 	log: {

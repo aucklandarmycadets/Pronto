@@ -7,7 +7,7 @@ const { commandHandler } = require('../handlers');
 module.exports = {
 	events: ['messageUpdate'],
 	process: [],
-	async execute(event, oldMessage, newMessage) {
+	async execute(_, oldMessage, newMessage) {
 		const { bot } = require('../pronto');
 		const { ids: { logID }, colours } = await require('../handlers/database')(newMessage.guild);
 
@@ -15,11 +15,11 @@ module.exports = {
 		const logEmbed = new Discord.MessageEmbed()
 			.setColor(colours.warn);
 
-		commandHandler(await newMessage.fetch());
+		newMessage = await newMessage.fetch();
+
+		commandHandler(newMessage);
 
 		if (oldMessage.partial && oldMessage.guild) {
-			newMessage = await newMessage.fetch();
-
 			logEmbed.setAuthor(newMessage.author.tag, newMessage.author.displayAvatarURL({ dynamic: true }));
 			logEmbed.setDescription(`**Uncached message edited in ${newMessage.channel}** [Jump to Message](${newMessage.url})`);
 			logEmbed.addField('After', charLimit(newMessage.content, 1024));
