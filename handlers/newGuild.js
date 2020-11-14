@@ -1,10 +1,9 @@
 'use strict';
 
 const Discord = require('discord.js');
-const mongoose = require('mongoose');
 const Guild = require('../models/guild');
 
-const { config, defaults, emojis, colours } = require('../config');
+const { ids, defaults, colours } = require('../config');
 
 const recentlyCreated = new Set();
 const createdChannels = new Discord.Collection();
@@ -54,14 +53,8 @@ module.exports = async guild => {
 
 async function createGuild(guild) {
 	guild = await new Guild({
-		_id: mongoose.Types.ObjectId(),
 		guildID: guild.id,
 		guildName: guild.name,
-		config: {
-			prefix: config.prefix,
-			dateOutput: config.dateOutput,
-			prontoLogo: config.prontoLogo,
-		},
 		ids: {
 			serverID: guild.id,
 			debugID: await findChannel(defaults.debug, guild),
@@ -76,29 +69,6 @@ async function createGuild(guild) {
 			exampleVoiceID: await findChannel(defaults.exampleVoice, guild, 'voice'),
 			everyoneID: guild.roles.everyone.id,
 			visitorID: findRole(defaults.visitor, guild),
-			administratorID: '',
-			trainingIDs: '',
-			formations: [],
-			channelPairs: [],
-		},
-		cmds: {},
-		emojis: {
-			success: {
-				name: emojis.success.name,
-				URL: emojis.success.URL,
-			},
-			error: {
-				name: emojis.error.name,
-				URL: emojis.error.URL,
-			},
-		},
-		colours: {
-			default: colours.default,
-			pronto: colours.pronto,
-			leave: colours.leave,
-			success: colours.success,
-			warn: colours.warn,
-			error: colours.error,
 		},
 	});
 
