@@ -68,8 +68,6 @@ async function createGuild(guild) {
 			lessonsID: await initChannel(defaults.lessons, guild, 'category'),
 			lessonInstructionsID: await initChannel(defaults.instructions, guild),
 			lessonPlansID: await initChannel(defaults.lessonPlans, guild),
-			exampleTextID: await initChannel(defaults.exampleText, guild),
-			exampleVoiceID: await initChannel(defaults.exampleVoice, guild, 'voice'),
 			everyoneID: guild.roles.everyone.id,
 			visitorID: findRole(defaults.visitor, guild),
 		},
