@@ -36,6 +36,17 @@ exports.defaults = {
 		name: 'new-members',
 		desc: '**Introduce yourself!** You can ask us any questions you might have here, or just say hello!',
 	},
+	instructions: {
+		name: 'instructions',
+		get desc() {
+			const { bot } = require('./pronto');
+			return `Instructions on how to use <@!${bot.user.id}> to manage and action **lesson plans**.`;
+		},
+		get parent() {
+			const { defaults } = require('./config');
+			return defaults.lessons.name;
+		},
+	},
 	lessonPlans: {
 		name: 'lesson-plans',
 		desc: 'An archive of **completed** and **approved** lesson plans.',

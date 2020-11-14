@@ -26,29 +26,31 @@ module.exports = async guild => {
 	setTimeout(() => recentlyCreated.delete(guild.guildID), 15000);
 
 	const { bot } = require('../pronto');
-	const { overwriteCommands } = require('./');
+	const { lessonInstructions, overwriteCommands } = require('./');
 
-	guild = await createGuild(guild);
-	guild = await overwriteCommands({ id: guild.guildID });
+	let _guild = await createGuild(guild);
+	_guild = await overwriteCommands(guild);
 
-	if (createdChannels.some(chnlGuild => chnlGuild === guild.guildID)) {
+	lessonInstructions(_guild.ids.lessonInstructionsID, guild);
+
+	if (createdChannels.some(guildID => guildID === guild.id)) {
 		const { dtg } = require('../modules');
 
 		const prontoCategory = bot.channels.cache.find(chnl => chnl.type === 'category' && chnl.name === defaults.pronto.name);
-		const logChannel = bot.channels.cache.get(guild.ids.logID);
+		const logChannel = bot.channels.cache.get(_guild.ids.logID);
 
 		const createdEmbed = new Discord.MessageEmbed()
 			.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }))
 			.setColor(colours.pronto)
 			.setDescription(`Initialised channel(s) in **${prontoCategory}**, feel free to move and/or rename them!`)
-			.addField('Created Channels', channelsOutput(createdChannels, guild))
+			.addField('Created Channels', channelsOutput(createdChannels, _guild))
 			.addField('More Information', 'To modify my configuration, please visit my dashboard.')
 			.setFooter(await dtg());
 
 		logChannel.send(createdEmbed).catch(error => console.error(error));
 	}
 
-	return guild;
+	return _guild;
 };
 
 async function createGuild(guild) {
@@ -57,16 +59,17 @@ async function createGuild(guild) {
 		guildName: guild.name,
 		ids: {
 			serverID: guild.id,
-			debugID: await findChannel(defaults.debug, guild),
-			logID: await findChannel(defaults.log, guild),
-			attendanceID: await findChannel(defaults.attendance, guild),
-			recruitingID: await findChannel(defaults.recruiting, guild),
-			newMembersID: await findChannel(defaults.newMembers, guild),
-			archivedID: await findChannel(defaults.archived, guild, 'category'),
-			lessonsID: await findChannel(defaults.lessons, guild, 'category'),
-			lessonPlansID: await findChannel(defaults.lessonPlans, guild),
-			exampleTextID: await findChannel(defaults.exampleText, guild),
-			exampleVoiceID: await findChannel(defaults.exampleVoice, guild, 'voice'),
+			debugID: await initChannel(defaults.debug, guild),
+			logID: await initChannel(defaults.log, guild),
+			attendanceID: await initChannel(defaults.attendance, guild),
+			recruitingID: await initChannel(defaults.recruiting, guild),
+			newMembersID: await initChannel(defaults.newMembers, guild),
+			archivedID: await initChannel(defaults.archived, guild, 'category'),
+			lessonsID: await initChannel(defaults.lessons, guild, 'category'),
+			lessonInstructionsID: await initChannel(defaults.instructions, guild),
+			lessonPlansID: await initChannel(defaults.lessonPlans, guild),
+			exampleTextID: await initChannel(defaults.exampleText, guild),
+			exampleVoiceID: await initChannel(defaults.exampleVoice, guild, 'voice'),
 			everyoneID: guild.roles.everyone.id,
 			visitorID: findRole(defaults.visitor, guild),
 		},
@@ -75,7 +78,7 @@ async function createGuild(guild) {
 	return await guild.save().catch(error => console.error(error));
 }
 
-async function findChannel(channel, guild, type) {
+async function initChannel(channel, guild, type) {
 	const { bot } = require('../pronto');
 
 	if (channel === defaults.debug && guild.id !== ids.defaultServer) return '';
