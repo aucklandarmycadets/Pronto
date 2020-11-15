@@ -10,7 +10,7 @@ module.exports = (dest, msg, chnl, debug) => {
 
 			console.error(error);
 
-			if (debug) embedScaffold(null, `Error sending direct message to ${dest}.`, colours.error, 'debug', 'More Information', support, js(error.stack));
-			else embedScaffold(chnl, `${dest} I can't send direct messages to you!`, colours.error, 'msg', 'More Information', support);
+			if (debug) embedScaffold(null, null, `Error sending direct message to ${dest}.`, colours.error, 'debug', 'More Information', support, js(error.stack));
+			else embedScaffold(null, chnl, `${dest} I can't send direct messages to you!`, colours.error, 'msg', 'More Information', support);
 		});
 };

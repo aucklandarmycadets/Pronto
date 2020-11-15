@@ -43,7 +43,7 @@ module.exports = async guild => {
 				msg.channel.bulkDelete(messages)
 					.catch(error => {
 						errorReact(msg);
-						embedScaffold(msg.channel, `${msg.author} Error purging ${purgeCount} messages.`, colours.error, 'msg');
+						embedScaffold(guild, msg.channel, `${msg.author} Error purging ${purgeCount} messages.`, colours.error, 'msg');
 						debugError(error, `Error purging ${purgeCount} messages in ${msg.channel}.`);
 					});
 			})

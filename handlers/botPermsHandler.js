@@ -17,14 +17,14 @@ module.exports = async (guild, changes) => {
 
 	const missingPermissions = [...new Set([...requiredPermissions].filter(value => !botPermissions.has(value)))];
 
-	if (!hasRequired) embedScaffold(null, 'I do not have my minimum permissions!', colours.error, 'debug', 'Missing Permissions', missingPermissions);
+	if (!hasRequired) embedScaffold(guild, null, 'I do not have my minimum permissions!', colours.error, 'debug', 'Missing Permissions', missingPermissions);
 
 	else if (changes) {
 		const requiredArray = requiredPermissions.toArray();
 
 		for (let i = 0; i < changes.length; i++) {
 			if (requiredArray.includes(changes[i])) {
-				embedScaffold(null, 'Permissions resolved.', colours.success, 'debug');
+				embedScaffold(guild, null, 'Permissions resolved.', colours.success, 'debug');
 				break;
 			}
 		}

@@ -5,5 +5,5 @@ module.exports = async (error, errorMsg, fieldTitle, fieldContent) => {
 	const { colours } = await require('../handlers/database')();
 
 	console.error(error);
-	embedScaffold(null, errorMsg, colours.error, 'debug', fieldTitle, fieldContent, js(error.stack));
+	embedScaffold(null, null, errorMsg, colours.error, 'debug', fieldTitle, fieldContent, js(error.stack));
 };

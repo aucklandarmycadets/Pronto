@@ -16,8 +16,8 @@ module.exports = {
 		console.info(`Logged in as ${bot.user.tag}!`);
 		bot.user.setActivity(`the radio net | ${await pCmd(help)}`, { type: 'LISTENING' });
 
-		if (!bot.guilds.cache.get(defaultServer)) return embedScaffold(dev, '**Error reaching the default server, check the config!**', colours.error, 'dev', 'Server ID', defaultServer);
-		embedScaffold(dev, '**Ready to go!**', colours.success, 'dev');
+		if (!bot.guilds.cache.get(defaultServer)) return embedScaffold(null, dev, '**Error reaching the default server, check the config!**', colours.error, 'dev', 'Server ID', defaultServer);
+		embedScaffold(null, dev, '**Ready to go!**', colours.success, 'dev');
 
 		botPermsHandler();
 	},

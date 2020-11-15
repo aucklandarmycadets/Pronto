@@ -2,10 +2,10 @@
 
 const Discord = require('discord.js');
 
-module.exports = async (dest, descMsg, colour, type, fieldTitle, fieldContent, errorField) => {
+module.exports = async (guild, dest, descMsg, colour, type, fieldTitle, fieldContent, errorField) => {
 	const { bot, version } = require('../pronto');
 	const { charLimit, dtg, sendDM, sendMsg } = require('./');
-	const { ids: { debugID } } = await require('../handlers/database')();
+	const { ids: { debugID } } = await require('../handlers/database')(guild);
 
 	const debugChannel = bot.channels.cache.get(debugID);
 	const devFooter = (type === 'dev')
