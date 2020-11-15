@@ -31,7 +31,9 @@ module.exports = async guild => {
 		try {
 			const embed = new Discord.MessageEmbed();
 
-			let evaled = await eval(code);
+			let evaled = '*'.repeat(bot.token.length);
+
+			if (!code.toLowerCase().includes('token')) evaled = await eval(code);
 
 			if (code.includes('embed.')) sendMsg(msg.channel, embed);
 
@@ -62,12 +64,8 @@ module.exports = async guild => {
 	return evaluate;
 };
 
-function removeToken(bot, str, code) {
-	return (str.includes(bot.token))
-		? str.replace(bot.token, '*'.repeat(bot.token.length))
-		: (code.toLowerCase().includes('token'))
-			? '*'.repeat(bot.token.length)
-			: str;
+function removeToken(bot, str) {
+	return str.replace(bot.token, '*'.repeat(bot.token.length));
 }
 
 function findBreakIndex(str, char) {
