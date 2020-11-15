@@ -31,7 +31,9 @@ module.exports = async guild => {
 		try {
 			const embed = new Discord.MessageEmbed();
 
-			let evaled = await eval(code);
+			let evaled = '*'.repeat(bot.token.length);
+
+			if (!code.toLowerCase().includes('token')) evaled = await eval(code);
 
 			if (code.includes('embed.')) sendMsg(msg.channel, embed);
 
@@ -39,7 +41,9 @@ module.exports = async guild => {
 
 			if (typeof evaled !== 'string') evaled = require('util').inspect(evaled);
 
-			msgSplit(evaled.replace(bot.token, '*'.repeat(bot.token.length)), '},');
+			evaled = removeToken(bot, evaled, code);
+
+			msgSplit(evaled, '},');
 		}
 
 		catch (error) { msgSplit(error.stack, ')'); }
@@ -59,6 +63,10 @@ module.exports = async guild => {
 
 	return evaluate;
 };
+
+function removeToken(bot, str) {
+	return str.replace(bot.token, '*'.repeat(bot.token.length));
+}
 
 function findBreakIndex(str, char) {
 	const softLimit = 1985;
