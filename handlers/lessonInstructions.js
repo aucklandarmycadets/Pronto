@@ -16,11 +16,11 @@ module.exports = async (id, guild) => {
 		\`${await pCmd(lesson)} add\` - Add a resource to a lesson.
 		\`${await pCmd(lesson)} remove\` - Remove a resource from a lesson.
 		\`${await pCmd(lesson)} submit\` - Submit a lesson for approval.
-		\`${await pCmd(seen)}\` - ${seen.desc}.
+		\`${await pCmd(seen)}\` - ${seen.desc}
 	`;
 
 	const staffCmds = `
-		\`${await pCmd(assign)}\` - ${assign.desc}.
+		\`${await pCmd(assign)}\` - ${assign.desc}
 		\`${await pCmd(approve)}\` - ${approve.desc}
 	`;
 
