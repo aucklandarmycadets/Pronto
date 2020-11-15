@@ -39,7 +39,9 @@ module.exports = async guild => {
 
 			if (typeof evaled !== 'string') evaled = require('util').inspect(evaled);
 
-			msgSplit(evaled.replace(bot.token, '*'.repeat(bot.token.length)), '},');
+			evaled = removeToken(bot, evaled, code);
+
+			msgSplit(evaled, '},');
 		}
 
 		catch (error) { msgSplit(error.stack, ')'); }
@@ -59,6 +61,14 @@ module.exports = async guild => {
 
 	return evaluate;
 };
+
+function removeToken(bot, str, code) {
+	return (str.includes(bot.token))
+		? str.replace(bot.token, '*'.repeat(bot.token.length))
+		: (code.toLowerCase().includes('token'))
+			? '*'.repeat(bot.token.length)
+			: str;
+}
 
 function findBreakIndex(str, char) {
 	const softLimit = 1985;
