@@ -39,33 +39,41 @@ module.exports = async guild => {
 
 			if (typeof evaled !== 'string') evaled = require('util').inspect(evaled);
 
-			msgSplit(evaled, '},');
+			msgSplit(evaled.replace(bot.token, '*'.repeat(bot.token.length)), '},');
 		}
 
 		catch (error) { msgSplit(error.stack, ')'); }
 
 		function msgSplit(str, char) {
-			const lim = Math.ceil(str.length / 1985);
+			while (str) {
+				const breakAt = findBreakIndex(str, char);
 
-			for (let i = 0; i < lim; i++) {
-				const breakAt = (str.length > 1985)
-					? (str.lastIndexOf(char, 1985) !== -1)
-						? str.lastIndexOf(char, 1985) + char.length
-						: (str.lastIndexOf(' ', 1985) !== -1)
-							? str.lastIndexOf(' ', 1985) + 1
-							: 1985
-					: 1985;
+				(codeBlock)
+					? sendMsg(msg.channel, js(str.substr(0, breakAt)))
+					: sendMsg(msg.channel, str.substr(0, breakAt));
 
-				(str !== 'Promise { <pending> }')
-					? (codeBlock)
-						? sendMsg(msg.channel, js(str.slice(0, breakAt)))
-						: sendMsg(msg.channel, str.slice(0, breakAt))
-					: null;
-
-				str = str.slice(breakAt, str.length);
+				str = str.substr(breakAt);
 			}
 		}
 	};
 
 	return evaluate;
 };
+
+function findBreakIndex(str, char) {
+	const softLimit = 1985;
+
+	const charIndex = str.lastIndexOf(char, softLimit);
+	const hasChar = charIndex !== -1;
+
+	const spaceIndex = str.lastIndexOf(' ', softLimit);
+	const hasSpace = spaceIndex !== -1;
+
+	return (str.length > softLimit)
+		? (hasChar)
+			? charIndex + char.length
+			: (hasSpace)
+				? spaceIndex + 1
+				: softLimit
+		: softLimit;
+}

@@ -46,7 +46,7 @@ module.exports = async guild => {
 			helpEmbed.setDescription(command.help);
 
 			if (msg.guild) {
-				helpEmbed.setFooter(`Requested by ${msg.member.displayName}`);
+				helpEmbed.setFooter(`Requested by ${msg.member.displayName}`, msg.author.displayAvatarURL({ dynamic: true }));
 				return sendMsg(msg.channel, helpEmbed);
 			}
 
