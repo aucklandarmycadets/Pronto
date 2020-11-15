@@ -53,7 +53,7 @@ module.exports = async guild => {
 			})
 			.catch(error => {
 				errorReact(msg);
-				embedScaffold(msg.channel, `${msg.author} Error archiving ${channel}.`, colours.error, 'msg');
+				embedScaffold(guild, msg.channel, `${msg.author} Error archiving ${channel}.`, colours.error, 'msg');
 				debugError(error, `Error archiving ${channel}.`);
 			});
 	};

@@ -19,7 +19,7 @@ module.exports = async guild => {
 
 		if (!msg.guild && !server.available) {
 			errorReact(msg);
-			return embedScaffold(msg.author, 'There was an error reaching the server, please try again later.', colours.error, 'dm');
+			return embedScaffold(guild, msg.author, 'There was an error reaching the server, please try again later.', colours.error, 'dm');
 		}
 
 		const memberRoles = (msg.guild)

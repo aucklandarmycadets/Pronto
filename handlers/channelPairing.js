@@ -21,7 +21,7 @@ module.exports = async (oldState, newState) => {
 	for (let i = 0; i < channelPairs.length; i++) {
 		const textChannel = newState.guild.channels.cache.get(channelPairs[i].text);
 		if (!textChannel) {
-			embedScaffold(null, 'Invalid text channel ID', colours.error, 'debug', null, null, js(`#${channelPairs[i].text}`));
+			embedScaffold(newState.guild, null, 'Invalid text channel ID', colours.error, 'debug', null, null, js(`#${channelPairs[i].text}`));
 			continue;
 		}
 
