@@ -5,15 +5,12 @@ const { getRoleError } = require('../modules');
 module.exports = async (msg, cmd) => {
 	const { bot } = require('../pronto');
 	const { permissionsCheck } = require('./');
-	const { ids: { serverID } } = await require('../handlers/database')(msg.guild);
 
-	const server = bot.guilds.cache.get(serverID);
+	const server = bot.guilds.cache.find(guild => guild.members.cache.has(msg.author.id));
 
 	const member = (msg.guild)
 		? msg.member
 		: await server.members.fetch(msg.author.id);
-
-	if (!member) return 'err';
 
 	const memberRoles = member.roles.cache;
 

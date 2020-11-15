@@ -7,8 +7,16 @@ module.exports = async msg => {
 	if (msg.author.bot) return;
 
 	const { bot } = require('../pronto');
+	const { ids: { devID } } = require('../config');
 	const { updateCommands, permissionsHandler } = require('./');
-	const { config: { prefix }, cmds: { help } } = await require('./database')(msg.guild);
+
+	const guilds = bot.guilds.cache.filter(_guild => _guild.members.cache.has(msg.author.id));
+
+	if (!msg.guild && guilds.size !== 1 && msg.author.id !== devID) return dmCmdError(msg, 'guilds');
+
+	const guild = msg.guild || guilds.first();
+
+	const { config: { prefix }, cmds: { help } } = await require('./database')(guild);
 
 	const args = msg.content.split(/ +/);
 
@@ -17,10 +25,10 @@ module.exports = async msg => {
 
 	if (!hasPrefix && (!hasBotMention || args.length === 1)) return;
 
-	await updateCommands(msg.guild);
+	await updateCommands(guild);
 
 	bot.commands = new Discord.Collection();
-	const commands = await require('../commands')(msg.guild);
+	const commands = await require('../commands')(guild);
 
 	Object.keys(commands).map(key => {
 		bot.commands.set(commands[key].cmd, commands[key]);
@@ -56,6 +64,6 @@ module.exports = async msg => {
 	}
 
 	catch (error) {
-		debugError(error, `Error executing ${await pCmd(cmd, msg.guild)}`);
+		debugError(error, `Error executing ${await pCmd(cmd, guild)}`);
 	}
 };
