@@ -9,9 +9,13 @@ module.exports = async (msg, cmd) => {
 
 	const server = bot.guilds.cache.get(serverID);
 
-	const memberRoles = (msg.guild)
-		? msg.member.roles.cache
-		: await server.members.fetch(msg.author.id).then(member => member.roles.cache);
+	const member = (msg.guild)
+		? msg.member
+		: await server.members.fetch(msg.author.id);
+
+	if (!member) return 'err';
+
+	const memberRoles = member.roles.cache;
 
 	return (memberRoles)
 		? permissionsCheck(memberRoles, msg.author.id, cmd)
