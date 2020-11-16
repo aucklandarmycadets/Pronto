@@ -37,11 +37,11 @@ async function process(cmds, database) {
 	const procCmds = {};
 	const uniqueKeys = ['roles', 'noRoles', 'devOnly', 'allowDM', 'showList'];
 
-	for (const [key, value] of Object.entries(cmds)) {
+	for (const [cmd, cmdObj] of Object.entries(cmds)) {
 		for (let i = 0; i < uniqueKeys.length; i++) {
-			if (database.cmds[value]) delete value[uniqueKeys[i]];
+			if (database.cmds[cmd]) delete cmdObj[uniqueKeys[i]];
 		}
-		procCmds[key] = value;
+		procCmds[cmd] = cmdObj;
 	}
 
 	return merge(database.cmds, procCmds);
