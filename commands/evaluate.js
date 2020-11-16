@@ -39,11 +39,11 @@ module.exports = async guild => {
 
 			if (silent) return;
 
-			if (typeof evaled !== 'string') evaled = require('util').inspect(evaled);
+			if (typeof evaled !== 'string') evaled = convertToString(evaled);
 
-			evaled = removeToken(bot, evaled, code);
+			evaled = removeSensitive(bot, evaled, code);
 
-			msgSplit(evaled, '},');
+			msgSplit(evaled.replace(/```/g, ''), '},');
 		}
 
 		catch (error) { msgSplit(error.stack, ')'); }
@@ -64,8 +64,19 @@ module.exports = async guild => {
 	return evaluate;
 };
 
-function removeToken(bot, str) {
-	return str.replace(bot.token, '*'.repeat(bot.token.length));
+function convertToString(obj) {
+	return require('util').inspect(obj);
+}
+
+function removeSensitive(bot, str) {
+	const githook = convertToString(process.env.githook);
+	const sensitives = [bot.token, githook.substr(1, githook.length - 2)];
+
+	for (let i = 0; i < sensitives.length; i++) {
+		str = str.replace(new RegExp(sensitives[i], 'g'), '*'.repeat(sensitives[i].length));
+	}
+
+	return str;
 }
 
 function findBreakIndex(str, char) {
