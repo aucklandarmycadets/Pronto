@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 
 const lessonSchema = mongoose.Schema({
-	_id: { type: mongoose.Schema.Types.ObjectId, default: mongoose.Types.ObjectId() },
+	_id: mongoose.Schema.Types.ObjectId,
 	lessonID: String,
 	lessonName: String,
 	instructors: Object,
