@@ -1,6 +1,7 @@
 'use strict';
 
 const Discord = require('discord.js');
+const mongoose = require('mongoose');
 const Guild = require('../models/guild');
 
 const { defaults, colours } = require('../config');
@@ -56,6 +57,7 @@ module.exports = async guild => {
 
 async function createGuild(guild) {
 	guild = await new Guild({
+		_id: mongoose.Types.ObjectId(),
 		guildID: guild.id,
 		guildName: guild.name,
 		ids: {

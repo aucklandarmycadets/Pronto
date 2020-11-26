@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const { config, emojis, colours } = require('../config');
 
 const guildSchema = mongoose.Schema({
-	_id: { type: mongoose.Schema.Types.ObjectId, default: mongoose.Types.ObjectId() },
+	_id: mongoose.Schema.Types.ObjectId,
 	guildID: String,
 	guildName: String,
 	config: {

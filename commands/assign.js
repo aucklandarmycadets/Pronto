@@ -1,6 +1,7 @@
 'use strict';
 
 const Discord = require('discord.js');
+const mongoose = require('mongoose');
 const Lesson = require('../models/lesson');
 
 const { checkURL, cmdError, debugError, delMsg, dtg, outputResources, processResources, promptEmbed, sendDM, sendMsg, successReact, titleCase } = require('../modules');
@@ -167,6 +168,7 @@ module.exports = async guild => {
 			});
 
 			const lesson = await new Lesson({
+				_id: mongoose.Types.ObjectId(),
 				lessonID: channelID,
 				lessonName: lessonName,
 				instructors: instructors,
