@@ -65,11 +65,14 @@ module.exports = async guild => {
 		else createRegister();
 
 		function createRegister(chnlMsg, attMsg) {
-			const register = args.join(' ');
+			const content = args.join(' ').split('\n');
+			const title = content.shift();
+			const register = content.join('\n');
 
 			const attendanceEmbed = new Discord.MessageEmbed()
 				.setColor(formationColour)
 				.setAuthor(formationName, msg.guild.iconURL())
+				.setTitle(title)
 				.setDescription(register)
 				.setFooter('Use the reactions below to confirm or cancel.');
 
