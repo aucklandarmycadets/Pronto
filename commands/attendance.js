@@ -39,8 +39,14 @@ module.exports = async guild => {
 
 			if (args.length === 0) return cmdError(msg, 'You must enter a message.', attendance.error);
 
-			const filterBy = message => {
-				try { return message.embeds[0].author.name.includes(formationName); }
+			const filter = _msg => {
+				try {
+					const matchesTitle = _msg.embeds[0].title.toLowerCase() === args.join(' ').split('\n')[0].toLowerCase();
+					const matchesFormation = _msg.embeds[0].author.name.includes(formationName);
+
+					return matchesTitle && matchesFormation;
+				}
+
 				catch { null; }
 			};
 
@@ -49,13 +55,13 @@ module.exports = async guild => {
 
 			await msg.channel.messages.fetch()
 				.then(messages => {
-					chnlMsg = messages.filter(filterBy).first();
+					chnlMsg = messages.filter(filter).first();
 				})
 				.catch(error => debugError(error, `Error fetching messages in ${msg.channel}.`));
 
 			await attendanceChannel.messages.fetch()
 				.then(messages => {
-					attMsg = messages.filter(filterBy).first();
+					attMsg = messages.filter(filter).first();
 				})
 				.catch(error => debugError(error, `Error fetching messages in ${msg.channel}.`));
 
@@ -86,10 +92,7 @@ module.exports = async guild => {
 						if (chnlMsg) {
 							attendanceEmbed.setFooter(`Last updated at ${await dtg()}`);
 
-							const findFormation = role => role.name === formationName;
-							const formationDisplay = msg.guild.roles.cache.find(findFormation) || `**${formationName}**`;
-
-							embedScaffold(guild, msg.channel, `${msg.author} Successfully updated attendance for ${formationDisplay}.`, colours.success, 'msg');
+							embedScaffold(guild, msg.channel, `${msg.author} Successfully updated attendance for **${title}**.`, colours.success, 'msg');
 
 							chnlMsg.edit(attendanceEmbed);
 							attMsg.edit(attendanceEmbed);
