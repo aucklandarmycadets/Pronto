@@ -24,9 +24,16 @@ module.exports = async guild => {
 
 		args = args.filter(arg => !arg.startsWith('-'));
 
+		if (args[0].includes('```')) {
+			const _args = args.join(' ').split('\n');
+			args = _args.slice(1, _args.length - 1);
+		}
+
 		if (args.length === 0) return cmdError(msg, 'You must enter something to evaluate.', evaluate.error);
 
 		const code = args.join(' ');
+
+		console.log(code);
 
 		try {
 			const embed = new Discord.MessageEmbed();
