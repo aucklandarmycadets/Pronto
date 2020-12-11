@@ -33,8 +33,6 @@ module.exports = async guild => {
 
 		const code = args.join(' ');
 
-		console.log(code);
-
 		try {
 			const embed = new Discord.MessageEmbed();
 
