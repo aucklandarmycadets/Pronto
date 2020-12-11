@@ -92,7 +92,7 @@ module.exports = async guild => {
 						if (chnlMsg) {
 							attendanceEmbed.setFooter(`Last updated at ${await dtg()}`);
 
-							embedScaffold(guild, msg.channel, `${msg.author} Successfully updated attendance for **${title}**.`, colours.success, 'msg');
+							embedScaffold(guild, msg.channel, `${msg.author} Successfully updated attendance for **[${title}](${chnlMsg.url})**.`, colours.success, 'msg');
 
 							chnlMsg.edit(attendanceEmbed);
 							attMsg.edit(attendanceEmbed);
