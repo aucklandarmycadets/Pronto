@@ -254,7 +254,7 @@ module.exports = async guild => {
 				return formatList({
 					'Aliases': pAls(this),
 					'Description': this.desc,
-					'Usage': `\n${pCmd(this)} <message>\n${pCmd(this)} update <message>`,
+					'Usage': `\n${pCmd(this)} <message>`,
 					'Allowed Roles': rolesOutput(this.roles),
 				});
 			},
