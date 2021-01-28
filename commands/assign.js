@@ -2,6 +2,10 @@
 
 const Discord = require('discord.js');
 const mongoose = require('mongoose');
+
+let chrono = require('chrono-node');
+chrono = new chrono.Chrono(chrono.en.createConfiguration(false, true));
+
 const Lesson = require('../models/lesson');
 
 const { checkURL, cmdError, debugError, delMsg, dtg, outputResources, processResources, promptEmbed, sendDM, sendMsg, successReact, titleCase } = require('../modules');
@@ -47,13 +51,13 @@ module.exports = async guild => {
 				prompt: 'What is the name of the lesson?',
 				type: 'txt',
 			},
-			dueDate: {
+			dueTimestamp: {
 				prompt: 'When is the lesson plan due?',
-				type: 'txt',
+				type: 'date',
 			},
-			lessonDate: {
+			lessonTimestamp: {
 				prompt: 'When will the lesson be taught?',
-				type: 'txt',
+				type: 'date',
 			},
 			resources: {
 				prompt: 'Provide any resources for the lesson if applicable.\n\nReply `done` when finished.',
@@ -75,7 +79,10 @@ module.exports = async guild => {
 			return sendDM(msg.author, cancelEmbed, null, true);
 		}
 
-		const { lessonName, dueDate, lessonDate, resources } = input;
+		const { lessonName, dueTimestamp, lessonTimestamp, resources } = input;
+
+		const dueDate = await dtg(dueTimestamp);
+		const lessonDate = await dtg(lessonTimestamp);
 
 		const lessonEmbed = new Discord.MessageEmbed()
 			.setTitle(`Lesson Assignment - ${lessonName}`)
@@ -173,7 +180,9 @@ module.exports = async guild => {
 				lessonName: lessonName,
 				instructors: instructors,
 				dueDate: dueDate,
+				dueTimestamp: dueTimestamp,
 				lessonDate: lessonDate,
+				lessonTimestamp: lessonTimestamp,
 				assignedResources: outputResources(resources),
 			});
 
@@ -188,8 +197,8 @@ async function inputs(msg, needed, colours) {
 	const input = {};
 
 	for (const [key, value] of Object.entries(needed)) {
-		if (value.type === 'txt') input[key] = await msgPrompt(promptEmbed(value.prompt, colours.pronto), msg, value.type, colours);
-		else input[key] = await whileLoop(promptEmbed(value.prompt, colours.pronto), msg, value.type, colours);
+		if (value.type === 'att') input[key] = await whileLoop(promptEmbed(value.prompt, colours.pronto), msg, value.type, colours);
+		else input[key] = await msgPrompt(promptEmbed(value.prompt, colours.pronto), msg, value.type, colours);
 
 		try {
 			if (input[key].toLowerCase() === 'restart') return await inputs(msg, needed, colours);
@@ -218,10 +227,22 @@ async function msgPrompt(prompt, msg, type, colours) {
 	const reply = promises[1].first();
 
 	try {
-		if (type === 'txt') {
+		if (type === 'txt' || type === 'date') {
 			if (!reply.content) {
 				sendDM(msg.author, promptEmbed('You must enter something!', colours.error), null, true);
 				throw await msgPrompt(prompt, msg, type, colours);
+			}
+
+			if (type === 'date') {
+				const parsedDate = chrono.parseDate(reply.content);
+
+				if (!parsedDate) {
+					sendDM(msg.author, reply.content);
+					sendDM(msg.author, promptEmbed('I don\'t recognise that date, please try again.', colours.error), null, true);
+					throw await msgPrompt(prompt, msg, type, colours);
+				}
+
+				throw parsedDate.setHours(18, 0, 0, 0).valueOf();
 			}
 
 			throw titleCase(reply.content);
