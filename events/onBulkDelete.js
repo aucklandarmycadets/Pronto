@@ -20,7 +20,7 @@ module.exports = {
 		const logEmbed = new Discord.MessageEmbed();
 
 		if (!lastMsg) {
-			logEmbed.setAuthor(msg.guild.name, msg.guild.iconURL());
+			logEmbed.setAuthor(msg.guild.name, msg.guild.iconURL({ dynamic: true }));
 			logEmbed.setDescription(`**${deleteCount} messages bulk deleted in ${msg.channel}**`);
 		}
 

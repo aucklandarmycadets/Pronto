@@ -12,7 +12,7 @@ module.exports = {
 
 		const log = bot.channels.cache.get(logID);
 		const logEmbed = new Discord.MessageEmbed()
-			.setAuthor(role.guild.name, role.guild.iconURL())
+			.setAuthor(role.guild.name, role.guild.iconURL({ dynamic: true }))
 			.setFooter(`ID: ${role.id} | ${await dtg()}`);
 
 		if (event === 'roleCreate') {

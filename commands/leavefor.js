@@ -46,7 +46,7 @@ module.exports = async guild => {
 		const dmEmbed = new Discord.MessageEmbed()
 			.setTitle(leaveForEmbedTitle)
 			.setColor(colours.leave)
-			.setAuthor(msg.guild.name, msg.guild.iconURL())
+			.setAuthor(msg.guild.name, msg.guild.iconURL({ dynamic: true }))
 			.setDescription(`Hi ${msg.author}, your submission of leave for ${absentee} has been received.`)
 			.addField('Details', capitalise(args.join(' ')))
 			.setFooter(await dtg());
@@ -54,7 +54,7 @@ module.exports = async guild => {
 		const absenteeEmbed = new Discord.MessageEmbed()
 			.setTitle(leaveForEmbedTitle)
 			.setColor(colours.leave)
-			.setAuthor(msg.guild.name, msg.guild.iconURL())
+			.setAuthor(msg.guild.name, msg.guild.iconURL({ dynamic: true }))
 			.setDescription(`${msg.author} has submitted leave for you in ${msg.channel}.`)
 			.addField('Details', capitalise(args.join(' ')))
 			.setFooter(`Reply with '${await pCmd(help)} ${leave.cmd}' to learn how to request leave for yourself.`);
