@@ -48,7 +48,7 @@ module.exports = async guild => {
 
 			const attendanceEmbed = new Discord.MessageEmbed()
 				.setColor(formationColour)
-				.setAuthor(formationName, msg.guild.iconURL())
+				.setAuthor(formationName, msg.guild.iconURL({ dynamic: true }))
 				.setTitle(title)
 				.setDescription(register)
 				.setFooter('Use the reactions below to confirm or cancel.');
@@ -56,7 +56,7 @@ module.exports = async guild => {
 			sendDM(msg.author, attendanceEmbed, msg.channel)
 				.then(dm => {
 					const sendAttendance = async () => {
-						attendanceEmbed.setAuthor(`${formationName} (${msg.member.displayName})`, msg.guild.iconURL());
+						attendanceEmbed.setAuthor(`${formationName} (${msg.member.displayName})`, msg.guild.iconURL({ dynamic: true }));
 						attendanceEmbed.setFooter(await dtg());
 
 

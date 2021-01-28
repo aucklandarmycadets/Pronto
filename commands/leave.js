@@ -28,7 +28,7 @@ module.exports = async guild => {
 		const dmEmbed = new Discord.MessageEmbed()
 			.setTitle(leaveEmbedTitle)
 			.setColor(colours.leave)
-			.setAuthor(msg.guild.name, msg.guild.iconURL())
+			.setAuthor(msg.guild.name, msg.guild.iconURL({ dynamic: true }))
 			.setDescription(`Hi ${msg.author}, your submission of leave has been received.`)
 			.addField('Details', capitalise(args.join(' ')))
 			.setFooter(await dtg());

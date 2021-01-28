@@ -15,7 +15,7 @@ module.exports = {
 			.setColor(colours.error);
 
 		if (msg.partial && msg.guild) {
-			logEmbed.setAuthor(msg.guild.name, msg.guild.iconURL());
+			logEmbed.setAuthor(msg.guild.name, msg.guild.iconURL({ dynamic: true }));
 			logEmbed.setDescription(`**Uncached message deleted in ${msg.channel}**`);
 			logEmbed.setFooter(`ID: ${msg.id} | ${await dtg()}`);
 		}

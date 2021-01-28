@@ -1,10 +1,11 @@
 'use strict';
 
+const Guild = require('../models/guild');
+
 const { ids: { defaultServer } } = require('../config');
 const { merge } = require('../modules');
 
 module.exports = async (guild, changes) => {
-	const Guild = require('../models/guild');
 	const { newGuild } = require('./');
 
 	const id = (guild)

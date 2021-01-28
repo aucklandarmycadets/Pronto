@@ -47,14 +47,14 @@ module.exports = {
 
 				const attendanceEmbed = new Discord.MessageEmbed(reaction.message.embeds[0])
 					.setTitle(`${title} (Updated)`)
-					.setAuthor(db.formation, reaction.message.guild.iconURL())
+					.setAuthor(db.formation, reaction.message.guild.iconURL({ dynamic: true }))
 					.setDescription(register)
 					.setFooter('Use the reactions below to confirm or cancel.');
 
 				sendDM(user, attendanceEmbed, reaction.message.channel)
 					.then(dm => {
 						const sendAttendance = async () => {
-							attendanceEmbed.setAuthor(`${db.formation} (${member.displayName})`, reaction.message.guild.iconURL());
+							attendanceEmbed.setAuthor(`${db.formation} (${member.displayName})`, reaction.message.guild.iconURL({ dynamic: true }));
 							attendanceEmbed.setFooter(`Last updated at ${await dtg()}`);
 
 							attendanceMessage.edit(attendanceEmbed);
