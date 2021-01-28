@@ -10,6 +10,7 @@ const guildSchema = mongoose.Schema({
 	config: {
 		prefix: { type: String, default: config.prefix },
 		dateOutput: { type: String, default: config.dateOutput },
+		shortDate: { type: String, default: config.shortDate },
 		prontoLogo: { type: String, default: config.prontoLogo },
 	},
 	ids: {
