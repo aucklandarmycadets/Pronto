@@ -1,6 +1,6 @@
 {
   "name": "pronto",
-  "version": "4.1.6",
+  "version": "4.2.0",
   "description": "A Discord bot developed for the City of Auckland Cadet Unit.",
   "main": "pronto.js",
   "scripts": {
@@ -21,6 +21,7 @@
     "dateformat": "^3.0.3",
     "discord.js": "^12.4.1",
     "dotenv": "^8.2.0",
-    "mongoose": "^5.10.11"
+    "mongoose": "^5.10.11",
+    "node-cron": "^2.0.3"
   }
 }

@@ -118,9 +118,9 @@ module.exports = async guild => {
 							lessonEmbed.setFooter(await dtg());
 
 							if (numMemberMentions === 1) lessonEmbed.setAuthor(memberMentions.first().displayName, memberMentions.first().user.displayAvatarURL({ dynamic: true }));
-							else lessonEmbed.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }));
+							else lessonEmbed.setAuthor(guild.name, guild.iconURL({ dynamic: true }));
 
-							sendMsg(chnl, lessonEmbed);
+							await sendMsg(chnl, lessonEmbed);
 							unsubmittedLessons(guild);
 
 							const successEmoji = msg.guild.emojis.cache.find(emoji => emoji.name === emojis.success.name);

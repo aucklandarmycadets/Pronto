@@ -12,6 +12,8 @@ const guildSchema = mongoose.Schema({
 		dateOutput: { type: String, default: config.dateOutput },
 		shortDate: { type: String, default: config.shortDate },
 		prontoLogo: { type: String, default: config.prontoLogo },
+		lessonCron: { type: String, default: config.lessonCron },
+		lessonReminders: { type: Boolean, default: false },
 	},
 	ids: {
 		serverID: String,

@@ -2,7 +2,7 @@
 
 const { ids: { defaultServer, devID } } = require('../config');
 const { embedScaffold, pCmd } = require('../modules');
-const { botPermsHandler, unsubmittedLessons } = require('../handlers');
+const { botPermsHandler, lessonReminders, unsubmittedLessons } = require('../handlers');
 
 module.exports = {
 	events: ['ready'],
@@ -22,6 +22,7 @@ module.exports = {
 		bot.guilds.cache.each(guild => {
 			botPermsHandler(guild);
 			unsubmittedLessons(guild);
+			lessonReminders(guild);
 		});
 	},
 };
