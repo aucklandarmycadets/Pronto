@@ -37,11 +37,11 @@ exports.defaults = {
 		name: 'new-members',
 		desc: '**Introduce yourself!** You can ask us any questions you might have here, or just say hello!',
 	},
-	instructions: {
-		name: 'instructions',
+	reference: {
+		name: 'reference',
 		get desc() {
 			const { bot } = require('./pronto');
-			return `Instructions on how to use <@!${bot.user.id}> to manage and action **lesson plans**.`;
+			return `Reference channel for <@!${bot.user.id}>'s **lesson plans** feature set.`;
 		},
 		get parent() {
 			const { defaults } = require('./config');

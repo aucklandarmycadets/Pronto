@@ -22,7 +22,7 @@ const guildSchema = mongoose.Schema({
 		newMembersID: String,
 		archivedID: String,
 		lessonsID: String,
-		lessonInstructionsID: String,
+		lessonReferenceID: String,
 		lessonPlansID: String,
 		everyoneID: String,
 		visitorID: String,
