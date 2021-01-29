@@ -6,6 +6,7 @@ exports.config = {
 	dateOutput: 'HHMM "h" ddd, d mmm yy',
 	shortDate: 'd mmm yy',
 	prontoLogo: 'https://i.imgur.com/EzmJVyV.png',
+	lessonCron: '0 16 * * 3',
 };
 
 exports.ids = {
