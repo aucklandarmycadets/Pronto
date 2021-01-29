@@ -1,6 +1,6 @@
 'use strict';
 
-const { manageAttendance } = require('../handlers');
+const { manageAttendance, updateUnsubmitted } = require('../handlers');
 
 module.exports = {
 	events: ['messageReactionAdd'],
@@ -10,5 +10,6 @@ module.exports = {
 		if (reaction.partial) await reaction.fetch();
 
 		manageAttendance(reaction, user);
+		updateUnsubmitted(reaction, user);
 	},
 };

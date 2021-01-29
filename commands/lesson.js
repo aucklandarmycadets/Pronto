@@ -3,7 +3,7 @@
 const Discord = require('discord.js');
 
 const { checkURL, cmdError, debugError, delMsg, dtg, outputResources, processResources, promptEmbed, remove, rolesOutput, sendDM, sendMsg, successReact } = require('../modules');
-const { confirmation, findLesson } = require('../handlers');
+const { confirmation, findLesson, unsubmittedLessons } = require('../handlers');
 
 const awaitingConfirm = new Set();
 
@@ -217,6 +217,8 @@ module.exports = async guild => {
 					return confirmation(msg, dm, lessonSubmit, lessonCancelled);
 				});
 		}
+
+		unsubmittedLessons(guild);
 	};
 
 	return lesson;
