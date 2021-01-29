@@ -9,7 +9,7 @@ chrono = new chrono.Chrono(chrono.en.createConfiguration(false, true));
 const Lesson = require('../models/lesson');
 
 const { checkURL, cmdError, debugError, delMsg, dtg, outputResources, processResources, promptEmbed, sendDM, sendMsg, successReact, titleCase } = require('../modules');
-const { confirmation } = require('../handlers');
+const { confirmation, unsubmittedLessons } = require('../handlers');
 
 const recentlyAssigned = new Set();
 
@@ -121,6 +121,7 @@ module.exports = async guild => {
 							else lessonEmbed.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }));
 
 							sendMsg(chnl, lessonEmbed);
+							unsubmittedLessons(guild);
 
 							const successEmoji = msg.guild.emojis.cache.find(emoji => emoji.name === emojis.success.name);
 

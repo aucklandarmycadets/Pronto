@@ -2,7 +2,7 @@
 
 const { ids: { defaultServer, devID } } = require('../config');
 const { embedScaffold, pCmd } = require('../modules');
-const { botPermsHandler } = require('../handlers');
+const { botPermsHandler, unsubmittedLessons } = require('../handlers');
 
 module.exports = {
 	events: ['ready'],
@@ -19,6 +19,9 @@ module.exports = {
 		if (!bot.guilds.cache.get(defaultServer)) return embedScaffold(null, dev, '**Error reaching the default server, check the config!**', colours.error, 'dev', 'Server ID', defaultServer);
 		embedScaffold(null, dev, '**Ready to go!**', colours.success, 'dev');
 
-		botPermsHandler();
+		bot.guilds.cache.each(guild => {
+			botPermsHandler(guild);
+			unsubmittedLessons(guild);
+		});
 	},
 };

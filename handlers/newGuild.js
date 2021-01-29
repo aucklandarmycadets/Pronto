@@ -33,7 +33,7 @@ module.exports = async guild => {
 	let _guild = await createGuild(guild);
 	_guild = await overwriteCommands(guild);
 
-	lessonInstructions(_guild.ids.lessonInstructionsID, guild);
+	lessonInstructions(_guild.ids.lessonReferenceID, guild);
 
 	if (createdChannels.some(guildID => guildID === guild.id)) {
 		const { dtg } = require('../modules');
@@ -69,7 +69,7 @@ async function createGuild(guild) {
 			newMembersID: await initChannel(defaults.newMembers, guild),
 			archivedID: await initChannel(defaults.archived, guild, 'category'),
 			lessonsID: await initChannel(defaults.lessons, guild, 'category'),
-			lessonInstructionsID: await initChannel(defaults.instructions, guild),
+			lessonReferenceID: await initChannel(defaults.instructions, guild),
 			lessonPlansID: await initChannel(defaults.lessonPlans, guild),
 			everyoneID: guild.roles.everyone.id,
 			visitorID: findRole(defaults.visitor, guild),
