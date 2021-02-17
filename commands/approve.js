@@ -24,7 +24,19 @@ module.exports = async guild => {
 			else if (lesson.changed) throw 'There are currently unsubmitted changes.';
 		}
 
-		catch (error) { return cmdError(msg, error, approve.error); }
+		catch (error) {
+			if (user) {
+				const _msg = {
+					guild: msg.guild,
+					author: msg.guild.members.cache.get(user.id).user,
+					member: msg.guild.members.cache.get(user.id),
+					channel: msg.channel,
+					deleted: true,
+				};
+			}
+
+			return cmdError(_msg, error, approve.error);
+		}
 
 		const lessonPlansChnl = msg.guild.channels.cache.get(lessonPlansID);
 

@@ -8,6 +8,8 @@ module.exports = async msg => {
 	const server = bot.guilds.cache.get(serverID);
 	const successEmoji = server.emojis.cache.find(emoji => emoji.name === emojis.success.name);
 
+	if (msg.deleted) return;
+
 	msg.react(successEmoji).catch(error => {
 		try {
 			if (msg.guild) throw `Error reacting to [message](${msg.url}) in ${msg.channel}.`;
