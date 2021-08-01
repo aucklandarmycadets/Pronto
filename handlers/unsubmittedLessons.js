@@ -29,23 +29,26 @@ module.exports = async guild => {
 
 	else if (unsubmitted.length) {
 		for (const lesson of unsubmitted) {
-			const lessonChannel = guild.channels.cache.get(lesson.lessonID);
-			const lastMessage = await lessonChannel.messages.fetch(lessonChannel.lastMessageID);
-			const channelURL = lastMessage.url.split('/').slice(0, -1).join('/');
+			try {
+				const lessonChannel = guild.channels.cache.get(lesson.lessonID);
+				const lastMessage = await lessonChannel.messages.fetch(lessonChannel.lastMessageID);
+				const channelURL = lastMessage.url.split('/').slice(0, -1).join('/');
 
-			const dueString = `Due \`${dateFormat(lesson.dueTimestamp, shortDate)}\` — `;
+				const dueString = `Due \`${dateFormat(lesson.dueTimestamp, shortDate)}\` — `;
 
-			for (const instructor of Object.values(lesson.instructors)) {
-				const instructorMember = await guild.members.fetch(instructor.id);
+				for (const instructor of Object.values(lesson.instructors)) {
+					const instructorMember = await guild.members.fetch(instructor.id);
 
-				if (!instructorMember || !lessonChannel) continue;
+					if (!instructorMember || !lessonChannel) continue;
 
-				const instructorField = unsubmittedEmbed.fields.find(field => field.name === instructorMember.displayName);
+					const instructorField = unsubmittedEmbed.fields.find(field => field.name === instructorMember.displayName);
 
-				(instructorField)
-					? instructorField.value += `${dueString} [${lesson.lessonName}](${channelURL})\n`
-					: unsubmittedEmbed.addField(instructorMember.displayName, `${dueString} [${lesson.lessonName}](${channelURL})\n`);
+					(instructorField)
+						? instructorField.value += `${dueString} [${lesson.lessonName}](${channelURL})\n`
+						: unsubmittedEmbed.addField(instructorMember.displayName, `${dueString} [${lesson.lessonName}](${channelURL})\n`);
+				}
 			}
+			catch { continue; }
 		}
 	}
 
