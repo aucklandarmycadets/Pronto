@@ -21,6 +21,8 @@ module.exports = async guild => {
 
 			else if (lesson.approved) throw 'This lesson has already been approved.';
 
+			else if (!lesson.submitted) throw 'This lesson has not yet been submitted by the instructor(s).';
+
 			else if (lesson.changed) throw 'There are currently unsubmitted changes.';
 		}
 
