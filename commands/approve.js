@@ -21,21 +21,24 @@ module.exports = async guild => {
 
 			else if (lesson.approved) throw 'This lesson has already been approved.';
 
+			else if (!lesson.submitted) throw 'This lesson has not yet been submitted by the instructor(s).';
+
 			else if (lesson.changed) throw 'There are currently unsubmitted changes.';
 		}
 
 		catch (error) {
-			if (user) {
-				const _msg = {
+			// If approve is triggered by reaction, ensure msg has the correct author properties (reacter, not submitter)
+			msg = (user)
+				? msg
+				: {
 					guild: msg.guild,
 					author: msg.guild.members.cache.get(user.id).user,
 					member: msg.guild.members.cache.get(user.id),
 					channel: msg.channel,
 					deleted: true,
 				};
-			}
 
-			return cmdError(_msg, error, approve.error);
+			return cmdError(msg, error, approve.error);
 		}
 
 		const lessonPlansChnl = msg.guild.channels.cache.get(lessonPlansID);

@@ -33,7 +33,7 @@ module.exports = async (oldState, newState) => {
 					const joinEmbed = new Discord.MessageEmbed()
 						.setColor(colours.success)
 						.setAuthor(newMember.displayName, newMember.user.displayAvatarURL({ dynamic: true }))
-						.setDescription(`${newMember} has joined the channel.`)
+						.setDescription(`**${newMember.displayName}** has joined the channel.`)
 						.setFooter(await dtg());
 					sendMsg(textChannel, joinEmbed);
 				})
@@ -48,7 +48,7 @@ module.exports = async (oldState, newState) => {
 					const leaveEmbed = new Discord.MessageEmbed()
 						.setColor(colours.error)
 						.setAuthor(newMember.displayName, newMember.user.displayAvatarURL({ dynamic: true }))
-						.setDescription(`${newMember} has left the channel.`)
+						.setDescription(`**${newMember.displayName}** has left the channel.`)
 						.setFooter(await dtg());
 					sendMsg(textChannel, leaveEmbed);
 

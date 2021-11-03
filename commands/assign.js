@@ -235,10 +235,12 @@ async function msgPrompt(prompt, msg, type, colours) {
 			}
 
 			if (type === 'date') {
+				if (reply.content.toLowerCase() === 'restart') throw 'restart';
+				else if (reply.content.toLowerCase() === 'cancel') throw 'cancel';
+
 				const parsedDate = chrono.parseDate(reply.content);
 
 				if (!parsedDate) {
-					sendDM(msg.author, reply.content);
 					sendDM(msg.author, promptEmbed('I don\'t recognise that date, please try again.', colours.error), null, true);
 					throw await msgPrompt(prompt, msg, type, colours);
 				}

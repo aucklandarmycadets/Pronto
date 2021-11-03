@@ -59,9 +59,6 @@ module.exports = async guild => {
 						attendanceEmbed.setAuthor(`${formationName} (${msg.member.displayName})`, msg.guild.iconURL({ dynamic: true }));
 						attendanceEmbed.setFooter(await dtg());
 
-
-						// / embedScaffold(guild, msg.channel, `${msg.author} Successfully updated attendance for **[${title}](${chnlMsg.url})**.`, colours.success, 'msg');
-
 						const attendanceChannel = bot.channels.cache.get(attendanceID);
 
 						const attendanceMessage = await sendMsg(attendanceChannel, attendanceEmbed);

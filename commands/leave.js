@@ -21,16 +21,18 @@ module.exports = async guild => {
 			.setTitle(leaveEmbedTitle)
 			.setColor(colours.leave)
 			.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
-			.setDescription(`${msg.author} has requested leave in ${msg.channel}`)
-			.addField('Details', capitalise(args.join(' ')))
+			.setDescription(`**${msg.member.displayName}** has requested leave in **#${msg.channel.name}**`)
+			.addField('Channel', msg.channel)
+			.addField('Remarks', capitalise(args.join(' ')))
 			.setFooter(await dtg());
 
 		const dmEmbed = new Discord.MessageEmbed()
 			.setTitle(leaveEmbedTitle)
 			.setColor(colours.leave)
 			.setAuthor(msg.guild.name, msg.guild.iconURL({ dynamic: true }))
-			.setDescription(`Hi ${msg.author}, your submission of leave has been received.`)
-			.addField('Details', capitalise(args.join(' ')))
+			.setDescription(`Hi **${msg.member.displayName}**, your submission of leave has been received.`)
+			.addField('Channel', msg.channel)
+			.addField('Remarks', capitalise(args.join(' ')))
 			.setFooter(await dtg());
 
 		sendMsg(attendanceChannel, attendanceEmbed);

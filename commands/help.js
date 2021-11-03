@@ -83,7 +83,7 @@ module.exports = async guild => {
 			helpEmbed.setFooter(`Developed by ${james.tag}`, james.avatarURL({ dynamic: true }));
 
 			if (msg.author.id !== devID) {
-				helpEmbed.addField('Note', `Only displaying commands available to ${msg.author}.`);
+				helpEmbed.addField('Note', `Only displaying commands available to **${(msg.guild) ? msg.member.displayName : msg.author}**.`);
 			}
 
 			sendDM(msg.author, helpEmbed, msg.channel);
