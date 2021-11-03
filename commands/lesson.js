@@ -91,7 +91,7 @@ module.exports = async guild => {
 				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
 				.setColor(colours.success)
 				.setTitle('Lesson Resources Updated')
-				.setDescription(`${msg.author} has added a new resource to this lesson.`)
+				.setDescription(`**${msg.member.displayName}** has added a new resource to this lesson.`)
 				.addField('Lesson', _lesson.lessonName)
 				.addField('Resources', outputResources(_lesson.submittedResources))
 				.setFooter(await dtg());
@@ -124,7 +124,7 @@ module.exports = async guild => {
 				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
 				.setColor(colours.success)
 				.setTitle('Lesson Resources Updated')
-				.setDescription(`${msg.author} has removed a resource from this lesson.`)
+				.setDescription(`**${msg.member.displayName}** has removed a resource from this lesson.`)
 				.addField('Lesson', _lesson.lessonName)
 				.addField('Resources', outputResources(_lesson.submittedResources))
 				.setFooter(await dtg());

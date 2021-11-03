@@ -32,7 +32,7 @@ module.exports = async guild => {
 
 		const seenEmbed = new Discord.MessageEmbed()
 			.setColor(colours.success)
-			.setDescription(`${instructor} has confirmed receipt of this lesson warning.`)
+			.setDescription(`**${guild.members.cache.get(instructor.id).displayName}** has confirmed receipt of this lesson warning.`)
 			.setFooter(await dtg());
 		sendMsg(msg.channel, seenEmbed);
 

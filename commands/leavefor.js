@@ -36,10 +36,11 @@ module.exports = async guild => {
 			.setTitle(leaveForEmbedTitle)
 			.setColor(colours.leave)
 			.setAuthor(absentee.displayName, absentee.user.displayAvatarURL({ dynamic: true }))
-			.setDescription(`${msg.author} has submitted leave for ${absentee} in ${msg.channel}`)
+			.setDescription(`**${msg.member.displayName}** has submitted leave for **${absentee.displayName}** in **#${msg.channel.name}**`)
 			.addFields(
 				{ name: 'Absentee', value: absentee },
-				{ name: 'Details', value: capitalise(args.join(' ')) },
+				{ name: 'Channel', value: msg.channel },
+				{ name: 'Remarks', value: capitalise(args.join(' ')) },
 			)
 			.setFooter(await dtg());
 
@@ -47,16 +48,18 @@ module.exports = async guild => {
 			.setTitle(leaveForEmbedTitle)
 			.setColor(colours.leave)
 			.setAuthor(msg.guild.name, msg.guild.iconURL({ dynamic: true }))
-			.setDescription(`Hi ${msg.author}, your submission of leave for ${absentee} has been received.`)
-			.addField('Details', capitalise(args.join(' ')))
+			.setDescription(`Hi **${msg.member.displayName}**, your submission of leave for **${absentee.displayName}** has been received.`)
+			.addField('Channel', msg.channel)
+			.addField('Remarks', capitalise(args.join(' ')))
 			.setFooter(await dtg());
 
 		const absenteeEmbed = new Discord.MessageEmbed()
 			.setTitle(leaveForEmbedTitle)
 			.setColor(colours.leave)
 			.setAuthor(msg.guild.name, msg.guild.iconURL({ dynamic: true }))
-			.setDescription(`${msg.author} has submitted leave for you in ${msg.channel}.`)
-			.addField('Details', capitalise(args.join(' ')))
+			.setDescription(`**${msg.member.displayName}** has submitted leave for you in **#${msg.channel.name}**.`)
+			.addField('Channel', msg.channel)
+			.addField('Remarks', capitalise(args.join(' ')))
 			.setFooter(`Reply with '${await pCmd(help)} ${leave.cmd}' to learn how to request leave for yourself.`);
 
 		sendMsg(attendanceChannel, attendanceEmbed);
