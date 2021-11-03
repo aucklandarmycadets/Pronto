@@ -241,7 +241,6 @@ async function msgPrompt(prompt, msg, type, colours) {
 				const parsedDate = chrono.parseDate(reply.content);
 
 				if (!parsedDate) {
-					sendDM(msg.author, reply.content);
 					sendDM(msg.author, promptEmbed('I don\'t recognise that date, please try again.', colours.error), null, true);
 					throw await msgPrompt(prompt, msg, type, colours);
 				}
