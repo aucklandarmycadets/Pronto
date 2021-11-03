@@ -235,6 +235,9 @@ async function msgPrompt(prompt, msg, type, colours) {
 			}
 
 			if (type === 'date') {
+				if (reply.content.toLowerCase() === 'restart') throw 'restart';
+				else if (reply.content.toLowerCase() === 'cancel') throw 'cancel';
+
 				const parsedDate = chrono.parseDate(reply.content);
 
 				if (!parsedDate) {
