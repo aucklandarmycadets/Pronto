@@ -66,12 +66,16 @@ module.exports = async guild => {
 			let archiveMsg;
 			const filterBy = _msg => _msg.id === lesson.archiveID;
 
-			await lessonPlansChnl.messages.fetch()
-				.then(msgs => {
-					archiveMsg = msgs.filter(filterBy).first();
-				})
-				.catch(error => debugError(error, `Error fetching messages in ${lessonPlansChnl}.`));
+			while (!archiveMsg) {
+				let before = null;
 
+				await lessonPlansChannel.messages.fetch({ limit: 100, before })
+					.then(msgs => {
+						archiveMsg = msgs.filter(filterBy).first();
+						before = msgs.last().id;
+					})
+					.catch(error => debugError(error, `Error fetching messages in ${lessonPlansChannel}.`));
+			}
 			archiveMsg.edit(submitEmbed);
 		}
 
