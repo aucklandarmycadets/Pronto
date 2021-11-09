@@ -75,7 +75,7 @@ module.exports = {
 
 		else return;
 
-		sendMsg(log, logEmbed);
+		sendMsg(log, { embeds: [logEmbed] });
 
 		function cmdCheck() {
 			const autoDelCmds = [evaluate, help, lesson, attendance, assign, purge];

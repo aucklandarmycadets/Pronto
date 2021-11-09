@@ -13,7 +13,7 @@ module.exports = async guild => {
 			.setColor(colours.success)
 			.setFooter(`${formatAge(bot.uptime, true)} | ${await dtg()} | Pronto v${version}`);
 
-		sendMsg(msg.channel, uptimeEmbed);
+		sendMsg(msg.channel, { embeds: [uptimeEmbed] });
 	};
 
 	return uptime;

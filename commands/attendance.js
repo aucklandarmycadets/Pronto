@@ -53,7 +53,7 @@ module.exports = async guild => {
 				.setDescription(register)
 				.setFooter('Use the reactions below to confirm or cancel.');
 
-			sendDM(msg.author, attendanceEmbed, msg.channel)
+			sendDM(msg.author, { embeds: [attendanceEmbed] }, msg.channel)
 				.then(dm => {
 					const sendAttendance = async () => {
 						attendanceEmbed.setAuthor(`${formationName} (${msg.member.displayName})`, msg.guild.iconURL({ dynamic: true }));
@@ -61,8 +61,8 @@ module.exports = async guild => {
 
 						const attendanceChannel = bot.channels.cache.get(attendanceID);
 
-						const attendanceMessage = await sendMsg(attendanceChannel, attendanceEmbed);
-						const channelMessage = await sendMsg(msg.channel, attendanceEmbed);
+						const attendanceMessage = await sendMsg(attendanceChannel, { embeds: [attendanceEmbed] });
+						const channelMessage = await sendMsg(msg.channel, { embeds: [attendanceEmbed] });
 
 						const db = await new Attendance({
 							_id: mongoose.Types.ObjectId(),

@@ -42,14 +42,14 @@ module.exports = async guild => {
 					.setColor(colours.error)
 					.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
 					.setFooter(await dtg());
-				sendMsg(channel, archiveEmbed);
+				sendMsg(channel, { embeds: [archiveEmbed] });
 
 				const logEmbed = new Discord.MessageEmbed()
 					.setColor(colours.warn)
 					.setAuthor(msg.author.tag, msg.author.displayAvatarURL({ dynamic: true }))
 					.setDescription(`**Channel ${channel} archived by ${msg.author}**`)
 					.setFooter(`User: ${msg.author.id} | Channel: ${channel.id} | ${await dtg()}`);
-				sendMsg(log, logEmbed);
+				sendMsg(log, { embeds: [logEmbed] });
 			})
 			.catch(error => {
 				errorReact(msg);

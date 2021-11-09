@@ -40,7 +40,7 @@ module.exports = async guild => {
 
 			if (!code.toLowerCase().includes('token')) evaled = await eval(code);
 
-			if (code.includes('embed.')) sendMsg(msg.channel, embed);
+			if (code.includes('embed.')) sendMsg(msg.channel, { embeds: [embed] });
 
 			if (silent) return;
 
@@ -58,8 +58,8 @@ module.exports = async guild => {
 				const breakAt = findBreakIndex(str, char);
 
 				(codeBlock)
-					? sendMsg(msg.channel, js(str.substr(0, breakAt)))
-					: sendMsg(msg.channel, str.substr(0, breakAt));
+					? sendMsg(msg.channel, { content: js(str.substr(0, breakAt)) })
+					: sendMsg(msg.channel, { content: str.substr(0, breakAt) });
 
 				str = str.substr(breakAt);
 			}

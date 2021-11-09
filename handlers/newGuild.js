@@ -49,7 +49,7 @@ module.exports = async guild => {
 			.addField('More Information', 'To modify my configuration, please visit my dashboard.')
 			.setFooter(await dtg());
 
-		sendMsg(debugChannel, createdEmbed);
+		sendMsg(debugChannel, { embeds: [createdEmbed] });
 	}
 
 	return _guild;
@@ -134,7 +134,7 @@ async function initChannel(channel, guild, type) {
 				.setColor(colours.error)
 				.setDescription(`\n\nI created this channel because I cannot access ${foundChannel}!`);
 
-			sendMsg(newChannel, debugEmbed);
+			sendMsg(newChannel, { embeds: [debugEmbed] });
 		}
 	}
 

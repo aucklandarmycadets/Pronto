@@ -43,6 +43,6 @@ module.exports = {
 		try { isBan = await member.guild.fetchBan(member); }
 		catch { null; }
 
-		if (!isBan) sendMsg(log, logEmbed);
+		if (!isBan) sendMsg(log, { embeds: [logEmbed] });
 	},
 };

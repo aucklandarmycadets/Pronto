@@ -73,7 +73,7 @@ module.exports = async guild => {
 				.addField('Resources', outputResources(_lesson.submittedResources), 1024)
 				.setFooter(await dtg());
 
-			sendMsg(msg.channel, lessonEmbed);
+			sendMsg(msg.channel, { embeds: [lessonEmbed] });
 		}
 
 		else if (cmd === 'add') {
@@ -96,7 +96,7 @@ module.exports = async guild => {
 				.addField('Resources', outputResources(_lesson.submittedResources))
 				.setFooter(await dtg());
 
-			sendMsg(msg.channel, updatedEmbed);
+			sendMsg(msg.channel, { embeds: [updatedEmbed] });
 		}
 
 		else if (cmd === 'remove') {
@@ -110,7 +110,7 @@ module.exports = async guild => {
 				.addField('Resources', resources)
 				.setFooter('Enter the corresponding serial for the resource you wish to remove, or \'cancel\' to exit.');
 
-			sendMsg(msg.channel, resourcesEmbed);
+			sendMsg(msg.channel, { embeds: [resourcesEmbed] });
 
 			const delIndex = await msgPrompt(msg, range, colours);
 
@@ -129,7 +129,7 @@ module.exports = async guild => {
 				.addField('Resources', outputResources(_lesson.submittedResources))
 				.setFooter(await dtg());
 
-			sendMsg(msg.channel, updatedEmbed);
+			sendMsg(msg.channel, { embeds: [updatedEmbed] });
 		}
 
 		else if (cmd === 'submit') {
@@ -148,7 +148,7 @@ module.exports = async guild => {
 				.addField('Resources', outputResources(_lesson.submittedResources), 1024)
 				.setFooter('Use the reactions below to confirm or cancel.');
 
-			sendDM(msg.author, submitEmbed)
+			sendDM(msg.author, { embeds: [submitEmbed] })
 				.then(dm => {
 					const lessonSubmit = async () => {
 						_lesson.changed = false;
@@ -162,7 +162,7 @@ module.exports = async guild => {
 						submitEmbed.setColor(colours.success);
 						submitEmbed.setFooter(await dtg());
 
-						sendMsg(msg.channel, submitEmbed);
+						sendMsg(msg.channel, { embeds: [submitEmbed] });
 
 						const linkTest = /\[Resource \d+\]/;
 						const attFilter = /\[(.+)\]\((.+)\)/;
@@ -171,7 +171,7 @@ module.exports = async guild => {
 
 						promises.push(
 							outputResources(_lesson.submittedResources).forEach(res => {
-								if (!linkTest.test(res)) promises.push(sendMsg(msg.channel, new Discord.MessageAttachment(res.match(attFilter)[2], res.match(attFilter)[1].replace(/\\/g, ''))));
+								if (!linkTest.test(res)) promises.push(sendMsg(msg.channel, { attachments: new Discord.MessageAttachment(res.match(attFilter)[2], res.match(attFilter)[1].replace(/\\/g, '')) }));
 							}),
 						);
 
@@ -183,7 +183,7 @@ module.exports = async guild => {
 							.setDescription(`Click the ${successEmoji} to approve this lesson plan.\n\nAlternatively, you can manually type \`!approve\`.`)
 							.setColor(colours.pronto);
 
-						sendMsg(msg.channel, rolesOutput(trainingIDs, true), ackEmbed)
+						sendMsg(msg.channel, { content: rolesOutput(trainingIDs, true) }, ackEmbed)
 							.then(async approveMsg => {
 								await successReact(approveMsg);
 
@@ -279,14 +279,14 @@ async function msgPrompt(msg, range, colours) {
 		if (reply.content.toLowerCase() === 'cancel') throw 'cancel';
 
 		else if (!Number(reply.content)) {
-			sendMsg(msg.channel, promptEmbed('You must enter a number.', colours.error), null, true);
+			sendMsg(msg.channel, { embeds: [promptEmbed('You must enter a number.', colours.error)] }, null, true);
 			throw await msgPrompt(msg, range, colours);
 		}
 
 		else if (!range.includes(Number(reply.content))) {
 			console.log(range);
 			console.log(reply.content);
-			sendMsg(msg.channel, promptEmbed(`You must enter a number between ${range[0]} and ${range[range.length - 1]}.`, colours.error), null, true);
+			sendMsg(msg.channel, { embeds: [promptEmbed(`You must enter a number between ${range[0]} and ${range[range.length - 1]}.`, colours.error)] }, null, true);
 			throw await msgPrompt(msg, range, colours);
 		}
 

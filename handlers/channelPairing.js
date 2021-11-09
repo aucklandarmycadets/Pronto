@@ -35,7 +35,7 @@ module.exports = async (oldState, newState) => {
 						.setAuthor(newMember.displayName, newMember.user.displayAvatarURL({ dynamic: true }))
 						.setDescription(`**${newMember.displayName}** has joined the channel.`)
 						.setFooter(await dtg());
-					sendMsg(textChannel, joinEmbed);
+					sendMsg(textChannel, { embeds: [joinEmbed] });
 				})
 				.catch(error => {
 					debugError(error, `Error giving ${newMember} permissions to ${textChannel}.`);
@@ -50,7 +50,7 @@ module.exports = async (oldState, newState) => {
 						.setAuthor(newMember.displayName, newMember.user.displayAvatarURL({ dynamic: true }))
 						.setDescription(`**${newMember.displayName}** has left the channel.`)
 						.setFooter(await dtg());
-					sendMsg(textChannel, leaveEmbed);
+					sendMsg(textChannel, { embeds: [leaveEmbed] });
 
 					if (oldState.channel.members.size === 0) {
 						const successEmoji = newState.guild.emojis.cache.find(emoji => emoji.name === emojis.success.name);
@@ -59,7 +59,7 @@ module.exports = async (oldState, newState) => {
 							.setTitle('Purge Text Channel')
 							.setColor(colours.success)
 							.setDescription(`Click on the ${successEmoji} reaction to purge this channel.`);
-						sendMsg(textChannel, purgeEmbed)
+						sendMsg(textChannel, { embeds: [purgeEmbed] })
 							.then(msg => {
 								successReact(msg);
 
@@ -80,7 +80,7 @@ module.exports = async (oldState, newState) => {
 												.setColor(colours.error)
 												.setAuthor(newMember.displayName, newMember.user.displayAvatarURL({ dynamic: true }))
 												.setDescription(`${user} Insufficient permissions. ${purge.error}`);
-											sendMsg(textChannel, errorEmbed);
+											sendMsg(textChannel, { embeds: [errorEmbed] });
 										}
 									}
 								});
@@ -102,7 +102,7 @@ module.exports = async (oldState, newState) => {
 											.setColor(colours.error)
 											.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }))
 											.setDescription(`Timed out. Type \`${await pCmd(purge, newState.guild)} 100\` to clear this channel manually.`);
-										sendMsg(textChannel, timeEmbed);
+										sendMsg(textChannel, { embeds: [timeEmbed] });
 									}
 								});
 							});

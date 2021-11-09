@@ -47,12 +47,12 @@ module.exports = async guild => {
 
 			if (msg.guild) {
 				helpEmbed.setFooter(`Requested by ${msg.member.displayName}`, msg.author.displayAvatarURL({ dynamic: true }));
-				return sendMsg(msg.channel, helpEmbed);
+				return sendMsg(msg.channel, { embeds: [helpEmbed] });
 			}
 
 			else if (!helpEmbed.description.includes('Allowed Roles')) {
 				successReact(msg);
-				return sendDM(msg.author, helpEmbed, msg.channel);
+				return sendDM(msg.author, { embeds: [helpEmbed] }, msg.channel);
 			}
 
 			else return dmCmdError(msg, 'hasRole');
@@ -86,7 +86,7 @@ module.exports = async guild => {
 				helpEmbed.addField('Note', `Only displaying commands available to **${(msg.guild) ? msg.member.displayName : msg.author}**.`);
 			}
 
-			sendDM(msg.author, helpEmbed, msg.channel);
+			sendDM(msg.author, { embeds: [helpEmbed] }, msg.channel);
 		}
 	};
 

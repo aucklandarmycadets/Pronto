@@ -44,7 +44,7 @@ module.exports = async guild => {
 			.addField('Instructor(s)', processMentions(memberMentions))
 			.setFooter(await dtg());
 
-		sendDM(msg.author, assignEmbed, msg.channel);
+		sendDM(msg.author, { embeds: [assignEmbed] }, msg.channel);
 
 		const neededInputs = {
 			lessonName: {
@@ -76,7 +76,7 @@ module.exports = async guild => {
 
 			recentlyAssigned.delete(msg.author.id);
 
-			return sendDM(msg.author, cancelEmbed, null, true);
+			return sendDM(msg.author, { embeds: [cancelEmbed] }, null, true);
 		}
 
 		const { lessonName, dueTimestamp, lessonTimestamp, resources } = input;
@@ -95,7 +95,7 @@ module.exports = async guild => {
 			.addField('Resources', outputResources(resources))
 			.setFooter('Use the reactions below to confirm or cancel.');
 
-		sendDM(msg.author, lessonEmbed, null, true)
+		sendDM(msg.author, { embeds: [lessonEmbed] }, null, true)
 			.then(dm => {
 				const assignLesson = async () => {
 					const everyone = guild.roles.everyone;
@@ -120,7 +120,7 @@ module.exports = async guild => {
 							if (numMemberMentions === 1) lessonEmbed.setAuthor(memberMentions.first().displayName, memberMentions.first().user.displayAvatarURL({ dynamic: true }));
 							else lessonEmbed.setAuthor(guild.name, guild.iconURL({ dynamic: true }));
 
-							await sendMsg(chnl, lessonEmbed);
+							await sendMsg(chnl, { embeds: [lessonEmbed] });
 							unsubmittedLessons(guild);
 
 							const successEmoji = msg.guild.emojis.cache.find(emoji => emoji.name === emojis.success.name);
@@ -129,7 +129,7 @@ module.exports = async guild => {
 								.setDescription(`Click the ${successEmoji} to acknowledge receipt of this lesson warning.\n\nAlternatively, you can manually type \`!seen\`.`)
 								.setColor(colours.pronto);
 
-							sendMsg(chnl, processMentions(memberMentions), ackEmbed)
+							sendMsg(chnl, { content: processMentions(memberMentions), embeds: [ackEmbed] })
 								.then(async seenMsg => {
 									await successReact(seenMsg);
 
@@ -146,7 +146,7 @@ module.exports = async guild => {
 												.setColor(colours.success)
 												.setDescription('All instructors have acknowledged receipt of this lesson warning.')
 												.setFooter(await dtg());
-											sendMsg(chnl, seenEmbed);
+											sendMsg(chnl, { embeds: [seenEmbed] });
 
 											for (const reaction of userReactions.values()) {
 												await reaction.users.remove(bot.user.id);
@@ -215,7 +215,7 @@ async function msgPrompt(prompt, msg, type, colours) {
 	const promises = [];
 	const filter = message => message.author.id === msg.author.id;
 	promises.push(
-		sendDM(msg.author, prompt, null, true)
+		sendDM(msg.author, { embeds: [prompt] }, null, true)
 			.then(async () => {
 				promises.push(
 					await msg.author.dmChannel.awaitMessages(filter, { max: 1 })
@@ -230,7 +230,7 @@ async function msgPrompt(prompt, msg, type, colours) {
 	try {
 		if (type === 'txt' || type === 'date') {
 			if (!reply.content) {
-				sendDM(msg.author, promptEmbed('You must enter something!', colours.error), null, true);
+				sendDM(msg.author, { embeds: [promptEmbed('You must enter something!', colours.error)] }, null, true);
 				throw await msgPrompt(prompt, msg, type, colours);
 			}
 
@@ -241,7 +241,7 @@ async function msgPrompt(prompt, msg, type, colours) {
 				const parsedDate = chrono.parseDate(reply.content);
 
 				if (!parsedDate) {
-					sendDM(msg.author, promptEmbed('I don\'t recognise that date, please try again.', colours.error), null, true);
+					sendDM(msg.author, { embeds: [promptEmbed('I don\'t recognise that date, please try again.', colours.error)] }, null, true);
 					throw await msgPrompt(prompt, msg, type, colours);
 				}
 
@@ -263,7 +263,7 @@ async function msgPrompt(prompt, msg, type, colours) {
 			for (let i = 0; i < args.length; i++) { if (checkURL(args[i])) URLs.push(args[i]); }
 
 			if (!att && !URLs.length) {
-				sendDM(msg.author, promptEmbed('You must attach a file or enter a URL!', colours.error), null, true);
+				sendDM(msg.author, { embeds: [promptEmbed('You must attach a file or enter a URL!', colours.error)] }, null, true);
 				throw await msgPrompt(prompt, msg, type, colours);
 			}
 

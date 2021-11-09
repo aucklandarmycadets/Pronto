@@ -60,6 +60,6 @@ module.exports = {
 		logEmbed.setAuthor(newMember.user.tag, newMember.user.displayAvatarURL({ dynamic: true }));
 		logEmbed.setColor(colours.warn);
 		logEmbed.setFooter(`ID: ${newMember.user.id} | ${await dtg()}`);
-		sendMsg(log, logEmbed);
+		sendMsg(log, { embeds: [logEmbed] });
 	},
 };

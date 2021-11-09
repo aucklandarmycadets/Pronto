@@ -45,7 +45,7 @@ module.exports = async (reaction, user) => {
 				.setDescription(register)
 				.setFooter('Use the reactions below to confirm or cancel.');
 
-			sendDM(user, attendanceEmbed, reaction.message.channel)
+			sendDM(user, { embeds: [attendanceEmbed] }, reaction.message.channel)
 				.then(dm => {
 					const sendAttendance = async () => {
 						attendanceEmbed.setAuthor(`${db.formation} (${member.displayName})`, reaction.message.guild.iconURL({ dynamic: true }));
@@ -72,7 +72,7 @@ module.exports = async (reaction, user) => {
 };
 
 async function userInput(user, msg, colours, callback) {
-	if (pendingInput.has(user.id)) return sendDM(user, promptEmbed('You\'re already editing another register!', colours.error), msg);
+	if (pendingInput.has(user.id)) return sendDM(user, { embeds: [promptEmbed('You\'re already editing another register!', colours.error)] }, msg);
 
 	const editingEmbed = new Discord.MessageEmbed()
 		.setTitle(`Editing '${msg.embeds[0].title}'...`)
@@ -82,7 +82,7 @@ async function userInput(user, msg, colours, callback) {
 		.addField('Current Attendance', msg.embeds[0].description)
 		.setFooter(await dtg());
 
-	const dm = await sendDM(user, editingEmbed.addField('Message Link', `[${msg.embeds[0].title}](${msg.url})`), msg.channel);
+	const dm = await sendDM(user, { embeds: [editingEmbed.addField('Message Link', `[${msg.embeds[0].title}](${msg.url})`)] }, msg.channel);
 
 	if (!dm) return;
 
@@ -101,7 +101,7 @@ async function userInput(user, msg, colours, callback) {
 
 		pendingInput.delete(user.id);
 
-		return sendDM(user, cancelEmbed, msg.channel);
+		return sendDM(user, { embeds: [cancelEmbed] }, msg.channel);
 	}
 
 	else callback(input);
@@ -112,7 +112,7 @@ async function msgPrompt(prompt, user, channel, colours) {
 	const filter = message => message.author.id === user.id;
 
 	promises.push(
-		sendDM(user, prompt, channel)
+		sendDM(user, { embeds: [prompt] }, channel)
 			.then(async () => {
 				promises.push(
 					await user.dmChannel.awaitMessages(filter, { max: 1 })
@@ -126,7 +126,7 @@ async function msgPrompt(prompt, user, channel, colours) {
 
 	try {
 		if (!reply.content) {
-			sendDM(user, promptEmbed('You must enter something!', colours.error), null, true);
+			sendDM(user, { embeds: [promptEmbed('You must enter something!', colours.error)] }, null, true);
 			throw await msgPrompt(prompt, user, channel, colours);
 		}
 

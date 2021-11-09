@@ -40,7 +40,7 @@ module.exports = async guild => {
 			.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
 			.setDescription(connectedMembers.join('\n'))
 			.setFooter(await dtg());
-		sendMsg(attendanceChannel, connectedEmbed);
+		sendMsg(attendanceChannel, { embeds: [connectedEmbed] });
 	};
 
 	return connected;

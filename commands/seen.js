@@ -34,7 +34,7 @@ module.exports = async guild => {
 			.setColor(colours.success)
 			.setDescription(`**${guild.members.cache.get(instructor.id).displayName}** has confirmed receipt of this lesson warning.`)
 			.setFooter(await dtg());
-		sendMsg(msg.channel, seenEmbed);
+		sendMsg(msg.channel, { embeds: [seenEmbed] });
 
 		lesson.instructors[instructor.id].seen = true;
 		lesson.markModified('instructors');
@@ -50,7 +50,7 @@ module.exports = async guild => {
 				.setColor(colours.success)
 				.setDescription('All instructors have acknowledged receipt of this lesson warning.')
 				.setFooter(await dtg());
-			sendMsg(msg.channel, allSeenEmbed);
+			sendMsg(msg.channel, { embeds: [allSeenEmbed] });
 		}
 
 		return await lesson.save().catch(error => console.error(error));

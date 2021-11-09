@@ -31,7 +31,7 @@ module.exports = async (id, guild) => {
 		.setColor(colours.pronto)
 		.addField('Instructor Commands', instructorCmds)
 		.addField('Training Staff Commands', staffCmds)
-		.setFooter(`All lesson commands can be accessed directly without the \'${lesson.cmd}\' parent.`);
+		.setFooter(`All lesson commands can be accessed directly without the '${lesson.cmd}' parent.`);
 
 	const addField = `
 		\`${await pCmd(lesson)} add <URL>\`
@@ -72,7 +72,7 @@ module.exports = async (id, guild) => {
 		.addField(`${await pCmd(assign)}`, assignField, true)
 		.addField('Example', assignExample, true);
 
-	await sendMsg(instructionsChnl, instructionsEmbed);
-	await sendMsg(instructionsChnl, usageEmbed);
-	await sendMsg(instructionsChnl, 'https://youtu.be/CKYvvE2ILAE');
+	await sendMsg(instructionsChnl, { embeds: [instructionsEmbed] });
+	await sendMsg(instructionsChnl, { embeds: [usageEmbed] });
+	await sendMsg(instructionsChnl, { content: 'https://youtu.be/CKYvvE2ILAE' });
 };

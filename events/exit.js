@@ -25,7 +25,7 @@ module.exports = {
 			.setColor(colours.warn)
 			.setFooter(`${await dtg()} | Pronto v${version}`);
 
-		await sendDM(dev, restartEmbed, null, true);
+		await sendDM(dev, { embeds: [restartEmbed] }, null, true);
 
 		await mongoose.connection.close(() => console.log('Disconnected from Mongoose'));
 

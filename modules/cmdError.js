@@ -18,5 +18,5 @@ module.exports = async (msg, errMsg, cmdErr, footer) => {
 	if (footer) errorEmbed.setFooter(footer);
 
 	errorReact(msg);
-	sendMsg(msg.channel, errorEmbed);
+	sendMsg(msg.channel, { embeds: [errorEmbed] });
 };

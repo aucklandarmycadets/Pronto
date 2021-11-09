@@ -57,6 +57,6 @@ module.exports = {
 
 		logEmbed.setAuthor(newRole.guild.name, newRole.guild.iconURL({ dynamic: true }));
 		logEmbed.setFooter(`ID: ${newRole.id} | ${await dtg()}`);
-		sendMsg(log, logEmbed);
+		sendMsg(log, { embeds: [logEmbed] });
 	},
 };

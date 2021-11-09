@@ -55,7 +55,7 @@ module.exports = async guild => {
 			.setFooter(await dtg());
 
 		if (!lesson.archiveID) {
-			sendMsg(lessonPlansChnl, submitEmbed)
+			sendMsg(lessonPlansChnl, { embeds: [submitEmbed] })
 				.then(async archiveMsg => {
 					lesson.archiveID = archiveMsg.id;
 					await lesson.save().catch(error => console.error(error));
@@ -83,7 +83,7 @@ module.exports = async guild => {
 			.setColor(colours.success)
 			.setDescription(`${approver} has approved this lesson plan.`)
 			.setFooter(await dtg());
-		sendMsg(msg.channel, approvedEmbed);
+		sendMsg(msg.channel, { embeds: [approvedEmbed] });
 
 		lesson.approved = true;
 		return await lesson.save().catch(error => console.error(error));

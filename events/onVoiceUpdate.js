@@ -45,7 +45,7 @@ module.exports = {
 
 		else return;
 
-		sendMsg(log, logEmbed);
+		sendMsg(log, { embeds: [logEmbed] });
 		channelPairing(oldState, newState);
 	},
 };

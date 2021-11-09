@@ -22,7 +22,7 @@ module.exports = {
 			.setDescription(`${memberUser} ${memberUser.tag}`)
 			.addField('Account Age', formatAge(memberUser.createdAt))
 			.setFooter(`ID: ${memberUser.id} | ${await dtg()}`);
-		sendMsg(log, logEmbed);
+		sendMsg(log, { embeds: [logEmbed] });
 
 		if (memberUser.bot) return;
 
@@ -34,6 +34,6 @@ module.exports = {
 			.setAuthor(memberUser.tag, memberUser.displayAvatarURL({ dynamic: true }))
 			.setDescription(`**${memberUser} has just entered ${newMembers}.**\nMake them feel welcome!`)
 			.setFooter(await dtg());
-		sendMsg(recruiting, welcomeEmbed);
+		sendMsg(recruiting, { embeds: [welcomeEmbed] });
 	},
 };

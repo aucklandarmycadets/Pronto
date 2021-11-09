@@ -46,6 +46,6 @@ module.exports = {
 			if (target.id === user.id) logEmbed.addField(`${type} By`, executor);
 		}
 
-		sendMsg(log, logEmbed);
+		sendMsg(log, { embeds: [logEmbed] });
 	},
 };

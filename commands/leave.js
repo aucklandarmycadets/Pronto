@@ -35,8 +35,8 @@ module.exports = async guild => {
 			.addField('Remarks', capitalise(args.join(' ')))
 			.setFooter(await dtg());
 
-		sendMsg(attendanceChannel, attendanceEmbed);
-		sendDM(msg.author, dmEmbed, msg.channel);
+		sendMsg(attendanceChannel, { embeds: [attendanceEmbed] });
+		sendDM(msg.author, { embeds: [dmEmbed] }, msg.channel);
 	};
 
 	return leave;

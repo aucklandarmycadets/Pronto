@@ -25,6 +25,6 @@ module.exports = {
 			logEmbed.setDescription(`**Role Deleted: ${role.name}**`);
 		}
 
-		sendMsg(log, logEmbed);
+		sendMsg(log, { embeds: [logEmbed] });
 	},
 };

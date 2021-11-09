@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = (dest, msg, additions) => {
+module.exports = (destination, options) => {
 	const { debugError } = require('./');
-	return dest.send(msg, additions).catch(error => debugError(error, `Error sending message to ${dest}.`));
+	return destination.send(options).catch(error => debugError(error, `Error sending message to ${destination}.`));
 };

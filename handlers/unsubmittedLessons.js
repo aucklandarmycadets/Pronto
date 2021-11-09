@@ -65,7 +65,7 @@ module.exports = async guild => {
 			: false;
 	});
 
-	if (!existingMsg) emojiReact(await sendMsg(referenceChannel, unsubmittedEmbed), '🔄');
+	if (!existingMsg) emojiReact(await sendMsg(referenceChannel, { embeds: [unsubmittedEmbed] }), '🔄');
 
 	else existingMsg.edit(unsubmittedEmbed);
 };
