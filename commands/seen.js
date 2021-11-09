@@ -2,13 +2,15 @@
 
 const Discord = require('discord.js');
 
-const { cmdError, dtg, sendMsg } = require('../modules');
+const { cmdError, dtg, sendMsg, successReact } = require('../modules');
 const { findLesson } = require('../handlers');
 
 module.exports = async guild => {
 	const { ids: { lessonsID }, cmds: { seen }, colours } = await require('../handlers/database')(guild);
 
 	seen.execute = async (msg, user) => {
+		if (!user.id) successReact(msg);
+
 		const lesson = await findLesson(msg.channel.id);
 
 		const instructor = (user.id)

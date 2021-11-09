@@ -2,7 +2,7 @@
 
 const Discord = require('discord.js');
 
-const { cmdError, debugError, dtg, outputResources, sendMsg } = require('../modules');
+const { cmdError, debugError, dtg, outputResources, sendMsg, successReact } = require('../modules');
 const { findLesson } = require('../handlers');
 
 module.exports = async guild => {
@@ -42,6 +42,7 @@ module.exports = async guild => {
 		}
 
 		const lessonPlansChnl = msg.guild.channels.cache.get(lessonPlansID);
+		if (!user.id) successReact(msg);
 
 		const submitEmbed = new Discord.MessageEmbed()
 			.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
