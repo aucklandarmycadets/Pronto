@@ -50,18 +50,22 @@ module.exports = async guild => {
 			lessonName: {
 				prompt: 'What is the name of the lesson?',
 				type: 'txt',
+				allowMultiple: false,
 			},
 			dueTimestamp: {
 				prompt: 'When is the lesson plan due?',
 				type: 'date',
+				allowMultiple: false,
 			},
 			lessonTimestamp: {
 				prompt: 'When will the lesson be taught?',
 				type: 'date',
+				allowMultiple: false,
 			},
 			resources: {
 				prompt: 'Provide any resources for the lesson if applicable.\n\nReply `done` when finished.',
 				type: 'att',
+				allowMultiple: true,
 			},
 		};
 
@@ -198,8 +202,8 @@ async function inputs(msg, needed, colours) {
 	const input = {};
 
 	for (const [key, value] of Object.entries(needed)) {
-		if (value.type === 'att') input[key] = await whileLoop(promptEmbed(value.prompt, colours.pronto), msg, value.type, colours);
-		else input[key] = await msgPrompt(promptEmbed(value.prompt, colours.pronto), msg, value.type, colours);
+		if (value.allowMultiple) input[key] = await whileLoop(promptEmbed(value.prompt, colours.pronto), msg, value.type, colours, value.allowMultiple);
+		else input[key] = await msgPrompt(promptEmbed(value.prompt, colours.pronto), msg, value.type, colours, value.allowMultiple);
 
 		try {
 			if (input[key].toLowerCase() === 'restart') return await inputs(msg, needed, colours);
@@ -230,13 +234,14 @@ async function msgPrompt(prompt, msg, type, colours) {
 	try {
 		if (type === 'txt' || type === 'date') {
 			if (!reply.content) {
+		if (input.content.toLowerCase() === 'restart') throw 'restart';
+		else if (input.content.toLowerCase() === 'cancel') throw 'cancel';
+		else if (input.content.toLowerCase() === 'done' && allowMultiple) throw 'done';
 				sendDM(msg.author, { embeds: [promptEmbed('You must enter something!', colours.error)] }, null, true);
 				throw await msgPrompt(prompt, msg, type, colours);
 			}
 
 			if (type === 'date') {
-				if (reply.content.toLowerCase() === 'restart') throw 'restart';
-				else if (reply.content.toLowerCase() === 'cancel') throw 'cancel';
 
 				const parsedDate = chrono.parseDate(reply.content);
 
@@ -252,9 +257,6 @@ async function msgPrompt(prompt, msg, type, colours) {
 		}
 
 		else if (type === 'att') {
-			if (reply.content.toLowerCase() === 'restart') throw 'restart';
-			else if (reply.content.toLowerCase() === 'cancel') throw 'cancel';
-			else if (reply.content.toLowerCase() === 'done') throw 'done';
 
 			const args = reply.content.split(/ +/);
 			const att = reply.attachments.first();
