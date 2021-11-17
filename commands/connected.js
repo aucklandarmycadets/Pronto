@@ -1,7 +1,7 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { cmdError, dtg, sendMsg, successReact } = require('../modules');
+const { cmdError, dtg, sendMsg, sortByRoles, successReact } = require('../modules');
 
 module.exports = async guild => {
 	const { ids: { attendanceID }, cmds: { connected }, colours } = await require('../handlers/database')(guild);
@@ -23,12 +23,7 @@ module.exports = async guild => {
 
 		catch (error) { return cmdError(msg, error, connected.error, 'Note: Use the <#channelID> syntax!'); }
 
-		const connectedMembers = [];
-		const attendanceChannel = bot.channels.cache.get(attendanceID);
-
-		for (const member of Object.values(channel.members.array())) {
-			connectedMembers.push(member.toString());
-		}
+		const connectedMembers = channel.members.sort(sortByRoles(guild)).map(member => member.toString());
 
 		if (connectedMembers.length === 0) return cmdError(msg, `There are no members connected to ${channel}.`, connected.error, 'Note: Use the <#channelID> syntax!');
 
