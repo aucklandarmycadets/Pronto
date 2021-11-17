@@ -8,8 +8,8 @@ chrono = new chrono.Chrono(chrono.en.createConfiguration(false, true));
 
 const Lesson = require('../models/lesson');
 
-const { checkURL, cmdError, debugError, delMsg, dtg, outputResources, processResources, promptEmbed, sendDM, sendMsg, successReact, titleCase } = require('../modules');
 const { confirmation, unsubmittedLessons } = require('../handlers');
+const { checkURL, cmdError, delMsg, dtg, outputResources, processResources, promptEmbed, sendDirect, sendMsg, successReact, titleCase } = require('../modules');
 
 const recentlyAssigned = new Set();
 
@@ -142,25 +142,8 @@ module.exports = async guild => {
 
 									collector.on('collect', async (_, user) => bot.commands.get(seen.cmd).execute(seenMsg, user));
 
-									collector.on('end', async () => {
-										const userReactions = seenMsg.reactions.cache.filter(reaction => reaction.users.cache.has(bot.user.id));
 
-										try {
-											const seenEmbed = new Discord.MessageEmbed()
-												.setColor(colours.success)
-												.setDescription('All instructors have acknowledged receipt of this lesson warning.')
-												.setFooter(await dtg());
-											sendMsg(chnl, { embeds: [seenEmbed] });
 
-											for (const reaction of userReactions.values()) {
-												await reaction.users.remove(bot.user.id);
-											}
-										}
-
-										catch (error) {
-											debugError(error, `Error removing reactions from message in ${chnl}.`);
-										}
-									});
 								});
 						})
 						.catch(error => console.error(`Error creating ${lessonName} in ${guild.name}\n`, error));

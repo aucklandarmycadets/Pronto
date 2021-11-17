@@ -2,8 +2,8 @@
 
 const Discord = require('discord.js');
 
-const { checkURL, cmdError, debugError, delMsg, dtg, outputResources, processResources, promptEmbed, remove, rolesOutput, sendDM, sendMsg, successReact } = require('../modules');
 const { confirmation, findLesson, unsubmittedLessons } = require('../handlers');
+const { checkURL, cmdError, delMsg, dtg, outputResources, processResources, promptEmbed, remove, rolesOutput, sendDirect, sendMsg, successReact } = require('../modules');
 
 const awaitingConfirm = new Set();
 
@@ -195,20 +195,6 @@ module.exports = async guild => {
 								const collector = approveMsg.createReactionCollector(filter, { dispose: true });
 
 								collector.on('collect', async (_, user) => bot.commands.get(approve.cmd).execute(msg, user));
-
-								collector.on('end', async () => {
-									const userReactions = approveMsg.reactions.cache.filter(reaction => reaction.users.cache.has(bot.user.id));
-
-									try {
-										for (const reaction of userReactions.values()) {
-											await reaction.users.remove(bot.user.id);
-										}
-									}
-
-									catch (error) {
-										debugError(error, `Error removing reactions from message in ${msg.channel}.`);
-									}
-								});
 							});
 					};
 
