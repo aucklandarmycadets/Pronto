@@ -48,7 +48,7 @@ module.exports = async guild => {
 
 			evaled = removeSensitive(bot, evaled, code);
 
-			msgSplit(evaled.replace(/```/g, ''), '},');
+			msgSplit(result.replace(/```j?s?/g, ''), '},');
 		}
 
 		catch (error) { msgSplit(error.stack, ')'); }
