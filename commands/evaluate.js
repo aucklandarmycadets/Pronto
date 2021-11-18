@@ -75,7 +75,7 @@ function convertToString(obj) {
 
 function removeSensitive(bot, str) {
 	const githook = convertToString(process.env.githook);
-	const sensitives = [bot.token, githook.substr(1, githook.length - 2)];
+	const sensitives = [process.env.TOKEN, githook.substr(1, githook.length - 2), process.env.SECRET, process.env.MONGOURI];
 
 	for (let i = 0; i < sensitives.length; i++) {
 		str = str.replace(new RegExp(sensitives[i], 'g'), '*'.repeat(sensitives[i].length));
