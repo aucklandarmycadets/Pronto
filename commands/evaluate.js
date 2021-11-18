@@ -85,19 +85,22 @@ function removeSensitive(bot, str) {
 }
 
 function findBreakIndex(str, char) {
-	const softLimit = 1985;
+	// The maximum index at which to break the message
+	// This derives from the Discord limit of 2000 characters, but accounts for the presence of a Javascript codeblock
+	// 2000 - '```js\n```' = 1991
+	const softLimit = 1990;
 
-	const charIndex = str.lastIndexOf(char, softLimit);
+	const charIndex = str.lastIndexOf(char, softLimit - char.length);
 	const hasChar = charIndex !== -1;
 
-	const spaceIndex = str.lastIndexOf(' ', softLimit);
+	const spaceIndex = str.lastIndexOf(' ', softLimit - 1);
 	const hasSpace = spaceIndex !== -1;
 
 	return (str.length > softLimit)
 		? (hasChar)
 			? charIndex + char.length
 			: (hasSpace)
-				? spaceIndex + 1
+				? spaceIndex
 				: softLimit
 		: softLimit;
 }
