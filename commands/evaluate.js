@@ -22,7 +22,7 @@ module.exports = async guild => {
 
 		if (args.includes('-delete') || args.includes('--del')) delMsg(msg);
 
-		args = args.filter(arg => !arg.startsWith('-'));
+		args = args.filter(arg => !arg.match(/-[A-z]+/g));
 
 		if (args[0].includes('```')) {
 			const _args = args.join(' ').split('\n');
