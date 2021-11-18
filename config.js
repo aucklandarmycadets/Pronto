@@ -5,7 +5,7 @@ exports.config = {
 	permsInt: 1879141584,
 	dateOutput: 'HHMM "h" ddd, d mmm yy',
 	shortDate: 'd mmm',
-	prontoLogo: 'https://i.imgur.com/EzmJVyV.png',
+	prontoLogo: 'https://i.imgur.com/Whgm87R.png',
 	lessonCron: '0 16 * * 3',
 };
 

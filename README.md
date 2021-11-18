@@ -70,7 +70,7 @@ exports.config = {
 	prefix: '!',
 	permsInt: 1879141584,
 	dateOutput: 'HHMM "h" ddd, d mmm yy',
-	prontoLogo: 'https://i.imgur.com/EzmJVyV.png',
+	prontoLogo: 'https://i.imgur.com/Whgm87R.png',
 };
 
 exports.ids = {
