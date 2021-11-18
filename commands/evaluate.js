@@ -12,15 +12,15 @@ module.exports = async guild => {
 	evaluate.execute = async (msg, args) => {
 		const { bot } = require('../pronto');
 
-		const codeBlock = (args.includes('-nocode') || args.includes('-nc'))
+		const codeBlock = (args.includes('-nocode') || args.includes('--nc'))
 			? false
 			: true;
 
-		const silent = (args.includes('-silent') || args.includes('-s'))
+		const silent = (args.includes('-silent') || args.includes('--s'))
 			? true
 			: false;
 
-		if (args.includes('-delete') || args.includes('-del')) delMsg(msg);
+		if (args.includes('-delete') || args.includes('--del')) delMsg(msg);
 
 		args = args.filter(arg => !arg.startsWith('-'));
 
