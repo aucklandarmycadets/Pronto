@@ -34,8 +34,8 @@ module.exports = async guild => {
 
 		const seenEmbed = new Discord.MessageEmbed()
 			.setColor(colours.success)
-			.setDescription(`**${guild.members.cache.get(instructor.id).displayName}** has confirmed receipt of this lesson warning.`)
 			.setFooter(await dtg());
+			.setDescription(`**${await guild.members.fetch(instructor.id).then(member => member.displayName)}** has confirmed receipt of this lesson warning.`)
 		sendMsg(msg.channel, { embeds: [seenEmbed] });
 
 		lesson.instructors[instructor.id].seen = true;

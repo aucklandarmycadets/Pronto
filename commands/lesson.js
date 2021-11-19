@@ -187,8 +187,8 @@ module.exports = async guild => {
 							.then(async approveMsg => {
 								await successReact(approveMsg);
 
-								const filter = (reaction, user) => {
-									const roles = msg.guild.members.cache.get(user.id).roles.cache;
+								const filter = async (reaction, user) => {
+									const roles = await msg.guild.members.fetch(user.id).then(member => member.roles.cache);
 									return reaction.emoji.name === emojis.success.name && roles.some(role => trainingIDs.includes(role.id));
 								};
 

@@ -67,9 +67,9 @@ module.exports = async (oldState, newState) => {
 
 								const collector = msg.createReactionCollector(filter, { dispose: true });
 
-								collector.on('collect', (_, user) => {
+								collector.on('collect', async (_, user) => {
 									if (!user.bot) {
-										if (permissionsCheck(msg.guild.members.cache.get(user.id).roles.cache, user.id, purge)) {
+										if (permissionsCheck(await msg.guild.members.fetch(user.id).then(member => member.roles.cache), user.id, purge)) {
 											msg.channel.messages.fetch({ limit: 100 })
 												.then(messages => purgeChannel(messages, msg.channel, collector))
 												.catch(error => debugError(error, `Error fetching messages in ${msg.channel}.`));
@@ -85,8 +85,8 @@ module.exports = async (oldState, newState) => {
 									}
 								});
 
-								collector.on('remove', (_, user) => {
-									if (permissionsCheck(msg.guild.members.cache.get(user.id).roles.cache, user.id, purge)) {
+								collector.on('remove', async (_, user) => {
+									if (permissionsCheck(await msg.guild.members.fetch(user.id).then(member => member.roles.cache), user.id, purge)) {
 										msg.channel.messages.fetch({ limit: 100 })
 											.then(messages => purgeChannel(messages, msg.channel, collector))
 											.catch(error => debugError(error, `Error fetching messages in ${msg.channel}.`));

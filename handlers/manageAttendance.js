@@ -37,7 +37,7 @@ module.exports = async (reaction, user) => {
 			const title = content.shift();
 			const register = content.join('\n');
 
-			const member = reaction.message.guild.members.cache.get(user.id);
+			const member = await reaction.message.guild.members.fetch(user.id);
 
 			const attendanceEmbed = new Discord.MessageEmbed(reaction.message.embeds[0])
 				.setTitle(`${title} (Updated)`)

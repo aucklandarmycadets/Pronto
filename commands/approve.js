@@ -32,8 +32,8 @@ module.exports = async guild => {
 				? msg
 				: {
 					guild: msg.guild,
-					author: msg.guild.members.cache.get(user.id).user,
-					member: msg.guild.members.cache.get(user.id),
+					author: await msg.guild.members.fetch(user.id).user,
+					member: await msg.guild.members.fetch(user.id),
 					channel: msg.channel,
 					deleted: true,
 				};
