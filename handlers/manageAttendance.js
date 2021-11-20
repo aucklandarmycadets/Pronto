@@ -32,7 +32,7 @@ module.exports = async (reaction, user) => {
 	}
 
 	else if (reaction.emoji.name === '📝') {
-		const createRegister = input => {
+		const createRegister = async input => {
 			const content = input.split('\n');
 			const title = content.shift();
 			const register = content.join('\n');
