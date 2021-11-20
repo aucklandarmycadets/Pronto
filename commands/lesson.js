@@ -70,7 +70,6 @@ module.exports = async guild => {
 				.addField('Lesson', _lesson.lessonName)
 				.addField('Lesson Plan Due', _lesson.dueDate)
 				.addField('Lesson Date', _lesson.lessonDate)
-				.addField('Resources', outputResources(_lesson.submittedResources), 1024)
 				.setFooter(await dtg());
 
 			sendMsg(msg.channel, { embeds: [lessonEmbed] });
@@ -145,7 +144,6 @@ module.exports = async guild => {
 				.addField('Lesson', _lesson.lessonName)
 				.addField('Lesson Plan Due', _lesson.dueDate)
 				.addField('Lesson Date', _lesson.lessonDate)
-				.addField('Resources', outputResources(_lesson.submittedResources), 1024)
 				.setFooter('Use the reactions below to confirm or cancel.');
 
 			sendDM(msg.author, { embeds: [submitEmbed] })

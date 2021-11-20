@@ -52,7 +52,6 @@ module.exports = async guild => {
 			.addField('Lesson', lesson.lessonName)
 			.addField('Lesson Plan Due', lesson.dueDate)
 			.addField('Lesson Date', lesson.lessonDate)
-			.addField('Resources', outputResources(lesson.submittedResources), 1024)
 			.setFooter(await dtg());
 
 		if (!lesson.archiveID) {
