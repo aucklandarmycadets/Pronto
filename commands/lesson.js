@@ -265,14 +265,14 @@ async function msgPrompt(msg, range, colours) {
 		if (reply.content.toLowerCase() === 'cancel') throw 'cancel';
 
 		else if (!Number(reply.content)) {
-			sendMsg(msg.channel, { embeds: [promptEmbed('You must enter a number.', colours.error)] }, null, true);
+			sendMsg(msg.channel, { embeds: [promptEmbed('You must enter a number.', colours.error)] });
 			throw await msgPrompt(msg, range, colours);
 		}
 
 		else if (!range.includes(Number(reply.content))) {
 			console.log(range);
 			console.log(reply.content);
-			sendMsg(msg.channel, { embeds: [promptEmbed(`You must enter a number between ${range[0]} and ${range[range.length - 1]}.`, colours.error)] }, null, true);
+			sendMsg(msg.channel, { embeds: [promptEmbed(`You must enter a number between ${range[0]} and ${range[range.length - 1]}.`, colours.error)] });
 			throw await msgPrompt(msg, range, colours);
 		}
 
