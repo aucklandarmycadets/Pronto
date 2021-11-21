@@ -71,6 +71,7 @@ module.exports = async guild => {
 				.addField('Lesson Plan Due', _lesson.dueDate)
 				.addField('Lesson Date', _lesson.lessonDate)
 				.setFooter(await dtg());
+				.addField('Resources', outputResources(_lesson.submittedResources, true))
 
 			sendMsg(msg.channel, { embeds: [lessonEmbed] });
 		}
@@ -92,8 +93,8 @@ module.exports = async guild => {
 				.setTitle('Lesson Resources Updated')
 				.setDescription(`**${msg.member.displayName}** has added a new resource to this lesson.`)
 				.addField('Lesson', _lesson.lessonName)
-				.addField('Resources', outputResources(_lesson.submittedResources))
 				.setFooter(await dtg());
+				.addField('Resources', outputResources(_lesson.submittedResources, true))
 
 			sendMsg(msg.channel, { embeds: [updatedEmbed] });
 		}
@@ -125,8 +126,8 @@ module.exports = async guild => {
 				.setTitle('Lesson Resources Updated')
 				.setDescription(`**${msg.member.displayName}** has removed a resource from this lesson.`)
 				.addField('Lesson', _lesson.lessonName)
-				.addField('Resources', outputResources(_lesson.submittedResources))
 				.setFooter(await dtg());
+				.addField('Resources', outputResources(_lesson.submittedResources, true))
 
 			sendMsg(msg.channel, { embeds: [updatedEmbed] });
 		}
@@ -144,6 +145,7 @@ module.exports = async guild => {
 				.addField('Lesson', _lesson.lessonName)
 				.addField('Lesson Plan Due', _lesson.dueDate)
 				.addField('Lesson Date', _lesson.lessonDate)
+				.addField('Resources', outputResources(_lesson.submittedResources, true))
 				.setFooter('Use the reactions below to confirm or cancel.');
 
 			sendDM(msg.author, { embeds: [submitEmbed] })

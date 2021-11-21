@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = arr => {
+module.exports = (arr, toString) => {
 	let procArr = [];
 	const linksArr = [];
 	const outputArr = [];
@@ -19,6 +19,10 @@ module.exports = arr => {
 	}
 
 	return (outputArr.concat(linksArr).length)
-		? outputArr.concat(linksArr)
-		: ['N/A'];
+		? (toString)
+			? outputArr.concat(linksArr).join('\n')
+			: outputArr.concat(linksArr)
+		: (toString)
+			? 'N/A'
+			: ['N/A'];
 };

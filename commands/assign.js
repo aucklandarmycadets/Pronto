@@ -96,7 +96,7 @@ module.exports = async guild => {
 			.addField('Lesson', lessonName)
 			.addField('Lesson Plan Due', dueDate)
 			.addField('Lesson Date', lessonDate)
-			.addField('Resources', outputResources(resources))
+			.addField('Resources', outputResources(resources, true))
 			.setFooter('Use the reactions below to confirm or cancel.');
 
 		sendDM(msg.author, { embeds: [lessonEmbed] }, null, true)
@@ -171,7 +171,7 @@ module.exports = async guild => {
 				dueTimestamp: dueTimestamp,
 				lessonDate: lessonDate,
 				lessonTimestamp: lessonTimestamp,
-				assignedResources: outputResources(resources),
+				assignedResources: outputResources(resources, true),
 			});
 
 			return await lesson.save().catch(error => console.error(error));

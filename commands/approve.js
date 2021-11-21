@@ -53,6 +53,7 @@ module.exports = async guild => {
 			.addField('Lesson Plan Due', lesson.dueDate)
 			.addField('Lesson Date', lesson.lessonDate)
 			.setFooter(await dtg());
+			.addField('Resources', outputResources(lesson.submittedResources, true))
 
 		if (!lesson.archiveID) {
 			sendMsg(lessonPlansChnl, { embeds: [submitEmbed] })
