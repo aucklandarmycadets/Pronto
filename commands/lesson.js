@@ -107,7 +107,7 @@ module.exports = async guild => {
 				.setColor(colours.error)
 				.setTitle('Remove a Lesson Resource')
 				.addField('Lesson', _lesson.lessonName)
-				.addField('Resources', resources)
+				.addField('Resources', resources.join('\n'))
 				.setFooter('Enter the corresponding serial for the resource you wish to remove, or \'cancel\' to exit.');
 
 			sendMsg(msg.channel, { embeds: [resourcesEmbed] });

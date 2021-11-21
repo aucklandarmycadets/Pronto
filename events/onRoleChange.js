@@ -45,8 +45,8 @@ module.exports = {
 			}
 
 			if (!addedPerms.length && !removedPerms.length) return;
-			if (addedPerms.length > 0) logEmbed.addField('Added Permissions', addedPerms);
-			if (removedPerms.length > 0) logEmbed.addField('Removed Permissions', removedPerms);
+			if (addedPerms.length > 0) logEmbed.addField('Added Permissions', addedPerms.join('\n'));
+			if (removedPerms.length > 0) logEmbed.addField('Removed Permissions', removedPerms.join('\n'));
 
 			const botRoles = newRole.guild.me.roles.cache;
 

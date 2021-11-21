@@ -34,7 +34,7 @@ module.exports = {
 
 			if (target.id === member.id) {
 				logEmbed.setAuthor('Member Kicked', memberUser.displayAvatarURL({ dynamic: true }));
-				logEmbed.addField('Kicked By', executor);
+				logEmbed.addField('Kicked By', executor.toString());
 			}
 		}
 

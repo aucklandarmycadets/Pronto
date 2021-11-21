@@ -43,7 +43,7 @@ module.exports = {
 
 		if (banLog) {
 			const { executor, target } = banLog;
-			if (target.id === user.id) logEmbed.addField(`${type} By`, executor);
+			if (target.id === user.id) logEmbed.addField(`${type} By`, executor.toString());
 		}
 
 		sendMsg(log, { embeds: [logEmbed] });

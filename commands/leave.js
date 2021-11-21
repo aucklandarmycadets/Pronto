@@ -22,7 +22,7 @@ module.exports = async guild => {
 			.setColor(colours.leave)
 			.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
 			.setDescription(`**${msg.member.displayName}** has requested leave in **#${msg.channel.name}**`)
-			.addField('Channel', msg.channel)
+			.addField('Channel', msg.channel.toString())
 			.addField('Remarks', capitalise(args.join(' ')))
 			.setFooter(await dtg());
 
@@ -31,7 +31,7 @@ module.exports = async guild => {
 			.setColor(colours.leave)
 			.setAuthor(msg.guild.name, msg.guild.iconURL({ dynamic: true }))
 			.setDescription(`Hi **${msg.member.displayName}**, your submission of leave has been received.`)
-			.addField('Channel', msg.channel)
+			.addField('Channel', msg.channel.toString())
 			.addField('Remarks', capitalise(args.join(' ')))
 			.setFooter(await dtg());
 

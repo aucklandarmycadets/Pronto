@@ -38,8 +38,8 @@ module.exports = async guild => {
 			.setAuthor(absentee.displayName, absentee.user.displayAvatarURL({ dynamic: true }))
 			.setDescription(`**${msg.member.displayName}** has submitted leave for **${absentee.displayName}** in **#${msg.channel.name}**`)
 			.addFields(
-				{ name: 'Absentee', value: absentee },
-				{ name: 'Channel', value: msg.channel },
+				{ name: 'Absentee', value: absentee.toString() },
+				{ name: 'Channel', value: msg.channel.toString() },
 				{ name: 'Remarks', value: capitalise(args.join(' ')) },
 			)
 			.setFooter(await dtg());
@@ -49,7 +49,7 @@ module.exports = async guild => {
 			.setColor(colours.leave)
 			.setAuthor(msg.guild.name, msg.guild.iconURL({ dynamic: true }))
 			.setDescription(`Hi **${msg.member.displayName}**, your submission of leave for **${absentee.displayName}** has been received.`)
-			.addField('Channel', msg.channel)
+			.addField('Channel', msg.channel.toString())
 			.addField('Remarks', capitalise(args.join(' ')))
 			.setFooter(await dtg());
 
@@ -58,7 +58,7 @@ module.exports = async guild => {
 			.setColor(colours.leave)
 			.setAuthor(msg.guild.name, msg.guild.iconURL({ dynamic: true }))
 			.setDescription(`**${msg.member.displayName}** has submitted leave for you in **#${msg.channel.name}**.`)
-			.addField('Channel', msg.channel)
+			.addField('Channel', msg.channel.toString())
 			.addField('Remarks', capitalise(args.join(' ')))
 			.setFooter(`Reply with '${await pCmd(help)} ${leave.cmd}' to learn how to request leave for yourself.`);
 
