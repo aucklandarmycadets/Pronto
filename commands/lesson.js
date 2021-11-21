@@ -114,6 +114,16 @@ module.exports = async guild => {
 
 			const delIndex = await msgPrompt(msg, range, colours);
 
+			if (delIndex === 'cancel') {
+				const cancelEmbed = new Discord.MessageEmbed()
+					.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }))
+					.setColor(colours.error)
+					.setDescription('**Cancelled.**')
+					.setFooter(await dateTimeGroup());
+
+				return sendMsg(msg.channel, { embeds: [cancelEmbed] });
+			}
+
 			_lesson.submittedResources = remove(_lesson.submittedResources, null, Number(delIndex) - 1);
 			_lesson.changed = true;
 			_lesson.approved = false;
