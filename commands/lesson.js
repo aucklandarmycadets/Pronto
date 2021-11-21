@@ -183,7 +183,7 @@ module.exports = async guild => {
 							.setDescription(`Click the ${successEmoji} to approve this lesson plan.\n\nAlternatively, you can manually type \`!approve\`.`)
 							.setColor(colours.pronto);
 
-						sendMsg(msg.channel, { content: rolesOutput(trainingIDs, true) }, ackEmbed)
+						sendMsg(msg.channel, { content: rolesOutput(trainingIDs, true), embeds: [ackEmbed] })
 							.then(async approveMsg => {
 								await successReact(approveMsg);
 
