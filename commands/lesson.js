@@ -250,7 +250,7 @@ async function msgPrompt(msg, range, colours) {
 	try {
 		if (reply.content.toLowerCase() === 'cancel') throw 'cancel';
 
-		else if (!Number(reply.content)) {
+		else if (isNaN(Number(reply.content))) {
 			sendMsg(msg.channel, { embeds: [promptEmbed('You must enter a number.', colours.error)] });
 			throw await msgPrompt(msg, range, colours);
 		}
