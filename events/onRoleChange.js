@@ -35,14 +35,8 @@ module.exports = {
 			const oldPerms = oldRole.permissions.toArray();
 			const changedPerms = updatedPermissions(newRole, oldRole);
 
-			const removedPerms = [];
-			const addedPerms = [];
-
-			for (let i = 0; i < changedPerms.length; i++) {
-				(oldPerms.includes(changedPerms[i]))
-					? removedPerms.push(changedPerms[i])
-					: addedPerms.push(changedPerms[i]);
-			}
+			const removedPerms = changedPerms.filter(permission => oldPerms.includes(permission));
+			const addedPerms = changedPerms.filter(permission => !oldPerms.includes(permission));
 
 			if (!addedPerms.length && !removedPerms.length) return;
 			if (addedPerms.length > 0) logEmbed.addField('Added Permissions', addedPerms.join('\n'));

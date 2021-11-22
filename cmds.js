@@ -430,8 +430,8 @@ module.exports = async guild => {
 	}
 
 	function pAls(cmd) {
-		const als = [...cmd.aliases];
-		for (let i = 0; i < als.length; i++) als[i] = `${prefix}${als[i]}`;
-		return als.join(', ');
+		return [...cmd.aliases]
+			.map(alias => prefix + alias)
+			.join(', ');
 	}
 };

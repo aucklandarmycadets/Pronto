@@ -1,27 +1,20 @@
 'use strict';
 
-module.exports = (arr, toString) => {
-	let procArr = [];
-	const linksArr = [];
-	const outputArr = [];
-	let count = 1;
+module.exports = (array, toString) => {
+	const processedArray = array.flatMap(resource => resource.split('\n'));
 
-	for (let i = 0; i < arr.length; i++) {
-		procArr = procArr.concat(arr[i].split('\n'));
-	}
+	const attachmentArray = processedArray.filter(resource => !resource.startsWith('[Resource]'))
+		.map(resource => resource);
 
-	for (let i = 0; i < procArr.length; i++) {
-		if (procArr[i].substr(0, 10) === '[Resource]') {
-			linksArr.push(`[Resource ${count}]${procArr[i].substring(10)}`);
-			count++;
-		}
-		else outputArr.push(`${procArr[i]}`);
-	}
+	const urlArray = processedArray.filter(resource => resource.startsWith('[Resource]'))
+		.map((resource, i) => `[Resource ${i + 1}]${resource.replace('[Resource]', '')}`);
 
-	return (outputArr.concat(linksArr).length)
+	const combinedArr = attachmentArray.concat(urlArray);
+
+	return (combinedArr.length)
 		? (toString)
-			? outputArr.concat(linksArr).join('\n')
-			: outputArr.concat(linksArr)
+			? combinedArr.join('\n')
+			: combinedArr
 		: (toString)
 			? 'N/A'
 			: ['N/A'];

@@ -226,38 +226,22 @@ function processMentions(obj) {
 		.join('\n');
 }
 
-function removeResources(db) {
-	let procArr = [];
-	const linksArr = [];
-	const attArr = [];
-	const dbArr = [];
-	let count = 1;
+function removeResources(lesson) {
+	const processedArray = lesson.submittedResources.flatMap(resource => resource.split('\n'));
 
-	for (let i = 0; i < db.submittedResources.length; i++) {
-		procArr = procArr.concat(db.submittedResources[i].split('\n'));
-	}
+	const attachmentArray = processedArray.filter(resource => !resource.startsWith('[Resource]'))
+		.map(resource => resource);
 
-	for (let i = 0; i < procArr.length; i++) {
-		if (procArr[i].substr(0, 10) === '[Resource]') {
-			linksArr.push(`[Resource ${count}]${procArr[i].substring(10)}`);
-			dbArr.push(`${procArr[i]}`);
-			count++;
-		}
-		else attArr.push(`${procArr[i]}`);
-	}
+	const dbArray = processedArray.filter(resource => resource.startsWith('[Resource]'));
+	const urlArray = dbArray.map((resource, i) => `[Resource ${i + 1}]${resource.replace('[Resource]', '')}`);
 
-	db.submittedResources = attArr.concat(dbArr);
-	db.save().catch(error => console.error(error));
+	lesson.submittedResources = attachmentArray.concat(dbArray);
+	lesson.save().catch(error => console.error(error));
 
-	const outputArr = attArr.concat(linksArr);
-	const range = [];
+	const resources = attachmentArray.concat(urlArray)
+		.map((resource, i) => `\`${i + 1}\` ${resource}`);
 
-	for (let i = 0; i < outputArr.length; i++) {
-		outputArr[i] = `\`${i + 1}\` ${outputArr[i]}`;
-		range.push(i + 1);
-	}
-
-	return { resources: outputArr, range: range };
+	return { resources, range: resources.map((_, i) => i + 1) };
 }
 
 async function msgPrompt(msg, range, colours) {

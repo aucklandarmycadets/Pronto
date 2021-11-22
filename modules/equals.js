@@ -6,9 +6,5 @@ module.exports = (arr1, arr2) => {
 	if (!arr1.length) return false;
 	if (arr1.length !== arr2.length) return false;
 
-	for (let i = 0; i < arr1.length; i++) {
-		if (arr1[i] !== arr2[i]) return false;
-	}
-
-	return true;
+	return arr1.every((element, i) => element === arr2[i]);
 };
