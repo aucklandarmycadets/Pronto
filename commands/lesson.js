@@ -229,8 +229,7 @@ function processMentions(obj) {
 function removeResources(lesson) {
 	const processedArray = lesson.submittedResources.flatMap(resource => resource.split('\n'));
 
-	const attachmentArray = processedArray.filter(resource => !resource.startsWith('[Resource]'))
-		.map(resource => resource);
+	const attachmentArray = processedArray.filter(resource => !resource.startsWith('[Resource]'));
 
 	const dbArray = processedArray.filter(resource => resource.startsWith('[Resource]'));
 	const urlArray = dbArray.map((resource, i) => `[Resource ${i + 1}]${resource.replace('[Resource]', '')}`);
