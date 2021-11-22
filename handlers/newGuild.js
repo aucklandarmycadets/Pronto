@@ -148,6 +148,6 @@ function findRole(name, guild) {
 
 function channelsOutput(collection, guild) {
 	return [...collection.filter(_guild => _guild === guild.guildID).keys()]
-		.reduce((list, channel) => list + `<#${channel}>\n`, '')
-		.replace(/\n+$/, '');
+		.map(channel => `<#${channel}>`)
+		.join('\n');
 }

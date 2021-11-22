@@ -96,6 +96,6 @@ module.exports = async guild => {
 
 function processMentions(obj) {
 	return Object.values(obj)
-		.reduce((mentions, user) => mentions + `<@!${user.id}>\n`, '')
-		.replace(/\n+$/, '');
+		.map(user => `<@!${user.id}>`)
+		.join('\n');
 }

@@ -279,6 +279,6 @@ async function whileLoop(prompt, msg, type, colours) {
 }
 
 function processMentions(members) {
-	return members.reduce((mentions, member) => mentions + `${member}\n`, '')
-		.replace(/\n+$/, '');
+	return members.map(member => member.toString())
+		.join('\n');
 }

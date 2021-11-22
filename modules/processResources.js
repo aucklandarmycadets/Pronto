@@ -2,11 +2,10 @@
 
 const Discord = require('discord.js');
 
-module.exports = (att, URLs) => {
-	const intialString = (att)
-		? `[${Discord.escapeMarkdown(att.name)}](${att.url})\n`
+module.exports = (attachment, URLs) => {
+	const initialString = (attachment)
+		? `[${Discord.escapeMarkdown(attachment.name)}](${attachment.url})\n`
 		: '';
 
-	return URLs.reduce((links, url) => links + `[Resource](${url})\n`, intialString)
-		.replace(/\n+$/, '');
+	return initialString + URLs.map(url => `[Resource](${url})`).join('\n');
 };
