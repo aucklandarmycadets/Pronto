@@ -244,15 +244,8 @@ function removeResources(lesson) {
 }
 
 async function msgPrompt(msg, range, colours) {
-	const promises = [];
-	const filter = message => message.author.id === msg.author.id;
-	promises.push(
-		await msg.channel.awaitMessages(filter, { max: 1 })
-			.then(collected => collected),
-	);
-
-	await Promise.all(promises);
-	const reply = promises[0].first();
+	const collected = await msg.channel.awaitMessages(_msg => _msg.author.id === msg.author.id, { max: 1 });
+	const reply = collected.first();
 
 	try {
 		if (reply.content.toLowerCase() === 'cancel') throw 'cancel';
