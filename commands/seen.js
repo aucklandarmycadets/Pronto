@@ -9,8 +9,6 @@ module.exports = async guild => {
 	const { ids: { lessonsID }, cmds: { seen }, colours } = await require('../handlers/database')(guild);
 
 	seen.execute = async (msg, user) => {
-		if (!user.id) successReact(msg);
-
 		const lesson = await findLesson(msg.channel.id);
 
 		const instructor = (user.id)
@@ -32,6 +30,7 @@ module.exports = async guild => {
 
 		catch (error) { return cmdError(msg, error, seen.error); }
 
+		if (!user.id) successReact(msg);
 		const seenEmbed = new Discord.MessageEmbed()
 			.setColor(colours.success)
 			.setFooter(await dtg());
