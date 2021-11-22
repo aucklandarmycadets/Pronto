@@ -64,12 +64,10 @@ module.exports = async guild => {
 		}
 
 		else {
-			let archiveMsg;
 			const filterBy = _msg => _msg.id === lesson.archiveID;
+			let archiveMsg, before;
 
 			while (!archiveMsg) {
-				let before = null;
-
 				await lessonPlansChannel.messages.fetch({ limit: 100, before })
 					.then(msgs => {
 						archiveMsg = msgs.filter(filterBy).first();
