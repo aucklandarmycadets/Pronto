@@ -242,13 +242,11 @@ async function msgPrompt(prompt, msg, type, colours) {
 
 			const args = reply.content.split(/ +/);
 			const att = reply.attachments.first();
-			const URLs = [];
-
-			for (let i = 0; i < args.length; i++) { if (checkURL(args[i])) URLs.push(args[i]); }
 
 			if (!att && !URLs.length) {
 				sendDM(msg.author, { embeds: [promptEmbed('You must attach a file or enter a URL!', colours.error)] }, null, true);
 				throw await msgPrompt(prompt, msg, type, colours);
+			const URLs = substrings.filter(substr => checkURL(substr));
 			}
 
 			throw processResources(att, URLs);

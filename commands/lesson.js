@@ -22,7 +22,7 @@ module.exports = async guild => {
 				: null;
 
 		const att = msg.attachments.first();
-		const URLs = [];
+		const URLs = args.filter(arg => isURL(arg));
 
 		try {
 			if (msg.channel.parentID !== lessonsID) {
@@ -37,8 +37,6 @@ module.exports = async guild => {
 			else if (!_lesson.instructors[msg.author.id].seen) _lesson = await bot.commands.get(seen.cmd).execute(msg, msg.author);
 
 			if (cmd === 'add') {
-				for (let i = 0; i < args.length; i++) { if (checkURL(args[i])) URLs.push(args[i]); }
-
 				if (!att && !URLs.length) throw 'You must attach a file or enter a URL!';
 			}
 
