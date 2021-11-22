@@ -278,8 +278,7 @@ async function whileLoop(prompt, msg, type, colours) {
 	return await loop();
 }
 
-function processMentions(obj) {
-	let mentions = '';
-	obj.each(mention => mentions += `${mention}\n`);
-	return mentions.replace(/\n+$/, '');
+function processMentions(members) {
+	return members.reduce((mentions, member) => mentions + `${member}\n`, '')
+		.replace(/\n+$/, '');
 }

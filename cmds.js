@@ -413,19 +413,10 @@ module.exports = async guild => {
 	return cmds;
 
 	function rolesOutput(array) {
-		let rolesString = '';
-
-		if (!array) return rolesString;
-
-		const filteredArray = array.filter(id => id !== ids.administratorID && id !== ids.everyoneID);
-
-		for (let i = 0; i < filteredArray.length; i++) {
-			if (i % 3 === 0) rolesString += '\n';
-
-			rolesString += `<@&${filteredArray[i]}> `;
-		}
-
-		return rolesString;
+		return (array)
+			? array.filter(id => id !== ids.administratorID && id !== ids.everyoneID)
+				.reduce((mentions, id, i) => mentions + `${(i % 3 === 0) ? '\n' : ''}<@&${id}> `, '')
+			: '';
 	}
 
 	function errorText(helpTxt, cmd) {

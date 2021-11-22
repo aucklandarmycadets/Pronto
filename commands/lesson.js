@@ -221,9 +221,9 @@ module.exports = async guild => {
 };
 
 function processMentions(obj) {
-	let mentions = '';
-	for (const mention of Object.values(obj)) { mentions += `<@!${mention.id}>\n`; }
-	return mentions.replace(/\n+$/, '');
+	return Object.values(obj)
+		.reduce((mentions, user) => mentions + `<@!${user.id}>\n`, '')
+		.replace(/\n+$/, '');
 }
 
 function removeResources(db) {

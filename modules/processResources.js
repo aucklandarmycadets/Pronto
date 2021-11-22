@@ -3,10 +3,10 @@
 const Discord = require('discord.js');
 
 module.exports = (att, URLs) => {
-	let linkString = '';
+	const intialString = (att)
+		? `[${Discord.escapeMarkdown(att.name)}](${att.url})\n`
+		: '';
 
-	if (att) linkString += `[${Discord.escapeMarkdown(att.name)}](${att.url})\n`;
-	for (let i = 0; i < URLs.length; i++) linkString += `[Resource](${URLs[i]})\n`;
-
-	return linkString.replace(/\n+$/, '');
+	return URLs.reduce((links, url) => links + `[Resource](${url})\n`, intialString)
+		.replace(/\n+$/, '');
 };

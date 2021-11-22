@@ -147,13 +147,7 @@ function findRole(name, guild) {
 }
 
 function channelsOutput(collection, guild) {
-	let chnlsList = '';
-
-	const chnls = [...collection.filter(chnlGuild => chnlGuild === guild.guildID).keys()];
-
-	for (let i = 0; i < chnls.length; i++) {
-		chnlsList += `<#${chnls[i]}>\n`;
-	}
-
-	return chnlsList;
+	return [...collection.filter(_guild => _guild === guild.guildID).keys()]
+		.reduce((list, channel) => list + `<#${channel}>\n`, '')
+		.replace(/\n+$/, '');
 }

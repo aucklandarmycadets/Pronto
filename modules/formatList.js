@@ -1,15 +1,11 @@
 'use strict';
 
 module.exports = (obj, forList) => {
-	let helpString = '';
-
 	const [startFormat, endFormat] = (forList)
 		? ['`', '` - ']
 		: ['**', ':** '];
 
-	for (const [key, value] of Object.entries(obj)) {
-		helpString += `${startFormat}${key}${endFormat}${value}\n`;
-	}
-
-	return helpString.replace(/\n+$/, '');
+	return Object.entries(obj)
+		.reduce((list, [key, value]) => list + `${startFormat}${key}${endFormat}${value}\n`, '')
+		.replace(/\n+$/, '');
 };
