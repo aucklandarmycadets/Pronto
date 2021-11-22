@@ -26,7 +26,7 @@ module.exports = {
 
 		if (memberUser.bot) return;
 
-		const visitorRole = member.guild.roles.cache.find(role => role.id === visitorID);
+		const visitorRole = member.guild.roles.cache.find(visitorID);
 		member.roles.add(visitorRole).catch(error => debugError(error, `Error adding ${member} to ${visitorRole}.`));
 
 		const welcomeEmbed = new Discord.MessageEmbed()

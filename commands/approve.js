@@ -64,13 +64,12 @@ module.exports = async guild => {
 		}
 
 		else {
-			const filterBy = _msg => _msg.id === lesson.archiveID;
 			let archiveMsg, before;
 
 			while (!archiveMsg) {
 				await lessonPlansChannel.messages.fetch({ limit: 100, before })
 					.then(msgs => {
-						archiveMsg = msgs.filter(filterBy).first();
+						archiveMsg = msgs.get(lesson.archiveID);
 						before = msgs.last().id;
 					})
 					.catch(error => debugError(error, `Error fetching messages in ${lessonPlansChannel}.`));
