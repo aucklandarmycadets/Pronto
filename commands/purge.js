@@ -29,25 +29,27 @@ module.exports = async guild => {
 
 		catch (error) { return cmdError(msg, error, purge.error); }
 
-		msg.channel.messages.fetch({ limit: 100, before: msg.id })
-			.then(messages => {
-				if (user) {
-					const filterBy = user.id;
-					messages = messages.filter(message => message.author.id === filterBy).array().slice(0, purgeCount);
-				}
+		let msgs = [];
+		let before = msg.id;
 
-				else {
-					messages = messages.array().slice(0, purgeCount);
-				}
+		while (msgs.length !== purgeCount) {
+			await msg.channel.messages.fetch({ limit: 100, before })
+				.then(_msgs => {
+					msgs = (userToPurge)
+						? msgs.concat(_msgs.filter(_msg => _msg.author.id === userToPurge.id).array().slice(0, purgeCount - msgs.length))
+						: msgs.concat(_msgs.array().slice(0, purgeCount - msgs.length));
 
-				msg.channel.bulkDelete(messages)
-					.catch(error => {
-						errorReact(msg);
-						embedScaffold(guild, msg.channel, `${msg.author} Error purging ${purgeCount} messages.`, colours.error, 'msg');
-						debugError(error, `Error purging ${purgeCount} messages in ${msg.channel}.`);
-					});
-			})
-			.catch(error => debugError(error, `Error fetching messages in ${msg.channel}.`));
+					before = _msgs.last().id;
+				})
+				.catch(error => debugError(error, `Error fetching messages in ${msg.channel}.`));
+		}
+
+		msg.channel.bulkDelete(msgs)
+			.catch(error => {
+				errorReact(msg);
+				embedScaffold(guild, msg.channel, `${msg.author} Error purging ${purgeCount} messages.`, colours.error, 'MESSAGE');
+				debugError(error, `Error purging ${purgeCount} messages in ${msg.channel}.`);
+			});
 	};
 
 	return purge;
