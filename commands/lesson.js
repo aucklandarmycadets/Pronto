@@ -206,6 +206,8 @@ module.exports = async guild => {
 
 								collector.on('collect', async (_, user) => bot.commands.get(approve.cmd).execute(msg, user));
 							});
+
+						unsubmittedLessons(guild);
 					};
 
 					const lessonCancelled = () => awaitingConfirm.delete(_lesson.lessonID);
@@ -213,8 +215,6 @@ module.exports = async guild => {
 					return confirmation(msg, dm, lessonSubmit, lessonCancelled);
 				});
 		}
-
-		unsubmittedLessons(guild);
 	};
 
 	return lesson;
