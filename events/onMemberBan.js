@@ -6,7 +6,7 @@ const { debugError, dtg, sendMsg } = require('../modules');
 module.exports = {
 	events: ['guildBanAdd', 'guildBanRemove'],
 	process: [],
-	async execute(event, guild, user) {
+	async handler(event, guild, user) {
 		const { bot } = require('../pronto');
 		const { ids: { logID }, colours } = await require('../handlers/database')(guild);
 

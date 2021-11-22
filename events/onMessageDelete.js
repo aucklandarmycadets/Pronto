@@ -6,7 +6,7 @@ const { charLimit, debugError, delMsg, dtg, sendMsg } = require('../modules');
 module.exports = {
 	events: ['messageDelete'],
 	process: [],
-	async execute(_, msg) {
+	async handler(_, msg) {
 		const { bot } = require('../pronto');
 		const { config: { prefix }, ids: { logID }, cmds: { evaluate, help, lesson, attendance, assign, purge }, colours } = await require('../handlers/database')(msg.guild);
 

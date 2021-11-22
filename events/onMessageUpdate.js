@@ -7,7 +7,7 @@ const { commandHandler } = require('../handlers');
 module.exports = {
 	events: ['messageUpdate'],
 	process: [],
-	async execute(_, oldMessage, newMessage) {
+	async handler(_, oldMessage, newMessage) {
 		const { bot } = require('../pronto');
 		const { ids: { logID }, colours } = await require('../handlers/database')(newMessage.guild);
 

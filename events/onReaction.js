@@ -5,7 +5,7 @@ const { manageAttendance, updateUnsubmitted } = require('../handlers');
 module.exports = {
 	events: ['messageReactionAdd'],
 	process: [],
-	async execute(_, reaction, user) {
+	async handler(_, reaction, user) {
 		if (user.bot) return;
 		if (reaction.partial) await reaction.fetch();
 

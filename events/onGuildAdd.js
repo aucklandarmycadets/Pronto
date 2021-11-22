@@ -6,7 +6,7 @@ const { botPermsHandler, newGuild } = require('../handlers');
 module.exports = {
 	events: ['guildCreate'],
 	process: [],
-	async execute(_, guild) {
+	async handler(_, guild) {
 		await newGuild(guild);
 		botPermsHandler(guild);
 

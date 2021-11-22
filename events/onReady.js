@@ -7,7 +7,7 @@ const { botPermsHandler, lessonReminders, unsubmittedLessons } = require('../han
 module.exports = {
 	events: ['ready'],
 	process: [],
-	async execute() {
+	async handler() {
 		const { bot } = require('../pronto');
 		const { cmds: { help }, colours } = await require('../handlers/database')();
 

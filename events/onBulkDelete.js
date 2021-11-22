@@ -6,7 +6,7 @@ const { delMsg, dtg, sendMsg } = require('../modules');
 module.exports = {
 	events: ['messageDeleteBulk'],
 	process: [],
-	async execute(_, msgs) {
+	async handler(_, msgs) {
 		const guild = msgs.first().guild;
 
 		const { bot } = require('../pronto');

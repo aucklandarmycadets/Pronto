@@ -7,7 +7,7 @@ const { channelPairing } = require('../handlers');
 module.exports = {
 	events: ['voiceStateUpdate'],
 	process: [],
-	async execute(_, oldState, newState) {
+	async handler(_, oldState, newState) {
 		const { bot } = require('../pronto');
 		const { ids: { logID }, colours } = await require('../handlers/database')(newState.guild);
 

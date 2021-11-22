@@ -15,11 +15,11 @@ bot.login(TOKEN)
 
 mongoose.login(MONGOURI);
 
-const eventHandler = (proc, event, mod) => proc.on(event, (...args) => mod.execute(event, ...args));
+const eventHandler = (emitter, event, handler) => emitter.on(event, (...args) => handler(event, ...args));
 
-const botEvents = require('./events');
+const events = require('./events');
 
-Object.keys(botEvents).map(key => {
-	if (botEvents[key].events.length) botEvents[key].events.forEach(event => eventHandler(bot, event, botEvents[key]));
-	if (botEvents[key].process.length) botEvents[key].process.forEach(event => eventHandler(process, event, botEvents[key]));
+Object.values(events).forEach(module => {
+	if (module.events.length) module.events.forEach(event => eventHandler(bot, event, module.handler));
+	if (module.process.length) module.process.forEach(event => eventHandler(process, event, module.handler));
 });

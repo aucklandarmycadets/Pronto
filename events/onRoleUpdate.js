@@ -6,7 +6,7 @@ const { dtg, sendMsg } = require('../modules');
 module.exports = {
 	events: ['roleCreate', 'roleDelete'],
 	process: [],
-	async execute(event, role) {
+	async handler(event, role) {
 		const { bot } = require('../pronto');
 		const { ids: { logID }, colours } = await require('../handlers/database')(role.guild);
 

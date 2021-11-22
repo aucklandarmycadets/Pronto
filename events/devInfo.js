@@ -5,7 +5,7 @@ const { capitalise, embedScaffold, js } = require('../modules');
 module.exports = {
 	events: ['error', 'invalidated', 'warn'],
 	process: ['unhandledRejection', 'uncaughtExceptionMonitor'],
-	async execute(event, info) {
+	async handler(event, info) {
 		const { colours } = await require('../handlers/database')();
 
 		const errorEvents = ['error', 'unhandledRejection', 'uncaughtExceptionMonitor'];

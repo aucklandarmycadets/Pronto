@@ -9,7 +9,7 @@ const { dtg, formatAge, sendDM } = require('../modules');
 module.exports = {
 	events: [],
 	process: ['exit', 'SIGINT'],
-	async execute(event, code) {
+	async handler(event, code) {
 		const { bot, version } = require('../pronto');
 
 		if (event === 'exit') console.log(`Exiting with code ${code}, uptime of ${formatAge(bot.uptime, true)}`);
