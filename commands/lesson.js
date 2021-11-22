@@ -3,7 +3,7 @@
 const Discord = require('discord.js');
 
 const { confirmation, findLesson, unsubmittedLessons } = require('../handlers');
-const { checkURL, cmdError, delMsg, dtg, outputResources, processResources, promptEmbed, remove, rolesOutput, sendDirect, sendMsg, successReact } = require('../modules');
+const { checkURL, cmdError, delMsg, dtg, errorReact, outputResources, processResources, promptEmbed, remove, rolesOutput, sendDM, sendMsg, successReact } = require('../modules');
 
 const awaitingConfirm = new Set();
 
@@ -113,6 +113,7 @@ module.exports = async guild => {
 			const delIndex = await msgPrompt(msg, range, colours);
 
 			if (delIndex === 'cancel') {
+				errorReact(msg);
 				const cancelEmbed = new Discord.MessageEmbed()
 					.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }))
 					.setColor(colours.error)
@@ -122,6 +123,7 @@ module.exports = async guild => {
 				return sendMsg(msg.channel, { embeds: [cancelEmbed] });
 			}
 
+			successReact(msg);
 			_lesson.submittedResources = remove(_lesson.submittedResources, null, Number(delIndex) - 1);
 			_lesson.changed = true;
 			_lesson.approved = false;
