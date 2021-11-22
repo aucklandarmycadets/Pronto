@@ -3,7 +3,7 @@
 const { capitalise, embedScaffold, js } = require('../modules');
 
 module.exports = {
-	events: ['error', 'invalidated', 'warn'],
+	events: ['error', 'warn'],
 	process: ['unhandledRejection', 'uncaughtExceptionMonitor'],
 	async handler(event, info) {
 		const { colours } = await require('../handlers/database')();
