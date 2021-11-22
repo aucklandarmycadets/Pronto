@@ -5,7 +5,7 @@ const { embedScaffold, pCmd } = require('../modules');
 const { botPermsHandler, lessonReminders, unsubmittedLessons } = require('../handlers');
 
 module.exports = {
-	events: ['ready'],
+	bot: ['ready'],
 	process: [],
 	async handler() {
 		const { bot } = require('../pronto');

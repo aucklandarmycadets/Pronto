@@ -5,7 +5,7 @@ const { dtg, debugError, sendMsg, updatedPermissions } = require('../modules');
 const { botPermsHandler } = require('../handlers');
 
 module.exports = {
-	events: ['guildMemberUpdate'],
+	bot: ['guildMemberUpdate'],
 	process: [],
 	async handler(_, oldMember, newMember) {
 		const { bot } = require('../pronto');

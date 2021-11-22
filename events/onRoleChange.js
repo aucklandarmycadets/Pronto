@@ -5,7 +5,7 @@ const { dtg, sendMsg, updatedPermissions } = require('../modules');
 const { botPermsHandler } = require('../handlers');
 
 module.exports = {
-	events: ['roleUpdate'],
+	bot: ['roleUpdate'],
 	process: [],
 	async handler(_, oldRole, newRole) {
 		const { bot } = require('../pronto');

@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 const { dtg, sendMsg } = require('../modules');
 
 module.exports = {
-	events: ['roleCreate', 'roleDelete'],
+	bot: ['roleCreate', 'roleDelete'],
 	process: [],
 	async handler(event, role) {
 		const { bot } = require('../pronto');

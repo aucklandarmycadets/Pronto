@@ -5,7 +5,7 @@ const { charLimit, dtg, sendMsg } = require('../modules');
 const { commandHandler } = require('../handlers');
 
 module.exports = {
-	events: ['messageUpdate'],
+	bot: ['messageUpdate'],
 	process: [],
 	async handler(_, oldMessage, newMessage) {
 		const { bot } = require('../pronto');

@@ -5,7 +5,7 @@ const { dtg, sendMsg } = require('../modules');
 const { channelPairing } = require('../handlers');
 
 module.exports = {
-	events: ['voiceStateUpdate'],
+	bot: ['voiceStateUpdate'],
 	process: [],
 	async handler(_, oldState, newState) {
 		const { bot } = require('../pronto');

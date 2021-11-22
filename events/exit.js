@@ -7,7 +7,7 @@ const { ids: { devID } } = require('../config');
 const { dtg, formatAge, sendDM } = require('../modules');
 
 module.exports = {
-	events: [],
+	bot: [],
 	process: ['exit', 'SIGINT'],
 	async handler(event, code) {
 		const { bot, version } = require('../pronto');

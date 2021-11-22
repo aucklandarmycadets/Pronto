@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 const { delMsg, dtg, sendMsg } = require('../modules');
 
 module.exports = {
-	events: ['messageDeleteBulk'],
+	bot: ['messageDeleteBulk'],
 	process: [],
 	async handler(_, msgs) {
 		const guild = msgs.first().guild;

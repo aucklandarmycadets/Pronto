@@ -4,7 +4,7 @@ const { emojis } = require('../config');
 const { botPermsHandler, newGuild } = require('../handlers');
 
 module.exports = {
-	events: ['guildCreate'],
+	bot: ['guildCreate'],
 	process: [],
 	async handler(_, guild) {
 		await newGuild(guild);

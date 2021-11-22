@@ -3,7 +3,7 @@
 const { manageAttendance, updateUnsubmitted } = require('../handlers');
 
 module.exports = {
-	events: ['messageReactionAdd'],
+	bot: ['messageReactionAdd'],
 	process: [],
 	async handler(_, reaction, user) {
 		if (user.bot) return;

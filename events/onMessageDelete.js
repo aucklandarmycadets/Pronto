@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 const { charLimit, debugError, delMsg, dtg, sendMsg } = require('../modules');
 
 module.exports = {
-	events: ['messageDelete'],
+	bot: ['messageDelete'],
 	process: [],
 	async handler(_, msg) {
 		const { bot } = require('../pronto');

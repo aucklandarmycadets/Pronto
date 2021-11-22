@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 const { debugError, dtg, sendMsg } = require('../modules');
 
 module.exports = {
-	events: ['guildBanAdd', 'guildBanRemove'],
+	bot: ['guildBanAdd', 'guildBanRemove'],
 	process: [],
 	async handler(event, guild, user) {
 		const { bot } = require('../pronto');
