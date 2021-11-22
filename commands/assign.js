@@ -205,8 +205,7 @@ async function msgPrompt(prompt, msg, type, colours) {
 		sendDM(msg.author, { embeds: [prompt] }, null, true)
 			.then(async () => {
 				promises.push(
-					await msg.author.dmChannel.awaitMessages(filter, { max: 1 })
-						.then(collected => collected),
+					await msg.author.dmChannel.awaitMessages(filter, { max: 1 }),
 				);
 			}),
 	);

@@ -115,8 +115,7 @@ async function msgPrompt(prompt, user, channel, colours) {
 		sendDM(user, { embeds: [prompt] }, channel)
 			.then(async () => {
 				promises.push(
-					await user.dmChannel.awaitMessages(filter, { max: 1 })
-						.then(collected => collected),
+					await user.dmChannel.awaitMessages(msg => msg.author.id === user.id, { max: 1 }),
 				);
 			}),
 	);
