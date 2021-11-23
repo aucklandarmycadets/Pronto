@@ -36,9 +36,9 @@ module.exports = async guild => {
 		try {
 			const embed = new Discord.MessageEmbed();
 
-			let evaled = '*'.repeat(bot.token.length);
-
-			if (!code.toLowerCase().includes('token')) evaled = await eval(code);
+			let evaled = (!code.toLowerCase().includes('token'))
+				? await eval(`(async () => { ${code} })()`)
+				: '*'.repeat(bot.token.length);
 
 			if (code.includes('embed.')) sendMsg(msg.channel, { embeds: [embed] });
 
