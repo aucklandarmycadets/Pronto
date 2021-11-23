@@ -38,11 +38,5 @@ module.exports = {
 			}
 		}
 
-		let isBan;
-
-		try { isBan = await member.guild.fetchBan(member); }
-		catch { null; }
-
-		if (!isBan) sendMsg(log, { embeds: [logEmbed] });
 	},
 };
