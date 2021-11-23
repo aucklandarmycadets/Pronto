@@ -35,7 +35,7 @@ async function process(cmds, database) {
 	}
 
 	const procCmds = {};
-	const uniqueKeys = ['roles', 'noRoles', 'devOnly', 'allowDM', 'showList'];
+	const uniqueKeys = ['roles', 'noRoles', 'allowDM', 'showList'];
 
 	for (const [cmd, cmdObj] of Object.entries(cmds)) {
 		for (let i = 0; i < uniqueKeys.length; i++) {
