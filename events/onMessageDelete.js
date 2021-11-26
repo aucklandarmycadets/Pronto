@@ -87,9 +87,11 @@ module.exports = {
 			);
 
 			const args = msg.content.split(/ +/);
-			const msgCmd = args.shift().toLowerCase().replace(prefix, '');
 
-			const hasCmd = cmd => cmd.cmd === msgCmd || cmd.aliases.includes(msgCmd);
+			const hasBotMention = stripID(args[0]) === bot.user.id;
+			const msgCmd = (hasBotMention)
+				? args.splice(0, 2)[1].toLowerCase()
+				: args.shift().toLowerCase().replace(prefix.toLowerCase(), '');
 
 			return autoDelCmds.some(hasCmd);
 		}
