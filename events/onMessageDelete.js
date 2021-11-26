@@ -2,6 +2,7 @@
 
 const Discord = require('discord.js');
 const { charLimit, debugError, delMsg, dtg, sendMsg } = require('../modules');
+const fs = require('fs');
 
 module.exports = {
 	bot: ['messageDelete'],
@@ -78,7 +79,12 @@ module.exports = {
 		sendMsg(log, { embeds: [logEmbed] });
 
 		function cmdCheck() {
-			const autoDelCmds = [evaluate, help, lesson, attendance, assign, purge];
+			const autoDelCmds = Promise.all(
+				fs.readdirSync('./commands/')
+					.filter(file => file.endsWith('.js') && file !== 'index.js')
+					.filter(file => fs.readFileSync(`./commands/${file}`, { encoding: 'utf-8', flag: 'r' }).includes('delMsg'))
+					.map(async file => await require(`../commands/${file}`)(msg.guild)),
+			);
 
 			const args = msg.content.split(/ +/);
 			const msgCmd = args.shift().toLowerCase().replace(prefix, '');
