@@ -32,8 +32,9 @@ module.exports = {
 		const welcomeEmbed = new Discord.MessageEmbed()
 			.setColor(colours.pronto)
 			.setAuthor(memberUser.tag, memberUser.displayAvatarURL({ dynamic: true }))
-			.setDescription(`**${memberUser} has just entered ${newMembers}.**\nMake them feel welcome!`)
 			.setFooter(await dtg());
+			.setDescription(`**${member.displayName} has just entered ${newMembersChannel.name}.**\nMake them feel welcome!`)
+			.addField('User', member.toString())
 		sendMsg(recruiting, { embeds: [welcomeEmbed] });
 	},
 };
