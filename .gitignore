@@ -59,9 +59,13 @@ typings/
 
 # next.js build output
 .next
-devConstObj.js
+
+# eslint configuration
 .eslintrc.json
-execProcess.js
+
+# Iterate version script
 updateVersion.js
 updateVersion.sh
+
+# VS Code files
 .vscode/
