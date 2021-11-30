@@ -12,13 +12,9 @@ module.exports = async guild => {
 	evaluate.execute = async (msg, args) => {
 		const { bot } = require('../pronto');
 
-		const codeBlock = (args.includes('-nocode') || args.includes('--nc'))
-			? false
-			: true;
+		const codeBlock = !(args.includes('-nocode') || args.includes('--nc'));
 
-		const silent = (args.includes('-silent') || args.includes('--s'))
-			? true
-			: false;
+		const silent = (args.includes('-silent') || args.includes('--s'));
 
 		if (args.includes('-delete') || args.includes('--del')) delMsg(msg);
 

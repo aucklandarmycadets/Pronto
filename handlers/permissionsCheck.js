@@ -7,7 +7,5 @@ module.exports = (memberRoles, id, cmd) => {
 	const hasAllowedRoles = !cmd.devOnly && cmd.roles.length && memberRoles.some(roles => cmd.roles.includes(roles.id));
 	const isDev = cmd.devOnly && id === devID;
 
-	return (noDisallowedRoles || hasAllowedRoles || isDev)
-		? true
-		: false;
+	return (noDisallowedRoles || hasAllowedRoles || isDev);
 };

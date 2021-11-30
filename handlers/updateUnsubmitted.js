@@ -9,8 +9,6 @@ module.exports = async (reaction, user) => {
 	const isUnsubmittedEmbed = (reaction.message.embeds[0])
 		? (reaction.message.embeds[0].title)
 			? (reaction.message.embeds[0].title === 'Lessons To Be Submitted')
-				? true
-				: false
 			: false
 		: false;
 

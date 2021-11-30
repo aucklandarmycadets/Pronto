@@ -59,8 +59,6 @@ module.exports = async guild => {
 		return (msg.embeds[0])
 			? (msg.embeds[0].title)
 				? (msg.embeds[0].title === embedTitle)
-					? true
-					: false
 				: false
 			: false;
 	});
