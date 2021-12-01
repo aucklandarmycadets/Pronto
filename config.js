@@ -38,7 +38,7 @@ exports.defaults = {
 		name: 'new-members',
 		desc: '**Introduce yourself!** You can ask us any questions you might have here, or just say hello!',
 	},
-	reference: {
+	lessonReference: {
 		name: 'reference',
 		get desc() {
 			const { bot } = require('./pronto');
