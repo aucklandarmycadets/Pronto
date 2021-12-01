@@ -3,9 +3,11 @@
 const { ids: { devID } } = require('../config');
 
 module.exports = (memberRoles, id, cmd) => {
-	const noDisallowedRoles = !cmd.devOnly && cmd.noRoles.length && !memberRoles.some(roles => cmd.noRoles.includes(roles.id));
-	const hasAllowedRoles = !cmd.devOnly && cmd.roles.length && memberRoles.some(roles => cmd.roles.includes(roles.id));
-	const isDev = cmd.devOnly && id === devID;
+	const hasDeniedRoles = memberRoles.some(roles => cmd.noRoles.includes(roles.id));
+	const hasRequiredRoles = memberRoles.some(roles => cmd.roles.includes(roles.id));
 
-	return (noDisallowedRoles || hasAllowedRoles || isDev);
+	const isDeveloper = id === devID;
+	const onlyDeniedRolesDefined = cmd.noRoles.length && !cmd.roles.length;
+
+	return (isDeveloper || (!cmd.devOnly && !hasDeniedRoles && (onlyDeniedRolesDefined || hasRequiredRoles)));
 };
