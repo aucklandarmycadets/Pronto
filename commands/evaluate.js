@@ -12,18 +12,20 @@ module.exports = async guild => {
 	evaluate.execute = async (msg, args) => {
 		const { bot } = require('../pronto');
 
-		const codeBlock = !(args.includes('-nocode') || args.includes('--nc'));
+		const shortFlags = args.filter(arg => arg.match(/(?<![-a-zA-Z])-[A-z]+(?![\s\S]*})/g))
+			.flatMap(flags => [...flags.replace('-'), '']);
 
-		const silent = (args.includes('-silent') || args.includes('--s'));
+		const codeBlock = !(args.includes('--no-code') || args.includes('--plain') || shortFlags.includes('P'));
 
-		if (args.includes('-delete') || args.includes('--del')) delMsg(msg);
+		const silent = (args.includes('--silent') || shortFlags.includes('s'));
 
-		args = args.filter(arg => !arg.match(/-[A-z]+/g));
+		if (args.includes('--delete') || shortFlags.includes('d')) deleteMsg(msg);
 
 		if (args[0].includes('```')) {
 			const _args = args.join(' ').split('\n');
 			args = _args.slice(1, _args.length - 1);
 		}
+		args = args.filter(arg => !arg.match(/(?<!(?<!--\w*)[a-zA-Z])-{1,2}[a-zA-Z]+/g));
 
 		if (args.length === 0) return cmdError(msg, 'You must enter something to evaluate.', evaluate.error);
 
