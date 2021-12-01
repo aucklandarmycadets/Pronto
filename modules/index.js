@@ -1,5 +1,37 @@
 'use strict';
 
-const processIndex = require('../handlers/processIndex');
-
-module.exports = processIndex('./modules');
+module.exports = {
+	modules: exports,
+	capitalise: require('./capitalise'),
+	charLimit: require('./charLimit'),
+	checkURL: require('./checkURL'),
+	cmdError: require('./cmdError'),
+	dtg: require('./dtg'),
+	debugError: require('./debugError'),
+	delMsg: require('./delMsg'),
+	difference: require('./difference'),
+	dmCmdError: require('./dmCmdError'),
+	embedScaffold: require('./embedScaffold'),
+	emojiReact: require('./emojiReact'),
+	equals: require('./equals'),
+	errorReact: require('./errorReact'),
+	formatAge: require('./formatAge'),
+	formatList: require('./formatList'),
+	getRoleError: require('./getRoleError'),
+	js: require('./js'),
+	merge: require('./merge'),
+	outputResources: require('./outputResources'),
+	pCmd: require('./pCmd'),
+	processResources: require('./processResources'),
+	promptEmbed: require('./promptEmbed'),
+	purgeChannel: require('./purgeChannel'),
+	remove: require('./remove'),
+	rolesOutput: require('./rolesOutput'),
+	sendDM: require('./sendDM'),
+	sendMsg: require('./sendMsg'),
+	sortByRoles: require('./sortByRoles'),
+	stripID: require('./stripID'),
+	successReact: require('./successReact'),
+	titleCase: require('./titleCase'),
+	updatedPermissions: require('./updatedPermissions'),
+};
