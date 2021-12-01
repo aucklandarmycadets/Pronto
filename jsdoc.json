@@ -11,11 +11,30 @@
 		"excludePattern": "(node_modules/|docs)"
 	},
 	"plugins": [
-		"plugins/markdown"
+		"plugins/markdown",
+		"node_modules/better-docs/category"
 	],
 	"opts": {
 		"recurse": true,
+		"verbose": true,
 		"destination": "./docs/",
-		"readme": "./readme.md"
+		"readme": "./readme.md",
+		"template": "node_modules/better-docs"
+	},
+	"templates": {
+		"cleverLinks": false,
+		"monospaceLinks": false,
+		"search": true,
+		"better-docs": {
+			"name": "Pronto",
+			"title": "Pronto |",
+			"hideGenerator": false,
+			"navLinks": [
+				{
+					"label": "Github",
+					"href": "https://github.com/JamesNZL/Pronto"
+				}
+			]
+		}
 	}
 }
