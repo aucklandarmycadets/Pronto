@@ -69,3 +69,6 @@ updateVersion.sh
 
 # VS Code files
 .vscode/
+
+# Temporarily ignore JSDoc documentation
+docs/
