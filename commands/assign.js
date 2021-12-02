@@ -248,9 +248,16 @@ module.exports = async guild => {
 };
 
 /**
+ * @typedef {'TEXT' | 'DATE' | 'ATTCHMENT'} InputType A \<string> representation of the type of input
+ * - Text inputs only require an input, with no additional error checking
+ * - Date inputs are parsed through chrono to ensure a valid date is recognised and return a Unix timest
+ * - Attachments allow attachments to be uploaded or URLs to be entered, with appropriate error checking
+ */
+
+/**
  * Collect the all the required inputs from the user and return an object with their completed inputs
  * @param {Discord.Message} msg The \<Message> that executed the command
- * @param {Object.<string, {prompt: string, type: 'TEXT' | 'DATE' | 'ATTACHMENT', allowMultiple: boolean}>} prompts An object defining the individual inputs to prompt for
+ * @param {Object.<string, {prompt: string, type: InputType, allowMultiple: boolean}>} prompts An object defining the individual inputs to prompt for
  * - Must contain an object.prompt property of type \<string>
  * - Must contain an object.type property for the type of input of type \<string>: `TEXT` || `DATE` || `ATTACHMENT`
  * - Must contain an object.allowMultiple \<boolean>: `true` || `false`
@@ -288,7 +295,7 @@ async function getUserInput(msg, prompts, colours) {
  * Display a prompt to the user and collect & process their input according to the type of input
  * @param {Discord.MessageEmbed} prompt The embed to use to prompt the user for the input
  * @param {Discord.Message} msg The \<Message> that executed the command
- * @param {'TEXT' | 'DATE' | 'ATTACHMENT'} type The type of input being prompted for: `TEXT` || `DATE` || `ATTACHMENT`
+ * @param {InputType} type The type of input being prompted for: `TEXT` || `DATE` || `ATTACHMENT`
  * @param {Typings.Colours} colours The guild's colour object
  * @param {boolean} allowMultiple Whether to allow multiple inputs
  * @returns {Promise<string | number | 'RESTART' | 'CANCEL' | 'DONE'>} The user's input, or the symbols `RESTART` || `CANCEL` || `DONE`
@@ -373,7 +380,7 @@ async function msgPrompt(prompt, msg, type, colours, allowMultiple) {
  * Implements a loop to allow multiple inputs for a given prompt, which are returned in an array
  * @param {Discord.MessageEmbed} prompt The embed to use to prompt the user for the input
  * @param {Discord.Message} msg The \<Message> that executed the command
- * @param {'TEXT' | 'DATE' | 'ATTACHMENT'} type The type of input being prompted for: `TEXT` || `DATE` || `ATTACHMENT`
+ * @param {InputType} type The type of input being prompted for: `TEXT` || `DATE` || `ATTACHMENT`
  * @param {Typings.Colours} colours The guild's colour object
  * @param {boolean} allowMultiple Whether to allow multiple inputs
  * @returns {Promise<string[] | number[] | 'RESTART' | 'CANCEL'>} An array of the user's inputs, or the symbols `RESTART` || `CANCEL`
