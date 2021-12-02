@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * @namespace models
+ */
 module.exports = {
 	models: exports,
 	Attendance: require('./attendance'),
