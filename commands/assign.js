@@ -1,6 +1,8 @@
 'use strict';
 
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
 const mongoose = require('mongoose');
 
 // Import chrono to schedule weekly lesson reminders
@@ -211,7 +213,7 @@ module.exports = async guild => {
 		/**
 		 * Create a new mongoose \<Lesson> document for the assigned lesson
 		 * @param {Discord.Snowflake} channelID The \<TextChannel.id> of the private lesson channel created for the lesson
-		 * @returns {Promise<Lesson>} The mongoose document for the lesson
+		 * @returns {Promise<Typings.Lesson>} The mongoose document for the lesson
 		 */
 		async function saveLesson(channelID) {
 			// For each instructor, create a new nested object within the instructors object with an ID property and a boolean flag to record acknowledgement status
@@ -224,7 +226,7 @@ module.exports = async guild => {
 
 			/**
 			 * Create new \<Lesson> document
-			 * @type {Lesson}
+			 * @type {Typings.Lesson}
 			 */
 			const lesson = await new Lesson({
 				_id: mongoose.Types.ObjectId(),
@@ -256,7 +258,7 @@ module.exports = async guild => {
  * - Text inputs only require an input, with no additional error checking
  * - Date inputs are parsed through chrono to ensure a valid date is recognised and return a Unix timestamp (ms)
  * - Attachments allow attachments to be uploaded or URLs to be entered, with appropriate error checking
- * @param {Colours} colours The guild's colour object
+ * @param {Typings.Colours} colours The guild's colour object
  * @returns {Promise<Object.<string, string | number> | 'CANCEL'>} An object with the user's completed inputs stored in each respective property, or the symbol `CANCEL` to represent a cancelled lesson assignment
  */
 async function getUserInput(msg, prompts, colours) {
@@ -288,7 +290,7 @@ async function getUserInput(msg, prompts, colours) {
  * @param {Discord.MessageEmbed} prompt The embed to use to prompt the user for the input
  * @param {Discord.Message} msg The \<Message> that executed the command
  * @param {'TEXT' | 'DATE' | 'ATTACHMENT'} type The type of input being prompted for: `TEXT` || `DATE` || `ATTACHMENT`
- * @param {Colours} colours The guild's colour object
+ * @param {Typings.Colours} colours The guild's colour object
  * @param {boolean} allowMultiple Whether to allow multiple inputs
  * @returns {Promise<string | number | 'RESTART' | 'CANCEL' | 'DONE'>} The user's input, or the symbols `RESTART` || `CANCEL` || `DONE`
  * - Text inputs return a \<string>
@@ -373,7 +375,7 @@ async function msgPrompt(prompt, msg, type, colours, allowMultiple) {
  * @param {Discord.MessageEmbed} prompt The embed to use to prompt the user for the input
  * @param {Discord.Message} msg The \<Message> that executed the command
  * @param {'TEXT' | 'DATE' | 'ATTACHMENT'} type The type of input being prompted for: `TEXT` || `DATE` || `ATTACHMENT`
- * @param {Colours} colours The guild's colour object
+ * @param {Typings.Colours} colours The guild's colour object
  * @param {boolean} allowMultiple Whether to allow multiple inputs
  * @returns {Promise<string[] | number[] | 'RESTART' | 'CANCEL'>} An array of the user's inputs, or the symbols `RESTART` || `CANCEL`
  * - The type stored within the array is dependent on the input type returned by msgPrompt()

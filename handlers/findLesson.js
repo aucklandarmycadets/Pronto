@@ -1,11 +1,13 @@
 'use strict';
 
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
 const { Lesson } = require('../models');
 
 /**
  *
  * @param {Discord.Snowflake} id
- * @returns {Promise<Lesson>}
+ * @returns {Promise<Typings.Lesson>}
  */
 module.exports = async id => {
 	return await Lesson.findOne({ lessonID: id }, error => {

@@ -1,9 +1,11 @@
 'use strict';
 
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
 const mongoose = require('mongoose');
-const { Attendance } = require('../models');
 
+const { Attendance } = require('../models');
 const { confirmWithReaction } = require('../handlers');
 const { commandError, deleteMsg, dateTimeGroup, emojiReact, sendDirect, sendMsg } = require('../modules');
 
@@ -98,7 +100,7 @@ module.exports = async guild => {
 
 						/**
 						 * Create and save a new mongoose document to record the register
-						 * @type {Attendance}
+						 * @type {Typings.Attendance}
 						 */
 						const document = await new Attendance({
 							_id: mongoose.Types.ObjectId(),

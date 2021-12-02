@@ -1,17 +1,19 @@
 'use strict';
 
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
+
 const dateFormat = require('dateformat');
 
 const { Lesson } = require('../models');
-
 const { dateTimeGroup, emojiReact, sendMsg } = require('../modules');
 
 module.exports = async guild => {
 	const { settings: { shortDate }, ids: { lessonReferenceID }, colours } = await require('../handlers/database')(guild);
 
 	/**
-	 * @type {Lesson[]}
+	 * @type {Typings.Lesson[]}
 	 */
 	const unsubmitted = await Lesson.find({ submitted: false }).sort({ dueTimestamp: 'ascending' });
 
@@ -25,7 +27,7 @@ module.exports = async guild => {
 
 	if (!unsubmitted.length) {
 		/**
-		 * @type {Lesson[]}
+		 * @type {Typings.Lesson[]}
 		 */
 		const lessons = await Lesson.find();
 		if (!lessons.length) return;

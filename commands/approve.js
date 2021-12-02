@@ -1,6 +1,8 @@
 'use strict';
 
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
 
 const { commandError, debugError, dateTimeGroup, enumerateResources, sendMsg, successReact } = require('../modules');
 const { findLesson } = require('../handlers');
@@ -18,7 +20,7 @@ module.exports = async guild => {
 	 * Approve a submitted lesson plan in a lesson channel, either from a message command or a message reaction
 	 * @param {Discord.Message} msg The \<Message> that either executed the approve command, or the \<Message> that the reaction collector was attached to
 	 * @param {string[] | Discord.User} user The command arguments, or a possible \<User> that will exist if the command was triggered by a reaction collector
-	 * @returns {Promise<Lesson>} The mongoose document for the lesson
+	 * @returns {Promise<Typings.Lesson>} The mongoose document for the lesson
 	 */
 	approve.execute = async (msg, user) => {
 		// Find <Lesson> document by querying database for lesson channel ID
@@ -134,7 +136,7 @@ module.exports = async guild => {
 
 /**
  * Process an \<Instructor> object into a formatted string
- * @param {Instructors} instructors An \<Instructors> object
+ * @param {Typings.Instructors} instructors An \<Instructors> object
  * @returns {string} A newline-delimited string of formatted user mentions
  */
 function processMentions(instructors) {

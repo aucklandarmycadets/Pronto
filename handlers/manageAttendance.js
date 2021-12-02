@@ -1,8 +1,10 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { Attendance } = require('../models');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
 
+const { Attendance } = require('../models');
 const { debugError, deleteMsg, dateTimeGroup, embedScaffold, promptEmbed, sendDirect } = require('../modules');
 
 const pendingInput = new Set();
@@ -14,7 +16,7 @@ module.exports = async (reaction, user) => {
 	const { ids: { attendanceID }, colours } = await require('../handlers/database')(reaction.message.guild);
 
 	/**
-	 * @type {Attendance}
+	 * @type {Typings.Attendance}
 	 */
 	const db = await Attendance.findOne({ channelID: reaction.message.id });
 

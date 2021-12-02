@@ -1,6 +1,8 @@
 'use strict';
 
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
 
 const { commandError, dateTimeGroup, sendMsg, successReact } = require('../modules');
 const { findLesson } = require('../handlers');
@@ -18,7 +20,7 @@ module.exports = async guild => {
 	 * Acknowledge a lesson warning, either from a message command or a message reaction
 	 * @param {Discord.Message} msg The \<Message> that either executed the approve command, or the \<Message> that the reaction collector was attached to
 	 * @param {string[] | Discord.User} user The command arguments, or a possible \<User> that will exist if the command was triggered by a reaction collector
-	 * @returns {Promise<Lesson>} The mongoose document for the lesson
+	 * @returns {Promise<Typings.Lesson>} The mongoose document for the lesson
 	 */
 	seen.execute = async (msg, user) => {
 		// Find <Lesson> document by querying database for lesson channel ID

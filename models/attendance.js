@@ -2,10 +2,12 @@
 
 // eslint-disable-next-line no-unused-vars
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
 const mongoose = require('mongoose');
 
 /**
- * @typedef {Attendance} models.Attendance An \<Object> representing the values of a \<mongoose.Document> to ensure attendance registers are only manageable by authorised users
+ * @typedef {Typings.Attendance} models.Attendance An \<Object> representing the values of a \<mongoose.Document> to ensure attendance registers are only manageable by authorised users
  * @property {mongoose.Schema.Types.ObjectId} _id A unique document identifier
  * @property {Discord.Snowflake} channelID The \<Message.id> of the \<Message> sent to the original submission channel
  * @property {Discord.Snowflake} attendanceID The \<Message.id> of the \<Message> sent to the guild's attendance channel

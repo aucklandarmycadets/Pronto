@@ -1,10 +1,12 @@
 'use strict';
 
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
 const mongoose = require('mongoose');
-const { Guild } = require('../models');
 
 const { defaults, colours } = require('../config');
+const { Guild } = require('../models');
 const { debugError, sendMsg } = require('../modules');
 
 const recentlyCreated = new Set();
@@ -24,7 +26,7 @@ module.exports = async guild => {
 	}
 
 	/**
-	 * @type {Guild}
+	 * @type {Typings.Guild}
 	 */
 	const existingGuild = await Guild.findOne({ guildID: guild.id }, error => {
 		if (error) console.error(error);
@@ -66,7 +68,7 @@ module.exports = async guild => {
 
 async function createGuild(guild) {
 	/**
-	 * @type {Guild}
+	 * @type {Typings.Guild}
 	 */
 	guild = await new Guild({
 		_id: mongoose.Types.ObjectId(),

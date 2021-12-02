@@ -2,12 +2,14 @@
 
 // eslint-disable-next-line no-unused-vars
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
 const mongoose = require('mongoose');
 
 const { settings, emojis, colours } = require('../config');
 
 /**
- * @typedef {Guild} models.Guild An \<Object> representing the values of a \<mongoose.Document> to record the specific configuration for each \<Guild>
+ * @typedef {Typings.Guild} models.Guild An \<Object> representing the values of a \<mongoose.Document> to record the specific configuration for each \<Guild>
  * @property {mongoose.Schema.Types.ObjectId} _id A unique document identifier
  * @property {Discord.Snowflake} guildID The \<Guild.id> that this configuration belongs to
  * @property {string} guildName The \<Guild.name> that this configuration belongs to
@@ -34,12 +36,12 @@ const { settings, emojis, colours } = require('../config');
  * @property {Discord.Snowflake | ''} ids.administratorID The \<Role.id> of the guild's administrator role if it is registered
  * @property {Discord.Snowflake[]} ids.trainingIDs A \<Role.id[]> of the guild's training roles
  * @property {Discord.Snowflake[]} ids.formations A \<Role.id[]> of the guild's formation roles
- * @property {ChannelPair[]} ids.channelPairs An {@link models.ChannelPair|<Object[]>} of the guild's pairings of \<VoiceChannel> and \<TextChannel>
+ * @property {Typings.ChannelPair[]} ids.channelPairs An {@link models.ChannelPair|<Object[]>} of the guild's pairings of \<VoiceChannel> and \<TextChannel>
  * @property {Object.<string, Object.<string, string | string[] | boolean>>} commands The guild's commands object containing each individual command in a nested object
  * @property {Object} emojis The guild's emojis object
- * @property {Emoji} emojis.success The guild's success [\<Emoji>]{@link models.Emoji}
- * @property {Emoji} emojis.error The guild's error [\<Emoji>]{@link models.Emoji}
- * @property {Colours} colours The guild's colour [\<Object>]{@link models.Colours}
+ * @property {Typings.Emoji} emojis.success The guild's success [\<Emoji>]{@link models.Emoji}
+ * @property {Typings.Emoji} emojis.error The guild's error [\<Emoji>]{@link models.Emoji}
+ * @property {Typings.Colours} colours The guild's colour [\<Object>]{@link models.Colours}
  */
 
 /**

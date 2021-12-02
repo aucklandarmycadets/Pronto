@@ -1,10 +1,13 @@
 'use strict';
 
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
+
 const { ids: { DEFAULT_GUILD } } = require('../config');
+const { Guild } = require('../models');
 const { difference, merge } = require('../modules');
 
 module.exports = async guild => {
-	const { Guild } = require('../models');
 	const updatedCommands = await require('../commands')(guild);
 
 	const id = (guild)
@@ -12,7 +15,7 @@ module.exports = async guild => {
 		: DEFAULT_GUILD;
 
 	/**
-	 * @type {Guild}
+	 * @type {Typings.Guild}
 	 */
 	const database = await Guild.findOne({ guildID: id }, error => {
 		if (error) console.error(error);

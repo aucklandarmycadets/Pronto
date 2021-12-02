@@ -1,6 +1,8 @@
 'use strict';
 
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
 
 const { commandError, deleteMsg, dateTimeGroup, enumerateResources, errorReact, isURL, processResources, promptEmbed, remove, rolesOutput, sendDirect, sendMsg, successReact } = require('../modules');
 const { confirmWithReaction, findLesson, unsubmittedLessons } = require('../handlers');
@@ -324,7 +326,7 @@ module.exports = async guild => {
 
 /**
  * Process an \<Instructor> object into a formatted string
- * @param {Instructors} instructors An \<Instructors> object
+ * @param {Typings.Instructors} instructors An \<Instructors> object
  * @returns {string} A newline-delimited string of formatted user mentions
  */
 function processMentions(instructors) {
@@ -336,7 +338,7 @@ function processMentions(instructors) {
 
 /**
  * Serialises a \<Lesson.submittedResources> string[] for display and creates a number[] of the serials
- * @param {{submittedResources: string[]}} lesson The mongoose document for the lesson
+ * @param {Typings.Lesson} lesson The mongoose document for the lesson
  * @returns {{resources: string[], range: number[]}} A \<string[]> of the serialised resources, and a \<number[]> of the valid serials
  */
 function serialiseResources(lesson) {
@@ -367,7 +369,7 @@ function serialiseResources(lesson) {
  * Collect and return a \<number> input from the user
  * @param {Discord.Message} msg The \<Message> that executed the command
  * @param {number[]} range A \<number[]> of valid number inputs
- * @param {Colours} colours The guild's colour object
+ * @param {Typings.Colours} colours The guild's colour object
  * @returns {Promise<number | 'CANCEL'>} The user's input, or the symbol `CANCEL`
  */
 async function getNumberInput(msg, range, colours) {
