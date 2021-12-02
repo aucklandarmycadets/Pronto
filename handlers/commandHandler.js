@@ -32,7 +32,7 @@ module.exports = async msg => {
 	await upsertCommands(guild);
 
 	bot.commands = new Discord.Collection();
-	const commands = await require('../commands/commands')(guild);
+	const commands = await require('../commands')(guild);
 
 	Object.keys(commands).map(key => {
 		bot.commands.set(commands[key].command, commands[key]);
