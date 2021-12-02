@@ -60,7 +60,7 @@ module.exports = async guild => {
 			.setFooter(await dateTimeGroup());
 
 		// Create confirmation embed
-		const dmEmbed = new Discord.MessageEmbed()
+		const directEmbed = new Discord.MessageEmbed()
 			.setTitle('Leave Request (For)')
 			.setColor(colours.leave)
 			.setAuthor(msg.guild.name, msg.guild.iconURL({ dynamic: true }))
@@ -84,7 +84,7 @@ module.exports = async guild => {
 
 		// Send the embeds to their respective destinations
 		sendMsg(attendanceChannel, { embeds: [attendanceEmbed] });
-		sendDirect(msg.author, { embeds: [dmEmbed] }, msg.channel);
+		sendDirect(msg.author, { embeds: [directEmbed] }, msg.channel);
 		sendDirect(absentee, { embeds: [absenteeEmbed] }, msg.channel, true);
 	};
 
