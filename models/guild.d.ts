@@ -66,19 +66,9 @@ export interface Guild extends mongoose.Document {
 	/** The guild's emojis object */
 	emojis: {
 		/** The guild's success emoji */
-		success: {
-			/** The name of the guild's success emoji */
-			name: string;
-			/** The URL of the guild's success emoji */
-			URL: string;
-		};
+		success: Emoji;
 		/** The guild's error emoji */
-		error: {
-			/** The name of the guild's error emoji */
-			name: string;
-			/** The URL of the guild's error emoji */
-			URL: string;
-		};
+		error: Emoji;
 	};
 	/** The guild's colour object */
 	colours: Colours;
@@ -92,6 +82,16 @@ interface ChannelPair {
 	voice: Discord.Snowflake;
 	/** The \<TextChannel.id> of this paired text channel */
 	text: Discord.Snowflake;
+}
+
+/**
+ * An \<Object> to create and/or find an emoji in a guild
+ */
+interface Emoji {
+	/** The name of the guild's emoji */
+	name: string;
+	/** The URL of the guild's emoji */
+	URL: string;
 }
 
 /**

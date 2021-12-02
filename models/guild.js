@@ -37,12 +37,8 @@ const { settings, emojis, colours } = require('../config');
  * @property {ChannelPair[]} ids.channelPairs An {@link models.ChannelPair|<Object[]>} of the guild's pairings of \<VoiceChannel> and \<TextChannel>
  * @property {Object.<string, Object.<string, string | string[] | boolean>>} commands The guild's commands object containing each individual command in a nested object
  * @property {Object} emojis The guild's emojis object
- * @property {Object} emojis.success The guild's success emoji
- * @property {string} emojis.success.name The name of the guild's success emoji
- * @property {string} emojis.success.URL The URL of the guild's success emoji
- * @property {Object} emojis.error The guild's error emoji
- * @property {string} emojis.error.name The name of the guild's error emoji
- * @property {string} emojis.error.URL The URL of the guild's error emoji
+ * @property {Emoji} emojis.success The guild's success [\<Emoji>]{@link models.Emoji}
+ * @property {Emoji} emojis.error The guild's error [\<Emoji>]{@link models.Emoji}
  * @property {Colours} colours The guild's colour [\<Object>]{@link models.Colours}
  */
 
@@ -50,6 +46,12 @@ const { settings, emojis, colours } = require('../config');
  * @typedef {Object} models.ChannelPair An \<Object> of a pair of \<VoiceChannel.id> and \<TextChannel.id>
  * @property {Discord.Snowflake} voice The \<VoiceChannel.id> of this paired voice channel
  * @property {Discord.Snowflake} text The \<TextChannel.id> of this paired text channel
+ */
+
+/**
+ * @typedef {Object} models.Emoji An \<Object> to create and/or find an emoji in a guild
+ * @property {string} name The name of the guild's emoji
+ * @property {string} URL The URL of the guild's emoji
  */
 
 /**
