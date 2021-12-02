@@ -36,24 +36,24 @@ module.exports = {
 
 			// Attempt to extract the deleted <Message> content, which may be an element of a <MessageEmbed>
 			let content = (!msg.content)
-				// If the <Message>.content field is empty, check if the <Message> had an embed
+				// If the <Message.content> field is empty, check if the <Message> had an embed
 				? (msg.embeds[0])
 					// If it did have an embed, check if the <MessageEmbed> had a description
 					? (msg.embeds[0].description)
-						// If the <MessageEmbed>.description is not empty, store it as the deleted message's content
+						// If the <MessageEmbed.description> is not empty, store it as the deleted message's content
 						? msg.embeds[0].description
-						// Otherwise, if the <MessageEmbed>.description is empty, check if the <MessageEmbed> has a title
+						// Otherwise, if the <MessageEmbed.description> is empty, check if the <MessageEmbed> has a title
 						: (msg.embeds[0].title)
 							// If there is a title, store it as the message's content
 							? msg.embeds[0].title
 							// Otherwise, store the deleted message's content as 'Message Embed'
 							: 'Message Embed'
-					// Otherwise, if the <Message>.content is empty and there is no <MessageEmbed>, store the message's content as 'No message content'
+					// Otherwise, if the <Message.content> is empty and there is no <MessageEmbed>, store the message's content as 'No message content'
 					: 'No message content'
-				// Otherwise, if the <Message>.content is not empty, store it as the message's content
+				// Otherwise, if the <Message.content> is not empty, store it as the message's content
 				: msg.content;
 
-			// Use modules.charLimit() to ensure the message's content does not exceed Discord's <MessageEmbed>.description character limit
+			// Use modules.charLimit() to ensure the message's content does not exceed Discord's <MessageEmbed.description> character limit
 			content = charLimit(`>>> ${content}`, 2048);
 
 			// Extract the <MessageAttachment> from the deleted message if it exists
@@ -87,7 +87,7 @@ module.exports = {
 				// If the audit logs were successfully fetched, extract the executor and target from the message deletion audit entry
 				const { executor, target } = fetchedLogs.entries.first();
 
-				// If the audit log target matches the <Message>.author, edit the log embed description to include the executor's tag
+				// If the audit log target matches the <Message.author>, edit the log embed description to include the executor's tag
 				if (target.id === msg.author.id) logEmbed.setDescription(`**Message sent by ${msg.author} deleted by ${executor} in ${msg.channel}**\n${content}`);
 			}
 		}

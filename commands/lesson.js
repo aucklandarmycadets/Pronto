@@ -335,7 +335,7 @@ function processMentions(instructors) {
 }
 
 /**
- * Serialises a \<Lesson>.submittedResources string[] for display and creates a number[] of the serials
+ * Serialises a \<Lesson.submittedResources> string[] for display and creates a number[] of the serials
  * @param {{submittedResources: string[]}} lesson The mongoose document for the lesson
  * @returns {{resources: string[], range: number[]}} A \<string[]> of the serialised resources, and a \<number[]> of the valid serials
  */

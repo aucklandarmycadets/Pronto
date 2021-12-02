@@ -18,7 +18,7 @@ module.exports = {
 		const { bot } = require('../pronto');
 		const { ids: { logID }, colours } = await require('../handlers/database')(newMessage.guild);
 
-		// Ensure the updated <Message> is not a partial by calling the <Message>.fetch() method
+		// Ensure the updated <Message> is not a partial by calling the <Message.fetch()> method
 		if (newMessage.partial) await newMessage.fetch();
 
 		// Call handlers.commandHandler() to handle a potential command message
@@ -39,7 +39,7 @@ module.exports = {
 
 		// Otherwise, if the oldMessage was sent in a guild and is not a partial, attempt to fully log its update
 		else if (newMessage.guild) {
-			// If the <Message>.content has not changed, or if the <Message>.author is a bot, cease further execution
+			// If the <Message.content> has not changed, or if the <Message.author> is a bot, cease further execution
 			if (oldMessage.content === newMessage.content || newMessage.author.bot) return;
 
 			// Update the log embed to fully log the <Message> update

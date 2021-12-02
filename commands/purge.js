@@ -46,17 +46,17 @@ module.exports = async guild => {
 
 		catch (error) { return commandError(msg, error, purge.error); }
 
-		// Initialise values for <Message>[] and before to ensure purgeCount messages are actually fetched and filtered
+		// Initialise values for <Message[]> and before to ensure purgeCount messages are actually fetched and filtered
 		let msgs = [];
 		let before = msg.id;
 
-		// Loop through until purgeCount messages are added to the msgs <Message>[]
+		// Loop through until purgeCount messages are added to the msgs <Message[]>
 		while (msgs.length !== purgeCount) {
 			// Fetch messages in blocks of 100 (maximum allowed by the API) moving back in time
 			await msg.channel.messages.fetch({ limit: 100, before })
 				.then(_msgs => {
-					// Filter the fetched messages by user (if specified), then convert the <Collection> to <Message>[]
-					// Slice the resultant array to the appropriate length and concantenate it to the msgs <Message>[]
+					// Filter the fetched messages by user (if specified), then convert the <Collection> to <Message[]>
+					// Slice the resultant array to the appropriate length and concantenate it to the msgs <Message[]>
 					msgs = (userToPurge)
 						? msgs.concat(_msgs.filter(_msg => _msg.author.id === userToPurge.id).array().slice(0, purgeCount - msgs.length))
 						: msgs.concat(_msgs.array().slice(0, purgeCount - msgs.length));
@@ -67,7 +67,7 @@ module.exports = async guild => {
 				.catch(error => debugError(error, `Error fetching messages in ${msg.channel}.`));
 		}
 
-		// Once all the messages to purge have been fetched, call the <TextChannel>.bulkDelete() method
+		// Once all the messages to purge have been fetched, call the <TextChannel.bulkDelete()> method
 		msg.channel.bulkDelete(msgs)
 			.catch(error => {
 			// If error, react with error and send error messages

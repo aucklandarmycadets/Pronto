@@ -28,7 +28,7 @@ module.exports = {
 		const restartEmbed = new Discord.MessageEmbed()
 			.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }))
 			.setDescription('**Restarting...**')
-			// Parse <Client>.uptime through modules.formatAge()
+			// Parse <Client.uptime> through modules.formatAge()
 			.addField('Uptime', formatAge(bot.uptime, true))
 			.setColor(colours.warn)
 			.setFooter(`${await dateTimeGroup()} | Pronto v${version}`);

@@ -54,7 +54,7 @@ module.exports = {
 			const addedPermissions = changedPermissions.filter(permission => !oldPermissions.includes(permission));
 
 			// Ensure there were some added/removed permissions that were successfully filtered, otherwise cease further execution
-			// This line is necessary as a <Role>.position change may enter this if-else block, but with no differences between PermissionString[]
+			// This line is necessary as a <Role.position> change may enter this if-else block, but with no differences between PermissionString[]
 			if (!addedPermissions.length && !removedPermissions.length) return;
 			// If there were permissions added, add a field to the log embed to list the added permissions
 			if (addedPermissions.length > 0) logEmbed.addField('Added Permissions', addedPermissions.join('\n'));

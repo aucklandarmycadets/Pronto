@@ -210,7 +210,7 @@ module.exports = async guild => {
 
 		/**
 		 * Create a new mongoose \<Lesson> document for the assigned lesson
-		 * @param {Discord.Snowflake} channelID The \<TextChannel>.id of the private lesson channel created for the lesson
+		 * @param {Discord.Snowflake} channelID The \<TextChannel.id> of the private lesson channel created for the lesson
 		 * @returns {Promise<Lesson>} The mongoose document for the lesson
 		 */
 		async function saveLesson(channelID) {
@@ -322,7 +322,7 @@ async function msgPrompt(prompt, msg, type, colours, allowMultiple) {
 
 		if (type === 'TEXT' || type === 'DATE') {
 			// If the type of input to be validated is 'TEXT' or 'DATE', ensure the input is not empty
-			// Uploaded attachments have a null <Message>.content, so cannot be checked here
+			// Uploaded attachments have a null <Message.content>, so cannot be checked here
 			if (!input.content) {
 				// If the input is empty, send an error and try again
 				sendDirect(msg.author, { embeds: [promptEmbed('You must enter something!', colours.error)] }, null, true);

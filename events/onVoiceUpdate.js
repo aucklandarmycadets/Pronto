@@ -25,13 +25,13 @@ module.exports = {
 		const logEmbed = new Discord.MessageEmbed()
 			.setAuthor(newState.member.displayName, newState.member.user.displayAvatarURL({ dynamic: true }));
 
-		// Extract the <VoiceChannel>.id of the old <VoiceChannel> if it exists
+		// Extract the <VoiceChannel.id> of the old <VoiceChannel> if it exists
 		// i.e. if the <GuildMember> has either left or changed channels
 		const oldChannelID = (oldState.channel)
 			? oldState.channelID
 			: null;
 
-		// Extract the <VoiceChannel>.id of the new <VoiceChannel> if it exists
+		// Extract the <VoiceChannel.id> of the new <VoiceChannel> if it exists
 		// i.e. if the <GuildMember> has joined or changed channels
 		const newChannelID = (newState.channel)
 			? newState.channelID
@@ -52,7 +52,7 @@ module.exports = {
 		}
 
 		else if (oldChannelID !== newChannelID) {
-			// Otherwise, if the two <VoiceChannel>.id snowflakes do not match, i.e. the <GuildMember> has changed from one <VoiceChannel> to another, set the log embed accordingly
+			// Otherwise, if the two <VoiceChannel.id> snowflakes do not match, i.e. the <GuildMember> has changed from one <VoiceChannel> to another, set the log embed accordingly
 			logEmbed.setColor(colours.warn);
 			logEmbed.setDescription(`**${newState.member} changed voice channel ${oldState.channel} > ${newState.channel}**`);
 			logEmbed.setFooter(`ID: ${newState.member.id} | ${await dateTimeGroup()}`);
