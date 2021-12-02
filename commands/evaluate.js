@@ -2,8 +2,9 @@
 'use strict';
 
 const Discord = require('discord.js');
+
 const { commandError, deleteMsg, dateTimeGroup, jsCodeBlock, sendMsg, ...modules } = require('../modules');
-const handlers = require('../handlers');
+const { database, ...handlers } = require('../handlers');
 
 /**
  * Attach the command.execute() function to command object
@@ -12,8 +13,7 @@ const handlers = require('../handlers');
  * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a command.execute() property
  */
 module.exports = async guild => {
-	const { commands: { evaluate, ...commands }, colours, _doc: settings, ...db } = await require('../handlers/database')(guild);
-	const { database } = require('../handlers');
+	const { commands: { evaluate, ...commands }, colours, _doc: settings, ...document } = await database(guild);
 
 	/**
 	 * Evaluate Javascript code directly from a Discord message

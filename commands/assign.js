@@ -10,7 +10,6 @@ let chrono = require('chrono-node');
 chrono = new chrono.Chrono(chrono.en.createConfiguration(false, true));
 
 const { Lesson } = require('../models');
-
 const { commandError, deleteMsg, dateTimeGroup, enumerateResources, isURL, processResources, promptEmbed, sendDirect, sendMsg, successReact, titleCase } = require('../modules');
 const { confirmWithReaction, unsubmittedLessons } = require('../handlers');
 

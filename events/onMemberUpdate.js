@@ -1,6 +1,7 @@
 'use strict';
 
 const Discord = require('discord.js');
+
 const { dateTimeGroup, debugError, sendMsg, updatedPermissions } = require('../modules');
 const { verifyBotPermissions } = require('../handlers');
 

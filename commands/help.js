@@ -1,6 +1,7 @@
 'use strict';
 
 const Discord = require('discord.js');
+
 const { ids: { DEVELOPER_ID } } = require('../config');
 const { deleteMsg, directCommandError, embedScaffold, errorReact, formatList, getRoleError, prefixCommand, sendDirect, sendMsg, successReact } = require('../modules');
 const { permissionsHandler } = require('../handlers');

@@ -6,8 +6,8 @@ const Typings = require('../typings');
 const mongoose = require('mongoose');
 
 const { Attendance } = require('../models');
-const { confirmWithReaction } = require('../handlers');
 const { commandError, deleteMsg, dateTimeGroup, emojiReact, sendDirect, sendMsg } = require('../modules');
+const { confirmWithReaction } = require('../handlers');
 
 /**
  * Attach the command.execute() function to command object

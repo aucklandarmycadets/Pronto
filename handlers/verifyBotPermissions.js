@@ -1,6 +1,7 @@
 'use strict';
 
 const Discord = require('discord.js');
+
 const { settings: { PERMISSIONS_INTEGER } } = require('../config');
 const { embedScaffold } = require('../modules');
 
