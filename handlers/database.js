@@ -14,7 +14,7 @@ const { merge } = require('../modules');
  * @returns
  */
 module.exports = async (guild, changes) => {
-	const { newGuild } = require('./');
+	const { createGuild } = require('./');
 
 	const id = (guild)
 		? guild.id
@@ -24,7 +24,7 @@ module.exports = async (guild, changes) => {
 		if (error) console.error(error);
 	});
 
-	if (!changes) return database || await newGuild(guild);
+	if (!changes) return database || await createGuild(guild);
 
 	if (changes instanceof Object) database = merge(database, changes);
 	Object.keys(changes).forEach(key => database.markModified(key));

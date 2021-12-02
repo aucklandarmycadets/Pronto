@@ -4,7 +4,7 @@
 const Discord = require('discord.js');
 
 const { emojis } = require('../config');
-const { newGuild, verifyBotPermissions } = require('../handlers');
+const { createGuild, verifyBotPermissions } = require('../handlers');
 
 module.exports = {
 	bot: ['guildCreate'],
@@ -15,8 +15,8 @@ module.exports = {
 	 * @param {Discord.Guild} guild The created \<Guild>
 	 */
 	async handler(_, guild) {
-		// Initialise the guild by calling handlers.newGuild()
-		await newGuild(guild);
+		// Initialise the guild by calling handlers.createGuild()
+		await createGuild(guild);
 		// Call handlers.verifyBotPermissions() to ensure the bot has the necessary <Discord.Permissions>
 		verifyBotPermissions(guild);
 

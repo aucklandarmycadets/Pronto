@@ -15,7 +15,7 @@ module.exports = {
 	lessonReminders: require('./lessonReminders'),
 	manageAttendance: require('./manageAttendance'),
 	mongoose: require('./mongoose'),
-	newGuild: require('./newGuild'),
+	createGuild: require('./createGuild'),
 	overwriteCommands: require('./overwriteCommands'),
 	permissionsCheck: require('./permissionsCheck'),
 	permissionsHandler: require('./permissionsHandler'),
