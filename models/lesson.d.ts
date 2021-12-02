@@ -11,7 +11,7 @@ export interface Lesson extends mongoose.Document {
 	lessonID: Discord.Snowflake;
 	/** The name of the lesson */
 	lessonName: string;
-	/** An \<Object> containing a nested <Object> for each lesson instructor with their \<User>.id and acknowledgement status */
+	/** An \<Object> containing a nested \<Object> for each lesson instructor with their \<User>.id and acknowledgement status */
 	instructors: Instructors;
 	/** The formatted date-time group of the lesson plan's due date */
 	dueDate: string;
@@ -35,6 +35,9 @@ export interface Lesson extends mongoose.Document {
 	changed: boolean;
 }
 
+/**
+ * An \<Object> containing a nested \<Object> for each lesson instructor with their \<User>.id and acknowledgement status
+ */
 export interface Instructors {
 	/** The instructor's individual lesson instructor object */
 	[key: Discord.Snowflake]: {

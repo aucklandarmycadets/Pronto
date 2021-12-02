@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
  * @property {mongoose.Schema.Types.ObjectId} _id A unique document identifier
  * @property {Discord.Snowflake} lessonID The \<TextChannel>.id of the private lesson channel created for the lesson
  * @property {string} lessonName The name of the lesson
- * @property {Instructors} instructors An \<Object> containing a nested [\<Object>]{@link models.Instructors} for each lesson instructor with their ID and acknowledgement status
+ * @property {Instructors} instructors An \<Object> containing a nested [\<Object>]{@link models.Instructors} for each lesson instructor with their \<User>.id and acknowledgement status
  * @property {string} dueDate The formatted date-time group of the lesson plan's due date
  * @property {number} dueTimestamp The Unix timestamp (ms) of the of the lesson plan's due date
  * @property {string} lessonDate The formatted date-time group of the lesson's date
@@ -23,7 +23,7 @@ const mongoose = require('mongoose');
  */
 
 /**
- * @typedef {Object} models.Instructors
+ * @typedef {Object} models.Instructors An \<Object> containing a nested \<Object> for each lesson instructor with their \<User>.id and acknowledgement status
  * @property {Object.<Discord.Snowflake, {id: Discord.Snowflake, seen: boolean}>} Snowflake The instructor's individual lesson instructor object
  * @property {Discord.Snowflake} Snowflake.id The instructor's \<User>.id
  * @property {boolean} Snowflake.seen Whether the instructor has acknowledged receipt of the lesson warning
