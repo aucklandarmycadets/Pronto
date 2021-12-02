@@ -44,7 +44,7 @@
 	},
 	"templates": {
 		"cleverLinks": false,
-		"monospaceLinks": false,
+		"monospaceLinks": true,
 		"search": true
 	}
 }
