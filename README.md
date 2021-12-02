@@ -9,6 +9,7 @@ A Discord bot developed for the City of Auckland Cadet Unit, built with [discord
 - [About](#about)
 	- [Features](#features)
 	- [Commands List](#commands-list)
+	- [JSDoc Documentation](#jsdoc-documentation)
 - [Installation](#installation)
 	- [Requirements](#requirements)
 	- [Dependencies](#dependencies)
@@ -59,6 +60,10 @@ A Discord bot developed for the City of Auckland Cadet Unit, built with [discord
 | `!seen`           | Acknowledge receipt of a lesson warning                      | Lesson Instructor                                               |
 | `!assign`         | Assign a lesson to an instructor                             | None                                                            |
 | `!approve`        | Approve a lesson plan                                        | None                                                            |
+
+### JSDoc Documentation
+
+[GitHub Pages](https://jamesnzl.github.io/Pronto/)
 
 ## Installation
 
@@ -148,7 +153,7 @@ A Discord bot developed for the City of Auckland Cadet Unit, built with [discord
 	>			deniedRoles: ['<roleOneID>', '<roleTwoID>'...],
 	>		}
 	>	}
-	> }) -silent
+	> }) --silent
 	> ```
 
 	> To set up channel linking, use the following:
@@ -168,7 +173,7 @@ A Discord bot developed for the City of Auckland Cadet Unit, built with [discord
 	>	database.markModified('ids')
 	>
 	>	return await database.save().catch(error => console.error(error));
-	> })() -silent
+	> })() --silent
 	> ```
 
 	> A dashboard is coming soon!
@@ -200,7 +205,7 @@ A Discord bot developed for the City of Auckland Cadet Unit, built with [discord
 	> Documentation can be found [here](https://discordjs.guide/popular-topics/faq.html#how-do-i-set-my-playing-status).
 
 6. Create a file named `.env` in the top-level folder (i.e. in the same folder as `pronto.js`) and enter:
-	```
+	```text
 	TOKEN=<PASTE_YOUR_BOT_TOKEN_HERE>
 	MONGOURI=mongodb://localhost/pronto
 	```
