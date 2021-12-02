@@ -13,7 +13,7 @@ module.exports = {
 	 */
 	async handler(_, msgs) {
 		const { bot } = require('../pronto');
-		const { ids: { logID }, cmds: { purge }, colours } = await require('../handlers/database')(msgs.first().guild);
+		const { ids: { logID }, commands: { purge }, colours } = await require('../handlers/database')(msgs.first().guild);
 
 		// Extract the first deleted message to access a <Message> instance
 		const msg = msgs.first();
@@ -33,7 +33,7 @@ module.exports = {
 		}
 
 		// However, if there was was indeed a remaining message, check to see if it was a commands\purge.js command
-		else if (lastMsg.content.includes(purge.cmd) || purge.aliases.some(alias => lastMsg.content.includes(alias))) {
+		else if (lastMsg.content.includes(purge.command) || purge.aliases.some(alias => lastMsg.content.includes(alias))) {
 			// If it was, delete the command message
 			deleteMsg(lastMsg);
 

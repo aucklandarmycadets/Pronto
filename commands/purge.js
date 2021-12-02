@@ -2,16 +2,16 @@
 
 // eslint-disable-next-line no-unused-vars
 const Discord = require('discord.js');
-const { cmdError, debugError, embedScaffold, errorReact } = require('../modules');
+const { commandError, debugError, embedScaffold, errorReact } = require('../modules');
 
 /**
- * Attach the cmd.execute() function to command object
+ * Attach the command.execute() function to command object
  * @module commands/purge
  * @param {Discord.Guild} guild The guild that the member shares with the bot
- * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a cmd.execute() property
+ * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a command.execute() property
  */
 module.exports = async guild => {
-	const { cmds: { purge }, colours } = await require('../handlers/database')(guild);
+	const { commands: { purge }, colours } = await require('../handlers/database')(guild);
 
 	/**
 	 * Bulk delete a specified number of messages from a <TextChannel>
@@ -44,7 +44,7 @@ module.exports = async guild => {
 			else if (purgeCount > 100) throw 'You cannot purge more than 100 messages at a time.';
 		}
 
-		catch (error) { return cmdError(msg, error, purge.error); }
+		catch (error) { return commandError(msg, error, purge.error); }
 
 		// Initialise values for <Message>[] and before to ensure purgeCount messages are actually fetched and filtered
 		let msgs = [];

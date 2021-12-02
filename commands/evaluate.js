@@ -2,17 +2,17 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { cmdError, deleteMsg, dateTimeGroup, jsCodeBlock, sendMsg, ...modules } = require('../modules');
+const { commandError, deleteMsg, dateTimeGroup, jsCodeBlock, sendMsg, ...modules } = require('../modules');
 const handlers = require('../handlers');
 
 /**
- * Attach the cmd.execute() function to command object
+ * Attach the command.execute() function to command object
  * @module commands/evaluate
  * @param {Discord.Guild} guild The guild that the member shares with the bot
- * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a cmd.execute() property
+ * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a command.execute() property
  */
 module.exports = async guild => {
-	const { cmds: { evaluate, ...cmds }, colours, _doc: settings, ...db } = await require('../handlers/database')(guild);
+	const { commands: { evaluate, ...commands }, colours, _doc: settings, ...db } = await require('../handlers/database')(guild);
 	const { database } = require('../handlers');
 
 	/**
@@ -45,7 +45,7 @@ module.exports = async guild => {
 		if (args.includes('```')) args = args.join(' ').split('\n').filter(arg => !arg.includes('```'));
 
 		// If there is no code to evaluate, return an error
-		if (args.length === 0) return cmdError(msg, 'You must enter something to evaluate.', evaluate.error);
+		if (args.length === 0) return commandError(msg, 'You must enter something to evaluate.', evaluate.error);
 
 		// Join the processed arguments together to form the code to evaluate
 		const code = args.join(' ');

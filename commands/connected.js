@@ -1,16 +1,16 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { cmdError, dateTimeGroup, sendMsg, sortByRoles, successReact } = require('../modules');
+const { commandError, dateTimeGroup, sendMsg, sortByRoles, successReact } = require('../modules');
 
 /**
- * Attach the cmd.execute() function to command object
+ * Attach the command.execute() function to command object
  * @module commands/connected
  * @param {Discord.Guild} guild The guild that the member shares with the bot
- * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a cmd.execute() property
+ * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a command.execute() property
  */
 module.exports = async guild => {
-	const { ids: { attendanceID }, cmds: { connected }, colours } = await require('../handlers/database')(guild);
+	const { ids: { attendanceID }, commands: { connected }, colours } = await require('../handlers/database')(guild);
 
 	/**
 	 * List the members connected to a <VoiceChannel>
@@ -34,13 +34,13 @@ module.exports = async guild => {
 			else if (msg.mentions.channels.size > 1) throw 'You can only display one channel at a time.';
 		}
 
-		catch (error) { return cmdError(msg, error, connected.error, 'Note: Use the <#channelID> syntax!'); }
+		catch (error) { return commandError(msg, error, connected.error, 'Note: Use the <#channelID> syntax!'); }
 
 		// Sort connected members in descending order according to their highest (non-administrator) role, then map the <Collection> to a string[] of member mentions
 		const connectedMembers = channel.members.sort(sortByRoles(guild)).map(member => member.toString());
 
 		// Return an error message if there are no members connected to the channel
-		if (connectedMembers.length === 0) return cmdError(msg, `There are no members connected to ${channel}.`, connected.error, 'Note: Use the <#channelID> syntax!');
+		if (connectedMembers.length === 0) return commandError(msg, `There are no members connected to ${channel}.`, connected.error, 'Note: Use the <#channelID> syntax!');
 
 		// Success react to command message
 		successReact(msg);

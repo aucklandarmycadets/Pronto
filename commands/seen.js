@@ -2,17 +2,17 @@
 
 const Discord = require('discord.js');
 
-const { cmdError, dateTimeGroup, sendMsg, successReact } = require('../modules');
+const { commandError, dateTimeGroup, sendMsg, successReact } = require('../modules');
 const { findLesson } = require('../handlers');
 
 /**
- * Attach the cmd.execute() function to command object
+ * Attach the command.execute() function to command object
  * @module commands/seen
  * @param {Discord.Guild} guild The guild that the member shares with the bot
- * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a cmd.execute() property
+ * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a command.execute() property
  */
 module.exports = async guild => {
-	const { ids: { lessonsID }, cmds: { seen }, colours } = await require('../handlers/database')(guild);
+	const { ids: { lessonsID }, commands: { seen }, colours } = await require('../handlers/database')(guild);
 
 	/**
 	 * Acknowledge a lesson warning, either from a message command or a message reaction
@@ -46,7 +46,7 @@ module.exports = async guild => {
 			else if (lesson.instructors[instructor.id].seen) throw 'You have already acknowledged this lesson warning.';
 		}
 
-		catch (error) { return cmdError(msg, error, seen.error); }
+		catch (error) { return commandError(msg, error, seen.error); }
 
 		// Success react if executed via command
 		if (!user.id) successReact(msg);

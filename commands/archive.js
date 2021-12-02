@@ -3,16 +3,16 @@
 const Discord = require('discord.js');
 const { Lesson } = require('../models');
 
-const { cmdError, debugError, dateTimeGroup, embedScaffold, errorReact, sendMsg, successReact } = require('../modules');
+const { commandError, debugError, dateTimeGroup, embedScaffold, errorReact, sendMsg, successReact } = require('../modules');
 
 /**
- * Attach the cmd.execute() function to command object
+ * Attach the command.execute() function to command object
  * @module commands/archive
  * @param {Discord.Guild} guild The guild that the member shares with the bot
- * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a cmd.execute() property
+ * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a command.execute() property
  */
 module.exports = async guild => {
-	const { ids: { logID, archivedID }, cmds: { archive }, colours } = await require('../handlers/database')(guild);
+	const { ids: { logID, archivedID }, commands: { archive }, colours } = await require('../handlers/database')(guild);
 
 	/**
 	 * Archive a <TextChannel> by restricting channel visibility and moving it to a designated channel category
@@ -38,7 +38,7 @@ module.exports = async guild => {
 			else if (bot.channels.cache.get(channel.id).parentID === archivedID) throw 'Channel is already archived.';
 		}
 
-		catch (error) { return cmdError(msg, error, archive.error); }
+		catch (error) { return commandError(msg, error, archive.error); }
 
 		// Delete database document when archiving a lesson channel
 		Lesson.findOneAndDelete({ lessonID: msg.channel.id }, error => {

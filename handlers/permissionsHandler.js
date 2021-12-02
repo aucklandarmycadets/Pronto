@@ -7,10 +7,10 @@ const { getRoleError } = require('../modules');
 /**
  *
  * @param {Discord.Message} msg
- * @param {Object.<string, string | string[] | boolean>} cmd The command object to check permissions against
+ * @param {Object.<string, string | string[] | boolean>} command The command object to check permissions against
  * @returns
  */
-module.exports = async (msg, cmd) => {
+module.exports = async (msg, command) => {
 	const { bot } = require('../pronto');
 	const { permissionsCheck } = require('./');
 
@@ -23,6 +23,6 @@ module.exports = async (msg, cmd) => {
 	const memberRoles = member.roles.cache;
 
 	return (memberRoles)
-		? permissionsCheck(memberRoles, msg.author.id, cmd)
+		? permissionsCheck(memberRoles, msg.author.id, command)
 		: await getRoleError(msg);
 };

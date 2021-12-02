@@ -15,7 +15,7 @@ module.exports = {
 	 */
 	async handler(_, msg) {
 		const { bot } = require('../pronto');
-		const { settings: { prefix }, ids: { logID }, cmds: { purge }, colours } = await require('../handlers/database')(msg.guild);
+		const { settings: { prefix }, ids: { logID }, commands: { purge }, colours } = await require('../handlers/database')(msg.guild);
 
 		// Initialise log embed
 		const logEmbed = new Discord.MessageEmbed()
@@ -30,9 +30,9 @@ module.exports = {
 
 		// Otherwise, if the deleted <Message> was sent in a guild and is not a partial, attempt to fully log its deletion
 		else if (msg.guild) {
-			// Call autoDeletingCmd() to check if the deleted <Message> was a command message for an auto-deleting command
+			// Call autoDeletingCommand() to check if the deleted <Message> was a command message for an auto-deleting command
 			// If it was, do not log its deletion and cease further execution
-			if (autoDeletingCmd()) return;
+			if (autoDeletingCommand()) return;
 
 			// Attempt to extract the deleted <Message> content, which may be an element of a <MessageEmbed>
 			let content = (!msg.content)
@@ -71,7 +71,7 @@ module.exports = {
 
 			if (msg.channel.lastMessage) {
 				// If the message's <TextChannel> was not completely emptied, check if the last <Message> was a commands\purge.js command
-				if (msg.channel.lastMessage.content.includes(purge.cmd) || purge.aliases.some(alias => msg.channel.lastMessage.content.includes(alias))) {
+				if (msg.channel.lastMessage.content.includes(purge.command) || purge.aliases.some(alias => msg.channel.lastMessage.content.includes(alias))) {
 					// If it was, delete the command message
 					deleteMsg(msg.channel.lastMessage);
 					// Add additional context to the log embed on the command author
@@ -103,9 +103,9 @@ module.exports = {
 		 * Check whether a deleted \<Message> was deleted due to the execution of an auto-deleting command
 		 * @returns {boolean} Whether the deleted message is a command message that is auto-deleted by the bot upon command execution
 		 */
-		function autoDeletingCmd() {
+		function autoDeletingCommand() {
 			// Use Promise.all() to ensure all command objects have been loaded before proceeding
-			const autoDeletingCmds = Promise.all(
+			const autoDeletingCommands = Promise.all(
 				fs.readdirSync('./commands/')
 					// Read the file names of all the Javascript command files inside ./commands, other than the index file
 					.filter(file => file.endsWith('.js') && file !== 'index.js')
@@ -127,14 +127,14 @@ module.exports = {
 			if (!usesPrefix && (!usesBotMention || args.length === 1)) return false;
 
 			// Parse the message command
-			const msgCmd = (usesBotMention)
+			const msgCommand = (usesBotMention)
 				// If the message command mentions the bot, remove the first two elements of the message arguments, and extract the 2nd substring in lowercase
 				? args.splice(0, 2)[1].toLowerCase()
 				// If the command message uses the guild's command prefix, remove the first element and remove the prefix from the substring
 				: args.shift().toLowerCase().replace(prefix.toLowerCase(), '');
 
 			// Check whether the parsed message command matches to a command file that references modules.deleteMsg(), and return the boolean result
-			return autoDeletingCmds.some(cmd => cmd.cmd === msgCmd || cmd.aliases.includes(msgCmd));
+			return autoDeletingCommands.some(command => command.command === msgCommand || command.aliases.includes(msgCommand));
 		}
 	},
 };

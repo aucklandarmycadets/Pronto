@@ -2,17 +2,17 @@
 
 const Discord = require('discord.js');
 
-const { cmdError, debugError, dateTimeGroup, enumerateResources, sendMsg, successReact } = require('../modules');
+const { commandError, debugError, dateTimeGroup, enumerateResources, sendMsg, successReact } = require('../modules');
 const { findLesson } = require('../handlers');
 
 /**
- * Attach the cmd.execute() function to command object
+ * Attach the command.execute() function to command object
  * @module commands/approve
  * @param {Discord.Guild} guild The guild that the member shares with the bot
- * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a cmd.execute() property
+ * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a command.execute() property
  */
 module.exports = async guild => {
-	const { ids: { lessonsID, lessonPlansID }, cmds: { approve }, colours } = await require('../handlers/database')(guild);
+	const { ids: { lessonsID, lessonPlansID }, commands: { approve }, colours } = await require('../handlers/database')(guild);
 
 	/**
 	 * Approve a submitted lesson plan in a lesson channel, either from a message command or a message reaction
@@ -56,7 +56,7 @@ module.exports = async guild => {
 					deleted: true,
 				};
 
-			return cmdError(msg, error, approve.error);
+			return commandError(msg, error, approve.error);
 		}
 
 		// Success react if executed via command

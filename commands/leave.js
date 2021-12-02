@@ -1,16 +1,16 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { capitalise, cmdError, dateTimeGroup, sendDirect, sendMsg, successReact } = require('../modules');
+const { capitalise, commandError, dateTimeGroup, sendDirect, sendMsg, successReact } = require('../modules');
 
 /**
- * Attach the cmd.execute() function to command object
+ * Attach the command.execute() function to command object
  * @module commands/leave
  * @param {Discord.Guild} guild The guild that the member shares with the bot
- * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a cmd.execute() property
+ * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a command.execute() property
  */
 module.exports = async guild => {
-	const { ids: { attendanceID }, cmds: { leave, leaveFor }, colours } = await require('../handlers/database')(guild);
+	const { ids: { attendanceID }, commands: { leave, leaveFor }, colours } = await require('../handlers/database')(guild);
 
 	/**
 	 * Process an individual's leave request
@@ -21,10 +21,10 @@ module.exports = async guild => {
 		const { bot } = require('../pronto');
 
 		// Ensure the command arguments are not empty, i.e. there is at least a remark included
-		if (args.length === 0) return cmdError(msg, 'Insufficient remarks.', leave.error);
+		if (args.length === 0) return commandError(msg, 'Insufficient remarks.', leave.error);
 
 		// If the first argument of the message command is 'for', execute commands\leaveFor.js instead
-		if (args[0].toLowerCase() === 'for') return bot.commands.get(leaveFor.cmd).execute(msg, args.slice(1));
+		if (args[0].toLowerCase() === 'for') return bot.commands.get(leaveFor.command).execute(msg, args.slice(1));
 
 		// Success react to command message
 		successReact(msg);

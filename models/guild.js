@@ -37,7 +37,7 @@ const { settings, emojis, colours } = require('../config');
  * @property {Object[]} ids.channelPairs An <Object[]> of the guild's pairings of <TextChannel> and <VoiceChannel>
  * @property {Discord.Snowflake} ids.channelPairs[].voice The \<VoiceChannel>.id of this paired voice channel
  * @property {Discord.Snowflake} ids.channelPairs[].text The \<TextChannel>.id of this paired text channel
- * @property {Object.<string, Object.<string, string | string[] | boolean>>} cmds The guild's commands object containing each individual command in a nested object
+ * @property {Object.<string, Object.<string, string | string[] | boolean>>} commands The guild's commands object containing each individual command in a nested object
  * @property {Object} emojis The guild's emojis object
  * @property {Object} emojis.success The guild's success emoji
  * @property {string} emojis.success.name The name of the guild's success emoji
@@ -86,7 +86,7 @@ const guildSchema = new mongoose.Schema({
 		channelPairs: Array,
 
 	},
-	cmds: Object,
+	commands: Object,
 	emojis: {
 		type: Object,
 		default: {

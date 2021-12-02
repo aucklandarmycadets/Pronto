@@ -9,20 +9,20 @@ chrono = new chrono.Chrono(chrono.en.createConfiguration(false, true));
 
 const { Lesson } = require('../models');
 
-const { cmdError, deleteMsg, dateTimeGroup, enumerateResources, isURL, processResources, promptEmbed, sendDirect, sendMsg, successReact, titleCase } = require('../modules');
+const { commandError, deleteMsg, dateTimeGroup, enumerateResources, isURL, processResources, promptEmbed, sendDirect, sendMsg, successReact, titleCase } = require('../modules');
 const { confirmWithReaction, unsubmittedLessons } = require('../handlers');
 
 // Set to ensure that each assigner does not attempt to assign more than one lesson at a time
 const recentlyAssigned = new Set();
 
 /**
- * Attach the cmd.execute() function to command object
+ * Attach the command.execute() function to command object
  * @module commands/assign
  * @param {Discord.Guild} guild The guild that the member shares with the bot
- * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a cmd.execute() property
+ * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a command.execute() property
  */
 module.exports = async guild => {
-	const { ids: { lessonsID, trainingIDs }, cmds: { seen, assign }, colours, emojis } = await require('../handlers/database')(guild);
+	const { ids: { lessonsID, trainingIDs }, commands: { seen, assign }, colours, emojis } = await require('../handlers/database')(guild);
 
 	/**
 	 * Assign a lesson to specified instructors by creating a private lesson channel and dispatching a lesson warning
@@ -45,7 +45,7 @@ module.exports = async guild => {
 			else if (recentlyAssigned.has(msg.author.id)) throw 'You are already assigning a lesson!';
 		}
 
-		catch (error) { return cmdError(msg, error, assign.error); }
+		catch (error) { return commandError(msg, error, assign.error); }
 
 		// Delete the command message
 		deleteMsg(msg);
@@ -193,7 +193,7 @@ module.exports = async guild => {
 									const collector = ackMessage.createReactionCollector(filter, { dispose: true });
 
 									// Execute the commands\seen.js command when an instructor acknowledges the lesson warning via reaction
-									collector.on('collect', async (_, user) => bot.commands.get(seen.cmd).execute(ackMessage, user));
+									collector.on('collect', async (_, user) => bot.commands.get(seen.command).execute(ackMessage, user));
 								});
 						})
 						.catch(error => console.error(`Error creating ${lessonName} in ${guild.name}\n`, error));

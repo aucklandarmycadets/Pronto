@@ -1,12 +1,12 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { debugError, dateTimeGroup, embedScaffold, jsCodeBlock, prefixCmd, purgeChannel, sendMsg, successReact } = require('../modules');
+const { debugError, dateTimeGroup, embedScaffold, jsCodeBlock, prefixCommand, purgeChannel, sendMsg, successReact } = require('../modules');
 
 module.exports = async (oldState, newState) => {
 	const { bot } = require('../pronto');
 	const { permissionsCheck } = require('./');
-	const { ids: { channelPairs }, cmds: { purge }, emojis, colours } = await require('./database')(newState.guild);
+	const { ids: { channelPairs }, commands: { purge }, emojis, colours } = await require('./database')(newState.guild);
 
 	const newMember = newState.member;
 
@@ -100,7 +100,7 @@ module.exports = async (oldState, newState) => {
 										const timeEmbed = new Discord.MessageEmbed()
 											.setColor(colours.error)
 											.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }))
-											.setDescription(`Timed out. Type \`${await prefixCmd(purge, newState.guild)} 100\` to clear this channel manually.`);
+											.setDescription(`Timed out. Type \`${await prefixCommand(purge, newState.guild)} 100\` to clear this channel manually.`);
 										sendMsg(textChannel, { embeds: [timeEmbed] });
 									}
 								});

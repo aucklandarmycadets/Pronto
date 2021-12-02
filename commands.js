@@ -16,9 +16,9 @@ module.exports = async guild => {
 		? require('./config')
 		: await require('./handlers/database')(guild);
 
-	const cmds = {
+	const commands = {
 		ping: {
-			cmd: 'ping',
+			command: 'ping',
 			aliases: ['p'],
 			description: 'Test the latency of the bot.',
 			allowDM: true,
@@ -30,7 +30,7 @@ module.exports = async guild => {
 				return formatList({
 					'Aliases': prefixAlias(this),
 					'Description': this.description,
-					'Usage': prefixCmd(this),
+					'Usage': prefixCommand(this),
 				});
 			},
 			set help(obj) {
@@ -38,7 +38,7 @@ module.exports = async guild => {
 			},
 		},
 		uptime: {
-			cmd: 'uptime',
+			command: 'uptime',
 			aliases: ['up'],
 			description: 'Time since last restart.',
 			allowDM: true,
@@ -50,7 +50,7 @@ module.exports = async guild => {
 				return formatList({
 					'Aliases': prefixAlias(this),
 					'Description': this.description,
-					'Usage': prefixCmd(this),
+					'Usage': prefixCommand(this),
 				});
 			},
 			set help(obj) {
@@ -58,7 +58,7 @@ module.exports = async guild => {
 			},
 		},
 		evaluate: {
-			cmd: 'evaluate',
+			command: 'evaluate',
 			aliases: ['eval'],
 			description: 'Evaluate Javascript code.',
 			allowDM: true,
@@ -70,21 +70,21 @@ module.exports = async guild => {
 				return formatList({
 					'Aliases': prefixAlias(this),
 					'Description': this.description,
-					'Usage': `${prefixCmd(this)} <code>`,
+					'Usage': `${prefixCommand(this)} <code>`,
 				});
 			},
 			set help(obj) {
 				formatList(obj);
 			},
 			get error() {
-				return errorText(this.help, this.cmd);
+				return errorText(this.help, this.command);
 			},
 			set error(value) {
-				errorText(this.help, this.cmd);
+				errorText(this.help, this.command);
 			},
 		},
 		restart: {
-			cmd: 'restart',
+			command: 'restart',
 			aliases: ['new', 'kill', 'update'],
 			description: 'Restart the bot.',
 			allowDM: true,
@@ -96,21 +96,21 @@ module.exports = async guild => {
 				return formatList({
 					'Aliases': prefixAlias(this),
 					'Description': this.description,
-					'Usage': prefixCmd(this),
+					'Usage': prefixCommand(this),
 				});
 			},
 			set help(obj) {
 				formatList(obj);
 			},
 			get error() {
-				return errorText(this.help, this.cmd);
+				return errorText(this.help, this.command);
 			},
 			set error(value) {
-				errorText(this.help, this.cmd);
+				errorText(this.help, this.command);
 			},
 		},
 		help: {
-			cmd: 'help',
+			command: 'help',
 			aliases: ['cmd', 'cmds', 'command', 'commands'],
 			description: {
 				general: 'Get help with using Pronto.',
@@ -126,22 +126,22 @@ module.exports = async guild => {
 				return formatList({
 					'Aliases': prefixAlias(this),
 					'Description': this.description.general,
-					'Usage': `${prefixCmd(this)} [command]`,
-					'Examples': `\n${prefixCmd(this)}\n${prefixCmd(this)} ${cmds.leave.cmd}`,
+					'Usage': `${prefixCommand(this)} [command]`,
+					'Examples': `\n${prefixCommand(this)}\n${prefixCommand(this)} ${commands.leave.command}`,
 				});
 			},
 			set help(obj) {
 				formatList(obj);
 			},
 			get error() {
-				return errorText(this.help, this.cmd);
+				return errorText(this.help, this.command);
 			},
 			set error(value) {
-				errorText(this.help, this.cmd);
+				errorText(this.help, this.command);
 			},
 		},
 		leave: {
-			cmd: 'leave',
+			command: 'leave',
 			aliases: ['lv'],
 			description: 'Submit a leave request.',
 			allowDM: false,
@@ -153,22 +153,22 @@ module.exports = async guild => {
 				return formatList({
 					'Aliases': prefixAlias(this),
 					'Description': this.description,
-					'Usage': `${prefixCmd(this)} <date(s)> <activity> <reason> [additional remarks]`,
-					'Example': `${prefixCmd(this)} 01 Jan for Parade Night due to an appointment`,
+					'Usage': `${prefixCommand(this)} <date(s)> <activity> <reason> [additional remarks]`,
+					'Example': `${prefixCommand(this)} 01 Jan for Parade Night due to an appointment`,
 				});
 			},
 			set help(obj) {
 				formatList(obj);
 			},
 			get error() {
-				return errorText(this.help, this.cmd);
+				return errorText(this.help, this.command);
 			},
 			set error(value) {
-				errorText(this.help, this.cmd);
+				errorText(this.help, this.command);
 			},
 		},
 		lesson: {
-			cmd: 'lesson',
+			command: 'lesson',
 			aliases: ['view', 'add', 'remove', 'submit'],
 			description: 'Commands to aid in actioning an assigned lesson.',
 			allowDM: false,
@@ -180,7 +180,7 @@ module.exports = async guild => {
 				return formatList({
 					'Aliases': prefixAlias(this),
 					'Description': this.description,
-					'Usage': prefixCmd(this),
+					'Usage': prefixCommand(this),
 					'Allowed Categories': `<#${ids.lessonsID}>`,
 				});
 			},
@@ -188,14 +188,14 @@ module.exports = async guild => {
 				formatList(obj);
 			},
 			get error() {
-				return errorText(this.help, this.cmd);
+				return errorText(this.help, this.command);
 			},
 			set error(value) {
-				errorText(this.help, this.cmd);
+				errorText(this.help, this.command);
 			},
 		},
 		seen: {
-			cmd: 'seen',
+			command: 'seen',
 			aliases: ['ack'],
 			description: 'Acknowledge receipt of a lesson warning.',
 			allowDM: false,
@@ -207,7 +207,7 @@ module.exports = async guild => {
 				return formatList({
 					'Aliases': prefixAlias(this),
 					'Description': this.description,
-					'Usage': prefixCmd(this),
+					'Usage': prefixCommand(this),
 					'Allowed Categories': `<#${ids.lessonsID}>`,
 				});
 			},
@@ -215,14 +215,14 @@ module.exports = async guild => {
 				formatList(obj);
 			},
 			get error() {
-				return errorText(this.help, this.cmd);
+				return errorText(this.help, this.command);
 			},
 			set error(value) {
-				errorText(this.help, this.cmd);
+				errorText(this.help, this.command);
 			},
 		},
 		leaveFor: {
-			cmd: 'leavefor',
+			command: 'leavefor',
 			aliases: ['lv4'],
 			description: 'Submit a leave request for another cadet.',
 			allowDM: false,
@@ -234,8 +234,8 @@ module.exports = async guild => {
 				return formatList({
 					'Aliases': prefixAlias(this),
 					'Description': this.description,
-					'Usage': `${prefixCmd(this)} <user> <date(s)> <activity> <reason> [additional remarks]`,
-					'Example': `${prefixCmd(this)} <@${DEVELOPER_ID}> 01 Jan for Parade Night due to an appointment`,
+					'Usage': `${prefixCommand(this)} <user> <date(s)> <activity> <reason> [additional remarks]`,
+					'Example': `${prefixCommand(this)} <@${DEVELOPER_ID}> 01 Jan for Parade Night due to an appointment`,
 					'Allowed Roles': rolesOutput(this.requiredRoles),
 				});
 			},
@@ -243,14 +243,14 @@ module.exports = async guild => {
 				formatList(obj);
 			},
 			get error() {
-				return errorText(this.help, this.cmd);
+				return errorText(this.help, this.command);
 			},
 			set error(value) {
-				errorText(this.help, this.cmd);
+				errorText(this.help, this.command);
 			},
 		},
 		attendance: {
-			cmd: 'attendance',
+			command: 'attendance',
 			aliases: ['att', 'attdnce'],
 			description: 'Submit an attendance register.',
 			allowDM: false,
@@ -262,7 +262,7 @@ module.exports = async guild => {
 				return formatList({
 					'Aliases': prefixAlias(this),
 					'Description': this.description,
-					'Usage': `\n${prefixCmd(this)} <message>`,
+					'Usage': `\n${prefixCommand(this)} <message>`,
 					'Allowed Roles': rolesOutput(this.requiredRoles),
 				});
 			},
@@ -270,14 +270,14 @@ module.exports = async guild => {
 				formatList(obj);
 			},
 			get error() {
-				return errorText(this.help, this.cmd);
+				return errorText(this.help, this.command);
 			},
 			set error(value) {
-				errorText(this.help, this.cmd);
+				errorText(this.help, this.command);
 			},
 		},
 		connected: {
-			cmd: 'connected',
+			command: 'connected',
 			aliases: ['cnnct', 'cnnctd'],
 			description: 'List the members connected to a voice channel.',
 			allowDM: false,
@@ -289,8 +289,8 @@ module.exports = async guild => {
 				return formatList({
 					'Aliases': prefixAlias(this),
 					'Description': this.description,
-					'Usage': `${prefixCmd(this)} <voice channel>`,
-					'Example': `${prefixCmd(this)} #example-voice`,
+					'Usage': `${prefixCommand(this)} <voice channel>`,
+					'Example': `${prefixCommand(this)} #example-voice`,
 					'Allowed Roles': rolesOutput(this.requiredRoles),
 				});
 			},
@@ -298,14 +298,14 @@ module.exports = async guild => {
 				formatList(obj);
 			},
 			get error() {
-				return errorText(this.help, this.cmd);
+				return errorText(this.help, this.command);
 			},
 			set error(value) {
-				errorText(this.help, this.cmd);
+				errorText(this.help, this.command);
 			},
 		},
 		assign: {
-			cmd: 'assign',
+			command: 'assign',
 			aliases: ['give'],
 			description: 'Assign a lesson to an instructor.',
 			allowDM: false,
@@ -317,8 +317,8 @@ module.exports = async guild => {
 				return formatList({
 					'Aliases': prefixAlias(this),
 					'Description': this.description,
-					'Usage': `${prefixCmd(this)} <user(s)>`,
-					'Example': `${prefixCmd(this)} <@${DEVELOPER_ID}>`,
+					'Usage': `${prefixCommand(this)} <user(s)>`,
+					'Example': `${prefixCommand(this)} <@${DEVELOPER_ID}>`,
 					'Allowed Roles': rolesOutput(this.requiredRoles),
 				});
 			},
@@ -326,14 +326,14 @@ module.exports = async guild => {
 				formatList(obj);
 			},
 			get error() {
-				return errorText(this.help, this.cmd);
+				return errorText(this.help, this.command);
 			},
 			set error(value) {
-				errorText(this.help, this.cmd);
+				errorText(this.help, this.command);
 			},
 		},
 		approve: {
-			cmd: 'approve',
+			command: 'approve',
 			aliases: ['app', 'apprv', 'acc', 'accept'],
 			description: 'Approve a lesson plan.',
 			allowDM: false,
@@ -345,7 +345,7 @@ module.exports = async guild => {
 				return formatList({
 					'Aliases': prefixAlias(this),
 					'Description': this.description,
-					'Usage': prefixCmd(this),
+					'Usage': prefixCommand(this),
 					'Allowed Roles': rolesOutput(this.requiredRoles),
 					'Allowed Categories': `<#${ids.lessonsID}>`,
 				});
@@ -354,14 +354,14 @@ module.exports = async guild => {
 				formatList(obj);
 			},
 			get error() {
-				return errorText(this.help, this.cmd);
+				return errorText(this.help, this.command);
 			},
 			set error(value) {
-				errorText(this.help, this.cmd);
+				errorText(this.help, this.command);
 			},
 		},
 		archive: {
-			cmd: 'archive',
+			command: 'archive',
 			aliases: ['archv'],
 			description: 'Archive a text channel.',
 			allowDM: false,
@@ -373,8 +373,8 @@ module.exports = async guild => {
 				return formatList({
 					'Aliases': prefixAlias(this),
 					'Description': this.description,
-					'Usage': `${prefixCmd(this)} <text channel>`,
-					'Example': `${prefixCmd(this)} #example-text`,
+					'Usage': `${prefixCommand(this)} <text channel>`,
+					'Example': `${prefixCommand(this)} #example-text`,
 					'Allowed Roles': rolesOutput(this.requiredRoles),
 				});
 			},
@@ -382,14 +382,14 @@ module.exports = async guild => {
 				formatList(obj);
 			},
 			get error() {
-				return errorText(this.help, this.cmd);
+				return errorText(this.help, this.command);
 			},
 			set error(value) {
-				errorText(this.help, this.cmd);
+				errorText(this.help, this.command);
 			},
 		},
 		purge: {
-			cmd: 'purge',
+			command: 'purge',
 			aliases: ['del', 'delete', 'clear'],
 			description: 'Delete a number of messages from a channel.',
 			allowDM: false,
@@ -401,8 +401,8 @@ module.exports = async guild => {
 				return formatList({
 					'Aliases': prefixAlias(this),
 					'Description': this.description,
-					'Usage': `${prefixCmd(this)} <count> [user]`,
-					'Examples': `\n${prefixCmd(this)} 10\n${prefixCmd(this)} 5 <@${DEVELOPER_ID}>`,
+					'Usage': `${prefixCommand(this)} <count> [user]`,
+					'Examples': `\n${prefixCommand(this)} 10\n${prefixCommand(this)} 5 <@${DEVELOPER_ID}>`,
 					'Allowed Roles': rolesOutput(this.requiredRoles),
 				});
 			},
@@ -410,15 +410,15 @@ module.exports = async guild => {
 				formatList(obj);
 			},
 			get error() {
-				return errorText(this.help, this.cmd);
+				return errorText(this.help, this.command);
 			},
 			set error(value) {
-				errorText(this.help, this.cmd);
+				errorText(this.help, this.command);
 			},
 		},
 	};
 
-	return cmds;
+	return commands;
 
 	function rolesOutput(array) {
 		return (array)
@@ -427,18 +427,18 @@ module.exports = async guild => {
 			: '';
 	}
 
-	function errorText(helpTxt, cmd) {
-		return '\n\n' + helpTxt + '\n' + formatList({
-			'Help Command': `${prefixCmd(cmds.help)} ${cmd}`,
+	function errorText(helpText, command) {
+		return '\n\n' + helpText + '\n' + formatList({
+			'Help Command': `${prefixCommand(commands.help)} ${command}`,
 		});
 	}
 
-	function prefixCmd(cmd) {
-		return `${prefix}${cmd.cmd}`;
+	function prefixCommand(command) {
+		return `${prefix}${command.command}`;
 	}
 
-	function prefixAlias(cmd) {
-		return [...cmd.aliases]
+	function prefixAlias(command) {
+		return [...command.aliases]
 			.map(alias => prefix + alias)
 			.join(', ');
 	}

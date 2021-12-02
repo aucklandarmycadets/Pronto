@@ -2,17 +2,17 @@
 
 const Discord = require('discord.js');
 const { ids: { DEVELOPER_ID } } = require('../config');
-const { deleteMsg, dmCmdError, embedScaffold, errorReact, formatList, getRoleError, prefixCmd, sendDirect, sendMsg, successReact } = require('../modules');
+const { deleteMsg, directCommandError, embedScaffold, errorReact, formatList, getRoleError, prefixCommand, sendDirect, sendMsg, successReact } = require('../modules');
 const { permissionsHandler } = require('../handlers');
 
 /**
- * Attach the cmd.execute() function to command object
+ * Attach the command.execute() function to command object
  * @module commands/help
  * @param {Discord.Guild} guild The guild that the member shares with the bot
- * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a cmd.execute() property
+ * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a command.execute() property
  */
 module.exports = async guild => {
-	const { settings: { prontoLogo }, cmds: { help, ...cmds }, colours } = await require('../handlers/database')(guild);
+	const { settings: { prontoLogo }, commands: { help, ...commands }, colours } = await require('../handlers/database')(guild);
 
 	/**
 	 * Send details and assistance about a specific command, or generate a list of available commands when needed
@@ -40,38 +40,38 @@ module.exports = async guild => {
 		if (msg.guild) deleteMsg(msg);
 
 		// Parse the argument command if it exists
-		const argCmd = args[0]
+		const argCommand = args[0]
 			? args[0].toLowerCase()
 			: null;
 
 		// Attempt to read the parsed argument command and find the command function
-		const cmd = bot.commands.get(argCmd) || bot.commands.find(_cmd => _cmd.aliases && _cmd.aliases.includes(_cmd));
+		const command = bot.commands.get(argCommand) || bot.commands.find(_command => _command.aliases && _command.aliases.includes(_command));
 
 		// Initialise blank help embed
 		const helpEmbed = new Discord.MessageEmbed();
 
-		(cmd)
+		(command)
 			// If command function was recognised, ensure the member has the necessary permissions for that command
-			? (await permissionsHandler(msg, cmd))
+			? (await permissionsHandler(msg, command))
 				// If so, send the help embed for that command
 				? sendHelpEmbed()
 				: (msg.guild)
 					// Otherwise, send a list of usable commands if help command message was in a guild
-					? sendCmdList()
+					? sendCommandList()
 					// If the help command message was in a DM, reply with an invalid permission error message
-					: dmCmdError(msg, 'NO_PERMISSION')
+					: directCommandError(msg, 'NO_PERMISSION')
 			// If the command was not recognised, send the list of usable commands
-			: sendCmdList();
+			: sendCommandList();
 
 		/**
 		 * Send a help embed for the specified command back to the user
 		 */
 		async function sendHelpEmbed() {
 			// Set the appropriate title for the help embed
-			helpEmbed.setTitle(`Command: ${await prefixCmd(cmd, guild)}`);
+			helpEmbed.setTitle(`Command: ${await prefixCommand(command, guild)}`);
 			helpEmbed.setColor(colours.pronto);
 			// Set the embed description to the help text for the identified command
-			helpEmbed.setDescription(cmd.help);
+			helpEmbed.setDescription(command.help);
 
 			// If the help command message was sent in a guild, add a footer identifying the message author and send it into the same channel
 			if (msg.guild) {
@@ -87,29 +87,29 @@ module.exports = async guild => {
 			}
 
 			// If there are role mentions, send an appropriate error message
-			else return dmCmdError(msg, 'HAS_ROLE_MENTION');
+			else return directCommandError(msg, 'HAS_ROLE_MENTION');
 		}
 
 		/**
 		 * Send a list of all the commands the user is permitted to use
 		 */
-		async function sendCmdList() {
+		async function sendCommandList() {
 			// Initialise the list (stored as a [key, value] object) of commands with the two entries for the help command
 			// i.e. unqualified help (no argument command) and qualified help (specified argument command)
-			const cmdsObj = {
-				[await prefixCmd(help, guild)]: help.description.unqualified,
-				[`${await prefixCmd(help, guild)} [command]`]: help.description.qualified,
+			const commandsObj = {
+				[await prefixCommand(help, guild)]: help.description.unqualified,
+				[`${await prefixCommand(help, guild)} [command]`]: help.description.qualified,
 			};
 
 			// Iterate through each remaining guild command
-			for (const _cmd of Object.values(cmds)) {
+			for (const guildCommand of Object.values(commands)) {
 				// Check whether the member has the necessary permissions for the command and if it should be shown in the commands list
 				// If so, create a new [key, value] entry in the commands object
-				if (await permissionsHandler(msg, _cmd) && _cmd.showList) cmdsObj[`${await prefixCmd(_cmd, guild)}`] = _cmd.description;
+				if (await permissionsHandler(msg, guildCommand) && guildCommand.showList) commandsObj[`${await prefixCommand(guildCommand, guild)}`] = guildCommand.description;
 			}
 
 			// If the original help command message was not deleted, react with the appropriate emoji, depending on whether an argument command was included or not
-			if (!msg.guild && argCmd) errorReact(msg);
+			if (!msg.guild && argCommand) errorReact(msg);
 			else if (!msg.guild) successReact(msg);
 
 			// Fetch James' <User> to include in the bot's footer
@@ -120,7 +120,7 @@ module.exports = async guild => {
 			helpEmbed.setThumbnail(prontoLogo);
 			helpEmbed.setColor(colours.pronto);
 			// Format the commands object using the modules.formatList() function
-			helpEmbed.setDescription(formatList(cmdsObj, true));
+			helpEmbed.setDescription(formatList(commandsObj, true));
 			// Add developer information to embed footer
 			helpEmbed.setFooter(`Developed by ${James.tag}`, James.avatarURL({ dynamic: true }));
 

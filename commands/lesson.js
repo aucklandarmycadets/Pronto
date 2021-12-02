@@ -2,39 +2,39 @@
 
 const Discord = require('discord.js');
 
-const { cmdError, deleteMsg, dateTimeGroup, enumerateResources, errorReact, isURL, processResources, promptEmbed, remove, rolesOutput, sendDirect, sendMsg, successReact } = require('../modules');
+const { commandError, deleteMsg, dateTimeGroup, enumerateResources, errorReact, isURL, processResources, promptEmbed, remove, rolesOutput, sendDirect, sendMsg, successReact } = require('../modules');
 const { confirmWithReaction, findLesson, unsubmittedLessons } = require('../handlers');
 
 // Set to ensure that lessons which are pending confirmation of submission cannot be submitted again
 const pendingConfirmation = new Set();
 
 /**
- * Attach the cmd.execute() function to command object
+ * Attach the command.execute() function to command object
  * @module commands/lesson
  * @param {Discord.Guild} guild The guild that the member shares with the bot
- * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a cmd.execute() property
+ * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a command.execute() property
  */
 module.exports = async guild => {
-	const { ids: { lessonsID, trainingIDs }, cmds: { lesson, seen, approve }, colours, emojis } = await require('../handlers/database')(guild);
+	const { ids: { lessonsID, trainingIDs }, commands: { lesson, seen, approve }, colours, emojis } = await require('../handlers/database')(guild);
 
 	/**
 	 * A family of sub-commands for an instructor to manage an existing lesson
 	 * @param {Discord.Message} msg The \<Message> that executed the command
 	 * @param {string[]} args The command arguments
-	 * @param {'view' | 'add' | 'remove' | 'submit' | string} msgCmd The message argument that was matched to this function
-	 * - Could be either cmd.cmd or an element of cmd.aliases
+	 * @param {'view' | 'add' | 'remove' | 'submit' | string} msgCommand The message argument that was matched to this function
+	 * - Could be either command.command or an element of command.aliases
 	 */
-	lesson.execute = async (msg, args, msgCmd) => {
+	lesson.execute = async (msg, args, msgCommand) => {
 		const { bot } = require('../pronto');
 
 		// Find <Lesson> document by querying database for lesson channel ID
 		let _lesson = await findLesson(msg.channel.id);
 
 		// Attempt to parse the lesson sub-command from the command message
-		const cmd = (lesson.aliases.includes(msgCmd))
+		const command = (lesson.aliases.includes(msgCommand))
 			// If the message command is one of the aliases (i.e. a valid lesson sub-command), use it
-			? msgCmd
-			// Otherwise, the command must have been executed with cmd.cmd
+			? msgCommand
+			// Otherwise, the command must have been executed with command.command
 			: (args.length)
 				// Take the first command argument if it exists
 				? args.shift().toLowerCase()
@@ -60,20 +60,20 @@ module.exports = async guild => {
 			else if (!_lesson.instructors[msg.author.id]) throw 'You are not an instructor for this lesson!';
 
 			// If the command author has not yet acknowledged receipt of the lesson warning, execute commands\seen.js
-			else if (!_lesson.instructors[msg.author.id].seen) _lesson = await bot.commands.get(seen.cmd).execute(msg, msg.author);
+			else if (!_lesson.instructors[msg.author.id].seen) _lesson = await bot.commands.get(seen.command).execute(msg, msg.author);
 
 			// If the lesson sub-command is 'add', ensure there was at least one attachment or URL
-			if (cmd === 'add') {
+			if (command === 'add') {
 				if (!attachments && !URLs.length) throw 'You must attach a file or enter a URL!';
 			}
 
 			// If the lesson sub-command is 'remove', ensure there are existing submitted resources
-			else if (cmd === 'remove') {
+			else if (command === 'remove') {
 				if (!_lesson.submittedResources.length) throw 'There are no resources to remove.';
 			}
 
 			// If the lesson sub-command is 'submit':
-			else if (cmd === 'submit') {
+			else if (command === 'submit') {
 				// Ensure there are changes to submit
 				if (!_lesson.changed && !_lesson.submitted) throw 'There is nothing to submit!';
 
@@ -85,15 +85,15 @@ module.exports = async guild => {
 			}
 
 			// Ensure the lesson sub-command has been successfully parsed
-			else if (!lesson.aliases.includes(cmd)) throw 'Invalid input.';
+			else if (!lesson.aliases.includes(command)) throw 'Invalid input.';
 		}
 
-		catch (error) { return cmdError(msg, error, lesson.error); }
+		catch (error) { return commandError(msg, error, lesson.error); }
 
 		/**
 		 * Preview details and attached resources of an assigned lesson
 		 */
-		if (cmd === 'view') {
+		if (command === 'view') {
 			// Success react to command message
 			successReact(msg);
 
@@ -118,7 +118,7 @@ module.exports = async guild => {
 		/**
 		 * Add resource(s) to a lesson
 		 */
-		else if (cmd === 'add') {
+		else if (command === 'add') {
 			// Success react to command message
 			successReact(msg);
 
@@ -152,7 +152,7 @@ module.exports = async guild => {
 		/**
 		 * Remove a resource from a lesson
 		 */
-		else if (cmd === 'remove') {
+		else if (command === 'remove') {
 			// Call serialiseResources() and destructure the serialised resources string[] and valid range number[]
 			const { resources, range } = serialiseResources(_lesson);
 
@@ -218,7 +218,7 @@ module.exports = async guild => {
 		/**
 		 * Submit a lesson for approval
 		 */
-		else if (cmd === 'submit') {
+		else if (command === 'submit') {
 			// Delete the command message
 			deleteMsg(msg);
 
@@ -301,7 +301,7 @@ module.exports = async guild => {
 								const collector = approveMsg.createReactionCollector(filter, { dispose: true });
 
 								// Execute the commands\approve.js command when a user with a Training Cell role approves the lesson plan via reaction
-								collector.on('collect', async (_, user) => bot.commands.get(approve.cmd).execute(msg, user));
+								collector.on('collect', async (_, user) => bot.commands.get(approve.command).execute(msg, user));
 							});
 
 						// Call handlers.unsubmittedLessons() to update the embed of unsubmitted lessons

@@ -1,16 +1,16 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { capitalise, cmdError, dateTimeGroup, prefixCmd, remove, sendDirect, sendMsg, successReact } = require('../modules');
+const { capitalise, commandError, dateTimeGroup, prefixCommand, remove, sendDirect, sendMsg, successReact } = require('../modules');
 
 /**
- * Attach the cmd.execute() function to command object
+ * Attach the command.execute() function to command object
  * @module commands/leavefor
  * @param {Discord.Guild} guild The guild that the member shares with the bot
- * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a cmd.execute() property
+ * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a command.execute() property
  */
 module.exports = async guild => {
-	const { ids: { attendanceID }, cmds: { help, leave, leaveFor }, colours } = await require('../handlers/database')(guild);
+	const { ids: { attendanceID }, commands: { help, leave, leaveFor }, colours } = await require('../handlers/database')(guild);
 
 	/**
 	 * Process a leave request submitted on behalf of someone else
@@ -37,7 +37,7 @@ module.exports = async guild => {
 			else if (args.length < 2) throw 'Insufficient remarks.';
 		}
 
-		catch (error) { return cmdError(msg, error, leaveFor.error); }
+		catch (error) { return commandError(msg, error, leaveFor.error); }
 
 		// Success react to command message
 		successReact(msg);
@@ -77,7 +77,7 @@ module.exports = async guild => {
 			.setDescription(`**${msg.member.displayName}** has submitted leave for you in **#${msg.channel.name}**.`)
 			.addField('Channel', msg.channel.toString())
 			.addField('Remarks', capitalise(args.join(' ')))
-			.setFooter(`Reply with '${await prefixCmd(help)} ${leave.cmd}' to learn how to request leave for yourself.`);
+			.setFooter(`Reply with '${await prefixCommand(help)} ${leave.command}' to learn how to request leave for yourself.`);
 
 		// Get the guild's attendance channel
 		const attendanceChannel = bot.channels.cache.get(attendanceID);

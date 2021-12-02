@@ -5,16 +5,16 @@ const mongoose = require('mongoose');
 const { Attendance } = require('../models');
 
 const { confirmWithReaction } = require('../handlers');
-const { cmdError, deleteMsg, dateTimeGroup, emojiReact, sendDirect, sendMsg } = require('../modules');
+const { commandError, deleteMsg, dateTimeGroup, emojiReact, sendDirect, sendMsg } = require('../modules');
 
 /**
- * Attach the cmd.execute() function to command object
+ * Attach the command.execute() function to command object
  * @module commands/attendance
  * @param {Discord.Guild} guild The guild that the member shares with the bot
- * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a cmd.execute() property
+ * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a command.execute() property
  */
 module.exports = async guild => {
-	const { ids: { attendanceID, formations }, cmds: { attendance }, colours } = await require('../handlers/database')(guild);
+	const { ids: { attendanceID, formations }, commands: { attendance }, colours } = await require('../handlers/database')(guild);
 
 	/**
 	 * Process an attendance register by creating an attendance embed and sending it to the attendance and original message command channels
@@ -32,7 +32,7 @@ module.exports = async guild => {
 		}
 
 		catch (error) {
-			return cmdError(msg, 'You cannot submit an empty register.', attendance.error);
+			return commandError(msg, 'You cannot submit an empty register.', attendance.error);
 		}
 
 		// Delete the command message
@@ -52,7 +52,7 @@ module.exports = async guild => {
 		}
 
 		// Check for legacy syntax - if the command intention is to update an existing register, return an error message instructing the user to use the edit reaction
-		if (args[0].toLowerCase() === 'update') return cmdError(msg, 'Please use the 📝 reaction to edit a register.', attendance.error);
+		if (args[0].toLowerCase() === 'update') return commandError(msg, 'Please use the 📝 reaction to edit a register.', attendance.error);
 
 		// Otherwise, execute createRegister()
 		else createRegister();

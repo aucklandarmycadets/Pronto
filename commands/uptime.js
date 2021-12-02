@@ -4,13 +4,13 @@ const Discord = require('discord.js');
 const { dateTimeGroup, formatAge, sendMsg } = require('../modules');
 
 /**
- * Attach the cmd.execute() function to command object
+ * Attach the command.execute() function to command object
  * @module commands/uptime
  * @param {Discord.Guild} guild The guild that the member shares with the bot
- * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a cmd.execute() property
+ * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a command.execute() property
  */
 module.exports = async guild => {
-	const { cmds: { uptime }, colours } = await require('../handlers/database')(guild);
+	const { commands: { uptime }, colours } = await require('../handlers/database')(guild);
 
 	/**
 	 * Display the bot's uptime

@@ -122,7 +122,7 @@ A Discord bot developed for the City of Auckland Cadet Unit, built with [discord
 	>	ids: {
 	>		formations: ['<roleOneID>', '<roleTwoID>'...],
 	>	},
-	>	cmds: {
+	>	commands: {
 	>		leave: {
 	>			requiredRoles: ['<roleOneID>', '<roleTwoID>'...],
 	>			deniedRoles: ['<roleOneID>', '<roleTwoID>'...],
@@ -174,10 +174,10 @@ A Discord bot developed for the City of Auckland Cadet Unit, built with [discord
 	> A dashboard is coming soon!
 
 5. Follow [this guide](https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot) to create your own bot user and get your bot token (you can set your own picture and name also!)
-	> The only locations where 'Pronto' is actually named by the bot are `cmds.js` and `config.js`, and the developer-only `commands\ping.js`, `commands\uptime.js` and `events\exit.js`:
+	> The only locations where 'Pronto' is actually named by the bot are `commands.js` and `config.js`, and the developer-only `commands\ping.js`, `commands\uptime.js` and `events\exit.js`:
 	> ```js
 	> help: {
-	> 	cmd: 'help',
+	> 	command: 'help',
 	> 	aliases: ['cmd', 'cmds', 'command', 'commands'],
 	> 	description: {
 	>		general: 'Get help with using Pronto.',
@@ -195,7 +195,7 @@ A Discord bot developed for the City of Auckland Cadet Unit, built with [discord
 
 	> To change the bot's status message, look in `events\onReady.js`:
 	> ```js
-	> bot.user.setActivity(`the radio net | ${await prefixCmd(help)}`, { type: 'LISTENING' });
+	> bot.user.setActivity(`the radio net | ${await prefixCommand(help)}`, { type: 'LISTENING' });
 	> ```
 	> Documentation can be found [here](https://discordjs.guide/popular-topics/faq.html#how-do-i-set-my-playing-status).
 

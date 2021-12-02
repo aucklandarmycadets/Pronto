@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = async (cmd, guild) => {
+module.exports = async (command, guild) => {
 	const { settings: { prefix } } = await require('../handlers/database')(guild);
-	return `${prefix}${cmd.cmd}`;
+	return `${prefix}${command.command}`;
 };

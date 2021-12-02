@@ -16,18 +16,18 @@ module.exports = async (directory, guild) => {
 	const files = fs.readdirSync(directory).filter(file => file.endsWith('.js') && file !== 'index.js');
 
 	// Initialise an empty commands object
-	const cmdsObj = {};
+	const commandsObj = {};
 
 	// Loop through each command file
 	for (const file of files) {
 		// Parse the command name by removing the file extension
-		const cmd = file.replace('.js', '');
+		const command = file.replace('.js', '');
 		// Load each command by passing the guild into each command file's exported function
-		// This completes the individual command's object by adding the cmd.execute() function to the command object
+		// This completes the individual command's object by adding the command.execute() function to the command object
 		// Store each indiviudal command as a [key, value] pair within the commands object, where the key is the command name and the value is the command object
-		cmdsObj[cmd] = await require(`.${directory}/${cmd}`)(guild);
+		commandsObj[command] = await require(`.${directory}/${command}`)(guild);
 	}
 
 	// Return the loaded commands object
-	return cmdsObj;
+	return commandsObj;
 };

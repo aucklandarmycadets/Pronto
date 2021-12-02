@@ -1,7 +1,7 @@
 'use strict';
 
 const { ids: { DEFAULT_GUILD, DEVELOPER_ID } } = require('../config');
-const { embedScaffold, prefixCmd } = require('../modules');
+const { embedScaffold, prefixCommand } = require('../modules');
 const { lessonReminders, unsubmittedLessons, verifyBotPermissions } = require('../handlers');
 
 module.exports = {
@@ -13,13 +13,13 @@ module.exports = {
 	 */
 	async handler() {
 		const { bot } = require('../pronto');
-		const { cmds: { help }, colours } = await require('../handlers/database')();
+		const { commands: { help }, colours } = await require('../handlers/database')();
 
 		// Log the successful log-in to the console
 		console.info(`Logged in as ${bot.user.tag}!`);
 
 		// Set the bot's activity status
-		bot.user.setActivity(`the radio net | ${await prefixCmd(help)}`, { type: 'LISTENING' });
+		bot.user.setActivity(`the radio net | ${await prefixCommand(help)}`, { type: 'LISTENING' });
 
 		// Fetch the developer's <User>
 		const developer = await bot.users.fetch(DEVELOPER_ID);
