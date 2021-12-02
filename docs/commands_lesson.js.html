@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Adding favicon -->
+    
+
+    <!-- Adding meta -->
+    
+
+    <!-- Adding external script-->
+    
+
+    <!-- Adding external style-->
+    
+
+    <!-- Adding scripts-->
+    
+
+    <!-- Adding style-->
+    
+
+    <!-- Adding overlay script-->
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.13.0/js/OverlayScrollbars.min.js"
+      integrity="sha512-5R3ngaUdvyhXkQkIqTf/k+Noq3phjmrqlUQyQYbgfI34Mzcx7vLIIYTy/K1VMHkL33T709kfh5y6R9Xy/Cbt7Q=="
+      crossorigin="anonymous"></script>
+    
+
+    <!-- Adding overlay style-->
+    
+
+
+    <title>
+      commands/lesson.js
+    </title>
+
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/third-party/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/third-party/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/reset.css">
+    <link type="text/css" rel="stylesheet" href="styles/clean-jsdoc-theme-base.css">
+    <link type="text/css" rel="stylesheet" href="styles/clean-jsdoc-theme-dark.css">
+    
+    <svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+    style="display:none">
+    <defs>
+        <symbol id="copy-icon" viewbox="0 0 488.3 488.3">
+            <g>
+                <path
+                    d="M314.25,85.4h-227c-21.3,0-38.6,17.3-38.6,38.6v325.7c0,21.3,17.3,38.6,38.6,38.6h227c21.3,0,38.6-17.3,38.6-38.6V124    C352.75,102.7,335.45,85.4,314.25,85.4z M325.75,449.6c0,6.4-5.2,11.6-11.6,11.6h-227c-6.4,0-11.6-5.2-11.6-11.6V124    c0-6.4,5.2-11.6,11.6-11.6h227c6.4,0,11.6,5.2,11.6,11.6V449.6z" />
+                <path
+                    d="M401.05,0h-227c-21.3,0-38.6,17.3-38.6,38.6c0,7.5,6,13.5,13.5,13.5s13.5-6,13.5-13.5c0-6.4,5.2-11.6,11.6-11.6h227    c6.4,0,11.6,5.2,11.6,11.6v325.7c0,6.4-5.2,11.6-11.6,11.6c-7.5,0-13.5,6-13.5,13.5s6,13.5,13.5,13.5c21.3,0,38.6-17.3,38.6-38.6    V38.6C439.65,17.3,422.35,0,401.05,0z" />
+            </g>
+        </symbol>
+        <symbol id='search-icon' viewBox="0 0 512 512">
+            <g>
+                <g>
+                    <path
+                        d="M225.474,0C101.151,0,0,101.151,0,225.474c0,124.33,101.151,225.474,225.474,225.474    c124.33,0,225.474-101.144,225.474-225.474C450.948,101.151,349.804,0,225.474,0z M225.474,409.323    c-101.373,0-183.848-82.475-183.848-183.848S124.101,41.626,225.474,41.626s183.848,82.475,183.848,183.848    S326.847,409.323,225.474,409.323z" />
+                </g>
+            </g>
+            <g>
+                <g>
+                    <path
+                        d="M505.902,476.472L386.574,357.144c-8.131-8.131-21.299-8.131-29.43,0c-8.131,8.124-8.131,21.306,0,29.43l119.328,119.328    c4.065,4.065,9.387,6.098,14.715,6.098c5.321,0,10.649-2.033,14.715-6.098C514.033,497.778,514.033,484.596,505.902,476.472z" />
+                </g>
+            </g>
+        </symbol>
+        <symbol id="down-icon" viewBox="0 0 16 16">
+            <path 
+                fill-rule="evenodd" 
+                clip-rule="evenodd" 
+                d="M12.7803 6.21967C13.0732 6.51256 13.0732 6.98744 12.7803 7.28033L8.53033 11.5303C8.23744 11.8232 7.76256 11.8232 7.46967 11.5303L3.21967 7.28033C2.92678 6.98744 2.92678 6.51256 3.21967 6.21967C3.51256 5.92678 3.98744 5.92678 4.28033 6.21967L8 9.93934L11.7197 6.21967C12.0126 5.92678 12.4874 5.92678 12.7803 6.21967Z"
+            >
+            </path>
+        </symbol>
+    </defs>
+</svg>
+  </head>
+
+  <body>
+
+    <nav class="navbar" id="navbar">
+      <div class="navbar-heading" id="navbar-heading"><a href="index.html"><h2 class="navbar-heading-text">Pronto</h2></a></div><div class="search-box" id="search-box"><div class="search-box-input-container"><input class="search-box-input" type="text" placeholder="Search..." id="search-box-input" /><svg class="search-icon" alt="search-icon"><use xlink:href="#search-icon"></use></svg></div><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-main-content" id="sidebar-main-content"><ul><li class="menu-li"><a href='https://github.com/JamesNZL/Pronto' class=' menu-link' id='' target='_blank'>GitHub Repository</a></li></ul><div class="accordion collapsed" id="2446248" > <h3 class="accordion-heading">Modules<svg><use xlink:href="#down-icon"></use></svg></h3><ul class="accordion-content"><li class="accordion-list" id=""><a href="module-commands.html">commands</a></li><li class="accordion collapsed child" id=8614866><div class="accordion-heading child"><a href="module-commands_approve.html">commands/approve</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="module-commands_approve.html#~processMentions">processMentions</a></li></ul></li><li class="accordion-list" id=""><a href="module-commands_archive.html">commands/archive</a></li><li class="accordion collapsed child" id=3511846><div class="accordion-heading child"><a href="module-commands_assign.html">commands/assign</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="module-commands_assign.html#~getUserInput">getUserInput</a></li><li data-type='method'><a href="module-commands_assign.html#~msgPrompt">msgPrompt</a></li><li data-type='method'><a href="module-commands_assign.html#~processMentions">processMentions</a></li><li data-type='method'><a href="module-commands_assign.html#~whileLoop">whileLoop</a></li></ul></li><li class="accordion-list" id=""><a href="module-commands_attendance.html">commands/attendance</a></li><li class="accordion-list" id=""><a href="module-commands_connected.html">commands/connected</a></li><li class="accordion collapsed child" id=5704352><div class="accordion-heading child"><a href="module-commands_evaluate.html">commands/evaluate</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="module-commands_evaluate.html#~convertToString">convertToString</a></li><li data-type='method'><a href="module-commands_evaluate.html#~findBreakIndex">findBreakIndex</a></li><li data-type='method'><a href="module-commands_evaluate.html#~removeSensitive">removeSensitive</a></li></ul></li><li class="accordion-list" id=""><a href="module-commands_help.html">commands/help</a></li><li class="accordion-list" id=""><a href="module-commands_leave.html">commands/leave</a></li><li class="accordion-list" id=""><a href="module-commands_leavefor.html">commands/leavefor</a></li><li class="accordion collapsed child" id=8794824><div class="accordion-heading child"><a href="module-commands_lesson.html">commands/lesson</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="module-commands_lesson.html#~getNumberInput">getNumberInput</a></li><li data-type='method'><a href="module-commands_lesson.html#~processMentions">processMentions</a></li><li data-type='method'><a href="module-commands_lesson.html#~serialiseResources">serialiseResources</a></li></ul></li><li class="accordion-list" id=""><a href="module-commands_ping.html">commands/ping</a></li><li class="accordion-list" id=""><a href="module-commands_purge.html">commands/purge</a></li><li class="accordion-list" id=""><a href="module-commands_restart.html">commands/restart</a></li><li class="accordion-list" id=""><a href="module-commands_seen.html">commands/seen</a></li><li class="accordion-list" id=""><a href="module-commands_uptime.html">commands/uptime</a></li></ul> </div><div class="accordion collapsed" id="799918" > <h3 class="accordion-heading">Namespaces<svg><use xlink:href="#down-icon"></use></svg></h3><ul class="accordion-content"><li class="accordion collapsed child" id=4877508><div class="accordion-heading child"><a href="handlers.html">handlers</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="handlers.html#.commandLoader">commandLoader</a></li></ul></li><li class="accordion-list" id=""><a href="models.html">models</a></li><li class="accordion-list" id=""><a href="modules.html">modules</a></li></ul> </div>
+      
+
+    </nav>
+    <div class="navbar-ham" id="navbar-ham">
+      <div>
+        <div class="first"></div>
+        <div class="second"></div>
+        <div class="third"></div>
+      </div>
+    </div>
+
+    <div id="main" class="main-content">
+      
+      <h1 id='page-title' class="page-title">
+        commands/lesson.js
+      </h1>
+      
+
+      
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
+
+const Discord = require('discord.js');
+
+const { commandError, deleteMsg, dateTimeGroup, enumerateResources, errorReact, isURL, processResources, promptEmbed, remove, rolesOutput, sendDirect, sendMsg, successReact } = require('../modules');
+const { confirmWithReaction, findLesson, unsubmittedLessons } = require('../handlers');
+
+// Set to ensure that lessons which are pending confirmation of submission cannot be submitted again
+const pendingConfirmation = new Set();
+
+/**
+ * Attach the command.execute() function to command object
+ * @module commands/lesson
+ * @param {Discord.Guild} guild The guild that the member shares with the bot
+ * @returns {Promise&lt;Object.&lt;string, string | string[] | boolean | Function>>} The complete command object with a command.execute() property
+ */
+module.exports = async guild => {
+	const { ids: { lessonsID, trainingIDs }, commands: { lesson, seen, approve }, colours, emojis } = await require('../handlers/database')(guild);
+
+	/**
+	 * A family of sub-commands for an instructor to manage an existing lesson
+	 * @param {Discord.Message} msg The \&lt;Message> that executed the command
+	 * @param {string[]} args The command arguments
+	 * @param {'view' | 'add' | 'remove' | 'submit' | string} msgCommand The message argument that was matched to this function
+	 * - Could be either command.command or an element of command.aliases
+	 */
+	lesson.execute = async (msg, args, msgCommand) => {
+		const { bot } = require('../pronto');
+
+		// Find &lt;Lesson> document by querying database for lesson channel ID
+		let _lesson = await findLesson(msg.channel.id);
+
+		// Attempt to parse the lesson sub-command from the command message
+		const command = (lesson.aliases.includes(msgCommand))
+			// If the message command is one of the aliases (i.e. a valid lesson sub-command), use it
+			? msgCommand
+			// Otherwise, the command must have been executed with command.command
+			: (args.length)
+				// Take the first command argument if it exists
+				? args.shift().toLowerCase()
+				// If the arguments are empty, then there must not be a sub-command
+				: null;
+
+		// Extract the &lt;MessageAttachment> if it exists
+		const attachments = msg.attachments.first();
+		// Filter the command arguments for URLs
+		const URLs = args.filter(arg => isURL(arg));
+
+		try {
+			// Ensure message channel is contained within lessons category
+			if (msg.channel.parentID !== lessonsID) {
+				const lessonsCategory = msg.guild.channels.cache.get(lessonsID);
+				throw `You can only use that command in **${lessonsCategory}**.`;
+			}
+
+			// Ensure &lt;Lesson> has been found
+			else if (!_lesson) throw 'Invalid lesson channel.';
+
+			// Ensure the command author is an instructor of the lesson
+			else if (!_lesson.instructors[msg.author.id]) throw 'You are not an instructor for this lesson!';
+
+			// If the command author has not yet acknowledged receipt of the lesson warning, execute commands\seen.js
+			else if (!_lesson.instructors[msg.author.id].seen) _lesson = await bot.commands.get(seen.command).execute(msg, msg.author);
+
+			// If the lesson sub-command is 'add', ensure there was at least one attachment or URL
+			if (command === 'add') {
+				if (!attachments &amp;&amp; !URLs.length) throw 'You must attach a file or enter a URL!';
+			}
+
+			// If the lesson sub-command is 'remove', ensure there are existing submitted resources
+			else if (command === 'remove') {
+				if (!_lesson.submittedResources.length) throw 'There are no resources to remove.';
+			}
+
+			// If the lesson sub-command is 'submit':
+			else if (command === 'submit') {
+				// Ensure there are changes to submit
+				if (!_lesson.changed &amp;&amp; !_lesson.submitted) throw 'There is nothing to submit!';
+
+				// Ensure there have been changes since the previous submission
+				else if (!_lesson.changed &amp;&amp; _lesson.submitted) throw 'There are no changes to submit.';
+
+				// Ensure the lesson has not already been submitted and is pending confirmation of submission
+				else if (pendingConfirmation.has(_lesson.lessonID)) throw 'This lesson has already been submitted and is pending confirmation in your Direct Messages.';
+			}
+
+			// Ensure the lesson sub-command has been successfully parsed
+			else if (!lesson.aliases.includes(command)) throw 'Invalid input.';
+		}
+
+		catch (error) { return commandError(msg, error, lesson.error); }
+
+		/**
+		 * Preview details and attached resources of an assigned lesson
+		 */
+		if (command === 'view') {
+			// Success react to command message
+			successReact(msg);
+
+			// Create lesson preview embed
+			const lessonEmbed = new Discord.MessageEmbed()
+				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
+				.setColor(colours.primary)
+				.setTitle(`Lesson Preview - ${_lesson.lessonName}`)
+				// Call processMentions() to format the lesson instructors
+				.addField('Instructor(s)', processMentions(_lesson.instructors))
+				.addField('Lesson', _lesson.lessonName)
+				.addField('Lesson Plan Due', _lesson.dueDate)
+				.addField('Lesson Date', _lesson.lessonDate)
+				// Call modules.enumerateResources() to format and output the lesson resources
+				.addField('Resources', enumerateResources(_lesson.submittedResources, true))
+				.setFooter(await dateTimeGroup());
+
+			// Send the lesson preview embed
+			return sendMsg(msg.channel, { embeds: [lessonEmbed] });
+		}
+
+		/**
+		 * Add resource(s) to a lesson
+		 */
+		else if (command === 'add') {
+			// Success react to command message
+			successReact(msg);
+
+			// If the added resources already exist in the lesson's submittedResources string[], cease further execution
+			if (_lesson.submittedResources.includes(processResources(attachments, URLs))) return;
+
+			// Add the resource to the lesson's submittedResources string[]
+			_lesson.submittedResources.push(processResources(attachments, URLs));
+			// Mark the lesson as having been changed, and ensure it is not marked as approved
+			_lesson.changed = true;
+			_lesson.approved = false;
+
+			// Save the &lt;Lesson> document
+			_lesson.save().catch(error => console.error(error));
+
+			// Create lesson updated embed
+			const updatedEmbed = new Discord.MessageEmbed()
+				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
+				.setColor(colours.success)
+				.setTitle('Lesson Resources Updated')
+				.setDescription(`**${msg.member.displayName}** has added a new resource to this lesson.`)
+				.addField('Lesson', _lesson.lessonName)
+				// Call modules.enumerateResources() to format and output the lesson resources
+				.addField('Resources', enumerateResources(_lesson.submittedResources, true))
+				.setFooter(await dateTimeGroup());
+
+			// Send the lesson updated embed
+			return sendMsg(msg.channel, { embeds: [updatedEmbed] });
+		}
+
+		/**
+		 * Remove a resource from a lesson
+		 */
+		else if (command === 'remove') {
+			// Call serialiseResources() and destructure the serialised resources string[] and valid range number[]
+			const { resources, range } = serialiseResources(_lesson);
+
+			// Create serialised resources embed
+			const resourcesEmbed = new Discord.MessageEmbed()
+				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
+				.setColor(colours.error)
+				.setTitle('Remove a Lesson Resource')
+				.addField('Lesson', _lesson.lessonName)
+				// Join the array of serialised resources with a newline separator
+				.addField('Resources', resources.join('\n'))
+				.setFooter('Enter the corresponding serial for the resource you wish to remove, or \'cancel\' to abort.');
+
+			// Send the serialsed resources embed
+			sendMsg(msg.channel, { embeds: [resourcesEmbed] });
+
+			// Call getNumberInput() to collect user's input for the resource to remove
+			const removeIndex = await getNumberInput(msg, range, colours);
+
+			// If getNumberInput() returns the symbol 'CANCEL', cancel the removal of a resource
+			if (removeIndex === 'CANCEL') {
+				// Error react to command message
+				errorReact(msg);
+
+				// Create cancellation embed
+				const cancelEmbed = new Discord.MessageEmbed()
+					.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }))
+					.setColor(colours.error)
+					.setDescription('**Cancelled.**')
+					.setFooter(await dateTimeGroup());
+
+				// Send the cancellation embed and cease further execution
+				return sendMsg(msg.channel, { embeds: [cancelEmbed] });
+			}
+
+			// Success react to command message
+			successReact(msg);
+
+			// Remove the resource at the index returned by getNumberInput() (accounting for a zero-indexed array)
+			_lesson.submittedResources = remove(_lesson.submittedResources, null, removeIndex - 1);
+			// Mark the lesson as having been changed, and ensure it is not marked as approved
+			_lesson.changed = true;
+			_lesson.approved = false;
+
+			// Save the &lt;Lesson> document
+			_lesson.save().catch(error => console.error(error));
+
+			// Create lesson updated embed
+			const updatedEmbed = new Discord.MessageEmbed()
+				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
+				.setColor(colours.success)
+				.setTitle('Lesson Resources Updated')
+				.setDescription(`**${msg.member.displayName}** has removed a resource from this lesson.`)
+				.addField('Lesson', _lesson.lessonName)
+				// Call modules.enumerateResources() to format and output the lesson resources
+				.addField('Resources', enumerateResources(_lesson.submittedResources, true))
+				.setFooter(await dateTimeGroup());
+
+			// Send the lesson updated embed
+			return sendMsg(msg.channel, { embeds: [updatedEmbed] });
+		}
+
+		/**
+		 * Submit a lesson for approval
+		 */
+		else if (command === 'submit') {
+			// Delete the command message
+			deleteMsg(msg);
+
+			// Add the lesson ID to the pendingConfirmation set
+			pendingConfirmation.add(_lesson.lessonID);
+
+			// Create lesson submission confirmation embed
+			const submitEmbed = new Discord.MessageEmbed()
+				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
+				.setColor(colours.warn)
+				.setTitle(`Lesson Submission - ${_lesson.lessonName}`)
+				// Call processMentions() to format the lesson instructors
+				.addField('Instructor(s)', processMentions(_lesson.instructors))
+				.addField('Lesson', _lesson.lessonName)
+				.addField('Lesson Plan Due', _lesson.dueDate)
+				.addField('Lesson Date', _lesson.lessonDate)
+				// Call modules.enumerateResources() to format and output the lesson resources
+				.addField('Resources', enumerateResources(_lesson.submittedResources, true))
+				.setFooter('Use the reactions below to confirm or cancel.');
+
+			// Send the lesson submission confirmation embed to the submitting instructor
+			sendDirect(msg.author, { embeds: [submitEmbed] })
+				.then(dm => {
+					/**
+					 * Create a lesson submission embed in a lesson channel and prompt for lesson plan approval by the Training Cell
+					 */
+					const lessonSubmit = async () => {
+						// 'Save' the changes and mark the lesson as being unchanged, and ensure it is marked as submitted
+						_lesson.changed = false;
+						_lesson.submitted = true;
+
+						// Save the &lt;Lesson> document
+						_lesson.save().catch(error => console.error(error));
+
+						// Remove the lesson ID from the pendingConfirmation set
+						pendingConfirmation.delete(_lesson.lessonID);
+
+						// Modify the lesson submission confirmation embed to repurpose it into the lesson submission embed
+						submitEmbed.setTitle(`Lesson Plan Submitted - ${_lesson.lessonName}`);
+						submitEmbed.setColor(colours.success);
+						submitEmbed.setFooter(await dateTimeGroup());
+
+						// Send the lesson submission embed to the private lesson channel
+						await sendMsg(msg.channel, { embeds: [submitEmbed] });
+
+						// Regex expression to match URL resources
+						const urlTest = /\[Resource \d+\]/;
+						// Regex expression to parse a &lt;MessageAttachment> resource
+						// The first capture group matches the file name, and the second capture group matches the attachment URL
+						const attachmentParser = /\[(.+)\]\((.+)\)/;
+
+						// Filter the enumerated submittedResources string[] for any &lt;MessageAttachment> resources, then send the parsed attachments to the lesson channel as a &lt;MessageAttachment>
+						// Use Promise.all() to ensure all &lt;MessageAttachment> messages have been sent before proceeding
+						await Promise.all(enumerateResources(_lesson.submittedResources)
+							.filter(resource => !urlTest.test(resource))
+							.map(resource => sendMsg(msg.channel, { attachments: new Discord.MessageAttachment(resource.match(attachmentParser)[2], resource.match(attachmentParser)[1].replace(/\\/g, '')) })),
+						);
+
+						// Retrieve the guild's success emoji
+						const successEmoji = msg.guild.emojis.cache.find(emoji => emoji.name === emojis.success.name);
+
+						// Create a new embed to prompt the Training Cell's approval of the submitted lesson plan
+						const approveEmbed = new Discord.MessageEmbed()
+							.setDescription(`Click the ${successEmoji} to approve this lesson plan.\n\nAlternatively, you can manually type \`!approve\`.`)
+							.setColor(colours.primary);
+
+						// Send the approval embed, and tag the Training Cell's roles in the message body
+						sendMsg(msg.channel, { content: rolesOutput(trainingIDs, true), embeds: [approveEmbed] })
+							.then(async approveMsg => {
+								// Add the success reaction to the approval message
+								await successReact(approveMsg);
+
+								// Filter reaction collector for reactions only of the success emoji, and that are made by a user with a Training Cell role
+								const filter = async (reaction, user) => {
+									const roles = await msg.guild.members.fetch(user.id).then(member => member.roles.cache);
+									return reaction.emoji.name === emojis.success.name &amp;&amp; roles.some(role => trainingIDs.includes(role.id));
+								};
+
+								// Create a new reaction collector on the approval message with the filter applied
+								const collector = approveMsg.createReactionCollector(filter, { dispose: true });
+
+								// Execute the commands\approve.js command when a user with a Training Cell role approves the lesson plan via reaction
+								collector.on('collect', async (_, user) => bot.commands.get(approve.command).execute(msg, user));
+							});
+
+						// Call handlers.unsubmittedLessons() to update the embed of unsubmitted lessons
+						unsubmittedLessons(guild);
+					};
+
+					/**
+					 * Remove the lesson ID from the pendingConfirmation set
+					 */
+					const lessonCancelled = () => pendingConfirmation.delete(_lesson.lessonID);
+
+					// Call handlers.confirmWithReaction() on the lesson assignment confirmation embed with assignLesson() and assignCancelled() as callbacks
+					return confirmWithReaction(msg, dm, lessonSubmit, lessonCancelled);
+				});
+		}
+	};
+
+	return lesson;
+};
+
+/**
+ * Process an object containing users with an ID child property into a formatted string
+ * @param {Object.&lt;string, {id: string}>} obj An object where each key stores a nested object with a property 'id'
+ * - e.g. const obj = {'192181901065322496': { 'id': '192181901065322496', ... }, ...}
+ * @returns {string} A newline-delimited string of formatted user mentions
+ */
+function processMentions(obj) {
+	// Map the nested objects to a new string[] of formatted mentions, then join the string[] with a newline separator
+	return Object.values(obj)
+		.map(user => `&lt;@!${user.id}>`)
+		.join('\n');
+}
+
+/**
+ * Serialises a \&lt;Lesson>.submittedResources string[] for display and creates a number[] of the serials
+ * @param {{submittedResources: string[]}} lesson The mongoose document for the lesson
+ * @returns {{resources: string[], range: number[]}} A \&lt;string[]> of the serialised resources, and a \&lt;number[]> of the valid serials
+ */
+function serialiseResources(lesson) {
+	// Split apart any potential string[] elements which contain both a &lt;MessageAttachment> and a URL, and return a flattened string[]
+	const processedArray = lesson.submittedResources.flatMap(resource => resource.split('\n'));
+
+	// Filter processedArray for any &lt;MessageAttachment> resources, and store in a new string[]
+	const attachmentArray = processedArray.filter(resource => !resource.startsWith('[Resource]'));
+
+	// Filter processedArray for URL resources, and store in a new string[]
+	const dbArray = processedArray.filter(resource => resource.startsWith('[Resource]'));
+	// Map the dbArray of URL resources to a new string[] of enumerated [Resource n] strings
+	const urlArray = dbArray.map((resource, i) => `[Resource ${i + 1}]${resource.replace('[Resource]', '')}`);
+
+	// Save the new dbArray in the &lt;Lesson> document, to ensure that the user's input corresponds to the intended array element
+	lesson.submittedResources = attachmentArray.concat(dbArray);
+	lesson.save().catch(error => console.error(error));
+
+	// Concantenate the URL string[] to the &lt;MessageAttachment> resource string[], then map it to a new string[] of serialised resource strings
+	const resources = attachmentArray.concat(urlArray)
+		.map((resource, i) => `\`${i + 1}\` ${resource}`);
+
+	// Return the serialsed resource string[], and return a new number[] of the serials
+	return { resources, range: resources.map((_, i) => i + 1) };
+}
+
+/**
+ * Collect and return a \&lt;number> input from the user
+ * @param {Discord.Message} msg The \&lt;Message> that executed the command
+ * @param {number[]} range A \&lt;number[]> of valid number inputs
+ * @param {Object.&lt;string, number>} colours The guild's colour object
+ * @returns {Promise&lt;number | 'CANCEL'>} The user's input, or the symbol `CANCEL`
+ */
+async function getNumberInput(msg, range, colours) {
+	// Await user's reply and extract the message from the resolved &lt;Collection>
+	const reply = await msg.channel.awaitMessages(_msg => _msg.author.id === msg.author.id, { max: 1 })
+		.then(collected => collected.first());
+
+	try {
+		// If the user desires to cancel input, return the 'CANCEL' symbol
+		if (reply.content.toLowerCase() === 'cancel') throw 'CANCEL';
+
+		// If the input cannot be cast to a number, send an error message and try again
+		else if (isNaN(Number(reply.content))) {
+			sendMsg(msg.channel, { embeds: [promptEmbed('You must enter a number.', colours.error)] });
+			throw await getNumberInput(msg, range, colours);
+		}
+
+		// If the input is a number but is not in the range number[] (i.e. invalid), send an error message and try again
+		else if (!range.includes(Number(reply.content))) {
+			sendMsg(msg.channel, { embeds: [promptEmbed(`You must enter a number between ${range[0]} and ${range[range.length - 1]}.`, colours.error)] });
+			throw await getNumberInput(msg, range, colours);
+		}
+
+		// If the input is a valid number, return the input as a number
+		throw Number(reply.content);
+	}
+
+	catch (thrown) { return thrown; }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+    </div>
+
+    <footer class="footer" id="footer">
+      
+    </footer>
+
+    <script src="scripts/third-party/prettify.js"></script>
+    <script src="scripts/third-party/lang-css.js"></script>
+    <script type="text/javascript" src="scripts/misc.js"></script>
+
+    <script>prettyPrint();</script>
+    <script src="scripts/linenumber.js"></script>
+    <script src="scripts/fix-code-block.js"></script>
+    <script src="scripts/fix-navbar.js"></script>
+    
+      <script src="scripts/search.js"></script>
+      <script src="scripts/third-party/fuse.js"></script>
+      <script>
+        var list = [{"title":"commands","link":"<a href=\"module-commands.html\">commands</a>"},{"title":"commands/approve","link":"<a href=\"module-commands_approve.html\">commands/approve</a>"},{"title":"module:commands/approve~processMentions","link":"<a href=\"module-commands_approve.html#~processMentions\">module:commands/approve~processMentions &rtrif; undefined</a>"},{"title":"commands/archive","link":"<a href=\"module-commands_archive.html\">commands/archive</a>"},{"title":"commands/assign","link":"<a href=\"module-commands_assign.html\">commands/assign</a>"},{"title":"module:commands/assign~getUserInput","link":"<a href=\"module-commands_assign.html#~getUserInput\">module:commands/assign~getUserInput &rtrif; undefined</a>"},{"title":"module:commands/assign~msgPrompt","link":"<a href=\"module-commands_assign.html#~msgPrompt\">module:commands/assign~msgPrompt &rtrif; undefined</a>"},{"title":"module:commands/assign~processMentions","link":"<a href=\"module-commands_assign.html#~processMentions\">module:commands/assign~processMentions &rtrif; undefined</a>"},{"title":"module:commands/assign~whileLoop","link":"<a href=\"module-commands_assign.html#~whileLoop\">module:commands/assign~whileLoop &rtrif; undefined</a>"},{"title":"commands/attendance","link":"<a href=\"module-commands_attendance.html\">commands/attendance</a>"},{"title":"commands/connected","link":"<a href=\"module-commands_connected.html\">commands/connected</a>"},{"title":"commands/evaluate","link":"<a href=\"module-commands_evaluate.html\">commands/evaluate</a>"},{"title":"module:commands/evaluate~convertToString","link":"<a href=\"module-commands_evaluate.html#~convertToString\">module:commands/evaluate~convertToString &rtrif; undefined</a>"},{"title":"module:commands/evaluate~findBreakIndex","link":"<a href=\"module-commands_evaluate.html#~findBreakIndex\">module:commands/evaluate~findBreakIndex &rtrif; undefined</a>"},{"title":"module:commands/evaluate~removeSensitive","link":"<a href=\"module-commands_evaluate.html#~removeSensitive\">module:commands/evaluate~removeSensitive &rtrif; undefined</a>"},{"title":"commands/help","link":"<a href=\"module-commands_help.html\">commands/help</a>"},{"title":"commands/leave","link":"<a href=\"module-commands_leave.html\">commands/leave</a>"},{"title":"commands/leavefor","link":"<a href=\"module-commands_leavefor.html\">commands/leavefor</a>"},{"title":"commands/lesson","link":"<a href=\"module-commands_lesson.html\">commands/lesson</a>"},{"title":"module:commands/lesson~getNumberInput","link":"<a href=\"module-commands_lesson.html#~getNumberInput\">module:commands/lesson~getNumberInput &rtrif; undefined</a>"},{"title":"module:commands/lesson~processMentions","link":"<a href=\"module-commands_lesson.html#~processMentions\">module:commands/lesson~processMentions &rtrif; undefined</a>"},{"title":"module:commands/lesson~serialiseResources","link":"<a href=\"module-commands_lesson.html#~serialiseResources\">module:commands/lesson~serialiseResources &rtrif; undefined</a>"},{"title":"commands/ping","link":"<a href=\"module-commands_ping.html\">commands/ping</a>"},{"title":"commands/purge","link":"<a href=\"module-commands_purge.html\">commands/purge</a>"},{"title":"commands/restart","link":"<a href=\"module-commands_restart.html\">commands/restart</a>"},{"title":"commands/seen","link":"<a href=\"module-commands_seen.html\">commands/seen</a>"},{"title":"commands/uptime","link":"<a href=\"module-commands_uptime.html\">commands/uptime</a>"},{"title":"handlers","link":"<a href=\"handlers.html\">handlers</a>"},{"title":"handlers.commandLoader","link":"<a href=\"handlers.html#.commandLoader\">handlers.commandLoader &rtrif; undefined</a>"},{"title":"models","link":"<a href=\"models.html\">models</a>"},{"title":"modules","link":"<a href=\"modules.html\">modules</a>"}];
+        var options = {"shouldSort":true,"threshold":0.4,"location":0,"distance":100,"maxPatternLength":32,"minMatchCharLength":1}
+          setupSearch(list, options)
+      </script>
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript">
+    var option = JSON.parse('{"option":{}}')
+      document.addEventListener("DOMContentLoaded", function () {
+        OverlayScrollbars(document.querySelectorAll('body'), option.option || {});
+      });
+    </script>
+    
+
+
+  </body>
+
+</html>

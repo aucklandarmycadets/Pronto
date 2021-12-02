@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Adding favicon -->
+    
+
+    <!-- Adding meta -->
+    
+
+    <!-- Adding external script-->
+    
+
+    <!-- Adding external style-->
+    
+
+    <!-- Adding scripts-->
+    
+
+    <!-- Adding style-->
+    
+
+    <!-- Adding overlay script-->
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.13.0/js/OverlayScrollbars.min.js"
+      integrity="sha512-5R3ngaUdvyhXkQkIqTf/k+Noq3phjmrqlUQyQYbgfI34Mzcx7vLIIYTy/K1VMHkL33T709kfh5y6R9Xy/Cbt7Q=="
+      crossorigin="anonymous"></script>
+    
+
+    <!-- Adding overlay style-->
+    
+
+
+    <title>
+      commands/help.js
+    </title>
+
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/third-party/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/third-party/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/reset.css">
+    <link type="text/css" rel="stylesheet" href="styles/clean-jsdoc-theme-base.css">
+    <link type="text/css" rel="stylesheet" href="styles/clean-jsdoc-theme-dark.css">
+    
+    <svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+    style="display:none">
+    <defs>
+        <symbol id="copy-icon" viewbox="0 0 488.3 488.3">
+            <g>
+                <path
+                    d="M314.25,85.4h-227c-21.3,0-38.6,17.3-38.6,38.6v325.7c0,21.3,17.3,38.6,38.6,38.6h227c21.3,0,38.6-17.3,38.6-38.6V124    C352.75,102.7,335.45,85.4,314.25,85.4z M325.75,449.6c0,6.4-5.2,11.6-11.6,11.6h-227c-6.4,0-11.6-5.2-11.6-11.6V124    c0-6.4,5.2-11.6,11.6-11.6h227c6.4,0,11.6,5.2,11.6,11.6V449.6z" />
+                <path
+                    d="M401.05,0h-227c-21.3,0-38.6,17.3-38.6,38.6c0,7.5,6,13.5,13.5,13.5s13.5-6,13.5-13.5c0-6.4,5.2-11.6,11.6-11.6h227    c6.4,0,11.6,5.2,11.6,11.6v325.7c0,6.4-5.2,11.6-11.6,11.6c-7.5,0-13.5,6-13.5,13.5s6,13.5,13.5,13.5c21.3,0,38.6-17.3,38.6-38.6    V38.6C439.65,17.3,422.35,0,401.05,0z" />
+            </g>
+        </symbol>
+        <symbol id='search-icon' viewBox="0 0 512 512">
+            <g>
+                <g>
+                    <path
+                        d="M225.474,0C101.151,0,0,101.151,0,225.474c0,124.33,101.151,225.474,225.474,225.474    c124.33,0,225.474-101.144,225.474-225.474C450.948,101.151,349.804,0,225.474,0z M225.474,409.323    c-101.373,0-183.848-82.475-183.848-183.848S124.101,41.626,225.474,41.626s183.848,82.475,183.848,183.848    S326.847,409.323,225.474,409.323z" />
+                </g>
+            </g>
+            <g>
+                <g>
+                    <path
+                        d="M505.902,476.472L386.574,357.144c-8.131-8.131-21.299-8.131-29.43,0c-8.131,8.124-8.131,21.306,0,29.43l119.328,119.328    c4.065,4.065,9.387,6.098,14.715,6.098c5.321,0,10.649-2.033,14.715-6.098C514.033,497.778,514.033,484.596,505.902,476.472z" />
+                </g>
+            </g>
+        </symbol>
+        <symbol id="down-icon" viewBox="0 0 16 16">
+            <path 
+                fill-rule="evenodd" 
+                clip-rule="evenodd" 
+                d="M12.7803 6.21967C13.0732 6.51256 13.0732 6.98744 12.7803 7.28033L8.53033 11.5303C8.23744 11.8232 7.76256 11.8232 7.46967 11.5303L3.21967 7.28033C2.92678 6.98744 2.92678 6.51256 3.21967 6.21967C3.51256 5.92678 3.98744 5.92678 4.28033 6.21967L8 9.93934L11.7197 6.21967C12.0126 5.92678 12.4874 5.92678 12.7803 6.21967Z"
+            >
+            </path>
+        </symbol>
+    </defs>
+</svg>
+  </head>
+
+  <body>
+
+    <nav class="navbar" id="navbar">
+      <div class="navbar-heading" id="navbar-heading"><a href="index.html"><h2 class="navbar-heading-text">Pronto</h2></a></div><div class="search-box" id="search-box"><div class="search-box-input-container"><input class="search-box-input" type="text" placeholder="Search..." id="search-box-input" /><svg class="search-icon" alt="search-icon"><use xlink:href="#search-icon"></use></svg></div><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-main-content" id="sidebar-main-content"><ul><li class="menu-li"><a href='https://github.com/JamesNZL/Pronto' class=' menu-link' id='' target='_blank'>GitHub Repository</a></li></ul><div class="accordion collapsed" id="2446248" > <h3 class="accordion-heading">Modules<svg><use xlink:href="#down-icon"></use></svg></h3><ul class="accordion-content"><li class="accordion-list" id=""><a href="module-commands.html">commands</a></li><li class="accordion collapsed child" id=8614866><div class="accordion-heading child"><a href="module-commands_approve.html">commands/approve</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="module-commands_approve.html#~processMentions">processMentions</a></li></ul></li><li class="accordion-list" id=""><a href="module-commands_archive.html">commands/archive</a></li><li class="accordion collapsed child" id=3511846><div class="accordion-heading child"><a href="module-commands_assign.html">commands/assign</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="module-commands_assign.html#~getUserInput">getUserInput</a></li><li data-type='method'><a href="module-commands_assign.html#~msgPrompt">msgPrompt</a></li><li data-type='method'><a href="module-commands_assign.html#~processMentions">processMentions</a></li><li data-type='method'><a href="module-commands_assign.html#~whileLoop">whileLoop</a></li></ul></li><li class="accordion-list" id=""><a href="module-commands_attendance.html">commands/attendance</a></li><li class="accordion-list" id=""><a href="module-commands_connected.html">commands/connected</a></li><li class="accordion collapsed child" id=5704352><div class="accordion-heading child"><a href="module-commands_evaluate.html">commands/evaluate</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="module-commands_evaluate.html#~convertToString">convertToString</a></li><li data-type='method'><a href="module-commands_evaluate.html#~findBreakIndex">findBreakIndex</a></li><li data-type='method'><a href="module-commands_evaluate.html#~removeSensitive">removeSensitive</a></li></ul></li><li class="accordion-list" id=""><a href="module-commands_help.html">commands/help</a></li><li class="accordion-list" id=""><a href="module-commands_leave.html">commands/leave</a></li><li class="accordion-list" id=""><a href="module-commands_leavefor.html">commands/leavefor</a></li><li class="accordion collapsed child" id=8794824><div class="accordion-heading child"><a href="module-commands_lesson.html">commands/lesson</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="module-commands_lesson.html#~getNumberInput">getNumberInput</a></li><li data-type='method'><a href="module-commands_lesson.html#~processMentions">processMentions</a></li><li data-type='method'><a href="module-commands_lesson.html#~serialiseResources">serialiseResources</a></li></ul></li><li class="accordion-list" id=""><a href="module-commands_ping.html">commands/ping</a></li><li class="accordion-list" id=""><a href="module-commands_purge.html">commands/purge</a></li><li class="accordion-list" id=""><a href="module-commands_restart.html">commands/restart</a></li><li class="accordion-list" id=""><a href="module-commands_seen.html">commands/seen</a></li><li class="accordion-list" id=""><a href="module-commands_uptime.html">commands/uptime</a></li></ul> </div><div class="accordion collapsed" id="799918" > <h3 class="accordion-heading">Namespaces<svg><use xlink:href="#down-icon"></use></svg></h3><ul class="accordion-content"><li class="accordion collapsed child" id=4877508><div class="accordion-heading child"><a href="handlers.html">handlers</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="handlers.html#.commandLoader">commandLoader</a></li></ul></li><li class="accordion-list" id=""><a href="models.html">models</a></li><li class="accordion-list" id=""><a href="modules.html">modules</a></li></ul> </div>
+      
+
+    </nav>
+    <div class="navbar-ham" id="navbar-ham">
+      <div>
+        <div class="first"></div>
+        <div class="second"></div>
+        <div class="third"></div>
+      </div>
+    </div>
+
+    <div id="main" class="main-content">
+      
+      <h1 id='page-title' class="page-title">
+        commands/help.js
+      </h1>
+      
+
+      
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
+
+const Discord = require('discord.js');
+const { ids: { DEVELOPER_ID } } = require('../config');
+const { deleteMsg, directCommandError, embedScaffold, errorReact, formatList, getRoleError, prefixCommand, sendDirect, sendMsg, successReact } = require('../modules');
+const { permissionsHandler } = require('../handlers');
+
+/**
+ * Attach the command.execute() function to command object
+ * @module commands/help
+ * @param {Discord.Guild} guild The guild that the member shares with the bot
+ * @returns {Promise&lt;Object.&lt;string, string | string[] | boolean | Function>>} The complete command object with a command.execute() property
+ */
+module.exports = async guild => {
+	const { settings: { prontoLogo }, commands: { help, ...commands }, colours } = await require('../handlers/database')(guild);
+
+	/**
+	 * Send details and assistance about a specific command, or generate a list of available commands when needed
+	 * @param {Discord.Message} msg The \&lt;Message> that executed the command
+	 * @param {string[]} args The command arguments
+	 */
+	help.execute = async (msg, args) => {
+		const { bot } = require('../pronto');
+
+		// Ensure that the member's common guild is not currently suffering an outage
+		if (!msg.guild &amp;&amp; !guild.available) {
+			errorReact(msg);
+			return embedScaffold(guild, msg.author, 'There was an error reaching the server, please try again later.', colours.error, 'DIRECT');
+		}
+
+		// Get the member's roles, which may require fetching if command was sent in DM
+		const memberRoles = (msg.guild)
+			? msg.member.roles.cache
+			: await guild.members.fetch(msg.author.id).then(member => member.roles.cache);
+
+		// Return if there was an issue retrieving the member's roles
+		if (!memberRoles) return getRoleError(msg);
+
+		// If the command message was sent in a guild, delete it
+		if (msg.guild) deleteMsg(msg);
+
+		// Parse the argument command if it exists
+		const argCommand = args[0]
+			? args[0].toLowerCase()
+			: null;
+
+		// Attempt to read the parsed argument command and find the command function
+		const command = bot.commands.get(argCommand) || bot.commands.find(_command => _command.aliases &amp;&amp; _command.aliases.includes(_command));
+
+		// Initialise blank help embed
+		const helpEmbed = new Discord.MessageEmbed();
+
+		(command)
+			// If command function was recognised, ensure the member has the necessary permissions for that command
+			? (await permissionsHandler(msg, command))
+				// If so, send the help embed for that command
+				? sendHelpEmbed()
+				: (msg.guild)
+					// Otherwise, send a list of usable commands if help command message was in a guild
+					? sendCommandList()
+					// If the help command message was in a DM, reply with an invalid permission error message
+					: directCommandError(msg, 'NO_PERMISSION')
+			// If the command was not recognised, send the list of usable commands
+			: sendCommandList();
+
+		/**
+		 * Send a help embed for the specified command back to the user
+		 */
+		async function sendHelpEmbed() {
+			// Set the appropriate title for the help embed
+			helpEmbed.setTitle(`Command: ${await prefixCommand(command, guild)}`);
+			helpEmbed.setColor(colours.primary);
+			// Set the embed description to the help text for the identified command
+			helpEmbed.setDescription(command.help);
+
+			// If the help command message was sent in a guild, add a footer identifying the message author and send it into the same channel
+			if (msg.guild) {
+				helpEmbed.setFooter(`Requested by ${msg.member.displayName}`, msg.author.displayAvatarURL({ dynamic: true }));
+				return sendMsg(msg.channel, { embeds: [helpEmbed] });
+			}
+
+			// Ensure the help embed does not include any role mention before sending it into a direct message channel
+			// This is because mentioned &lt;Role> tags render as '@deleted-role' when sent in a non-&lt;GuildChannel>
+			else if (!helpEmbed.description.includes('&lt;@&amp;')) {
+				successReact(msg);
+				return sendDirect(msg.author, { embeds: [helpEmbed] }, msg.channel);
+			}
+
+			// If there are role mentions, send an appropriate error message
+			else return directCommandError(msg, 'HAS_ROLE_MENTION');
+		}
+
+		/**
+		 * Send a list of all the commands the user is permitted to use
+		 */
+		async function sendCommandList() {
+			// Initialise the list (stored as a [key, value] object) of commands with the two entries for the help command
+			// i.e. unqualified help (no argument command) and qualified help (specified argument command)
+			const commandsObj = {
+				[await prefixCommand(help, guild)]: help.description.unqualified,
+				[`${await prefixCommand(help, guild)} [command]`]: help.description.qualified,
+			};
+
+			// Iterate through each remaining guild command
+			for (const guildCommand of Object.values(commands)) {
+				// Check whether the member has the necessary permissions for the command and if it should be shown in the commands list
+				// If so, create a new [key, value] entry in the commands object
+				if (await permissionsHandler(msg, guildCommand) &amp;&amp; guildCommand.showList) commandsObj[`${await prefixCommand(guildCommand, guild)}`] = guildCommand.description;
+			}
+
+			// If the original help command message was not deleted, react with the appropriate emoji, depending on whether an argument command was included or not
+			if (!msg.guild &amp;&amp; argCommand) errorReact(msg);
+			else if (!msg.guild) successReact(msg);
+
+			// Fetch James' &lt;User> to include in the bot's footer
+			const James = await bot.users.fetch('192181901065322496');
+
+			// Fill out the help embed
+			helpEmbed.setTitle('Commands List');
+			helpEmbed.setThumbnail(prontoLogo);
+			helpEmbed.setColor(colours.primary);
+			// Format the commands object using the modules.formatList() function
+			helpEmbed.setDescription(formatList(commandsObj, true));
+			// Add developer information to embed footer
+			helpEmbed.setFooter(`Developed by ${James.tag}`, James.avatarURL({ dynamic: true }));
+
+			// Add field for all users apart from the developer to indicate that some commands may not be shown
+			if (msg.author.id !== DEVELOPER_ID) helpEmbed.addField('Note', `Only displaying commands available to **${(msg.guild) ? msg.member.displayName : msg.author}**.`);
+
+			// Send the commands list embed to the user in DMs
+			sendDirect(msg.author, { embeds: [helpEmbed] }, msg.channel);
+		}
+	};
+
+	return help;
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+    </div>
+
+    <footer class="footer" id="footer">
+      
+    </footer>
+
+    <script src="scripts/third-party/prettify.js"></script>
+    <script src="scripts/third-party/lang-css.js"></script>
+    <script type="text/javascript" src="scripts/misc.js"></script>
+
+    <script>prettyPrint();</script>
+    <script src="scripts/linenumber.js"></script>
+    <script src="scripts/fix-code-block.js"></script>
+    <script src="scripts/fix-navbar.js"></script>
+    
+      <script src="scripts/search.js"></script>
+      <script src="scripts/third-party/fuse.js"></script>
+      <script>
+        var list = [{"title":"commands","link":"<a href=\"module-commands.html\">commands</a>"},{"title":"commands/approve","link":"<a href=\"module-commands_approve.html\">commands/approve</a>"},{"title":"module:commands/approve~processMentions","link":"<a href=\"module-commands_approve.html#~processMentions\">module:commands/approve~processMentions &rtrif; undefined</a>"},{"title":"commands/archive","link":"<a href=\"module-commands_archive.html\">commands/archive</a>"},{"title":"commands/assign","link":"<a href=\"module-commands_assign.html\">commands/assign</a>"},{"title":"module:commands/assign~getUserInput","link":"<a href=\"module-commands_assign.html#~getUserInput\">module:commands/assign~getUserInput &rtrif; undefined</a>"},{"title":"module:commands/assign~msgPrompt","link":"<a href=\"module-commands_assign.html#~msgPrompt\">module:commands/assign~msgPrompt &rtrif; undefined</a>"},{"title":"module:commands/assign~processMentions","link":"<a href=\"module-commands_assign.html#~processMentions\">module:commands/assign~processMentions &rtrif; undefined</a>"},{"title":"module:commands/assign~whileLoop","link":"<a href=\"module-commands_assign.html#~whileLoop\">module:commands/assign~whileLoop &rtrif; undefined</a>"},{"title":"commands/attendance","link":"<a href=\"module-commands_attendance.html\">commands/attendance</a>"},{"title":"commands/connected","link":"<a href=\"module-commands_connected.html\">commands/connected</a>"},{"title":"commands/evaluate","link":"<a href=\"module-commands_evaluate.html\">commands/evaluate</a>"},{"title":"module:commands/evaluate~convertToString","link":"<a href=\"module-commands_evaluate.html#~convertToString\">module:commands/evaluate~convertToString &rtrif; undefined</a>"},{"title":"module:commands/evaluate~findBreakIndex","link":"<a href=\"module-commands_evaluate.html#~findBreakIndex\">module:commands/evaluate~findBreakIndex &rtrif; undefined</a>"},{"title":"module:commands/evaluate~removeSensitive","link":"<a href=\"module-commands_evaluate.html#~removeSensitive\">module:commands/evaluate~removeSensitive &rtrif; undefined</a>"},{"title":"commands/help","link":"<a href=\"module-commands_help.html\">commands/help</a>"},{"title":"commands/leave","link":"<a href=\"module-commands_leave.html\">commands/leave</a>"},{"title":"commands/leavefor","link":"<a href=\"module-commands_leavefor.html\">commands/leavefor</a>"},{"title":"commands/lesson","link":"<a href=\"module-commands_lesson.html\">commands/lesson</a>"},{"title":"module:commands/lesson~getNumberInput","link":"<a href=\"module-commands_lesson.html#~getNumberInput\">module:commands/lesson~getNumberInput &rtrif; undefined</a>"},{"title":"module:commands/lesson~processMentions","link":"<a href=\"module-commands_lesson.html#~processMentions\">module:commands/lesson~processMentions &rtrif; undefined</a>"},{"title":"module:commands/lesson~serialiseResources","link":"<a href=\"module-commands_lesson.html#~serialiseResources\">module:commands/lesson~serialiseResources &rtrif; undefined</a>"},{"title":"commands/ping","link":"<a href=\"module-commands_ping.html\">commands/ping</a>"},{"title":"commands/purge","link":"<a href=\"module-commands_purge.html\">commands/purge</a>"},{"title":"commands/restart","link":"<a href=\"module-commands_restart.html\">commands/restart</a>"},{"title":"commands/seen","link":"<a href=\"module-commands_seen.html\">commands/seen</a>"},{"title":"commands/uptime","link":"<a href=\"module-commands_uptime.html\">commands/uptime</a>"},{"title":"handlers","link":"<a href=\"handlers.html\">handlers</a>"},{"title":"handlers.commandLoader","link":"<a href=\"handlers.html#.commandLoader\">handlers.commandLoader &rtrif; undefined</a>"},{"title":"models","link":"<a href=\"models.html\">models</a>"},{"title":"modules","link":"<a href=\"modules.html\">modules</a>"}];
+        var options = {"shouldSort":true,"threshold":0.4,"location":0,"distance":100,"maxPatternLength":32,"minMatchCharLength":1}
+          setupSearch(list, options)
+      </script>
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript">
+    var option = JSON.parse('{"option":{}}')
+      document.addEventListener("DOMContentLoaded", function () {
+        OverlayScrollbars(document.querySelectorAll('body'), option.option || {});
+      });
+    </script>
+    
+
+
+  </body>
+
+</html>

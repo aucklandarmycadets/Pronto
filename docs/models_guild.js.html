@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Adding favicon -->
+    
+
+    <!-- Adding meta -->
+    
+
+    <!-- Adding external script-->
+    
+
+    <!-- Adding external style-->
+    
+
+    <!-- Adding scripts-->
+    
+
+    <!-- Adding style-->
+    
+
+    <!-- Adding overlay script-->
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.13.0/js/OverlayScrollbars.min.js"
+      integrity="sha512-5R3ngaUdvyhXkQkIqTf/k+Noq3phjmrqlUQyQYbgfI34Mzcx7vLIIYTy/K1VMHkL33T709kfh5y6R9Xy/Cbt7Q=="
+      crossorigin="anonymous"></script>
+    
+
+    <!-- Adding overlay style-->
+    
+
+
+    <title>
+      models/guild.js
+    </title>
+
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/third-party/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/third-party/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/reset.css">
+    <link type="text/css" rel="stylesheet" href="styles/clean-jsdoc-theme-base.css">
+    <link type="text/css" rel="stylesheet" href="styles/clean-jsdoc-theme-dark.css">
+    
+    <svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+    style="display:none">
+    <defs>
+        <symbol id="copy-icon" viewbox="0 0 488.3 488.3">
+            <g>
+                <path
+                    d="M314.25,85.4h-227c-21.3,0-38.6,17.3-38.6,38.6v325.7c0,21.3,17.3,38.6,38.6,38.6h227c21.3,0,38.6-17.3,38.6-38.6V124    C352.75,102.7,335.45,85.4,314.25,85.4z M325.75,449.6c0,6.4-5.2,11.6-11.6,11.6h-227c-6.4,0-11.6-5.2-11.6-11.6V124    c0-6.4,5.2-11.6,11.6-11.6h227c6.4,0,11.6,5.2,11.6,11.6V449.6z" />
+                <path
+                    d="M401.05,0h-227c-21.3,0-38.6,17.3-38.6,38.6c0,7.5,6,13.5,13.5,13.5s13.5-6,13.5-13.5c0-6.4,5.2-11.6,11.6-11.6h227    c6.4,0,11.6,5.2,11.6,11.6v325.7c0,6.4-5.2,11.6-11.6,11.6c-7.5,0-13.5,6-13.5,13.5s6,13.5,13.5,13.5c21.3,0,38.6-17.3,38.6-38.6    V38.6C439.65,17.3,422.35,0,401.05,0z" />
+            </g>
+        </symbol>
+        <symbol id='search-icon' viewBox="0 0 512 512">
+            <g>
+                <g>
+                    <path
+                        d="M225.474,0C101.151,0,0,101.151,0,225.474c0,124.33,101.151,225.474,225.474,225.474    c124.33,0,225.474-101.144,225.474-225.474C450.948,101.151,349.804,0,225.474,0z M225.474,409.323    c-101.373,0-183.848-82.475-183.848-183.848S124.101,41.626,225.474,41.626s183.848,82.475,183.848,183.848    S326.847,409.323,225.474,409.323z" />
+                </g>
+            </g>
+            <g>
+                <g>
+                    <path
+                        d="M505.902,476.472L386.574,357.144c-8.131-8.131-21.299-8.131-29.43,0c-8.131,8.124-8.131,21.306,0,29.43l119.328,119.328    c4.065,4.065,9.387,6.098,14.715,6.098c5.321,0,10.649-2.033,14.715-6.098C514.033,497.778,514.033,484.596,505.902,476.472z" />
+                </g>
+            </g>
+        </symbol>
+        <symbol id="down-icon" viewBox="0 0 16 16">
+            <path 
+                fill-rule="evenodd" 
+                clip-rule="evenodd" 
+                d="M12.7803 6.21967C13.0732 6.51256 13.0732 6.98744 12.7803 7.28033L8.53033 11.5303C8.23744 11.8232 7.76256 11.8232 7.46967 11.5303L3.21967 7.28033C2.92678 6.98744 2.92678 6.51256 3.21967 6.21967C3.51256 5.92678 3.98744 5.92678 4.28033 6.21967L8 9.93934L11.7197 6.21967C12.0126 5.92678 12.4874 5.92678 12.7803 6.21967Z"
+            >
+            </path>
+        </symbol>
+    </defs>
+</svg>
+  </head>
+
+  <body>
+
+    <nav class="navbar" id="navbar">
+      <div class="navbar-heading" id="navbar-heading"><a href="index.html"><h2 class="navbar-heading-text">Pronto</h2></a></div><div class="search-box" id="search-box"><div class="search-box-input-container"><input class="search-box-input" type="text" placeholder="Search..." id="search-box-input" /><svg class="search-icon" alt="search-icon"><use xlink:href="#search-icon"></use></svg></div><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-main-content" id="sidebar-main-content"><ul><li class="menu-li"><a href='https://github.com/JamesNZL/Pronto' class=' menu-link' id='' target='_blank'>GitHub Repository</a></li></ul><div class="accordion collapsed" id="2446248" > <h3 class="accordion-heading">Modules<svg><use xlink:href="#down-icon"></use></svg></h3><ul class="accordion-content"><li class="accordion-list" id=""><a href="module-commands.html">commands</a></li><li class="accordion collapsed child" id=8614866><div class="accordion-heading child"><a href="module-commands_approve.html">commands/approve</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="module-commands_approve.html#~processMentions">processMentions</a></li></ul></li><li class="accordion-list" id=""><a href="module-commands_archive.html">commands/archive</a></li><li class="accordion collapsed child" id=3511846><div class="accordion-heading child"><a href="module-commands_assign.html">commands/assign</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="module-commands_assign.html#~getUserInput">getUserInput</a></li><li data-type='method'><a href="module-commands_assign.html#~msgPrompt">msgPrompt</a></li><li data-type='method'><a href="module-commands_assign.html#~processMentions">processMentions</a></li><li data-type='method'><a href="module-commands_assign.html#~whileLoop">whileLoop</a></li></ul></li><li class="accordion-list" id=""><a href="module-commands_attendance.html">commands/attendance</a></li><li class="accordion-list" id=""><a href="module-commands_connected.html">commands/connected</a></li><li class="accordion collapsed child" id=5704352><div class="accordion-heading child"><a href="module-commands_evaluate.html">commands/evaluate</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="module-commands_evaluate.html#~convertToString">convertToString</a></li><li data-type='method'><a href="module-commands_evaluate.html#~findBreakIndex">findBreakIndex</a></li><li data-type='method'><a href="module-commands_evaluate.html#~removeSensitive">removeSensitive</a></li></ul></li><li class="accordion-list" id=""><a href="module-commands_help.html">commands/help</a></li><li class="accordion-list" id=""><a href="module-commands_leave.html">commands/leave</a></li><li class="accordion-list" id=""><a href="module-commands_leavefor.html">commands/leavefor</a></li><li class="accordion collapsed child" id=8794824><div class="accordion-heading child"><a href="module-commands_lesson.html">commands/lesson</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="module-commands_lesson.html#~getNumberInput">getNumberInput</a></li><li data-type='method'><a href="module-commands_lesson.html#~processMentions">processMentions</a></li><li data-type='method'><a href="module-commands_lesson.html#~serialiseResources">serialiseResources</a></li></ul></li><li class="accordion-list" id=""><a href="module-commands_ping.html">commands/ping</a></li><li class="accordion-list" id=""><a href="module-commands_purge.html">commands/purge</a></li><li class="accordion-list" id=""><a href="module-commands_restart.html">commands/restart</a></li><li class="accordion-list" id=""><a href="module-commands_seen.html">commands/seen</a></li><li class="accordion-list" id=""><a href="module-commands_uptime.html">commands/uptime</a></li></ul> </div><div class="accordion collapsed" id="799918" > <h3 class="accordion-heading">Namespaces<svg><use xlink:href="#down-icon"></use></svg></h3><ul class="accordion-content"><li class="accordion collapsed child" id=4877508><div class="accordion-heading child"><a href="handlers.html">handlers</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="handlers.html#.commandLoader">commandLoader</a></li></ul></li><li class="accordion-list" id=""><a href="models.html">models</a></li><li class="accordion-list" id=""><a href="modules.html">modules</a></li></ul> </div>
+      
+
+    </nav>
+    <div class="navbar-ham" id="navbar-ham">
+      <div>
+        <div class="first"></div>
+        <div class="second"></div>
+        <div class="third"></div>
+      </div>
+    </div>
+
+    <div id="main" class="main-content">
+      
+      <h1 id='page-title' class="page-title">
+        models/guild.js
+      </h1>
+      
+
+      
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
+
+// eslint-disable-next-line no-unused-vars
+const Discord = require('discord.js');
+const mongoose = require('mongoose');
+
+const { settings, emojis, colours } = require('../config');
+
+/**
+ * @typedef {Guild} models.Guild An \&lt;Object> representing the values of a \&lt;mongoose.Document> to record the specific configuration for each \&lt;Guild>
+ * @property {mongoose.Schema.Types.ObjectId} _id A unique document identifier
+ * @property {Discord.Snowflake} guildID The \&lt;Guild>.id that this configuration belongs to
+ * @property {string} guildName The \&lt;Guild>.name that this configuration belongs to
+ * @property {Object} settings The guild's settings object
+ * @property {string} settings.prefix The guild's command prefix
+ * @property {string} settings.longDate The guild's default dateformat mask for its date-time groups
+ * @property {string} settings.shortDate The guild's dateformat mask for its shortened date strings
+ * @property {string} settings.prontoLogo The image URL to display as the guild's logo for Pronto
+ * @property {string} settings.lessonCron The guild's cron expression to schedule lesson reminders
+ * @property {boolean} settings.lessonReminders A \&lt;boolean> to control whether to schedule lesson reminders
+ * @property {Object} ids The guild's object of identifiers/snowflakes
+ * @property {Discord.Snowflake} ids.guildID The \&lt;Guild>.id of the guild
+ * @property {Discord.Snowflake} ids.debugID The \&lt;TextChannel>.id of the guild's debugging channel
+ * @property {Discord.Snowflake} ids.logID The \&lt;TextChannel>.id of the guild's log channel
+ * @property {Discord.Snowflake} ids.attendanceID The \&lt;TextChannel>.id of the guild's attendance channel
+ * @property {Discord.Snowflake} ids.recruitingID The \&lt;TextChannel>.id of the guild's recruiting channel
+ * @property {Discord.Snowflake} ids.welcomeID The \&lt;TextChannel>.id of the guild's new members channel
+ * @property {Discord.Snowflake} ids.archivedID The \&lt;TextChannel>.id of the guild's debugging channel
+ * @property {Discord.Snowflake} ids.lessonsID The \&lt;CategoryChannel>.id of the guild's lesson plans category channel
+ * @property {Discord.Snowflake} ids.lessonReferenceID The \&lt;TextChannel>.id of the guild's lesson reference channel
+ * @property {Discord.Snowflake} ids.lessonPlansID The \&lt;TextChannel>.id of the guild's lesson plans archive channel
+ * @property {Discord.Snowflake} ids.everyoneID The \&lt;Role>.id of the guild's \@everyone role
+ * @property {Discord.Snowflake} ids.visitorID The \&lt;Role>.id of the guild's visitor role
+ * @property {Discord.Snowflake | ''} ids.administratorID The \&lt;Role>.id of the guild's administrator role
+ * @property {Discord.Snowflake[]} ids.trainingIDs A \&lt;Role>.id[] of the guild's training roles
+ * @property {Discord.Snowflake[]} ids.formations A \&lt;Role>.id[] of the guild's formation roles
+ * @property {Object[]} ids.channelPairs An &lt;Object[]> of the guild's pairings of &lt;TextChannel> and &lt;VoiceChannel>
+ * @property {Discord.Snowflake} ids.channelPairs[].voice The \&lt;VoiceChannel>.id of this paired voice channel
+ * @property {Discord.Snowflake} ids.channelPairs[].text The \&lt;TextChannel>.id of this paired text channel
+ * @property {Object.&lt;string, Object.&lt;string, string | string[] | boolean>>} commands The guild's commands object containing each individual command in a nested object
+ * @property {Object} emojis The guild's emojis object
+ * @property {Object} emojis.success The guild's success emoji
+ * @property {string} emojis.success.name The name of the guild's success emoji
+ * @property {string} emojis.success.URL The URL of the guild's success emoji
+ * @property {Object} emojis.error The guild's error emoji
+ * @property {string} emojis.error.name The name of the guild's error emoji
+ * @property {string} emojis.error.URL The URL of the guild's error emoji
+ * @property {Object} colours The guild's colour object
+ * @property {number} colours.default The colour to use as the guild's non-specific colour
+ * @property {number} colours.primary The colour to use as the guild's primary colour
+ * @property {number} colours.leave The colour to use on the guild's leave tickets
+ * @property {number} colours.success The colour to use as the guild's success colour
+ * @property {number} colours.warn The colour to use as the guild's warning colour
+ * @property {number} colours.error The colour to use as the guild's error colour
+ */
+
+// Create a new &lt;Schema> of &lt;Guild> type
+const guildSchema = new mongoose.Schema({
+	_id: mongoose.Schema.Types.ObjectId,
+	guildID: String,
+	guildName: String,
+	settings: {
+		prefix: { type: String, default: settings.prefix },
+		longDate: { type: String, default: settings.longDate },
+		shortDate: { type: String, default: settings.shortDate },
+		prontoLogo: { type: String, default: settings.prontoLogo },
+		lessonCron: { type: String, default: settings.lessonCron },
+		lessonReminders: { type: Boolean, default: false },
+	},
+	ids: {
+		guildID: String,
+		debugID: String,
+		logID: String,
+		attendanceID: String,
+		recruitingID: String,
+		welcomeID: String,
+		archivedID: String,
+		lessonsID: String,
+		lessonReferenceID: String,
+		lessonPlansID: String,
+		everyoneID: String,
+		visitorID: String,
+		administratorID: { type: String, default: '' },
+		trainingIDs: Array,
+		formations: Array,
+		channelPairs: Array,
+
+	},
+	commands: Object,
+	emojis: {
+		type: Object,
+		default: {
+			success: {
+				name: emojis.success.name,
+				URL: emojis.success.URL,
+			},
+			error: {
+				name: emojis.error.name,
+				URL: emojis.error.URL,
+			},
+		},
+	},
+	colours: {
+		type: Object,
+		default: {
+			default: colours.default,
+			primary: colours.primary,
+			leave: colours.leave,
+			success: colours.success,
+			warn: colours.warn,
+			error: colours.error,
+		},
+	},
+});
+
+// Export the &lt;Schema> as a &lt;Model>
+module.exports = mongoose.model('Guild', guildSchema, 'guilds');</code></pre>
+        </article>
+    </section>
+
+
+
+
+    </div>
+
+    <footer class="footer" id="footer">
+      
+    </footer>
+
+    <script src="scripts/third-party/prettify.js"></script>
+    <script src="scripts/third-party/lang-css.js"></script>
+    <script type="text/javascript" src="scripts/misc.js"></script>
+
+    <script>prettyPrint();</script>
+    <script src="scripts/linenumber.js"></script>
+    <script src="scripts/fix-code-block.js"></script>
+    <script src="scripts/fix-navbar.js"></script>
+    
+      <script src="scripts/search.js"></script>
+      <script src="scripts/third-party/fuse.js"></script>
+      <script>
+        var list = [{"title":"commands","link":"<a href=\"module-commands.html\">commands</a>"},{"title":"commands/approve","link":"<a href=\"module-commands_approve.html\">commands/approve</a>"},{"title":"module:commands/approve~processMentions","link":"<a href=\"module-commands_approve.html#~processMentions\">module:commands/approve~processMentions &rtrif; undefined</a>"},{"title":"commands/archive","link":"<a href=\"module-commands_archive.html\">commands/archive</a>"},{"title":"commands/assign","link":"<a href=\"module-commands_assign.html\">commands/assign</a>"},{"title":"module:commands/assign~getUserInput","link":"<a href=\"module-commands_assign.html#~getUserInput\">module:commands/assign~getUserInput &rtrif; undefined</a>"},{"title":"module:commands/assign~msgPrompt","link":"<a href=\"module-commands_assign.html#~msgPrompt\">module:commands/assign~msgPrompt &rtrif; undefined</a>"},{"title":"module:commands/assign~processMentions","link":"<a href=\"module-commands_assign.html#~processMentions\">module:commands/assign~processMentions &rtrif; undefined</a>"},{"title":"module:commands/assign~whileLoop","link":"<a href=\"module-commands_assign.html#~whileLoop\">module:commands/assign~whileLoop &rtrif; undefined</a>"},{"title":"commands/attendance","link":"<a href=\"module-commands_attendance.html\">commands/attendance</a>"},{"title":"commands/connected","link":"<a href=\"module-commands_connected.html\">commands/connected</a>"},{"title":"commands/evaluate","link":"<a href=\"module-commands_evaluate.html\">commands/evaluate</a>"},{"title":"module:commands/evaluate~convertToString","link":"<a href=\"module-commands_evaluate.html#~convertToString\">module:commands/evaluate~convertToString &rtrif; undefined</a>"},{"title":"module:commands/evaluate~findBreakIndex","link":"<a href=\"module-commands_evaluate.html#~findBreakIndex\">module:commands/evaluate~findBreakIndex &rtrif; undefined</a>"},{"title":"module:commands/evaluate~removeSensitive","link":"<a href=\"module-commands_evaluate.html#~removeSensitive\">module:commands/evaluate~removeSensitive &rtrif; undefined</a>"},{"title":"commands/help","link":"<a href=\"module-commands_help.html\">commands/help</a>"},{"title":"commands/leave","link":"<a href=\"module-commands_leave.html\">commands/leave</a>"},{"title":"commands/leavefor","link":"<a href=\"module-commands_leavefor.html\">commands/leavefor</a>"},{"title":"commands/lesson","link":"<a href=\"module-commands_lesson.html\">commands/lesson</a>"},{"title":"module:commands/lesson~getNumberInput","link":"<a href=\"module-commands_lesson.html#~getNumberInput\">module:commands/lesson~getNumberInput &rtrif; undefined</a>"},{"title":"module:commands/lesson~processMentions","link":"<a href=\"module-commands_lesson.html#~processMentions\">module:commands/lesson~processMentions &rtrif; undefined</a>"},{"title":"module:commands/lesson~serialiseResources","link":"<a href=\"module-commands_lesson.html#~serialiseResources\">module:commands/lesson~serialiseResources &rtrif; undefined</a>"},{"title":"commands/ping","link":"<a href=\"module-commands_ping.html\">commands/ping</a>"},{"title":"commands/purge","link":"<a href=\"module-commands_purge.html\">commands/purge</a>"},{"title":"commands/restart","link":"<a href=\"module-commands_restart.html\">commands/restart</a>"},{"title":"commands/seen","link":"<a href=\"module-commands_seen.html\">commands/seen</a>"},{"title":"commands/uptime","link":"<a href=\"module-commands_uptime.html\">commands/uptime</a>"},{"title":"handlers","link":"<a href=\"handlers.html\">handlers</a>"},{"title":"handlers.commandLoader","link":"<a href=\"handlers.html#.commandLoader\">handlers.commandLoader &rtrif; undefined</a>"},{"title":"models","link":"<a href=\"models.html\">models</a>"},{"title":"modules","link":"<a href=\"modules.html\">modules</a>"}];
+        var options = {"shouldSort":true,"threshold":0.4,"location":0,"distance":100,"maxPatternLength":32,"minMatchCharLength":1}
+          setupSearch(list, options)
+      </script>
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript">
+    var option = JSON.parse('{"option":{}}')
+      document.addEventListener("DOMContentLoaded", function () {
+        OverlayScrollbars(document.querySelectorAll('body'), option.option || {});
+      });
+    </script>
+    
+
+
+  </body>
+
+</html>

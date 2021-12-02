@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Adding favicon -->
+    
+
+    <!-- Adding meta -->
+    
+
+    <!-- Adding external script-->
+    
+
+    <!-- Adding external style-->
+    
+
+    <!-- Adding scripts-->
+    
+
+    <!-- Adding style-->
+    
+
+    <!-- Adding overlay script-->
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.13.0/js/OverlayScrollbars.min.js"
+      integrity="sha512-5R3ngaUdvyhXkQkIqTf/k+Noq3phjmrqlUQyQYbgfI34Mzcx7vLIIYTy/K1VMHkL33T709kfh5y6R9Xy/Cbt7Q=="
+      crossorigin="anonymous"></script>
+    
+
+    <!-- Adding overlay style-->
+    
+
+
+    <title>
+      commands/assign.js
+    </title>
+
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/third-party/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/third-party/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/reset.css">
+    <link type="text/css" rel="stylesheet" href="styles/clean-jsdoc-theme-base.css">
+    <link type="text/css" rel="stylesheet" href="styles/clean-jsdoc-theme-dark.css">
+    
+    <svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+    style="display:none">
+    <defs>
+        <symbol id="copy-icon" viewbox="0 0 488.3 488.3">
+            <g>
+                <path
+                    d="M314.25,85.4h-227c-21.3,0-38.6,17.3-38.6,38.6v325.7c0,21.3,17.3,38.6,38.6,38.6h227c21.3,0,38.6-17.3,38.6-38.6V124    C352.75,102.7,335.45,85.4,314.25,85.4z M325.75,449.6c0,6.4-5.2,11.6-11.6,11.6h-227c-6.4,0-11.6-5.2-11.6-11.6V124    c0-6.4,5.2-11.6,11.6-11.6h227c6.4,0,11.6,5.2,11.6,11.6V449.6z" />
+                <path
+                    d="M401.05,0h-227c-21.3,0-38.6,17.3-38.6,38.6c0,7.5,6,13.5,13.5,13.5s13.5-6,13.5-13.5c0-6.4,5.2-11.6,11.6-11.6h227    c6.4,0,11.6,5.2,11.6,11.6v325.7c0,6.4-5.2,11.6-11.6,11.6c-7.5,0-13.5,6-13.5,13.5s6,13.5,13.5,13.5c21.3,0,38.6-17.3,38.6-38.6    V38.6C439.65,17.3,422.35,0,401.05,0z" />
+            </g>
+        </symbol>
+        <symbol id='search-icon' viewBox="0 0 512 512">
+            <g>
+                <g>
+                    <path
+                        d="M225.474,0C101.151,0,0,101.151,0,225.474c0,124.33,101.151,225.474,225.474,225.474    c124.33,0,225.474-101.144,225.474-225.474C450.948,101.151,349.804,0,225.474,0z M225.474,409.323    c-101.373,0-183.848-82.475-183.848-183.848S124.101,41.626,225.474,41.626s183.848,82.475,183.848,183.848    S326.847,409.323,225.474,409.323z" />
+                </g>
+            </g>
+            <g>
+                <g>
+                    <path
+                        d="M505.902,476.472L386.574,357.144c-8.131-8.131-21.299-8.131-29.43,0c-8.131,8.124-8.131,21.306,0,29.43l119.328,119.328    c4.065,4.065,9.387,6.098,14.715,6.098c5.321,0,10.649-2.033,14.715-6.098C514.033,497.778,514.033,484.596,505.902,476.472z" />
+                </g>
+            </g>
+        </symbol>
+        <symbol id="down-icon" viewBox="0 0 16 16">
+            <path 
+                fill-rule="evenodd" 
+                clip-rule="evenodd" 
+                d="M12.7803 6.21967C13.0732 6.51256 13.0732 6.98744 12.7803 7.28033L8.53033 11.5303C8.23744 11.8232 7.76256 11.8232 7.46967 11.5303L3.21967 7.28033C2.92678 6.98744 2.92678 6.51256 3.21967 6.21967C3.51256 5.92678 3.98744 5.92678 4.28033 6.21967L8 9.93934L11.7197 6.21967C12.0126 5.92678 12.4874 5.92678 12.7803 6.21967Z"
+            >
+            </path>
+        </symbol>
+    </defs>
+</svg>
+  </head>
+
+  <body>
+
+    <nav class="navbar" id="navbar">
+      <div class="navbar-heading" id="navbar-heading"><a href="index.html"><h2 class="navbar-heading-text">Pronto</h2></a></div><div class="search-box" id="search-box"><div class="search-box-input-container"><input class="search-box-input" type="text" placeholder="Search..." id="search-box-input" /><svg class="search-icon" alt="search-icon"><use xlink:href="#search-icon"></use></svg></div><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-main-content" id="sidebar-main-content"><ul><li class="menu-li"><a href='https://github.com/JamesNZL/Pronto' class=' menu-link' id='' target='_blank'>GitHub Repository</a></li></ul><div class="accordion collapsed" id="2446248" > <h3 class="accordion-heading">Modules<svg><use xlink:href="#down-icon"></use></svg></h3><ul class="accordion-content"><li class="accordion-list" id=""><a href="module-commands.html">commands</a></li><li class="accordion collapsed child" id=8614866><div class="accordion-heading child"><a href="module-commands_approve.html">commands/approve</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="module-commands_approve.html#~processMentions">processMentions</a></li></ul></li><li class="accordion-list" id=""><a href="module-commands_archive.html">commands/archive</a></li><li class="accordion collapsed child" id=3511846><div class="accordion-heading child"><a href="module-commands_assign.html">commands/assign</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="module-commands_assign.html#~getUserInput">getUserInput</a></li><li data-type='method'><a href="module-commands_assign.html#~msgPrompt">msgPrompt</a></li><li data-type='method'><a href="module-commands_assign.html#~processMentions">processMentions</a></li><li data-type='method'><a href="module-commands_assign.html#~whileLoop">whileLoop</a></li></ul></li><li class="accordion-list" id=""><a href="module-commands_attendance.html">commands/attendance</a></li><li class="accordion-list" id=""><a href="module-commands_connected.html">commands/connected</a></li><li class="accordion collapsed child" id=5704352><div class="accordion-heading child"><a href="module-commands_evaluate.html">commands/evaluate</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="module-commands_evaluate.html#~convertToString">convertToString</a></li><li data-type='method'><a href="module-commands_evaluate.html#~findBreakIndex">findBreakIndex</a></li><li data-type='method'><a href="module-commands_evaluate.html#~removeSensitive">removeSensitive</a></li></ul></li><li class="accordion-list" id=""><a href="module-commands_help.html">commands/help</a></li><li class="accordion-list" id=""><a href="module-commands_leave.html">commands/leave</a></li><li class="accordion-list" id=""><a href="module-commands_leavefor.html">commands/leavefor</a></li><li class="accordion collapsed child" id=8794824><div class="accordion-heading child"><a href="module-commands_lesson.html">commands/lesson</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="module-commands_lesson.html#~getNumberInput">getNumberInput</a></li><li data-type='method'><a href="module-commands_lesson.html#~processMentions">processMentions</a></li><li data-type='method'><a href="module-commands_lesson.html#~serialiseResources">serialiseResources</a></li></ul></li><li class="accordion-list" id=""><a href="module-commands_ping.html">commands/ping</a></li><li class="accordion-list" id=""><a href="module-commands_purge.html">commands/purge</a></li><li class="accordion-list" id=""><a href="module-commands_restart.html">commands/restart</a></li><li class="accordion-list" id=""><a href="module-commands_seen.html">commands/seen</a></li><li class="accordion-list" id=""><a href="module-commands_uptime.html">commands/uptime</a></li></ul> </div><div class="accordion collapsed" id="799918" > <h3 class="accordion-heading">Namespaces<svg><use xlink:href="#down-icon"></use></svg></h3><ul class="accordion-content"><li class="accordion collapsed child" id=4877508><div class="accordion-heading child"><a href="handlers.html">handlers</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="handlers.html#.commandLoader">commandLoader</a></li></ul></li><li class="accordion-list" id=""><a href="models.html">models</a></li><li class="accordion-list" id=""><a href="modules.html">modules</a></li></ul> </div>
+      
+
+    </nav>
+    <div class="navbar-ham" id="navbar-ham">
+      <div>
+        <div class="first"></div>
+        <div class="second"></div>
+        <div class="third"></div>
+      </div>
+    </div>
+
+    <div id="main" class="main-content">
+      
+      <h1 id='page-title' class="page-title">
+        commands/assign.js
+      </h1>
+      
+
+      
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
+
+const Discord = require('discord.js');
+const mongoose = require('mongoose');
+
+// Import chrono to schedule weekly lesson reminders
+let chrono = require('chrono-node');
+chrono = new chrono.Chrono(chrono.en.createConfiguration(false, true));
+
+const { Lesson } = require('../models');
+
+const { commandError, deleteMsg, dateTimeGroup, enumerateResources, isURL, processResources, promptEmbed, sendDirect, sendMsg, successReact, titleCase } = require('../modules');
+const { confirmWithReaction, unsubmittedLessons } = require('../handlers');
+
+// Set to ensure that each assigner does not attempt to assign more than one lesson at a time
+const recentlyAssigned = new Set();
+
+/**
+ * Attach the command.execute() function to command object
+ * @module commands/assign
+ * @param {Discord.Guild} guild The guild that the member shares with the bot
+ * @returns {Promise&lt;Object.&lt;string, string | string[] | boolean | Function>>} The complete command object with a command.execute() property
+ */
+module.exports = async guild => {
+	const { ids: { lessonsID, trainingIDs }, commands: { seen, assign }, colours, emojis } = await require('../handlers/database')(guild);
+
+	/**
+	 * Assign a lesson to specified instructors by creating a private lesson channel and dispatching a lesson warning
+	 * @param {Discord.Message} msg The \&lt;Message> that executed the command
+	 */
+	assign.execute = async msg => {
+		const { bot } = require('../pronto');
+
+		// Extract mentioned members
+		const lessonInstructors = msg.mentions.members;
+
+		try {
+			// Ensure there was at least one member mentioned
+			if (lessonInstructors.size === 0) throw 'You must tag a user.';
+
+			// Ensure no mentioned members are a bot
+			else if (lessonInstructors.some(mention => mention.user.bot)) throw 'You cannot assign a lesson to a bot!';
+
+			// Ensure the assigner does not already exist in the recentlyAssigned set
+			else if (recentlyAssigned.has(msg.author.id)) throw 'You are already assigning a lesson!';
+		}
+
+		catch (error) { return commandError(msg, error, assign.error); }
+
+		// Delete the command message
+		deleteMsg(msg);
+
+		// Add the assigner's ID to the recentlyAssigned set
+		// This ensures that each assigner cannot attempt to assign more than one lesson at a time
+		recentlyAssigned.add(msg.author.id);
+
+		// Create and send assign embed
+		const assignEmbed = new Discord.MessageEmbed()
+			.setTitle('Assigning Lesson...')
+			.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
+			.setColor(colours.success)
+			.setDescription('Type `restart` to start again, or `cancel` to abort.')
+			// Resolve the mentioned members into a formatted string and add new field
+			.addField('Instructor(s)', processMentions(lessonInstructors))
+			.setFooter(await dateTimeGroup());
+
+		sendDirect(msg.author, { embeds: [assignEmbed] }, msg.channel);
+
+		// Object defining the required inputs to properly assign a lesson
+		// Object keys represent the type of data retained - the object is passed into the getUserInput() function, which returns an object with matching keys storing the user's input
+		const neededInputs = {
+			lessonName: {
+				prompt: 'What is the name of the lesson?',
+				type: 'TEXT',
+				allowMultiple: false,
+			},
+			dueTimestamp: {
+				prompt: 'When is the lesson plan due?',
+				type: 'DATE',
+				allowMultiple: false,
+			},
+			lessonTimestamp: {
+				prompt: 'When will the lesson be taught?',
+				type: 'DATE',
+				allowMultiple: false,
+			},
+			resources: {
+				prompt: 'Provide any resources for the lesson if applicable.\n\nReply `done` when finished.',
+				type: 'ATTACHMENT',
+				allowMultiple: true,
+			},
+		};
+
+		// Pass the neededInputs object into the getUserInput() function to collect user's input
+		const userInput = await getUserInput(msg, neededInputs, colours);
+
+		// If getUserInput() returns the symbol 'CANCEL', cancel the assigning of the lesson
+		if (userInput === 'CANCEL') {
+			// Create cancellation embed
+			const cancelEmbed = new Discord.MessageEmbed()
+				.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }))
+				.setColor(colours.error)
+				.setDescription('**Cancelled.**')
+				.setFooter(await dateTimeGroup());
+
+			// Remove the assigner's ID from the recentlyAssigned set
+			recentlyAssigned.delete(msg.author.id);
+
+			// Send the cancellation embed and cease further execution
+			return sendDirect(msg.author, { embeds: [cancelEmbed] }, null, true);
+		}
+
+		// Destructure desired user's input from the returned value of the getUserInput() function
+		const { lessonName, dueTimestamp, lessonTimestamp, resources } = userInput;
+
+		// Obtain and store formatted date strings from parsed time stamps
+		const dueDate = await dateTimeGroup(dueTimestamp);
+		const lessonDate = await dateTimeGroup(lessonTimestamp);
+
+		// Create lesson assignment confirmation embed
+		const lessonEmbed = new Discord.MessageEmbed()
+			.setTitle(`Lesson Assignment - ${lessonName}`)
+			.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
+			.setColor(colours.warn)
+			// Call processMentions() to format the lesson instructors
+			.addField('Instructor(s)', processMentions(lessonInstructors))
+			.addField('Lesson', lessonName)
+			.addField('Lesson Plan Due', dueDate)
+			.addField('Lesson Date', lessonDate)
+			// Call modules.enumerateResources() to format and output the lesson resources
+			.addField('Resources', enumerateResources(resources, true))
+			.setFooter('Use the reactions below to confirm or cancel.');
+
+		// Send the lesson assignment confirmation embed to the assigner
+		sendDirect(msg.author, { embeds: [lessonEmbed] }, null, true)
+			.then(dm => {
+				/**
+				 * Create a private lesson channel for specified instructors and dispatch the lesson warning, as well as a message to request acknowledgement from the instructor(s)
+				 */
+				const assignLesson = async () => {
+					// Set channel topic to be a list of the instructor(s)'s mentions, and create the channel under the lessons category channel
+					const channelOptions = { topic: processMentions(lessonInstructors), parent: lessonsID };
+
+					// Create the private lesson channel, with a name matching the lesson name and with the above channel options
+					// '.' in lesson name are invalid characters for channel names, therefore substitute them with '-'
+					await guild.channels.create(lessonName.replace('.', '-'), channelOptions)
+						.then(async channel => {
+							// Once the channel has been created, ensure the correct visibility permissions are applied
+							// Make the channel private for all users other than the bot, training cell, and instructors
+							await channel.createOverwrite(bot.user.id, { 'VIEW_CHANNEL': true });
+							channel.createOverwrite(guild.roles.everyone, { 'VIEW_CHANNEL': false });
+							trainingIDs.forEach(staff => channel.createOverwrite(staff, { 'VIEW_CHANNEL': true }));
+							lessonInstructors.each(instructor => channel.createOverwrite(instructor, { 'VIEW_CHANNEL': true }));
+
+							// Create and save a new database entry for the lesson
+							saveLesson(channel.id);
+
+							// Remove the assigner's ID from the recentlyAssigned set now that lesson assignment has been completed
+							recentlyAssigned.delete(msg.author.id);
+
+							// Modify the lesson assignment confirmation embed to repurpose it into the lesson warning embed
+							lessonEmbed.setTitle(`Lesson Warning - ${lessonName}`);
+							lessonEmbed.setDescription('You have been assigned a lesson, use this channel to organise yourself.');
+							lessonEmbed.setFooter(await dateTimeGroup());
+
+							// If there is only one instructor, set the author of the lesson warning embed to be the instructor's name and display avatar
+							if (lessonInstructors.size === 1) lessonEmbed.setAuthor(lessonInstructors.first().displayName, lessonInstructors.first().user.displayAvatarURL({ dynamic: true }));
+							// Otherwise, if there are multiple instructors, set the author to be the guild's name and guild icon
+							else lessonEmbed.setAuthor(guild.name, guild.iconURL({ dynamic: true }));
+
+							// Send the lesson warning embed to the private lesson channel
+							await sendMsg(channel, { embeds: [lessonEmbed] });
+							// Call unsubmittedLessons() to update the master unsubmitted lessons tracker embed
+							unsubmittedLessons(guild);
+
+							// Retrieve the guild's success emoji
+							const successEmoji = msg.guild.emojis.cache.find(emoji => emoji.name === emojis.success.name);
+
+							// Create a new embed to prompt the instructor(s)'s acknowledgement of the lesson warning
+							const ackEmbed = new Discord.MessageEmbed()
+								.setDescription(`Click the ${successEmoji} to acknowledge receipt of this lesson warning.\n\nAlternatively, you can manually type \`!seen\`.`)
+								.setColor(colours.primary);
+
+							// Send the acknowledgement embed, and tag each instructor in the message body
+							sendMsg(channel, { content: processMentions(lessonInstructors), embeds: [ackEmbed] })
+								.then(async ackMessage => {
+									// Add the success reaction to the acknowledgement message
+									await successReact(ackMessage);
+
+									// Filter reaction collector for reactions only of the success emoji, and that are made by an instructor
+									const filter = (reaction, user) => reaction.emoji.name === emojis.success.name &amp;&amp; lessonInstructors.has(user.id);
+									// Create a new reaction collector on the acknowledgement message with the filter applied
+									const collector = ackMessage.createReactionCollector(filter, { dispose: true });
+
+									// Execute the commands\seen.js command when an instructor acknowledges the lesson warning via reaction
+									collector.on('collect', async (_, user) => bot.commands.get(seen.command).execute(ackMessage, user));
+								});
+						})
+						.catch(error => console.error(`Error creating ${lessonName} in ${guild.name}\n`, error));
+				};
+
+				/**
+				 * Remove the assigner's ID from the recentlyAssigned set
+				 */
+				const assignCancelled = () => recentlyAssigned.delete(msg.author.id);
+
+				// Call handlers.confirmWithReaction() on the lesson assignment confirmation embed with assignLesson() and assignCancelled() as callbacks
+				return confirmWithReaction(msg, dm, assignLesson, assignCancelled);
+			});
+
+		/**
+		 * Create a new mongoose \&lt;Lesson> document for the assigned lesson
+		 * @param {Discord.Snowflake} channelID The \&lt;TextChannel>.id of the private lesson channel created for the lesson
+		 * @returns {Promise&lt;Lesson>} The mongoose document for the lesson
+		 */
+		async function saveLesson(channelID) {
+			// For each instructor, create a new nested object within the instructors object with an ID property and a boolean flag to record acknowledgement status
+			const instructors = Object.fromEntries(
+				lessonInstructors.map(mention => [mention.id, {
+					id: mention.id,
+					seen: false,
+				}]),
+			);
+
+			/**
+			 * Create new \&lt;Lesson> document
+			 * @type {Lesson}
+			 */
+			const lesson = await new Lesson({
+				_id: mongoose.Types.ObjectId(),
+				lessonID: channelID,
+				lessonName: lessonName,
+				instructors: instructors,
+				dueDate: dueDate,
+				dueTimestamp: dueTimestamp,
+				lessonDate: lessonDate,
+				lessonTimestamp: lessonTimestamp,
+				assignedResources: enumerateResources(resources),
+			});
+
+			// Save the document and return it
+			return await lesson.save().catch(error => console.error(error));
+		}
+	};
+
+	return assign;
+};
+
+/**
+ * Collect the all the required inputs from the user and return an object with their completed inputs
+ * @param {Discord.Message} msg The \&lt;Message> that executed the command
+ * @param {Object.&lt;string, {prompt: string, type: 'TEXT' | 'DATE' | 'ATTACHMENT', allowMultiple: boolean}>} prompts An object defining the individual inputs to prompt for
+ * - Must contain an object.prompt property of type \&lt;string>
+ * - Must contain an object.type property for the type of input of type \&lt;string>: `TEXT` || `DATE` || `ATTACHMENT`
+ * - Must contain an object.allowMultiple \&lt;boolean>: `true` || `false`
+ * - Text inputs only require an input, with no additional error checking
+ * - Date inputs are parsed through chrono to ensure a valid date is recognised and return a Unix timestamp (ms)
+ * - Attachments allow attachments to be uploaded or URLs to be entered, with appropriate error checking
+ * @param {Object.&lt;string, number>} colours The guild's colour object
+ * @returns {Promise&lt;Object.&lt;string, string | number> | 'CANCEL'>} An object with the user's completed inputs stored in each respective property, or the symbol `CANCEL` to represent a cancelled lesson assignment
+ */
+async function getUserInput(msg, prompts, colours) {
+	// Initialise an empty object in preparation to store the user's input to each property of prompts as they are completed individually in turn
+	const input = {};
+
+	// Loop through each needed input prompt
+	for (const [key, value] of Object.entries(prompts)) {
+		// If the current prompt allows for multiple inputs, call the whileLoop() function
+		if (value.allowMultiple) input[key] = await whileLoop(promptEmbed(value.prompt, colours.primary), msg, value.type, colours, value.allowMultiple);
+		// Otherwise, call the msgPrompt() function
+		else input[key] = await msgPrompt(promptEmbed(value.prompt, colours.primary), msg, value.type, colours, value.allowMultiple);
+
+		try {
+			// If the received symbol is to 'RESTART', restart input by returning getUserInput() recursively
+			if (input[key] === 'RESTART') return await getUserInput(msg, prompts, colours);
+			// Otherwise, if the received symbol is to 'CANCEL', return the same symbol from getUserInput()
+			else if (input[key] === 'CANCEL') return 'CANCEL';
+		}
+		catch { null; }
+	}
+
+	// If all inputs have been successfully completed, return the completed input object
+	return input;
+}
+
+/**
+ * Display a prompt to the user and collect &amp; process their input according to the type of input
+ * @param {Discord.MessageEmbed} prompt The embed to use to prompt the user for the input
+ * @param {Discord.Message} msg The \&lt;Message> that executed the command
+ * @param {'TEXT' | 'DATE' | 'ATTACHMENT'} type The type of input being prompted for: `TEXT` || `DATE` || `ATTACHMENT`
+ * @param {Object.&lt;string, number>} colours The guild's colour object
+ * @param {boolean} allowMultiple Whether to allow multiple inputs
+ * @returns {Promise&lt;string | number | 'RESTART' | 'CANCEL' | 'DONE'>} The user's input, or the symbols `RESTART` || `CANCEL` || `DONE`
+ * - Text inputs return a \&lt;string>
+ * - Date inputs return a Unix timestamp (ms) as \&lt;number>
+ * - Attachments return a URL formatted as a hyperlink using processResources() as \&lt;string>
+ * - `RESTART` = restart input from the beginning
+ * - `CANCEL` = cancel lesson assignment
+ * - `DONE` = attachment input is complete
+ */
+async function msgPrompt(prompt, msg, type, colours, allowMultiple) {
+	// Filter message collector for messages only sent by command author
+	const filter = message => message.author.id === msg.author.id;
+
+	// Send the prompt embed to the user, and await the user's input
+	// Use Promise.all() to wait for the user's input before proceeding
+	const input = await Promise.all([
+		sendDirect(msg.author, { embeds: [prompt] }, null, true),
+		msg.author.dmChannel.awaitMessages(filter, { max: 1 }),
+	])
+		// Extract the user's input from the resolved promises
+		.then(resolved => resolved[1].first());
+
+
+	// Use a try {} catch {} block to utilise throw
+	try {
+		// If the user desires to restart or cancel input, return the appropriate symbol
+		if (input.content.toLowerCase() === 'restart') throw 'RESTART';
+		else if (input.content.toLowerCase() === 'cancel') throw 'CANCEL';
+		// Otherwise, if the user has completed their multiple inputs, and the current prompt allows multiple inputs (such that 'done' is a keyword), return the 'DONE' symbol
+		else if (input.content.toLowerCase() === 'done' &amp;&amp; allowMultiple) throw 'DONE';
+
+		if (type === 'TEXT' || type === 'DATE') {
+			// If the type of input to be validated is 'TEXT' or 'DATE', ensure the input is not empty
+			// Uploaded attachments have a null &lt;Message>.content, so cannot be checked here
+			if (!input.content) {
+				// If the input is empty, send an error and try again
+				sendDirect(msg.author, { embeds: [promptEmbed('You must enter something!', colours.error)] }, null, true);
+				throw await msgPrompt(prompt, msg, type, colours, allowMultiple);
+			}
+
+			// If the input is of type 'DATE', try to parse the date and obtain a Unix timestamp
+			if (type === 'DATE') {
+				const parsedDate = chrono.parseDate(input.content);
+
+				// If no date has been successfully parsed, send an error and try again
+				if (!parsedDate) {
+					sendDirect(msg.author, { embeds: [promptEmbed('I don\'t recognise that date, please try again.', colours.error)] }, null, true);
+					throw await msgPrompt(prompt, msg, type, colours, allowMultiple);
+				}
+
+				// If a date has been successfully parsed, return its Unix (ms) timestamp
+				throw parsedDate.setHours(18, 0, 0, 0).valueOf();
+			}
+
+			// If the input is of type 'TEXT' and is not empty, return it through modules.titleCase()
+			throw titleCase(input.content);
+		}
+
+		else if (type === 'ATTACHMENT') {
+			// Otherwise, if the input is of type 'ATTACHMENT', parse the input for URLs and check for uploaded attachments
+			const substrings = input.content.split(/ +/);
+			const attachments = input.attachments.first();
+			// Filter the substrings of the input message for URLs
+			const URLs = substrings.filter(substr => isURL(substr));
+
+			// If there have not been any attachments uploaded and no URLs have been successfully parsed, send an error and try again
+			if (!attachments &amp;&amp; !URLs.length) {
+				sendDirect(msg.author, { embeds: [promptEmbed('You must attach a file or enter a URL!', colours.error)] }, null, true);
+				throw await msgPrompt(prompt, msg, type, colours, allowMultiple);
+			}
+
+			// Otherwise, if there have successfully been attachments and/or URLs input, return it through modules.processResources()
+			throw processResources(attachments, URLs);
+		}
+	}
+
+	catch (thrown) { return thrown; }
+}
+
+/**
+ * Implements a loop to allow multiple inputs for a given prompt, which are returned in an array
+ * @param {Discord.MessageEmbed} prompt The embed to use to prompt the user for the input
+ * @param {Discord.Message} msg The \&lt;Message> that executed the command
+ * @param {'TEXT' | 'DATE' | 'ATTACHMENT'} type The type of input being prompted for: `TEXT` || `DATE` || `ATTACHMENT`
+ * @param {Object.&lt;string, number>} colours The guild's colour object
+ * @param {boolean} allowMultiple Whether to allow multiple inputs
+ * @returns {Promise&lt;string[] | number[] | 'RESTART' | 'CANCEL'>} An array of the user's inputs, or the symbols `RESTART` || `CANCEL`
+ * - The type stored within the array is dependent on the input type returned by msgPrompt()
+ * - `RESTART` = restart input from the beginning
+ * - `CANCEL` = cancel lesson assignment
+ */
+async function whileLoop(prompt, msg, type, colours, allowMultiple) {
+	// Initialise an empty array to store the user's multiple inputs
+	const array = [];
+
+	/**
+	 * A recursive function which repeatedly prompts the user for input until loop is ended
+	 * @returns {Promise&lt;string[] | number[] | 'RESTART' | 'CANCEL'>} An array of the user's inputs, or the symbols `RESTART` || `CANCEL`
+	 * - The type stored within the array is dependent on the input type returned by msgPrompt()
+	 * - `RESTART` = restart input from the beginning
+	 * - `CANCEL` = cancel lesson assignment
+	 */
+	async function loop() {
+		// Call the msgPrompt() function and collect &amp; process the user's input
+		const input = await msgPrompt(prompt, msg, type, colours, allowMultiple);
+
+		// If the user desires to restart or cancel input, return the appropriate symbol
+		if (input === 'RESTART') return 'RESTART';
+		else if (input === 'CANCEL') return 'CANCEL';
+
+		// Otherwise, if the user has completed input, return the array
+		else if (input === 'DONE') return array;
+
+		// Otherwise, if the user has yet to complete input, push the new input to the array and loop again
+		else {
+			array.push(input);
+			return await loop(prompt, msg, type);
+		}
+	}
+
+	return await loop();
+}
+
+/**
+ * Process a Collection\&lt;Snowflake, GuildMember> into a formatted string
+ * @param {Discord.Collection&lt;Discord.Snowflake, Discord.GuildMember>} members A Collection\&lt;Snowflake, GuildMember> to process
+ * @returns {string} A newline-delimited string of formatted user mentions
+ */
+function processMentions(members) {
+	// Map the &lt;GuildMember> instances to a new string[] of mentions, then join the string[] with a newline separator
+	return members.map(member => member.toString())
+		.join('\n');
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+    </div>
+
+    <footer class="footer" id="footer">
+      
+    </footer>
+
+    <script src="scripts/third-party/prettify.js"></script>
+    <script src="scripts/third-party/lang-css.js"></script>
+    <script type="text/javascript" src="scripts/misc.js"></script>
+
+    <script>prettyPrint();</script>
+    <script src="scripts/linenumber.js"></script>
+    <script src="scripts/fix-code-block.js"></script>
+    <script src="scripts/fix-navbar.js"></script>
+    
+      <script src="scripts/search.js"></script>
+      <script src="scripts/third-party/fuse.js"></script>
+      <script>
+        var list = [{"title":"commands","link":"<a href=\"module-commands.html\">commands</a>"},{"title":"commands/approve","link":"<a href=\"module-commands_approve.html\">commands/approve</a>"},{"title":"module:commands/approve~processMentions","link":"<a href=\"module-commands_approve.html#~processMentions\">module:commands/approve~processMentions &rtrif; undefined</a>"},{"title":"commands/archive","link":"<a href=\"module-commands_archive.html\">commands/archive</a>"},{"title":"commands/assign","link":"<a href=\"module-commands_assign.html\">commands/assign</a>"},{"title":"module:commands/assign~getUserInput","link":"<a href=\"module-commands_assign.html#~getUserInput\">module:commands/assign~getUserInput &rtrif; undefined</a>"},{"title":"module:commands/assign~msgPrompt","link":"<a href=\"module-commands_assign.html#~msgPrompt\">module:commands/assign~msgPrompt &rtrif; undefined</a>"},{"title":"module:commands/assign~processMentions","link":"<a href=\"module-commands_assign.html#~processMentions\">module:commands/assign~processMentions &rtrif; undefined</a>"},{"title":"module:commands/assign~whileLoop","link":"<a href=\"module-commands_assign.html#~whileLoop\">module:commands/assign~whileLoop &rtrif; undefined</a>"},{"title":"commands/attendance","link":"<a href=\"module-commands_attendance.html\">commands/attendance</a>"},{"title":"commands/connected","link":"<a href=\"module-commands_connected.html\">commands/connected</a>"},{"title":"commands/evaluate","link":"<a href=\"module-commands_evaluate.html\">commands/evaluate</a>"},{"title":"module:commands/evaluate~convertToString","link":"<a href=\"module-commands_evaluate.html#~convertToString\">module:commands/evaluate~convertToString &rtrif; undefined</a>"},{"title":"module:commands/evaluate~findBreakIndex","link":"<a href=\"module-commands_evaluate.html#~findBreakIndex\">module:commands/evaluate~findBreakIndex &rtrif; undefined</a>"},{"title":"module:commands/evaluate~removeSensitive","link":"<a href=\"module-commands_evaluate.html#~removeSensitive\">module:commands/evaluate~removeSensitive &rtrif; undefined</a>"},{"title":"commands/help","link":"<a href=\"module-commands_help.html\">commands/help</a>"},{"title":"commands/leave","link":"<a href=\"module-commands_leave.html\">commands/leave</a>"},{"title":"commands/leavefor","link":"<a href=\"module-commands_leavefor.html\">commands/leavefor</a>"},{"title":"commands/lesson","link":"<a href=\"module-commands_lesson.html\">commands/lesson</a>"},{"title":"module:commands/lesson~getNumberInput","link":"<a href=\"module-commands_lesson.html#~getNumberInput\">module:commands/lesson~getNumberInput &rtrif; undefined</a>"},{"title":"module:commands/lesson~processMentions","link":"<a href=\"module-commands_lesson.html#~processMentions\">module:commands/lesson~processMentions &rtrif; undefined</a>"},{"title":"module:commands/lesson~serialiseResources","link":"<a href=\"module-commands_lesson.html#~serialiseResources\">module:commands/lesson~serialiseResources &rtrif; undefined</a>"},{"title":"commands/ping","link":"<a href=\"module-commands_ping.html\">commands/ping</a>"},{"title":"commands/purge","link":"<a href=\"module-commands_purge.html\">commands/purge</a>"},{"title":"commands/restart","link":"<a href=\"module-commands_restart.html\">commands/restart</a>"},{"title":"commands/seen","link":"<a href=\"module-commands_seen.html\">commands/seen</a>"},{"title":"commands/uptime","link":"<a href=\"module-commands_uptime.html\">commands/uptime</a>"},{"title":"handlers","link":"<a href=\"handlers.html\">handlers</a>"},{"title":"handlers.commandLoader","link":"<a href=\"handlers.html#.commandLoader\">handlers.commandLoader &rtrif; undefined</a>"},{"title":"models","link":"<a href=\"models.html\">models</a>"},{"title":"modules","link":"<a href=\"modules.html\">modules</a>"}];
+        var options = {"shouldSort":true,"threshold":0.4,"location":0,"distance":100,"maxPatternLength":32,"minMatchCharLength":1}
+          setupSearch(list, options)
+      </script>
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript">
+    var option = JSON.parse('{"option":{}}')
+      document.addEventListener("DOMContentLoaded", function () {
+        OverlayScrollbars(document.querySelectorAll('body'), option.option || {});
+      });
+    </script>
+    
+
+
+  </body>
+
+</html>
