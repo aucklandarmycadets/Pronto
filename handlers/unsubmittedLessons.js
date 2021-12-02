@@ -5,10 +5,10 @@ const dateFormat = require('dateformat');
 
 const { Lesson } = require('../models');
 
-const { dtg, emojiReact, sendMsg } = require('../modules');
+const { dateTimeGroup, emojiReact, sendMsg } = require('../modules');
 
 module.exports = async guild => {
-	const { config: { shortDate }, ids: { lessonReferenceID }, colours } = await require('../handlers/database')(guild);
+	const { settings: { shortDate }, ids: { lessonReferenceID }, colours } = await require('../handlers/database')(guild);
 
 	const unsubmitted = await Lesson.find({ submitted: false }).sort({ dueTimestamp: 'ascending' });
 
@@ -18,7 +18,7 @@ module.exports = async guild => {
 		.setColor(colours.pronto)
 		.setTitle(embedTitle)
 		.setAuthor(guild.name, guild.iconURL({ dynamic: true }))
-		.setFooter(`Last updated at ${await dtg()}`);
+		.setFooter(`Last updated at ${await dateTimeGroup()}`);
 
 	if (!unsubmitted.length) {
 		const lessons = await Lesson.find();

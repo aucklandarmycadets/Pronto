@@ -1,9 +1,9 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { debugError, dtg, errorReact, successReact } = require('../modules');
+const { debugError, dateTimeGroup, errorReact, successReact } = require('../modules');
 
-module.exports = async (msg, dm, success, cancel) => {
+module.exports = async (msg, dm, confirm, cancel) => {
 	const { bot } = require('../pronto');
 	const { colours, emojis } = await require('./database')(msg.guild);
 
@@ -19,13 +19,13 @@ module.exports = async (msg, dm, success, cancel) => {
 				.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }))
 				.setColor(colours.error)
 				.setDescription('**Cancelled.**')
-				.setFooter(await dtg());
+				.setFooter(await dateTimeGroup());
 
 			if (reaction.emoji.name === emojis.success.name) {
 				confirmEmbed.setColor(colours.success);
 				confirmEmbed.setDescription('**Confirmed.**');
 
-				if (success && typeof (success) === 'function') success();
+				if (confirm && typeof (confirm) === 'function') confirm();
 			}
 
 			else if (cancel && typeof (cancel) === 'function') cancel();
@@ -36,9 +36,9 @@ module.exports = async (msg, dm, success, cancel) => {
 	});
 
 	collector.on('end', async () => {
-		const userReactions = dm.reactions.cache.filter(reaction => reaction.users.cache.has(bot.user.id));
+		const botReactions = dm.reactions.cache.filter(reaction => reaction.users.cache.has(bot.user.id));
 		try {
-			for (const reaction of userReactions.values()) {
+			for (const reaction of botReactions.values()) {
 				await reaction.users.remove(bot.user.id);
 			}
 		}

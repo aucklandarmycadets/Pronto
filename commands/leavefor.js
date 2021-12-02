@@ -1,70 +1,91 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { capitalise, cmdError, dtg, pCmd, remove, sendDM, sendMsg, successReact } = require('../modules');
+const { capitalise, cmdError, dateTimeGroup, prefixCmd, remove, sendDirect, sendMsg, successReact } = require('../modules');
 
+/**
+ * Attach the cmd.execute() function to command object
+ * @module commands/leavefor
+ * @param {Discord.Guild} guild The guild that the member shares with the bot
+ * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a cmd.execute() property
+ */
 module.exports = async guild => {
 	const { ids: { attendanceID }, cmds: { help, leave, leaveFor }, colours } = await require('../handlers/database')(guild);
 
+	/**
+	 * Process a leave request submitted on behalf of someone else
+	 * @param {Discord.Message} msg The \<Message> that executed the command
+	 * @param {string[]} args The command arguments
+	 */
 	leaveFor.execute = async (msg, args) => {
 		const { bot } = require('../pronto');
 
-		const memberMentions = msg.mentions.members;
-		const numMemberMentions = memberMentions.size;
-		const absentee = memberMentions.first();
+		// Extract the mentioned absentee from the command message
+		const absentee = msg.mentions.members.first();
 
 		try {
-			if (numMemberMentions === 0) throw 'You must tag a user.';
+			// Ensure there was at least one <GuildMember> mentioned
+			if (msg.mentions.members.size === 0) throw 'You must tag a user.';
 
-			else if (memberMentions.some(mention => mention.user.bot)) throw 'You cannot submit leave for a bot!';
+			// Ensure no mentioned members are a bot
+			else if (msg.mentions.members.some(mention => mention.user.bot)) throw 'You cannot submit leave for a bot!';
 
-			else if (numMemberMentions > 1) throw 'You must submit leave individually.';
+			// Ensure there was only member mentioned
+			else if (msg.mentions.members.size > 1) throw 'You must submit leave individually.';
 
-			else if (args.length < 2) throw 'Insufficient arguments.';
+			// Ensure there are at least some remarks
+			else if (args.length < 2) throw 'Insufficient remarks.';
 		}
 
 		catch (error) { return cmdError(msg, error, leaveFor.error); }
 
-		const leaveForEmbedTitle = 'Leave Request (For)';
-		const attendanceChannel = bot.channels.cache.get(attendanceID);
-
+		// Success react to command message
 		successReact(msg);
 
+		// Remove the mentioned <GuildMember> from the command arguments
 		args = remove(args, `<@!${absentee.user.id}>`);
 
+		// Create leave request embed
 		const attendanceEmbed = new Discord.MessageEmbed()
-			.setTitle(leaveForEmbedTitle)
+			.setTitle('Leave Request (For)')
 			.setColor(colours.leave)
 			.setAuthor(absentee.displayName, absentee.user.displayAvatarURL({ dynamic: true }))
 			.setDescription(`**${msg.member.displayName}** has submitted leave for **${absentee.displayName}** in **#${msg.channel.name}**`)
 			.addFields(
 				{ name: 'Absentee', value: absentee.toString() },
 				{ name: 'Channel', value: msg.channel.toString() },
+				// Capitalise the first letter of the command arguments and add them to a 'Remarks' field
 				{ name: 'Remarks', value: capitalise(args.join(' ')) },
 			)
-			.setFooter(await dtg());
+			.setFooter(await dateTimeGroup());
 
+		// Create confirmation embed
 		const dmEmbed = new Discord.MessageEmbed()
-			.setTitle(leaveForEmbedTitle)
+			.setTitle('Leave Request (For)')
 			.setColor(colours.leave)
 			.setAuthor(msg.guild.name, msg.guild.iconURL({ dynamic: true }))
 			.setDescription(`Hi **${msg.member.displayName}**, your submission of leave for **${absentee.displayName}** has been received.`)
 			.addField('Channel', msg.channel.toString())
 			.addField('Remarks', capitalise(args.join(' ')))
-			.setFooter(await dtg());
+			.setFooter(await dateTimeGroup());
 
+		// Create notice embed to inform absentee that a request has been made on their behalf
 		const absenteeEmbed = new Discord.MessageEmbed()
-			.setTitle(leaveForEmbedTitle)
+			.setTitle('Leave Request (For)')
 			.setColor(colours.leave)
 			.setAuthor(msg.guild.name, msg.guild.iconURL({ dynamic: true }))
 			.setDescription(`**${msg.member.displayName}** has submitted leave for you in **#${msg.channel.name}**.`)
 			.addField('Channel', msg.channel.toString())
 			.addField('Remarks', capitalise(args.join(' ')))
-			.setFooter(`Reply with '${await pCmd(help)} ${leave.cmd}' to learn how to request leave for yourself.`);
+			.setFooter(`Reply with '${await prefixCmd(help)} ${leave.cmd}' to learn how to request leave for yourself.`);
 
+		// Get the guild's attendance channel
+		const attendanceChannel = bot.channels.cache.get(attendanceID);
+
+		// Send the embeds to their respective destinations
 		sendMsg(attendanceChannel, { embeds: [attendanceEmbed] });
-		sendDM(msg.author, { embeds: [dmEmbed] }, msg.channel);
-		sendDM(absentee, { embeds: [absenteeEmbed] }, msg.channel, true);
+		sendDirect(msg.author, { embeds: [dmEmbed] }, msg.channel);
+		sendDirect(absentee, { embeds: [absenteeEmbed] }, msg.channel, true);
 	};
 
 	return leaveFor;

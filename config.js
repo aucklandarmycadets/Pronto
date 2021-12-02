@@ -1,46 +1,46 @@
 'use strict';
 
-exports.config = {
+exports.settings = {
+	PERMISSIONS_INTEGER: 1879141584,
 	prefix: '!',
-	permsInt: 1879141584,
-	dateOutput: 'HHMM "h" ddd, d mmm yy',
+	longDate: 'HHMM "h" ddd, d mmm yy',
 	shortDate: 'd mmm',
 	prontoLogo: 'https://i.imgur.com/Whgm87R.png',
 	lessonCron: '0 16 * * 3',
 };
 
 exports.ids = {
-	defaultServer: '765758073942966272',
-	devID: '192181901065322496',
+	DEFAULT_GUILD: '765758073942966272',
+	DEVELOPER_ID: '192181901065322496',
 };
 
 exports.defaults = {
 	debug: {
 		name: 'debugging',
-		get desc() {
+		get description() {
 			const { bot } = require('./pronto');
 			return `For debugging <@!${bot.user.id}>.`;
 		},
 	},
 	log: {
 		name: 'log-channel',
-		desc: 'Log channel.',
+		description: 'Log channel.',
 	},
 	attendance: {
 		name: 'attendance',
-		desc: 'To assist in **recording attendance** and **monitoring leave**; leave tickets will be sent here.',
+		description: 'To assist in **recording attendance** and **monitoring leave**; leave tickets will be sent here.',
 	},
 	recruiting: {
 		name: 'recruiting',
-		desc: 'For everything related to **recruitment**.',
+		description: 'For everything related to **recruitment**.',
 	},
-	newMembers: {
-		name: 'new-members',
-		desc: '**Introduce yourself!** You can ask us any questions you might have here, or just say hello!',
+	welcome: {
+		name: 'welcome',
+		description: '**Introduce yourself!** You can ask us any questions you might have here, or just say hello!',
 	},
 	lessonReference: {
 		name: 'reference',
-		get desc() {
+		get description() {
 			const { bot } = require('./pronto');
 			return `Reference channel for <@!${bot.user.id}>'s **lesson plans** feature set.`;
 		},
@@ -51,7 +51,7 @@ exports.defaults = {
 	},
 	lessonPlans: {
 		name: 'lesson-plans',
-		desc: 'An archive of **completed** and **approved** lesson plans.',
+		description: 'An archive of **completed** and **approved** lesson plans.',
 		get parent() {
 			const { defaults } = require('./config');
 			return defaults.lessons.name;

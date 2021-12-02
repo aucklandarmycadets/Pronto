@@ -3,10 +3,10 @@
 module.exports = async msg => {
 	const { bot } = require('../pronto');
 	const { debugError } = require('./');
-	const { ids: { serverID }, emojis } = await require('../handlers/database')(msg.guild);
+	const { ids: { guildID }, emojis } = await require('../handlers/database')(msg.guild);
 
-	const server = bot.guilds.cache.get(serverID);
-	const successEmoji = server.emojis.cache.find(emoji => emoji.name === emojis.success.name);
+	const guild = bot.guilds.cache.get(guildID);
+	const successEmoji = guild.emojis.cache.find(emoji => emoji.name === emojis.success.name);
 
 	if (msg.deleted) return;
 

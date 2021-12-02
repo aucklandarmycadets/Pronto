@@ -2,7 +2,7 @@
 
 const Discord = require('discord.js');
 
-module.exports = async (msg, errMsg, cmdErr, footer) => {
+module.exports = async (msg, errorMsg, cmdError, footer) => {
 	const { errorReact, sendMsg } = require('./');
 	const { colours } = await require('../handlers/database')(msg.guild);
 
@@ -13,7 +13,7 @@ module.exports = async (msg, errMsg, cmdErr, footer) => {
 	const errorEmbed = new Discord.MessageEmbed()
 		.setColor(colours.error)
 		.setAuthor(authName, msg.author.displayAvatarURL({ dynamic: true }))
-		.setDescription(`${msg.author} ${errMsg} ${cmdErr}`);
+		.setDescription(`${msg.author} ${errorMsg} ${cmdError}`);
 
 	if (footer) errorEmbed.setFooter(footer);
 

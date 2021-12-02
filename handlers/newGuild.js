@@ -8,12 +8,18 @@ const { defaults, colours } = require('../config');
 const { debugError, sendMsg } = require('../modules');
 
 const recentlyCreated = new Set();
+// A Collection<Channel.Snowflake, Guild.Snowflake>
 const createdChannels = new Discord.Collection();
 
+/**
+ *
+ * @param {?Discord.Guild} guild
+ * @returns
+ */
 module.exports = async guild => {
 	if (!guild) {
 		const returnObj = require('../config');
-		returnObj.cmds = await require('../cmds')('break');
+		returnObj.cmds = await require('../cmds')('BREAK');
 		return returnObj;
 	}
 
@@ -36,7 +42,7 @@ module.exports = async guild => {
 	lessonInstructions(_guild.ids.lessonReferenceID, guild);
 
 	if (createdChannels.some(guildID => guildID === guild.id)) {
-		const { dtg } = require('../modules');
+		const { dateTimeGroup } = require('../modules');
 
 		const prontoCategory = bot.channels.cache.find(chnl => chnl.type === 'category' && chnl.name === defaults.pronto.name);
 		const debugChannel = bot.channels.cache.get(_guild.ids.debugID);
@@ -47,7 +53,7 @@ module.exports = async guild => {
 			.setDescription(`Initialised channel(s) in **${prontoCategory}**, feel free to move and/or rename them!`)
 			.addField('Created Channels', channelsOutput(createdChannels, _guild))
 			.addField('More Information', 'To modify my configuration, please visit my dashboard.')
-			.setFooter(await dtg());
+			.setFooter(await dateTimeGroup());
 
 		sendMsg(debugChannel, { embeds: [createdEmbed] });
 	}
@@ -61,12 +67,12 @@ async function createGuild(guild) {
 		guildID: guild.id,
 		guildName: guild.name,
 		ids: {
-			serverID: guild.id,
+			guildID: guild.id,
 			debugID: await initChannel(defaults.debug, guild),
 			logID: await initChannel(defaults.log, guild),
 			attendanceID: await initChannel(defaults.attendance, guild),
 			recruitingID: await initChannel(defaults.recruiting, guild),
-			newMembersID: await initChannel(defaults.newMembers, guild),
+			welcomeID: await initChannel(defaults.welcome, guild),
 			archivedID: await initChannel(defaults.archived, guild, 'category'),
 			lessonsID: await initChannel(defaults.lessons, guild, 'category'),
 			lessonReferenceID: await initChannel(defaults.lessonReference, guild),
@@ -119,8 +125,8 @@ async function initChannel(channel, guild, type) {
 	const chnlOptions = (type === 'category')
 		? { type: type }
 		: (parent)
-			? { topic: channel.desc, parent: parent, type: type }
-			: { topic: channel.desc, parent: prontoCategory, type: type };
+			? { topic: channel.description, parent: parent, type: type }
+			: { topic: channel.description, parent: prontoCategory, type: type };
 
 	const newChannel = await guild.channels.create(channel.name, chnlOptions)
 		.catch(error => debugError(error, `Error creating ${channel.name} in ${guild.name}\n`));
@@ -147,6 +153,7 @@ function findRole(name, guild) {
 }
 
 function channelsOutput(collection, guild) {
+	// Filter the <Collection> for channels created in the specified guild
 	return [...collection.filter(_guild => _guild === guild.guildID).keys()]
 		.map(channel => `<#${channel}>`)
 		.join('\n');

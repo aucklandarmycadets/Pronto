@@ -1,12 +1,14 @@
 'use strict';
 
+/**
+ * @namespace handlers
+ */
 module.exports = {
 	handlers: exports,
-	botPermsHandler: require('./botPermsHandler')
 	channelPairing: require('./channelPairing'),
 	commandHandler: require('./commandHandler'),
 	commandLoader: require('./commandLoader'),
-	confirmation: require('./confirmation'),
+	confirmWithReaction: require('./confirmWithReaction'),
 	database: require('./database'),
 	findLesson: require('./findLesson'),
 	lessonInstructions: require('./lessonInstructions'),
@@ -19,6 +21,7 @@ module.exports = {
 	permissionsHandler: require('./permissionsHandler'),
 	removeGuild: require('./removeGuild'),
 	unsubmittedLessons: require('./unsubmittedLessons'),
-	updateCommands: require('./updateCommands'),
+	upsertCommands: require('./upsertCommands'),
 	updateUnsubmitted: require('./updateUnsubmitted'),
+	verifyBotPermissions: require('./verifyBotPermissions'),
 };

@@ -40,10 +40,10 @@ A Discord bot developed for the City of Auckland Cadet Unit, built with [discord
 
 | Command           | Description                                                  | Default Permissions                                             |
 | ----------------- | ------------------------------------------------------------ | --------------------------------------------------------------- |
-| `!ping`           | Test the latency of the bot                                  | Dev                                                             |
-| `!uptime`         | Time since last restart                                      | Dev                                                             |
-| `!evaluate`       | Evaluate Javascript code                                     | Dev                                                             |
-| `!restart`        | Restart the bot                                              | Dev                                                             |
+| `!ping`           | Test the latency of the bot                                  | Developer                                                       |
+| `!uptime`         | Time since last restart                                      | Developer                                                       |
+| `!evaluate`       | Evaluate Javascript code                                     | Developer                                                       |
+| `!restart`        | Restart the bot                                              | Developer                                                       |
 | `!help`           | Get help with using Pronto                                   | All                                                             |
 | `!help (command)` | Get help with a specific command                             | All (user must have permissions to use the sub-command however) |
 | `!leave`          | Submit a leave request                                       | None                                                            |
@@ -84,68 +84,68 @@ A Discord bot developed for the City of Auckland Cadet Unit, built with [discord
 
 3. Install [MongoDB Community Edition](https://docs.mongodb.com/manual/administration/install-community/)
 	> NOTE: These instructions apply to the set-up of a local database.
-	> This guide will not cover how to connect to a MongoDB Atlas database, however this only requires a substitution of the Atlas connection string in the place of `'mongodb://localhost/pronto'` within the value of `MONGOURI=` in `.env`.
+	> This guide will not cover how to connect to a MongoDB Atlas database, however this only requires a substitution of `'mongodb://localhost/pronto'` with the Atlas connection string within the value of `MONGOURI=` in `.env`.
 
 4. Open `config.js` and change the configuration settings & default identifiers:
 	```js
-	exports.config = {
+	exports.settings = {
 		prefix: '!',
-		permsInt: 1879141584,
-		dateOutput: 'HHMM "h" ddd, d mmm yy',
+		PERMISSIONS_INTEGER: 1879141584,
+		longDate: 'HHMM "h" ddd, d mmm yy',
 		shortDate: 'd mmm',
-		prontoLogo: 'https://i.imgur.com/EzmJVyV.png',
+		prontoLogo: 'https://i.imgur.com/Whgm87R.png',
 		lessonCron: '0 16 * * 3',
 	};
 
 	exports.ids = {
-		defaultServer: '765758073942966272',
-		devID: '192181901065322496',
+		DEFAULT_GUILD: '765758073942966272',
+		DEVELOPER_ID: '192181901065322496',
 	};
 
 	...
 	```
 
-    | Property        | Description                                                                                                                                                                                                                                                                                                                 |
-    | :-------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-    | `prefix`        | The command prefix for message commands                                                                                                                                                                                                                                                                                     |
-    | `permsInt`      | You shouldn't change this unless you know what you're doing or adding/removing things from the bot.<br>If you are, Pronto may require more/less minimum [Discord permissions](https://discordapi.com/permissions.html).<br>This integer allows Pronto to verify that it has the necessary permissions to function properly. |
-    | `dateOutput`    | The dateformat mask / format string.<br>[Documentation](https://www.npmjs.com/package/dateformat#mask-options)                                                                                                                                                                                                              |
-    | `shortDate`     | The dateformat mask that Pronto uses for a 'shortened' date string                                                                                                                                                                                                                                                          |
-    | `prontoLogo`    | A link to the image to use as Pronto's logo (e.g. in the thumbnail of the Commands List embed)<br>*NOTE: This is not the avatar of the bot – you need to set that when you create the bot user*                                                                                                                             |
-    | `lessonCron`    | The cron schedule expression that controls when Pronto sends out lesson reminders.<br>[Documentation](https://www.npmjs.com/package/node-cron#cron-syntax)                                                                                                                                                                  |
-    | `defaultServer` | The identifier of Pronto's 'master' server, used as a fallback when a secondary guild has a database error.<br>[How to find a Discord identifier](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-)                                                                      |
-    | `devID`         | The identifier of the user managing the bot (i.e. you)                                                                                                                                                                                                                                                                      |
+    | Property              | Description                                                                                                                                                                                                                                                                                                                 |
+    | :-------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+    | `prefix`              | The command prefix for message commands                                                                                                                                                                                                                                                                                     |
+    | `PERMISSIONS_INTEGER` | You shouldn't change this unless you know what you're doing or adding/removing things from the bot.<br>If you are, Pronto may require more/less minimum [Discord permissions](https://discordapi.com/permissions.html).<br>This integer allows Pronto to verify that it has the necessary permissions to function properly. |
+    | `longDate`            | The dateformat mask / format string.<br>[Documentation](https://www.npmjs.com/package/dateformat#mask-options)                                                                                                                                                                                                              |
+    | `shortDate`           | The dateformat mask that Pronto uses for a 'shortened' date string                                                                                                                                                                                                                                                          |
+    | `prontoLogo`          | A link to the image to use as Pronto's logo (e.g. in the thumbnail of the Commands List embed)<br>*NOTE: This is not the avatar of the bot – you need to set that when you create the bot user*                                                                                                                             |
+    | `lessonCron`          | The cron schedule expression that controls when Pronto sends out lesson reminders.<br>[Documentation](https://www.npmjs.com/package/node-cron#cron-syntax)                                                                                                                                                                  |
+    | `DEFAULT_GUILD`       | The identifier of Pronto's 'master' guild, used as a fallback when a secondary guild has a database error.<br>[How to find a Discord identifier](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-)                                                                       |
+    | `DEVELOPER_ID`        | The identifier of the user managing the bot (i.e. you)                                                                                                                                                                                                                                                                      |
 
-	> To assign command permissions in v4.2.2, use the following command in a server channel:
+	> To assign command permissions in v4.2.2, use the following command in a guild channel:
 	> ```js
 	> !eval database(msg.guild, {
 	>	ids: {
-	>		formations: ['<role1ID>', '<role2ID>'...],
+	>		formations: ['<roleOneID>', '<roleTwoID>'...],
 	>	},
 	>	cmds: {
 	>		leave: {
-	>			roles: ['<role1ID>', '<role2ID>'...],
-	>			noRoles: ['<role1ID>', '<role2ID>'...],
+	>			requiredRoles: ['<roleOneID>', '<roleTwoID>'...],
+	>			deniedRoles: ['<roleOneID>', '<roleTwoID>'...],
 	>		},
 	>		leaveFor: {
-	>			roles: ['<role1ID>', '<role2ID>'...],
-	>			noRoles: ['<role1ID>', '<role2ID>'...],
+	>			requiredRoles: ['<roleOneID>', '<roleTwoID>'...],
+	>			deniedRoles: ['<roleOneID>', '<roleTwoID>'...],
 	>		},
 	>		attendance: {
-	>			roles: ['<role1ID>', '<role2ID>'...],
-	>			noRoles: ['<role1ID>', '<role2ID>'...],
+	>			requiredRoles: ['<roleOneID>', '<roleTwoID>'...],
+	>			deniedRoles: ['<roleOneID>', '<roleTwoID>'...],
 	>		},
 	>		connected: {
-	>			roles: ['<role1ID>', '<role2ID>'...],
-	>			noRoles: ['<role1ID>', '<role2ID>'...],
+	>			requiredRoles: ['<roleOneID>', '<roleTwoID>'...],
+	>			deniedRoles: ['<roleOneID>', '<roleTwoID>'...],
 	>		},
 	>		archive: {
-	>			roles: ['<role1ID>', '<role2ID>'...],
-	>			noRoles: ['<role1ID>', '<role2ID>'...],
+	>			requiredRoles: ['<roleOneID>', '<roleTwoID>'...],
+	>			deniedRoles: ['<roleOneID>', '<roleTwoID>'...],
 	>		},
 	>		purge: {
-	>			roles: ['<role1ID>', '<role2ID>'...],
-	>			noRoles: ['<role1ID>', '<role2ID>'...],
+	>			requiredRoles: ['<roleOneID>', '<roleTwoID>'...],
+	>			deniedRoles: ['<roleOneID>', '<roleTwoID>'...],
 	>		}
 	>	}
 	> }) -silent
@@ -161,9 +161,9 @@ A Discord bot developed for the City of Auckland Cadet Unit, built with [discord
 	>	});
 	>
 	>	database.ids.channelPairs = [
-	>		{ voice: 'voice1ID', text: 'text1ID' },
-	>		{ voice: 'voice2ID', text: 'text2ID' },
-	>		{ voice: 'voice3ID', text: 'text3ID' },
+	>		{ voice: 'voiceOneID', text: 'textOneID' },
+	>		{ voice: 'voiceTwoID', text: 'textTwoID' },
+	>		{ voice: 'voiceThreeID', text: 'textThreeID' },
 	>	  ];
 	>	database.markModified('ids')
 	>
@@ -179,7 +179,7 @@ A Discord bot developed for the City of Auckland Cadet Unit, built with [discord
 	> help: {
 	> 	cmd: 'help',
 	> 	aliases: ['cmd', 'cmds', 'command', 'commands'],
-	> 	desc: {
+	> 	description: {
 	>		general: 'Get help with using Pronto.',
 	> 		...
 	> ```
@@ -189,13 +189,13 @@ A Discord bot developed for the City of Auckland Cadet Unit, built with [discord
 	> },
 	> ```
 	> ```js
-	> .setFooter(`${pingValue} ms | ${await dtg()} | Pronto v${version}`);`
+	> .setFooter(`${pingValue} ms | ${await dateTimeGroup()} | Pronto v${version}`);`
 	> ```
 	> You can rename the bot here (inside the ' ' marks), and everything will still work! Basically, just don't change file names :)
 
 	> To change the bot's status message, look in `events\onReady.js`:
 	> ```js
-	> bot.user.setActivity(`the radio net | ${await pCmd(help)}`, { type: 'LISTENING' });
+	> bot.user.setActivity(`the radio net | ${await prefixCmd(help)}`, { type: 'LISTENING' });
 	> ```
 	> Documentation can be found [here](https://discordjs.guide/popular-topics/faq.html#how-do-i-set-my-playing-status).
 

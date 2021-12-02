@@ -3,57 +3,79 @@
 const Discord = require('discord.js');
 const { Lesson } = require('../models');
 
-const { cmdError, debugError, dtg, embedScaffold, errorReact, sendMsg, successReact } = require('../modules');
+const { cmdError, debugError, dateTimeGroup, embedScaffold, errorReact, sendMsg, successReact } = require('../modules');
 
+/**
+ * Attach the cmd.execute() function to command object
+ * @module commands/archive
+ * @param {Discord.Guild} guild The guild that the member shares with the bot
+ * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a cmd.execute() property
+ */
 module.exports = async guild => {
 	const { ids: { logID, archivedID }, cmds: { archive }, colours } = await require('../handlers/database')(guild);
 
+	/**
+	 * Archive a <TextChannel> by restricting channel visibility and moving it to a designated channel category
+	 * @param {Discord.Message} msg The \<Message> that executed the command
+	 */
 	archive.execute = msg => {
 		const { bot } = require('../pronto');
 
-		const channelMentions = msg.mentions.channels;
-		const numChannelMentions = channelMentions.size;
-		const channel = channelMentions.first();
+		// Extract the first mentioned channel
+		const channel = msg.mentions.channels.first();
 
 		try {
-			if (numChannelMentions === 0) throw 'You must specify a text channel.';
+			// Ensure there was at least one <GuildChannel> mentioned
+			if (msg.mentions.channels.size === 0) throw 'You must specify a text channel.';
 
-			else if (channelMentions.some(mention => mention.type !== 'text' && mention.type !== 'news')) throw 'You can only archive text channels.';
+			// Ensure <GuildChannel> is of type <TextChannel> or <NewsChannel>
+			else if (msg.mentions.channels.some(mention => mention.type !== 'text' && mention.type !== 'news')) throw 'You can only archive text channels.';
 
-			else if (numChannelMentions > 1) throw 'You must archive channels individually.';
+			// Ensure there was only one channel mentioned
+			else if (msg.mentions.channels.size > 1) throw 'You must archive channels individually.';
 
+			// Ensure channel is not already archived
 			else if (bot.channels.cache.get(channel.id).parentID === archivedID) throw 'Channel is already archived.';
 		}
 
 		catch (error) { return cmdError(msg, error, archive.error); }
 
+		// Delete database document when archiving a lesson channel
 		Lesson.findOneAndDelete({ lessonID: msg.channel.id }, error => {
 			if (error) console.error(error);
 		});
 
-		const log = bot.channels.cache.get(logID);
-
+		// Move channel to archive category
 		channel.setParent(archivedID, { lockPermissions: true })
 			.then(async () => {
+				// Success react to command message
 				successReact(msg);
 
+				// Create archive embed
 				const archiveEmbed = new Discord.MessageEmbed()
 					.setTitle('Channel Archived 🔒')
 					.setColor(colours.error)
 					.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
-					.setFooter(await dtg());
+					.setFooter(await dateTimeGroup());
+
+				// Send archive embed
 				sendMsg(channel, { embeds: [archiveEmbed] });
 
+				// Create log embed
 				const logEmbed = new Discord.MessageEmbed()
 					.setColor(colours.warn)
 					.setAuthor(msg.author.tag, msg.author.displayAvatarURL({ dynamic: true }))
 					.setDescription(`**Channel ${channel} archived by ${msg.author}**`)
-					.setFooter(`User: ${msg.author.id} | Channel: ${channel.id} | ${await dtg()}`);
-				sendMsg(log, { embeds: [logEmbed] });
+					.setFooter(`User: ${msg.author.id} | Channel: ${channel.id} | ${await dateTimeGroup()}`);
+
+				// Get the guild's log channel and send the log embed
+				const logChannel = bot.channels.cache.get(logID);
+				sendMsg(logChannel, { embeds: [logEmbed] });
 			})
 			.catch(error => {
+				// If error, react with error and send error messages
 				errorReact(msg);
-				embedScaffold(guild, msg.channel, `${msg.author} Error archiving ${channel}.`, colours.error, 'msg');
+				embedScaffold(guild, msg.channel, `${msg.author} Error archiving ${channel}.`, colours.error, 'MESSAGE');
 				debugError(error, `Error archiving ${channel}.`);
 			});
 	};

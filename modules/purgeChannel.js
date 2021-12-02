@@ -6,7 +6,7 @@ module.exports = async (msgs, chnl, collector) => {
 
 	chnl.bulkDelete(msgs)
 		.catch(error => {
-			embedScaffold(null, chnl, `Error purging ${chnl}.`, colours.error, 'msg');
+			embedScaffold(null, chnl, `Error purging ${chnl}.`, colours.error, 'MESSAGE');
 			debugError(error, `Error purging ${chnl}.`);
 		});
 

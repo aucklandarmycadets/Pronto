@@ -5,10 +5,10 @@ const cron = require('node-cron');
 
 const { Lesson } = require('../models');
 
-const { dtg, sendMsg } = require('../modules');
+const { dateTimeGroup, sendMsg } = require('../modules');
 
 module.exports = async guild => {
-	const { config: { lessonCron, lessonReminders }, ids: { archivedID }, colours } = await require('../handlers/database')(guild);
+	const { settings: { lessonCron, lessonReminders }, ids: { archivedID }, colours } = await require('../handlers/database')(guild);
 
 	cron.schedule(lessonCron, async () => {
 		const unsubmitted = await Lesson.find({ submitted: false, dueTimestamp: { $gte: Date.now(), $lte: new Date().setDate(new Date().getDate() + 8).valueOf() } });
@@ -22,7 +22,7 @@ module.exports = async guild => {
 				.setTitle('Lesson Reminder')
 				.setColor(colours.warn)
 				.setDescription(`Reminder — your lesson plan is due at \`${lesson.dueDate}\`.`)
-				.setFooter(await dtg());
+				.setFooter(await dateTimeGroup());
 
 			if (lesson.dueTimestamp - Date.now() <= 86400000) remindEmbed.setColor(colours.error);
 

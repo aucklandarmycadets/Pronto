@@ -1,31 +1,27 @@
 'use strict';
 
 module.exports = (raw, elapsed) => {
-	let years = 0;
-	let months = 0;
-	let days = 0;
-	let hours = 0;
-	let minutes = 0;
-	let seconds = 0;
+	const units = {
+		0: 'year',
+		1: 'month',
+		2: 'day',
+		3: 'hr',
+		4: 'min',
+		5: 'sec',
+	};
+
+	const durations = [31556952000, 2629800000, 86400000, 3600000, 60000, 1000];
 
 	if (!elapsed) raw = Date.now() - raw;
 
-	if (raw > 31556952000) years = Math.floor(raw / 31556952000);
-	if ((raw - (years * 31556952000)) > 2629800000) months = Math.floor((raw - (years * 31556952000)) / 2629800000);
-	if ((raw - (years * 31556952000) - (months * 2629800000)) > 86400000) days = Math.floor((raw - (years * 31556952000) - (months * 2629800000)) / 86400000);
-	if ((raw - (years * 31556952000) - (months * 2629800000) - (days * 86400000)) > 3600000) hours = Math.floor((raw - (years * 31556952000) - (months * 2629800000) - (days * 86400000)) / 3600000);
-	if ((raw - (years * 31556952000) - (months * 2629800000) - (days * 86400000) - (hours * 3600000)) > 60000) minutes = Math.floor((raw - (years * 31556952000) - (months * 2629800000) - (days * 86400000) - (hours * 3600000)) / 60000);
-	if ((raw - (years * 31556952000) - (months * 2629800000) - (days * 86400000) - (hours * 3600000) - (minutes * 60000)) > 1000) seconds = Math.floor((raw - (years * 31556952000) - (months * 2629800000) - (days * 86400000) - (hours * 3600000) - (minutes * 60000)) / 1000);
-
-	return (years)
-		? `${years} years, ${months} months, ${days} days`
-		: (months)
-			? `${months} months, ${days} days, ${hours} hrs`
-			: (days)
-				? `${days} days, ${hours} hrs, ${minutes} min`
-				: (hours)
-					? `${hours} hrs, ${minutes} min, ${seconds} sec`
-					: (minutes)
-						? `${minutes} min, ${seconds} sec`
-						: `${seconds} sec`;
+	return durations.map((duration, i) => {
+		const unitValue = Math.floor(raw / duration);
+		raw %= duration;
+		return (unitValue > 0)
+			? `${unitValue} ${(unitValue > 1) ? `${units[i]}s` : units[i]}`
+			: '';
+	})
+		.filter(string => string !== '')
+		.slice(0, 3)
+		.join(', ');
 };

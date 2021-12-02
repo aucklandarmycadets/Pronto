@@ -1,7 +1,15 @@
 'use strict';
 
+// eslint-disable-next-line no-unused-vars
+const Discord = require('discord.js');
 const { getRoleError } = require('../modules');
 
+/**
+ *
+ * @param {Discord.Message} msg
+ * @param {Object.<string, string | string[] | boolean>} cmd The command object to check permissions against
+ * @returns
+ */
 module.exports = async (msg, cmd) => {
 	const { bot } = require('../pronto');
 	const { permissionsCheck } = require('./');

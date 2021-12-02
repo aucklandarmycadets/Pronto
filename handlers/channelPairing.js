@@ -1,7 +1,7 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { debugError, dtg, embedScaffold, js, pCmd, purgeChannel, sendMsg, successReact } = require('../modules');
+const { debugError, dateTimeGroup, embedScaffold, jsCodeBlock, prefixCmd, purgeChannel, sendMsg, successReact } = require('../modules');
 
 module.exports = async (oldState, newState) => {
 	const { bot } = require('../pronto');
@@ -21,7 +21,7 @@ module.exports = async (oldState, newState) => {
 	for (let i = 0; i < channelPairs.length; i++) {
 		const textChannel = newState.guild.channels.cache.get(channelPairs[i].text);
 		if (!textChannel) {
-			embedScaffold(newState.guild, null, 'Invalid text channel ID', colours.error, 'debug', null, null, js(`#${channelPairs[i].text}`));
+			embedScaffold(newState.guild, null, 'Invalid text channel ID', colours.error, 'DEBUG', null, null, jsCodeBlock(`#${channelPairs[i].text}`));
 			continue;
 		}
 
@@ -34,7 +34,7 @@ module.exports = async (oldState, newState) => {
 						.setColor(colours.success)
 						.setAuthor(newMember.displayName, newMember.user.displayAvatarURL({ dynamic: true }))
 						.setDescription(`**${newMember.displayName}** has joined the channel.`)
-						.setFooter(await dtg());
+						.setFooter(await dateTimeGroup());
 					sendMsg(textChannel, { embeds: [joinEmbed] });
 				})
 				.catch(error => {
@@ -49,7 +49,7 @@ module.exports = async (oldState, newState) => {
 						.setColor(colours.error)
 						.setAuthor(newMember.displayName, newMember.user.displayAvatarURL({ dynamic: true }))
 						.setDescription(`**${newMember.displayName}** has left the channel.`)
-						.setFooter(await dtg());
+						.setFooter(await dateTimeGroup());
 					sendMsg(textChannel, { embeds: [leaveEmbed] });
 
 					if (oldState.channel.members.size === 0) {
@@ -64,7 +64,6 @@ module.exports = async (oldState, newState) => {
 								successReact(msg);
 
 								const filter = reaction => reaction.emoji.name === emojis.success.name;
-
 								const collector = msg.createReactionCollector(filter, { dispose: true });
 
 								collector.on('collect', async (_, user) => {
@@ -101,7 +100,7 @@ module.exports = async (oldState, newState) => {
 										const timeEmbed = new Discord.MessageEmbed()
 											.setColor(colours.error)
 											.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }))
-											.setDescription(`Timed out. Type \`${await pCmd(purge, newState.guild)} 100\` to clear this channel manually.`);
+											.setDescription(`Timed out. Type \`${await prefixCmd(purge, newState.guild)} 100\` to clear this channel manually.`);
 										sendMsg(textChannel, { embeds: [timeEmbed] });
 									}
 								});

@@ -1,10 +1,18 @@
 'use strict';
 
-const { ids: { devID } } = require('./config');
+// eslint-disable-next-line no-unused-vars
+const Discord = require('discord.js');
+
+const { ids: { DEVELOPER_ID } } = require('./config');
 const { formatList } = require('./modules');
 
+/**
+ *
+ * @param {Discord.Guild | 'BREAK'} guild
+ * @returns
+ */
 module.exports = async guild => {
-	const { config: { prefix }, ids } = (guild === 'break')
+	const { settings: { prefix }, ids } = (guild === 'BREAK')
 		? require('./config')
 		: await require('./handlers/database')(guild);
 
@@ -12,17 +20,17 @@ module.exports = async guild => {
 		ping: {
 			cmd: 'ping',
 			aliases: ['p'],
-			desc: 'Test the latency of the bot.',
+			description: 'Test the latency of the bot.',
 			allowDM: true,
-			roles: [],
-			noRoles: [],
-			devOnly: true,
+			requiredRoles: [],
+			deniedRoles: [],
+			developerOnly: true,
 			showList: true,
 			get help() {
 				return formatList({
-					'Aliases': pAls(this),
-					'Description': this.desc,
-					'Usage': pCmd(this),
+					'Aliases': prefixAlias(this),
+					'Description': this.description,
+					'Usage': prefixCmd(this),
 				});
 			},
 			set help(obj) {
@@ -32,17 +40,17 @@ module.exports = async guild => {
 		uptime: {
 			cmd: 'uptime',
 			aliases: ['up'],
-			desc: 'Time since last restart.',
+			description: 'Time since last restart.',
 			allowDM: true,
-			roles: [],
-			noRoles: [],
-			devOnly: true,
+			requiredRoles: [],
+			deniedRoles: [],
+			developerOnly: true,
 			showList: true,
 			get help() {
 				return formatList({
-					'Aliases': pAls(this),
-					'Description': this.desc,
-					'Usage': pCmd(this),
+					'Aliases': prefixAlias(this),
+					'Description': this.description,
+					'Usage': prefixCmd(this),
 				});
 			},
 			set help(obj) {
@@ -52,17 +60,17 @@ module.exports = async guild => {
 		evaluate: {
 			cmd: 'evaluate',
 			aliases: ['eval'],
-			desc: 'Evaluate Javascript code.',
+			description: 'Evaluate Javascript code.',
 			allowDM: true,
-			roles: [],
-			noRoles: [],
-			devOnly: true,
+			requiredRoles: [],
+			deniedRoles: [],
+			developerOnly: true,
 			showList: true,
 			get help() {
 				return formatList({
-					'Aliases': pAls(this),
-					'Description': this.desc,
-					'Usage': `${pCmd(this)} <code>`,
+					'Aliases': prefixAlias(this),
+					'Description': this.description,
+					'Usage': `${prefixCmd(this)} <code>`,
 				});
 			},
 			set help(obj) {
@@ -78,17 +86,17 @@ module.exports = async guild => {
 		restart: {
 			cmd: 'restart',
 			aliases: ['new', 'kill', 'update'],
-			desc: 'Restart the bot.',
+			description: 'Restart the bot.',
 			allowDM: true,
-			roles: [],
-			noRoles: [],
-			devOnly: true,
+			requiredRoles: [],
+			deniedRoles: [],
+			developerOnly: true,
 			showList: true,
 			get help() {
 				return formatList({
-					'Aliases': pAls(this),
-					'Description': this.desc,
-					'Usage': pCmd(this),
+					'Aliases': prefixAlias(this),
+					'Description': this.description,
+					'Usage': prefixCmd(this),
 				});
 			},
 			set help(obj) {
@@ -104,22 +112,22 @@ module.exports = async guild => {
 		help: {
 			cmd: 'help',
 			aliases: ['cmd', 'cmds', 'command', 'commands'],
-			desc: {
+			description: {
 				general: 'Get help with using Pronto.',
 				unqualified: 'List of the commands you can use.',
 				qualified: 'Get help with a specific command.',
 			},
 			allowDM: true,
-			roles: [ids.everyoneID],
-			noRoles: [],
-			devOnly: false,
+			requiredRoles: [ids.everyoneID],
+			deniedRoles: [],
+			developerOnly: false,
 			showList: true,
 			get help() {
 				return formatList({
-					'Aliases': pAls(this),
-					'Description': this.desc.general,
-					'Usage': `${pCmd(this)} [command]`,
-					'Examples': `\n${pCmd(this)}\n${pCmd(this)} ${cmds.leave.cmd}`,
+					'Aliases': prefixAlias(this),
+					'Description': this.description.general,
+					'Usage': `${prefixCmd(this)} [command]`,
+					'Examples': `\n${prefixCmd(this)}\n${prefixCmd(this)} ${cmds.leave.cmd}`,
 				});
 			},
 			set help(obj) {
@@ -135,18 +143,18 @@ module.exports = async guild => {
 		leave: {
 			cmd: 'leave',
 			aliases: ['lv'],
-			desc: 'Submit a leave request.',
+			description: 'Submit a leave request.',
 			allowDM: false,
-			roles: [],
-			noRoles: [],
-			devOnly: false,
+			requiredRoles: [],
+			deniedRoles: [],
+			developerOnly: false,
 			showList: true,
 			get help() {
 				return formatList({
-					'Aliases': pAls(this),
-					'Description': this.desc,
-					'Usage': `${pCmd(this)} <date(s)> <activity> <reason> [additional remarks]`,
-					'Example': `${pCmd(this)} 01 Jan for Parade Night due to an appointment`,
+					'Aliases': prefixAlias(this),
+					'Description': this.description,
+					'Usage': `${prefixCmd(this)} <date(s)> <activity> <reason> [additional remarks]`,
+					'Example': `${prefixCmd(this)} 01 Jan for Parade Night due to an appointment`,
 				});
 			},
 			set help(obj) {
@@ -162,17 +170,17 @@ module.exports = async guild => {
 		lesson: {
 			cmd: 'lesson',
 			aliases: ['view', 'add', 'remove', 'submit'],
-			desc: 'Commands to help action an assigned lesson.',
+			description: 'Commands to aid in actioning an assigned lesson.',
 			allowDM: false,
-			roles: [],
-			noRoles: [],
-			devOnly: false,
+			requiredRoles: [],
+			deniedRoles: [],
+			developerOnly: false,
 			showList: false,
 			get help() {
 				return formatList({
-					'Aliases': pAls(this),
-					'Description': this.desc,
-					'Usage': pCmd(this),
+					'Aliases': prefixAlias(this),
+					'Description': this.description,
+					'Usage': prefixCmd(this),
 					'Allowed Categories': `<#${ids.lessonsID}>`,
 				});
 			},
@@ -189,17 +197,17 @@ module.exports = async guild => {
 		seen: {
 			cmd: 'seen',
 			aliases: ['ack'],
-			desc: 'Acknowledge receipt of a lesson warning.',
+			description: 'Acknowledge receipt of a lesson warning.',
 			allowDM: false,
-			roles: [],
-			noRoles: [],
-			devOnly: false,
+			requiredRoles: [],
+			deniedRoles: [],
+			developerOnly: false,
 			showList: false,
 			get help() {
 				return formatList({
-					'Aliases': pAls(this),
-					'Description': this.desc,
-					'Usage': pCmd(this),
+					'Aliases': prefixAlias(this),
+					'Description': this.description,
+					'Usage': prefixCmd(this),
 					'Allowed Categories': `<#${ids.lessonsID}>`,
 				});
 			},
@@ -216,19 +224,19 @@ module.exports = async guild => {
 		leaveFor: {
 			cmd: 'leavefor',
 			aliases: ['lv4'],
-			desc: 'Submit a leave request for another cadet.',
+			description: 'Submit a leave request for another cadet.',
 			allowDM: false,
-			roles: [],
-			noRoles: [],
-			devOnly: false,
+			requiredRoles: [],
+			deniedRoles: [],
+			developerOnly: false,
 			showList: true,
 			get help() {
 				return formatList({
-					'Aliases': pAls(this),
-					'Description': this.desc,
-					'Usage': `${pCmd(this)} <user> <date(s)> <activity> <reason> [additional remarks]`,
-					'Example': `${pCmd(this)} <@${devID}> 01 Jan for Parade Night due to an appointment`,
-					'Allowed Roles': rolesOutput(this.roles),
+					'Aliases': prefixAlias(this),
+					'Description': this.description,
+					'Usage': `${prefixCmd(this)} <user> <date(s)> <activity> <reason> [additional remarks]`,
+					'Example': `${prefixCmd(this)} <@${DEVELOPER_ID}> 01 Jan for Parade Night due to an appointment`,
+					'Allowed Roles': rolesOutput(this.requiredRoles),
 				});
 			},
 			set help(obj) {
@@ -244,18 +252,18 @@ module.exports = async guild => {
 		attendance: {
 			cmd: 'attendance',
 			aliases: ['att', 'attdnce'],
-			desc: 'Submit an attendance register.',
+			description: 'Submit an attendance register.',
 			allowDM: false,
-			roles: [],
-			noRoles: [],
-			devOnly: false,
+			requiredRoles: [],
+			deniedRoles: [],
+			developerOnly: false,
 			showList: true,
 			get help() {
 				return formatList({
-					'Aliases': pAls(this),
-					'Description': this.desc,
-					'Usage': `\n${pCmd(this)} <message>`,
-					'Allowed Roles': rolesOutput(this.roles),
+					'Aliases': prefixAlias(this),
+					'Description': this.description,
+					'Usage': `\n${prefixCmd(this)} <message>`,
+					'Allowed Roles': rolesOutput(this.requiredRoles),
 				});
 			},
 			set help(obj) {
@@ -271,19 +279,19 @@ module.exports = async guild => {
 		connected: {
 			cmd: 'connected',
 			aliases: ['cnnct', 'cnnctd'],
-			desc: 'List the members connected to a voice channel.',
+			description: 'List the members connected to a voice channel.',
 			allowDM: false,
-			roles: [],
-			noRoles: [],
-			devOnly: false,
+			requiredRoles: [],
+			deniedRoles: [],
+			developerOnly: false,
 			showList: true,
 			get help() {
 				return formatList({
-					'Aliases': pAls(this),
-					'Description': this.desc,
-					'Usage': `${pCmd(this)} <voice channel>`,
-					'Example': `${pCmd(this)} #example-voice`,
-					'Allowed Roles': rolesOutput(this.roles),
+					'Aliases': prefixAlias(this),
+					'Description': this.description,
+					'Usage': `${prefixCmd(this)} <voice channel>`,
+					'Example': `${prefixCmd(this)} #example-voice`,
+					'Allowed Roles': rolesOutput(this.requiredRoles),
 				});
 			},
 			set help(obj) {
@@ -299,19 +307,19 @@ module.exports = async guild => {
 		assign: {
 			cmd: 'assign',
 			aliases: ['give'],
-			desc: 'Assign a lesson to an instructor.',
+			description: 'Assign a lesson to an instructor.',
 			allowDM: false,
-			roles: [],
-			noRoles: [],
-			devOnly: false,
+			requiredRoles: [],
+			deniedRoles: [],
+			developerOnly: false,
 			showList: true,
 			get help() {
 				return formatList({
-					'Aliases': pAls(this),
-					'Description': this.desc,
-					'Usage': `${pCmd(this)} <user(s)>`,
-					'Example': `${pCmd(this)} <@${devID}>`,
-					'Allowed Roles': rolesOutput(this.roles),
+					'Aliases': prefixAlias(this),
+					'Description': this.description,
+					'Usage': `${prefixCmd(this)} <user(s)>`,
+					'Example': `${prefixCmd(this)} <@${DEVELOPER_ID}>`,
+					'Allowed Roles': rolesOutput(this.requiredRoles),
 				});
 			},
 			set help(obj) {
@@ -327,18 +335,18 @@ module.exports = async guild => {
 		approve: {
 			cmd: 'approve',
 			aliases: ['app', 'apprv', 'acc', 'accept'],
-			desc: 'Approve a lesson plan.',
+			description: 'Approve a lesson plan.',
 			allowDM: false,
-			roles: [],
-			noRoles: [],
-			devOnly: false,
+			requiredRoles: [],
+			deniedRoles: [],
+			developerOnly: false,
 			showList: true,
 			get help() {
 				return formatList({
-					'Aliases': pAls(this),
-					'Description': this.desc,
-					'Usage': pCmd(this),
-					'Allowed Roles': rolesOutput(this.roles),
+					'Aliases': prefixAlias(this),
+					'Description': this.description,
+					'Usage': prefixCmd(this),
+					'Allowed Roles': rolesOutput(this.requiredRoles),
 					'Allowed Categories': `<#${ids.lessonsID}>`,
 				});
 			},
@@ -355,19 +363,19 @@ module.exports = async guild => {
 		archive: {
 			cmd: 'archive',
 			aliases: ['archv'],
-			desc: 'Archive a text channel.',
+			description: 'Archive a text channel.',
 			allowDM: false,
-			roles: [],
-			noRoles: [],
-			devOnly: false,
+			requiredRoles: [],
+			deniedRoles: [],
+			developerOnly: false,
 			showList: true,
 			get help() {
 				return formatList({
-					'Aliases': pAls(this),
-					'Description': this.desc,
-					'Usage': `${pCmd(this)} <text channel>`,
-					'Example': `${pCmd(this)} #example-text`,
-					'Allowed Roles': rolesOutput(this.roles),
+					'Aliases': prefixAlias(this),
+					'Description': this.description,
+					'Usage': `${prefixCmd(this)} <text channel>`,
+					'Example': `${prefixCmd(this)} #example-text`,
+					'Allowed Roles': rolesOutput(this.requiredRoles),
 				});
 			},
 			set help(obj) {
@@ -383,19 +391,19 @@ module.exports = async guild => {
 		purge: {
 			cmd: 'purge',
 			aliases: ['del', 'delete', 'clear'],
-			desc: 'Delete a number of messages from a channel.',
+			description: 'Delete a number of messages from a channel.',
 			allowDM: false,
-			roles: [],
-			noRoles: [],
-			devOnly: false,
+			requiredRoles: [],
+			deniedRoles: [],
+			developerOnly: false,
 			showList: true,
 			get help() {
 				return formatList({
-					'Aliases': pAls(this),
-					'Description': this.desc,
-					'Usage': `${pCmd(this)} <count> [user]`,
-					'Examples': `\n${pCmd(this)} 10\n${pCmd(this)} 5 <@${devID}>`,
-					'Allowed Roles': rolesOutput(this.roles),
+					'Aliases': prefixAlias(this),
+					'Description': this.description,
+					'Usage': `${prefixCmd(this)} <count> [user]`,
+					'Examples': `\n${prefixCmd(this)} 10\n${prefixCmd(this)} 5 <@${DEVELOPER_ID}>`,
+					'Allowed Roles': rolesOutput(this.requiredRoles),
 				});
 			},
 			set help(obj) {
@@ -421,15 +429,15 @@ module.exports = async guild => {
 
 	function errorText(helpTxt, cmd) {
 		return '\n\n' + helpTxt + '\n' + formatList({
-			'Help Command': `${pCmd(cmds.help)} ${cmd}`,
+			'Help Command': `${prefixCmd(cmds.help)} ${cmd}`,
 		});
 	}
 
-	function pCmd(cmd) {
+	function prefixCmd(cmd) {
 		return `${prefix}${cmd.cmd}`;
 	}
 
-	function pAls(cmd) {
+	function prefixAlias(cmd) {
 		return [...cmd.aliases]
 			.map(alias => prefix + alias)
 			.join(', ');

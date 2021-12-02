@@ -1,29 +1,33 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { debugError, dmCmdError, pCmd, stripID } = require('../modules');
+const { debugError, dmCmdError, prefixCmd, stripID } = require('../modules');
 
+/**
+ *
+ * @param {Discord.Message} msg The \<Message> that emitted the \<Client>#message event
+ */
 module.exports = async msg => {
 	if (msg.author.bot) return;
 
 	const { bot } = require('../pronto');
-	const { ids: { devID } } = require('../config');
+	const { ids: { DEVELOPER_ID } } = require('../config');
 	const { updateCommands, permissionsHandler } = require('./');
 
 	const guilds = bot.guilds.cache.filter(_guild => _guild.members.cache.has(msg.author.id));
 
-	if (!msg.guild && guilds.size !== 1 && msg.author.id !== devID) return dmCmdError(msg, 'guilds');
+	if (!msg.guild && guilds.size !== 1 && msg.author.id !== DEVELOPER_ID) return dmCmdError(msg, 'MULTIPLE_GUILDS');
 
 	const guild = msg.guild || guilds.first();
 
-	const { config: { prefix }, cmds: { help } } = await require('./database')(guild);
+	const { settings: { prefix }, cmds: { help } } = await require('./database')(guild);
 
 	const args = msg.content.split(/ +/);
 
-	const hasPrefix = msg.content.toLowerCase().startsWith(prefix.toLowerCase());
-	const hasBotMention = stripID(args[0]) === bot.user.id;
+	const usesPrefix = msg.content.toLowerCase().startsWith(prefix.toLowerCase());
+	const usesBotMention = stripID(args[0]) === bot.user.id;
 
-	if (!hasPrefix && (!hasBotMention || args.length === 1)) return;
+	if (!usesPrefix && (!usesBotMention || args.length === 1)) return;
 
 	await updateCommands(guild);
 
@@ -34,7 +38,7 @@ module.exports = async msg => {
 		bot.commands.set(commands[key].cmd, commands[key]);
 	});
 
-	const msgCmd = (hasBotMention)
+	const msgCmd = (usesBotMention)
 		? args.splice(0, 2)[1].toLowerCase()
 		: args.shift().toLowerCase().replace(prefix.toLowerCase(), '');
 
@@ -53,17 +57,17 @@ module.exports = async msg => {
 
 	const hasPerms = await permissionsHandler(msg, cmd);
 
-	if (hasPerms === 'err') return;
+	if (hasPerms === 'ERROR') return;
 
 	if (msg.guild && !hasPerms) return helpCmd.execute(msg, args);
-	else if (!msg.guild && !hasPerms) return dmCmdError(msg, 'noPerms');
-	else if (!msg.guild && !cmd.allowDM) return dmCmdError(msg, 'noDM');
+	else if (!msg.guild && !hasPerms) return dmCmdError(msg, 'NO_PERMISSION');
+	else if (!msg.guild && !cmd.allowDM) return dmCmdError(msg, 'NO_DIRECT');
 
 	try {
 		cmd.execute(msg, args, msgCmd);
 	}
 
 	catch (error) {
-		debugError(error, `Error executing ${await pCmd(cmd, guild)}`);
+		debugError(error, `Error executing ${await prefixCmd(cmd, guild)}`);
 	}
 };

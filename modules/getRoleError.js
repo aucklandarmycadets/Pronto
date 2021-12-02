@@ -6,11 +6,11 @@ module.exports = async msg => {
 
 	errorReact(msg);
 
-	const verifyErr = 'There was an error verifying permissions, please try again later.';
+	const [destination, destinationSymbol] = (msg.guild)
+		? [msg.channel, 'MESSAGE']
+		: [msg.author, 'DIRECT'];
 
-	(msg.guild)
-		? embedScaffold(null, msg.channel, verifyErr, colours.error, 'msg')
-		: embedScaffold(null, msg.author, verifyErr, colours.error, 'dm');
+	embedScaffold(null, destination, 'There was an error verifying permissions, please try again later.', colours.error, destinationSymbol);
 
-	return 'err';
+	return 'ERROR';
 };

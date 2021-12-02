@@ -1,16 +1,33 @@
 'use strict';
 
-module.exports = async (dir, guild) => {
-	const fs = require('fs');
+// eslint-disable-next-line no-unused-vars
+const Discord = require('discord.js');
+const fs = require('fs');
 
-	const files = fs.readdirSync(dir).filter(file => file.endsWith('.js') && file !== 'index.js');
+/**
+ * Load the bot's commands from the commands directory for a specified guild
+ * @function handlers.commandLoader
+ * @param {string} directory The directory to load commands from
+ * @param {Discord.Guild} guild The \<Guild> to load commands for
+ * @returns {Promise<Object.<string, Object.<string, string | string[] | boolean | Function>>>} The loaded commands object containing each of the guild's commands in a nested object
+ */
+module.exports = async (directory, guild) => {
+	// Read the file names of every Javascript file in the directory, other than the index file
+	const files = fs.readdirSync(directory).filter(file => file.endsWith('.js') && file !== 'index.js');
 
-	const procObj = {};
+	// Initialise an empty commands object
+	const cmdsObj = {};
 
+	// Loop through each command file
 	for (const file of files) {
-		const key = file.replace('.js', '');
-		procObj[key] = await require(`.${dir}/${key}`)(guild);
+		// Parse the command name by removing the file extension
+		const cmd = file.replace('.js', '');
+		// Load each command by passing the guild into each command file's exported function
+		// This completes the individual command's object by adding the cmd.execute() function to the command object
+		// Store each indiviudal command as a [key, value] pair within the commands object, where the key is the command name and the value is the command object
+		cmdsObj[cmd] = await require(`.${directory}/${cmd}`)(guild);
 	}
 
-	return procObj;
+	// Return the loaded commands object
+	return cmdsObj;
 };

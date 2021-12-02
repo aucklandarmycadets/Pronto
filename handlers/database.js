@@ -1,16 +1,24 @@
 'use strict';
 
+// eslint-disable-next-line no-unused-vars
+const Discord = require('discord.js');
 const { Guild } = require('../models');
 
-const { ids: { defaultServer } } = require('../config');
+const { ids: { DEFAULT_GUILD } } = require('../config');
 const { merge } = require('../modules');
 
+/**
+ *
+ * @param {?Discord.Guild} guild
+ * @param {*} changes
+ * @returns
+ */
 module.exports = async (guild, changes) => {
 	const { newGuild } = require('./');
 
 	const id = (guild)
 		? guild.id
-		: defaultServer;
+		: DEFAULT_GUILD;
 
 	let database = await Guild.findOne({ guildID: id }, error => {
 		if (error) console.error(error);

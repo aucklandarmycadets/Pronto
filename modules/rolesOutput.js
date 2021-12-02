@@ -1,5 +1,12 @@
 'use strict';
 
+/**
+ *
+ * @param {string[]} array
+ * @param {*} mention
+ * @param {*} breakAt
+ * @returns
+ */
 module.exports = (array, mention, breakAt) => {
 	const { bot } = require('../pronto');
 
