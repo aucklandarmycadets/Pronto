@@ -5,7 +5,7 @@ const { Lesson } = require('../models');
 /**
  *
  * @param {Discord.Snowflake} id
- * @returns {Lesson}
+ * @returns {Promise<Lesson>}
  */
 module.exports = async id => {
 	return await Lesson.findOne({ lessonID: id }, error => {
