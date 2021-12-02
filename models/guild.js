@@ -34,9 +34,7 @@ const { settings, emojis, colours } = require('../config');
  * @property {Discord.Snowflake | ''} ids.administratorID The \<Role.id> of the guild's administrator role if it is registered
  * @property {Discord.Snowflake[]} ids.trainingIDs A \<Role.id[]> of the guild's training roles
  * @property {Discord.Snowflake[]} ids.formations A \<Role.id[]> of the guild's formation roles
- * @property {Object[]} ids.channelPairs An \<Object[]> of the guild's pairings of \<TextChannel> and \<VoiceChannel>
- * @property {Discord.Snowflake} ids.channelPairs[].voice The \<VoiceChannel.id> of this paired voice channel
- * @property {Discord.Snowflake} ids.channelPairs[].text The \<TextChannel.id> of this paired text channel
+ * @property {ChannelPair[]} ids.channelPairs An [\<Object[]>]{@link models.ChannelPair} of the guild's pairings of \<VoiceChannel> and \<TextChannel>
  * @property {Object.<string, Object.<string, string | string[] | boolean>>} commands The guild's commands object containing each individual command in a nested object
  * @property {Object} emojis The guild's emojis object
  * @property {Object} emojis.success The guild's success emoji
@@ -46,6 +44,12 @@ const { settings, emojis, colours } = require('../config');
  * @property {string} emojis.error.name The name of the guild's error emoji
  * @property {string} emojis.error.URL The URL of the guild's error emoji
  * @property {Colours} colours The guild's colour [\<Object>]{@link models.Colours}
+ */
+
+/**
+ * @typedef {Object} models.ChannelPair An \<Object> of a pair of \<VoiceChannel.id> and \<TextChannel.id>
+ * @property {Discord.Snowflake} voice The \<VoiceChannel.id> of this paired voice channel
+ * @property {Discord.Snowflake} text The \<TextChannel.id> of this paired text channel
  */
 
 /**

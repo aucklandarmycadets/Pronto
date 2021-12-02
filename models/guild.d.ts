@@ -58,13 +58,8 @@ export interface Guild extends mongoose.Document {
 		trainingIDs: Discord.Snowflake[];
 		/** A \<Role.id[]> of the guild's formation roles */
 		formations: Discord.Snowflake[];
-		/** An \<Object[]> of the guild's pairings of \<TextChannel> and \<VoiceChannel> */
-		channelPairs: {
-			/** The \<VoiceChannel.id> of this paired voice channel */
-			voice: Discord.Snowflake;
-			/** The \<TextChannel.id> of this paired text channel */
-			text: Discord.Snowflake;
-		}[];
+		/** An \<Object[]> of the guild's pairings of \<VoiceChannel> and \<TextChannel> */
+		channelPairs: ChannelPair[];
 	};
 	/** The guild's commands object containing each individual command in a nested object */
 	commands: Object.<string, Object.<string, string | string[] | boolean>>;
@@ -87,6 +82,16 @@ export interface Guild extends mongoose.Document {
 	};
 	/** The guild's colour object */
 	colours: Colours;
+}
+
+/**
+ * An \<Object> of a pair of \<VoiceChannel.id> and \<TextChannel.id>
+ */
+interface ChannelPair {
+	/** The \<VoiceChannel.id> of this paired voice channel */
+	voice: Discord.Snowflake;
+	/** The \<TextChannel.id> of this paired text channel */
+	text: Discord.Snowflake;
 }
 
 /**
