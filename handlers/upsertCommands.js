@@ -11,6 +11,9 @@ module.exports = async guild => {
 		? guild.id
 		: DEFAULT_GUILD;
 
+	/**
+	 * @type {Guild}
+	 */
 	const database = await Guild.findOne({ guildID: id }, error => {
 		if (error) console.error(error);
 	});

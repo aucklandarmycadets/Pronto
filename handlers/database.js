@@ -20,6 +20,9 @@ module.exports = async (guild, changes) => {
 		? guild.id
 		: DEFAULT_GUILD;
 
+	/**
+	 * @type {Guild}
+	 */
 	let database = await Guild.findOne({ guildID: id }, error => {
 		if (error) console.error(error);
 	});

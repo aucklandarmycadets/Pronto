@@ -4,4 +4,5 @@ import { Lesson } from './models/lesson';
 
 declare global {
 	export { Attendance } from './models/attendance';
+	export { Guild } from './models/guild';
 }

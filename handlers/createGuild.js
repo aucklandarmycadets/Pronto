@@ -23,6 +23,9 @@ module.exports = async guild => {
 		return returnObj;
 	}
 
+	/**
+	 * @type {Guild}
+	 */
 	const existingGuild = await Guild.findOne({ guildID: guild.id }, error => {
 		if (error) console.error(error);
 	});
@@ -62,6 +65,9 @@ module.exports = async guild => {
 };
 
 async function createGuild(guild) {
+	/**
+	 * @type {Guild}
+	 */
 	guild = await new Guild({
 		_id: mongoose.Types.ObjectId(),
 		guildID: guild.id,

@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const { settings, emojis, colours } = require('../config');
 
 /**
- * @typedef {Object} models.Guild An \<Object> representing the values of a \<mongoose.Document> to record the specific configuration for each \<Guild>
+ * @typedef {Guild} models.Guild An \<Object> representing the values of a \<mongoose.Document> to record the specific configuration for each \<Guild>
  * @property {mongoose.Schema.Types.ObjectId} _id A unique document identifier
  * @property {Discord.Snowflake} guildID The \<Guild>.id that this configuration belongs to
  * @property {string} guildName The \<Guild>.name that this configuration belongs to
@@ -46,12 +46,12 @@ const { settings, emojis, colours } = require('../config');
  * @property {string} emojis.error.name The name of the guild's error emoji
  * @property {string} emojis.error.URL The URL of the guild's error emoji
  * @property {Object} colours The guild's colour object
- * @property {number} colours.default The guild's
- * @property {number} colours.pronto
- * @property {number} colours.leave
- * @property {number} colours.success
- * @property {number} colours.warn
- * @property {number} colours.error
+ * @property {number} colours.default The colour to use as the guild's non-specific colour
+ * @property {number} colours.pronto The colour to use as the guild's primary colour
+ * @property {number} colours.leave The colour to use on the guild's leave tickets
+ * @property {number} colours.success The colour to use as the guild's success colour
+ * @property {number} colours.warn The colour to use as the guild's warning colour
+ * @property {number} colours.error The colour to use as the guild's error colour
  */
 
 // Create a new <Schema> of <Guild> type
