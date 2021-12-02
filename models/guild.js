@@ -31,7 +31,7 @@ const { settings, emojis, colours } = require('../config');
  * @property {Discord.Snowflake} ids.lessonPlansID The \<TextChannel>.id of the guild's lesson plans archive channel
  * @property {Discord.Snowflake} ids.everyoneID The \<Role>.id of the guild's \@everyone role
  * @property {Discord.Snowflake} ids.visitorID The \<Role>.id of the guild's visitor role
- * @property {Discord.Snowflake | ''} ids.administratorID The \<Role>.id of the guild's administrator role
+ * @property {Discord.Snowflake | ''} ids.administratorID The \<Role>.id of the guild's administrator role if it is registered
  * @property {Discord.Snowflake[]} ids.trainingIDs A \<Role>.id[] of the guild's training roles
  * @property {Discord.Snowflake[]} ids.formations A \<Role>.id[] of the guild's formation roles
  * @property {Object[]} ids.channelPairs An \<Object[]> of the guild's pairings of \<TextChannel> and \<VoiceChannel>

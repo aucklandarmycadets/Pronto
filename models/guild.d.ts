@@ -52,7 +52,7 @@ export interface Guild extends mongoose.Document {
 		everyoneID: Discord.Snowflake;
 		/** The \<Role>.id of the guild's visitor role */
 		visitorID: Discord.Snowflake;
-		/** The \<Role>.id of the guild's administrator role */
+		/** The \<Role>.id of the guild's administrator role if it is registered */
 		administratorID: Discord.Snowflake | '';
 		/** A \<Role>.id[] of the guild's training roles */
 		trainingIDs: Discord.Snowflake[];
