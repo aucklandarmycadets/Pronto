@@ -7,9 +7,9 @@ import Discord = require('discord.js');
 export interface Guild extends mongoose.Document {
 	/** A unique document identifier */
 	_id: mongoose.Schema.Types.ObjectId;
-	/** The \<Guild>.id that this configuration belongs to */
+	/** The \<Guild.id> that this configuration belongs to */
 	guildID: Discord.Snowflake;
-	/** The \<Guild>.name that this configuration belongs to */
+	/** The \<Guild.name> that this configuration belongs to */
 	guildName: string;
 	/** The guild's settings object */
 	settings: {
@@ -28,41 +28,41 @@ export interface Guild extends mongoose.Document {
 	};
 	/** The guild's object of identifiers/snowflakes */
 	ids: {
-		/** The \<Guild>.id of the guild */
+		/** The \<Guild.id> of the guild */
 		guildID: Discord.Snowflake;
-		/** The \<TextChannel>.id of the guild's debugging channel */
+		/** The \<TextChannel.id> of the guild's debugging channel */
 		debugID: Discord.Snowflake;
-		/** The \<TextChannel>.id of the guild's log channel */
+		/** The \<TextChannel.id> of the guild's log channel */
 		logID: Discord.Snowflake;
-		/** The \<TextChannel>.id of the guild's attendance channel */
+		/** The \<TextChannel.id> of the guild's attendance channel */
 		attendanceID: Discord.Snowflake;
-		/** The \<TextChannel>.id of the guild's recruiting channel */
+		/** The \<TextChannel.id> of the guild's recruiting channel */
 		recruitingID: Discord.Snowflake;
-		/** The \<TextChannel>.id of the guild's new members channel */
+		/** The \<TextChannel.id> of the guild's new members channel */
 		welcomeID: Discord.Snowflake;
-		/** The \<TextChannel>.id of the guild's debugging channel */
+		/** The \<TextChannel.id> of the guild's debugging channel */
 		archivedID: Discord.Snowflake;
-		/** The \<CategoryChannel>.id of the guild's lesson plans category channel */
+		/** The \<CategoryChannel.id> of the guild's lesson plans category channel */
 		lessonsID: Discord.Snowflake;
-		/** The \<TextChannel>.id of the guild's lesson reference channel */
+		/** The \<TextChannel.id> of the guild's lesson reference channel */
 		lessonReferenceID: Discord.Snowflake;
-		/** The \<TextChannel>.id of the guild's lesson plans archive channel */
+		/** The \<TextChannel.id> of the guild's lesson plans archive channel */
 		lessonPlansID: Discord.Snowflake;
-		/** The \<Role>.id of the guild's \@everyone role */
+		/** The \<Role.id> of the guild's \@everyone role */
 		everyoneID: Discord.Snowflake;
-		/** The \<Role>.id of the guild's visitor role */
+		/** The \<Role.id> of the guild's visitor role */
 		visitorID: Discord.Snowflake;
-		/** The \<Role>.id of the guild's administrator role if it is registered */
+		/** The \<Role.id> of the guild's administrator role if it is registered */
 		administratorID: Discord.Snowflake | '';
-		/** A \<Role>.id[] of the guild's training roles */
+		/** A \<Role.id[]> of the guild's training roles */
 		trainingIDs: Discord.Snowflake[];
-		/** A \<Role>.id[] of the guild's formation roles */
+		/** A \<Role.id[]> of the guild's formation roles */
 		formations: Discord.Snowflake[];
 		/** An \<Object[]> of the guild's pairings of \<TextChannel> and \<VoiceChannel> */
 		channelPairs: {
-			/** The \<VoiceChannel>.id of this paired voice channel */
+			/** The \<VoiceChannel.id> of this paired voice channel */
 			voice: Discord.Snowflake;
-			/** The \<TextChannel>.id of this paired text channel */
+			/** The \<TextChannel.id> of this paired text channel */
 			text: Discord.Snowflake;
 		}[];
 	};
