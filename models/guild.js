@@ -45,13 +45,17 @@ const { settings, emojis, colours } = require('../config');
  * @property {Object} emojis.error The guild's error emoji
  * @property {string} emojis.error.name The name of the guild's error emoji
  * @property {string} emojis.error.URL The URL of the guild's error emoji
- * @property {Object} colours The guild's colour object
- * @property {number} colours.default The colour to use as the guild's non-specific colour
- * @property {number} colours.primary The colour to use as the guild's primary colour
- * @property {number} colours.leave The colour to use on the guild's leave tickets
- * @property {number} colours.success The colour to use as the guild's success colour
- * @property {number} colours.warn The colour to use as the guild's warning colour
- * @property {number} colours.error The colour to use as the guild's error colour
+ * @property {Colours} colours The guild's colour [\<Object>]{@link models.Colours}
+ */
+
+/**
+ * @typedef {Object} models.Colours An \<Object> of the customisable colours for each guild
+ * @property {number} default The colour to use as the guild's non-specific colour
+ * @property {number} primary The colour to use as the guild's primary colour
+ * @property {number} leave The colour to use on the guild's leave tickets
+ * @property {number} success The colour to use as the guild's success colour
+ * @property {number} warn The colour to use as the guild's warning colour
+ * @property {number} error The colour to use as the guild's error colour
  */
 
 // Create a new <Schema> of <Guild> type

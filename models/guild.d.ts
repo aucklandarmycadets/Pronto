@@ -86,18 +86,23 @@ export interface Guild extends mongoose.Document {
 		};
 	};
 	/** The guild's colour object */
-	colours: {
-		/** The colour to use as the guild's non-specific colour */
-		default: number;
-		/** The colour to use as the guild's primary colour */
-		primary: number;
-		/** The colour to use on the guild's leave tickets */
-		leave: number;
-		/** The colour to use as the guild's success colour */
-		success: number;
-		/** The colour to use as the guild's warning colour */
-		warn: number;
-		/** The colour to use as the guild's error colour */
-		error: number;
-	};
+	colours: Colours;
+}
+
+/**
+ * An \<Object> of the customisable colours for each guild
+ */
+export interface Colours {
+	/** The colour to use as the guild's non-specific colour */
+	default: number;
+	/** The colour to use as the guild's primary colour */
+	primary: number;
+	/** The colour to use on the guild's leave tickets */
+	leave: number;
+	/** The colour to use as the guild's success colour */
+	success: number;
+	/** The colour to use as the guild's warning colour */
+	warn: number;
+	/** The colour to use as the guild's error colour */
+	error: number;
 }

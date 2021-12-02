@@ -367,7 +367,7 @@ function serialiseResources(lesson) {
  * Collect and return a \<number> input from the user
  * @param {Discord.Message} msg The \<Message> that executed the command
  * @param {number[]} range A \<number[]> of valid number inputs
- * @param {Object.<string, number>} colours The guild's colour object
+ * @param {Colours} colours The guild's colour object
  * @returns {Promise<number | 'CANCEL'>} The user's input, or the symbol `CANCEL`
  */
 async function getNumberInput(msg, range, colours) {
