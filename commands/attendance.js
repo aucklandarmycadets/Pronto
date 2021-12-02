@@ -109,8 +109,6 @@ module.exports = async guild => {
 							author: [msg.author.id],
 						});
 
-						document.channelID;
-
 						document.save();
 
 						// Apply edit and delete reactions to the message in the submission channel
