@@ -113,5 +113,5 @@ const guildSchema = new mongoose.Schema({
 	},
 });
 
-// Export the \<Schema> as a \<Model>
+// Export the <Schema> as a <Model>
 module.exports = mongoose.model('Guild', guildSchema, 'guilds');
