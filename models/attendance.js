@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const mongoose = require('mongoose');
 
 /**
- * @typedef {Object} Attendance An \<Object> to ensure attendance registers are only manageable by authorised users
+ * @typedef {Object} models.Attendance An \<Object> to ensure attendance registers are only manageable by authorised users
  * @property {mongoose.Schema.Types.ObjectId} _id A unique document identifier
  * @property {Discord.Snowflake} channelID The \<Message>.id of the \<Message> sent to the original submission channel
  * @property {Discord.Snowflake} attendanceID The \<Message>.id of the \<Message> sent to the guild's attendance channel
