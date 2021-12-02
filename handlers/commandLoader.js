@@ -13,7 +13,7 @@ const fs = require('fs');
  */
 module.exports = async (directory, guild) => {
 	// Read the file names of every Javascript file in the directory, other than the index file
-	const files = fs.readdirSync(directory).filter(file => file.endsWith('.js') && file !== 'index.js');
+	const files = fs.readdirSync(directory).filter(file => file.endsWith('.js') && !['index.js', 'commands.js'].includes(file));
 
 	// Initialise an empty commands object
 	const commandsObj = {};

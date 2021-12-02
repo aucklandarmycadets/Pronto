@@ -21,7 +21,7 @@ const createdChannels = new Discord.Collection();
 module.exports = async guild => {
 	if (!guild) {
 		const returnObj = require('../config');
-		returnObj.commands = await require('../commands')('BREAK');
+		returnObj.commands = await require('../commands/commands')('BREAK');
 		return returnObj;
 	}
 

@@ -8,7 +8,7 @@ const { Guild } = require('../models');
 const { difference, merge } = require('../modules');
 
 module.exports = async guild => {
-	const updatedCommands = await require('../commands')(guild);
+	const updatedCommands = await require('../commands/commands')(guild);
 
 	const id = (guild)
 		? guild.id

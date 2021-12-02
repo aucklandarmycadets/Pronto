@@ -5,7 +5,7 @@ const Typings = require('../typings');
 const { Guild } = require('../models');
 
 module.exports = async guild => {
-	const commands = await require('../commands')(guild);
+	const commands = await require('../commands/commands')(guild);
 
 	/**
 	 * @type {Typings.Guild}
