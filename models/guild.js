@@ -34,7 +34,7 @@ const { settings, emojis, colours } = require('../config');
  * @property {Discord.Snowflake | ''} ids.administratorID The \<Role>.id of the guild's administrator role
  * @property {Discord.Snowflake[]} ids.trainingIDs A \<Role>.id[] of the guild's training roles
  * @property {Discord.Snowflake[]} ids.formations A \<Role>.id[] of the guild's formation roles
- * @property {Object[]} ids.channelPairs An <Object[]> of the guild's pairings of <TextChannel> and <VoiceChannel>
+ * @property {Object[]} ids.channelPairs An \<Object[]> of the guild's pairings of \<TextChannel> and \<VoiceChannel>
  * @property {Discord.Snowflake} ids.channelPairs[].voice The \<VoiceChannel>.id of this paired voice channel
  * @property {Discord.Snowflake} ids.channelPairs[].text The \<TextChannel>.id of this paired text channel
  * @property {Object.<string, Object.<string, string | string[] | boolean>>} commands The guild's commands object containing each individual command in a nested object

@@ -58,7 +58,7 @@ export interface Guild extends mongoose.Document {
 		trainingIDs: Discord.Snowflake[];
 		/** A \<Role>.id[] of the guild's formation roles */
 		formations: Discord.Snowflake[];
-		/** An <Object[]> of the guild's pairings of <TextChannel> and <VoiceChannel> */
+		/** An \<Object[]> of the guild's pairings of \<TextChannel> and \<VoiceChannel> */
 		channelPairs: {
 			/** The \<VoiceChannel>.id of this paired voice channel */
 			voice: Discord.Snowflake;
