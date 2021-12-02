@@ -11,7 +11,7 @@ const { merge } = require('../modules');
  *
  * @param {?Discord.Guild} guild
  * @param {*} changes
- * @returns
+ * @returns {Promise<Guild>}
  */
 module.exports = async (guild, changes) => {
 	const { createGuild } = require('./');
