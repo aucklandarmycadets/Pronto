@@ -113,7 +113,7 @@ module.exports = async guild => {
 		// Destructure desired user's input from the returned value of the getUserInput() function
 		const { lessonName, dueTimestamp, lessonTimestamp, resources } = userInput;
 
-		// Obtain and store formatted date strings from parsed time stamps
+		// Obtain and store formatted date-time groups from parsed time stamps
 		const dueDate = await dateTimeGroup(dueTimestamp);
 		const lessonDate = await dateTimeGroup(lessonTimestamp);
 
