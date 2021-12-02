@@ -12,7 +12,7 @@ module.exports = async msg => {
 
 	const { bot } = require('../pronto');
 	const { ids: { DEVELOPER_ID } } = require('../config');
-	const { updateCommands, permissionsHandler } = require('./');
+	const { upsertCommands, permissionsHandler } = require('./');
 
 	const guilds = bot.guilds.cache.filter(_guild => _guild.members.cache.has(msg.author.id));
 
@@ -29,7 +29,7 @@ module.exports = async msg => {
 
 	if (!usesPrefix && (!usesBotMention || args.length === 1)) return;
 
-	await updateCommands(guild);
+	await upsertCommands(guild);
 
 	bot.commands = new Discord.Collection();
 	const commands = await require('../commands/commands')(guild);
