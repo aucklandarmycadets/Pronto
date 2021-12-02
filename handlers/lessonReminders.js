@@ -11,6 +11,9 @@ module.exports = async guild => {
 	const { settings: { lessonCron, lessonReminders }, ids: { archivedID }, colours } = await require('../handlers/database')(guild);
 
 	cron.schedule(lessonCron, async () => {
+		/**
+		 * @type {Lesson[]}
+		 */
 		const unsubmitted = await Lesson.find({ submitted: false, dueTimestamp: { $gte: Date.now(), $lte: new Date().setDate(new Date().getDate() + 8).valueOf() } });
 
 		for (const lesson of unsubmitted) {

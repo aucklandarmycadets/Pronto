@@ -10,6 +10,9 @@ const { dateTimeGroup, emojiReact, sendMsg } = require('../modules');
 module.exports = async guild => {
 	const { settings: { shortDate }, ids: { lessonReferenceID }, colours } = await require('../handlers/database')(guild);
 
+	/**
+	 * @type {Lesson[]}
+	 */
 	const unsubmitted = await Lesson.find({ submitted: false }).sort({ dueTimestamp: 'ascending' });
 
 	const embedTitle = 'Lessons To Be Submitted';
@@ -21,6 +24,9 @@ module.exports = async guild => {
 		.setFooter(`Last updated at ${await dateTimeGroup()}`);
 
 	if (!unsubmitted.length) {
+		/**
+		 * @type {Lesson[]}
+		 */
 		const lessons = await Lesson.find();
 		if (!lessons.length) return;
 

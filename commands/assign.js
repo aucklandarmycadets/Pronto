@@ -211,7 +211,7 @@ module.exports = async guild => {
 		/**
 		 * Create a new mongoose \<Lesson> document for the assigned lesson
 		 * @param {Discord.Snowflake} channelID The \<TextChannel>.id of the private lesson channel created for the lesson
-		 * @returns {Promise<Lesson.Lesson>} The mongoose document for the lesson
+		 * @returns {Promise<Lesson>} The mongoose document for the lesson
 		 */
 		async function saveLesson(channelID) {
 			// For each instructor, create a new nested object within the instructors object with an ID property and a boolean flag to record acknowledgement status
@@ -224,7 +224,7 @@ module.exports = async guild => {
 
 			/**
 			 * Create new \<Lesson> document
-			 * @type {mongoose.Document}
+			 * @type {Lesson}
 			 */
 			const lesson = await new Lesson({
 				_id: mongoose.Types.ObjectId(),

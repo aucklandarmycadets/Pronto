@@ -323,14 +323,13 @@ module.exports = async guild => {
 };
 
 /**
- * Process an object containing users with an ID child property into a formatted string
- * @param {Object.<string, {id: string}>} obj An object where each key stores a nested object with a property 'id'
- * - e.g. const obj = {'192181901065322496': { 'id': '192181901065322496', ... }, ...}
+ * Process an \<Instructor> object into a formatted string
+ * @param {Instructors} instructors An \<Instructors> object
  * @returns {string} A newline-delimited string of formatted user mentions
  */
-function processMentions(obj) {
+function processMentions(instructors) {
 	// Map the nested objects to a new string[] of formatted mentions, then join the string[] with a newline separator
-	return Object.values(obj)
+	return Object.values(instructors)
 		.map(user => `<@!${user.id}>`)
 		.join('\n');
 }
