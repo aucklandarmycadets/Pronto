@@ -91,7 +91,7 @@ async function userInput(user, msg, colours, callback) {
 
 	pendingInput.add(user.id);
 
-	const input = await msgPrompt(promptEmbed('Please reply with your updated register.', colours.pronto), user, msg.channel, colours);
+	const input = await msgPrompt(promptEmbed('Please reply with your updated register.', colours.primary), user, msg.channel, colours);
 
 	if (input.toLowerCase() === 'cancel') {
 		const { bot } = require('../pronto');

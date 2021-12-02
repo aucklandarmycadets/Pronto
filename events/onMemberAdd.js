@@ -42,7 +42,7 @@ module.exports = {
 
 		// Create welcome embed
 		const welcomeEmbed = new Discord.MessageEmbed()
-			.setColor(colours.pronto)
+			.setColor(colours.primary)
 			.setAuthor(member.user.tag, member.user.displayAvatarURL({ dynamic: true }))
 			.setDescription(`**${member.displayName} has just entered ${welcomeChannel.name}.**\nMake them feel welcome!`)
 			.addField('User', member.toString())

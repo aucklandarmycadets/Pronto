@@ -87,7 +87,7 @@ exports.emojis = {
 
 exports.colours = {
 	default: 0x1b1b1b,
-	pronto: 0xffd456,
+	primary: 0xffd456,
 	leave: 0xd31145,
 	success: 0x45bb8a,
 	warn: 0xffcc4d,

@@ -90,7 +90,7 @@ export interface Guild extends mongoose.Document {
 		/** The colour to use as the guild's non-specific colour */
 		default: number;
 		/** The colour to use as the guild's primary colour */
-		pronto: number;
+		primary: number;
 		/** The colour to use on the guild's leave tickets */
 		leave: number;
 		/** The colour to use as the guild's success colour */

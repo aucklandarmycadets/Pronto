@@ -28,7 +28,7 @@ module.exports = async (id, guild) => {
 		.setAuthor(bot.user.tag, bot.user.avatarURL())
 		.setTitle('Instructions')
 		.setDescription(`${bot.user} has a comprehensive collection of commands to assist with the assignment and production of lesson plans, with a simple system to manage lesson resources, supporting both file attachments and web links.`)
-		.setColor(colours.pronto)
+		.setColor(colours.primary)
 		.addField('Instructor Commands', instructorCommands)
 		.addField('Training Staff Commands', staffCommands)
 		.setFooter(`All lesson commands can be accessed directly without the '${lesson.command}' parent.`);
@@ -65,7 +65,7 @@ module.exports = async (id, guild) => {
 	const usageEmbed = new Discord.MessageEmbed()
 		.setAuthor(bot.user.tag, bot.user.avatarURL())
 		.setTitle('Usage')
-		.setColor(colours.pronto)
+		.setColor(colours.primary)
 		.addField(`${await prefixCommand(lesson)} add`, addField, true)
 		.addField('Example', addExample, true)
 		.addField(`${await prefixCommand(lesson)} remove`, removeField)

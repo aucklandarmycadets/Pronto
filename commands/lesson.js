@@ -100,7 +100,7 @@ module.exports = async guild => {
 			// Create lesson preview embed
 			const lessonEmbed = new Discord.MessageEmbed()
 				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
-				.setColor(colours.pronto)
+				.setColor(colours.primary)
 				.setTitle(`Lesson Preview - ${_lesson.lessonName}`)
 				// Call processMentions() to format the lesson instructors
 				.addField('Instructor(s)', processMentions(_lesson.instructors))
@@ -283,7 +283,7 @@ module.exports = async guild => {
 						// Create a new embed to prompt the Training Cell's approval of the submitted lesson plan
 						const approveEmbed = new Discord.MessageEmbed()
 							.setDescription(`Click the ${successEmoji} to approve this lesson plan.\n\nAlternatively, you can manually type \`!approve\`.`)
-							.setColor(colours.pronto);
+							.setColor(colours.primary);
 
 						// Send the approval embed, and tag the Training Cell's roles in the message body
 						sendMsg(msg.channel, { content: rolesOutput(trainingIDs, true), embeds: [approveEmbed] })

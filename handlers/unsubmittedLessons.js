@@ -15,7 +15,7 @@ module.exports = async guild => {
 	const embedTitle = 'Lessons To Be Submitted';
 
 	const unsubmittedEmbed = new Discord.MessageEmbed()
-		.setColor(colours.pronto)
+		.setColor(colours.primary)
 		.setTitle(embedTitle)
 		.setAuthor(guild.name, guild.iconURL({ dynamic: true }))
 		.setFooter(`Last updated at ${await dateTimeGroup()}`);

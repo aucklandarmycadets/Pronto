@@ -179,7 +179,7 @@ module.exports = async guild => {
 							// Create a new embed to prompt the instructor(s)'s acknowledgement of the lesson warning
 							const ackEmbed = new Discord.MessageEmbed()
 								.setDescription(`Click the ${successEmoji} to acknowledge receipt of this lesson warning.\n\nAlternatively, you can manually type \`!seen\`.`)
-								.setColor(colours.pronto);
+								.setColor(colours.primary);
 
 							// Send the acknowledgement embed, and tag each instructor in the message body
 							sendMsg(channel, { content: processMentions(lessonInstructors), embeds: [ackEmbed] })
@@ -266,9 +266,9 @@ async function getUserInput(msg, prompts, colours) {
 	// Loop through each needed input prompt
 	for (const [key, value] of Object.entries(prompts)) {
 		// If the current prompt allows for multiple inputs, call the whileLoop() function
-		if (value.allowMultiple) input[key] = await whileLoop(promptEmbed(value.prompt, colours.pronto), msg, value.type, colours, value.allowMultiple);
+		if (value.allowMultiple) input[key] = await whileLoop(promptEmbed(value.prompt, colours.primary), msg, value.type, colours, value.allowMultiple);
 		// Otherwise, call the msgPrompt() function
-		else input[key] = await msgPrompt(promptEmbed(value.prompt, colours.pronto), msg, value.type, colours, value.allowMultiple);
+		else input[key] = await msgPrompt(promptEmbed(value.prompt, colours.primary), msg, value.type, colours, value.allowMultiple);
 
 		try {
 			// If the received symbol is to 'RESTART', restart input by returning getUserInput() recursively

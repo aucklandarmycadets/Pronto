@@ -47,7 +47,7 @@ const { settings, emojis, colours } = require('../config');
  * @property {string} emojis.error.URL The URL of the guild's error emoji
  * @property {Object} colours The guild's colour object
  * @property {number} colours.default The colour to use as the guild's non-specific colour
- * @property {number} colours.pronto The colour to use as the guild's primary colour
+ * @property {number} colours.primary The colour to use as the guild's primary colour
  * @property {number} colours.leave The colour to use on the guild's leave tickets
  * @property {number} colours.success The colour to use as the guild's success colour
  * @property {number} colours.warn The colour to use as the guild's warning colour
@@ -104,7 +104,7 @@ const guildSchema = new mongoose.Schema({
 		type: Object,
 		default: {
 			default: colours.default,
-			pronto: colours.pronto,
+			primary: colours.primary,
 			leave: colours.leave,
 			success: colours.success,
 			warn: colours.warn,

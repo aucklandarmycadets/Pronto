@@ -69,7 +69,7 @@ module.exports = async guild => {
 		async function sendHelpEmbed() {
 			// Set the appropriate title for the help embed
 			helpEmbed.setTitle(`Command: ${await prefixCommand(command, guild)}`);
-			helpEmbed.setColor(colours.pronto);
+			helpEmbed.setColor(colours.primary);
 			// Set the embed description to the help text for the identified command
 			helpEmbed.setDescription(command.help);
 
@@ -118,7 +118,7 @@ module.exports = async guild => {
 			// Fill out the help embed
 			helpEmbed.setTitle('Commands List');
 			helpEmbed.setThumbnail(prontoLogo);
-			helpEmbed.setColor(colours.pronto);
+			helpEmbed.setColor(colours.primary);
 			// Format the commands object using the modules.formatList() function
 			helpEmbed.setDescription(formatList(commandsObj, true));
 			// Add developer information to embed footer
