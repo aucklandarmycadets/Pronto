@@ -1,7 +1,7 @@
 'use strict';
 
 const Discord = require('discord.js');
-const Lesson = require('../models/lesson');
+const { Lesson } = require('../models');
 
 const { cmdError, debugError, dtg, embedScaffold, errorReact, sendMsg, successReact } = require('../modules');
 

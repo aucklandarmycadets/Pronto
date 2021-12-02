@@ -1,6 +1,6 @@
 'use strict';
 
-const Guild = require('../models/guild');
+const { Guild } = require('../models');
 
 module.exports = guild => {
 	Guild.findOneAndDelete({ guildID: guild.id }, error => {

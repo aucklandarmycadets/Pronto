@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = async guild => {
-	const Guild = require('../models/guild');
+	const { Guild } = require('../models');
 	const cmds = await require('../cmds')(guild);
 
 	const database = await Guild.findOne({ guildID: guild.id }, error => {

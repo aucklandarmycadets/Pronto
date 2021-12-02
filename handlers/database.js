@@ -1,6 +1,6 @@
 'use strict';
 
-const Guild = require('../models/guild');
+const { Guild } = require('../models');
 
 const { ids: { defaultServer } } = require('../config');
 const { merge } = require('../modules');

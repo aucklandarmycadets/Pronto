@@ -1,7 +1,7 @@
 'use strict';
 
 const Discord = require('discord.js');
-const Attendance = require('../models/attendance');
+const { Attendance } = require('../models');
 
 const { debugError, delMsg, dtg, embedScaffold, promptEmbed, sendDM } = require('../modules');
 

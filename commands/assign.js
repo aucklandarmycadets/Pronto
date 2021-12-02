@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 let chrono = require('chrono-node');
 chrono = new chrono.Chrono(chrono.en.createConfiguration(false, true));
 
-const Lesson = require('../models/lesson');
+const { Lesson } = require('../models');
 
 const { confirmation, unsubmittedLessons } = require('../handlers');
 const { checkURL, cmdError, delMsg, dtg, outputResources, processResources, promptEmbed, sendDirect, sendMsg, successReact, titleCase } = require('../modules');

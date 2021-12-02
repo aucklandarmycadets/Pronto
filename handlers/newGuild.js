@@ -2,7 +2,7 @@
 
 const Discord = require('discord.js');
 const mongoose = require('mongoose');
-const Guild = require('../models/guild');
+const { Guild } = require('../models');
 
 const { defaults, colours } = require('../config');
 const { debugError, sendMsg } = require('../modules');

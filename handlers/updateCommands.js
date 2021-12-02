@@ -4,8 +4,8 @@ const { ids: { defaultServer } } = require('../config');
 const { difference, merge } = require('../modules');
 
 module.exports = async guild => {
-	const Guild = require('../models/guild');
 	const cmds = await require('../cmds')(guild);
+	const { Guild } = require('../models');
 
 	const id = (guild)
 		? guild.id

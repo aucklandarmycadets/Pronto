@@ -3,7 +3,7 @@
 const Discord = require('discord.js');
 const cron = require('node-cron');
 
-const Lesson = require('../models/lesson');
+const { Lesson } = require('../models');
 
 const { dtg, sendMsg } = require('../modules');
 

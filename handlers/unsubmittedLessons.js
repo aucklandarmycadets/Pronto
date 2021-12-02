@@ -3,7 +3,7 @@
 const Discord = require('discord.js');
 const dateFormat = require('dateformat');
 
-const Lesson = require('../models/lesson');
+const { Lesson } = require('../models');
 
 const { dtg, emojiReact, sendMsg } = require('../modules');
 

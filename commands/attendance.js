@@ -2,7 +2,7 @@
 
 const Discord = require('discord.js');
 const mongoose = require('mongoose');
-const Attendance = require('../models/attendance');
+const { Attendance } = require('../models');
 
 const confirmation = require('../handlers/confirmation');
 const { cmdError, delMsg, dtg, emojiReact, sendDM, sendMsg } = require('../modules');
