@@ -18,7 +18,29 @@
 		"verbose": true,
 		"destination": "./docs/",
 		"readme": "./readme.md",
-		"template": ""
+		"template": "node_modules/clean-jsdoc-theme",
+		"theme_opts": {
+			"theme": "dark",
+			"title": "Pronto",
+			"menu": [
+				{
+					"title": "GitHub Repository",
+					"link": "https://github.com/JamesNZL/Pronto",
+					"target": "_blank"
+				}
+			],
+			"search": {
+				"shouldSort": true,
+				"threshold": 0.4,
+				"location": 0,
+				"distance": 100,
+				"maxPatternLength": 32,
+				"minMatchCharLength": 1
+			},
+			"overlay_scrollbar": {
+				"option": {}
+			}
+		}
 	},
 	"templates": {
 		"cleverLinks": false,
