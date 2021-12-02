@@ -13,6 +13,9 @@ module.exports = async (reaction, user) => {
 
 	const { ids: { attendanceID }, colours } = await require('../handlers/database')(reaction.message.guild);
 
+	/**
+	 * @type {Attendance}
+	 */
 	const db = await Attendance.findOne({ channelID: reaction.message.id });
 
 	if (!db) return;
