@@ -4,7 +4,7 @@
  *
  * @param {*} array
  * @param {*} toString
- * @returns
+ * @returns {string | string[]}
  */
 module.exports = (array, toString) => {
 	// Split apart any potential string[] elements which contain both a <MessageAttachment> and a URL, and return a flattened string[]

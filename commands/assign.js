@@ -235,7 +235,7 @@ module.exports = async guild => {
 				dueTimestamp: dueTimestamp,
 				lessonDate: lessonDate,
 				lessonTimestamp: lessonTimestamp,
-				assignedResources: enumerateResources(resources, true),
+				assignedResources: enumerateResources(resources),
 			});
 
 			// Save the document and return it
