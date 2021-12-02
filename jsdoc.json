@@ -15,7 +15,6 @@
 	],
 	"opts": {
 		"recurse": true,
-		"verbose": true,
 		"destination": "./docs/",
 		"readme": "./readme.md",
 		"template": "node_modules/clean-jsdoc-theme",
