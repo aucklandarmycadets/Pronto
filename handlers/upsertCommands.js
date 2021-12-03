@@ -41,7 +41,7 @@ async function process(updatedCommands, database) {
 	}
 
 	// A string[] of the command object properties which may differ across each guild
-	const guildProperties = ['requiredRoles', 'deniedRoles', 'allowDirect', 'showList'];
+	const guildProperties = ['requiredRoles', 'deniedRoles', 'allowDirect', 'displayInList'];
 
 	// Use Object.fromEntries() to create a sanitised commands object, where each command object is stripped of any guild-specific keys if they already exist in the guild's database
 	const sanitisedCommands = Object.fromEntries(

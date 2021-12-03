@@ -105,9 +105,9 @@ module.exports = async guild => {
 
 			// Iterate through each remaining guild command
 			for (const guildCommand of Object.values(commands)) {
-				// Check whether the member has the necessary permissions for the command and if it should be shown in the commands list
+				// Check whether the member has the necessary permissions for the command and if it should be displayed in the commands list
 				// If so, create a new [key, value] entry in the commands object
-				if (await permissionsHandler(msg, guildCommand) && guildCommand.showList) commandsObj[`${await prefixCommand(guildCommand, guild)}`] = guildCommand.description;
+				if (await permissionsHandler(msg, guildCommand) && guildCommand.displayInList) commandsObj[`${await prefixCommand(guildCommand, guild)}`] = guildCommand.description;
 			}
 
 			// If the original help command message was not deleted, react with the appropriate emoji, depending on whether an argument command was included or not

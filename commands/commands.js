@@ -37,7 +37,7 @@ module.exports = async guild => {
 			requiredRoles: [],
 			deniedRoles: [],
 			developerOnly: true,
-			showList: true,
+			displayInList: true,
 			get help() {
 				return formatList({
 					'Aliases': prefixAlias(this),
@@ -57,7 +57,7 @@ module.exports = async guild => {
 			requiredRoles: [],
 			deniedRoles: [],
 			developerOnly: true,
-			showList: true,
+			displayInList: true,
 			get help() {
 				return formatList({
 					'Aliases': prefixAlias(this),
@@ -77,7 +77,7 @@ module.exports = async guild => {
 			requiredRoles: [],
 			deniedRoles: [],
 			developerOnly: true,
-			showList: true,
+			displayInList: true,
 			get help() {
 				return formatList({
 					'Aliases': prefixAlias(this),
@@ -103,7 +103,7 @@ module.exports = async guild => {
 			requiredRoles: [],
 			deniedRoles: [],
 			developerOnly: true,
-			showList: true,
+			displayInList: true,
 			get help() {
 				return formatList({
 					'Aliases': prefixAlias(this),
@@ -133,7 +133,7 @@ module.exports = async guild => {
 			requiredRoles: [ids.everyoneID],
 			deniedRoles: [],
 			developerOnly: false,
-			showList: true,
+			displayInList: true,
 			get help() {
 				return formatList({
 					'Aliases': prefixAlias(this),
@@ -160,7 +160,7 @@ module.exports = async guild => {
 			requiredRoles: [],
 			deniedRoles: [],
 			developerOnly: false,
-			showList: true,
+			displayInList: true,
 			get help() {
 				return formatList({
 					'Aliases': prefixAlias(this),
@@ -187,7 +187,7 @@ module.exports = async guild => {
 			requiredRoles: [],
 			deniedRoles: [],
 			developerOnly: false,
-			showList: false,
+			displayInList: false,
 			get help() {
 				return formatList({
 					'Aliases': prefixAlias(this),
@@ -214,7 +214,7 @@ module.exports = async guild => {
 			requiredRoles: [],
 			deniedRoles: [],
 			developerOnly: false,
-			showList: false,
+			displayInList: false,
 			get help() {
 				return formatList({
 					'Aliases': prefixAlias(this),
@@ -241,7 +241,7 @@ module.exports = async guild => {
 			requiredRoles: [],
 			deniedRoles: [],
 			developerOnly: false,
-			showList: true,
+			displayInList: true,
 			get help() {
 				return formatList({
 					'Aliases': prefixAlias(this),
@@ -269,7 +269,7 @@ module.exports = async guild => {
 			requiredRoles: [],
 			deniedRoles: [],
 			developerOnly: false,
-			showList: true,
+			displayInList: true,
 			get help() {
 				return formatList({
 					'Aliases': prefixAlias(this),
@@ -296,7 +296,7 @@ module.exports = async guild => {
 			requiredRoles: [],
 			deniedRoles: [],
 			developerOnly: false,
-			showList: true,
+			displayInList: true,
 			get help() {
 				return formatList({
 					'Aliases': prefixAlias(this),
@@ -324,7 +324,7 @@ module.exports = async guild => {
 			requiredRoles: [],
 			deniedRoles: [],
 			developerOnly: false,
-			showList: true,
+			displayInList: true,
 			get help() {
 				return formatList({
 					'Aliases': prefixAlias(this),
@@ -352,7 +352,7 @@ module.exports = async guild => {
 			requiredRoles: [],
 			deniedRoles: [],
 			developerOnly: false,
-			showList: true,
+			displayInList: true,
 			get help() {
 				return formatList({
 					'Aliases': prefixAlias(this),
@@ -380,7 +380,7 @@ module.exports = async guild => {
 			requiredRoles: [],
 			deniedRoles: [],
 			developerOnly: false,
-			showList: true,
+			displayInList: true,
 			get help() {
 				return formatList({
 					'Aliases': prefixAlias(this),
@@ -408,7 +408,7 @@ module.exports = async guild => {
 			requiredRoles: [],
 			deniedRoles: [],
 			developerOnly: false,
-			showList: true,
+			displayInList: true,
 			get help() {
 				return formatList({
 					'Aliases': prefixAlias(this),
