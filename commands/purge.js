@@ -2,6 +2,9 @@
 
 // eslint-disable-next-line no-unused-vars
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
+
 const { commandError, debugError, embedScaffold, errorReact } = require('../modules');
 
 /**
@@ -15,10 +18,9 @@ module.exports = async guild => {
 
 	/**
 	 * Bulk delete a specified number of messages from a <TextChannel>
-	 * @param {Discord.Message} msg The \<Message> that executed the command
-	 * @param {string[]} args The command arguments
+	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
-	purge.execute = async (msg, args) => {
+	purge.execute = async ({ msg, args }) => {
 		// Parse the number of messages to purge from the command arguments
 		const purgeCount = Number(args[0]) || Number(args[1]);
 		// Extract the first mentioned <GuildMember>, assuming it exists

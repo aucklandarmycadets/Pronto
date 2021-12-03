@@ -1,6 +1,9 @@
 'use strict';
 
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
+
 const { dateTimeGroup, formatAge, sendMsg } = require('../modules');
 
 /**
@@ -14,9 +17,9 @@ module.exports = async guild => {
 
 	/**
 	 * Display the bot's uptime
-	 * @param {Discord.Message} msg The \<Message> that executed the command
+	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
-	uptime.execute = async msg => {
+	uptime.execute = async ({ msg }) => {
 		const { bot, version } = require('../pronto');
 
 		// Create uptime embed

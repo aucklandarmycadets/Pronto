@@ -1,6 +1,9 @@
 'use strict';
 
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
+
 const { capitalise, commandError, dateTimeGroup, prefixCommand, remove, sendDirect, sendMsg, successReact } = require('../modules');
 
 /**
@@ -14,10 +17,9 @@ module.exports = async guild => {
 
 	/**
 	 * Process a leave request submitted on behalf of someone else
-	 * @param {Discord.Message} msg The \<Message> that executed the command
-	 * @param {string[]} args The command arguments
+	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
-	leaveFor.execute = async (msg, args) => {
+	leaveFor.execute = async ({ msg, args }) => {
 		const { bot } = require('../pronto');
 
 		// Extract the mentioned absentee from the command message

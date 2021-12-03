@@ -7,6 +7,18 @@ const { ids: { DEVELOPER_ID } } = require('./config');
 const { formatList } = require('./modules');
 
 /**
+ * @namespace commands
+ */
+
+/**
+ * @typedef {Object} CommandParameters An \<Object> of the valid parameters accepted by the \<Command.execute()> method
+ * @property {Discord.Message} msg The \<Message> that executed the command, or the \<Message> that the reaction collector was attached to
+ * @property {?string[]} args The \<string[]> containing the command arguments
+ * @property {?string} msgCommand The message argument that was parsed to this \<CommandBase>, i.e. either \<CommandBase.command> or \<CommandBase.aliases.includes(msgCommand)>
+ * @property {?Discord.User} user The \<User> that triggered the reaction collector
+ */
+
+/**
  *
  * @param {Discord.Guild | 'BREAK'} guild
  * @returns

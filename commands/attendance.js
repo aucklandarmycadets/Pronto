@@ -20,10 +20,9 @@ module.exports = async guild => {
 
 	/**
 	 * Process an attendance register by creating an attendance embed and sending it to the attendance and original message command channels
-	 * @param {Discord.Message} msg The \<Message> that executed the command
-	 * @param {string[]} args The command arguments
+	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
-	attendance.execute = async (msg, args) => {
+	attendance.execute = async ({ msg, args }) => {
 		const { bot } = require('../pronto');
 
 		// Ensure the command arguments are not empty, i.e. a register is actually present

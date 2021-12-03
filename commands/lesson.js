@@ -62,7 +62,7 @@ module.exports = async guild => {
 			else if (!_lesson.instructors[msg.author.id]) throw 'You are not an instructor for this lesson!';
 
 			// If the command author has not yet acknowledged receipt of the lesson warning, execute commands\seen.js
-			else if (!_lesson.instructors[msg.author.id].seen) _lesson = await bot.commands.get(seen.command).execute(msg, msg.author);
+			else if (!_lesson.instructors[msg.author.id].seen) _lesson = await bot.commands.get(seen.command).execute({ msg, user: msg.author });
 
 			// If the lesson sub-command is 'add', ensure there was at least one attachment or URL
 			if (command === 'add') {
@@ -303,7 +303,7 @@ module.exports = async guild => {
 								const collector = approveMsg.createReactionCollector(filter, { dispose: true });
 
 								// Execute the commands\approve.js command when a user with a Training Cell role approves the lesson plan via reaction
-								collector.on('collect', async (_, user) => bot.commands.get(approve.command).execute(msg, user));
+								collector.on('collect', async (_, user) => bot.commands.get(approve.command).execute({ msg, user }));
 							});
 
 						// Call handlers.unsubmittedLessons() to update the embed of unsubmitted lessons

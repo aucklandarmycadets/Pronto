@@ -1,6 +1,8 @@
 'use strict';
 
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
 
 const { ids: { DEVELOPER_ID } } = require('../config');
 const { deleteMsg, directCommandError, embedScaffold, errorReact, formatList, getRoleError, prefixCommand, sendDirect, sendMsg, successReact } = require('../modules');
@@ -17,10 +19,9 @@ module.exports = async guild => {
 
 	/**
 	 * Send details and assistance about a specific command, or generate a list of available commands when needed
-	 * @param {Discord.Message} msg The \<Message> that executed the command
-	 * @param {string[]} args The command arguments
+	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
-	help.execute = async (msg, args) => {
+	help.execute = async ({ msg, args }) => {
 		const { bot } = require('../pronto');
 
 		// Ensure that the member's common guild is not currently suffering an outage

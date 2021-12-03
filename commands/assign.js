@@ -27,9 +27,9 @@ module.exports = async guild => {
 
 	/**
 	 * Assign a lesson to specified instructors by creating a private lesson channel and dispatching a lesson warning
-	 * @param {Discord.Message} msg The \<Message> that executed the command
+	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
-	assign.execute = async msg => {
+	assign.execute = async ({ msg }) => {
 		const { bot } = require('../pronto');
 
 		// Extract mentioned members
@@ -194,7 +194,7 @@ module.exports = async guild => {
 									const collector = ackMessage.createReactionCollector(filter, { dispose: true });
 
 									// Execute the commands\seen.js command when an instructor acknowledges the lesson warning via reaction
-									collector.on('collect', async (_, user) => bot.commands.get(seen.command).execute(ackMessage, user));
+									collector.on('collect', async (_, user) => bot.commands.get(seen.command).execute({ msg: ackMessage, user: user }));
 								});
 						})
 						.catch(error => console.error(`Error creating ${lessonName} in ${guild.name}\n`, error));

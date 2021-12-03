@@ -2,6 +2,7 @@
 'use strict';
 
 const Discord = require('discord.js');
+const Typings = require('../typings');
 
 const { commandError, deleteMsg, dateTimeGroup, jsCodeBlock, sendMsg, ...modules } = require('../modules');
 const { database, ...handlers } = require('../handlers');
@@ -17,10 +18,9 @@ module.exports = async guild => {
 
 	/**
 	 * Evaluate Javascript code directly from a Discord message
-	 * @param {Discord.Message} msg The \<Message> that executed the command
-	 * @param {string[]} args The command arguments
+	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
-	evaluate.execute = async (msg, args) => {
+	evaluate.execute = async ({ msg, args }) => {
 		const { bot } = require('../pronto');
 
 		// Parse the short flags from the message, which consist of single letters that may be joined together under a single '-'

@@ -1,6 +1,9 @@
 'use strict';
 
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
+
 const { capitalise, commandError, dateTimeGroup, sendDirect, sendMsg, successReact } = require('../modules');
 
 /**
@@ -14,17 +17,16 @@ module.exports = async guild => {
 
 	/**
 	 * Process an individual's leave request
-	 * @param {Discord.Message} msg The \<Message> that executed the command
-	 * @param {string[]} args The command arguments
+	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
-	leave.execute = async (msg, args) => {
+	leave.execute = async ({ msg, args }) => {
 		const { bot } = require('../pronto');
 
 		// Ensure the command arguments are not empty, i.e. there is at least a remark included
 		if (args.length === 0) return commandError(msg, 'Insufficient remarks.', leave.error);
 
 		// If the first argument of the message command is 'for', execute commands\leaveFor.js instead
-		if (args[0].toLowerCase() === 'for') return bot.commands.get(leaveFor.command).execute(msg, args.slice(1));
+		if (args[0].toLowerCase() === 'for') return bot.commands.get(leaveFor.command).execute({ msg, args: args.slice(1) });
 
 		// Success react to command message
 		successReact(msg);

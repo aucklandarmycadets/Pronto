@@ -18,11 +18,10 @@ module.exports = async guild => {
 
 	/**
 	 * Approve a submitted lesson plan in a lesson channel, either from a message command or a message reaction
-	 * @param {Discord.Message} msg The \<Message> that either executed the approve command, or the \<Message> that the reaction collector was attached to
-	 * @param {string[] | Discord.User} user The command arguments, or a possible \<User> that will exist if the command was triggered by a reaction collector
+	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 * @returns {Promise<Typings.Lesson>} The mongoose document for the lesson
 	 */
-	approve.execute = async (msg, user) => {
+	approve.execute = async ({ msg, user }) => {
 		// Find <Lesson> document by querying database for lesson channel ID
 		const lesson = await findLesson(msg.channel.id);
 
@@ -62,7 +61,7 @@ module.exports = async guild => {
 		}
 
 		// Success react if executed via command
-		if (!user.id) successReact(msg);
+		if (!user) successReact(msg);
 
 		// Get the master lesson plans channel
 		const lessonPlansChannel = msg.guild.channels.cache.get(lessonPlansID);
@@ -112,9 +111,7 @@ module.exports = async guild => {
 		}
 
 		// Resolve the approving user, depending on whether executed via command or reaction
-		const approver = (user.id)
-			? user
-			: msg.author;
+		const approver = user || msg.author;
 
 		// Create lesson approval embed
 		const approvedEmbed = new Discord.MessageEmbed()

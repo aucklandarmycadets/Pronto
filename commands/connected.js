@@ -1,6 +1,9 @@
 'use strict';
 
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
+
 const { commandError, dateTimeGroup, sendMsg, sortByRoles, successReact } = require('../modules');
 
 /**
@@ -14,10 +17,9 @@ module.exports = async guild => {
 
 	/**
 	 * List the members connected to a <VoiceChannel>
-	 * @param {Discord.Message} msg The \<Message> that executed the command
-	 * @param {string[]} args The command arguments
+	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
-	connected.execute = async msg => {
+	connected.execute = async ({ msg }) => {
 		const { bot } = require('../pronto');
 
 		// Extract the first mentioned channel

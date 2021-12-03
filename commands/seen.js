@@ -18,18 +18,15 @@ module.exports = async guild => {
 
 	/**
 	 * Acknowledge a lesson warning, either from a message command or a message reaction
-	 * @param {Discord.Message} msg The \<Message> that either executed the approve command, or the \<Message> that the reaction collector was attached to
-	 * @param {string[] | Discord.User} user The command arguments, or a possible \<User> that will exist if the command was triggered by a reaction collector
+	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 * @returns {Promise<Typings.Lesson>} The mongoose document for the lesson
 	 */
-	seen.execute = async (msg, user) => {
+	seen.execute = async ({ msg, user }) => {
 		// Find <Lesson> document by querying database for lesson channel ID
 		const lesson = await findLesson(msg.channel.id);
 
 		// Resolve the instructor, depending on whether executed via command or reaction
-		const instructor = (user.id)
-			? user
-			: msg.author;
+		const instructor = user || msg.author;
 
 		try {
 			// Ensure message channel is contained within lessons category
@@ -51,7 +48,7 @@ module.exports = async guild => {
 		catch (error) { return commandError(msg, error, seen.error); }
 
 		// Success react if executed via command
-		if (!user.id) successReact(msg);
+		if (!user) successReact(msg);
 
 		// Create seen embed
 		const seenEmbed = new Discord.MessageEmbed()
