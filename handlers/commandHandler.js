@@ -61,7 +61,7 @@ module.exports = async msg => {
 
 	if (msg.guild && !hasPerms) return helpCommand.execute({ msg, args });
 	else if (!msg.guild && !hasPerms) return directCommandError(msg, 'NO_PERMISSION');
-	else if (!msg.guild && !command.allowDM) return directCommandError(msg, 'NO_DIRECT');
+	else if (!msg.guild && !command.allowDirect) return directCommandError(msg, 'NO_DIRECT');
 
 	try {
 		command.execute({ msg, args, msgCommand });
