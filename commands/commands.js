@@ -2,6 +2,8 @@
 
 // eslint-disable-next-line no-unused-vars
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
 
 const { ids: { DEVELOPER_ID } } = require('./config');
 const { formatList } = require('./modules');
@@ -11,10 +13,47 @@ const { formatList } = require('./modules');
  */
 
 /**
- * @typedef {Object} commands.CommandParameters An \<Object> of the valid parameters accepted by the \<Command.execute()> method
+ * @typedef {string} commands.CommandName The name of the command
+ */
+
+/**
+ * @typedef {Object} commands.CommandBase The base of each of Pronto's commands, with the base properties to construct a complete [\<Command>]{@link commands.Command}
+ * @property {commands.CommandName} command The name of the command
+ * @property {string[]} aliases The aliases for the command
+ * @property {string} description The description of the command
+ * @property {boolean} allowDirect Whether to allow the command to execute from a direct message
+ * @property {Discord.Snowflake[]} requiredRoles A <Role.id[]> of which the \<GuildMember> must have at least one to execute the command
+ * @property {Discord.Snowflake[]} deniedRoles A <Role.id[]> of which the \<GuildMember> must have none to execute the command
+ * @property {boolean} developerOnly Whether the command is only executable by the developer defined by config.ids.DEVELOPER_ID
+ * @property {boolean} displayInList Whether to display the command in the guild's commands list
+ * @property {string} help The help text to display for the command
+ * @property {?string} error The error text to display for the command
+*/
+
+/**
+ * @typedef {Object.<commands.CommandName, commands.CommandBase>} commands.CommandsBase The base of Pronto's commands object, where each [\<CommandBase>]{@link commands.CommandBase} is stored in the \<CommandsBase> object under the property [{@link commands.CommandName|CommandName}]
+ */
+
+/**
+ * @typedef {commands.CommandBase} commands.Command The complete \<Command> object for one of Pronto's commands, with a [\<Command.execute()>]{@link commands.Execute} method
+ * @property {commands.Execute} execute The command's [\<Command.execute()>]{@link commands.Execute} method
+ */
+
+/**
+ * @typedef {Object.<commands.CommandName, commands.Command>} commands.Commands The complete \<Commands> object for all of Pronto's commands, where each [\<Command>]{@link commands.Command} is stored in the \<Commands> object under the property [{@link commands.CommandName|CommandName}]
+ */
+
+/**
+ * @typedef {Function} commands.Execute A command's \<Command.execute()> method
+ * @param {commands.CommandParameters} parameters The [\<CommandParameters>]{@link commands.CommandParameters} to execute this command
+ * @returns {Promise<void | Typings.Lesson>} Void, or the [\<Lesson>]{@link models.Lesson} object
+ */
+
+/**
+ * @typedef {Object} commands.CommandParameters An \<Object> of the valid parameters accepted by the [\<Command.execute()>]{@link commands.Execute} method
  * @property {Discord.Message} msg The \<Message> that executed the command, or the \<Message> that the reaction collector was attached to
  * @property {?string[]} args The \<string[]> containing the command arguments
- * @property {?string} msgCommand The message argument that was parsed to this \<CommandBase>, i.e. either \<CommandBase.command> or \<CommandBase.aliases.includes(msgCommand)>
+ * @property {?string} msgCommand The message argument that was parsed to this [\<CommandBase>]{@link commands.CommandBase}, i.e. either \<CommandBase.command> or \<CommandBase.aliases.includes(msgCommand)>
  * @property {?Discord.User} user The \<User> that triggered the reaction collector
  */
 
