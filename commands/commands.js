@@ -11,7 +11,7 @@ const { formatList } = require('./modules');
  */
 
 /**
- * @typedef {Object} CommandParameters An \<Object> of the valid parameters accepted by the \<Command.execute()> method
+ * @typedef {Object} commands.CommandParameters An \<Object> of the valid parameters accepted by the \<Command.execute()> method
  * @property {Discord.Message} msg The \<Message> that executed the command, or the \<Message> that the reaction collector was attached to
  * @property {?string[]} args The \<string[]> containing the command arguments
  * @property {?string} msgCommand The message argument that was parsed to this \<CommandBase>, i.e. either \<CommandBase.command> or \<CommandBase.aliases.includes(msgCommand)>
