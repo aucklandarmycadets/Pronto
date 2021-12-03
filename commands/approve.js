@@ -46,16 +46,16 @@ module.exports = async guild => {
 		}
 
 		catch (error) {
-			// If approve is triggered by reaction, ensure msg has the correct author properties (reacter, not submitter)
+			// If approve is triggered by reaction, ensure msg has the correct author properties (approver, not submitter)
 			msg = (user)
-				? msg
-				: {
+				? {
 					guild: msg.guild,
 					author: await msg.guild.members.fetch(user.id).user,
 					member: await msg.guild.members.fetch(user.id),
 					channel: msg.channel,
 					deleted: true,
-				};
+				}
+				: msg;
 
 			return commandError(msg, error, approve.error);
 		}
