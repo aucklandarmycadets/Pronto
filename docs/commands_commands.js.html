@@ -35,7 +35,7 @@
 
 
     <title>
-      commands/purge.js
+      commands/commands.js
     </title>
 
     <!--[if lt IE 9]>
@@ -102,7 +102,7 @@
     <div id="main" class="main-content">
       
       <h1 id='page-title' class="page-title">
-        commands/purge.js
+        commands/commands.js
       </h1>
       
 
@@ -120,83 +120,494 @@ const Discord = require('discord.js');
 // eslint-disable-next-line no-unused-vars
 const Typings = require('../typings');
 
-const { commandError, debugError, embedScaffold, errorReact } = require('../modules');
+const { ids: { DEVELOPER_ID } } = require('./config');
+const { formatList } = require('./modules');
 
 /**
- * Attach the command.execute() function to command object
- * @module commands/purge
- * @param {Discord.Guild} guild The guild that the member shares with the bot
- * @returns {Promise&lt;Object.&lt;string, string | string[] | boolean | Function>>} The complete command object with a command.execute() property
+ * @namespace commands
+ */
+
+/**
+ * @typedef {string} commands.CommandName The name of the command
+ */
+
+/**
+ * @typedef {Object} commands.CommandBase The base of each of Pronto's commands, with the base properties to construct a complete [\&lt;Command>]{@link commands.Command}
+ * @property {commands.CommandName} command The name of the command
+ * @property {string[]} aliases The aliases for the command
+ * @property {string} description The description of the command
+ * @property {boolean} allowDirect Whether to allow the command to execute from a direct message
+ * @property {Discord.Snowflake[]} requiredRoles A &lt;Role.id[]> of which the \&lt;GuildMember> must have at least one to execute the command
+ * @property {Discord.Snowflake[]} deniedRoles A &lt;Role.id[]> of which the \&lt;GuildMember> must have none to execute the command
+ * @property {boolean} developerOnly Whether the command is only executable by the developer defined by config.ids.DEVELOPER_ID
+ * @property {boolean} displayInList Whether to display the command in the guild's commands list
+ * @property {string} help The help text to display for the command
+ * @property {?string} error The error text to display for the command
+*/
+
+/**
+ * @typedef {Object.&lt;commands.CommandName, commands.CommandBase>} commands.CommandsBase The base of Pronto's commands object, where each [\&lt;CommandBase>]{@link commands.CommandBase} is stored in the \&lt;CommandsBase> object under the property [{@link commands.CommandName|CommandName}]
+ */
+
+/**
+ * @typedef {commands.CommandBase} commands.Command The complete \&lt;Command> object for one of Pronto's commands, with a [\&lt;Command.execute()>]{@link commands.Execute} method
+ * @property {commands.Execute} execute The command's [\&lt;Command.execute()>]{@link commands.Execute} method
+ */
+
+/**
+ * @typedef {Object.&lt;commands.CommandName, commands.Command>} commands.Commands The complete \&lt;Commands> object for all of Pronto's commands, where each [\&lt;Command>]{@link commands.Command} is stored in the \&lt;Commands> object under the property [{@link commands.CommandName|CommandName}]
+ */
+
+/**
+ * @typedef {Function} commands.Execute A command's \&lt;Command.execute()> method
+ * @param {commands.CommandParameters} parameters The [\&lt;CommandParameters>]{@link commands.CommandParameters} to execute this command
+ * @returns {Promise&lt;void | Typings.Lesson>} Void, or the [\&lt;Lesson>]{@link models.Lesson} object
+ */
+
+/**
+ * @typedef {Object} commands.CommandParameters An \&lt;Object> of the valid parameters accepted by the [\&lt;Command.execute()>]{@link commands.Execute} method
+ * @property {Discord.Message} msg The \&lt;Message> that executed the command, or the \&lt;Message> that the reaction collector was attached to
+ * @property {?string[]} args The \&lt;string[]> containing the command arguments
+ * @property {?string} msgCommand The message argument that was parsed to this [\&lt;CommandBase>]{@link commands.CommandBase}, i.e. either \&lt;CommandBase.command> or \&lt;CommandBase.aliases.includes(msgCommand)>
+ * @property {?Discord.User} user The \&lt;User> that triggered the reaction collector
+ */
+
+/**
+ *
+ * @param {Discord.Guild | 'BREAK'} guild
+ * @returns
  */
 module.exports = async guild => {
-	const { commands: { purge }, colours } = await require('../handlers/database')(guild);
+	const { settings: { prefix }, ids } = (guild === 'BREAK')
+		? require('./config')
+		: await require('./handlers/database')(guild);
 
-	/**
-	 * Bulk delete a specified number of messages from a &lt;TextChannel>
-	 * @param {Typings.CommandParameters} parameters The \&lt;CommandParameters> to execute this command
-	 */
-	purge.execute = async ({ msg, args }) => {
-		// Parse the number of messages to purge from the command arguments
-		const purgeCount = Number(args[0]) || Number(args[1]);
-		// Extract the first mentioned &lt;GuildMember>, assuming it exists
-		const userToPurge = msg.mentions.users.first();
-
-		try {
-			// Ensure the command arguments are not empty
-			if (args.length === 0) throw 'Insufficient arguments.';
-
-			// Ensure there was only one or less &lt;GuildMember> mentioned
-			else if (msg.mentions.users.size > 1) throw 'You cannot purge multiple users simultaneously.';
-
-			// Ensure there are not more than two command arguments
-			else if (args.length > 2) throw 'Too many arguments.';
-
-			// Error message for if neither a valid purgeCount nor a mentioned member
-			else if (!purgeCount &amp;&amp; !userToPurge) throw 'Invalid input.';
-
-			// Ensure a valid purgeCount was parsed
-			else if (!purgeCount) throw 'You must specify an amount of messages to delete.';
-
-			// Ensure the number of messages to purge does not exceed the Discord API limit of 100 messages
-			else if (purgeCount > 100) throw 'You cannot purge more than 100 messages at a time.';
-		}
-
-		catch (error) { return commandError(msg, error, purge.error); }
-
-		// Initialise values for &lt;Message[]> and before to ensure purgeCount messages are actually fetched and filtered
-		let msgs = [];
-		let before = msg.id;
-
-		// Loop through until purgeCount messages are added to the msgs &lt;Message[]>
-		while (msgs.length !== purgeCount) {
-			// Fetch messages in blocks of 100 (maximum allowed by the API) moving back in time
-			await msg.channel.messages.fetch({ limit: 100, before })
-				.then(_msgs => {
-					// Filter the fetched messages by user (if specified), then convert the &lt;Collection> to &lt;Message[]>
-					// Slice the resultant array to the appropriate length and concantenate it to the msgs &lt;Message[]>
-					msgs = (userToPurge)
-						? msgs.concat(_msgs.filter(_msg => _msg.author.id === userToPurge.id).array().slice(0, purgeCount - msgs.length))
-						: msgs.concat(_msgs.array().slice(0, purgeCount - msgs.length));
-
-					// Update oldest message ID
-					before = _msgs.last().id;
-				})
-				.catch(error => debugError(error, `Error fetching messages in ${msg.channel}.`));
-		}
-
-		// Once all the messages to purge have been fetched, call the &lt;TextChannel.bulkDelete()> method
-		msg.channel.bulkDelete(msgs)
-			.catch(error => {
-			// If error, react with error and send error messages
-				errorReact(msg);
-				embedScaffold(guild, msg.channel, `${msg.author} Error purging ${purgeCount} messages.`, colours.error, 'MESSAGE');
-				debugError(error, `Error purging ${purgeCount} messages in ${msg.channel}.`);
-			});
-
-		// deleteMsg() is called on the command message by &lt;Client>#messageDeleteBulk
+	const commands = {
+		ping: {
+			command: 'ping',
+			aliases: ['p'],
+			description: 'Test the latency of the bot.',
+			allowDirect: true,
+			requiredRoles: [],
+			deniedRoles: [],
+			developerOnly: true,
+			displayInList: true,
+			get help() {
+				return formatList({
+					'Aliases': prefixAlias(this),
+					'Description': this.description,
+					'Usage': prefixCommand(this),
+				});
+			},
+			set help(obj) {
+				formatList(obj);
+			},
+		},
+		uptime: {
+			command: 'uptime',
+			aliases: ['up'],
+			description: 'Time since last restart.',
+			allowDirect: true,
+			requiredRoles: [],
+			deniedRoles: [],
+			developerOnly: true,
+			displayInList: true,
+			get help() {
+				return formatList({
+					'Aliases': prefixAlias(this),
+					'Description': this.description,
+					'Usage': prefixCommand(this),
+				});
+			},
+			set help(obj) {
+				formatList(obj);
+			},
+		},
+		evaluate: {
+			command: 'evaluate',
+			aliases: ['eval'],
+			description: 'Evaluate Javascript code.',
+			allowDirect: true,
+			requiredRoles: [],
+			deniedRoles: [],
+			developerOnly: true,
+			displayInList: true,
+			get help() {
+				return formatList({
+					'Aliases': prefixAlias(this),
+					'Description': this.description,
+					'Usage': `${prefixCommand(this)} &lt;code>`,
+				});
+			},
+			set help(obj) {
+				formatList(obj);
+			},
+			get error() {
+				return errorText(this.help, this.command);
+			},
+			set error(value) {
+				errorText(this.help, this.command);
+			},
+		},
+		restart: {
+			command: 'restart',
+			aliases: ['new', 'kill', 'update'],
+			description: 'Restart the bot.',
+			allowDirect: true,
+			requiredRoles: [],
+			deniedRoles: [],
+			developerOnly: true,
+			displayInList: true,
+			get help() {
+				return formatList({
+					'Aliases': prefixAlias(this),
+					'Description': this.description,
+					'Usage': prefixCommand(this),
+				});
+			},
+			set help(obj) {
+				formatList(obj);
+			},
+			get error() {
+				return errorText(this.help, this.command);
+			},
+			set error(value) {
+				errorText(this.help, this.command);
+			},
+		},
+		help: {
+			command: 'help',
+			aliases: ['cmd', 'cmds', 'command', 'commands'],
+			description: {
+				general: 'Get help with using Pronto.',
+				unqualified: 'List of the commands you can use.',
+				qualified: 'Get help with a specific command.',
+			},
+			allowDirect: true,
+			requiredRoles: [ids.everyoneID],
+			deniedRoles: [],
+			developerOnly: false,
+			displayInList: true,
+			get help() {
+				return formatList({
+					'Aliases': prefixAlias(this),
+					'Description': this.description.general,
+					'Usage': `${prefixCommand(this)} [command]`,
+					'Examples': `\n${prefixCommand(this)}\n${prefixCommand(this)} ${commands.leave.command}`,
+				});
+			},
+			set help(obj) {
+				formatList(obj);
+			},
+			get error() {
+				return errorText(this.help, this.command);
+			},
+			set error(value) {
+				errorText(this.help, this.command);
+			},
+		},
+		leave: {
+			command: 'leave',
+			aliases: ['lv'],
+			description: 'Submit a leave request.',
+			allowDirect: false,
+			requiredRoles: [],
+			deniedRoles: [],
+			developerOnly: false,
+			displayInList: true,
+			get help() {
+				return formatList({
+					'Aliases': prefixAlias(this),
+					'Description': this.description,
+					'Usage': `${prefixCommand(this)} &lt;date(s)> &lt;activity> &lt;reason> [additional remarks]`,
+					'Example': `${prefixCommand(this)} 01 Jan for Parade Night due to an appointment`,
+				});
+			},
+			set help(obj) {
+				formatList(obj);
+			},
+			get error() {
+				return errorText(this.help, this.command);
+			},
+			set error(value) {
+				errorText(this.help, this.command);
+			},
+		},
+		lesson: {
+			command: 'lesson',
+			aliases: ['view', 'add', 'remove', 'submit'],
+			description: 'Commands to aid in actioning an assigned lesson.',
+			allowDirect: false,
+			requiredRoles: [],
+			deniedRoles: [],
+			developerOnly: false,
+			displayInList: false,
+			get help() {
+				return formatList({
+					'Aliases': prefixAlias(this),
+					'Description': this.description,
+					'Usage': prefixCommand(this),
+					'Allowed Categories': `&lt;#${ids.lessonsID}>`,
+				});
+			},
+			set help(obj) {
+				formatList(obj);
+			},
+			get error() {
+				return errorText(this.help, this.command);
+			},
+			set error(value) {
+				errorText(this.help, this.command);
+			},
+		},
+		seen: {
+			command: 'seen',
+			aliases: ['ack'],
+			description: 'Acknowledge receipt of a lesson warning.',
+			allowDirect: false,
+			requiredRoles: [],
+			deniedRoles: [],
+			developerOnly: false,
+			displayInList: false,
+			get help() {
+				return formatList({
+					'Aliases': prefixAlias(this),
+					'Description': this.description,
+					'Usage': prefixCommand(this),
+					'Allowed Categories': `&lt;#${ids.lessonsID}>`,
+				});
+			},
+			set help(obj) {
+				formatList(obj);
+			},
+			get error() {
+				return errorText(this.help, this.command);
+			},
+			set error(value) {
+				errorText(this.help, this.command);
+			},
+		},
+		leaveFor: {
+			command: 'leavefor',
+			aliases: ['lv4'],
+			description: 'Submit a leave request for another cadet.',
+			allowDirect: false,
+			requiredRoles: [],
+			deniedRoles: [],
+			developerOnly: false,
+			displayInList: true,
+			get help() {
+				return formatList({
+					'Aliases': prefixAlias(this),
+					'Description': this.description,
+					'Usage': `${prefixCommand(this)} &lt;user> &lt;date(s)> &lt;activity> &lt;reason> [additional remarks]`,
+					'Example': `${prefixCommand(this)} &lt;@${DEVELOPER_ID}> 01 Jan for Parade Night due to an appointment`,
+					'Allowed Roles': rolesOutput(this.requiredRoles),
+				});
+			},
+			set help(obj) {
+				formatList(obj);
+			},
+			get error() {
+				return errorText(this.help, this.command);
+			},
+			set error(value) {
+				errorText(this.help, this.command);
+			},
+		},
+		attendance: {
+			command: 'attendance',
+			aliases: ['att', 'attdnce'],
+			description: 'Submit an attendance register.',
+			allowDirect: false,
+			requiredRoles: [],
+			deniedRoles: [],
+			developerOnly: false,
+			displayInList: true,
+			get help() {
+				return formatList({
+					'Aliases': prefixAlias(this),
+					'Description': this.description,
+					'Usage': `\n${prefixCommand(this)} &lt;message>`,
+					'Allowed Roles': rolesOutput(this.requiredRoles),
+				});
+			},
+			set help(obj) {
+				formatList(obj);
+			},
+			get error() {
+				return errorText(this.help, this.command);
+			},
+			set error(value) {
+				errorText(this.help, this.command);
+			},
+		},
+		connected: {
+			command: 'connected',
+			aliases: ['cnnct', 'cnnctd'],
+			description: 'List the members connected to a voice channel.',
+			allowDirect: false,
+			requiredRoles: [],
+			deniedRoles: [],
+			developerOnly: false,
+			displayInList: true,
+			get help() {
+				return formatList({
+					'Aliases': prefixAlias(this),
+					'Description': this.description,
+					'Usage': `${prefixCommand(this)} &lt;voice channel>`,
+					'Example': `${prefixCommand(this)} #example-voice`,
+					'Allowed Roles': rolesOutput(this.requiredRoles),
+				});
+			},
+			set help(obj) {
+				formatList(obj);
+			},
+			get error() {
+				return errorText(this.help, this.command);
+			},
+			set error(value) {
+				errorText(this.help, this.command);
+			},
+		},
+		assign: {
+			command: 'assign',
+			aliases: ['give'],
+			description: 'Assign a lesson to an instructor.',
+			allowDirect: false,
+			requiredRoles: [],
+			deniedRoles: [],
+			developerOnly: false,
+			displayInList: true,
+			get help() {
+				return formatList({
+					'Aliases': prefixAlias(this),
+					'Description': this.description,
+					'Usage': `${prefixCommand(this)} &lt;user(s)>`,
+					'Example': `${prefixCommand(this)} &lt;@${DEVELOPER_ID}>`,
+					'Allowed Roles': rolesOutput(this.requiredRoles),
+				});
+			},
+			set help(obj) {
+				formatList(obj);
+			},
+			get error() {
+				return errorText(this.help, this.command);
+			},
+			set error(value) {
+				errorText(this.help, this.command);
+			},
+		},
+		approve: {
+			command: 'approve',
+			aliases: ['app', 'apprv', 'acc', 'accept'],
+			description: 'Approve a lesson plan.',
+			allowDirect: false,
+			requiredRoles: [],
+			deniedRoles: [],
+			developerOnly: false,
+			displayInList: true,
+			get help() {
+				return formatList({
+					'Aliases': prefixAlias(this),
+					'Description': this.description,
+					'Usage': prefixCommand(this),
+					'Allowed Roles': rolesOutput(this.requiredRoles),
+					'Allowed Categories': `&lt;#${ids.lessonsID}>`,
+				});
+			},
+			set help(obj) {
+				formatList(obj);
+			},
+			get error() {
+				return errorText(this.help, this.command);
+			},
+			set error(value) {
+				errorText(this.help, this.command);
+			},
+		},
+		archive: {
+			command: 'archive',
+			aliases: ['archv'],
+			description: 'Archive a text channel.',
+			allowDirect: false,
+			requiredRoles: [],
+			deniedRoles: [],
+			developerOnly: false,
+			displayInList: true,
+			get help() {
+				return formatList({
+					'Aliases': prefixAlias(this),
+					'Description': this.description,
+					'Usage': `${prefixCommand(this)} &lt;text channel>`,
+					'Example': `${prefixCommand(this)} #example-text`,
+					'Allowed Roles': rolesOutput(this.requiredRoles),
+				});
+			},
+			set help(obj) {
+				formatList(obj);
+			},
+			get error() {
+				return errorText(this.help, this.command);
+			},
+			set error(value) {
+				errorText(this.help, this.command);
+			},
+		},
+		purge: {
+			command: 'purge',
+			aliases: ['del', 'delete', 'clear'],
+			description: 'Delete a number of messages from a channel.',
+			allowDirect: false,
+			requiredRoles: [],
+			deniedRoles: [],
+			developerOnly: false,
+			displayInList: true,
+			get help() {
+				return formatList({
+					'Aliases': prefixAlias(this),
+					'Description': this.description,
+					'Usage': `${prefixCommand(this)} &lt;count> [user]`,
+					'Examples': `\n${prefixCommand(this)} 10\n${prefixCommand(this)} 5 &lt;@${DEVELOPER_ID}>`,
+					'Allowed Roles': rolesOutput(this.requiredRoles),
+				});
+			},
+			set help(obj) {
+				formatList(obj);
+			},
+			get error() {
+				return errorText(this.help, this.command);
+			},
+			set error(value) {
+				errorText(this.help, this.command);
+			},
+		},
 	};
 
-	return purge;
+	return commands;
+
+	function rolesOutput(array) {
+		return (array)
+			? array.filter(id => id !== ids.administratorID &amp;&amp; id !== ids.everyoneID)
+				.reduce((mentions, id, i) => mentions + `${(i % 3 === 0) ? '\n' : ''}&lt;@&amp;${id}> `, '')
+			: '';
+	}
+
+	function errorText(helpText, command) {
+		return '\n\n' + helpText + '\n' + formatList({
+			'Help Command': `${prefixCommand(commands.help)} ${command}`,
+		});
+	}
+
+	function prefixCommand(command) {
+		return `${prefix}${command.command}`;
+	}
+
+	function prefixAlias(command) {
+		return [...command.aliases]
+			.map(alias => prefix + alias)
+			.join(', ');
+	}
 };</code></pre>
         </article>
     </section>
