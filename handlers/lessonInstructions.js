@@ -12,16 +12,16 @@ module.exports = async (id, guild) => {
 	const instructionsChnl = bot.channels.cache.get(id);
 
 	const instructorCommands = `
-		\`${await prefixCommand(lesson)} view\` - Preview details and attached resources of an assigned lesson.
-		\`${await prefixCommand(lesson)} add\` - Add a resource to a lesson.
-		\`${await prefixCommand(lesson)} remove\` - Remove a resource from a lesson.
-		\`${await prefixCommand(lesson)} submit\` - Submit a lesson for approval.
-		\`${await prefixCommand(seen)}\` - ${seen.description.general}
+		\`${await prefixCommand(lesson, guild)} view\` - Preview details and attached resources of an assigned lesson.
+		\`${await prefixCommand(lesson, guild)} add\` - Add a resource to a lesson.
+		\`${await prefixCommand(lesson, guild)} remove\` - Remove a resource from a lesson.
+		\`${await prefixCommand(lesson, guild)} submit\` - Submit a lesson for approval.
+		\`${await prefixCommand(seen, guild)}\` - ${seen.description.general}
 	`;
 
 	const staffCommands = `
-		\`${await prefixCommand(assign)}\` - ${assign.description.general}
-		\`${await prefixCommand(approve)}\` - ${approve.description.general}
+		\`${await prefixCommand(assign, guild)}\` - ${assign.description.general}
+		\`${await prefixCommand(approve, guild)}\` - ${approve.description.general}
 	`;
 
 	const instructionsEmbed = new Discord.MessageEmbed()
@@ -34,31 +34,31 @@ module.exports = async (id, guild) => {
 		.setFooter(`All lesson commands can be accessed directly without the '${lesson.command}' parent.`);
 
 	const addField = `
-		\`${await prefixCommand(lesson)} add <URL>\`
-		\`${await prefixCommand(lesson)} add\` with an attached file
+		\`${await prefixCommand(lesson, guild)} add <URL>\`
+		\`${await prefixCommand(lesson, guild)} add\` with an attached file
 	`;
 
 	const addExample = `
-		\`${await prefixCommand(lesson)} add https://www.cadetnet.org.nz/\`
+		\`${await prefixCommand(lesson, guild)} add https://www.cadetnet.org.nz/\`
 		[Example of attaching a file](https://i.imgur.com/sUHIdTB.png)
 	`;
 
 	const removeField = `
-		\`1.\` Type \`${await prefixCommand(lesson)} remove\`
+		\`1.\` Type \`${await prefixCommand(lesson, guild)} remove\`
 		\`2.\` A serialised list of submitted resources will be outputted
 		\`3.\` Reply with the serial of the resource you wish to remove
 		[Example of removing a resource](https://i.imgur.com/QDgRc5F.png)
 	`;
 
 	const assignField = `
-		\`1.\` Type \`${await prefixCommand(assign)} <user(s)>\`
+		\`1.\` Type \`${await prefixCommand(assign, guild)} <user(s)>\`
 		\`2.\` Respond to the prompts in DMs
 	`;
 
 	const developer = await bot.users.fetch(DEVELOPER_ID);
 
 	const assignExample = `
-		\`${await prefixCommand(assign)} @${developer.username}\`
+		\`${await prefixCommand(assign, guild)} @${developer.username}\`
 		[Example of DM prompts](https://imgur.com/a/y6iO6d1)
 	`;
 
@@ -66,10 +66,10 @@ module.exports = async (id, guild) => {
 		.setAuthor(bot.user.tag, bot.user.avatarURL())
 		.setTitle('Usage')
 		.setColor(colours.primary)
-		.addField(`${await prefixCommand(lesson)} add`, addField, true)
+		.addField(`${await prefixCommand(lesson, guild)} add`, addField, true)
 		.addField('Example', addExample, true)
-		.addField(`${await prefixCommand(lesson)} remove`, removeField)
-		.addField(`${await prefixCommand(assign)}`, assignField, true)
+		.addField(`${await prefixCommand(lesson, guild)} remove`, removeField)
+		.addField(`${await prefixCommand(assign, guild)}`, assignField, true)
 		.addField('Example', assignExample, true);
 
 	await sendMsg(instructionsChnl, { embeds: [instructionsEmbed] });

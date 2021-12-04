@@ -79,7 +79,7 @@ module.exports = async guild => {
 			.setDescription(`**${msg.member.displayName}** has submitted leave for you in **#${msg.channel.name}**.`)
 			.addField('Channel', msg.channel.toString())
 			.addField('Remarks', capitalise(args.join(' ')))
-			.setFooter(`Reply with '${await prefixCommand(help)} ${leave.command}' to learn how to request leave for yourself.`);
+			.setFooter(`Reply with '${await prefixCommand(help, guild)} ${leave.command}' to learn how to request leave for yourself.`);
 
 		// Get the guild's attendance channel
 		const attendanceChannel = bot.channels.cache.get(attendanceID);
