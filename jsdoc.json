@@ -1,14 +1,10 @@
 {
 	"source": {
 		"include": [
-			"commands",
-			"events",
-			"handlers",
-			"models",
-			"modules"
+			"./"
 		],
 		"includePattern": ".js$",
-		"excludePattern": "(node_modules/|docs)"
+		"excludePattern": "(node_modules|docs)"
 	},
 	"plugins": [
 		"plugins/markdown"
