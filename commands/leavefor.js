@@ -7,10 +7,10 @@ const Typings = require('../typings');
 const { capitalise, commandError, dateTimeGroup, prefixCommand, remove, sendDirect, sendMsg, successReact } = require('../modules');
 
 /**
- * Attach the command.execute() function to command object
+ * Complete the \<Command> object from a \<CommandBase>
  * @module commands/leavefor
  * @param {Discord.Guild} guild The guild that the member shares with the bot
- * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a command.execute() property
+ * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
 	const { ids: { attendanceID }, commands: { help, leave, leaveFor }, colours } = await require('../handlers/database')(guild);

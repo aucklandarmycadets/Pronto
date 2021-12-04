@@ -8,10 +8,10 @@ const Typings = require('../typings');
 const { commandError, debugError, embedScaffold, errorReact } = require('../modules');
 
 /**
- * Attach the command.execute() function to command object
+ * Complete the \<Command> object from a \<CommandBase>
  * @module commands/purge
  * @param {Discord.Guild} guild The guild that the member shares with the bot
- * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a command.execute() property
+ * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
 	const { commands: { purge }, colours } = await require('../handlers/database')(guild);

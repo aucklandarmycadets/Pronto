@@ -1,22 +1,25 @@
 'use strict';
 
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
+
 const { dateTimeGroup, sendMsg } = require('../modules');
 
 /**
- * Attach the command.execute() function to command object
+ * Complete the \<Command> object from a \<CommandBase>
  * @module commands/ping
  * @param {Discord.Guild} guild The guild that the member shares with the bot
- * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a command.execute() property
+ * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
 	const { commands: { ping }, colours } = await require('../handlers/database')(guild);
 
 	/**
 	 * Calculate the latency of the bot
-	 * @param {Discord.Message} msg The \<Message> that executed the command
+	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
-	ping.execute = msg => {
+	ping.execute = ({ msg }) => {
 		const { version } = require('../pronto');
 
 		// Send initial pong message

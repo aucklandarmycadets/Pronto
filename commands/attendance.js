@@ -10,10 +10,10 @@ const { commandError, deleteMsg, dateTimeGroup, emojiReact, sendDirect, sendMsg 
 const { confirmWithReaction } = require('../handlers');
 
 /**
- * Attach the command.execute() function to command object
+ * Complete the \<Command> object from a \<CommandBase>
  * @module commands/attendance
  * @param {Discord.Guild} guild The guild that the member shares with the bot
- * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a command.execute() property
+ * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
 	const { ids: { attendanceID, formations }, commands: { attendance }, colours } = await require('../handlers/database')(guild);

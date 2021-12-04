@@ -2,32 +2,34 @@
 
 // eslint-disable-next-line no-unused-vars
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
+
 const fs = require('fs');
 
 /**
- * Load the bot's commands from the commands directory for a specified guild
+ * Load the bot's \<Commands> from the commands directory for a specified guild
  * @function handlers.commandLoader
- * @param {string} directory The directory to load commands from
- * @param {Discord.Guild} guild The \<Guild> to load commands for
- * @returns {Promise<Object.<string, Object.<string, string | string[] | boolean | Function>>>} The loaded commands object containing each of the guild's commands in a nested object
+ * @param {string} directory The directory to load each \<Command> from
+ * @param {Discord.Guild} guild The \<Guild> to load \<Commands> for
+ * @returns {Promise<Typings.Commands>} The loaded \<Commands> object for the guild, containing each \<Command> in a nested object
  */
 module.exports = async (directory, guild) => {
-	// Read the file names of every Javascript file in the directory, other than the index file
+	// Read the file names of every Javascript file in the directory, other than the index and <CommandsBase> schematic files
 	const files = fs.readdirSync(directory).filter(file => file.endsWith('.js') && !['index.js', 'commands.js'].includes(file));
 
 	// Initialise an empty commands object
 	const commandsObj = {};
 
-	// Loop through each command file
+	// Loop through each <Command> file name
 	for (const file of files) {
-		// Parse the command name by removing the file extension
+		// Parse the <CommandName> by removing the file extension
 		const command = file.replace('.js', '');
-		// Load each command by passing the guild into each command file's exported function
-		// This completes the individual command's object by adding the command.execute() function to the command object
-		// Store each indiviudal command as a [key, value] pair within the commands object, where the key is the command name and the value is the command object
+		// Load each <Command> by passing the guild into each command file's exported function
+		// Store each indiviudal <Command> as a [key, value] pair within the <Commands> object, where the key is the <CommandName> and the value is the <Command> object
 		commandsObj[command] = await require(`.${directory}/${command}`)(guild);
 	}
 
-	// Return the loaded commands object
+	// Return the loaded <Commands> object
 	return commandsObj;
 };

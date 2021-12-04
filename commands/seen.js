@@ -8,10 +8,10 @@ const { commandError, dateTimeGroup, sendMsg, successReact } = require('../modul
 const { findLesson } = require('../handlers');
 
 /**
- * Attach the command.execute() function to command object
+ * Complete the \<Command> object from a \<CommandBase>
  * @module commands/seen
  * @param {Discord.Guild} guild The guild that the member shares with the bot
- * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a command.execute() property
+ * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
 	const { ids: { lessonsID }, commands: { seen }, colours } = await require('../handlers/database')(guild);

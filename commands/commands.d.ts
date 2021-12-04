@@ -2,7 +2,7 @@ import Discord = require('discord.js');
 import Typings = require('../typings');
 
 /**
- * The \<Client> object for Pronto, with an extended \<Client.commands> property to store the guild's commands, upserted on each execution of `handlers.commandHandler()`
+ * The \<Client> object for Pronto, with an extended \<Client.commands> property to store the guild's \<Commands>, upserted on each execution of `handlers.commandHandler()`
  */
 export interface Client extends Discord.Client {
 	commands: ?Discord.Collection<CommandName, Command>;
@@ -10,6 +10,18 @@ export interface Client extends Discord.Client {
 
 /** The name of the command */
 declare type CommandName = string;
+
+/**
+ * The description of the command, which differs depending on whether the message command is qualified with a different \<CommandName> as an argument
+ */
+export interface DynamicCommandDescription {
+	/** The description to display in the command's own help text */
+	general: string;
+	/** The description to display as the command's base description */
+	unqualified: string;
+	/** The description to display as the command's description if qualified with a different \<CommandName> */
+	qualified: string;
+}
 
 /**
  * The base of each of Pronto's commands, with the base properties to construct a complete \<Command>
@@ -20,7 +32,7 @@ export interface CommandBase {
 	/** The aliases for the command */
 	aliases: string[];
 	/** The description of the command */
-	description: string;
+	description: string | DynamicCommandDescription;
 	/** Whether to allow the command to execute from a direct message */
 	allowDirect: boolean;
 	/** A <Role.id[]> of which the \<GuildMember> must have at least one to execute the command */
@@ -65,7 +77,7 @@ export interface Commands {
  * An \<Object> of the valid parameters accepted by the \<Command.execute()> method
  */
 export interface CommandParameters {
-	/** The \<Message> that executed the command, or the \<Message> that the reaction collector was attached to */
+	/** The \<Message> that executed the \<Command>, or the \<Message> that the reaction collector was attached to */
 	msg: Discord.Message;
 	/** The \<string[]> containing the command arguments */
 	args: ?string[];

@@ -17,10 +17,10 @@ const { confirmWithReaction, unsubmittedLessons } = require('../handlers');
 const recentlyAssigned = new Set();
 
 /**
- * Attach the command.execute() function to command object
+ * Complete the \<Command> object from a \<CommandBase>
  * @module commands/assign
  * @param {Discord.Guild} guild The guild that the member shares with the bot
- * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a command.execute() property
+ * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
 	const { ids: { lessonsID, trainingIDs }, commands: { seen, assign }, colours, emojis } = await require('../handlers/database')(guild);
@@ -193,7 +193,7 @@ module.exports = async guild => {
 									// Create a new reaction collector on the acknowledgement message with the filter applied
 									const collector = ackMessage.createReactionCollector(filter, { dispose: true });
 
-									// Execute the commands\seen.js command when an instructor acknowledges the lesson warning via reaction
+									// Execute the commands\seen.js <Command> when an instructor acknowledges the lesson warning via reaction
 									collector.on('collect', async (_, user) => bot.commands.get(seen.command).execute({ msg: ackMessage, user: user }));
 								});
 						})
@@ -256,7 +256,7 @@ module.exports = async guild => {
 
 /**
  * Collect the all the required inputs from the user and return an object with their completed inputs
- * @param {Discord.Message} msg The \<Message> that executed the command
+ * @param {Discord.Message} msg The \<Message> that executed the \<Command>
  * @param {Object.<string, {prompt: string, type: InputType, allowMultiple: boolean}>} prompts An object defining the individual inputs to prompt for
  * - Must contain an object.prompt property of type \<string>
  * - Must contain an object.type property for the type of input of type \<string>: `TEXT` || `DATE` || `ATTACHMENT`
@@ -294,7 +294,7 @@ async function getUserInput(msg, prompts, colours) {
 /**
  * Display a prompt to the user and collect & process their input according to the type of input
  * @param {Discord.MessageEmbed} prompt The embed to use to prompt the user for the input
- * @param {Discord.Message} msg The \<Message> that executed the command
+ * @param {Discord.Message} msg The \<Message> that executed the \<Command>
  * @param {InputType} type The type of input being prompted for: `TEXT` || `DATE` || `ATTACHMENT`
  * @param {Typings.Colours} colours The guild's colour object
  * @param {boolean} allowMultiple Whether to allow multiple inputs
@@ -379,7 +379,7 @@ async function msgPrompt(prompt, msg, type, colours, allowMultiple) {
 /**
  * Implements a loop to allow multiple inputs for a given prompt, which are returned in an array
  * @param {Discord.MessageEmbed} prompt The embed to use to prompt the user for the input
- * @param {Discord.Message} msg The \<Message> that executed the command
+ * @param {Discord.Message} msg The \<Message> that executed the \<Command>
  * @param {InputType} type The type of input being prompted for: `TEXT` || `DATE` || `ATTACHMENT`
  * @param {Typings.Colours} colours The guild's colour object
  * @param {boolean} allowMultiple Whether to allow multiple inputs

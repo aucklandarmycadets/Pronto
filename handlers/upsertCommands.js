@@ -27,6 +27,12 @@ module.exports = async guild => {
 	return await database.save().catch(error => console.error(error));
 };
 
+/**
+ *
+ * @param {*} updatedCommands
+ * @param {Typings.Guild} database
+ * @returns
+ */
 async function process(updatedCommands, database) {
 	const commandsArray = Object.keys(updatedCommands);
 	const databaseArray = Object.keys(database.commands);
@@ -40,17 +46,17 @@ async function process(updatedCommands, database) {
 		}
 	}
 
-	// A string[] of the command object properties which may differ across each guild
+	// A string[] of the <CommandBase> properties which may differ across each guild
 	const guildProperties = ['requiredRoles', 'deniedRoles', 'allowDirect', 'displayInList'];
 
-	// Use Object.fromEntries() to create a sanitised commands object, where each command object is stripped of any guild-specific keys if they already exist in the guild's database
+	// Use Object.fromEntries() to create a sanitised object, where each <CommandBase> object is stripped of any guild-specific keys if they already exist in the guild's database
 	const sanitisedCommands = Object.fromEntries(
 		Object.entries(updatedCommands).map(([command, commandObj]) => {
-			// If the guild already has the command registered in its database, delete the guild modifiable properties from the updated command object
+			// If the guild already has the <CommandBase> registered in its database, delete the guild modifiable properties from the updated <CommandBase> object
 			if (database.commands[command]) guildProperties.forEach(guildProperty => delete commandObj[guildProperty]);
 
-			// Map to an array of key-value entries where each command name is a key and each updated command object is the corresponding value
-			// This is used by Object.fromEntries() to create the updated (and sanitised) commands object
+			// Map to an array of key-value entries where each <CommandName> is a key and each updated <CommandBase> object is the corresponding value
+			// This is used by Object.fromEntries() to create the updated (and sanitised) <CommandsBase>-derived object
 			return [command, commandObj];
 		}),
 	);

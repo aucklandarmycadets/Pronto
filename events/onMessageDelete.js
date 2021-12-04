@@ -30,7 +30,7 @@ module.exports = {
 
 		// Otherwise, if the deleted <Message> was sent in a guild and is not a partial, attempt to fully log its deletion
 		else if (msg.guild) {
-			// Call autoDeletingCommand() to check if the deleted <Message> was a command message for an auto-deleting command
+			// Call autoDeletingCommand() to check if the deleted <Message> was a command message for an auto-deleting <Command>
 			// If it was, do not log its deletion and cease further execution
 			if (autoDeletingCommand()) return;
 
@@ -70,7 +70,7 @@ module.exports = {
 			if (attachment) logEmbed.addField('Attachment', Discord.escapeMarkdown(attachment.name));
 
 			if (msg.channel.lastMessage) {
-				// If the message's <TextChannel> was not completely emptied, check if the last <Message> was a commands\purge.js command
+				// If the message's <TextChannel> was not completely emptied, check if the last <Message> was a commands\purge.js <Command>
 				if (msg.channel.lastMessage.content.includes(purge.command) || purge.aliases.some(alias => msg.channel.lastMessage.content.includes(alias))) {
 					// If it was, delete the command message
 					deleteMsg(msg.channel.lastMessage);
@@ -100,30 +100,30 @@ module.exports = {
 		sendMsg(logChannel, { embeds: [logEmbed] });
 
 		/**
-		 * Check whether a deleted \<Message> was deleted due to the execution of an auto-deleting command
-		 * @returns {boolean} Whether the deleted message is a command message that is auto-deleted by the bot upon command execution
+		 * Check whether a deleted \<Message> was deleted due to the execution of an auto-deleting \<Command>
+		 * @returns {boolean} Whether the deleted message is a command message that is auto-deleted by the bot upon \<Command> execution
 		 */
 		function autoDeletingCommand() {
-			// Use Promise.all() to ensure all command objects have been loaded before proceeding
+			// Use Promise.all() to ensure all <Command> objects have been loaded before proceeding
 			const autoDeletingCommands = Promise.all(
 				fs.readdirSync('./commands/')
-					// Read the file names of all the Javascript command files inside ./commands, other than the index file
-					.filter(file => file.endsWith('.js') && file !== 'index.js')
-					// Read the file contents of each command file, and filter the string[] to the names of only the files which reference modules.deleteMsg()
+					// Read the file names of all the Javascript command files inside ./commands, other than the index and <CommandBase> schematic files
+					.filter(file => file.endsWith('.js') && !['index.js', 'commands.js'].includes(file))
+					// Read the file contents of each <Command> file, and filter the string[] to the names of only the files which reference modules.deleteMsg()
 					.filter(file => fs.readFileSync(`./commands/${file}`, { encoding: 'utf-8', flag: 'r' }).includes('deleteMsg'))
-					// Load each command by passing the guild into each command file's exported function
+					// Load each <Command> by passing the guild into each command file's exported function
 					.map(async file => await require(`../commands/${file}`)(msg.guild)),
 			);
 
 			// Parse the arguments from the message, by splitting the string at the space characters
 			const args = msg.content.split(/ +/);
 
-			// Check if the command was executed with the guild's command prefix
+			// Check if the <Command> was executed with the guild's command prefix
 			const usesPrefix = msg.content.toLowerCase().startsWith(prefix.toLowerCase());
-			// Check if the command was executed by mentioning the bot user in place of a prefix
+			// Check if the <Command> was executed by mentioning the bot user in place of a prefix
 			const usesBotMention = stripID(args[0]) === bot.user.id;
 
-			// If the message does not begin with either the guild's command prefix or the bot's mention followed by a command, return false
+			// If the message does not begin with either the guild's command prefix or the bot's mention followed by a potential <CommandName>, return false
 			if (!usesPrefix && (!usesBotMention || args.length === 1)) return false;
 
 			// Parse the message command
@@ -133,7 +133,7 @@ module.exports = {
 				// If the command message uses the guild's command prefix, remove the first element and remove the prefix from the substring
 				: args.shift().toLowerCase().replace(prefix.toLowerCase(), '');
 
-			// Check whether the parsed message command matches to a command file that references modules.deleteMsg(), and return the boolean result
+			// Check whether the parsed message command matches to a <Command> file that references modules.deleteMsg(), and return the boolean result
 			return autoDeletingCommands.some(command => command.command === msgCommand || command.aliases.includes(msgCommand));
 		}
 	},

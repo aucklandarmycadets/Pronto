@@ -17,10 +17,17 @@ const { formatList } = require('./modules');
  */
 
 /**
+ * @typedef {Object} commands.DynamicCommandDescription The description of the command, which differs depending on whether the message command is qualified with a different [\<CommandName>]{@link commands.CommandName} as an argument
+ * @property {string} general The description to display in the command's own help text
+ * @property {string} unqualified The description to display as the command's base description
+ * @property {string} qualified The description to display as the command's description if qualified with a different [\<CommandName>]{@link commands.CommandName}
+ */
+
+/**
  * @typedef {Object} commands.CommandBase The base of each of Pronto's commands, with the base properties to construct a complete [\<Command>]{@link commands.Command}
  * @property {commands.CommandName} command The name of the command
  * @property {string[]} aliases The aliases for the command
- * @property {string} description The description of the command
+ * @property {string | commands.DynamicCommandDescription} description The description of the command
  * @property {boolean} allowDirect Whether to allow the command to execute from a direct message
  * @property {Discord.Snowflake[]} requiredRoles A <Role.id[]> of which the \<GuildMember> must have at least one to execute the command
  * @property {Discord.Snowflake[]} deniedRoles A <Role.id[]> of which the \<GuildMember> must have none to execute the command
@@ -35,8 +42,9 @@ const { formatList } = require('./modules');
  */
 
 /**
- * @typedef {commands.CommandBase} commands.Command The complete \<Command> object for one of Pronto's commands, with a [\<Command.execute()>]{@link commands.Execute} method
- * @property {commands.Execute} execute The command's [\<Command.execute()>]{@link commands.Execute} method
+ * @typedef {commands.CommandBase} commands.Command The complete \<Command> object for one of Pronto's commands, with a [\<Command.execute()>]{@link commands.CommandExecute} method
+ * @extends {commands.CommandBase}
+* @property {commands.CommandExecute} execute The command's [\<Command.execute()>]{@link commands.CommandExecute} method
  */
 
 /**
@@ -44,14 +52,14 @@ const { formatList } = require('./modules');
  */
 
 /**
- * @typedef {Function} commands.Execute A command's \<Command.execute()> method
+ * @typedef {Function} commands.CommandExecute A command's \<Command.execute()> method
  * @param {commands.CommandParameters} parameters The [\<CommandParameters>]{@link commands.CommandParameters} to execute this command
  * @returns {Promise<void | Typings.Lesson>} Void, or the [\<Lesson>]{@link models.Lesson} object
  */
 
 /**
- * @typedef {Object} commands.CommandParameters An \<Object> of the valid parameters accepted by the [\<Command.execute()>]{@link commands.Execute} method
- * @property {Discord.Message} msg The \<Message> that executed the command, or the \<Message> that the reaction collector was attached to
+ * @typedef {Object} commands.CommandParameters An \<Object> of the valid parameters accepted by the [\<Command.execute()>]{@link commands.CommandExecute} method
+ * @property {Discord.Message} msg The \<Message> that executed the \<Command>, or the \<Message> that the reaction collector was attached to
  * @property {?string[]} args The \<string[]> containing the command arguments
  * @property {?string} msgCommand The message argument that was parsed to this [\<CommandBase>]{@link commands.CommandBase}, i.e. either \<CommandBase.command> or \<CommandBase.aliases.includes(msgCommand)>
  * @property {?Discord.User} user The \<User> that triggered the reaction collector
@@ -60,13 +68,16 @@ const { formatList } = require('./modules');
 /**
  *
  * @param {Discord.Guild | 'BREAK'} guild
- * @returns
+ * @returns {Typings.CommandsBase}
  */
 module.exports = async guild => {
 	const { settings: { prefix }, ids } = (guild === 'BREAK')
 		? require('./config')
 		: await require('./handlers/database')(guild);
 
+	/**
+	 * @type {Typings.CommandsBase}
+	 */
 	const commands = {
 		ping: {
 			command: 'ping',

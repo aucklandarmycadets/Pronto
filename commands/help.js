@@ -9,10 +9,10 @@ const { deleteMsg, directCommandError, embedScaffold, errorReact, formatList, ge
 const { permissionsHandler } = require('../handlers');
 
 /**
- * Attach the command.execute() function to command object
+ * Complete the \<Command> object from a \<CommandBase>
  * @module commands/help
  * @param {Discord.Guild} guild The guild that the member shares with the bot
- * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a command.execute() property
+ * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
 	const { settings: { prontoLogo }, commands: { help, ...commands }, colours } = await require('../handlers/database')(guild);
@@ -46,33 +46,33 @@ module.exports = async guild => {
 			? args[0].toLowerCase()
 			: null;
 
-		// Attempt to read the parsed argument command and find the command function
+		// Attempt to read the parsed argument command and find the <Command>
 		const command = bot.commands.get(argCommand) || bot.commands.find(_command => _command.aliases && _command.aliases.includes(_command));
 
 		// Initialise blank help embed
 		const helpEmbed = new Discord.MessageEmbed();
 
 		(command)
-			// If command function was recognised, ensure the member has the necessary permissions for that command
+			// If the <Command> has been found, ensure the member has the necessary permissions for the <Command>
 			? (await permissionsHandler(msg, command))
-				// If so, send the help embed for that command
+				// If so, send the help embed for the <Command>
 				? sendHelpEmbed()
 				: (msg.guild)
 					// Otherwise, send a list of usable commands if help command message was in a guild
 					? sendCommandList()
 					// If the help command message was in a DM, reply with an invalid permission error message
 					: directCommandError(msg, 'NO_PERMISSION')
-			// If the command was not recognised, send the list of usable commands
+			// If a <Command> was not recognised, send the list of usable commands
 			: sendCommandList();
 
 		/**
-		 * Send a help embed for the specified command back to the user
+		 * Send a help embed for the specified \<Command> back to the user
 		 */
 		async function sendHelpEmbed() {
 			// Set the appropriate title for the help embed
 			helpEmbed.setTitle(`Command: ${await prefixCommand(command, guild)}`);
 			helpEmbed.setColor(colours.primary);
-			// Set the embed description to the help text for the identified command
+			// Set the embed description to the help text for the identified \<Command>
 			helpEmbed.setDescription(command.help);
 
 			// If the help command message was sent in a guild, add a footer identifying the message author and send it into the same channel
@@ -96,18 +96,18 @@ module.exports = async guild => {
 		 * Send a list of all the commands the user is permitted to use
 		 */
 		async function sendCommandList() {
-			// Initialise the list (stored as a [key, value] object) of commands with the two entries for the help command
+			// Initialise the list (stored as a [key, value] object) of commands with the unqualified and qualified descriptions of the help \<CommandBase>
 			// i.e. unqualified help (no argument command) and qualified help (specified argument command)
-			const commandsObj = {
+			const commandsList = {
 				[await prefixCommand(help, guild)]: help.description.unqualified,
 				[`${await prefixCommand(help, guild)} [command]`]: help.description.qualified,
 			};
 
-			// Iterate through each remaining guild command
+			// Iterate through each remaining \<CommandBase>
 			for (const guildCommand of Object.values(commands)) {
-				// Check whether the member has the necessary permissions for the command and if it should be displayed in the commands list
-				// If so, create a new [key, value] entry in the commands object
-				if (await permissionsHandler(msg, guildCommand) && guildCommand.displayInList) commandsObj[`${await prefixCommand(guildCommand, guild)}`] = guildCommand.description;
+				// Check whether the member has the necessary permissions for the <CommandBase> and if it should be displayed in the commands list
+				// If so, create a new [key, value] entry in the commandsList object
+				if (await permissionsHandler(msg, guildCommand) && guildCommand.displayInList) commandsList[`${await prefixCommand(guildCommand, guild)}`] = guildCommand.description;
 			}
 
 			// If the original help command message was not deleted, react with the appropriate emoji, depending on whether an argument command was included or not
@@ -121,8 +121,8 @@ module.exports = async guild => {
 			helpEmbed.setTitle('Commands List');
 			helpEmbed.setThumbnail(prontoLogo);
 			helpEmbed.setColor(colours.primary);
-			// Format the commands object using the modules.formatList() function
-			helpEmbed.setDescription(formatList(commandsObj, true));
+			// Format the commandsList object using modules.formatList()
+			helpEmbed.setDescription(formatList(commandsList, true));
 			// Add developer information to embed footer
 			helpEmbed.setFooter(`Developed by ${James.tag}`, James.avatarURL({ dynamic: true }));
 

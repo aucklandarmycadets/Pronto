@@ -11,22 +11,19 @@ const { confirmWithReaction, findLesson, unsubmittedLessons } = require('../hand
 const pendingConfirmation = new Set();
 
 /**
- * Attach the command.execute() function to command object
+ * Complete the \<Command> object from a \<CommandBase>
  * @module commands/lesson
  * @param {Discord.Guild} guild The guild that the member shares with the bot
- * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a command.execute() property
+ * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
 	const { ids: { lessonsID, trainingIDs }, commands: { lesson, seen, approve }, colours, emojis } = await require('../handlers/database')(guild);
 
 	/**
 	 * A family of sub-commands for an instructor to manage an existing lesson
-	 * @param {Discord.Message} msg The \<Message> that executed the command
-	 * @param {string[]} args The command arguments
-	 * @param {'view' | 'add' | 'remove' | 'submit' | string} msgCommand The message argument that was matched to this function
-	 * - Could be either command.command or an element of command.aliases
+	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
-	lesson.execute = async (msg, args, msgCommand) => {
+	lesson.execute = async ({ msg, args, msgCommand }) => {
 		const { bot } = require('../pronto');
 
 		// Find <Lesson> document by querying database for lesson channel ID
@@ -34,9 +31,9 @@ module.exports = async guild => {
 
 		// Attempt to parse the lesson sub-command from the command message
 		const command = (lesson.aliases.includes(msgCommand))
-			// If the message command is one of the aliases (i.e. a valid lesson sub-command), use it
+			// If the message command is one of the <CommandBase.aliases> (i.e. a valid lesson sub-command), use it
 			? msgCommand
-			// Otherwise, the command must have been executed with command.command
+			// Otherwise, the <Command> must have been executed with <CommandName>
 			: (args.length)
 				// Take the first command argument if it exists
 				? args.shift().toLowerCase()
@@ -302,7 +299,7 @@ module.exports = async guild => {
 								// Create a new reaction collector on the approval message with the filter applied
 								const collector = approveMsg.createReactionCollector(filter, { dispose: true });
 
-								// Execute the commands\approve.js command when a user with a Training Cell role approves the lesson plan via reaction
+								// Execute the commands\approve.js <Command> when a user with a Training Cell role approves the lesson plan via reaction
 								collector.on('collect', async (_, user) => bot.commands.get(approve.command).execute({ msg, user }));
 							});
 
@@ -367,7 +364,7 @@ function serialiseResources(lesson) {
 
 /**
  * Collect and return a \<number> input from the user
- * @param {Discord.Message} msg The \<Message> that executed the command
+ * @param {Discord.Message} msg The \<Message> that executed the \<Command>
  * @param {number[]} range A \<number[]> of valid number inputs
  * @param {Typings.Colours} colours The guild's colour object
  * @returns {Promise<number | 'CANCEL'>} The user's input, or the symbol `CANCEL`

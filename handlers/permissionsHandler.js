@@ -2,12 +2,15 @@
 
 // eslint-disable-next-line no-unused-vars
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
+
 const { getRoleError } = require('../modules');
 
 /**
  *
  * @param {Discord.Message} msg
- * @param {Object.<string, string | string[] | boolean>} command The command object to check permissions against
+ * @param {Typings.CommandBase} command The \<CommandBase> object to check permissions against
  * @returns
  */
 module.exports = async (msg, command) => {

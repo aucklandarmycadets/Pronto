@@ -1,24 +1,27 @@
 'use strict';
 
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
+
 const { Lesson } = require('../models');
 
 const { commandError, debugError, dateTimeGroup, embedScaffold, errorReact, sendMsg, successReact } = require('../modules');
 
 /**
- * Attach the command.execute() function to command object
+ * Complete the \<Command> object from a \<CommandBase>
  * @module commands/archive
  * @param {Discord.Guild} guild The guild that the member shares with the bot
- * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a command.execute() property
+ * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
 	const { ids: { logID, archivedID }, commands: { archive }, colours } = await require('../handlers/database')(guild);
 
 	/**
 	 * Archive a <TextChannel> by restricting channel visibility and moving it to a designated channel category
-	 * @param {Discord.Message} msg The \<Message> that executed the command
+	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
-	archive.execute = msg => {
+	archive.execute = ({ msg }) => {
 		const { bot } = require('../pronto');
 
 		// Extract the first mentioned channel

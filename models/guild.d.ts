@@ -1,5 +1,6 @@
 import mongoose = require('mongoose');
 import Discord = require('discord.js');
+import Typings = require('../typings');
 
 /**
  * An \<Object> representing the values of a \<mongoose.Document> to record the specific configuration for each \<Guild>
@@ -61,8 +62,8 @@ export interface Guild extends mongoose.Document {
 		/** An \<Object[]> of the guild's pairings of \<VoiceChannel> and \<TextChannel> */
 		channelPairs: ChannelPair[];
 	};
-	/** The guild's commands object containing each individual command in a nested object */
-	commands: Object.<string, Object.<string, string | string[] | boolean>>;
+	/** The guild's \<CommandsBase> object containing each individual \<CommandBase> under the property [CommandName] */
+	commands: Typings.CommandsBase;
 	/** The guild's emojis object */
 	emojis: {
 		/** The guild's success emoji */

@@ -10,7 +10,7 @@ module.exports = {
 	process: [],
 	/**
 	 * Event handler to log whenever a \<Message> is updated,
-	 * and to call handlers.commandHandler() in case it is a command to be executed
+	 * and to call handlers.commandHandler() in case it is a \<Command> to be executed
 	 * @param {'messageUpdate'} _ The event that was emitted
 	 * @param {Discord.Message} oldMessage The \<Message> before the update
 	 * @param {Discord.Message} newMessage The \<Message> after the update

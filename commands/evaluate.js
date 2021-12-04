@@ -8,10 +8,10 @@ const { commandError, deleteMsg, dateTimeGroup, jsCodeBlock, sendMsg, ...modules
 const { database, ...handlers } = require('../handlers');
 
 /**
- * Attach the command.execute() function to command object
+ * Complete the \<Command> object from a \<CommandBase>
  * @module commands/evaluate
  * @param {Discord.Guild} guild The guild that the member shares with the bot
- * @returns {Promise<Object.<string, string | string[] | boolean | Function>>} The complete command object with a command.execute() property
+ * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
 	const { commands: { evaluate, ...commands }, colours, _doc: settings, ...document } = await database(guild);
