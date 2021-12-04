@@ -32,7 +32,7 @@ module.exports = {
 	rolesOutput: require('./rolesOutput'),
 	sendDirect: require('./sendDirect'),
 	sendMsg: require('./sendMsg'),
-	sortByRoles: require('./sortByRoles'),
+	sortMembersByRoles: require('./sortMembersByRoles'),
 	stripID: require('./stripID'),
 	successReact: require('./successReact'),
 	titleCase: require('./titleCase'),

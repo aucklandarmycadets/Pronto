@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 // eslint-disable-next-line no-unused-vars
 const Typings = require('../typings');
 
-const { commandError, dateTimeGroup, sendMsg, sortByRoles, successReact } = require('../modules');
+const { commandError, dateTimeGroup, sendMsg, sortMembersByRoles, successReact } = require('../modules');
 
 /**
  * Complete the \<Command> object from a \<BaseCommand>
@@ -39,7 +39,7 @@ module.exports = async guild => {
 		catch (error) { return commandError(msg, error, connected.error, 'Note: Use the <#channelID> syntax!'); }
 
 		// Sort connected members in descending order according to their highest (non-administrator) role, then map the <Collection> to a string[] of member mentions
-		const connectedMembers = channel.members.sort(sortByRoles(guild)).map(member => member.toString());
+		const connectedMembers = channel.members.sort(sortMembersByRoles(guild)).map(member => member.toString());
 
 		// Return an error message if there are no members connected to the channel
 		if (connectedMembers.length === 0) return commandError(msg, `There are no members connected to ${channel}.`, connected.error, 'Note: Use the <#channelID> syntax!');
