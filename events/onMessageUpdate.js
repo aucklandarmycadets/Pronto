@@ -17,10 +17,11 @@ module.exports = {
 	 */
 	async handler(_, oldMessage, newMessage) {
 		const { bot } = require('../pronto');
-		const { ids: { logID }, colours } = await require('../handlers/database')(newMessage.guild);
 
 		// Ensure the updated <Message> is not a partial by calling the <Message.fetch()> method
 		if (newMessage.partial) await newMessage.fetch();
+
+		const { ids: { logID }, colours } = await require('../handlers/database')(newMessage.guild);
 
 		// Call handlers.commandHandler() to handle a potential command message
 		commandHandler(newMessage);
