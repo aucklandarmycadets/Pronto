@@ -16,12 +16,12 @@ module.exports = async (id, guild) => {
 		\`${await prefixCommand(lesson)} add\` - Add a resource to a lesson.
 		\`${await prefixCommand(lesson)} remove\` - Remove a resource from a lesson.
 		\`${await prefixCommand(lesson)} submit\` - Submit a lesson for approval.
-		\`${await prefixCommand(seen)}\` - ${seen.description}
+		\`${await prefixCommand(seen)}\` - ${seen.description.general}
 	`;
 
 	const staffCommands = `
-		\`${await prefixCommand(assign)}\` - ${assign.description}
-		\`${await prefixCommand(approve)}\` - ${approve.description}
+		\`${await prefixCommand(assign)}\` - ${assign.description.general}
+		\`${await prefixCommand(approve)}\` - ${approve.description.general}
 	`;
 
 	const instructionsEmbed = new Discord.MessageEmbed()

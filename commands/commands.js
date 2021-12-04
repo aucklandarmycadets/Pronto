@@ -17,17 +17,17 @@ const { formatList } = require('./modules');
  */
 
 /**
- * @typedef {Object} commands.DynamicCommandDescription The description of the command, which differs depending on whether the message command is qualified with a different [\<CommandName>]{@link commands.CommandName} as an argument
- * @property {string} general The description to display in the command's own help text
- * @property {string} unqualified The description to display as the command's base description
- * @property {string} qualified The description to display as the command's description if qualified with a different [\<CommandName>]{@link commands.CommandName}
+ * @typedef {Object} commands.CommandDescription The description of the command, which may differ depending on whether the message command is qualified with a different [\<CommandName>]{@link commands.CommandName} as an argument
+ * @property {string} general The description of the command, or the description to display in the command's base help text if the command supports a dynamic description
+ * @property {?string} unqualified The description to display as the command's base description if the command supports a dynamic description
+ * @property {?string} qualified The description to display as the command's description if qualified with a different [\<CommandName>]{@link commands.CommandName}, if the command supports a dynamic description
  */
 
 /**
  * @typedef {Object} commands.BaseCommand The base of each of Pronto's commands, with the base properties to construct a complete [\<Command>]{@link commands.Command}
  * @property {commands.CommandName} command The name of the command
  * @property {string[]} aliases The aliases for the command
- * @property {string | commands.DynamicCommandDescription} description The description of the command
+ * @property {commands.CommandDescription} description The [\<CommandDescription>]{@link commands.CommandDescription} object of the command
  * @property {boolean} allowDirect Whether to allow the command to execute from a direct message
  * @property {Discord.Snowflake[]} requiredRoles A <Role.id[]> of which the \<GuildMember> must have at least one to execute the command
  * @property {Discord.Snowflake[]} deniedRoles A <Role.id[]> of which the \<GuildMember> must have none to execute the command
@@ -35,7 +35,7 @@ const { formatList } = require('./modules');
  * @property {boolean} displayInList Whether to display the command in the guild's commands list
  * @property {string} help The help text to display for the command
  * @property {?string} error The error text to display for the command
-*/
+ */
 
 /**
  * @typedef {Object.<commands.CommandName, commands.BaseCommand>} commands.BaseCommands The base of Pronto's commands object, where each [\<BaseCommand>]{@link commands.BaseCommand} is stored in the \<BaseCommands> object under the property [{@link commands.CommandName|CommandName}]
@@ -44,7 +44,7 @@ const { formatList } = require('./modules');
 /**
  * @typedef {commands.BaseCommand} commands.Command The complete \<Command> object for one of Pronto's commands, with a [\<Command.execute()>]{@link commands.CommandExecute} method
  * @extends {commands.BaseCommand}
-* @property {commands.CommandExecute} execute The command's [\<Command.execute()>]{@link commands.CommandExecute} method
+ * @property {commands.CommandExecute} execute The command's [\<Command.execute()>]{@link commands.CommandExecute} method
  */
 
 /**
@@ -82,7 +82,9 @@ module.exports = async guild => {
 		ping: {
 			command: 'ping',
 			aliases: ['p'],
-			description: 'Test the latency of the bot.',
+			description: {
+				general: 'Test the latency of the bot.',
+			},
 			allowDirect: true,
 			requiredRoles: [],
 			deniedRoles: [],
@@ -91,7 +93,7 @@ module.exports = async guild => {
 			get help() {
 				return formatList({
 					'Aliases': prefixAlias(this),
-					'Description': this.description,
+					'Description': this.description.general,
 					'Usage': prefixCommand(this),
 				});
 			},
@@ -102,7 +104,9 @@ module.exports = async guild => {
 		uptime: {
 			command: 'uptime',
 			aliases: ['up'],
-			description: 'Time since last restart.',
+			description: {
+				general: 'Time since last restart.',
+			},
 			allowDirect: true,
 			requiredRoles: [],
 			deniedRoles: [],
@@ -111,7 +115,7 @@ module.exports = async guild => {
 			get help() {
 				return formatList({
 					'Aliases': prefixAlias(this),
-					'Description': this.description,
+					'Description': this.description.general,
 					'Usage': prefixCommand(this),
 				});
 			},
@@ -122,7 +126,9 @@ module.exports = async guild => {
 		evaluate: {
 			command: 'evaluate',
 			aliases: ['eval'],
-			description: 'Evaluate Javascript code.',
+			description: {
+				general: 'Evaluate Javascript code.',
+			},
 			allowDirect: true,
 			requiredRoles: [],
 			deniedRoles: [],
@@ -131,7 +137,7 @@ module.exports = async guild => {
 			get help() {
 				return formatList({
 					'Aliases': prefixAlias(this),
-					'Description': this.description,
+					'Description': this.description.general,
 					'Usage': `${prefixCommand(this)} <code>`,
 				});
 			},
@@ -148,7 +154,9 @@ module.exports = async guild => {
 		restart: {
 			command: 'restart',
 			aliases: ['new', 'kill', 'update'],
-			description: 'Restart the bot.',
+			description: {
+				general: 'Restart the bot.',
+			},
 			allowDirect: true,
 			requiredRoles: [],
 			deniedRoles: [],
@@ -157,7 +165,7 @@ module.exports = async guild => {
 			get help() {
 				return formatList({
 					'Aliases': prefixAlias(this),
-					'Description': this.description,
+					'Description': this.description.general,
 					'Usage': prefixCommand(this),
 				});
 			},
@@ -205,7 +213,9 @@ module.exports = async guild => {
 		leave: {
 			command: 'leave',
 			aliases: ['lv'],
-			description: 'Submit a leave request.',
+			description: {
+				general: 'Submit a leave request.',
+			},
 			allowDirect: false,
 			requiredRoles: [],
 			deniedRoles: [],
@@ -214,7 +224,7 @@ module.exports = async guild => {
 			get help() {
 				return formatList({
 					'Aliases': prefixAlias(this),
-					'Description': this.description,
+					'Description': this.description.general,
 					'Usage': `${prefixCommand(this)} <date(s)> <activity> <reason> [additional remarks]`,
 					'Example': `${prefixCommand(this)} 01 Jan for Parade Night due to an appointment`,
 				});
@@ -232,7 +242,9 @@ module.exports = async guild => {
 		lesson: {
 			command: 'lesson',
 			aliases: ['view', 'add', 'remove', 'submit'],
-			description: 'Commands to aid in actioning an assigned lesson.',
+			description: {
+				general: 'Commands to aid in actioning an assigned lesson.',
+			},
 			allowDirect: false,
 			requiredRoles: [],
 			deniedRoles: [],
@@ -241,7 +253,7 @@ module.exports = async guild => {
 			get help() {
 				return formatList({
 					'Aliases': prefixAlias(this),
-					'Description': this.description,
+					'Description': this.description.general,
 					'Usage': prefixCommand(this),
 					'Allowed Categories': `<#${ids.lessonsID}>`,
 				});
@@ -259,7 +271,9 @@ module.exports = async guild => {
 		seen: {
 			command: 'seen',
 			aliases: ['ack'],
-			description: 'Acknowledge receipt of a lesson warning.',
+			description: {
+				general: 'Acknowledge receipt of a lesson warning.',
+			},
 			allowDirect: false,
 			requiredRoles: [],
 			deniedRoles: [],
@@ -268,7 +282,7 @@ module.exports = async guild => {
 			get help() {
 				return formatList({
 					'Aliases': prefixAlias(this),
-					'Description': this.description,
+					'Description': this.description.general,
 					'Usage': prefixCommand(this),
 					'Allowed Categories': `<#${ids.lessonsID}>`,
 				});
@@ -286,7 +300,9 @@ module.exports = async guild => {
 		leaveFor: {
 			command: 'leavefor',
 			aliases: ['lv4'],
-			description: 'Submit a leave request for another cadet.',
+			description: {
+				general: 'Submit a leave request for another cadet.',
+			},
 			allowDirect: false,
 			requiredRoles: [],
 			deniedRoles: [],
@@ -295,7 +311,7 @@ module.exports = async guild => {
 			get help() {
 				return formatList({
 					'Aliases': prefixAlias(this),
-					'Description': this.description,
+					'Description': this.description.general,
 					'Usage': `${prefixCommand(this)} <user> <date(s)> <activity> <reason> [additional remarks]`,
 					'Example': `${prefixCommand(this)} <@${DEVELOPER_ID}> 01 Jan for Parade Night due to an appointment`,
 					'Allowed Roles': rolesOutput(this.requiredRoles),
@@ -314,7 +330,9 @@ module.exports = async guild => {
 		attendance: {
 			command: 'attendance',
 			aliases: ['att', 'attdnce'],
-			description: 'Submit an attendance register.',
+			description: {
+				general: 'Submit an attendance register.',
+			},
 			allowDirect: false,
 			requiredRoles: [],
 			deniedRoles: [],
@@ -323,7 +341,7 @@ module.exports = async guild => {
 			get help() {
 				return formatList({
 					'Aliases': prefixAlias(this),
-					'Description': this.description,
+					'Description': this.description.general,
 					'Usage': `\n${prefixCommand(this)} <message>`,
 					'Allowed Roles': rolesOutput(this.requiredRoles),
 				});
@@ -341,7 +359,9 @@ module.exports = async guild => {
 		connected: {
 			command: 'connected',
 			aliases: ['cnnct', 'cnnctd'],
-			description: 'List the members connected to a voice channel.',
+			description: {
+				general: 'List the members connected to a voice channel.',
+			},
 			allowDirect: false,
 			requiredRoles: [],
 			deniedRoles: [],
@@ -350,7 +370,7 @@ module.exports = async guild => {
 			get help() {
 				return formatList({
 					'Aliases': prefixAlias(this),
-					'Description': this.description,
+					'Description': this.description.general,
 					'Usage': `${prefixCommand(this)} <voice channel>`,
 					'Example': `${prefixCommand(this)} #example-voice`,
 					'Allowed Roles': rolesOutput(this.requiredRoles),
@@ -369,7 +389,9 @@ module.exports = async guild => {
 		assign: {
 			command: 'assign',
 			aliases: ['give'],
-			description: 'Assign a lesson to an instructor.',
+			description: {
+				general: 'Assign a lesson to an instructor.',
+			},
 			allowDirect: false,
 			requiredRoles: [],
 			deniedRoles: [],
@@ -378,7 +400,7 @@ module.exports = async guild => {
 			get help() {
 				return formatList({
 					'Aliases': prefixAlias(this),
-					'Description': this.description,
+					'Description': this.description.general,
 					'Usage': `${prefixCommand(this)} <user(s)>`,
 					'Example': `${prefixCommand(this)} <@${DEVELOPER_ID}>`,
 					'Allowed Roles': rolesOutput(this.requiredRoles),
@@ -397,7 +419,9 @@ module.exports = async guild => {
 		approve: {
 			command: 'approve',
 			aliases: ['app', 'apprv', 'acc', 'accept'],
-			description: 'Approve a lesson plan.',
+			description: {
+				general: 'Approve a lesson plan.',
+			},
 			allowDirect: false,
 			requiredRoles: [],
 			deniedRoles: [],
@@ -406,7 +430,7 @@ module.exports = async guild => {
 			get help() {
 				return formatList({
 					'Aliases': prefixAlias(this),
-					'Description': this.description,
+					'Description': this.description.general,
 					'Usage': prefixCommand(this),
 					'Allowed Roles': rolesOutput(this.requiredRoles),
 					'Allowed Categories': `<#${ids.lessonsID}>`,
@@ -425,7 +449,9 @@ module.exports = async guild => {
 		archive: {
 			command: 'archive',
 			aliases: ['archv'],
-			description: 'Archive a text channel.',
+			description: {
+				general: 'Archive a text channel.',
+			},
 			allowDirect: false,
 			requiredRoles: [],
 			deniedRoles: [],
@@ -434,7 +460,7 @@ module.exports = async guild => {
 			get help() {
 				return formatList({
 					'Aliases': prefixAlias(this),
-					'Description': this.description,
+					'Description': this.description.general,
 					'Usage': `${prefixCommand(this)} <text channel>`,
 					'Example': `${prefixCommand(this)} #example-text`,
 					'Allowed Roles': rolesOutput(this.requiredRoles),
@@ -453,7 +479,9 @@ module.exports = async guild => {
 		purge: {
 			command: 'purge',
 			aliases: ['del', 'delete', 'clear'],
-			description: 'Delete a number of messages from a channel.',
+			description: {
+				general: 'Delete a number of messages from a channel.',
+			},
 			allowDirect: false,
 			requiredRoles: [],
 			deniedRoles: [],
@@ -462,7 +490,7 @@ module.exports = async guild => {
 			get help() {
 				return formatList({
 					'Aliases': prefixAlias(this),
-					'Description': this.description,
+					'Description': this.description.general,
 					'Usage': `${prefixCommand(this)} <count> [user]`,
 					'Examples': `\n${prefixCommand(this)} 10\n${prefixCommand(this)} 5 <@${DEVELOPER_ID}>`,
 					'Allowed Roles': rolesOutput(this.requiredRoles),

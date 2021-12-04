@@ -12,15 +12,15 @@ export interface Client extends Discord.Client {
 declare type CommandName = string;
 
 /**
- * The description of the command, which differs depending on whether the message command is qualified with a different \<CommandName> as an argument
+ * The description of the command, which may differ depending on whether the message command is qualified with a different \<CommandName> as an argument
  */
-export interface DynamicCommandDescription {
-	/** The description to display in the command's own help text */
+export interface CommandDescription {
+	/** The description of the command, or the description to display in the command's base help text if the command supports a dynamic description */
 	general: string;
-	/** The description to display as the command's base description */
-	unqualified: string;
-	/** The description to display as the command's description if qualified with a different \<CommandName> */
-	qualified: string;
+	/** The description of the command, or the description to display in the command's base help text if the command supports a dynamic description */
+	unqualified: ?string;
+	/** The description to display as the command's description if qualified with a different \<CommandName>, if the command supports a dynamic description */
+	qualified: ?string;
 }
 
 /**
@@ -31,8 +31,8 @@ export interface BaseCommand {
 	command: CommandName;
 	/** The aliases for the command */
 	aliases: string[];
-	/** The description of the command */
-	description: string | DynamicCommandDescription;
+	/** The \<CommandDescription> object of the command */
+	description: CommandDescription;
 	/** Whether to allow the command to execute from a direct message */
 	allowDirect: boolean;
 	/** A <Role.id[]> of which the \<GuildMember> must have at least one to execute the command */

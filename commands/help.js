@@ -107,7 +107,7 @@ module.exports = async guild => {
 			for (const guildCommand of Object.values(commands)) {
 				// Check whether the member has the necessary permissions for the <BaseCommand> and if it should be displayed in the commands list
 				// If so, create a new [key, value] entry in the commandsList object
-				if (await permissionsHandler(msg, guildCommand) && guildCommand.displayInList) commandsList[`${await prefixCommand(guildCommand, guild)}`] = guildCommand.description;
+				if (await permissionsHandler(msg, guildCommand) && guildCommand.displayInList) commandsList[`${await prefixCommand(guildCommand, guild)}`] = guildCommand.description.general;
 			}
 
 			// If the original help command message was not deleted, react with the appropriate emoji, depending on whether an argument command was included or not
