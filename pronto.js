@@ -7,24 +7,38 @@ const Discord = require('discord.js');
 const Typings = require('./typings');
 const { mongoose } = require('./handlers');
 
-// Export the bot's current version
-exports.version = '4.2.2';
-
 /**
- * Create a new \<Bot>, and allow partial \<Message> events
- * @type {Typings.Client}
+ * @namespace pronto
  */
+
+// Create a new <Client>, and allow partial <Message> events
 const bot = new Discord.Client({ partials: ['MESSAGE'] });
 
 // Log the bot in, then export the <Client> object
 bot.login(process.env.TOKEN)
-	.then(() => exports.bot = bot);
+	.then(() => {
+		module.exports = {
+			/**
+			 * The bot's \<Client> object
+			 * @memberof pronto
+			 * @type {Typings.Client}
+			 */
+			bot,
+			/**
+			 * Pronto's current version
+			 * @memberof pronto
+			 * @type {string}
+			 */
+			version: '4.2.2',
+		};
+	});
 
 // Log in to the MongoDB database
 mongoose.login(process.env.MONGOURI);
 
 /**
  * Attach an event listener to a \<Discord.Client> or \<NodeJS.Process> to execute an event handler
+ * @function pronto~eventHandler
  * @param {Discord.Client | NodeJS.Process} emitter The \<EventEmitter> to add the event listener to
  * @param {string} event The event to listen for
  * @param {Function} handler The event handler function to execute when the event is emitted
