@@ -30,7 +30,7 @@ module.exports = async (guild, destination, description, colour, type, fieldTitl
 
 	try {
 		// Ensure there is a valid destination channel
-		if (destination || debugChannel) {
+		if ((destination && type !== 'DEBUG') || (debugChannel && type === 'DEBUG')) {
 			if (type === 'DIRECT') sendDirect(destination, { embeds: [embed] }, null, true);
 			else if (type === 'DEVELOPER') sendDirect(destination, { embeds: [embed] }, null, true);
 			else if (type === 'MESSAGE') sendMsg(destination, { embeds: [embed] });
