@@ -11,7 +11,7 @@ const mongoose = require('mongoose');
  * @property {mongoose.Schema.Types.ObjectId} _id A unique document identifier
  * @property {Discord.Snowflake} lessonID The \<TextChannel.id> of the private lesson channel created for the lesson
  * @property {string} lessonName The name of the lesson
- * @property {Typings.Instructors} instructors An \<Object> containing a nested [\<Object>]{@link models.Instructors} for each lesson instructor with their \<User.id> and acknowledgement status
+ * @property {models.Instructors} instructors An \<Object> containing a nested [\<Object>]{@link models.Instructors} for each lesson instructor with their \<User.id> and acknowledgement status
  * @property {string} dueDate The formatted date-time group of the lesson plan's due date
  * @property {number} dueTimestamp The Unix timestamp (ms) of the of the lesson plan's due date
  * @property {string} lessonDate The formatted date-time group of the lesson's date
