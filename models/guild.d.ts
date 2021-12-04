@@ -62,8 +62,8 @@ export interface Guild extends mongoose.Document {
 		/** An \<Object[]> of the guild's pairings of \<VoiceChannel> and \<TextChannel> */
 		channelPairs: ChannelPair[];
 	};
-	/** The guild's \<CommandsBase> object containing each individual \<CommandBase> under the property [CommandName] */
-	commands: Typings.CommandsBase;
+	/** The guild's \<BaseCommands> object containing each individual \<BaseCommand> under the property [CommandName] */
+	commands: Typings.BaseCommands;
 	/** The guild's emojis object */
 	emojis: {
 		/** The guild's success emoji */

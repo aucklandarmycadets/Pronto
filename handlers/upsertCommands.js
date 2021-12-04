@@ -46,17 +46,17 @@ async function process(updatedCommands, database) {
 		}
 	}
 
-	// A string[] of the <CommandBase> properties which may differ across each guild
+	// A string[] of the <BaseCommand> properties which may differ across each guild
 	const guildProperties = ['requiredRoles', 'deniedRoles', 'allowDirect', 'displayInList'];
 
-	// Use Object.fromEntries() to create a sanitised object, where each <CommandBase> object is stripped of any guild-specific keys if they already exist in the guild's database
+	// Use Object.fromEntries() to create a sanitised object, where each <BaseCommand> object is stripped of any guild-specific keys if they already exist in the guild's database
 	const sanitisedCommands = Object.fromEntries(
 		Object.entries(updatedCommands).map(([command, commandObj]) => {
-			// If the guild already has the <CommandBase> registered in its database, delete the guild modifiable properties from the updated <CommandBase> object
+			// If the guild already has the <BaseCommand> registered in its database, delete the guild modifiable properties from the updated <BaseCommand> object
 			if (database.commands[command]) guildProperties.forEach(guildProperty => delete commandObj[guildProperty]);
 
-			// Map to an array of key-value entries where each <CommandName> is a key and each updated <CommandBase> object is the corresponding value
-			// This is used by Object.fromEntries() to create the updated (and sanitised) <CommandsBase>-derived object
+			// Map to an array of key-value entries where each <CommandName> is a key and each updated <BaseCommand> object is the corresponding value
+			// This is used by Object.fromEntries() to create the updated (and sanitised) <BaseCommands>-derived object
 			return [command, commandObj];
 		}),
 	);

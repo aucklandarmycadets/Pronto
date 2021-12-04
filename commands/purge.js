@@ -8,7 +8,7 @@ const Typings = require('../typings');
 const { commandError, debugError, embedScaffold, errorReact } = require('../modules');
 
 /**
- * Complete the \<Command> object from a \<CommandBase>
+ * Complete the \<Command> object from a \<BaseCommand>
  * @module commands/purge
  * @param {Discord.Guild} guild The guild that the member shares with the bot
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method

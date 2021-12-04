@@ -12,7 +12,7 @@ const { ids: { DEVELOPER_ID } } = require('../config');
  * as per the truth table at https://imgur.com/a/iwiKpsG
  * @param {Discord.Collection<Discord.Snowflake, Discord.Role>} memberRoles The Collection\<Snowflake, Role> of the \<GuildMember>
  * @param {Discord.Snowflake} id The \<User.id> of the user to check permissions for
- * @param {Typings.CommandBase} command The \<CommandBase> object to check permissions against
+ * @param {Typings.BaseCommand} command The \<BaseCommand> object to check permissions against
  * @returns {boolean} Whether the \<User> has the adequate permissions to access the \<Command>
  */
 module.exports = (memberRoles, id, command) => {

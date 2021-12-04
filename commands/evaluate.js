@@ -8,7 +8,7 @@ const { commandError, deleteMsg, dateTimeGroup, jsCodeBlock, sendMsg, ...modules
 const { database, ...handlers } = require('../handlers');
 
 /**
- * Complete the \<Command> object from a \<CommandBase>
+ * Complete the \<Command> object from a \<BaseCommand>
  * @module commands/evaluate
  * @param {Discord.Guild} guild The guild that the member shares with the bot
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method

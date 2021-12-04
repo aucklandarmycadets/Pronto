@@ -26,7 +26,7 @@ export interface DynamicCommandDescription {
 /**
  * The base of each of Pronto's commands, with the base properties to construct a complete \<Command>
  */
-export interface CommandBase {
+export interface BaseCommand {
 	/** The name of the command */
 	command: CommandName;
 	/** The aliases for the command */
@@ -50,17 +50,17 @@ export interface CommandBase {
 }
 
 /**
- * The base of Pronto's commands object, where each \<CommandBase> is stored in the \<CommandsBase> object under the property [CommandName]
+ * The base of Pronto's commands object, where each \<BaseCommand> is stored in the \<BaseCommands> object under the property [CommandName]
  */
-export interface CommandsBase {
-	/** The command's individual \<CommandBase> object */
-	[key: CommandName]: CommandBase;
+export interface BaseCommands {
+	/** The command's individual \<BaseCommand> object */
+	[key: CommandName]: BaseCommand;
 }
 
 /**
  * The complete \<Command> object for one of Pronto's commands, with a \<Command.execute()> method
  */
-export interface Command extends CommandBase {
+export interface Command extends BaseCommand {
 	/** The command's \<Command.execute()> method */
 	execute(parameters: CommandParameters): Promise<void | Typings.Lesson>;
 }
@@ -81,7 +81,7 @@ export interface CommandParameters {
 	msg: Discord.Message;
 	/** The \<string[]> containing the command arguments */
 	args: ?string[];
-	/** The message argument that was parsed to this \<CommandBase>, i.e. either \<CommandBase.command> or \<CommandBase.aliases.includes(msgCommand)> */
+	/** The message argument that was parsed to this \<BaseCommand>, i.e. either \<BaseCommand.command> or \<BaseCommand.aliases.includes(msgCommand)> */
 	msgCommand: ?string;
 	/** The \<User> that triggered the reaction collector */
 	user: ?Discord.User;

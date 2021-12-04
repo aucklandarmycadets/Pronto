@@ -8,7 +8,7 @@ const { commandError, dateTimeGroup, sendMsg, successReact } = require('../modul
 const { findLesson } = require('../handlers');
 
 /**
- * Complete the \<Command> object from a \<CommandBase>
+ * Complete the \<Command> object from a \<BaseCommand>
  * @module commands/seen
  * @param {Discord.Guild} guild The guild that the member shares with the bot
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method

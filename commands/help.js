@@ -9,7 +9,7 @@ const { deleteMsg, directCommandError, embedScaffold, errorReact, formatList, ge
 const { permissionsHandler } = require('../handlers');
 
 /**
- * Complete the \<Command> object from a \<CommandBase>
+ * Complete the \<Command> object from a \<BaseCommand>
  * @module commands/help
  * @param {Discord.Guild} guild The guild that the member shares with the bot
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
@@ -96,16 +96,16 @@ module.exports = async guild => {
 		 * Send a list of all the commands the user is permitted to use
 		 */
 		async function sendCommandList() {
-			// Initialise the list (stored as a [key, value] object) of commands with the unqualified and qualified descriptions of the help \<CommandBase>
+			// Initialise the list (stored as a [key, value] object) of commands with the unqualified and qualified descriptions of the help \<BaseCommand>
 			// i.e. unqualified help (no argument command) and qualified help (specified argument command)
 			const commandsList = {
 				[await prefixCommand(help, guild)]: help.description.unqualified,
 				[`${await prefixCommand(help, guild)} [command]`]: help.description.qualified,
 			};
 
-			// Iterate through each remaining \<CommandBase>
+			// Iterate through each remaining \<BaseCommand>
 			for (const guildCommand of Object.values(commands)) {
-				// Check whether the member has the necessary permissions for the <CommandBase> and if it should be displayed in the commands list
+				// Check whether the member has the necessary permissions for the <BaseCommand> and if it should be displayed in the commands list
 				// If so, create a new [key, value] entry in the commandsList object
 				if (await permissionsHandler(msg, guildCommand) && guildCommand.displayInList) commandsList[`${await prefixCommand(guildCommand, guild)}`] = guildCommand.description;
 			}

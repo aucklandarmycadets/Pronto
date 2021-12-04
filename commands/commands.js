@@ -24,7 +24,7 @@ const { formatList } = require('./modules');
  */
 
 /**
- * @typedef {Object} commands.CommandBase The base of each of Pronto's commands, with the base properties to construct a complete [\<Command>]{@link commands.Command}
+ * @typedef {Object} commands.BaseCommand The base of each of Pronto's commands, with the base properties to construct a complete [\<Command>]{@link commands.Command}
  * @property {commands.CommandName} command The name of the command
  * @property {string[]} aliases The aliases for the command
  * @property {string | commands.DynamicCommandDescription} description The description of the command
@@ -38,12 +38,12 @@ const { formatList } = require('./modules');
 */
 
 /**
- * @typedef {Object.<commands.CommandName, commands.CommandBase>} commands.CommandsBase The base of Pronto's commands object, where each [\<CommandBase>]{@link commands.CommandBase} is stored in the \<CommandsBase> object under the property [{@link commands.CommandName|CommandName}]
+ * @typedef {Object.<commands.CommandName, commands.BaseCommand>} commands.BaseCommands The base of Pronto's commands object, where each [\<BaseCommand>]{@link commands.BaseCommand} is stored in the \<BaseCommands> object under the property [{@link commands.CommandName|CommandName}]
  */
 
 /**
- * @typedef {commands.CommandBase} commands.Command The complete \<Command> object for one of Pronto's commands, with a [\<Command.execute()>]{@link commands.CommandExecute} method
- * @extends {commands.CommandBase}
+ * @typedef {commands.BaseCommand} commands.Command The complete \<Command> object for one of Pronto's commands, with a [\<Command.execute()>]{@link commands.CommandExecute} method
+ * @extends {commands.BaseCommand}
 * @property {commands.CommandExecute} execute The command's [\<Command.execute()>]{@link commands.CommandExecute} method
  */
 
@@ -61,14 +61,14 @@ const { formatList } = require('./modules');
  * @typedef {Object} commands.CommandParameters An \<Object> of the valid parameters accepted by the [\<Command.execute()>]{@link commands.CommandExecute} method
  * @property {Discord.Message} msg The \<Message> that executed the \<Command>, or the \<Message> that the reaction collector was attached to
  * @property {?string[]} args The \<string[]> containing the command arguments
- * @property {?string} msgCommand The message argument that was parsed to this [\<CommandBase>]{@link commands.CommandBase}, i.e. either \<CommandBase.command> or \<CommandBase.aliases.includes(msgCommand)>
+ * @property {?string} msgCommand The message argument that was parsed to this [\<BaseCommand>]{@link commands.BaseCommand}, i.e. either \<BaseCommand.command> or \<BaseCommand.aliases.includes(msgCommand)>
  * @property {?Discord.User} user The \<User> that triggered the reaction collector
  */
 
 /**
  *
  * @param {Discord.Guild | 'BREAK'} guild
- * @returns {Typings.CommandsBase}
+ * @returns {Typings.BaseCommands}
  */
 module.exports = async guild => {
 	const { settings: { prefix }, ids } = (guild === 'BREAK')
@@ -76,7 +76,7 @@ module.exports = async guild => {
 		: await require('./handlers/database')(guild);
 
 	/**
-	 * @type {Typings.CommandsBase}
+	 * @type {Typings.BaseCommands}
 	 */
 	const commands = {
 		ping: {

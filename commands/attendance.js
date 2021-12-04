@@ -10,7 +10,7 @@ const { commandError, deleteMsg, dateTimeGroup, emojiReact, sendDirect, sendMsg 
 const { confirmWithReaction } = require('../handlers');
 
 /**
- * Complete the \<Command> object from a \<CommandBase>
+ * Complete the \<Command> object from a \<BaseCommand>
  * @module commands/attendance
  * @param {Discord.Guild} guild The guild that the member shares with the bot
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method

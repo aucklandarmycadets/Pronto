@@ -11,7 +11,7 @@ const { confirmWithReaction, findLesson, unsubmittedLessons } = require('../hand
 const pendingConfirmation = new Set();
 
 /**
- * Complete the \<Command> object from a \<CommandBase>
+ * Complete the \<Command> object from a \<BaseCommand>
  * @module commands/lesson
  * @param {Discord.Guild} guild The guild that the member shares with the bot
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
@@ -31,7 +31,7 @@ module.exports = async guild => {
 
 		// Attempt to parse the lesson sub-command from the command message
 		const command = (lesson.aliases.includes(msgCommand))
-			// If the message command is one of the <CommandBase.aliases> (i.e. a valid lesson sub-command), use it
+			// If the message command is one of the <BaseCommand.aliases> (i.e. a valid lesson sub-command), use it
 			? msgCommand
 			// Otherwise, the <Command> must have been executed with <CommandName>
 			: (args.length)

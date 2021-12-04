@@ -10,7 +10,7 @@ const { getRoleError } = require('../modules');
 /**
  *
  * @param {Discord.Message} msg
- * @param {Typings.CommandBase} command The \<CommandBase> object to check permissions against
+ * @param {Typings.BaseCommand} command The \<BaseCommand> object to check permissions against
  * @returns
  */
 module.exports = async (msg, command) => {

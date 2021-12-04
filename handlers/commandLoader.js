@@ -15,7 +15,7 @@ const fs = require('fs');
  * @returns {Promise<Typings.Commands>} The loaded \<Commands> object for the guild, containing each \<Command> in a nested object
  */
 module.exports = async (directory, guild) => {
-	// Read the file names of every Javascript file in the directory, other than the index and <CommandsBase> schematic files
+	// Read the file names of every Javascript file in the directory, other than the index and <BaseCommands> schematic files
 	const files = fs.readdirSync(directory).filter(file => file.endsWith('.js') && !['index.js', 'commands.js'].includes(file));
 
 	// Initialise an empty commands object
