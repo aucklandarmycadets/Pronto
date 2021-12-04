@@ -1,3 +1,5 @@
+import Discord = require('discord.js');
+
 /**
  * \<mongoose.Document> typings
  */

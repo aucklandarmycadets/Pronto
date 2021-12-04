@@ -1,13 +1,19 @@
 'use strict';
 
 require('dotenv').config();
+
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('./typings');
 const { mongoose } = require('./handlers');
 
 // Export the bot's current version
 exports.version = '4.2.2';
 
-// Create a new <Client>, and allow partial <Message> events
+/**
+ * Create a new \<Bot>, and allow partial \<Message> events
+ * @type {Typings.Client}
+ */
 const bot = new Discord.Client({ partials: ['MESSAGE'] });
 
 // Log the bot in, then export the <Client> object
