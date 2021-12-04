@@ -68,7 +68,7 @@ const { formatList } = require('./modules');
 /**
  *
  * @param {Discord.Guild | 'BREAK'} guild
- * @returns {Typings.BaseCommands}
+ * @returns {Promise<Typings.BaseCommands>}
  */
 module.exports = async guild => {
 	const { settings: { prefix }, ids } = (guild === 'BREAK')
