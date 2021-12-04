@@ -15,8 +15,8 @@ module.exports = {
 	 * @param {Discord.User} user The \<User> that applied the guild or reaction emoji
 	 */
 	async handler(_, reaction, user) {
-		// If the reacting <user> is a bot, cease further execution
-		if (user.bot) return;
+		// If the reacting <User> is a bot, or if the reaction was applied to a direct message, cease further execution
+		if (user.bot || !reaction.message.guild) return;
 
 		// Call handlers.manageAttendance() to process a potential reaction on an attendance register
 		manageAttendance(reaction, user);
