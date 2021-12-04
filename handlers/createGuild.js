@@ -41,7 +41,7 @@ module.exports = async guild => {
 	const { bot } = require('../pronto');
 	const { lessonInstructions, overwriteCommands } = require('./');
 
-	let _guild = await createGuild(guild);
+	let _guild = await createGuildDocument(guild);
 	_guild = await overwriteCommands(guild);
 
 	lessonInstructions(_guild.ids.lessonReferenceID, guild);
@@ -66,7 +66,7 @@ module.exports = async guild => {
 	return _guild;
 };
 
-async function createGuild(guild) {
+async function createGuildDocument(guild) {
 	/**
 	 * @type {Typings.Guild}
 	 */
