@@ -11,7 +11,7 @@ const { getRoleError } = require('../modules');
  *
  * @param {Discord.Message} msg
  * @param {Typings.BaseCommand} command The \<BaseCommand> object to check permissions against
- * @returns
+ * @returns {Promise<boolean | 'ERROR'>}
  */
 module.exports = async (msg, command) => {
 	const { bot } = require('../pronto');

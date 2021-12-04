@@ -3,7 +3,7 @@
 /**
  *
  * @param {string} str
- * @returns
+ * @returns {string}
  */
 module.exports = str => {
 	return str.split(' ')

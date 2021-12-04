@@ -29,9 +29,9 @@ module.exports = async guild => {
 
 /**
  *
- * @param {*} updatedCommands
+ * @param {Typings.BaseCommands} updatedCommands
  * @param {Typings.Guild} database
- * @returns
+ * @returns {Promise<Typings.BaseCommands>}
  */
 async function process(updatedCommands, database) {
 	const commandsArray = Object.keys(updatedCommands);

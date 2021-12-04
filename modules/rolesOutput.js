@@ -3,9 +3,9 @@
 /**
  *
  * @param {string[]} array
- * @param {*} mention
- * @param {*} breakAt
- * @returns
+ * @param {boolean} mention
+ * @param {number} breakAt
+ * @returns {string}
  */
 module.exports = (array, mention, breakAt) => {
 	const { bot } = require('../pronto');

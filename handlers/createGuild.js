@@ -16,7 +16,7 @@ const createdChannels = new Discord.Collection();
 /**
  *
  * @param {?Discord.Guild} guild
- * @returns
+ * @returns {Promise<Typings.Guild>}
  */
 module.exports = async guild => {
 	if (!guild) {
