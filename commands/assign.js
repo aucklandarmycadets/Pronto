@@ -58,7 +58,7 @@ module.exports = async guild => {
 		// This ensures that each assigner cannot attempt to assign more than one lesson at a time
 		recentlyAssigned.add(msg.author.id);
 
-		// Create and send assign embed
+		// Create assign embed
 		const assignEmbed = new Discord.MessageEmbed()
 			.setTitle('Assigning Lesson...')
 			.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
@@ -68,6 +68,7 @@ module.exports = async guild => {
 			.addField('Instructor(s)', processMentions(lessonInstructors))
 			.setFooter(await dateTimeGroup());
 
+		// Send the assign embed
 		sendDirect(msg.author, { embeds: [assignEmbed] }, msg.channel);
 
 		// Object defining the required inputs to properly assign a lesson
