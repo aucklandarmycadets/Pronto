@@ -51,8 +51,8 @@ export interface Guild extends mongoose.Document {
 		lessonPlansID: Discord.Snowflake;
 		/** The \<Role.id> of the guild's \@everyone role */
 		everyoneID: Discord.Snowflake;
-		/** The \<Role.id> of the guild's visitor role */
-		visitorID: Discord.Snowflake;
+		/** The \<Role.id> of the guild's visitor role if it is registered */
+		visitorID: Discord.Snowflake | '';
 		/** The \<Role.id> of the guild's administrator role if it is registered */
 		administratorID: Discord.Snowflake | '';
 		/** A \<Role.id[]> of the guild's training roles */
