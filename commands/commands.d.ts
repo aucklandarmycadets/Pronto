@@ -39,7 +39,7 @@ export interface BaseCommand {
 	requiredRoles: Discord.Snowflake[];
 	/** A <Role.id[]> of which the \<GuildMember> must have none to execute the command */
 	deniedRoles: Discord.Snowflake[];
-	/** Whether the command is only executable by the developer defined by config.ids.DEVELOPER_ID */
+	/** Whether the command is only executable by the developer defined by `config.ids.DEVELOPER_ID` */
 	developerOnly: boolean;
 	/** Whether to display the command in the guild's commands list */
 	displayInList: boolean;

@@ -72,7 +72,7 @@ module.exports = async guild => {
 			// Set the appropriate title for the help embed
 			helpEmbed.setTitle(`Command: ${await prefixCommand(command, guild)}`);
 			helpEmbed.setColor(colours.primary);
-			// Set the embed description to the help text for the identified \<Command>
+			// Set the embed description to the help text for the identified <Command>
 			helpEmbed.setDescription(command.help);
 
 			// If the help command message was sent in a guild, add a footer identifying the message author and send it into the same channel
@@ -96,14 +96,14 @@ module.exports = async guild => {
 		 * Send a list of all the commands the user is permitted to use
 		 */
 		async function sendCommandList() {
-			// Initialise the list (stored as a [key, value] object) of commands with the unqualified and qualified descriptions of the help \<BaseCommand>
+			// Initialise the list (stored as a [key, value] object) of commands with the unqualified and qualified descriptions of the help <BaseCommand>
 			// i.e. unqualified help (no argument command) and qualified help (specified argument command)
 			const commandsList = {
 				[await prefixCommand(help, guild)]: help.description.unqualified,
 				[`${await prefixCommand(help, guild)} [command]`]: help.description.qualified,
 			};
 
-			// Iterate through each remaining \<BaseCommand>
+			// Iterate through each remaining <BaseCommand>
 			for (const guildCommand of Object.values(commands)) {
 				// Check whether the member has the necessary permissions for the <BaseCommand> and if it should be displayed in the commands list
 				// If so, create a new [key, value] entry in the commandsList object

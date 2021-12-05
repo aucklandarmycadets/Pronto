@@ -13,7 +13,10 @@ const { Lesson } = require('../models');
 const { commandError, deleteMsg, dateTimeGroup, enumerateResources, isURL, processResources, promptEmbed, sendDirect, sendMsg, successReact, titleCase } = require('../modules');
 const { confirmWithReaction, unsubmittedLessons } = require('../handlers');
 
-// Set to ensure that each assigner does not attempt to assign more than one lesson at a time
+/**
+ * Set to ensure that each assigner (identified by their \<User.id>) does not attempt to assign more than one lesson at a time
+ * @type {Set<Discord.Snowflake>}
+ */
 const recentlyAssigned = new Set();
 
 /**
@@ -239,7 +242,7 @@ module.exports = async guild => {
 				assignedResources: enumerateResources(resources),
 			});
 
-			// Save the document and return it
+			// Save the <Lesson> document and return it
 			return await lesson.save().catch(error => console.error(error));
 		}
 	};
@@ -316,7 +319,7 @@ async function msgPrompt(prompt, msg, type, colours, allowMultiple) {
 		sendDirect(msg.author, { embeds: [prompt] }, null, true),
 		msg.author.dmChannel.awaitMessages(filter, { max: 1 }),
 	])
-		// Extract the user's input from the resolved promises
+		// Extract the user's input from the resolved Promises
 		.then(resolved => resolved[1].first());
 
 

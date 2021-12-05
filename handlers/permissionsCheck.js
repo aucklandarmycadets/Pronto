@@ -10,6 +10,7 @@ const { ids: { DEVELOPER_ID } } = require('../config');
 /**
  * `handlers.permissionsCheck()` verifies whether a \<User> has the adequate permissions to access a specified \<Command>,
  * as per the truth table at https://imgur.com/a/iwiKpsG
+ * @function handlers.permissionsCheck
  * @param {Discord.Collection<Discord.Snowflake, Discord.Role>} memberRoles The Collection\<Snowflake, Role> of the \<GuildMember>
  * @param {Discord.Snowflake} id The \<User.id> of the user to check permissions for
  * @param {Typings.BaseCommand} command The \<BaseCommand> object to check permissions against

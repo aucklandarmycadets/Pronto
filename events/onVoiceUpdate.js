@@ -10,7 +10,7 @@ module.exports = {
 	process: [],
 	/**
 	 * Event handler to log whenever a \<GuildMember> joins/leaves a \<VoiceChannel>,
-	 * and to trigger handlers.channelPairing()
+	 * and to trigger `handlers.channelPairing()`
 	 * @param {'voiceStateUpdate'} _ The event that was emitted
 	 * @param {Discord.VoiceState} oldState The \<VoiceState> before the update
 	 * @param {Discord.VoiceState} newState The \<VoiceState> after the update

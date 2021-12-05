@@ -9,7 +9,7 @@ const { Guild } = require('../models');
 const { difference, merge } = require('../modules');
 
 /**
- *
+ * @function handlers.upsertCommands
  * @param {Discord.Guild} guild
  * @returns {Promise<Typings.Guild>}
  */

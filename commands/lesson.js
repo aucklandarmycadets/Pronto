@@ -7,7 +7,10 @@ const Typings = require('../typings');
 const { commandError, deleteMsg, dateTimeGroup, enumerateResources, errorReact, isURL, processResources, promptEmbed, remove, rolesOutput, sendDirect, sendMsg, successReact } = require('../modules');
 const { confirmWithReaction, findLesson, unsubmittedLessons } = require('../handlers');
 
-// Set to ensure that lessons which are pending confirmation of submission cannot be submitted again
+/**
+ * Set to ensure that lessons (identified by their \<TextChannel.id>) which are pending confirmation of submission cannot be submitted again
+ * @type {Set<Discord.Snowflake>}
+ */
 const pendingConfirmation = new Set();
 
 /**

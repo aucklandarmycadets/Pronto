@@ -11,7 +11,7 @@ module.exports = {
 	process: [],
 	/**
 	 * Event handler to automatically add an acknowledgement emoji to messages in any \<NewsChannel>,
-	 * and to call handlers.commandHandler() whenever a message is created
+	 * and to call `handlers.commandHandler()` whenever a message is created
 	 * @param {'message'} _ The event that was emitted
 	 * @param {Discord.Message} msg The created message
 	 */
