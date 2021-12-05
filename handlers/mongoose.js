@@ -1,11 +1,11 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const { dbOptions } = require('../config');
+const { databaseOptions } = require('../config');
 
 module.exports = {
 	login(uri) {
-		mongoose.connect(uri, dbOptions);
+		mongoose.connect(uri, databaseOptions);
 		mongoose.set('useFindAndModify', false);
 
 		mongoose.connection.on('err', error => console.error('Mongoose connection error:\n', error));
