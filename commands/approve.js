@@ -23,7 +23,7 @@ module.exports = async guild => {
 	 */
 	approve.execute = async ({ msg, user }) => {
 		// Find <Lesson> document by querying database for lesson channel ID
-		const lesson = await findLesson(msg.channel.id);
+		const lessonDocument = await findLesson(msg.channel.id);
 
 		try {
 			// Ensure message channel is contained within lessons category
@@ -33,16 +33,16 @@ module.exports = async guild => {
 			}
 
 			// Ensure <Lesson> has been found
-			else if (!lesson) throw 'Invalid lesson channel.';
+			else if (!lessonDocument) throw 'Invalid lesson channel.';
 
 			// Ensure lesson has not already been approved
-			else if (lesson.approved) throw 'This lesson has already been approved.';
+			else if (lessonDocument.approved) throw 'This lesson has already been approved.';
 
 			// Ensure lesson has been submitted and is awaiting approval
-			else if (!lesson.submitted) throw 'This lesson has not yet been submitted by the instructor(s).';
+			else if (!lessonDocument.submitted) throw 'This lesson has not yet been submitted by the instructor(s).';
 
 			// Ensure there have not been any changes since previous submission
-			else if (lesson.changed) throw 'There are currently unsubmitted changes.';
+			else if (lessonDocument.changed) throw 'There are currently unsubmitted changes.';
 		}
 
 		catch (error) {
@@ -70,21 +70,21 @@ module.exports = async guild => {
 		const submissionEmbed = new Discord.MessageEmbed()
 			.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
 			.setColor(colours.success)
-			.setTitle(`Lesson Plan - ${lesson.lessonName}`)
-			.addField('Instructor(s)', processMentions(lesson.instructors))
-			.addField('Lesson', lesson.lessonName)
-			.addField('Lesson Plan Due', lesson.dueDate)
-			.addField('Lesson Date', lesson.lessonDate)
-			.addField('Resources', enumerateResources(lesson.submittedResources, true))
+			.setTitle(`Lesson Plan - ${lessonDocument.lessonName}`)
+			.addField('Instructor(s)', processMentions(lessonDocument.instructors))
+			.addField('Lesson', lessonDocument.lessonName)
+			.addField('Lesson Plan Due', lessonDocument.dueDate)
+			.addField('Lesson Date', lessonDocument.lessonDate)
+			.addField('Resources', enumerateResources(lessonDocument.submittedResources, true))
 			.setFooter(await dateTimeGroup());
 
 		// If lesson has not yet been archived in the master channel, send a copy into the channel
-		if (!lesson.archiveID) {
+		if (!lessonDocument.archiveID) {
 			sendMsg(lessonPlansChannel, { embeds: [submissionEmbed] })
 				.then(async archiveMsg => {
 					// Record the archived message's ID
-					lesson.archiveID = archiveMsg.id;
-					await lesson.save().catch(error => console.error(error));
+					lessonDocument.archiveID = archiveMsg.id;
+					await lessonDocument.save().catch(error => console.error(error));
 				});
 		}
 
@@ -98,7 +98,7 @@ module.exports = async guild => {
 				await lessonPlansChannel.messages.fetch({ limit: 100, before })
 					.then(msgs => {
 						// Attempt to find the message matching the archived message's ID
-						archiveMsg = msgs.get(lesson.archiveID);
+						archiveMsg = msgs.get(lessonDocument.archiveID);
 
 						// Update oldest message ID
 						before = msgs.last().id;
@@ -123,9 +123,9 @@ module.exports = async guild => {
 		sendMsg(msg.channel, { embeds: [approvedEmbed] });
 
 		// Mark lesson as approved in database
-		lesson.approved = true;
+		lessonDocument.approved = true;
 		// Save the <Lesson> document and return it
-		return await lesson.save().catch(error => console.error(error));
+		return await lessonDocument.save().catch(error => console.error(error));
 	};
 
 	return approve;

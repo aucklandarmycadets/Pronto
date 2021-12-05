@@ -30,7 +30,7 @@ module.exports = async guild => {
 		const { bot } = require('../pronto');
 
 		// Find <Lesson> document by querying database for lesson channel ID
-		let _lesson = await findLesson(msg.channel.id);
+		let lessonDocument = await findLesson(msg.channel.id);
 
 		// Attempt to parse the lesson sub-command from the command message
 		const command = (lesson.aliases.includes(msgCommand))
@@ -56,13 +56,13 @@ module.exports = async guild => {
 			}
 
 			// Ensure <Lesson> has been found
-			else if (!_lesson) throw 'Invalid lesson channel.';
+			else if (!lessonDocument) throw 'Invalid lesson channel.';
 
 			// Ensure the command author is an instructor of the lesson
-			else if (!_lesson.instructors[msg.author.id]) throw 'You are not an instructor for this lesson!';
+			else if (!lessonDocument.instructors[msg.author.id]) throw 'You are not an instructor for this lesson!';
 
 			// If the command author has not yet acknowledged receipt of the lesson warning, execute commands\seen.js
-			else if (!_lesson.instructors[msg.author.id].seen) _lesson = await bot.commands.get(seen.command).execute({ msg, user: msg.author });
+			else if (!lessonDocument.instructors[msg.author.id].seen) lessonDocument = await bot.commands.get(seen.command).execute({ msg, user: msg.author });
 
 			// If the lesson sub-command is 'add', ensure there was at least one attachment or URL
 			if (command === 'add') {
@@ -71,19 +71,19 @@ module.exports = async guild => {
 
 			// If the lesson sub-command is 'remove', ensure there are existing submitted resources
 			else if (command === 'remove') {
-				if (!_lesson.submittedResources.length) throw 'There are no resources to remove.';
+				if (!lessonDocument.submittedResources.length) throw 'There are no resources to remove.';
 			}
 
 			// If the lesson sub-command is 'submit':
 			else if (command === 'submit') {
 				// Ensure there are changes to submit
-				if (!_lesson.changed && !_lesson.submitted) throw 'There is nothing to submit!';
+				if (!lessonDocument.changed && !lessonDocument.submitted) throw 'There is nothing to submit!';
 
 				// Ensure there have been changes since the previous submission
-				else if (!_lesson.changed && _lesson.submitted) throw 'There are no changes to submit.';
+				else if (!lessonDocument.changed && lessonDocument.submitted) throw 'There are no changes to submit.';
 
 				// Ensure the lesson has not already been submitted and is pending confirmation of submission
-				else if (pendingConfirmation.has(_lesson.lessonID)) throw 'This lesson has already been submitted and is pending confirmation in your Direct Messages.';
+				else if (pendingConfirmation.has(lessonDocument.lessonID)) throw 'This lesson has already been submitted and is pending confirmation in your Direct Messages.';
 			}
 
 			// Ensure the lesson sub-command has been successfully parsed
@@ -103,14 +103,14 @@ module.exports = async guild => {
 			const lessonEmbed = new Discord.MessageEmbed()
 				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
 				.setColor(colours.primary)
-				.setTitle(`Lesson Preview - ${_lesson.lessonName}`)
+				.setTitle(`Lesson Preview - ${lessonDocument.lessonName}`)
 				// Call processMentions() to format the lesson instructors
-				.addField('Instructor(s)', processMentions(_lesson.instructors))
-				.addField('Lesson', _lesson.lessonName)
-				.addField('Lesson Plan Due', _lesson.dueDate)
-				.addField('Lesson Date', _lesson.lessonDate)
+				.addField('Instructor(s)', processMentions(lessonDocument.instructors))
+				.addField('Lesson', lessonDocument.lessonName)
+				.addField('Lesson Plan Due', lessonDocument.dueDate)
+				.addField('Lesson Date', lessonDocument.lessonDate)
 				// Call modules.enumerateResources() to format and output the lesson resources
-				.addField('Resources', enumerateResources(_lesson.submittedResources, true))
+				.addField('Resources', enumerateResources(lessonDocument.submittedResources, true))
 				.setFooter(await dateTimeGroup());
 
 			// Send the lesson preview embed
@@ -125,16 +125,16 @@ module.exports = async guild => {
 			successReact(msg);
 
 			// If the added resources already exist in the lesson's submittedResources string[], cease further execution
-			if (_lesson.submittedResources.includes(processResources(attachments, URLs))) return;
+			if (lessonDocument.submittedResources.includes(processResources(attachments, URLs))) return;
 
 			// Add the resource to the lesson's submittedResources string[]
-			_lesson.submittedResources.push(processResources(attachments, URLs));
+			lessonDocument.submittedResources.push(processResources(attachments, URLs));
 			// Mark the lesson as having been changed, and ensure it is not marked as approved
-			_lesson.changed = true;
-			_lesson.approved = false;
+			lessonDocument.changed = true;
+			lessonDocument.approved = false;
 
 			// Save the <Lesson> document
-			_lesson.save().catch(error => console.error(error));
+			lessonDocument.save().catch(error => console.error(error));
 
 			// Create lesson updated embed
 			const updatedEmbed = new Discord.MessageEmbed()
@@ -142,9 +142,9 @@ module.exports = async guild => {
 				.setColor(colours.success)
 				.setTitle('Lesson Resources Updated')
 				.setDescription(`**${msg.member.displayName}** has added a new resource to this lesson.`)
-				.addField('Lesson', _lesson.lessonName)
+				.addField('Lesson', lessonDocument.lessonName)
 				// Call modules.enumerateResources() to format and output the lesson resources
-				.addField('Resources', enumerateResources(_lesson.submittedResources, true))
+				.addField('Resources', enumerateResources(lessonDocument.submittedResources, true))
 				.setFooter(await dateTimeGroup());
 
 			// Send the lesson updated embed
@@ -156,14 +156,14 @@ module.exports = async guild => {
 		 */
 		else if (command === 'remove') {
 			// Call serialiseResources() and destructure the serialised resources string[] and valid range number[]
-			const { resources, range } = serialiseResources(_lesson);
+			const { resources, range } = serialiseResources(lessonDocument);
 
 			// Create serialised resources embed
 			const resourcesEmbed = new Discord.MessageEmbed()
 				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
 				.setColor(colours.error)
 				.setTitle('Remove a Lesson Resource')
-				.addField('Lesson', _lesson.lessonName)
+				.addField('Lesson', lessonDocument.lessonName)
 				// Join the array of serialised resources with a newline separator
 				.addField('Resources', resources.join('\n'))
 				.setFooter('Enter the corresponding serial for the resource you wish to remove, or \'cancel\' to abort.');
@@ -194,13 +194,13 @@ module.exports = async guild => {
 			successReact(msg);
 
 			// Remove the resource at the index returned by getNumberInput() (accounting for a zero-indexed array)
-			_lesson.submittedResources = remove(_lesson.submittedResources, null, removeIndex - 1);
+			lessonDocument.submittedResources = remove(lessonDocument.submittedResources, null, removeIndex - 1);
 			// Mark the lesson as having been changed, and ensure it is not marked as approved
-			_lesson.changed = true;
-			_lesson.approved = false;
+			lessonDocument.changed = true;
+			lessonDocument.approved = false;
 
 			// Save the <Lesson> document
-			_lesson.save().catch(error => console.error(error));
+			lessonDocument.save().catch(error => console.error(error));
 
 			// Create lesson updated embed
 			const updatedEmbed = new Discord.MessageEmbed()
@@ -208,9 +208,9 @@ module.exports = async guild => {
 				.setColor(colours.success)
 				.setTitle('Lesson Resources Updated')
 				.setDescription(`**${msg.member.displayName}** has removed a resource from this lesson.`)
-				.addField('Lesson', _lesson.lessonName)
+				.addField('Lesson', lessonDocument.lessonName)
 				// Call modules.enumerateResources() to format and output the lesson resources
-				.addField('Resources', enumerateResources(_lesson.submittedResources, true))
+				.addField('Resources', enumerateResources(lessonDocument.submittedResources, true))
 				.setFooter(await dateTimeGroup());
 
 			// Send the lesson updated embed
@@ -225,20 +225,20 @@ module.exports = async guild => {
 			deleteMsg(msg);
 
 			// Add the lesson ID to the pendingConfirmation set
-			pendingConfirmation.add(_lesson.lessonID);
+			pendingConfirmation.add(lessonDocument.lessonID);
 
 			// Create lesson submission confirmation embed
 			const submitEmbed = new Discord.MessageEmbed()
 				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
 				.setColor(colours.warn)
-				.setTitle(`Lesson Submission - ${_lesson.lessonName}`)
+				.setTitle(`Lesson Submission - ${lessonDocument.lessonName}`)
 				// Call processMentions() to format the lesson instructors
-				.addField('Instructor(s)', processMentions(_lesson.instructors))
-				.addField('Lesson', _lesson.lessonName)
-				.addField('Lesson Plan Due', _lesson.dueDate)
-				.addField('Lesson Date', _lesson.lessonDate)
+				.addField('Instructor(s)', processMentions(lessonDocument.instructors))
+				.addField('Lesson', lessonDocument.lessonName)
+				.addField('Lesson Plan Due', lessonDocument.dueDate)
+				.addField('Lesson Date', lessonDocument.lessonDate)
 				// Call modules.enumerateResources() to format and output the lesson resources
-				.addField('Resources', enumerateResources(_lesson.submittedResources, true))
+				.addField('Resources', enumerateResources(lessonDocument.submittedResources, true))
 				.setFooter('Use the reactions below to confirm or cancel.');
 
 			// Send the lesson submission confirmation embed to the submitting instructor
@@ -249,17 +249,17 @@ module.exports = async guild => {
 					 */
 					const lessonSubmit = async () => {
 						// 'Save' the changes and mark the lesson as being unchanged, and ensure it is marked as submitted
-						_lesson.changed = false;
-						_lesson.submitted = true;
+						lessonDocument.changed = false;
+						lessonDocument.submitted = true;
 
 						// Save the <Lesson> document
-						_lesson.save().catch(error => console.error(error));
+						lessonDocument.save().catch(error => console.error(error));
 
 						// Remove the lesson ID from the pendingConfirmation set
-						pendingConfirmation.delete(_lesson.lessonID);
+						pendingConfirmation.delete(lessonDocument.lessonID);
 
 						// Modify the lesson submission confirmation embed to repurpose it into the lesson submission embed
-						submitEmbed.setTitle(`Lesson Plan Submitted - ${_lesson.lessonName}`);
+						submitEmbed.setTitle(`Lesson Plan Submitted - ${lessonDocument.lessonName}`);
 						submitEmbed.setColor(colours.success);
 						submitEmbed.setFooter(await dateTimeGroup());
 
@@ -274,7 +274,7 @@ module.exports = async guild => {
 
 						// Filter the enumerated submittedResources string[] for any <MessageAttachment> resources, then send the parsed attachments to the lesson channel as a <MessageAttachment>
 						// Use Promise.all() to ensure all <MessageAttachment> messages have been sent before proceeding
-						await Promise.all(enumerateResources(_lesson.submittedResources)
+						await Promise.all(enumerateResources(lessonDocument.submittedResources)
 							.filter(resource => !urlTest.test(resource))
 							.map(resource => sendMsg(msg.channel, { attachments: new Discord.MessageAttachment(resource.match(attachmentParser)[2], resource.match(attachmentParser)[1].replace(/\\/g, '')) })),
 						);
@@ -313,7 +313,7 @@ module.exports = async guild => {
 					/**
 					 * Remove the lesson ID from the pendingConfirmation set
 					 */
-					const lessonCancelled = () => pendingConfirmation.delete(_lesson.lessonID);
+					const lessonCancelled = () => pendingConfirmation.delete(lessonDocument.lessonID);
 
 					// Call handlers.confirmWithReaction() on the lesson assignment confirmation embed with assignLesson() and assignCancelled() as callbacks
 					return confirmWithReaction(msg, dm, lessonSubmit, lessonCancelled);
@@ -338,12 +338,12 @@ function processMentions(instructors) {
 
 /**
  * Serialises a \<Lesson.submittedResources> string[] for display and creates a number[] of the serials
- * @param {Typings.Lesson} lesson The mongoose document for the lesson
+ * @param {Typings.Lesson} document The mongoose document for the lesson
  * @returns {{resources: string[], range: number[]}} A \<string[]> of the serialised resources, and a \<number[]> of the valid serials
  */
-function serialiseResources(lesson) {
+function serialiseResources(document) {
 	// Split apart any potential string[] elements which contain both a <MessageAttachment> and a URL, and return a flattened string[]
-	const processedArray = lesson.submittedResources.flatMap(resource => resource.split('\n'));
+	const processedArray = document.submittedResources.flatMap(resource => resource.split('\n'));
 
 	// Filter processedArray for any <MessageAttachment> resources, and store in a new string[]
 	const attachmentArray = processedArray.filter(resource => !resource.startsWith('[Resource]'));
@@ -354,8 +354,8 @@ function serialiseResources(lesson) {
 	const urlArray = databaseArray.map((resource, i) => `[Resource ${i + 1}]${resource.replace('[Resource]', '')}`);
 
 	// Save the new databaseArray in the <Lesson> document, to ensure that the user's input corresponds to the intended array element
-	lesson.submittedResources = attachmentArray.concat(databaseArray);
-	lesson.save().catch(error => console.error(error));
+	document.submittedResources = attachmentArray.concat(databaseArray);
+	document.save().catch(error => console.error(error));
 
 	// Concantenate the URL string[] to the <MessageAttachment> resource string[], then map it to a new string[] of serialised resource strings
 	const resources = attachmentArray.concat(urlArray)

@@ -23,7 +23,7 @@ module.exports = async guild => {
 	 */
 	seen.execute = async ({ msg, user }) => {
 		// Find <Lesson> document by querying database for lesson channel ID
-		const lesson = await findLesson(msg.channel.id);
+		const lessonDocument = await findLesson(msg.channel.id);
 
 		// Resolve the instructor, depending on whether executed via command or reaction
 		const instructor = user || msg.author;
@@ -36,13 +36,13 @@ module.exports = async guild => {
 			}
 
 			// Ensure <Lesson> has been found
-			else if (!lesson) throw 'Invalid lesson channel.';
+			else if (!lessonDocument) throw 'Invalid lesson channel.';
 
 			// Ensure the resolved instructor is an instructor of the lesson
-			else if (!lesson.instructors[instructor.id]) throw 'You are not an instructor for this lesson!';
+			else if (!lessonDocument.instructors[instructor.id]) throw 'You are not an instructor for this lesson!';
 
 			// Ensure the instructor has not already acknowledged receipt
-			else if (lesson.instructors[instructor.id].seen) throw 'You have already acknowledged this lesson warning.';
+			else if (lessonDocument.instructors[instructor.id].seen) throw 'You have already acknowledged this lesson warning.';
 		}
 
 		catch (error) { return commandError(msg, error, seen.error); }
@@ -60,11 +60,11 @@ module.exports = async guild => {
 		sendMsg(msg.channel, { embeds: [seenEmbed] });
 
 		// Change the instructor's seen status in the database
-		lesson.instructors[instructor.id].seen = true;
-		lesson.markModified('instructors');
+		lessonDocument.instructors[instructor.id].seen = true;
+		lessonDocument.markModified('instructors');
 
 		// Check whether all instructors have been marked as having acknowledged receipt of the lesson warning
-		const allSeen = Object.values(lesson.instructors).every(_instructor => _instructor.seen);
+		const allSeen = Object.values(lessonDocument.instructors).every(_instructor => _instructor.seen);
 
 		if (allSeen) {
 			// If so, create and send an embed to state that all instructors have acknowledged receipt
@@ -76,7 +76,7 @@ module.exports = async guild => {
 		}
 
 		// Save the <Lesson> document and return it
-		return await lesson.save().catch(error => console.error(error));
+		return await lessonDocument.save().catch(error => console.error(error));
 	};
 
 	return seen;
