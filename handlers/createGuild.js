@@ -9,68 +9,113 @@ const { defaults, colours } = require('../config');
 const { Guild } = require('../models');
 const { debugError, sendMsg } = require('../modules');
 
-const recentlyCreated = new Set();
-// A Collection<Channel.Snowflake, Guild.Snowflake>
+/**
+ * A Collection\<Channel.Snowflake, Guild.Snowflake> to store any channels that have been created by Pronto as part of the initialisation process
+ * @type {Discord.Collection<Discord.Snowflake, Discord.Snowflake}
+ */
 const createdChannels = new Discord.Collection();
 
 /**
- *
- * @param {?Discord.Guild} guild
- * @returns {Promise<Typings.Guild>}
+ * - Set to record the \<Guild.id> snowflakes of the guild currently undergoing creation
+ * - If a guild's snowflake is currently in this set, they must await until the Promises stored within the values of pendingPromises[\<Guild.id>] resolve for the \<Guild> document to be accessible
+ * @type {Set<Discord.Snowflake>}
+ */
+const currentlyCreating = new Set();
+
+/**
+ * - An \<Object> to record all pending Promises, stored as an \<Object.\<string, Promise\<*>>> in the property pendingPromises[\<Guild.id>]
+ * - A guild's \<Guild> document is only guaranteed to be accessible once all Promises within `Object.values(pendingPromises[<Guild.id>])` have been resolved
+ * @type {Object.<string, Object.<string, Promise<*>>}
+ */
+const pendingPromises = {};
+
+/**
+ * `handlers.createGuild()` performs the initialisation process for a guild by creating/finding the default channels defined by `config.defaults`,
+ * and creates and returns a new \<Guild> document if it does not already exist
+ * @param {Discord.Guild} guild The guild to initialise
+ * @returns {Promise<Typings.Guild>} The guild's \<Guild> document
  */
 module.exports = async guild => {
-	if (!guild) {
-		const returnObj = require('../config');
-		returnObj.commands = await require('../commands/commands')('BREAK');
-		return returnObj;
-	}
-
 	/**
-	 * @type {Typings.Guild}
+	 * Attempt to find an existing \<Guild> document by querying for the guild's identifer
+	 * @type {?Typings.Guild}
 	 */
-	const existingGuild = await Guild.findOne({ guildID: guild.id }, error => {
+	const existingDocument = await Guild.findOne({ guildID: guild.id }, error => {
 		if (error) console.error(error);
 	});
 
-	if (existingGuild) return existingGuild;
-	if (recentlyCreated.has(guild.id)) return require('../config');
+	// If the guild already has an existing <Guild> document, return it and cease further execution
+	if (existingDocument) return existingDocument;
 
-	recentlyCreated.add(guild.id);
-	setTimeout(() => recentlyCreated.delete(guild.guildID), 15000);
+	if (currentlyCreating.has(guild.id)) {
+		// If the guild's identifier already exists inside the currentlyCreated set, await until the guild's pending Promises resolve for the <Guild> document to be accessible
+		await Promise.all(Object.values(pendingPromises[guild.id]));
+		// Recursively call handlers.createGuild() to return the created <Guild> document
+		return await this(guild);
+	}
+
+	// Add the guild's identifier to the currentlyCreating set
+	currentlyCreating.add(guild.id);
 
 	const { bot } = require('../pronto');
 	const { lessonInstructions, overwriteCommands } = require('./');
 
-	let _guild = await createGuildDocument(guild);
-	_guild = await overwriteCommands(guild);
+	// Call createGuildDocument() to create the guild's initial <Guild> document, and wait for the document to be saved before proceeding
+	// This is done by saving the Promise in an object within pendingPromises[guild.id], then waiting for that Promise to resolve
+	pendingPromises[guild.id] = { createGuildDocument: createGuildDocument(guild) };
+	await Promise.resolve(pendingPromises[guild.id].createGuildDocument);
 
-	lessonInstructions(_guild.ids.lessonReferenceID, guild);
+	// Once the initial <Guild> document has been created, call handlers.overwriteCommands() to upsert <Guild.commands>, and save the Promise
+	pendingPromises[guild.id].overwriteCommands = overwriteCommands(guild);
+	await Promise.resolve(pendingPromises[guild.id].overwriteCommands);
 
+	// Once the handlers.overwriteCommands() Promise has resolved, retrieve the complete <Guild> document from its resolved value
+	const guildDocument = pendingPromises[guild.id].overwriteCommands;
+
+	// Remove the guild's identifier from the currentlyCreating set now that the <Guild> document has been created
+	currentlyCreating.delete(guild.id);
+
+	// Call handlers.lessonInstructions() to send an instructional embed on Pronto's lesson management functionality
+	lessonInstructions(guildDocument.ids.lessonReferenceID, guild);
+
+	// If this guild has had some channels created as part of the initialisation process, send an embed listing the created channels
 	if (createdChannels.some(guildID => guildID === guild.id)) {
 		const { dateTimeGroup } = require('../modules');
 
-		const prontoCategory = bot.channels.cache.find(chnl => chnl.type === 'category' && chnl.name === defaults.pronto.name);
-		const debugChannel = bot.channels.cache.get(_guild.ids.debugID);
+		// Retrieve the <CategoryChannel> that was created by Pronto to categorise Pronto's created channels
+		const prontoCategory = bot.channels.cache.find(channel => channel.type === 'category' && channel.name === defaults.pronto.name);
+		// Get the guild's debug channel
+		const debugChannel = bot.channels.cache.get(guildDocument.ids.debugID);
 
-		const createdEmbed = new Discord.MessageEmbed()
+		// Create created channels embed
+		const createdChannelsEmbed = new Discord.MessageEmbed()
 			.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }))
 			.setColor(colours.primary)
 			.setDescription(`Initialised channel(s) in **${prontoCategory}**, feel free to move and/or rename them!`)
-			.addField('Created Channels', channelsOutput(createdChannels, _guild))
+			.addField('Created Channels', channelsOutput(createdChannels, guildDocument))
 			.addField('More Information', 'To modify my configuration, please visit my dashboard.')
 			.setFooter(await dateTimeGroup());
 
-		sendMsg(debugChannel, { embeds: [createdEmbed] });
+		// Send the created channels embed
+		sendMsg(debugChannel, { embeds: [createdChannelsEmbed] });
 	}
 
-	return _guild;
+	// Filter the createdChannels <Collection> for channels created in this guild, and delete them from the <Collection> now that we are done with them
+	[...createdChannels.filter(guildID => guildID === guild.id).keys()]
+		.forEach(channelID => createdChannels.delete(channelID));
+
+	// Delete the guild's property from the pendingPromises <Object> now that we are done with it
+	delete pendingPromises[guild.id];
+
+	// Return the created <Guild> document
+	return guildDocument;
 };
 
 async function createGuildDocument(guild) {
 	/**
 	 * @type {Typings.Guild}
 	 */
-	guild = await new Guild({
+	const guildDocument = await new Guild({
 		_id: mongoose.Types.ObjectId(),
 		guildID: guild.id,
 		guildName: guild.name,
@@ -90,7 +135,7 @@ async function createGuildDocument(guild) {
 		},
 	});
 
-	return await guild.save().catch(error => console.error(error));
+	return await guildDocument.save().catch(error => console.error(error));
 }
 
 async function initChannel(channel, guild, type) {
@@ -140,7 +185,6 @@ async function initChannel(channel, guild, type) {
 		.catch(error => debugError(error, `Error creating ${channel.name} in ${guild.name}\n`));
 
 	createdChannels.set(newChannel.id, guild.id);
-	setTimeout(() => createdChannels.delete(newChannel.id), 5000);
 
 	if (foundChannel) {
 		if (foundChannel.name === defaults.debug.name) {
