@@ -25,20 +25,20 @@ module.exports = async (guild, changes) => {
 	/**
 	 * @type {Typings.Guild}
 	 */
-	let database = await Guild.findOne({ guildID: guild.id }, error => {
+	let document = await Guild.findOne({ guildID: guild.id }, error => {
 		if (error) console.error(error);
 	});
 
-	if (!changes) return database || await createGuild(guild);
+	if (!changes) return document || await createGuild(guild);
 
 	else if (changes instanceof Object) {
 		// Otherwise, if there are changes to upsert, call modules.merge() to merge the two objects
-		database = merge(database, changes);
+		document = merge(document, changes);
 
 		// Iterate through each changed key and ensure the path is marked as having been changed
-		Object.keys(changes).forEach(key => database.markModified(key));
+		Object.keys(changes).forEach(key => document.markModified(key));
 	}
 
 	// Save any changes to the <Guild> and return it
-	return await database.save().catch(error => console.error(error));
+	return await document.save().catch(error => console.error(error));
 };
