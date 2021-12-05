@@ -228,7 +228,7 @@ module.exports = async guild => {
 			);
 
 			/**
-			 * Create new \<Lesson> document
+			 * Create a new \<Lesson> document
 			 * @type {Typings.Lesson}
 			 */
 			const lesson = await new Lesson({
