@@ -16,16 +16,16 @@ const { merge } = require('../modules');
  * @returns {Promise<Typings.Guild>}
  */
 module.exports = async (guild, changes) => {
+	const { bot } = await require('../pronto');
 	const { createGuild } = require('./');
 
-	const id = (guild)
-		? guild.id
-		: DEFAULT_GUILD;
+	// If the guild is null, replace it with the <Guild> object of the default guild
+	guild = guild || bot.guilds.cache.get(DEFAULT_GUILD);
 
 	/**
 	 * @type {Typings.Guild}
 	 */
-	let database = await Guild.findOne({ guildID: id }, error => {
+	let database = await Guild.findOne({ guildID: guild.id }, error => {
 		if (error) console.error(error);
 	});
 
