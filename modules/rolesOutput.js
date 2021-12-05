@@ -4,7 +4,7 @@
  *
  * @param {string[]} array
  * @param {boolean} mention
- * @param {number} breakAt
+ * @param {?number} breakAt
  * @returns {string}
  */
 module.exports = (array, mention, breakAt) => {
