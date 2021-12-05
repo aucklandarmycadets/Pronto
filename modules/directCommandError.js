@@ -2,7 +2,8 @@
 
 module.exports = async (msg, type) => {
 	const { embedScaffold, errorReact } = require('./');
-	const { colours } = await require('../handlers/database')(msg.guild);
+	// There will not be a guild as sent in DMs
+	const { colours } = await require('../handlers/database')();
 
 	errorReact(msg);
 
