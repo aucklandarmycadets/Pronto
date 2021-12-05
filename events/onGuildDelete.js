@@ -8,12 +8,12 @@ module.exports = {
 	bot: ['guildDelete'],
 	process: [],
 	/**
-	 * Event handler to delete the guild's database whenever a \<Guild> kicks the \<Client> or the \<Guild> is deleted/left
+	 * Event handler to delete the guild's document whenever a \<Guild> kicks the \<Client> or the \<Guild> is deleted/left
 	 * @param {'guildCreate'} _ The event that was emitted
 	 * @param {Discord.Guild} guild The \<Guild> that was deleted
 	 */
 	handler(_, guild) {
-		// Remove the guild's database using handlers.removeGuild()
+		// Remove the guild's document using handlers.removeGuild()
 		removeGuild(guild);
 	},
 };

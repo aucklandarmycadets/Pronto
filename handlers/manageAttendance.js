@@ -18,16 +18,16 @@ module.exports = async (reaction, user) => {
 	/**
 	 * @type {Typings.Attendance}
 	 */
-	const db = await Attendance.findOne({ channelID: reaction.message.id });
+	const document = await Attendance.findOne({ channelID: reaction.message.id });
 
-	if (!db) return;
+	if (!document) return;
 
-	const formation = reaction.message.guild.roles.cache.find(role => role.name === db.formation);
+	const formation = reaction.message.guild.roles.cache.find(role => role.name === document.formation);
 
-	if (!formation.members.get(user.id) && !db.authors.includes(user.id)) return reaction.users.remove(user.id);
+	if (!formation.members.get(user.id) && !document.authors.includes(user.id)) return reaction.users.remove(user.id);
 
 	const attendanceChannel = bot.channels.cache.get(attendanceID);
-	const attendanceMessage = await attendanceChannel.messages.fetch(db.attendanceID)
+	const attendanceMessage = await attendanceChannel.messages.fetch(document.attendanceID)
 		.catch(error => debugError(error, `Error fetching messages in ${attendanceChannel}.`));
 
 	if (reaction.emoji.name === '🗑️') {
@@ -46,14 +46,14 @@ module.exports = async (reaction, user) => {
 
 			const attendanceEmbed = new Discord.MessageEmbed(reaction.message.embeds[0])
 				.setTitle(`${title} (Updated)`)
-				.setAuthor(db.formation, reaction.message.guild.iconURL({ dynamic: true }))
+				.setAuthor(document.formation, reaction.message.guild.iconURL({ dynamic: true }))
 				.setDescription(register)
 				.setFooter('Use the reactions below to confirm or cancel.');
 
 			sendDirect(user, { embeds: [attendanceEmbed] }, reaction.message.channel)
 				.then(dm => {
 					const sendAttendance = async () => {
-						attendanceEmbed.setAuthor(`${db.formation} (${member.displayName})`, reaction.message.guild.iconURL({ dynamic: true }));
+						attendanceEmbed.setAuthor(`${document.formation} (${member.displayName})`, reaction.message.guild.iconURL({ dynamic: true }));
 						attendanceEmbed.setFooter(`Last updated at ${await dateTimeGroup()}`);
 
 						attendanceMessage.edit(attendanceEmbed);
@@ -61,10 +61,10 @@ module.exports = async (reaction, user) => {
 
 						embedScaffold(reaction.message.guild, reaction.message.channel, `${user} Successfully updated attendance for **[${title}](${reaction.message.url})**.`, colours.success, 'MESSAGE');
 
-						db.name = title;
-						if (!db.authors.includes(user.id)) db.authors.push(user.id);
+						document.name = title;
+						if (!document.authors.includes(user.id)) document.authors.push(user.id);
 
-						db.save();
+						document.save();
 					};
 
 					confirmWithReaction(reaction.message, dm, sendAttendance);

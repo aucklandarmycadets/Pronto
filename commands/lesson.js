@@ -349,12 +349,12 @@ function serialiseResources(lesson) {
 	const attachmentArray = processedArray.filter(resource => !resource.startsWith('[Resource]'));
 
 	// Filter processedArray for URL resources, and store in a new string[]
-	const dbArray = processedArray.filter(resource => resource.startsWith('[Resource]'));
-	// Map the dbArray of URL resources to a new string[] of enumerated [Resource n] strings
-	const urlArray = dbArray.map((resource, i) => `[Resource ${i + 1}]${resource.replace('[Resource]', '')}`);
+	const databaseArray = processedArray.filter(resource => resource.startsWith('[Resource]'));
+	// Map the databaseArray of URL resources to a new string[] of enumerated [Resource n] strings
+	const urlArray = databaseArray.map((resource, i) => `[Resource ${i + 1}]${resource.replace('[Resource]', '')}`);
 
-	// Save the new dbArray in the <Lesson> document, to ensure that the user's input corresponds to the intended array element
-	lesson.submittedResources = attachmentArray.concat(dbArray);
+	// Save the new databaseArray in the <Lesson> document, to ensure that the user's input corresponds to the intended array element
+	lesson.submittedResources = attachmentArray.concat(databaseArray);
 	lesson.save().catch(error => console.error(error));
 
 	// Concantenate the URL string[] to the <MessageAttachment> resource string[], then map it to a new string[] of serialised resource strings

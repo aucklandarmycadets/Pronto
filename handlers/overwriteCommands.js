@@ -10,11 +10,11 @@ module.exports = async guild => {
 	/**
 	 * @type {Typings.Guild}
 	 */
-	const database = await Guild.findOne({ guildID: guild.id }, error => {
+	const document = await Guild.findOne({ guildID: guild.id }, error => {
 		if (error) console.error(error);
 	});
 
-	database.commands = commands;
+	document.commands = commands;
 
-	return await database.save().catch(error => console.error(error));
+	return await document.save().catch(error => console.error(error));
 };
