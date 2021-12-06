@@ -16,7 +16,7 @@ module.exports = async guild => {
 	const commands = await require('../commands/commands')(guild);
 
 	/**
-	 * @type {Typings.Guild}
+	 * @type {Partial<Typings.Guild>}
 	 */
 	const document = await Guild.findOne({ guildID: guild.id }, error => {
 		if (error) console.error(error);

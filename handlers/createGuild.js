@@ -61,12 +61,12 @@ module.exports = async guild => {
 	const { bot } = require('../pronto');
 	const { lessonInstructions, overwriteCommands } = require('./');
 
-	// Call createGuildDocument() to create the guild's initial <Guild> document, and wait for the document to be saved before proceeding
+	// Call createGuildDocument() to create the guild's initial Partial<Guild> document, and wait for the document to be saved before proceeding
 	// This is done by saving the Promise in an object within pendingPromises[guild.id], then waiting for that Promise to resolve
 	pendingPromises[guild.id] = { createGuildDocument: createGuildDocument(guild) };
 	await Promise.resolve(pendingPromises[guild.id].createGuildDocument);
 
-	// Once the initial <Guild> document has been created, call handlers.overwriteCommands() to upsert <Guild.commands>, and save the Promise
+	// Once the initial Partial<Guild> document has been created, call handlers.overwriteCommands() to upsert <Guild.commands>, and save the Promise
 	pendingPromises[guild.id].overwriteCommands = overwriteCommands(guild);
 	await Promise.resolve(pendingPromises[guild.id].overwriteCommands);
 
