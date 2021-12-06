@@ -5,7 +5,6 @@ const Discord = require('discord.js');
 const Typings = require('../typings');
 
 const { Lesson } = require('../models');
-
 const { commandError, debugError, dateTimeGroup, embedScaffold, errorReact, sendMsg, successReact } = require('../modules');
 
 /**
