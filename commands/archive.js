@@ -18,7 +18,7 @@ module.exports = async guild => {
 	const { ids: { logID, archivedID }, commands: { archive }, colours } = await require('../handlers/database')(guild);
 
 	/**
-	 * Archive a <TextChannel> by restricting channel visibility and moving it to a designated channel category
+	 * Archive a \<TextChannel> by restricting channel visibility and moving it to a designated channel category
 	 * @function execute
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */

@@ -35,9 +35,9 @@ export interface BaseCommand {
 	description: CommandDescription;
 	/** Whether to allow the command to execute from a direct message */
 	allowDirect: boolean;
-	/** A <Role.id[]> of which the \<GuildMember> must have at least one to execute the command */
+	/** A \<Role.id[]> of which the \<GuildMember> must have at least one to execute the command */
 	requiredRoles: Discord.Snowflake[];
-	/** A <Role.id[]> of which the \<GuildMember> must have none to execute the command */
+	/** A \<Role.id[]> of which the \<GuildMember> must have none to execute the command */
 	deniedRoles: Discord.Snowflake[];
 	/** Whether the command is only executable by the developer defined by `config.ids.DEVELOPER_ID` */
 	developerOnly: boolean;

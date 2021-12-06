@@ -17,7 +17,7 @@ module.exports = async guild => {
 	const { commands: { purge }, colours } = await require('../handlers/database')(guild);
 
 	/**
-	 * Bulk delete a specified number of messages from a <TextChannel>
+	 * Bulk delete a specified number of messages from a \<TextChannel>
 	 * @function execute
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
