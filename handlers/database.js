@@ -10,14 +10,14 @@ const { Guild } = require('../models');
 const { merge } = require('../modules');
 
 /**
- * - `handlers.database()` queries the MongoDB database for the guild's \<Guild> document if it exists, or will first call `handlers.createGuild()`
- * to create the \<Guild> document
+ * - `handlers.database()` queries the MongoDB database for the guild's \<GuildConfiguration> if it exists, or will first call `handlers.createGuild()`
+ * to create the \<GuildConfiguration>
  * - If the guild is `null`, the document of Pronto's 'master' guild is returned
  * @function handlers.database
- * @param {?Discord.Guild} guild The guild to find the \<Guild> document for
- * - If `null`, the \<Guild> document of the default guild defined by `config.ids.DEFAULT_GUILD` will be returned instead
- * @param {Partial<Typings.Guild>} changes A Partial\<Guild> object of the values to update within the \<Guild> document
- * @returns {Promise<Typings.Guild>} The guild's \<Guild> document, or the `config.ids.DEFAULT_GUILD`'s \<Guild> document
+ * @param {?Discord.Guild} guild The \<Guild> to find the \<GuildConfiguration> for
+ * - If `null`, the \<GuildConfiguration> of the default guild defined by `config.ids.DEFAULT_GUILD` will be returned instead
+ * @param {Partial<Typings.GuildConfiguration>} changes A Partial\<GuildConfiguration> object of the values to update within the \<GuildConfiguration>
+ * @returns {Promise<Typings.GuildConfiguration>} The guild's \<GuildConfiguration>, or the `config.ids.DEFAULT_GUILD`'s \<GuildConfiguration>
  */
 module.exports = async (guild, changes) => {
 	const { bot } = await require('../pronto');
@@ -27,8 +27,8 @@ module.exports = async (guild, changes) => {
 	guild = guild || bot.guilds.cache.get(DEFAULT_GUILD);
 
 	/**
-	 * Attempt to find the \<Guild> document by querying for the guild's identifier
-	 * @type {Typings.Guild}
+	 * Attempt to find the \<GuildConfiguration> document by querying for the guild's identifier
+	 * @type {Typings.GuildConfiguration}
 	 */
 	let document = await Guild.findOne({ guildID: guild.id }, error => {
 		if (error) console.error(error);
@@ -45,6 +45,6 @@ module.exports = async (guild, changes) => {
 		Object.keys(changes).forEach(key => document.markModified(key));
 	}
 
-	// Save any changes to the <Guild> and return it
+	// Save any changes to the <GuildConfiguration> document and return it
 	return await document.save().catch(error => console.error(error));
 };

@@ -10,13 +10,13 @@ const { Guild } = require('../models');
 /**
  *
  * @param {Discord.Guild} guild
- * @returns {Promise<Typings.Guild>}
+ * @returns {Promise<Typings.GuildConfiguration>}
  */
 module.exports = async guild => {
 	const commands = await require('../commands/commands')(guild);
 
 	/**
-	 * @type {Partial<Typings.Guild>}
+	 * @type {Partial<Typings.GuildConfiguration>}
 	 */
 	const document = await Guild.findOne({ guildID: guild.id }, error => {
 		if (error) console.error(error);

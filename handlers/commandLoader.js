@@ -11,7 +11,7 @@ const fs = require('fs');
  * `handlers.commandLoader()` loads the bot's \<Commands> from the commands directory for a specified guild
  * @function handlers.commandLoader
  * @param {string} directory The directory to load each \<Command> from
- * @param {Discord.Guild} guild The guild to load \<Commands> for
+ * @param {Discord.Guild} guild The \<Guild> to load \<Commands> for
  * @returns {Promise<Typings.Commands>} The loaded \<Commands> object for the guild, containing each \<Command> in a nested object
  */
 module.exports = async (directory, guild) => {

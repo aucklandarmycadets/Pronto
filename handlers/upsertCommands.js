@@ -11,13 +11,13 @@ const { difference, merge } = require('../modules');
 /**
  * @function handlers.upsertCommands
  * @param {Discord.Guild} guild
- * @returns {Promise<Typings.Guild>}
+ * @returns {Promise<Typings.GuildConfiguration>}
  */
 module.exports = async guild => {
 	const updatedCommands = await require('../commands/commands')(guild);
 
 	/**
-	 * @type {Typings.Guild}
+	 * @type {Typings.GuildConfiguration}
 	 */
 	const document = await Guild.findOne({ guildID: guild.id }, error => {
 		if (error) console.error(error);
@@ -32,7 +32,7 @@ module.exports = async guild => {
 /**
  * @function handlers.upsertCommands~process
  * @param {Typings.BaseCommands} updatedCommands
- * @param {Typings.Guild} document
+ * @param {Typings.GuildConfiguration} document
  * @returns {Promise<Typings.BaseCommands>}
  */
 async function process(updatedCommands, document) {

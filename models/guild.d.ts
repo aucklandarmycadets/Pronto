@@ -5,7 +5,7 @@ import Typings = require('../typings');
 /**
  * An \<Object> representing the values of a \<mongoose.Document> to record the specific configuration for each \<Guild>
  */
-export interface Guild extends mongoose.Document {
+export interface GuildConfiguration extends mongoose.Document {
 	/** A unique document identifier */
 	_id: mongoose.Schema.Types.ObjectId;
 	/** The \<Guild.id> that this configuration belongs to */

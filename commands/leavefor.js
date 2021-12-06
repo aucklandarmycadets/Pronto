@@ -9,7 +9,7 @@ const { capitalise, commandError, dateTimeGroup, prefixCommand, remove, sendDire
 /**
  * Complete the \<Command> object from a \<BaseCommand>
  * @module commands/leavefor
- * @param {Discord.Guild} guild The guild that the member shares with the bot
+ * @param {Discord.Guild} guild The \<Guild> that the member shares with the bot
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {

@@ -10,7 +10,7 @@ const { commandLoader } = require('../handlers');
 /**
  * Load the commands folder for the specified guild with handlers.commandLoader()
  * @module commands
- * @param {Discord.Guild} guild The guild to load the \<Commands> for
+ * @param {Discord.Guild} guild The \<Guild> to load the \<Commands> for
  * @returns {Promise<Typings.Commands>} The guild's complete \<Commands> object
  */
 module.exports = async guild => await commandLoader('./commands', guild);

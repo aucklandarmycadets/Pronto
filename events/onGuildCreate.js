@@ -10,7 +10,7 @@ module.exports = {
 	bot: ['guildCreate'],
 	process: [],
 	/**
-	 * Event handler to initialise the \<Guild> whenever the \<Client> joins a new \<Guild>
+	 * Event handler to initialise the \<GuildConfiguration> whenever the \<Client> joins a new \<Guild>
 	 * @param {'guildCreate'} _ The event that was emitted
 	 * @param {Discord.Guild} guild The created \<Guild>
 	 */

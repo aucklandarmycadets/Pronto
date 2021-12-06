@@ -11,14 +11,14 @@ const { debugError, sendMsg } = require('../modules');
 
 /**
  * - Set to record the \<Guild.id> snowflakes of the guild currently undergoing creation
- * - If a guild's snowflake is currently in this set, they must await until the Promises stored within the values of pendingPromises[\<Guild.id>] resolve for the \<Guild> document to be accessible
+ * - If a guild's snowflake is currently in this set, they must await until the Promises stored within the values of pendingPromises[\<Guild.id>] resolve for the \<GuildConfiguration> document to be accessible
  * @type {Set<Discord.Snowflake>}
  */
 const currentlyCreating = new Set();
 
 /**
  * - An \<Object> to record all current pending Promises, stored as an \<Object.\<string, Promise\<*>>> in the property pendingPromises[\<Guild.id>]
- * - A guild's \<Guild> document is only guaranteed to be accessible once all Promises within `Object.values(pendingPromises[<Guild.id>])` have been resolved
+ * - A guild's \<GuildConfiguration> document is only guaranteed to be accessible once all Promises within `Object.values(pendingPromises[<Guild.id>])` have been resolved
  * @type {Object.<string, Object.<string, Promise<*>>}
  */
 const pendingPromises = {};
@@ -31,27 +31,27 @@ const createdChannels = new Discord.Collection();
 
 /**
  * `handlers.createGuild()` performs the initialisation process for a guild by creating/finding the default channels defined by `config.defaults`,
- * and creates and returns a new \<Guild> document if it does not already exist
+ * and creates and returns a new \<GuildConfiguration> document if it does not already exist
  * @function handlers.createGuild
- * @param {Discord.Guild} guild The guild to initialise
- * @returns {Promise<Typings.Guild>} The guild's \<Guild> document
+ * @param {Discord.Guild} guild The \<Guild> to initialise
+ * @returns {Promise<Typings.GuildConfiguration>} The guild's \<GuildConfiguration> document
  */
 module.exports = async guild => {
 	/**
-	 * Attempt to find an existing \<Guild> document by querying for the guild's identifer
-	 * @type {?Typings.Guild}
+	 * Attempt to find an existing \<GuildConfiguration> document by querying for the guild's identifer
+	 * @type {?Typings.GuildConfiguration}
 	 */
 	const existingDocument = await Guild.findOne({ guildID: guild.id }, error => {
 		if (error) console.error(error);
 	});
 
-	// If the guild already has an existing <Guild> document, return it and cease further execution
+	// If the guild already has an existing <GuildConfiguration> document, return it and cease further execution
 	if (existingDocument) return existingDocument;
 
 	if (currentlyCreating.has(guild.id)) {
-		// If the guild's identifier already exists inside the currentlyCreated set, await until the guild's pending Promises resolve for the <Guild> document to be accessible
+		// If the guild's identifier already exists inside the currentlyCreated set, await until the guild's pending Promises resolve for the <GuildConfiguration> document to be accessible
 		await Promise.all(Object.values(pendingPromises[guild.id]));
-		// Recursively call handlers.createGuild() to return the created <Guild> document
+		// Recursively call handlers.createGuild() to return the created <GuildConfiguration> document
 		return await this(guild);
 	}
 
@@ -61,19 +61,19 @@ module.exports = async guild => {
 	const { bot } = require('../pronto');
 	const { lessonInstructions, overwriteCommands } = require('./');
 
-	// Call createGuildDocument() to create the guild's initial Partial<Guild> document, and wait for the document to be saved before proceeding
+	// Call createGuildDocument() to create the guild's initial Partial<GuildConfiguration> document, and wait for the document to be saved before proceeding
 	// This is done by saving the Promise in an object within pendingPromises[guild.id], then waiting for that Promise to resolve
 	pendingPromises[guild.id] = { createGuildDocument: createGuildDocument(guild) };
 	await Promise.resolve(pendingPromises[guild.id].createGuildDocument);
 
-	// Once the initial Partial<Guild> document has been created, call handlers.overwriteCommands() to upsert <Guild.commands>, and save the Promise
+	// Once the initial Partial<GuildConfiguration> document has been created, call handlers.overwriteCommands() to upsert <GuildConfiguration.commands>, and save the Promise
 	pendingPromises[guild.id].overwriteCommands = overwriteCommands(guild);
 	await Promise.resolve(pendingPromises[guild.id].overwriteCommands);
 
-	// Once the handlers.overwriteCommands() Promise has resolved, retrieve the complete <Guild> document from its resolved value
+	// Once the handlers.overwriteCommands() Promise has resolved, retrieve the complete <GuildConfiguration> document from its resolved value
 	const guildDocument = pendingPromises[guild.id].overwriteCommands;
 
-	// Remove the guild's identifier from the currentlyCreating set now that the <Guild> document has been created
+	// Remove the guild's identifier from the currentlyCreating set now that the <GuildConfiguration> document has been created
 	currentlyCreating.delete(guild.id);
 
 	// Call handlers.lessonInstructions() to send an instructional embed on Pronto's lesson management functionality
@@ -109,20 +109,20 @@ module.exports = async guild => {
 	// Delete the guild's property from the pendingPromises <Object> now that we are done with it
 	delete pendingPromises[guild.id];
 
-	// Return the created <Guild> document
+	// Return the created <GuildConfiguration> document
 	return guildDocument;
 };
 
 /**
- * Creates an initial \<Guild> document without a \<Guild.commands> \<BaseCommands> object, by calling `initialiseChannel()` and `findRole()` to populate the \<Guild.ids> object
+ * Creates an initial Partial\<GuildConfiguration> without a \<GuildConfiguration.commands> \<BaseCommands> object, by calling `initialiseChannel()` and `findRole()` to populate the \<GuildConfiguration.ids> object
  * @function handlers.createGuild~createGuildDocument
- * @param {Discord.Guild} guild The guild to create a \<Guild> document for
- * @returns {Promise<Typings.Guild>} The created initial \<Guild> document
+ * @param {Discord.Guild} guild The \<Guild> to create a \<GuildConfiguration> document for
+ * @returns {Promise<Typings.GuildConfiguration>} The created initial \<GuildConfiguration> document
  */
 async function createGuildDocument(guild) {
 	/**
-	 * Create a new \<Guild> document, by calling `initialiseChannel()` to find/create each necessary \<GuildChannel>, and `findRole()` to find desired existing roles
-	 * @type {Typings.Guild}
+	 * Create a new \<GuildConfiguration> document, by calling `initialiseChannel()` to find/create each necessary \<GuildChannel>, and `findRole()` to find desired existing roles
+	 * @type {Typings.GuildConfiguration}
 	 */
 	const guildDocument = await new Guild({
 		_id: mongoose.Types.ObjectId(),
@@ -144,7 +144,7 @@ async function createGuildDocument(guild) {
 		},
 	});
 
-	// Return the created initial <Guild> document
+	// Return the created initial <GuildConfiguration> document
 	return await guildDocument.save().catch(error => console.error(error));
 }
 
@@ -152,7 +152,7 @@ async function createGuildDocument(guild) {
  * Finds an existing \<GuildChannel> that matches the specified \<DefaultChannel.name>, or creates the channel if it does not already exist
  * @function handlers.createGuild~initialiseChannel
  * @param {Typings.DefaultChannel} defaultChannel The \<DefaultChannel> object of the channel to find/create
- * @param {Discord.Guild} guild The guild to find/create the \<GuildChannel> in
+ * @param {Discord.Guild} guild The \<Guild> to find/create the \<GuildChannel> in
  * @param {?'TEXT' | 'CATEGORY'} type The type of the channel to be created, either `TEXT` || `CATEGORY`
  * - If `null`, a \<TextChannel> will be created by default
  * @returns {Promise<Discord.Snowflake>} The \<GuildChannel.id> of the found/created channel
@@ -261,7 +261,7 @@ async function initialiseChannel(defaultChannel, guild, type) {
  * Finds an existing \<Role> that includes the specified name
  * @function handlers.createGuild~findRole
  * @param {string} name The \<Role.name> of the role to search for
- * @param {Discord.Guild} guild The guild to search for the \<Role> in
+ * @param {Discord.Guild} guild The \<Guild> to search for the \<Role> in
  * @returns {Discord.Snowflake | ''} The \<Role.id> of the found role, or `''` if it was not found
  */
 function findRole(name, guild) {
@@ -275,7 +275,7 @@ function findRole(name, guild) {
  * Process a Collection\<GuildChannel.Snowflake, Guild.Snowflake> into a formatted string of channel mentions
  * @function handlers.createGuild~channelsOutput
  * @param {Discord.Collection<Discord.Snowflake, Discord.Snowflake} collection A Collection\<GuildChannel.Snowflake, Guild.Snowflake> that contains any channels that have been created as part of the current initialisation process(es)
- * @param {Discord.Guild} guild The guild to output a list of any created channel(s) for
+ * @param {Discord.Guild} guild The \<Guild> to output a list of any created channel(s) for
  * @returns {string} A newline-delimited string of formatted channel mentions
  */
 function channelsOutput(collection, guild) {
