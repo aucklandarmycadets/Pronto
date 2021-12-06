@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Pronto: commands/leavefor</title>
+    <title>Pronto: config.js</title>
     
       <link type="text/css" rel="stylesheet" href="styles/vendor/prism-okaidia.css">
     
@@ -31,189 +31,139 @@
 </header>
 
 
-<main class="layout-main ">
+<main class="layout-main  layout-content--source">
   <div class="container">
-    <p class="page-kind">Module</p>
-    <h1 class="page-title">commands/leavefor</h1>
+    <p class="page-kind">source</p>
+    <h1 class="page-title">config.js</h1>
     
 
 
 
+    
 
 <section>
-
-
-<header class="not-class">
-
-
-    
-        
-            
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-
-
-
-    
-        
-            <div class="description"><p>Complete the &lt;Command&gt; object from a &lt;BaseCommand&gt;</p></div>
-        
-
-        
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">guild</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.Guild</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"><p>The guild that the member shares with the bot</p></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-    <h4 class="method-heading">Returns</h4>
-    <ul>
-    
-        <li class="method-returns">
-            
-                <code>Promise.&lt;Typings.Command></code>
-            
-            
-                <p>The complete &lt;Command&gt; object with a &lt;Command.execute()&gt; method</p>
-            
-        </li>
-    
-    </ul>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="commands_leavefor.js.html">commands/leavefor.js</a><a href="commands_leavefor.js.html#source.9">, line 9</a>
-        </li>
-    </ul>
-
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-     
-
-    
-
-    
-
-
-    
-
-    
-
-    
-
-    
-</article>
-
+    <article>
+        <pre id="source" class="source-page line-numbers"><code class="language-js">'use strict';
+
+/**
+ * @namespace config
+ */
+
+/**
+ * @typedef {Object} config.Configuration
+ * @property {config.Settings} settings
+ * @property {config.Identifiers} ids
+ * @property {config.}
+ */
+
+/**
+ * @typedef {Object} config.Settings
+ * @property {number} PERMISSIONS_INTEGER
+ * @property {string} prefix
+ * @property {string} longDate
+ * @property {string} shortDate
+ * @property {string} prontoLogo
+ * @property {string} lessonCron
+ */
+
+module.exports = {
+	settings: {
+		PERMISSIONS_INTEGER: 1879141584,
+		prefix: '!',
+		longDate: 'HHMM "h" ddd, d mmm yy',
+		shortDate: 'd mmm',
+		prontoLogo: 'https://i.imgur.com/Whgm87R.png',
+		lessonCron: '0 16 * * 3',
+	},
+	ids: {
+		DEFAULT_GUILD: '765758073942966272',
+		DEVELOPER_ID: '192181901065322496',
+	},
+	defaults: {
+		debug: {
+			name: 'debugging',
+			get description() {
+				const { bot } = require('./pronto');
+				return `For debugging &lt;@!${bot.user.id}>.`;
+			},
+		},
+		log: {
+			name: 'log-channel',
+			description: 'Log channel.',
+		},
+		attendance: {
+			name: 'attendance',
+			description: 'To assist in **recording attendance** and **monitoring leave**; leave tickets will be sent here.',
+		},
+		recruiting: {
+			name: 'recruiting',
+			description: 'For everything related to **recruitment**.',
+		},
+		welcome: {
+			name: 'welcome',
+			description: '**Introduce yourself!** You can ask us any questions you might have here, or just say hello!',
+		},
+		lessonReference: {
+			name: 'reference',
+			get description() {
+				const { bot } = require('./pronto');
+				return `Reference channel for &lt;@!${bot.user.id}>'s **lesson plans** feature set.`;
+			},
+			get parent() {
+				const { defaults } = require('./config');
+				return defaults.lessons.name;
+			},
+		},
+		lessonPlans: {
+			name: 'lesson-plans',
+			description: 'An archive of **completed** and **approved** lesson plans.',
+			get parent() {
+				const { defaults } = require('./config');
+				return defaults.lessons.name;
+			},
+		},
+		pronto: {
+			name: 'Pronto',
+		},
+		archived: {
+			name: 'Archived',
+		},
+		lessons: {
+			name: 'Lesson Plans',
+		},
+		visitor: {
+			name: 'visitor',
+		},
+		administrator: {
+			name: 'administrator',
+		},
+	},
+	emojis: {
+		success: {
+			name: 'success',
+			URL: 'https://i.imgur.com/OMi5RLT.png',
+		},
+		error: {
+			name: 'error',
+			URL: 'https://i.imgur.com/DW8EJJ7.png',
+		},
+	},
+	colours: {
+		default: 0x1b1b1b,
+		primary: 0xffd456,
+		leave: 0xd31145,
+		success: 0x45bb8a,
+		warn: 0xffcc4d,
+		error: 0xef4949,
+	},
+	databaseOptions: {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+		autoIndex: false,
+		family: 4,
+	},
+};</code></pre>
+    </article>
 </section>
 
 

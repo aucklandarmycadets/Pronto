@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Pronto: commands/leavefor</title>
+    <title>Pronto: pronto</title>
     
       <link type="text/css" rel="stylesheet" href="styles/vendor/prism-okaidia.css">
     
@@ -33,8 +33,8 @@
 
 <main class="layout-main ">
   <div class="container">
-    <p class="page-kind">Module</p>
-    <h1 class="page-title">commands/leavefor</h1>
+    <p class="page-kind">Namespace</p>
+    <h1 class="page-title">pronto</h1>
     
 
 
@@ -48,7 +48,12 @@
 
     
         
-            
+        <!-- <h2>pronto</h2> -->
+
+        
+
+        
+
         
     
 </header>
@@ -60,18 +65,262 @@
 
     
         
-            <div class="description"><p>Complete the &lt;Command&gt; object from a &lt;BaseCommand&gt;</p></div>
+
         
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</div>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+     
+
+    
+
+    
+
+
+    
+        <h3 class="subtitle">Members</h3>
+
+        
+            
+
+<article class="member">
+    <div class="method-type">
+        <span class="method-type-signature is-static">static</span>
+    </div>
+<h4 class="member-name" id=".bot">bot<span class="type-signature">Typings.Client</span></h4>
+
+
+
+
+<div class="description">
+    <p>The bot's &lt;Client&gt; object</p>
+</div>
+
+
+
+    <h4>Type</h4>
+    <ul>
+        <li>
+            
+
+
+    <span class="param-type">
+        <code>Typings.Client</code>
+    </span>
+    
+
+        </li>
+    </ul>
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    <h4>Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="pronto.js.html">pronto.js</a><a href="pronto.js.html#source.26">, line 26</a>
+        </li>
+    </ul>
+
+
+</article>
+        
+            
+
+<article class="member">
+    <div class="method-type">
+        <span class="method-type-signature is-static">static</span>
+    </div>
+<h4 class="member-name" id=".version">version<span class="type-signature">string</span></h4>
+
+
+
+
+<div class="description">
+    <p>Pronto's current version</p>
+</div>
+
+
+
+    <h4>Type</h4>
+    <ul>
+        <li>
+            
+
+
+    <span class="param-type">
+        <code>string</code>
+    </span>
+    
+
+        </li>
+    </ul>
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    <h4>Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="pronto.js.html">pronto.js</a><a href="pronto.js.html#source.32">, line 32</a>
+        </li>
+    </ul>
+
+
+</article>
+        
+    
+
+    
+        <h3 class="subtitle">Methods</h3>
 
         
             
 
 
+    <article class="method">
+
+
+
+
+    
+
+
+    
+
+    <div class="method-type">
+    <span class="method-type-signature is-inner">inner</span>
+    </div>
+
+    <h4 class="method-name" id="~eventHandler">eventHandler<span class="signature">(emitter, event, handler)</span><span class="return-type-signature"></span>
+    </h4>
 
 
 
 
 
+<div class="method-description">
+    
+    <p>Attach an event listener to a &lt;Discord.Client&gt; or &lt;NodeJS.Process&gt; to execute an event handler</p>
+</div>
 
 
 
@@ -89,7 +338,7 @@
 
         <li>
             
-                <span class="param-name">guild</span>
+                <span class="param-name">emitter</span>
             
 
             
@@ -97,7 +346,12 @@
 
 
     <span class="param-type">
-        <code>Discord.Guild</code>
+        <code>Discord.Client</code>
+    </span>
+    |
+
+    <span class="param-type">
+        <code>NodeJS.Process</code>
     </span>
     
 
@@ -107,7 +361,59 @@
 
             
 
-            <div class="param-description"><p>The guild that the member shares with the bot</p></div>
+            <div class="param-description"><p>The &lt;EventEmitter&gt; to add the event listener to</p></div>
+            
+        </li>
+
+    
+
+        <li>
+            
+                <span class="param-name">event</span>
+            
+
+            
+                
+
+
+    <span class="param-type">
+        <code>string</code>
+    </span>
+    
+
+            
+
+            
+
+            
+
+            <div class="param-description"><p>The event to listen for</p></div>
+            
+        </li>
+
+    
+
+        <li>
+            
+                <span class="param-name">handler</span>
+            
+
+            
+                
+
+
+    <span class="param-type">
+        <code>function</code>
+    </span>
+    
+
+            
+
+            
+
+            
+
+            <div class="param-description"><p>The event handler function to execute when the event is emitted</p></div>
             
         </li>
 
@@ -152,20 +458,6 @@
 
 
 
-    <h4 class="method-heading">Returns</h4>
-    <ul>
-    
-        <li class="method-returns">
-            
-                <code>Promise.&lt;Typings.Command></code>
-            
-            
-                <p>The complete &lt;Command&gt; object with a &lt;Command.execute()&gt; method</p>
-            
-        </li>
-    
-    </ul>
-
 
 
 
@@ -184,29 +476,15 @@
     <h4 class="method-heading">Source</h4>
     <ul>
         <li class="method-source">
-            <a href="commands_leavefor.js.html">commands/leavefor.js</a><a href="commands_leavefor.js.html#source.9">, line 9</a>
+            <a href="pronto.js.html">pronto.js</a><a href="pronto.js.html#source.39">, line 39</a>
         </li>
     </ul>
 
 
 
+    </article>
+
         
-    
-    </div>
-
-    
-
-    
-
-     
-
-    
-
-    
-
-
-    
-
     
 
     
