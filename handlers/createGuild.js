@@ -19,13 +19,13 @@ const currentlyCreating = new Set();
 /**
  * - An \<Object> to record all current pending Promises, stored as an \<Object.\<string, Promise\<*>>> in the property pendingPromises[\<Guild.id>]
  * - A guild's \<GuildConfiguration> document is only guaranteed to be accessible once all Promises within `Object.values(pendingPromises[<Guild.id>])` have been resolved
- * @type {Object.<string, Object.<string, Promise<*>>}
+ * @type {Object.<string, Object.<string, Promise<*>>>}
  */
 const pendingPromises = {};
 
 /**
  * A Collection\<GuildChannel.Snowflake, Guild.Snowflake> to store any channels that have been created by Pronto as part of the current initialisation process(es)
- * @type {Discord.Collection<Discord.Snowflake, Discord.Snowflake}
+ * @type {Discord.Collection<Discord.Snowflake, Discord.Snowflake>}
  */
 const createdChannels = new Discord.Collection();
 
@@ -274,7 +274,7 @@ function findRole(name, guild) {
 /**
  * Process a Collection\<GuildChannel.Snowflake, Guild.Snowflake> into a formatted string of channel mentions
  * @function handlers.createGuild~channelsOutput
- * @param {Discord.Collection<Discord.Snowflake, Discord.Snowflake} collection A Collection\<GuildChannel.Snowflake, Guild.Snowflake> that contains any channels that have been created as part of the current initialisation process(es)
+ * @param {Discord.Collection<Discord.Snowflake, Discord.Snowflake>} collection A Collection\<GuildChannel.Snowflake, Guild.Snowflake> that contains any channels that have been created as part of the current initialisation process(es)
  * @param {Discord.Guild} guild The \<Guild> to output a list of any created channel(s) for
  * @returns {string} A newline-delimited string of formatted channel mentions
  */
