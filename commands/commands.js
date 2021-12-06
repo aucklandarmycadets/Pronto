@@ -43,7 +43,6 @@ const { formatList } = require('./modules');
 
 /**
  * @typedef {commands.BaseCommand} commands.Command The complete \<Command> object for one of Pronto's commands, with a [\<Command.execute()>]{@link commands.CommandExecute} method
- * @extends {commands.BaseCommand}
  * @property {commands.CommandExecute} execute The command's [\<Command.execute()>]{@link commands.CommandExecute} method
  */
 
