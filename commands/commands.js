@@ -67,13 +67,11 @@ const { formatList } = require('./modules');
 
 /**
  *
- * @param {Discord.Guild | 'BREAK'} guild
+ * @param {Discord.Guild} guild
  * @returns {Promise<Typings.BaseCommands>}
  */
 module.exports = async guild => {
-	const { settings: { prefix }, ids } = (guild === 'BREAK')
-		? require('./config')
-		: await require('./handlers/database')(guild);
+	const { settings: { prefix }, ids } = await require('./handlers/database')(guild);
 
 	/**
 	 * @type {Typings.BaseCommands}
