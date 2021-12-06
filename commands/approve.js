@@ -132,7 +132,7 @@ module.exports = async guild => {
 };
 
 /**
- * Process an \<Instructor> object into a formatted string
+ * Process an \<Instructor> object into a formatted string of user mentions
  * @param {Typings.Instructors} instructors An \<Instructors> object
  * @returns {string} A newline-delimited string of formatted user mentions
  */
