@@ -8,6 +8,12 @@ const Typings = require('./typings');
 const { mongoose } = require('./handlers');
 
 /**
+ * The Discord.js JavaScript library to interact with the Discord API
+ * @external Discord
+ * @see https://discord.js.org/#/docs
+ */
+
+/**
  * @namespace pronto
  */
 
