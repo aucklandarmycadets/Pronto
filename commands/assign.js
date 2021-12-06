@@ -143,7 +143,10 @@ module.exports = async guild => {
 				 * Create a private lesson channel for specified instructors and dispatch the lesson warning, as well as a message to request acknowledgement from the instructor(s)
 				 */
 				const assignLesson = async () => {
-					// Set channel topic to be a list of the instructor(s)'s mentions, and create the channel under the lessons category channel
+					/**
+					 * Set channel topic to be a list of the instructor(s)'s mentions, and create the channel under the lessons category channel
+					 * @type {Discord.GuildChannelCreateOptions}
+					 */
 					const channelOptions = { topic: processMentions(lessonInstructors), parent: lessonsID };
 
 					// Create the private lesson channel, with a name matching the lesson name and with the above channel options
