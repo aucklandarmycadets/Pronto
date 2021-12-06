@@ -37,7 +37,7 @@ const { settings, emojis, colours } = require('../config');
  * @property {Discord.Snowflake[]} ids.trainingIDs A \<Role.id[]> of the guild's training roles
  * @property {Discord.Snowflake[]} ids.formations A \<Role.id[]> of the guild's formation roles
  * @property {Typings.ChannelPair[]} ids.channelPairs An {@link models.ChannelPair|<Object[]>} of the guild's pairings of \<VoiceChannel> and \<TextChannel>
- * @property {Typings.BaseCommands} commands The guild's [\<BaseCommands>]{@link commands.BaseCommands} object containing each individual [\<BaseCommand>]{@link commands.BaseCommand} under the property [{@link commands.CommandName|CommandName}]
+ * @property {?Typings.BaseCommands} commands The guild's [\<BaseCommands>]{@link commands.BaseCommands} object containing each individual [\<BaseCommand>]{@link commands.BaseCommand} under the property [{@link commands.CommandName|CommandName}]
  * @property {Object} emojis The guild's emojis object
  * @property {Typings.Emoji} emojis.success The guild's success [\<Emoji>]{@link models.Emoji}
  * @property {Typings.Emoji} emojis.error The guild's error [\<Emoji>]{@link models.Emoji}
