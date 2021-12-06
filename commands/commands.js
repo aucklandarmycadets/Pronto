@@ -33,8 +33,8 @@ const { formatList } = require('./modules');
  * @property {Discord.Snowflake[]} deniedRoles A <Role.id[]> of which the \<GuildMember> must have none to execute the command
  * @property {boolean} developerOnly Whether the command is only executable by the developer defined by `config.ids.DEVELOPER_ID`
  * @property {boolean} displayInList Whether to display the command in the guild's commands list
- * @property {string} help The help text to display for the command
- * @property {?string} error The error text to display for the command
+ * @property {Readonly<string>} help The help text to display for the command
+ * @property {Readonly<?string>} error The error text to display for the command
  */
 
 /**
@@ -95,9 +95,6 @@ module.exports = async guild => {
 					'Usage': prefixCommand(this),
 				});
 			},
-			set help(obj) {
-				formatList(obj);
-			},
 		},
 		uptime: {
 			command: 'uptime',
@@ -116,9 +113,6 @@ module.exports = async guild => {
 					'Description': this.description.general,
 					'Usage': prefixCommand(this),
 				});
-			},
-			set help(obj) {
-				formatList(obj);
 			},
 		},
 		evaluate: {
@@ -139,14 +133,8 @@ module.exports = async guild => {
 					'Usage': `${prefixCommand(this)} <code>`,
 				});
 			},
-			set help(obj) {
-				formatList(obj);
-			},
 			get error() {
 				return errorText(this.help, this.command);
-			},
-			set error(value) {
-				errorText(this.help, this.command);
 			},
 		},
 		restart: {
@@ -167,14 +155,8 @@ module.exports = async guild => {
 					'Usage': prefixCommand(this),
 				});
 			},
-			set help(obj) {
-				formatList(obj);
-			},
 			get error() {
 				return errorText(this.help, this.command);
-			},
-			set error(value) {
-				errorText(this.help, this.command);
 			},
 		},
 		help: {
@@ -198,14 +180,8 @@ module.exports = async guild => {
 					'Examples': `\n${prefixCommand(this)}\n${prefixCommand(this)} ${commands.leave.command}`,
 				});
 			},
-			set help(obj) {
-				formatList(obj);
-			},
 			get error() {
 				return errorText(this.help, this.command);
-			},
-			set error(value) {
-				errorText(this.help, this.command);
 			},
 		},
 		leave: {
@@ -227,14 +203,8 @@ module.exports = async guild => {
 					'Example': `${prefixCommand(this)} 01 Jan for Parade Night due to an appointment`,
 				});
 			},
-			set help(obj) {
-				formatList(obj);
-			},
 			get error() {
 				return errorText(this.help, this.command);
-			},
-			set error(value) {
-				errorText(this.help, this.command);
 			},
 		},
 		lesson: {
@@ -256,14 +226,8 @@ module.exports = async guild => {
 					'Allowed Categories': `<#${ids.lessonsID}>`,
 				});
 			},
-			set help(obj) {
-				formatList(obj);
-			},
 			get error() {
 				return errorText(this.help, this.command);
-			},
-			set error(value) {
-				errorText(this.help, this.command);
 			},
 		},
 		seen: {
@@ -285,14 +249,8 @@ module.exports = async guild => {
 					'Allowed Categories': `<#${ids.lessonsID}>`,
 				});
 			},
-			set help(obj) {
-				formatList(obj);
-			},
 			get error() {
 				return errorText(this.help, this.command);
-			},
-			set error(value) {
-				errorText(this.help, this.command);
 			},
 		},
 		leaveFor: {
@@ -315,14 +273,8 @@ module.exports = async guild => {
 					'Allowed Roles': rolesOutput(this.requiredRoles),
 				});
 			},
-			set help(obj) {
-				formatList(obj);
-			},
 			get error() {
 				return errorText(this.help, this.command);
-			},
-			set error(value) {
-				errorText(this.help, this.command);
 			},
 		},
 		attendance: {
@@ -344,14 +296,8 @@ module.exports = async guild => {
 					'Allowed Roles': rolesOutput(this.requiredRoles),
 				});
 			},
-			set help(obj) {
-				formatList(obj);
-			},
 			get error() {
 				return errorText(this.help, this.command);
-			},
-			set error(value) {
-				errorText(this.help, this.command);
 			},
 		},
 		connected: {
@@ -374,14 +320,8 @@ module.exports = async guild => {
 					'Allowed Roles': rolesOutput(this.requiredRoles),
 				});
 			},
-			set help(obj) {
-				formatList(obj);
-			},
 			get error() {
 				return errorText(this.help, this.command);
-			},
-			set error(value) {
-				errorText(this.help, this.command);
 			},
 		},
 		assign: {
@@ -404,14 +344,8 @@ module.exports = async guild => {
 					'Allowed Roles': rolesOutput(this.requiredRoles),
 				});
 			},
-			set help(obj) {
-				formatList(obj);
-			},
 			get error() {
 				return errorText(this.help, this.command);
-			},
-			set error(value) {
-				errorText(this.help, this.command);
 			},
 		},
 		approve: {
@@ -434,14 +368,8 @@ module.exports = async guild => {
 					'Allowed Categories': `<#${ids.lessonsID}>`,
 				});
 			},
-			set help(obj) {
-				formatList(obj);
-			},
 			get error() {
 				return errorText(this.help, this.command);
-			},
-			set error(value) {
-				errorText(this.help, this.command);
 			},
 		},
 		archive: {
@@ -464,14 +392,8 @@ module.exports = async guild => {
 					'Allowed Roles': rolesOutput(this.requiredRoles),
 				});
 			},
-			set help(obj) {
-				formatList(obj);
-			},
 			get error() {
 				return errorText(this.help, this.command);
-			},
-			set error(value) {
-				errorText(this.help, this.command);
 			},
 		},
 		purge: {
@@ -494,14 +416,8 @@ module.exports = async guild => {
 					'Allowed Roles': rolesOutput(this.requiredRoles),
 				});
 			},
-			set help(obj) {
-				formatList(obj);
-			},
 			get error() {
 				return errorText(this.help, this.command);
-			},
-			set error(value) {
-				errorText(this.help, this.command);
 			},
 		},
 	};

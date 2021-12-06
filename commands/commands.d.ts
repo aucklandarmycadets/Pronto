@@ -44,9 +44,9 @@ export interface BaseCommand {
 	/** Whether to display the command in the guild's commands list */
 	displayInList: boolean;
 	/** The help text to display for the command */
-	help: string;
+	readonly help: string;
 	/** The error text to display for the command */
-	error: ?string;
+	readonly error: ?string;
 }
 
 /**
