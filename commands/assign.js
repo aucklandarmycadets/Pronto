@@ -16,6 +16,7 @@ const { confirmWithReaction, unsubmittedLessons } = require('../handlers');
 /**
  * Set to ensure that each assigner (identified by their \<User.id>) does not attempt to assign more than one lesson at a time
  * @type {Set<Discord.Snowflake>}
+ * @memberof commands/assign
  */
 const recentlyAssigned = new Set();
 

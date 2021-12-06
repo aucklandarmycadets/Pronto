@@ -10,6 +10,7 @@ const { confirmWithReaction, findLesson, unsubmittedLessons } = require('../hand
 /**
  * Set to ensure that lessons (identified by their \<TextChannel.id>) which are pending confirmation of submission cannot be submitted again
  * @type {Set<Discord.Snowflake>}
+ * @memberof commands/lesson
  */
 const pendingConfirmation = new Set();
 

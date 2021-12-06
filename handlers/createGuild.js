@@ -13,6 +13,7 @@ const { debugError, sendMsg } = require('../modules');
  * - Set to record the \<Guild.id> snowflakes of the guild currently undergoing creation
  * - If a guild's snowflake is currently in this set, they must await until the Promises stored within the values of pendingPromises[\<Guild.id>] resolve for the \<GuildConfiguration> document to be accessible
  * @type {Set<Discord.Snowflake>}
+ * @memberof handlers.createGuild
  */
 const currentlyCreating = new Set();
 
@@ -20,12 +21,14 @@ const currentlyCreating = new Set();
  * - An \<Object> to record all current pending Promises, stored as an \<Object.\<string, Promise\<*>>> in the property pendingPromises[\<Guild.id>]
  * - A guild's \<GuildConfiguration> document is only guaranteed to be accessible once all Promises within `Object.values(pendingPromises[<Guild.id>])` have been resolved
  * @type {Object.<string, Object.<string, Promise<*>>>}
+ * @memberof handlers.createGuild
  */
 const pendingPromises = {};
 
 /**
  * A Collection\<GuildChannel.Snowflake, Guild.Snowflake> to store any channels that have been created by Pronto as part of the current initialisation process(es)
  * @type {Discord.Collection<Discord.Snowflake, Discord.Snowflake>}
+ * @memberof handlers.createGuild
  */
 const createdChannels = new Discord.Collection();
 
