@@ -90,7 +90,7 @@ module.exports = async guild => {
 			displayInList: true,
 			get help() {
 				return formatList({
-					'Aliases': prefixAlias(this),
+					'Aliases': prefixAliases(this),
 					'Description': this.description.general,
 					'Usage': prefixCommand(this),
 				});
@@ -109,7 +109,7 @@ module.exports = async guild => {
 			displayInList: true,
 			get help() {
 				return formatList({
-					'Aliases': prefixAlias(this),
+					'Aliases': prefixAliases(this),
 					'Description': this.description.general,
 					'Usage': prefixCommand(this),
 				});
@@ -128,7 +128,7 @@ module.exports = async guild => {
 			displayInList: true,
 			get help() {
 				return formatList({
-					'Aliases': prefixAlias(this),
+					'Aliases': prefixAliases(this),
 					'Description': this.description.general,
 					'Usage': `${prefixCommand(this)} <code>`,
 				});
@@ -150,7 +150,7 @@ module.exports = async guild => {
 			displayInList: true,
 			get help() {
 				return formatList({
-					'Aliases': prefixAlias(this),
+					'Aliases': prefixAliases(this),
 					'Description': this.description.general,
 					'Usage': prefixCommand(this),
 				});
@@ -174,7 +174,7 @@ module.exports = async guild => {
 			displayInList: true,
 			get help() {
 				return formatList({
-					'Aliases': prefixAlias(this),
+					'Aliases': prefixAliases(this),
 					'Description': this.description.general,
 					'Usage': `${prefixCommand(this)} [command]`,
 					'Examples': `\n${prefixCommand(this)}\n${prefixCommand(this)} ${commands.leave.command}`,
@@ -197,7 +197,7 @@ module.exports = async guild => {
 			displayInList: true,
 			get help() {
 				return formatList({
-					'Aliases': prefixAlias(this),
+					'Aliases': prefixAliases(this),
 					'Description': this.description.general,
 					'Usage': `${prefixCommand(this)} <date(s)> <activity> <reason> [additional remarks]`,
 					'Example': `${prefixCommand(this)} 01 Jan for Parade Night due to an appointment`,
@@ -220,7 +220,7 @@ module.exports = async guild => {
 			displayInList: false,
 			get help() {
 				return formatList({
-					'Aliases': prefixAlias(this),
+					'Aliases': prefixAliases(this),
 					'Description': this.description.general,
 					'Usage': prefixCommand(this),
 					'Allowed Categories': `<#${ids.lessonsID}>`,
@@ -243,7 +243,7 @@ module.exports = async guild => {
 			displayInList: false,
 			get help() {
 				return formatList({
-					'Aliases': prefixAlias(this),
+					'Aliases': prefixAliases(this),
 					'Description': this.description.general,
 					'Usage': prefixCommand(this),
 					'Allowed Categories': `<#${ids.lessonsID}>`,
@@ -266,7 +266,7 @@ module.exports = async guild => {
 			displayInList: true,
 			get help() {
 				return formatList({
-					'Aliases': prefixAlias(this),
+					'Aliases': prefixAliases(this),
 					'Description': this.description.general,
 					'Usage': `${prefixCommand(this)} <user> <date(s)> <activity> <reason> [additional remarks]`,
 					'Example': `${prefixCommand(this)} <@${DEVELOPER_ID}> 01 Jan for Parade Night due to an appointment`,
@@ -290,7 +290,7 @@ module.exports = async guild => {
 			displayInList: true,
 			get help() {
 				return formatList({
-					'Aliases': prefixAlias(this),
+					'Aliases': prefixAliases(this),
 					'Description': this.description.general,
 					'Usage': `\n${prefixCommand(this)} <message>`,
 					'Allowed Roles': rolesOutput(this.requiredRoles),
@@ -313,7 +313,7 @@ module.exports = async guild => {
 			displayInList: true,
 			get help() {
 				return formatList({
-					'Aliases': prefixAlias(this),
+					'Aliases': prefixAliases(this),
 					'Description': this.description.general,
 					'Usage': `${prefixCommand(this)} <voice channel>`,
 					'Example': `${prefixCommand(this)} #example-voice`,
@@ -337,7 +337,7 @@ module.exports = async guild => {
 			displayInList: true,
 			get help() {
 				return formatList({
-					'Aliases': prefixAlias(this),
+					'Aliases': prefixAliases(this),
 					'Description': this.description.general,
 					'Usage': `${prefixCommand(this)} <user(s)>`,
 					'Example': `${prefixCommand(this)} <@${DEVELOPER_ID}>`,
@@ -361,7 +361,7 @@ module.exports = async guild => {
 			displayInList: true,
 			get help() {
 				return formatList({
-					'Aliases': prefixAlias(this),
+					'Aliases': prefixAliases(this),
 					'Description': this.description.general,
 					'Usage': prefixCommand(this),
 					'Allowed Roles': rolesOutput(this.requiredRoles),
@@ -385,7 +385,7 @@ module.exports = async guild => {
 			displayInList: true,
 			get help() {
 				return formatList({
-					'Aliases': prefixAlias(this),
+					'Aliases': prefixAliases(this),
 					'Description': this.description.general,
 					'Usage': `${prefixCommand(this)} <text channel>`,
 					'Example': `${prefixCommand(this)} #example-text`,
@@ -409,7 +409,7 @@ module.exports = async guild => {
 			displayInList: true,
 			get help() {
 				return formatList({
-					'Aliases': prefixAlias(this),
+					'Aliases': prefixAliases(this),
 					'Description': this.description.general,
 					'Usage': `${prefixCommand(this)} <count> [user]`,
 					'Examples': `\n${prefixCommand(this)} 10\n${prefixCommand(this)} 5 <@${DEVELOPER_ID}>`,
@@ -441,7 +441,7 @@ module.exports = async guild => {
 		return `${prefix}${command.command}`;
 	}
 
-	function prefixAlias(command) {
+	function prefixAliases(command) {
 		return [...command.aliases]
 			.map(alias => prefix + alias)
 			.join(', ');
