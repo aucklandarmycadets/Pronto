@@ -17,6 +17,7 @@ module.exports = async guild => {
 
 	/**
 	 * Process an individual's leave request
+	 * @function execute
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
 	leave.execute = async ({ msg, args }) => {

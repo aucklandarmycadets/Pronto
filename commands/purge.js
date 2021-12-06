@@ -18,6 +18,7 @@ module.exports = async guild => {
 
 	/**
 	 * Bulk delete a specified number of messages from a <TextChannel>
+	 * @function execute
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
 	purge.execute = async ({ msg, args }) => {

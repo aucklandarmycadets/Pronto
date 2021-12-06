@@ -18,6 +18,7 @@ module.exports = async guild => {
 
 	/**
 	 * End the current bot process
+	 * @function execute
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
 	restart.execute = ({ msg }) => {

@@ -18,6 +18,7 @@ module.exports = async guild => {
 
 	/**
 	 * Acknowledge a lesson warning, either from a message command or a message reaction
+	 * @function execute
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 * @returns {Promise<Typings.Lesson>} The mongoose document for the lesson
 	 */

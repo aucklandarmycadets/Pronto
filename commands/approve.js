@@ -18,6 +18,7 @@ module.exports = async guild => {
 
 	/**
 	 * Approve a submitted lesson plan in a lesson channel, either from a message command or a message reaction
+	 * @function execute
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 * @returns {Promise<Typings.Lesson>} The mongoose document for the lesson
 	 */

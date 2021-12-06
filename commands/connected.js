@@ -17,6 +17,7 @@ module.exports = async guild => {
 
 	/**
 	 * List the members connected to a <VoiceChannel>
+	 * @function execute
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
 	connected.execute = async ({ msg }) => {

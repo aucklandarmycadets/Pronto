@@ -19,6 +19,7 @@ module.exports = async guild => {
 
 	/**
 	 * Send details and assistance about a specific command, or generate a list of available commands when needed
+	 * @function execute
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
 	help.execute = async ({ msg, args }) => {
@@ -67,6 +68,7 @@ module.exports = async guild => {
 
 		/**
 		 * Send a help embed for the specified \<Command> back to the user
+		 * @function sendHelpEmbed
 		 */
 		async function sendHelpEmbed() {
 			// Set the appropriate title for the help embed
@@ -94,6 +96,7 @@ module.exports = async guild => {
 
 		/**
 		 * Send a list of all the commands the user is permitted to use
+		 * @function sendCommandList
 		 */
 		async function sendCommandList() {
 			// Initialise the list (stored as a [key, value] object) of commands with the unqualified and qualified descriptions of the help <BaseCommand>

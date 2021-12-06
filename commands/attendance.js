@@ -20,6 +20,7 @@ module.exports = async guild => {
 
 	/**
 	 * Process an attendance register by creating an attendance embed and sending it to the attendance and original message command channels
+	 * @function execute
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
 	attendance.execute = async ({ msg, args }) => {
@@ -60,6 +61,7 @@ module.exports = async guild => {
 
 		/**
 		 * Create an attendance register and prompt confirmation from the user
+		 * @function createRegister
 		 */
 		function createRegister() {
 			// Parse the attendance register from the message arguments, by joining them into a string separataed by a space, then splitting again by newlines
@@ -83,6 +85,7 @@ module.exports = async guild => {
 				.then(dm => {
 					/**
 					 * Send the completed attendance embed to both the original submission channel and the guild's attendance channel upon confirmation
+					 * @function sendAttendance
 					 */
 					const sendAttendance = async () => {
 						// Update the embed author to include the submitting user

@@ -19,6 +19,7 @@ module.exports = async guild => {
 
 	/**
 	 * Archive a <TextChannel> by restricting channel visibility and moving it to a designated channel category
+	 * @function execute
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
 	archive.execute = ({ msg }) => {

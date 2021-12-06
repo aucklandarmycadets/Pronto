@@ -31,6 +31,7 @@ module.exports = async guild => {
 
 	/**
 	 * Assign a lesson to specified instructors by creating a private lesson channel and dispatching a lesson warning
+	 * @function execute
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
 	assign.execute = async ({ msg }) => {
@@ -142,6 +143,7 @@ module.exports = async guild => {
 			.then(dm => {
 				/**
 				 * Create a private lesson channel for specified instructors and dispatch the lesson warning, as well as a message to request acknowledgement from the instructor(s)
+				 * @function assignLesson
 				 */
 				const assignLesson = async () => {
 					/**
@@ -210,6 +212,7 @@ module.exports = async guild => {
 
 				/**
 				 * Remove the assigner's ID from the recentlyAssigned set
+				 * @function assignCancelled
 				 */
 				const assignCancelled = () => recentlyAssigned.delete(msg.author.id);
 
@@ -219,6 +222,7 @@ module.exports = async guild => {
 
 		/**
 		 * Create a new mongoose \<Lesson> document for the assigned lesson
+		 * @function saveLesson
 		 * @param {Discord.Snowflake} channelID The \<TextChannel.id> of the private lesson channel created for the lesson
 		 * @returns {Promise<Typings.Lesson>} The mongoose document for the lesson
 		 */

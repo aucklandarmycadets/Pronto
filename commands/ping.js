@@ -17,6 +17,7 @@ module.exports = async guild => {
 
 	/**
 	 * Calculate the latency of the bot
+	 * @function execute
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
 	ping.execute = ({ msg }) => {

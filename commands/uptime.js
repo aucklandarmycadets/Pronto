@@ -17,6 +17,7 @@ module.exports = async guild => {
 
 	/**
 	 * Display the bot's uptime
+	 * @function execute
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
 	uptime.execute = async ({ msg }) => {

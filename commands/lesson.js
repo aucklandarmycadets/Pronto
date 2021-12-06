@@ -25,6 +25,7 @@ module.exports = async guild => {
 
 	/**
 	 * A family of sub-commands for an instructor to manage an existing lesson
+	 * @function execute
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
 	lesson.execute = async ({ msg, args, msgCommand }) => {
@@ -247,6 +248,7 @@ module.exports = async guild => {
 				.then(dm => {
 					/**
 					 * Create a lesson submission embed in a lesson channel and prompt for lesson plan approval by the Training Cell
+					 * @function lessonSubmit
 					 */
 					const lessonSubmit = async () => {
 						// 'Save' the changes and mark the lesson as being unchanged, and ensure it is marked as submitted
@@ -313,6 +315,7 @@ module.exports = async guild => {
 
 					/**
 					 * Remove the lesson ID from the pendingConfirmation set
+					 * @function lessonCancelled
 					 */
 					const lessonCancelled = () => pendingConfirmation.delete(lessonDocument.lessonID);
 

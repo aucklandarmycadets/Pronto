@@ -18,6 +18,7 @@ module.exports = async guild => {
 
 	/**
 	 * Evaluate Javascript code directly from a Discord message
+	 * @function execute
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
 	evaluate.execute = async ({ msg, args }) => {
@@ -82,6 +83,7 @@ module.exports = async guild => {
 
 		/**
 		 * Split a string into the necessary number of messages to accommodate for Discord's message character limit, splitting at a specified convenient substring
+		 * @function msgSplit
 		 * @param {string} str The string to split into (potentially) multiple messages
 		 * @param {string} [substr] The substring at which to break
 		 */
