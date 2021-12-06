@@ -425,8 +425,8 @@ async function whileLoop(prompt, msg, type, colours, allowMultiple) {
 }
 
 /**
- * Process a Collection\<Snowflake, GuildMember> into a formatted string
- * @param {Discord.Collection<Discord.Snowflake, Discord.GuildMember>} members A Collection\<Snowflake, GuildMember> to process
+ * Process a Collection\<GuildMember.Snowflake, GuildMember> into a formatted string
+ * @param {Discord.Collection<Discord.Snowflake, Discord.GuildMember>} members A Collection\<GuildMember.Snowflake, GuildMember> to process
  * @returns {string} A newline-delimited string of formatted user mentions
  */
 function processMentions(members) {
