@@ -234,12 +234,12 @@ module.exports = async guild => {
 			const lesson = await new Lesson({
 				_id: mongoose.Types.ObjectId(),
 				lessonID: channelID,
-				lessonName: lessonName,
-				instructors: instructors,
-				dueDate: dueDate,
-				dueTimestamp: dueTimestamp,
-				lessonDate: lessonDate,
-				lessonTimestamp: lessonTimestamp,
+				lessonName,
+				instructors,
+				dueDate,
+				dueTimestamp,
+				lessonDate,
+				lessonTimestamp,
 				assignedResources: enumerateResources(resources),
 			});
 
