@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Pronto: events/onGuildCreate.js</title>
+    <title>Pronto: Discord</title>
     
       <link type="text/css" rel="stylesheet" href="styles/vendor/prism-okaidia.css">
     
@@ -31,50 +31,110 @@
 </header>
 
 
-<main class="layout-main  layout-content--source">
+<main class="layout-main ">
   <div class="container">
-    <p class="page-kind">source</p>
-    <h1 class="page-title">events/onGuildCreate.js</h1>
+    <p class="page-kind">External</p>
+    <h1 class="page-title">Discord</h1>
     
 
 
 
-    
 
 <section>
-    <article>
-        <pre id="source" class="source-page line-numbers"><code class="language-js">'use strict';
 
-// eslint-disable-next-line no-unused-vars
-const Discord = require('discord.js');
 
-const { emojis } = require('../config');
-const { createGuild, verifyBotPermissions } = require('../handlers');
+<header class="not-class">
 
-module.exports = {
-	bot: ['guildCreate'],
-	process: [],
-	/**
-	 * Event handler to initialise the \&lt;GuildConfiguration> whenever the \&lt;Client> joins a new \&lt;Guild>
-	 * @param {'guildCreate'} _ The event that was emitted
-	 * @param {Discord.Guild} guild The created \&lt;Guild>
-	 */
-	async handler(_, guild) {
-		// Initialise the guild by calling handlers.createGuild()
-		await createGuild(guild);
-		// Call handlers.verifyBotPermissions() to ensure the bot has the necessary &lt;Discord.Permissions>
-		verifyBotPermissions(guild);
 
-		// Loop through each of Pronto's configured emojis in ..\config.js
-		for (const emoji of Object.values(emojis)) {
-			// If the guild does not already have a guild with a matching name, create it for the guild
-			if (!guild.emojis.cache.some(guildEmoji => guildEmoji.name === emoji.name)) {
-				guild.emojis.create(emoji.URL, emoji.name);
-			}
-		}
-	},
-};</code></pre>
-    </article>
+    
+        
+        <!-- <h2>Discord</h2> -->
+
+        
+
+        
+
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+
+
+
+    
+        
+            <div class="description"><p>The Discord.js JavaScript library to interact with the Discord API</p></div>
+        
+
+        
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h4 class="method-heading">See</h4>
+        <ul>
+            
+                <li><a href="https://discord.js.org/#/docs">https://discord.js.org/#/docs</a></li>
+            
+        </ul>
+    
+
+    
+</div>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+     
+
+    
+
+    
+
+
+    
+
+    
+
+    
+
+    
+</article>
+
 </section>
 
 
