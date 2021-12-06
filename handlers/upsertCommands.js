@@ -30,7 +30,7 @@ module.exports = async guild => {
 };
 
 /**
- *
+ * @function handlers.upsertCommands~process
  * @param {Typings.BaseCommands} updatedCommands
  * @param {Typings.Guild} document
  * @returns {Promise<Typings.BaseCommands>}

@@ -1,9 +1,17 @@
 'use strict';
 
 // eslint-disable-next-line no-unused-vars
+const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
 const Typings = require('../typings');
+
 const { Guild } = require('../models');
 
+/**
+ *
+ * @param {Discord.Guild} guild
+ * @returns {Promise<Typings.Guild>}
+ */
 module.exports = async guild => {
 	const commands = await require('../commands/commands')(guild);
 
