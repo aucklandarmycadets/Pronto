@@ -31,7 +31,7 @@ module.exports = async guild => {
 
 			if (lesson.dueTimestamp - Date.now() <= 86400000) remindEmbed.setColor(colours.error);
 
-			sendMsg(lessonChannel, { content: Object.keys(lesson.instructors).map(id => `<@!${id}>`).join(' '), embeds: [remindEmbed] });
+			sendMsg(lessonChannel, { content: Object.keys(lesson.instructors).map(userID => `<@!${userID}>`).join(' '), embeds: [remindEmbed] });
 		}
 	}, {
 		scheduled: lessonReminders,

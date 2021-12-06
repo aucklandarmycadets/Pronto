@@ -512,8 +512,8 @@ module.exports = async guild => {
 
 	function rolesOutput(array) {
 		return (array)
-			? array.filter(id => id !== ids.administratorID && id !== ids.everyoneID)
-				.reduce((mentions, id, i) => mentions + `${(i % 3 === 0) ? '\n' : ''}<@&${id}> `, '')
+			? array.filter(roleID => roleID !== ids.administratorID && roleID !== ids.everyoneID)
+				.reduce((mentions, roleID, i) => mentions + `${(i % 3 === 0) ? '\n' : ''}<@&${roleID}> `, '')
 			: '';
 	}
 

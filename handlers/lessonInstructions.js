@@ -5,11 +5,10 @@ const Discord = require('discord.js');
 const { ids: { DEVELOPER_ID } } = require('../config');
 const { prefixCommand, sendMsg } = require('../modules');
 
-module.exports = async (id, guild) => {
+module.exports = async (channelID, guild) => {
 	const { bot } = require('../pronto');
 	const { commands: { lesson, seen, assign, approve }, colours } = await require('../handlers/database')(guild);
 
-	const instructionsChnl = bot.channels.cache.get(id);
 
 	const instructorCommands = `
 		\`${await prefixCommand(lesson, guild)} view\` - Preview details and attached resources of an assigned lesson.
@@ -72,7 +71,9 @@ module.exports = async (id, guild) => {
 		.addField(`${await prefixCommand(assign, guild)}`, assignField, true)
 		.addField('Example', assignExample, true);
 
-	await sendMsg(instructionsChnl, { embeds: [instructionsEmbed] });
-	await sendMsg(instructionsChnl, { embeds: [usageEmbed] });
-	await sendMsg(instructionsChnl, { content: 'https://youtu.be/CKYvvE2ILAE' });
+	const instructionsChannel = bot.channels.cache.get(channelID);
+
+	await sendMsg(instructionsChannel, { embeds: [instructionsEmbed] });
+	await sendMsg(instructionsChannel, { embeds: [usageEmbed] });
+	await sendMsg(instructionsChannel, { content: 'https://youtu.be/CKYvvE2ILAE' });
 };
