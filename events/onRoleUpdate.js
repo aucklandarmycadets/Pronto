@@ -44,18 +44,18 @@ module.exports = {
 			logEmbed.setColor(colours.warn);
 			logEmbed.setDescription(`**Role permissions ${newRole} changed**`);
 
-			// Get the PermissionString[] of the old <Role> permissions
+			// Get the <PermissionString[]> of the old <Role> permissions
 			const oldPermissions = oldRole.permissions.toArray();
-			// Use modules.updatedPermissions() to get the PermissionString[] of the difference between the two <Role> objects
+			// Use modules.updatedPermissions() to get the <PermissionString[]> of the difference between the two <Role> objects
 			const changedPermissions = updatedPermissions(oldRole, newRole);
 
-			// Filter the PermissionString[] difference for removed permissions, i.e. the ones which exist in the old <Role> permissions
+			// Filter the <PermissionString[]> difference for removed permissions, i.e. the ones which exist in the old <Role> permissions
 			const removedPermissions = changedPermissions.filter(permission => oldPermissions.includes(permission));
-			// Filter the PermissionString[] difference for added permissions, i.e the ones which don't exist in the old <Role> permissions
+			// Filter the <PermissionString[]> difference for added permissions, i.e the ones which don't exist in the old <Role> permissions
 			const addedPermissions = changedPermissions.filter(permission => !oldPermissions.includes(permission));
 
 			// Ensure there were some added/removed permissions that were successfully filtered, otherwise cease further execution
-			// This line is necessary as a <Role.position> change may enter this if-else block, but with no differences between PermissionString[]
+			// This line is necessary as a <Role.position> change may enter this if-else block, but with no differences between <PermissionString[]>
 			if (!addedPermissions.length && !removedPermissions.length) return;
 			// If there were permissions added, add a field to the log embed to list the added permissions
 			if (addedPermissions.length > 0) logEmbed.addField('Added Permissions', addedPermissions.join('\n'));

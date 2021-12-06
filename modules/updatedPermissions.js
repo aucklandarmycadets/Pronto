@@ -11,6 +11,6 @@ const Discord = require('discord.js');
  */
 module.exports = (stateOne, stateTwo) => {
 	const { difference } = require('./');
-	// Return the difference between the PermissionString[] of the old <GuildMember | Role> and the new <GuildMember | Role>
+	// Return the difference between the <PermissionString[]> of the old <GuildMember | Role> and the new <GuildMember | Role>
 	return difference(stateOne.permissions.toArray(), stateTwo.permissions.toArray());
 };
