@@ -10,12 +10,6 @@ const { Guild } = require('../models');
 const { debugError, sendMsg } = require('../modules');
 
 /**
- * A Collection\<Channel.Snowflake, Guild.Snowflake> to store any channels that have been created by Pronto as part of the initialisation process
- * @type {Discord.Collection<Discord.Snowflake, Discord.Snowflake}
- */
-const createdChannels = new Discord.Collection();
-
-/**
  * - Set to record the \<Guild.id> snowflakes of the guild currently undergoing creation
  * - If a guild's snowflake is currently in this set, they must await until the Promises stored within the values of pendingPromises[\<Guild.id>] resolve for the \<Guild> document to be accessible
  * @type {Set<Discord.Snowflake>}
@@ -23,15 +17,22 @@ const createdChannels = new Discord.Collection();
 const currentlyCreating = new Set();
 
 /**
- * - An \<Object> to record all pending Promises, stored as an \<Object.\<string, Promise\<*>>> in the property pendingPromises[\<Guild.id>]
+ * - An \<Object> to record all current pending Promises, stored as an \<Object.\<string, Promise\<*>>> in the property pendingPromises[\<Guild.id>]
  * - A guild's \<Guild> document is only guaranteed to be accessible once all Promises within `Object.values(pendingPromises[<Guild.id>])` have been resolved
  * @type {Object.<string, Object.<string, Promise<*>>}
  */
 const pendingPromises = {};
 
 /**
+ * A Collection\<GuildChannel.Snowflake, Guild.Snowflake> to store any channels that have been created by Pronto as part of the current initialisation process(es)
+ * @type {Discord.Collection<Discord.Snowflake, Discord.Snowflake}
+ */
+const createdChannels = new Discord.Collection();
+
+/**
  * `handlers.createGuild()` performs the initialisation process for a guild by creating/finding the default channels defined by `config.defaults`,
  * and creates and returns a new \<Guild> document if it does not already exist
+ * @function handlers.createGuild
  * @param {Discord.Guild} guild The guild to initialise
  * @returns {Promise<Typings.Guild>} The guild's \<Guild> document
  */
@@ -92,6 +93,7 @@ module.exports = async guild => {
 			.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }))
 			.setColor(colours.primary)
 			.setDescription(`Initialised channel(s) in **${prontoCategory}**, feel free to move and/or rename them!`)
+			// Call channelsOutput() to format the guild's created channels into a
 			.addField('Created Channels', channelsOutput(createdChannels, guildDocument))
 			.addField('More Information', 'To modify my configuration, please visit my dashboard.')
 			.setFooter(await dateTimeGroup());
@@ -111,8 +113,15 @@ module.exports = async guild => {
 	return guildDocument;
 };
 
+/**
+ * Creates an initial \<Guild> document without a \<Guild.commands> \<BaseCommands> object, by calling `initialiseChannel()` and `findRole()` to populate the \<Guild.ids> object
+ * @function handlers.createGuild~createGuildDocument
+ * @param {Discord.Guild} guild The guild to create a \<Guild> document for
+ * @returns {Promise<Typings.Guild>} The created initial \<Guild> document
+ */
 async function createGuildDocument(guild) {
 	/**
+	 * Create a new \<Guild> document, by calling `initialiseChannel()` to find/create each necessary \<GuildChannel>, and `findRole()` to find desired existing roles
 	 * @type {Typings.Guild}
 	 */
 	const guildDocument = await new Guild({
@@ -121,92 +130,157 @@ async function createGuildDocument(guild) {
 		guildName: guild.name,
 		ids: {
 			guildID: guild.id,
-			debugID: await initChannel(defaults.debug, guild),
-			logID: await initChannel(defaults.log, guild),
-			attendanceID: await initChannel(defaults.attendance, guild),
-			recruitingID: await initChannel(defaults.recruiting, guild),
-			welcomeID: await initChannel(defaults.welcome, guild),
-			archivedID: await initChannel(defaults.archived, guild, 'category'),
-			lessonsID: await initChannel(defaults.lessons, guild, 'category'),
-			lessonReferenceID: await initChannel(defaults.lessonReference, guild),
-			lessonPlansID: await initChannel(defaults.lessonPlans, guild),
+			debugID: await initialiseChannel(defaults.debug, guild),
+			logID: await initialiseChannel(defaults.log, guild),
+			attendanceID: await initialiseChannel(defaults.attendance, guild),
+			recruitingID: await initialiseChannel(defaults.recruiting, guild),
+			welcomeID: await initialiseChannel(defaults.welcome, guild),
+			archivedID: await initialiseChannel(defaults.archived, guild, 'CATEGORY'),
+			lessonsID: await initialiseChannel(defaults.lessons, guild, 'CATEGORY'),
+			lessonReferenceID: await initialiseChannel(defaults.lessonReference, guild),
+			lessonPlansID: await initialiseChannel(defaults.lessonPlans, guild),
 			everyoneID: guild.roles.everyone.id,
 			visitorID: findRole(defaults.visitor, guild),
 		},
 	});
 
+	// Return the created initial <Guild> document
 	return await guildDocument.save().catch(error => console.error(error));
 }
 
-async function initChannel(channel, guild, type) {
+/**
+ * Finds an existing \<GuildChannel> that matches the specified \<DefaultChannel.name>, or creates the channel if it does not already exist
+ * @function handlers.createGuild~initialiseChannel
+ * @param {Typings.DefaultChannel} defaultChannel The \<DefaultChannel> object of the channel to find/create
+ * @param {Discord.Guild} guild The guild to find/create the \<GuildChannel> in
+ * @param {?'TEXT' | 'CATEGORY'} type The type of the channel to be created, either `TEXT` || `CATEGORY`
+ * - If `null`, a \<TextChannel> will be created by default
+ * @returns {Promise<Discord.Snowflake>} The \<GuildChannel.id> of the found/created channel
+ */
+async function initialiseChannel(defaultChannel, guild, type) {
 	const { bot } = require('../pronto');
 
-	const chnls = guild.channels.cache;
-	const everyone = guild.roles.everyone;
-	const minPerms = ['VIEW_CHANNEL', 'SEND_MESSAGES'];
+	/**
+	 * A \<PermissionString[]> of the minimum permissions Pronto must have in an existing `config.defaults.debug.name` \<GuildChannel> to fully accept it as 'found', and to not create a new copy
+	 * @type {Discord.PermissionString[]}
+	 */
+	const MINIMUM_PERMISSIONS = ['VIEW_CHANNEL', 'SEND_MESSAGES'];
 
-	const hasChannel = chnl => chnl.name === channel.name;
-	const hasMinPerms = chnl => chnl.permissionsFor(bot.user).has(minPerms);
+	/**
+	 * Test function to determine whether a \<GuildChannel.name> matches the desired `defaultChannel.name`
+	 * @param {Discord.GuildChannel} channel The \<GuildChannel> to test
+	 * @returns {boolean} Whether the \<GuildChannel.name> matches the desired `defaultChannel.name`
+	 */
+	const matchesName = channel => channel.name === defaultChannel.name;
 
-	const foundChannel = chnls.find(chnl => hasChannel(chnl) && hasMinPerms(chnl)) || chnls.find(hasChannel);
+	/**
+	 * Test function to determine whether Pronto has the minimum desired \<Discord.Permissions> in the \<GuildChannel>
+	 * @param {Discord.GuildChannel} channel The \<GuildChannel> to test
+	 * @returns {boolean} Whether Pronto has the minimum desired \<Discord.Permissions>, defined by `MINIMUM_PERMISSIONS`, in the specified \<GuildChannel>
+	 */
+	const hasMinimumPermissions = channel => channel.permissionsFor(bot.user).has(MINIMUM_PERMISSIONS);
+
+	// Attempt to first find a <GuildChannel> that both matches the desired name and where Pronto has the minimum desired permissions, or if none was found, see if there a <GuildChannel> that just matches the name
+	const foundChannel = guild.channels.cache.find(channel => matchesName(channel) && hasMinimumPermissions(channel)) || guild.channels.cache.find(matchesName);
 
 	if (foundChannel) {
-		const isDebugChannel = channel.name === defaults.debug.name;
+		// If a <GuildChannel> was found, check whether the current initialiseChannel() call is searching for the guild's debugging channel, where Pronto must have the minimum permissions
+		const findingDebugChannel = defaultChannel.name === defaults.debug.name;
 
-		if (hasMinPerms(foundChannel) || !isDebugChannel) return foundChannel.id;
+		// As long as a <GuildChannel> was found, return its <GuildChannel.id>, unless the current initialiseChannel() call is for the guild's debugging channel and Pronto does not have the minimum permissions
+		// If that is the case, ignore the found channel and continue execution to create a new debugging channel
+		if (!findingDebugChannel || hasMinimumPermissions(foundChannel)) return foundChannel.id;
 	}
 
-	const findProntoCategory = chnl => chnl.type === 'category' && chnl.name === defaults.pronto.name;
+	/**
+	 * Test function to find a \<CategoryChannel> whose name matches the name defined by `config.defaults.pronto.name`
+	 * @param {Discord.GuildChannel} channel The \<GuildChannel> to test
+	 * @returns {boolean} Whether the \<GuildChannel> is a \<CategoryChannel> whose name matches `config.defaults.pronto.name`
+	 */
+	const findProntoCategory = channel => channel.type === 'category' && channel.name === defaults.pronto.name;
 
-	let prontoCategory = chnls.find(chnl => findProntoCategory(chnl) && hasMinPerms(chnl));
+	// Attempt to find a <GuildChannel> that matches the name of the Pronto category channel defined by config.defaults.pronto.name, and where Pronto has the minimum desired permissions
+	let prontoCategory = guild.channels.cache.find(channel => findProntoCategory(channel) && hasMinimumPermissions(channel));
 
 	if (!prontoCategory) {
+		// If the Pronto category channel could not be found, create it for the guild
 		await guild.channels.create(defaults.pronto.name, { type: 'category' })
-			.then(async chnl => {
-				await chnl.createOverwrite(bot.user.id, { 'VIEW_CHANNEL': true });
-				chnl.createOverwrite(everyone, { 'VIEW_CHANNEL': false });
-				chnl.setPosition(0);
-				prontoCategory = chnl;
+			.then(async channel => {
+				// Ensure the bot has VIEW_CHANNEL permissions before hiding the channel for @everyone
+				await channel.createOverwrite(bot.user.id, { 'VIEW_CHANNEL': true });
+				// Make the created <CategoryChannel> hidden for @everyone
+				channel.createOverwrite(guild.roles.everyone, { 'VIEW_CHANNEL': false });
+				// Move the created <CategoryChannel> to the top of the channels list
+				channel.setPosition(0);
+
+				// Store the created <CategoryChannel> in the prontoCategory variable
+				prontoCategory = channel;
 			})
 			.catch(error => debugError(error, `Error creating category '${defaults.pronto.name}' in ${guild.name}\n`));
 	}
 
-	const parent = (channel.parent)
-		? chnls.find(chnl => chnl.type === 'category' && chnl.name === channel.parent)
+	// If the channel to be created must be created within a specific category, attempt to find it
+	const parent = (defaultChannel.parent)
+		? guild.channels.cache.find(channel => channel.type === 'category' && channel.name === defaultChannel.parent)
 		: null;
 
-	const chnlOptions = (type === 'category')
-		? { type: type }
+	/**
+	 * The dynamically-set \<GuildChannelCreateOptions> for the \<GuildChannel> to create
+	 * @type {Discord.GuildChannelCreateOptions}
+	 */
+	const channelOptions = (type === 'CATEGORY')
+		// If the type of the channel to be created is a <CategoryChannel>, set the <GuildChannelCreateOptions> accordingly
+		? { type: type.toLowerCase() }
 		: (parent)
-			? { topic: channel.description, parent: parent, type: type }
-			: { topic: channel.description, parent: prontoCategory, type: type };
+			// Otherwise, if the channel to be created is not a <CategoryChannel> but has a specific parent, set the options accordingly
+			? { topic: defaultChannel.description, parent, type: type.toLowerCase() }
+			// Otherwise, create the <GuildChannel> within the prontoCategory <CategoryChannel>
+			: { topic: defaultChannel.description, parent: prontoCategory, type: type.toLowerCase() };
 
-	const newChannel = await guild.channels.create(channel.name, chnlOptions)
-		.catch(error => debugError(error, `Error creating ${channel.name} in ${guild.name}\n`));
+	// Create the <GuildChannel>, using the specified name and appropriate <GuildChannelCreateOptions>
+	const createdChannel = await guild.channels.create(defaultChannel.name, channelOptions)
+		.catch(error => debugError(error, `Error creating ${defaultChannel.name} in ${guild.name}\n`));
 
-	createdChannels.set(newChannel.id, guild.id);
+	// Record the identifier of the created <GuildChannel> and its <Guild.id> within the createdChannels <Collection>
+	createdChannels.set(createdChannel.id, guild.id);
 
 	if (foundChannel) {
-		if (foundChannel.name === defaults.debug.name) {
-			const debugEmbed = new Discord.MessageEmbed()
-				.setColor(colours.error)
-				.setDescription(`\n\nI created this channel because I cannot access ${foundChannel}!`);
+		// If the existing debugging channel could not be accessed by Pronto, create and send an embed to the created debugging channel to communicate that
+		const debugEmbed = new Discord.MessageEmbed()
+			.setColor(colours.error)
+			.setDescription(`\n\nI created this channel because I cannot access ${foundChannel}!`);
 
-			sendMsg(newChannel, { embeds: [debugEmbed] });
-		}
+		sendMsg(createdChannel, { embeds: [debugEmbed] });
 	}
 
-	return newChannel.id;
+	// Return the identifier of the created <GuildChannel>
+	return createdChannel.id;
 }
 
+/**
+ * Finds an existing \<Role> that includes the specified name
+ * @function handlers.createGuild~findRole
+ * @param {string} name The \<Role.name> of the role to search for
+ * @param {Discord.Guild} guild The guild to search for the \<Role> in
+ * @returns {Discord.Snowflake | ''} The \<Role.id> of the found role, or `''` if it was not found
+ */
 function findRole(name, guild) {
+	// Attempt to find one <Role.name> which contains the specified name as a substring, and return its identifier if found
 	try { return guild.roles.cache.find(role => role.name.toLowerCase().includes(name.toLowerCase())).id; }
+	// If no \<Role> was found, simply return an empty string
 	catch { return ''; }
 }
 
+/**
+ * Process a Collection\<GuildChannel.Snowflake, Guild.Snowflake> into a formatted string of channel mentions
+ * @function handlers.createGuild~channelsOutput
+ * @param {Discord.Collection<Discord.Snowflake, Discord.Snowflake} collection A Collection\<GuildChannel.Snowflake, Guild.Snowflake> that contains any channels that have been created as part of the current initialisation process(es)
+ * @param {Discord.Guild} guild The guild to output a list of any created channel(s) for
+ * @returns {string} A newline-delimited string of formatted channel mentions
+ */
 function channelsOutput(collection, guild) {
-	// Filter the <Collection> for channels created in the specified guild
-	return [...collection.filter(_guild => _guild === guild.guildID).keys()]
+	// Filter the <Collection> for channels created in the specified guild, then map each <GuildChannel.Snowflake> to a new string[] of formatted mentions, and finally join the string[] with a newline separator
+	return [...collection.filter(guildID => guildID === guild.id).keys()]
 		.map(channel => `<#${channel}>`)
 		.join('\n');
 }
