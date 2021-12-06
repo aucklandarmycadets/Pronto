@@ -53,13 +53,13 @@ async function process(updatedCommands, document) {
 
 	// Use Object.fromEntries() to create a sanitised object, where each <BaseCommand> object is stripped of any guild-specific keys if they already exist in the guild's database
 	const sanitisedCommands = Object.fromEntries(
-		Object.entries(updatedCommands).map(([command, commandObj]) => {
+		Object.entries(updatedCommands).map(([command, commandObject]) => {
 			// If the guild already has the <BaseCommand> registered in its database, delete the guild modifiable properties from the updated <BaseCommand> object
-			if (document.commands[command]) guildProperties.forEach(guildProperty => delete commandObj[guildProperty]);
+			if (document.commands[command]) guildProperties.forEach(guildProperty => delete commandObject[guildProperty]);
 
 			// Map to an array of key-value entries where each <CommandName> is a key and each updated <BaseCommand> object is the corresponding value
 			// This is used by Object.fromEntries() to create the updated (and sanitised) <BaseCommands>-derived object
-			return [command, commandObj];
+			return [command, commandObject];
 		}),
 	);
 
