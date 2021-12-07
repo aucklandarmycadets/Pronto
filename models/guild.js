@@ -41,7 +41,7 @@ const { settings, emojis, colours } = require('../config');
  * @property {Object} emojis The guild's emojis object
  * @property {models.Emoji} emojis.success The guild's success [\<Emoji>]{@link models.Emoji}
  * @property {models.Emoji} emojis.error The guild's error [\<Emoji>]{@link models.Emoji}
- * @property {models.Colours} colours The guild's colour [\<Object>]{@link models.Colours}
+ * @property {models.Colours} colours The guild's [\<Colours>]{@link models.Colours} object
  */
 
 /**

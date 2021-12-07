@@ -66,12 +66,12 @@ export interface GuildConfiguration extends mongoose.Document {
 	commands: Typings.BaseCommands;
 	/** The guild's emojis object */
 	emojis: {
-		/** The guild's success emoji */
+		/** The guild's success \<Emoji> */
 		success: Emoji;
-		/** The guild's error emoji */
+		/** The guild's error \<Emoji> */
 		error: Emoji;
 	};
-	/** The guild's colour object */
+	/** The guild's \<Colours> object */
 	colours: Colours;
 }
 
