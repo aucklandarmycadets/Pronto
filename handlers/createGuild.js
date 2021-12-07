@@ -138,8 +138,8 @@ async function createGuildDocument(guild) {
 			attendanceID: await initialiseChannel(defaults.attendance, guild),
 			recruitingID: await initialiseChannel(defaults.recruiting, guild),
 			welcomeID: await initialiseChannel(defaults.welcome, guild),
-			archivedID: await initialiseChannel(defaults.archived, guild, 'CATEGORY'),
-			lessonsID: await initialiseChannel(defaults.lessons, guild, 'CATEGORY'),
+			archivedID: await initialiseChannel(defaults.archived, guild),
+			lessonsID: await initialiseChannel(defaults.lessons, guild),
 			lessonReferenceID: await initialiseChannel(defaults.lessonReference, guild),
 			lessonPlansID: await initialiseChannel(defaults.lessonPlans, guild),
 			everyoneID: guild.roles.everyone.id,
@@ -156,11 +156,9 @@ async function createGuildDocument(guild) {
  * @function handlers.createGuild~initialiseChannel
  * @param {Typings.DefaultChannel} defaultChannel The \<DefaultChannel> object of the channel to find/create
  * @param {Discord.Guild} guild The \<Guild> to find/create the \<GuildChannel> in
- * @param {?'TEXT' | 'CATEGORY'} type The type of the channel to be created, either `TEXT` || `CATEGORY`
- * - If `null`, a \<TextChannel> will be created by default
  * @returns {Promise<Discord.Snowflake>} The \<GuildChannel.id> of the found/created channel
  */
-async function initialiseChannel(defaultChannel, guild, type) {
+async function initialiseChannel(defaultChannel, guild) {
 	const { bot } = require('../pronto');
 
 	/**
@@ -231,14 +229,14 @@ async function initialiseChannel(defaultChannel, guild, type) {
 	 * The dynamically-set \<GuildChannelCreateOptions> for the \<GuildChannel> to create
 	 * @type {Discord.GuildChannelCreateOptions}
 	 */
-	const channelOptions = (type === 'CATEGORY')
+	const channelOptions = (defaultChannel.type === 'CATEGORY')
 		// If the type of the channel to be created is a <CategoryChannel>, set the <GuildChannelCreateOptions> accordingly
-		? { type: type.toLowerCase() }
+		? { type: defaultChannel.type.toLowerCase() }
 		: (parent)
 			// Otherwise, if the channel to be created is not a <CategoryChannel> but has a specific parent, set the options accordingly
-			? { topic: defaultChannel.description, parent, type: type.toLowerCase() }
+			? { topic: defaultChannel.description, parent, type: defaultChannel.type.toLowerCase() }
 			// Otherwise, create the <GuildChannel> within the prontoCategory <CategoryChannel>
-			: { topic: defaultChannel.description, parent: prontoCategory, type: type.toLowerCase() };
+			: { topic: defaultChannel.description, parent: prontoCategory, type: defaultChannel.type.toLowerCase() };
 
 	// Create the <GuildChannel>, using the specified name and appropriate <GuildChannelCreateOptions>
 	const createdChannel = await guild.channels.create(defaultChannel.name, channelOptions)
@@ -263,13 +261,13 @@ async function initialiseChannel(defaultChannel, guild, type) {
 /**
  * Finds an existing \<Role> that includes the specified name
  * @function handlers.createGuild~findRole
- * @param {string} name The \<Role.name> of the role to search for
+ * @param {Typings.DefaultRole} defaultRole The \<Role.name> of the role to search for
  * @param {Discord.Guild} guild The \<Guild> to search for the \<Role> in
  * @returns {Discord.Snowflake | ''} The \<Role.id> of the found role, or `''` if it was not found
  */
-function findRole(name, guild) {
+function findRole(defaultRole, guild) {
 	// Attempt to find one <Role.name> which contains the specified name as a substring, and return its identifier if found
-	try { return guild.roles.cache.find(role => role.name.toLowerCase().includes(name.toLowerCase())).id; }
+	try { return guild.roles.cache.find(role => role.name.toLowerCase().includes(defaultRole.name.toLowerCase())).id; }
 	// If no \<Role> was found, simply return an empty string
 	catch { return ''; }
 }
