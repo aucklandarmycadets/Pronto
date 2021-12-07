@@ -33,7 +33,7 @@ const pendingPromises = {};
 const createdChannels = new Discord.Collection();
 
 /**
- * `handlers.createGuild()` performs the initialisation process for a guild by creating/finding the default channels defined by `config.defaults`,
+ * `handlers.createGuild()` performs the initialisation process for a guild by creating/finding the default channels defined by [`config.defaults`]{@link config.Configuration},
  * and creates and returns a new \<GuildConfiguration> document if it does not already exist
  * @function handlers.createGuild
  * @param {Discord.Guild} guild The \<Guild> to initialise
@@ -162,7 +162,7 @@ async function initialiseChannel(defaultChannel, guild) {
 	const { bot } = require('../pronto');
 
 	/**
-	 * A \<PermissionString[]> of the minimum permissions Pronto must have in an existing `config.defaults.debug.name` \<GuildChannel> to fully accept it as 'found', and to not create a new copy
+	 * A \<PermissionString[]> of the minimum permissions Pronto must have in an existing [`config.defaults.debug.name`]{@link config.Configuration} \<GuildChannel> to fully accept it as 'found', and to not create a new copy
 	 * @type {Discord.PermissionString[]}
 	 */
 	const MINIMUM_PERMISSIONS = ['VIEW_CHANNEL', 'SEND_MESSAGES'];
@@ -194,9 +194,9 @@ async function initialiseChannel(defaultChannel, guild) {
 	}
 
 	/**
-	 * Test function to find a \<CategoryChannel> whose name matches the name defined by `config.defaults.pronto.name`
+	 * Test function to find a \<CategoryChannel> whose name matches the name defined by [`config.defaults.pronto.name`]{@link config.Configuration}
 	 * @param {Discord.GuildChannel} channel The \<GuildChannel> to test
-	 * @returns {boolean} Whether the \<GuildChannel> is a \<CategoryChannel> whose name matches `config.defaults.pronto.name`
+	 * @returns {boolean} Whether the \<GuildChannel> is a \<CategoryChannel> whose name matches [`config.defaults.pronto.name`]{@link config.Configuration}
 	 */
 	const findProntoCategory = channel => channel.type === 'category' && channel.name === defaults.pronto.name;
 

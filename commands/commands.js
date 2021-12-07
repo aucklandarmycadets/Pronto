@@ -31,7 +31,7 @@ const { formatList } = require('./modules');
  * @property {boolean} allowDirect Whether to allow the command to execute from a direct message
  * @property {Discord.Snowflake[]} requiredRoles A \<Role.id[]> of which the \<GuildMember> must have at least one to execute the command
  * @property {Discord.Snowflake[]} deniedRoles A \<Role.id[]> of which the \<GuildMember> must have none to execute the command
- * @property {boolean} developerOnly Whether the command is only executable by the developer defined by `config.ids.DEVELOPER_ID`
+ * @property {boolean} developerOnly Whether the command is only executable by the developer defined by [`config.ids.DEVELOPER_ID`]{@link config.Configuration}
  * @property {boolean} displayInList Whether to display the command in the guild's commands list
  * @property {Readonly<string>} help The help text to display for the command
  * @property {Readonly<?string>} error The error text to display for the command

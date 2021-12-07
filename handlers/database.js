@@ -15,9 +15,9 @@ const { merge } = require('../modules');
  * - If the guild is `null`, the document of Pronto's 'master' guild is returned
  * @function handlers.database
  * @param {?Discord.Guild} guild The \<Guild> to find the \<GuildConfiguration> for
- * - If `null`, the \<GuildConfiguration> of the default guild defined by `config.ids.DEFAULT_GUILD` will be returned instead
+ * - If `null`, the \<GuildConfiguration> of the default guild defined by [`config.ids.DEFAULT_GUILD`]{@link config.Configuration} will be returned instead
  * @param {Partial<Typings.GuildConfiguration>} changes A Partial\<GuildConfiguration> object of the values to update within the \<GuildConfiguration>
- * @returns {Promise<Typings.GuildConfiguration>} The guild's \<GuildConfiguration>, or the `config.ids.DEFAULT_GUILD`'s \<GuildConfiguration>
+ * @returns {Promise<Typings.GuildConfiguration>} The guild's \<GuildConfiguration>, or the [`config.ids.DEFAULT_GUILD`]{@link config.Configuration}'s \<GuildConfiguration>
  */
 module.exports = async (guild, changes) => {
 	const { bot } = await require('../pronto');
