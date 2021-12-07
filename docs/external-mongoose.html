@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Pronto: handlers/unsubmittedLessons.js</title>
+    <title>Pronto: mongoose</title>
     
       <link type="text/css" rel="stylesheet" href="styles/vendor/prism-okaidia.css">
     
@@ -31,96 +31,110 @@
 </header>
 
 
-<main class="layout-main  layout-content--source">
+<main class="layout-main ">
   <div class="container">
-    <p class="page-kind">source</p>
-    <h1 class="page-title">handlers/unsubmittedLessons.js</h1>
+    <p class="page-kind">External</p>
+    <h1 class="page-title">mongoose</h1>
     
 
 
 
-    
 
 <section>
-    <article>
-        <pre id="source" class="source-page line-numbers"><code class="language-js">'use strict';
 
-const Discord = require('discord.js');
-// eslint-disable-next-line no-unused-vars
-const Typings = require('../typings');
 
-const dateFormat = require('dateformat');
+<header class="not-class">
 
-const { Lesson } = require('../models');
-const { dateTimeGroup, emojiReact, sendMsg } = require('../modules');
 
-module.exports = async guild => {
-	const { settings: { shortDate }, ids: { lessonReferenceID }, colours } = await require('../handlers/database')(guild);
+    
+        
+        <!-- <h2>mongoose</h2> -->
 
-	/**
-	 * @type {Typings.Lesson[]}
-	 */
-	const unsubmitted = await Lesson.find({ submitted: false }).sort({ dueTimestamp: 'ascending' });
+        
 
-	const embedTitle = 'Lessons To Be Submitted';
+        
 
-	const unsubmittedEmbed = new Discord.MessageEmbed()
-		.setColor(colours.primary)
-		.setTitle(embedTitle)
-		.setAuthor(guild.name, guild.iconURL({ dynamic: true }))
-		.setFooter(`Last updated at ${await dateTimeGroup()}`);
+        
+    
+</header>
 
-	if (!unsubmitted.length) {
-		/**
-		 * @type {Typings.Lesson[]}
-		 */
-		const lessons = await Lesson.find();
-		if (!lessons.length) return;
+<article>
+    <div class="container-overview">
 
-		unsubmittedEmbed.setDescription('All lesson plans have been submitted!');
-	}
 
-	else if (unsubmitted.length) {
-		for (const lesson of unsubmitted) {
-			try {
-				const lessonChannel = guild.channels.cache.get(lesson.lessonID);
-				const lastMessage = await lessonChannel.messages.fetch(lessonChannel.lastMessageID);
-				const channelURL = lastMessage.url.split('/').slice(0, -1).join('/');
 
-				const dueString = `Due \`${dateFormat(lesson.dueTimestamp, shortDate)}\` — `;
+    
+        
+            <div class="description"><p>The mongoose library to interact with the MongoDB API</p></div>
+        
 
-				for (const instructor of Object.values(lesson.instructors)) {
-					const instructorMember = await guild.members.fetch(instructor.id);
+        
 
-					if (!instructorMember || !lessonChannel) continue;
 
-					const instructorField = unsubmittedEmbed.fields.find(field => field.name === instructorMember.displayName);
+<div class="details">
+    
 
-					(instructorField)
-						? instructorField.value += `${dueString} [${lesson.lessonName}](${channelURL})\n`
-						: unsubmittedEmbed.addField(instructorMember.displayName, `${dueString} [${lesson.lessonName}](${channelURL})\n`);
-				}
-			}
-			catch { continue; }
-		}
-	}
+    
 
-	const referenceChannel = guild.channels.cache.get(lessonReferenceID);
-	await referenceChannel.messages.fetch();
+    
 
-	const existingMsg = referenceChannel.messages.cache.find(msg => {
-		return (msg.embeds[0])
-			? (msg.embeds[0].title)
-				? (msg.embeds[0].title === embedTitle)
-				: false
-			: false;
-	});
+    
 
-	if (!existingMsg) emojiReact(await sendMsg(referenceChannel, { embeds: [unsubmittedEmbed] }), '🔄');
+    
 
-	else existingMsg.edit(unsubmittedEmbed);
-};</code></pre>
-    </article>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h4 class="method-heading">See</h4>
+        <ul>
+            
+                <li><a href="https://mongoosejs.com/docs">https://mongoosejs.com/docs</a></li>
+            
+        </ul>
+    
+
+    
+</div>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+     
+
+    
+
+    
+
+
+    
+
+    
+
+    
+
+    
+</article>
+
 </section>
 
 
