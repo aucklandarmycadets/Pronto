@@ -8,9 +8,15 @@ const Typings = require('./typings');
 const { mongoose } = require('./handlers');
 
 /**
- * The Discord.js JavaScript library to interact with the Discord API
+ * The Discord.js library to interact with the Discord API
  * @external Discord
  * @see https://discord.js.org/#/docs
+ */
+
+/**
+ * The mongoose library to interact with the MongoDB API
+ * @external mongoose
+ * @see https://mongoosejs.com/docs
  */
 
 /**
