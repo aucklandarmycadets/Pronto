@@ -14,7 +14,7 @@ declare type CommandName = string;
 /**
  * The description of the command, which may differ depending on whether the message command is qualified with a different \<CommandName> as an argument
  */
-export interface CommandDescription {
+interface CommandDescription {
 	/** The description of the command, or the description to display in the command's base help text if the command supports a dynamic description */
 	general: string;
 	/** The description of the command, or the description to display in the command's base help text if the command supports a dynamic description */
