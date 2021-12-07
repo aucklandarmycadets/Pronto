@@ -8,8 +8,11 @@ const { commandError, deleteMsg, dateTimeGroup, jsCodeBlock, sendMsg, ...modules
 const { database, ...handlers } = require('../handlers');
 
 /**
+ * @member {commands.Command} commands.evaluate Evaluate Javascript code directly from a Discord message
+ */
+
+/**
  * Complete the \<Command> object from a \<BaseCommand>
- * @module commands/evaluate
  * @param {Discord.Guild} guild The \<Guild> that the member shares with the bot
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
@@ -17,8 +20,6 @@ module.exports = async guild => {
 	const { commands: { evaluate, ...commands }, colours, _doc: settings, ...document } = await database(guild);
 
 	/**
-	 * Evaluate Javascript code directly from a Discord message
-	 * @function execute
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
 	evaluate.execute = async ({ msg, args }) => {
@@ -83,7 +84,7 @@ module.exports = async guild => {
 
 		/**
 		 * Split a string into the necessary number of messages to accommodate for Discord's message character limit, splitting at a specified convenient substring
-		 * @function msgSplit
+		 * @function commands.evaluate~msgSplit
 		 * @param {string} str The string to split into (potentially) multiple messages
 		 * @param {string} [substr] The substring at which to break
 		 */
@@ -116,6 +117,7 @@ module.exports = async guild => {
 
 /**
  * Convert an object (or other non-string type) to its string representation
+ * @function commands.evaluate~convertToString
  * @param {Object | *} toConvert An object, or any other data type, to be inspected and converted into a string
  * @returns {string} A string representation of the input
  */
@@ -126,6 +128,7 @@ function convertToString(toConvert) {
 
 /**
  * Censor sensitive information from an input string, and return the result
+ * @function commands.evaluate~removeSensitive
  * @param {string} str The string to be censored
  * @returns {string} The resultant censored string
  */
@@ -150,6 +153,7 @@ function removeSensitive(str) {
 
 /**
  * Find the last occurence of a given substring within a string to ensure a comfortable message split position
+ * @function commands.evaluate~findBreakIndex
  * @param {string} str The string to search within
  * @param {?string} substr The substring at which to break
  * @param {number} maximumIndex The maximum length that the message can be

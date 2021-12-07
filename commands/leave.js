@@ -7,8 +7,11 @@ const Typings = require('../typings');
 const { capitalise, commandError, dateTimeGroup, sendDirect, sendMsg, successReact } = require('../modules');
 
 /**
+ * @member {commands.Command} commands.leave
+ */
+
+/**
  * Complete the \<Command> object from a \<BaseCommand>
- * @module commands/leave
  * @param {Discord.Guild} guild The \<Guild> that the member shares with the bot
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
@@ -17,7 +20,7 @@ module.exports = async guild => {
 
 	/**
 	 * Process an individual's leave request
-	 * @function execute
+	
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
 	leave.execute = async ({ msg, args }) => {

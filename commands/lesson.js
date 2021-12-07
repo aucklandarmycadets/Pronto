@@ -10,13 +10,16 @@ const { confirmWithReaction, findLesson, unsubmittedLessons } = require('../hand
 /**
  * Set to ensure that lessons (identified by their \<TextChannel.id>) which are pending confirmation of submission cannot be submitted again
  * @type {Set<Discord.Snowflake>}
- * @memberof commands/lesson
+ * @memberof commands.lesson
  */
 const pendingConfirmation = new Set();
 
 /**
+ * @member {commands.Command} commands.lesson A family of sub-commands for an instructor to manage an existing lesson
+ */
+
+/**
  * Complete the \<Command> object from a \<BaseCommand>
- * @module commands/lesson
  * @param {Discord.Guild} guild The \<Guild> that the member shares with the bot
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
@@ -24,8 +27,6 @@ module.exports = async guild => {
 	const { ids: { lessonsID, trainingIDs }, commands: { lesson, seen, approve }, colours, emojis } = await require('../handlers/database')(guild);
 
 	/**
-	 * A family of sub-commands for an instructor to manage an existing lesson
-	 * @function execute
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
 	lesson.execute = async ({ msg, args, msgCommand }) => {
@@ -248,7 +249,7 @@ module.exports = async guild => {
 				.then(dm => {
 					/**
 					 * Create a lesson submission embed in a lesson channel and prompt for lesson plan approval by the Training Cell
-					 * @function lessonSubmit
+					 * @function commands.lesson~lessonSubmit
 					 */
 					const lessonSubmit = async () => {
 						// 'Save' the changes and mark the lesson as being unchanged, and ensure it is marked as submitted
@@ -315,7 +316,7 @@ module.exports = async guild => {
 
 					/**
 					 * Remove the lesson ID from the pendingConfirmation set
-					 * @function lessonCancelled
+					 * @function commands.lesson~lessonCancelled
 					 */
 					const lessonCancelled = () => pendingConfirmation.delete(lessonDocument.lessonID);
 
@@ -330,6 +331,7 @@ module.exports = async guild => {
 
 /**
  * Process an \<Instructor> object into a formatted string of user mentions
+ * @function commands.lesson~processMentions
  * @param {Typings.Instructors} instructors An \<Instructors> object
  * @returns {string} A newline-delimited string of formatted user mentions
  */
@@ -342,6 +344,7 @@ function processMentions(instructors) {
 
 /**
  * Serialises a \<Lesson.submittedResources> string[] for display and creates a number[] of the serials
+ * @function commands.lesson~serialiseResources
  * @param {Typings.Lesson} document The mongoose document for the lesson
  * @returns {{resources: string[], range: number[]}} A \<string[]> of the serialised resources, and a \<number[]> of the valid serials
  */
@@ -371,6 +374,7 @@ function serialiseResources(document) {
 
 /**
  * Collect and return a \<number> input from the user
+ * @function commands.lesson~getNumberInput
  * @param {Discord.Message} msg The \<Message> that executed the \<Command>
  * @param {number[]} range A \<number[]> of valid number inputs
  * @param {Typings.Colours} colours The guild's colour object

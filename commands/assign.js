@@ -16,13 +16,16 @@ const { confirmWithReaction, unsubmittedLessons } = require('../handlers');
 /**
  * Set to ensure that each assigner (identified by their \<User.id>) does not attempt to assign more than one lesson at a time
  * @type {Set<Discord.Snowflake>}
- * @memberof commands/assign
+ * @memberof commands.assign
  */
 const recentlyAssigned = new Set();
 
 /**
+ * @member {commands.Command} commands.assign Assign a lesson to specified instructors by creating a private lesson channel and dispatching a lesson warning
+ */
+
+/**
  * Complete the \<Command> object from a \<BaseCommand>
- * @module commands/assign
  * @param {Discord.Guild} guild The \<Guild> that the member shares with the bot
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
@@ -30,8 +33,6 @@ module.exports = async guild => {
 	const { ids: { lessonsID, trainingIDs }, commands: { seen, assign }, colours, emojis } = await require('../handlers/database')(guild);
 
 	/**
-	 * Assign a lesson to specified instructors by creating a private lesson channel and dispatching a lesson warning
-	 * @function execute
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
 	assign.execute = async ({ msg }) => {
@@ -143,7 +144,7 @@ module.exports = async guild => {
 			.then(dm => {
 				/**
 				 * Create a private lesson channel for specified instructors and dispatch the lesson warning, as well as a message to request acknowledgement from the instructor(s)
-				 * @function assignLesson
+				 * @function commands.assign~assignLesson
 				 */
 				const assignLesson = async () => {
 					/**
@@ -212,7 +213,7 @@ module.exports = async guild => {
 
 				/**
 				 * Remove the assigner's ID from the recentlyAssigned set
-				 * @function assignCancelled
+				 * @function commands.assign~assignCancelled
 				 */
 				const assignCancelled = () => recentlyAssigned.delete(msg.author.id);
 
@@ -222,7 +223,7 @@ module.exports = async guild => {
 
 		/**
 		 * Create a new mongoose \<Lesson> document for the assigned lesson
-		 * @function saveLesson
+		 * @function commands.assign~saveLesson
 		 * @param {Discord.Snowflake} channelID The \<TextChannel.id> of the private lesson channel created for the lesson
 		 * @returns {Promise<Typings.Lesson>} The mongoose document for the lesson
 		 */
@@ -260,7 +261,7 @@ module.exports = async guild => {
 };
 
 /**
- * @typedef {'TEXT' | 'DATE' | 'ATTCHMENT'} InputType A \<string> representation of the type of input
+ * @typedef {'TEXT' | 'DATE' | 'ATTCHMENT'} commands.assign.InputType A \<string> representation of the type of input
  * - Text inputs only require an input, with no additional error checking
  * - Date inputs are parsed through chrono to ensure a valid date is recognised and return a Unix timest
  * - Attachments allow attachments to be uploaded or URLs to be entered, with appropriate error checking
@@ -268,8 +269,9 @@ module.exports = async guild => {
 
 /**
  * Collect the all the required inputs from the user and return an object with their completed inputs
+ * @function commands.assign~getUserInput
  * @param {Discord.Message} msg The \<Message> that executed the \<Command>
- * @param {Object.<string, {prompt: string, type: InputType, allowMultiple: boolean}>} prompts An object defining the individual inputs to prompt for
+ * @param {Object.<string, {prompt: string, type: commands.assign.InputType, allowMultiple: boolean}>} prompts An object defining the individual inputs to prompt for
  * - Must contain an object.prompt property of type \<string>
  * - Must contain an object.type property for the type of input of type \<string>: `TEXT` || `DATE` || `ATTACHMENT`
  * - Must contain an object.allowMultiple \<boolean>: `true` || `false`
@@ -305,9 +307,10 @@ async function getUserInput(msg, prompts, colours) {
 
 /**
  * Display a prompt to the user and collect & process their input according to the type of input
+ * @function commands.assign~msgPrompt
  * @param {Discord.MessageEmbed} prompt The embed to use to prompt the user for the input
  * @param {Discord.Message} msg The \<Message> that executed the \<Command>
- * @param {InputType} type The type of input being prompted for: `TEXT` || `DATE` || `ATTACHMENT`
+ * @param {commands.assign.InputType} type The type of input being prompted for: `TEXT` || `DATE` || `ATTACHMENT`
  * @param {Typings.Colours} colours The guild's colour object
  * @param {boolean} allowMultiple Whether to allow multiple inputs
  * @returns {Promise<string | number | 'RESTART' | 'CANCEL' | 'DONE'>} The user's input, or the symbols `RESTART` || `CANCEL` || `DONE`
@@ -390,9 +393,10 @@ async function msgPrompt(prompt, msg, type, colours, allowMultiple) {
 
 /**
  * Implements a loop to allow multiple inputs for a given prompt, which are returned in an array
+ * @function commands.assign~whileLoop
  * @param {Discord.MessageEmbed} prompt The embed to use to prompt the user for the input
  * @param {Discord.Message} msg The \<Message> that executed the \<Command>
- * @param {InputType} type The type of input being prompted for: `TEXT` || `DATE` || `ATTACHMENT`
+ * @param {commands.assign.InputType} type The type of input being prompted for: `TEXT` || `DATE` || `ATTACHMENT`
  * @param {Typings.Colours} colours The guild's colour object
  * @param {boolean} allowMultiple Whether to allow multiple inputs
  * @returns {Promise<string[] | number[] | 'RESTART' | 'CANCEL'>} An array of the user's inputs, or the symbols `RESTART` || `CANCEL`
@@ -434,6 +438,7 @@ async function whileLoop(prompt, msg, type, colours, allowMultiple) {
 
 /**
  * Process a Collection\<GuildMember.Snowflake, GuildMember> into a formatted string of user mentions
+ * @function commands.assign~processMentions
  * @param {Discord.Collection<Discord.Snowflake, Discord.GuildMember>} members A Collection\<GuildMember.Snowflake, GuildMember> to process
  * @returns {string} A newline-delimited string of formatted user mentions
  */

@@ -8,8 +8,11 @@ const { Lesson } = require('../models');
 const { commandError, debugError, dateTimeGroup, embedScaffold, errorReact, sendMsg, successReact } = require('../modules');
 
 /**
+ * @member {commands.Command} commands.archive Archive a \<TextChannel> by restricting channel visibility and moving it to a designated channel category
+ */
+
+/**
  * Complete the \<Command> object from a \<BaseCommand>
- * @module commands/archive
  * @param {Discord.Guild} guild The \<Guild> that the member shares with the bot
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
@@ -17,8 +20,6 @@ module.exports = async guild => {
 	const { ids: { logID, archivedID }, commands: { archive }, colours } = await require('../handlers/database')(guild);
 
 	/**
-	 * Archive a \<TextChannel> by restricting channel visibility and moving it to a designated channel category
-	 * @function execute
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
 	archive.execute = ({ msg }) => {

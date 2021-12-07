@@ -8,8 +8,11 @@ const { commandError, dateTimeGroup, sendMsg, successReact } = require('../modul
 const { findLesson } = require('../handlers');
 
 /**
+ * @member {commands.Command} commands.seen
+ */
+
+/**
  * Complete the \<Command> object from a \<BaseCommand>
- * @module commands/seen
  * @param {Discord.Guild} guild The \<Guild> that the member shares with the bot
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
@@ -18,7 +21,7 @@ module.exports = async guild => {
 
 	/**
 	 * Acknowledge a lesson warning, either from a message command or a message reaction
-	 * @function execute
+	
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 * @returns {Promise<Typings.Lesson>} The mongoose document for the lesson
 	 */

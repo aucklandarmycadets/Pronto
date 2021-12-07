@@ -7,8 +7,11 @@ const Typings = require('../typings');
 const { capitalise, commandError, dateTimeGroup, prefixCommand, remove, sendDirect, sendMsg, successReact } = require('../modules');
 
 /**
+ * @member {commands.Command} commands.leavefor Process a leave request submitted on behalf of someone else
+ */
+
+/**
  * Complete the \<Command> object from a \<BaseCommand>
- * @module commands/leavefor
  * @param {Discord.Guild} guild The \<Guild> that the member shares with the bot
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
@@ -16,8 +19,6 @@ module.exports = async guild => {
 	const { ids: { attendanceID }, commands: { help, leave, leaveFor }, colours } = await require('../handlers/database')(guild);
 
 	/**
-	 * Process a leave request submitted on behalf of someone else
-	 * @function execute
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
 	leaveFor.execute = async ({ msg, args }) => {

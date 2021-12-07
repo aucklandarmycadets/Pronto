@@ -7,8 +7,11 @@ const Typings = require('../typings');
 const { commandError, dateTimeGroup, sendMsg, sortMembersByRoles, successReact } = require('../modules');
 
 /**
+ * @member {commands.Command} commands.connected
+ */
+
+/**
  * Complete the \<Command> object from a \<BaseCommand>
- * @module commands/connected
  * @param {Discord.Guild} guild The \<Guild> that the member shares with the bot
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
@@ -17,7 +20,7 @@ module.exports = async guild => {
 
 	/**
 	 * List the members connected to a \<VoiceChannel>
-	 * @function execute
+	
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
 	connected.execute = async ({ msg }) => {

@@ -8,8 +8,11 @@ const Typings = require('../typings');
 const { commandError, debugError, embedScaffold, errorReact } = require('../modules');
 
 /**
+ * @member {commands.Command} commands.purge
+ */
+
+/**
  * Complete the \<Command> object from a \<BaseCommand>
- * @module commands/purge
  * @param {Discord.Guild} guild The \<Guild> that the member shares with the bot
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
@@ -18,7 +21,7 @@ module.exports = async guild => {
 
 	/**
 	 * Bulk delete a specified number of messages from a \<TextChannel>
-	 * @function execute
+	
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
 	purge.execute = async ({ msg, args }) => {

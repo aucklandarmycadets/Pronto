@@ -8,8 +8,11 @@ const { commandError, debugError, dateTimeGroup, enumerateResources, sendMsg, su
 const { findLesson } = require('../handlers');
 
 /**
+ * @member {commands.Command} commands.approve Approve a submitted lesson plan in a lesson channel, either from a message command or a message reaction
+ */
+
+/**
  * Complete the \<Command> object from a \<BaseCommand>
- * @module commands/approve
  * @param {Discord.Guild} guild The \<Guild> that the member shares with the bot
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
@@ -17,8 +20,6 @@ module.exports = async guild => {
 	const { ids: { lessonsID, lessonPlansID }, commands: { approve }, colours } = await require('../handlers/database')(guild);
 
 	/**
-	 * Approve a submitted lesson plan in a lesson channel, either from a message command or a message reaction
-	 * @function execute
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 * @returns {Promise<Typings.Lesson>} The mongoose document for the lesson
 	 */
@@ -134,6 +135,7 @@ module.exports = async guild => {
 
 /**
  * Process an \<Instructor> object into a formatted string of user mentions
+ * @function commands.approve~processMentions
  * @param {Typings.Instructors} instructors An \<Instructors> object
  * @returns {string} A newline-delimited string of formatted user mentions
  */

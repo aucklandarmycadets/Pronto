@@ -10,8 +10,11 @@ const { commandError, deleteMsg, dateTimeGroup, emojiReact, sendDirect, sendMsg 
 const { confirmWithReaction } = require('../handlers');
 
 /**
+ * @member {commands.Command} commands.attendance Process an attendance register by creating an attendance embed and sending it to the attendance and original message command channels
+ */
+
+/**
  * Complete the \<Command> object from a \<BaseCommand>
- * @module commands/attendance
  * @param {Discord.Guild} guild The \<Guild> that the member shares with the bot
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
@@ -19,8 +22,6 @@ module.exports = async guild => {
 	const { ids: { attendanceID, formations }, commands: { attendance }, colours } = await require('../handlers/database')(guild);
 
 	/**
-	 * Process an attendance register by creating an attendance embed and sending it to the attendance and original message command channels
-	 * @function execute
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
 	attendance.execute = async ({ msg, args }) => {
@@ -61,7 +62,7 @@ module.exports = async guild => {
 
 		/**
 		 * Create an attendance register and prompt confirmation from the user
-		 * @function createRegister
+		 * @function commands.attendance~createRegister
 		 */
 		function createRegister() {
 			// Parse the attendance register from the message arguments, by joining them into a string separataed by a space, then splitting again by newlines
@@ -85,7 +86,7 @@ module.exports = async guild => {
 				.then(dm => {
 					/**
 					 * Send the completed attendance embed to both the original submission channel and the guild's attendance channel upon confirmation
-					 * @function sendAttendance
+					 * @function commands.attendance~sendAttendance
 					 */
 					const sendAttendance = async () => {
 						// Update the embed author to include the submitting user
