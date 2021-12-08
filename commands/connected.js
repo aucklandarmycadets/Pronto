@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const Typings = require('../typings');
 
 const { dateTimeGroup, sortMembersByRoles } = require('../modules');
-const { commandError, database, sendMsg, successReact } = require('../handlers');
+const { commandError, findGuildConfiguration, sendMsg, successReact } = require('../handlers');
 
 /**
  * @member {commands.Command} commands.connected
@@ -17,7 +17,7 @@ const { commandError, database, sendMsg, successReact } = require('../handlers')
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { ids: { attendanceID }, commands: { connected }, colours } = await database(guild);
+	const { ids: { attendanceID }, commands: { connected }, colours } = await findGuildConfiguration(guild);
 
 	/**
 	 * List the members connected to a \<VoiceChannel>

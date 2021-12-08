@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const Typings = require('../typings');
 
 const { dateTimeGroup, jsCodeBlock, ...modules } = require('../modules');
-const { commandError, database, deleteMsg, sendMsg, ...handlers } = require('../handlers');
+const { commandError, deleteMsg, findGuildConfiguration, sendMsg, ...handlers } = require('../handlers');
 
 /**
  * @member {commands.Command} commands.evaluate Evaluate Javascript code directly from a Discord message
@@ -17,7 +17,7 @@ const { commandError, database, deleteMsg, sendMsg, ...handlers } = require('../
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { commands: { evaluate, ...commands }, colours, _doc: config, ...document } = await database(guild);
+	const { commands: { evaluate, ...commands }, colours, _doc: config, ...document } = await findGuildConfiguration(guild);
 
 	/**
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command

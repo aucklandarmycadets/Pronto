@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 
 const { ids: { DEVELOPER_ID } } = require('../config');
 const { dateTimeGroup, formatAge } = require('../modules');
-const { database, sendDirect } = require('../handlers');
+const { findGuildConfiguration, sendDirect } = require('../handlers');
 
 /**
  * @member {events.EventModule} events.exit Event handler to notify the developer that the bot is restarting, and to close the MongoDB connection
@@ -31,7 +31,7 @@ module.exports = {
 
 		// Asynchronous operations below this point are abandoned when handling Process#exit, and the process terminates here
 
-		const { colours } = await database();
+		const { colours } = await findGuildConfiguration();
 
 		// Create restart embed
 		const restartEmbed = new Discord.MessageEmbed()

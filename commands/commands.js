@@ -7,7 +7,7 @@ const Typings = require('../typings');
 
 const { ids: { DEVELOPER_ID } } = require('../config');
 const { formatList } = require('../modules');
-const { database } = require('../handlers');
+const { findGuildConfiguration } = require('../handlers');
 
 /**
  * @typedef {string} commands.CommandName The name of the command
@@ -67,7 +67,7 @@ const { database } = require('../handlers');
  * @returns {Promise<Typings.BaseCommands>}
  */
 module.exports = async guild => {
-	const { settings: { prefix }, ids } = await database(guild);
+	const { settings: { prefix }, ids } = await findGuildConfiguration(guild);
 
 	/**
 	 * @type {Typings.BaseCommands}

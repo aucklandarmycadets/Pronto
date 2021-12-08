@@ -5,7 +5,7 @@ const Typings = require('../typings');
 
 const { ids: { DEFAULT_GUILD, DEVELOPER_ID } } = require('../config');
 const { prefixCommand } = require('../modules');
-const { database, embedScaffold, lessonReminders, unsubmittedLessons, verifyBotPermissions } = require('../handlers');
+const { embedScaffold, findGuildConfiguration, lessonReminders, unsubmittedLessons, verifyBotPermissions } = require('../handlers');
 
 /**
  * @member {events.EventModule} events.onReady Event handler to notify the developer and execute the bot's startup routine
@@ -22,7 +22,7 @@ module.exports = {
 	 */
 	async handler() {
 		const { bot } = require('../pronto');
-		const { commands: { help }, colours } = await database();
+		const { commands: { help }, colours } = await findGuildConfiguration();
 
 		// Log the successful log-in to the console
 		console.info(`Logged in as ${bot.user.tag}!`);

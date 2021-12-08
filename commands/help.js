@@ -6,7 +6,7 @@ const Typings = require('../typings');
 
 const { ids: { DEVELOPER_ID } } = require('../config');
 const { formatList, prefixCommand } = require('../modules');
-const { database, deleteMsg, directCommandError, embedScaffold, errorReact, getRoleError, permissionsHandler, sendDirect, sendMsg, successReact } = require('../handlers');
+const { deleteMsg, directCommandError, embedScaffold, errorReact, findGuildConfiguration, getRoleError, permissionsHandler, sendDirect, sendMsg, successReact } = require('../handlers');
 
 /**
  * @member {commands.Command} commands.help
@@ -18,7 +18,7 @@ const { database, deleteMsg, directCommandError, embedScaffold, errorReact, getR
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { settings: { prontoLogo }, commands: { help, ...commands }, colours } = await database(guild);
+	const { settings: { prontoLogo }, commands: { help, ...commands }, colours } = await findGuildConfiguration(guild);
 
 	/**
 	 * Send details and assistance about a specific command, or generate a list of available commands when needed

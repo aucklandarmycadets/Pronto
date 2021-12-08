@@ -1,10 +1,10 @@
 'use strict';
 
-const { database, debugError } = require('../handlers');
+const { debugError, findGuildConfiguration } = require('../handlers');
 
 module.exports = async msg => {
 	const { bot } = require('../pronto');
-	const { ids: { guildID }, emojis } = await database(msg.guild);
+	const { ids: { guildID }, emojis } = await findGuildConfiguration(msg.guild);
 
 	const guild = bot.guilds.cache.get(guildID);
 	const successEmoji = guild.emojis.cache.find(emoji => emoji.name === emojis.success.name);

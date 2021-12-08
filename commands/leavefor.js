@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const Typings = require('../typings');
 
 const { capitalise, dateTimeGroup, prefixCommand, remove } = require('../modules');
-const { commandError, database, sendDirect, sendMsg, successReact } = require('../handlers');
+const { commandError, findGuildConfiguration, sendDirect, sendMsg, successReact } = require('../handlers');
 
 /**
  * @member {commands.Command} commands.leavefor Process a leave request submitted on behalf of someone else
@@ -17,7 +17,7 @@ const { commandError, database, sendDirect, sendMsg, successReact } = require('.
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { ids: { attendanceID }, commands: { help, leave, leaveFor }, colours } = await database(guild);
+	const { ids: { attendanceID }, commands: { help, leave, leaveFor }, colours } = await findGuildConfiguration(guild);
 
 	/**
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command

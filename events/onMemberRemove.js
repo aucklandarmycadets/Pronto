@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const Typings = require('../typings');
 
 const { dateTimeGroup, formatRoles } = require('../modules');
-const { database, debugError, sendMsg } = require('../handlers');
+const { debugError, findGuildConfiguration, sendMsg } = require('../handlers');
 
 /**
  * @member {events.EventModule} events.onMemberRemove Event handler to log whenever a \<GuildMember> leaves a guild, or is kicked
@@ -23,7 +23,7 @@ module.exports = {
 	 */
 	async handler(_, member) {
 		const { bot } = require('../pronto');
-		const { ids: { logID }, colours } = await database(member.guild);
+		const { ids: { logID }, colours } = await findGuildConfiguration(member.guild);
 
 		// Create log embed
 		const logEmbed = new Discord.MessageEmbed()

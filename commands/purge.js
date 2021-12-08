@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 // eslint-disable-next-line no-unused-vars
 const Typings = require('../typings');
 
-const { commandError, database, debugError, embedScaffold, errorReact } = require('../handlers');
+const { commandError, debugError, embedScaffold, errorReact, findGuildConfiguration } = require('../handlers');
 
 /**
  * @member {commands.Command} commands.purge
@@ -17,7 +17,7 @@ const { commandError, database, debugError, embedScaffold, errorReact } = requir
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { commands: { purge }, colours } = await database(guild);
+	const { commands: { purge }, colours } = await findGuildConfiguration(guild);
 
 	/**
 	 * Bulk delete a specified number of messages from a \<TextChannel>

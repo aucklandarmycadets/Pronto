@@ -8,10 +8,10 @@ const cron = require('node-cron');
 
 const { Lesson } = require('../models');
 const { dateTimeGroup } = require('../modules');
-const { database, sendMsg } = require('../handlers');
+const { findGuildConfiguration, sendMsg } = require('../handlers');
 
 module.exports = async guild => {
-	const { settings: { lessonCron, lessonReminders }, ids: { archivedID }, colours } = await database(guild);
+	const { settings: { lessonCron, lessonReminders }, ids: { archivedID }, colours } = await findGuildConfiguration(guild);
 
 	cron.schedule(lessonCron, async () => {
 		/**

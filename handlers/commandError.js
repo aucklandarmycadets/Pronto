@@ -1,10 +1,10 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { database, errorReact, sendMsg } = require('../handlers');
+const { errorReact, findGuildConfiguration, sendMsg } = require('../handlers');
 
 module.exports = async (msg, errorMsg, commandError, footer) => {
-	const { colours } = await database(msg.guild);
+	const { colours } = await findGuildConfiguration(msg.guild);
 
 	const authName = (msg.member)
 		? msg.member.displayName

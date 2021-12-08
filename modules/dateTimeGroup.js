@@ -1,9 +1,9 @@
 'use strict';
 
 const dateFormat = require('dateformat');
-const { database } = require('../handlers');
+const { findGuildConfiguration } = require('../handlers');
 
 module.exports = async date => {
-	const { settings: { longDate } } = await database();
+	const { settings: { longDate } } = await findGuildConfiguration();
 	return dateFormat(date, longDate);
 };

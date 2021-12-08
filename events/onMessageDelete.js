@@ -7,7 +7,7 @@ const Typings = require('../typings');
 const fs = require('fs');
 
 const { charLimit, dateTimeGroup, extractID } = require('../modules');
-const { database, debugError, deleteMsg, sendMsg } = require('../handlers');
+const { debugError, deleteMsg, findGuildConfiguration, sendMsg } = require('../handlers');
 
 /**
  * @member {events.EventModule} events.onMessageDelete Event handler to log whenever a \<Message> is deleted
@@ -25,7 +25,7 @@ module.exports = {
 	 */
 	async handler(_, msg) {
 		const { bot } = require('../pronto');
-		const { settings: { prefix }, ids: { logID }, commands: { purge }, colours } = await database(msg.guild);
+		const { settings: { prefix }, ids: { logID }, commands: { purge }, colours } = await findGuildConfiguration(msg.guild);
 
 		// Initialise log embed
 		const logEmbed = new Discord.MessageEmbed()

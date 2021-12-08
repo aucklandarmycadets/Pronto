@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const Typings = require('../typings');
 
 const { dateTimeGroup, enumerateResources, formatRoles, isURL, processResources, remove } = require('../modules');
-const { commandError, confirmWithReaction, createEmbed, database, deleteMsg, errorReact, findLesson, sendDirect, sendMsg, successReact, unsubmittedLessons } = require('../handlers');
+const { commandError, confirmWithReaction, createEmbed, deleteMsg, errorReact, findGuildConfiguration, findLesson, sendDirect, sendMsg, successReact, unsubmittedLessons } = require('../handlers');
 
 /**
  * Set to ensure that lessons (identified by their \<TextChannel.id>) which are pending confirmation of submission cannot be submitted again
@@ -24,7 +24,7 @@ const pendingConfirmation = new Set();
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { ids: { lessonsID, trainingIDs }, commands: { lesson, seen, approve }, colours, emojis } = await database(guild);
+	const { ids: { lessonsID, trainingIDs }, commands: { lesson, seen, approve }, colours, emojis } = await findGuildConfiguration(guild);
 
 	/**
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command

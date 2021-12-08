@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const Typings = require('../typings');
 
 const { dateTimeGroup } = require('../modules');
-const { database, sendMsg } = require('../handlers');
+const { findGuildConfiguration, sendMsg } = require('../handlers');
 
 /**
  * @member {commands.Command} commands.ping Calculate the latency of the bot
@@ -17,7 +17,7 @@ const { database, sendMsg } = require('../handlers');
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { commands: { ping }, colours } = await database(guild);
+	const { commands: { ping }, colours } = await findGuildConfiguration(guild);
 
 	/**
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command

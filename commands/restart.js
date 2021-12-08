@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 // eslint-disable-next-line no-unused-vars
 const Typings = require('../typings');
 
-const { database, successReact } = require('../handlers');
+const { findGuildConfiguration, successReact } = require('../handlers');
 
 /**
  * @member {commands.Command} commands.restart
@@ -17,7 +17,7 @@ const { database, successReact } = require('../handlers');
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { commands: { restart } } = await database(guild);
+	const { commands: { restart } } = await findGuildConfiguration(guild);
 
 	/**
 	 * End the current bot process

@@ -11,7 +11,7 @@ chrono = new chrono.Chrono(chrono.en.createConfiguration(false, true));
 
 const { Lesson } = require('../models');
 const { dateTimeGroup, enumerateResources, isURL, processResources, titleCase } = require('../modules');
-const { commandError, confirmWithReaction, createEmbed, database, deleteMsg, sendDirect, sendMsg, successReact, unsubmittedLessons } = require('../handlers');
+const { commandError, confirmWithReaction, createEmbed, deleteMsg, findGuildConfiguration, sendDirect, sendMsg, successReact, unsubmittedLessons } = require('../handlers');
 
 /**
  * Set to ensure that each assigner (identified by their \<User.id>) does not attempt to assign more than one lesson at a time
@@ -30,7 +30,7 @@ const recentlyAssigned = new Set();
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { ids: { lessonsID, trainingIDs }, commands: { seen, assign }, colours, emojis } = await database(guild);
+	const { ids: { lessonsID, trainingIDs }, commands: { seen, assign }, colours, emojis } = await findGuildConfiguration(guild);
 
 	/**
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command

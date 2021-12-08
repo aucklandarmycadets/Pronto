@@ -3,11 +3,11 @@
 const Discord = require('discord.js');
 
 const { dateTimeGroup, jsCodeBlock, prefixCommand } = require('../modules');
-const { database, debugError, embedScaffold, permissionsCheck, purgeChannel, sendMsg, successReact } = require('../handlers');
+const { debugError, embedScaffold, findGuildConfiguration, permissionsCheck, purgeChannel, sendMsg, successReact } = require('../handlers');
 
 module.exports = async (oldState, newState) => {
 	const { bot } = require('../pronto');
-	const { ids: { channelPairs }, commands: { purge }, emojis, colours } = await database(newState.guild);
+	const { ids: { channelPairs }, commands: { purge }, emojis, colours } = await findGuildConfiguration(newState.guild);
 
 	const newMember = newState.member;
 

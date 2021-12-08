@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const Typings = require('../typings');
 
 const { dateTimeGroup } = require('../modules');
-const { commandError, database, findLesson, sendMsg, successReact } = require('../handlers');
+const { commandError, findGuildConfiguration, findLesson, sendMsg, successReact } = require('../handlers');
 
 /**
  * @member {commands.Command} commands.seen
@@ -17,7 +17,7 @@ const { commandError, database, findLesson, sendMsg, successReact } = require('.
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { ids: { lessonsID }, commands: { seen }, colours } = await database(guild);
+	const { ids: { lessonsID }, commands: { seen }, colours } = await findGuildConfiguration(guild);
 
 	/**
 	 * Acknowledge a lesson warning, either from a message command or a message reaction

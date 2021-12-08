@@ -3,11 +3,11 @@
 const Discord = require('discord.js');
 
 const { charLimit, dateTimeGroup } = require('../modules');
-const { database, sendDirect, sendMsg } = require('../handlers');
+const { findGuildConfiguration, sendDirect, sendMsg } = require('../handlers');
 
 module.exports = async (guild, destination, description, colour, type, fieldTitle, fieldContent, errorField) => {
 	const { bot, version } = require('../pronto');
-	const { ids: { debugID } } = await database(guild);
+	const { ids: { debugID } } = await findGuildConfiguration(guild);
 
 	// Dynamically set footer to show current version for developer
 	const developerFooter = (type === 'DEVELOPER')

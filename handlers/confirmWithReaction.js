@@ -3,11 +3,11 @@
 const Discord = require('discord.js');
 
 const { dateTimeGroup } = require('../modules');
-const { database, debugError, errorReact, successReact } = require('../handlers');
+const { debugError, errorReact, findGuildConfiguration, successReact } = require('../handlers');
 
 module.exports = async (msg, dm, confirm, cancel) => {
 	const { bot } = require('../pronto');
-	const { colours, emojis } = await database(msg.guild);
+	const { colours, emojis } = await findGuildConfiguration(msg.guild);
 
 	await successReact(dm);
 	await errorReact(dm);

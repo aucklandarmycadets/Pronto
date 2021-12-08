@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const Typings = require('../typings');
 
 const { dateTimeGroup, formatAge } = require('../modules');
-const { database, debugError, sendMsg } = require('../handlers');
+const { debugError, findGuildConfiguration, sendMsg } = require('../handlers');
 
 /**
  * @member {events.EventModule} events.onMemberAdd Event handler to log whenever a user joins a \<Guild>, and to assign them to the guild's visitor role and send a welcome embed
@@ -23,7 +23,7 @@ module.exports = {
 	 */
 	async handler(_, member) {
 		const { bot } = require('../pronto');
-		const { ids: { logID, recruitingID, welcomeID, visitorID }, colours } = await database(member.guild);
+		const { ids: { logID, recruitingID, welcomeID, visitorID }, colours } = await findGuildConfiguration(member.guild);
 
 		// Create log embed
 		const logEmbed = new Discord.MessageEmbed()

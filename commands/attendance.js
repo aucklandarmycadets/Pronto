@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 
 const { Attendance } = require('../models');
 const { dateTimeGroup } = require('../modules');
-const { commandError, confirmWithReaction, database, deleteMsg, emojiReact, sendDirect, sendMsg } = require('../handlers');
+const { commandError, confirmWithReaction, deleteMsg, emojiReact, findGuildConfiguration, sendDirect, sendMsg } = require('../handlers');
 
 /**
  * @member {commands.Command} commands.attendance Process an attendance register by creating an attendance embed and sending it to the attendance and original message command channels
@@ -19,7 +19,7 @@ const { commandError, confirmWithReaction, database, deleteMsg, emojiReact, send
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { ids: { attendanceID, formations }, commands: { attendance }, colours } = await database(guild);
+	const { ids: { attendanceID, formations }, commands: { attendance }, colours } = await findGuildConfiguration(guild);
 
 	/**
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command

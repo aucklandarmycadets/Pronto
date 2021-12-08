@@ -8,10 +8,10 @@ const dateFormat = require('dateformat');
 
 const { Lesson } = require('../models');
 const { dateTimeGroup } = require('../modules');
-const { database, emojiReact, sendMsg } = require('../handlers');
+const { emojiReact, findGuildConfiguration, sendMsg } = require('../handlers');
 
 module.exports = async guild => {
-	const { settings: { shortDate }, ids: { lessonReferenceID }, colours } = await database(guild);
+	const { settings: { shortDate }, ids: { lessonReferenceID }, colours } = await findGuildConfiguration(guild);
 
 	/**
 	 * @type {Typings.Lesson[]}

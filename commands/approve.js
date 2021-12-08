@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const Typings = require('../typings');
 
 const { dateTimeGroup, enumerateResources } = require('../modules');
-const { commandError, database, debugError, findLesson, sendMsg, successReact } = require('../handlers');
+const { commandError, debugError, findGuildConfiguration, findLesson, sendMsg, successReact } = require('../handlers');
 
 /**
  * @member {commands.Command} commands.approve Approve a submitted lesson plan in a lesson channel, either from a message command or a message reaction
@@ -17,7 +17,7 @@ const { commandError, database, debugError, findLesson, sendMsg, successReact } 
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { ids: { lessonsID, lessonPlansID }, commands: { approve }, colours } = await database(guild);
+	const { ids: { lessonsID, lessonPlansID }, commands: { approve }, colours } = await findGuildConfiguration(guild);
 
 	/**
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command

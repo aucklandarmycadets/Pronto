@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const Typings = require('../typings');
 
 const { charLimit, dateTimeGroup } = require('../modules');
-const { commandHandler, database, sendMsg } = require('../handlers');
+const { commandHandler, findGuildConfiguration, sendMsg } = require('../handlers');
 
 /**
  * @member {events.EventModule} events.onMessageUpdate Event handler to log whenever a \<Message> is updated,
@@ -29,7 +29,7 @@ module.exports = {
 		// Ensure the updated <Message> is not a partial by calling the <Message.fetch()> method
 		if (newMessage.partial) await newMessage.fetch();
 
-		const { ids: { logID }, colours } = await database(newMessage.guild);
+		const { ids: { logID }, colours } = await findGuildConfiguration(newMessage.guild);
 
 		// Call handlers.commandHandler() to handle a potential command message
 		commandHandler(newMessage);

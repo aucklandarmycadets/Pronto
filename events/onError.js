@@ -4,7 +4,7 @@
 const Typings = require('../typings');
 
 const { jsCodeBlock } = require('../modules');
-const { database, embedScaffold } = require('../handlers');
+const { embedScaffold, findGuildConfiguration } = require('../handlers');
 
 /**
  * @member {events.EventModule} events.onError Event handler for \<Discord.Client> and \<NodeJS.Process> events which may be useful for debugging
@@ -22,7 +22,7 @@ module.exports = {
 	 * - \<any> may be emitted by \<NodeJS.Process>#unhandledRejection, but it is typically an \<Error>
 	 */
 	async handler(event, error) {
-		const { colours } = await database();
+		const { colours } = await findGuildConfiguration();
 
 		// If error is an <Error> with a stack, reassign the variable
 		// Only do this if the stack is actually present, and not if it is a regular <string> or <*>

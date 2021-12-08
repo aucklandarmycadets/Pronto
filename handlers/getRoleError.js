@@ -1,9 +1,9 @@
 'use strict';
 
-const { database, embedScaffold, errorReact } = require('../handlers');
+const { embedScaffold, errorReact, findGuildConfiguration } = require('../handlers');
 
 module.exports = async msg => {
-	const { colours } = await database(msg.guild);
+	const { colours } = await findGuildConfiguration(msg.guild);
 
 	errorReact(msg);
 

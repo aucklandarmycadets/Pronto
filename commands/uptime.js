@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const Typings = require('../typings');
 
 const { dateTimeGroup, formatAge } = require('../modules');
-const { database, sendMsg } = require('../handlers');
+const { findGuildConfiguration, sendMsg } = require('../handlers');
 
 /**
  * @member {commands.Command} commands.uptime Display the bot's uptime
@@ -17,7 +17,7 @@ const { database, sendMsg } = require('../handlers');
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { commands: { uptime }, colours } = await database(guild);
+	const { commands: { uptime }, colours } = await findGuildConfiguration(guild);
 
 	/**
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command

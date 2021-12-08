@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const Typings = require('../typings');
 
 const { dateTimeGroup } = require('../modules');
-const { channelPairing, database, sendMsg } = require('../handlers');
+const { channelPairing, findGuildConfiguration, sendMsg } = require('../handlers');
 
 /**
  * @member {events.EventModule} events.onVoiceUpdate Event handler to log whenever a \<GuildMember> joins/leaves a \<VoiceChannel>,
@@ -25,7 +25,7 @@ module.exports = {
 	 */
 	async handler(_, oldState, newState) {
 		const { bot } = require('../pronto');
-		const { ids: { logID }, colours } = await database(newState.guild);
+		const { ids: { logID }, colours } = await findGuildConfiguration(newState.guild);
 
 		// Call handlers.channelPairing() to process channel pairing functionality in case the <VoiceChannel> is paired to a <TextChannel>
 		channelPairing(oldState, newState);

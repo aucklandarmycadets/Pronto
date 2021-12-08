@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 
 const { ids: { DEVELOPER_ID } } = require('../config');
 const { extractID, prefixCommand } = require('../modules');
-const { database, debugError, directCommandError, permissionsHandler, upsertCommands } = require('../handlers');
+const { debugError, directCommandError, findGuildConfiguration, permissionsHandler, upsertCommands } = require('../handlers');
 
 /**
  *
@@ -21,7 +21,7 @@ module.exports = async msg => {
 
 	const guild = msg.guild || guilds.first();
 
-	const { settings: { prefix }, commands: { help } } = await database(guild);
+	const { settings: { prefix }, commands: { help } } = await findGuildConfiguration(guild);
 
 	const args = msg.content.split(/ +/);
 

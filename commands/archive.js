@@ -6,7 +6,7 @@ const Typings = require('../typings');
 
 const { Lesson } = require('../models');
 const { dateTimeGroup } = require('../modules');
-const { commandError, database, debugError, embedScaffold, errorReact, sendMsg, successReact } = require('../handlers');
+const { commandError, debugError, embedScaffold, errorReact, findGuildConfiguration, sendMsg, successReact } = require('../handlers');
 
 /**
  * @member {commands.Command} commands.archive Archive a \<TextChannel> by restricting channel visibility and moving it to a designated channel category
@@ -18,7 +18,7 @@ const { commandError, database, debugError, embedScaffold, errorReact, sendMsg, 
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { ids: { logID, archivedID }, commands: { archive }, colours } = await database(guild);
+	const { ids: { logID, archivedID }, commands: { archive }, colours } = await findGuildConfiguration(guild);
 
 	/**
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command

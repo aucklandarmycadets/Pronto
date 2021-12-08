@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const Typings = require('../typings');
 
 const { dateTimeGroup } = require('../modules');
-const { database, deleteMsg, sendMsg } = require('../handlers');
+const { deleteMsg, findGuildConfiguration, sendMsg } = require('../handlers');
 
 /**
  * @member {events.EventModule} events.onBulkDelete Event handler to log whenever messages are deleted in bulk, and delete the purge command message if it exists
@@ -23,7 +23,7 @@ module.exports = {
 	 */
 	async handler(_, msgs) {
 		const { bot } = require('../pronto');
-		const { ids: { logID }, commands: { purge }, colours } = await database(msgs.first().guild);
+		const { ids: { logID }, commands: { purge }, colours } = await findGuildConfiguration(msgs.first().guild);
 
 		// Extract the first deleted message to access a <Message> instance
 		const msg = msgs.first();

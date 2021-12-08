@@ -6,13 +6,13 @@ const Typings = require('../typings');
 
 const { Attendance } = require('../models');
 const { dateTimeGroup } = require('../modules');
-const { confirmWithReaction, createEmbed, database, debugError, deleteMsg, embedScaffold, sendDirect } = require('../handlers');
+const { confirmWithReaction, createEmbed, debugError, deleteMsg, embedScaffold, findGuildConfiguration, sendDirect } = require('../handlers');
 
 const pendingInput = new Set();
 
 module.exports = async (reaction, user) => {
 	const { bot } = require('../pronto');
-	const { ids: { attendanceID }, colours } = await database(reaction.message.guild);
+	const { ids: { attendanceID }, colours } = await findGuildConfiguration(reaction.message.guild);
 
 	/**
 	 * @type {Typings.Attendance}

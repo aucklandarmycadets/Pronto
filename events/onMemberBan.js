@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const Typings = require('../typings');
 
 const { dateTimeGroup } = require('../modules');
-const { database, debugError, sendMsg } = require('../handlers');
+const { debugError, findGuildConfiguration, sendMsg } = require('../handlers');
 
 /**
  * @member {events.EventModule} events.onMemberBan Event handler to log whenever a member is banned or unbanned from a \<Guild>
@@ -24,7 +24,7 @@ module.exports = {
 	 */
 	async handler(event, guild, user) {
 		const { bot } = require('../pronto');
-		const { ids: { logID }, colours } = await database(guild);
+		const { ids: { logID }, colours } = await findGuildConfiguration(guild);
 
 		// Fetch the guild's audit logs for a ban/unban and store the whether the user was banned/unbanned
 		const [fetchedLogs, banAction] = (event === 'guildBanAdd')

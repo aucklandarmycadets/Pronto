@@ -9,7 +9,7 @@ module.exports = {
 
 	// mongoose/database handlers
 
-	database: require('./database'),
+	findGuildConfiguration: require('./findGuildConfiguration'),
 	findLesson: require('./findLesson'),
 	mongoose: require('./mongoose'),
 

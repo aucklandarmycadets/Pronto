@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const Typings = require('../typings');
 
 const { dateTimeGroup } = require('../modules');
-const { database, sendMsg } = require('../handlers');
+const { findGuildConfiguration, sendMsg } = require('../handlers');
 
 /**
  * @member {events.EventModule} events.onRoleInteraction Event handler to log whenever a \<Role> is created/deleted
@@ -23,7 +23,7 @@ module.exports = {
 	 */
 	async handler(event, role) {
 		const { bot } = require('../pronto');
-		const { ids: { logID }, colours } = await database(role.guild);
+		const { ids: { logID }, colours } = await findGuildConfiguration(role.guild);
 
 		// Create log embed
 		const logEmbed = new Discord.MessageEmbed()

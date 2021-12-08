@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const Typings = require('../typings');
 
 const { dateTimeGroup, updatedPermissions } = require('../modules');
-const { database, debugError, sendMsg, verifyBotPermissions } = require('../handlers');
+const { debugError, findGuildConfiguration, sendMsg, verifyBotPermissions } = require('../handlers');
 
 /**
  * @member {events.EventModule} events.onMemberUpdate Event handler to log whenever a \<GuildMember> changes their nickname, or has a role added/removed
@@ -24,7 +24,7 @@ module.exports = {
 	 */
 	async handler(_, oldMember, newMember) {
 		const { bot } = require('../pronto');
-		const { ids: { logID }, colours } = await database(newMember.guild);
+		const { ids: { logID }, colours } = await findGuildConfiguration(newMember.guild);
 
 		// Initialise log embed
 		const logEmbed = new Discord.MessageEmbed()
