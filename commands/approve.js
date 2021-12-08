@@ -73,7 +73,7 @@ module.exports = async guild => {
 			.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
 			.setColor(colours.success)
 			.setTitle(`Lesson Plan - ${lessonDocument.lessonName}`)
-			.addField('Instructor(s)', processMentions(lessonDocument.instructors))
+			.addField('Instructor(s)', lessonDocument.processMentions())
 			.addField('Lesson', lessonDocument.lessonName)
 			.addField('Lesson Plan Due', lessonDocument.dueDate)
 			.addField('Lesson Date', lessonDocument.lessonDate)
@@ -132,16 +132,3 @@ module.exports = async guild => {
 
 	return approve;
 };
-
-/**
- * Process an \<Instructor> object into a formatted string of user mentions
- * @function commands.approve~processMentions
- * @param {Typings.Instructors} instructors An \<Instructors> object
- * @returns {string} A newline-delimited string of formatted user mentions
- */
-function processMentions(instructors) {
-	// Map the nested objects to a new string[] of formatted mentions, then join the string[] with a newline separator
-	return Object.values(instructors)
-		.map(user => `<@!${user.id}>`)
-		.join('\n');
-}

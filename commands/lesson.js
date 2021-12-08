@@ -107,8 +107,8 @@ module.exports = async guild => {
 				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
 				.setColor(colours.primary)
 				.setTitle(`Lesson Preview - ${lessonDocument.lessonName}`)
-				// Call processMentions() to format the lesson instructors
-				.addField('Instructor(s)', processMentions(lessonDocument.instructors))
+				// Call <Lesson.processMentions()> to format the lesson instructors
+				.addField('Instructor(s)', lessonDocument.processMentions())
 				.addField('Lesson', lessonDocument.lessonName)
 				.addField('Lesson Plan Due', lessonDocument.dueDate)
 				.addField('Lesson Date', lessonDocument.lessonDate)
@@ -235,8 +235,8 @@ module.exports = async guild => {
 				.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
 				.setColor(colours.warn)
 				.setTitle(`Lesson Submission - ${lessonDocument.lessonName}`)
-				// Call processMentions() to format the lesson instructors
-				.addField('Instructor(s)', processMentions(lessonDocument.instructors))
+				// Call <Lesson.processMentions()> to format the lesson instructors
+				.addField('Instructor(s)', lessonDocument.processMentions())
 				.addField('Lesson', lessonDocument.lessonName)
 				.addField('Lesson Plan Due', lessonDocument.dueDate)
 				.addField('Lesson Date', lessonDocument.lessonDate)
@@ -328,19 +328,6 @@ module.exports = async guild => {
 
 	return lesson;
 };
-
-/**
- * Process an \<Instructor> object into a formatted string of user mentions
- * @function commands.lesson~processMentions
- * @param {Typings.Instructors} instructors An \<Instructors> object
- * @returns {string} A newline-delimited string of formatted user mentions
- */
-function processMentions(instructors) {
-	// Map the nested objects to a new string[] of formatted mentions, then join the string[] with a newline separator
-	return Object.values(instructors)
-		.map(user => `<@!${user.id}>`)
-		.join('\n');
-}
 
 /**
  * Serialises a \<Lesson.submittedResources> string[] for display and creates a number[] of the serials

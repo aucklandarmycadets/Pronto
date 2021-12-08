@@ -33,6 +33,11 @@ export interface Lesson extends mongoose.Document {
 	approved: boolean;
 	/** A \<boolean> to record whether the lesson has unsubmitted changes */
 	changed: boolean;
+	/** 
+	 * Create a formatted string of user mentions for the \<Lesson.instructors>
+	 * @returns {string} A newline-delimited string of formatted user mentions
+	 */
+	processMentions(): string;
 }
 
 /**

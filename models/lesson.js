@@ -22,6 +22,7 @@ const mongoose = require('mongoose');
  * @property {boolean} submitted A \<boolean> to record whether the lesson has been submitted at least once
  * @property {boolean} approved A \<boolean> to record whether the lesson is approved in its current state
  * @property {boolean} changed A \<boolean> to record whether the lesson has unsubmitted changes
+ * @property {function():string} processMentions Create a formatted string of user mentions for the \<Lesson.instructors>
  */
 
 /**
@@ -48,6 +49,21 @@ const lessonSchema = new mongoose.Schema({
 	approved: { type: Boolean, default: false },
 	changed: { type: Boolean, default: false },
 });
+
+/**
+ * Create a formatted string of user mentions for the \<Lesson.instructors>
+ * @function models.Lesson#processMentions
+ * @this Typings.Lesson The \<Lesson> document this method belongs to
+ * @returns {string} A newline-delimited string of formatted user mentions
+ */
+function processMentions() {
+	// Map the nested objects to a new string[] of formatted mentions, then join the string[] with a newline separator
+	return Object.values(this.instructors)
+		.map(user => `<@!${user.id}>`)
+		.join('\n');
+}
+
+lessonSchema.methods.processMentions = processMentions();
 
 // Export the <Schema> as a <Model>
 module.exports = mongoose.model('lesson', lessonSchema, 'lessons');
