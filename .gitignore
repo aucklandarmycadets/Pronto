@@ -70,5 +70,8 @@ updateVersion.sh
 # VS Code files
 .vscode/
 
+# Local files
+.local/
+
 # Ignore compiled Typescript files
 ts-compiled/
