@@ -1,47 +1,47 @@
 :root {
-	--primary-color: #0664a8;
-	--secondary-color: #107e7d;
-	--link-color: var(--primary-color);
-	--link-hover-color: var(--primary-color);
-	--border-color: #eee;
-	--code-color: #666;
-	--code-attention-color: #ca2d00;
-	--text-color: #4a4a4a;
-	--light-font-color: #999;
-	--supporting-color: #7097b5;
-	--heading-color: var(--text-color);
-	--subheading-color: var(--secondary-color);
+	--primary-colour: #0664a8;
+	--secondary-colour: #107e7d;
+	--link-colour: var(--primary-colour);
+	--link-hover-colour: var(--primary-colour);
+	--border-colour: #eee;
+	--code-colour: #666;
+	--code-attention-colour: #ca2d00;
+	--text-colour: #4a4a4a;
+	--light-font-colour: #999;
+	--supporting-colour: #7097b5;
+	--heading-colour: var(--text-colour);
+	--subheading-colour: var(--secondary-colour);
 	--heading-background: #f7f7f7;
-	--code-bg-color: #f8f8f8;
-	--nav-title-color: var(--primary-color);
+	--code-bg-colour: #f8f8f8;
+	--nav-title-colour: var(--primary-colour);
 	--nav-title-align: center;
 	--nav-title-size: 1rem;
 	--nav-title-margin-bottom: 1.5em;
 	--nav-title-font-weight: 600;
 	--nav-list-margin-left: 2em;
-	--nav-bg-color: #fff;
+	--nav-bg-colour: #fff;
 	--nav-heading-display: block;
-	--nav-heading-color: #aaa;
-	--nav-link-color: #666;
-	--nav-text-color: #aaa;
-	--nav-type-class-color: #fff;
+	--nav-heading-colour: #aaa;
+	--nav-link-colour: #666;
+	--nav-text-colour: #aaa;
+	--nav-type-class-colour: #fff;
 	--nav-type-class-bg: #FF8C00;
-	--nav-type-member-color: #39b739;
+	--nav-type-member-colour: #39b739;
 	--nav-type-member-bg: #d5efd5;
-	--nav-type-function-color: #549ab9;
+	--nav-type-function-colour: #549ab9;
 	--nav-type-function-bg: #e1f6ff;
-	--nav-type-namespace-color: #eb6420;
+	--nav-type-namespace-colour: #eb6420;
 	--nav-type-namespace-bg: #fad8c7;
-	--nav-type-typedef-color: #964cb1;
+	--nav-type-typedef-colour: #964cb1;
 	--nav-type-typedef-bg: #f2e4f7;
-	--nav-type-module-color: #964cb1;
+	--nav-type-module-colour: #964cb1;
 	--nav-type-module-bg: #f2e4f7;
-	--nav-type-event-color: #948b34;
+	--nav-type-event-colour: #948b34;
 	--nav-type-event-bg: #fff6a6;
 	--max-content-width: 900px;
 	--nav-width: 320px;
 	--padding-unit: 30px;
-	--layout-footer-color: #aaa;
+	--layout-footer-colour: #aaa;
 	--member-name-signature-display: none;
 	--base-font-size: 16px;
 	--base-line-height: 1.7;
@@ -53,7 +53,7 @@ body {
 	font-family: var(--body-font);
 	font-size: var(--base-font-size);
 	line-height: var(--base-line-height);
-	color: var(--text-color);
+	color: var(--text-colour);
 	-webkit-font-smoothing: antialiased;
 	text-size-adjust: 100%;
 }
@@ -64,13 +64,13 @@ body {
 
 a {
 	text-decoration: none;
-	color: var(--link-color);
+	color: var(--link-colour);
 }
 
 a:hover,
 a:active {
 	text-decoration: underline;
-	color: var(--link-hover-color);
+	color: var(--link-hover-colour);
 }
 
 img {
@@ -94,17 +94,17 @@ samp {
 
 code {
 	display: inline-block;
-	background-color: var(--code-bg-color);
+	background-color: var(--code-bg-colour);
 	padding: 2px 6px 0px;
 	border-radius: 3px;
-	color: var(--code-attention-color);
+	color: var(--code-attention-colour);
 }
 
 .prettyprint.source code:not([class*="language-"]) {
 	display: block;
 	padding: 20px;
 	overflow: scroll;
-	color: var(--code-color);
+	color: var(--code-colour);
 }
 
 .layout-main,
@@ -125,8 +125,8 @@ code {
 }
 
 .layout-header {
-	background: var(--nav-bg-color);
-	border-right: 1px solid var(--border-color);
+	background: var(--nav-bg-colour);
+	border-right: 1px solid var(--border-colour);
 	position: fixed;
 	padding: 0 var(--padding-unit);
 	top: 0;
@@ -147,7 +147,7 @@ code {
 
 .layout-header h1 a:link,
 .layout-header h1 a:visited {
-	color: var(--nav-title-color);
+	color: var(--nav-title-colour);
 }
 
 .layout-header img {
@@ -175,17 +175,17 @@ code {
 	margin-left: 0;
 	margin-bottom: 1em;
 	text-transform: uppercase;
-	color: var(--nav-heading-color);
+	color: var(--nav-heading-colour);
 	font-size: 0.85em;
 }
 
 .layout-nav a {
-	color: var(--nav-link-color);
+	color: var(--nav-link-colour);
 }
 
 .layout-nav a:link,
 .layout-nav a a:visited {
-	color: var(--nav-link-color);
+	color: var(--nav-link-colour);
 }
 
 .layout-content--source {
@@ -198,12 +198,12 @@ code {
 }
 
 .nav-heading a {
-	color: var(--nav-link-color);
+	color: var(--nav-link-colour);
 }
 
 .nav-heading a:link,
 .nav-heading a:visited {
-	color: var(--nav-link-color);
+	color: var(--nav-link-colour);
 }
 
 .nav-heading .nav-item-type {
@@ -223,44 +223,44 @@ code {
 }
 
 .nav-item-type.type-class {
-	color: var(--nav-type-class-color);
+	color: var(--nav-type-class-colour);
 	background: var(--nav-type-class-bg);
 }
 
 .nav-item-type.type-typedef {
-	color: var(--nav-type-typedef-color);
+	color: var(--nav-type-typedef-colour);
 	background: var(--nav-type-typedef-bg);
 }
 
 .nav-item-type.type-function {
-	color: var(--nav-type-function-color);
+	color: var(--nav-type-function-colour);
 	background: var(--nav-type-function-bg);
 }
 
 .nav-item-type.type-namespace {
-	color: var(--nav-type-namespace-color);
+	color: var(--nav-type-namespace-colour);
 	background: var(--nav-type-namespace-bg);
 }
 
 .nav-item-type.type-member {
-	color: var(--nav-type-member-color);
+	color: var(--nav-type-member-colour);
 	background: var(--nav-type-member-bg);
 }
 
 .nav-item-type.type-module {
-	color: var(--nav-type-module-color);
+	color: var(--nav-type-module-colour);
 	background: var(--nav-type-module-bg);
 }
 
 .nav-item-type.type-event {
-	color: var(--nav-type-event-color);
+	color: var(--nav-type-event-colour);
 	background: var(--nav-type-event-bg);
 }
 
 .nav-item-name.is-function:after {
 	display: inline;
 	content: '()';
-	color: var(--nav-link-color);
+	color: var(--nav-link-colour);
 	opacity: 0.75;
 }
 
@@ -273,17 +273,17 @@ code {
 	padding-bottom: 2rem;
 	font-size: 0.8em;
 	text-align: center;
-	color: var(--layout-footer-color);
+	color: var(--layout-footer-colour);
 }
 
 .layout-footer a {
-	color: var(--light-font-color);
+	color: var(--light-font-colour);
 	text-decoration: underline;
 }
 
 h1 {
 	font-size: 2rem;
-	color: var(--heading-color);
+	color: var(--heading-colour);
 }
 
 h5 {
@@ -299,7 +299,7 @@ h5+.code-caption {
 .page-kind {
 	margin: 0 0 -0.5em;
 	font-weight: 400;
-	color: var(--light-font-color);
+	color: var(--light-font-colour);
 	text-transform: uppercase;
 }
 
@@ -310,10 +310,10 @@ h5+.code-caption {
 .subtitle {
 	font-weight: 600;
 	font-size: 1.5em;
-	color: var(--subheading-color);
+	color: var(--subheading-colour);
 	margin: 1em 0;
 	padding: 0.4em 0;
-	border-bottom: 1px solid var(--border-color);
+	border-bottom: 1px solid var(--border-colour);
 }
 
 .subtitle+.event,
@@ -335,7 +335,7 @@ h5+.code-caption {
 	font-size: 1.4rem;
 	font-family: var(--code-font);
 	font-weight: 600;
-	color: var(--primary-color);
+	color: var(--primary-colour);
 }
 
 .event-name .signature-attributes,
@@ -377,8 +377,8 @@ table {
 	width: auto;
 	min-width: 400px;
 	max-width: 100%;
-	border-top: 1px solid var(--border-color);
-	border-right: 1px solid var(--border-color);
+	border-top: 1px solid var(--border-colour);
+	border-right: 1px solid var(--border-colour);
 }
 
 table th,
@@ -393,8 +393,8 @@ table td {
 
 table th,
 table td {
-	border-left: 1px solid var(--border-color);
-	border-bottom: 1px solid var(--border-color);
+	border-left: 1px solid var(--border-colour);
+	border-bottom: 1px solid var(--border-colour);
 }
 
 table p:last-child {
@@ -402,10 +402,10 @@ table p:last-child {
 }
 
 .readme h2 {
-	border-bottom: 1px solid var(--border-color);
+	border-bottom: 1px solid var(--border-colour);
 	margin: 1em 0;
 	padding-bottom: 0.5rem;
-	color: var(--subheading-color);
+	color: var(--subheading-colour);
 }
 
 .readme h2+h3 {
@@ -421,7 +421,7 @@ article.member,
 article.method {
 	padding: 1em 0 1em;
 	margin: 1em 0;
-	border-top: 1px solid var(--border-color);
+	border-top: 1px solid var(--border-colour);
 }
 
 .method-type-signature:not(:empty) {
@@ -445,7 +445,7 @@ li.method-returns,
 
 .method-source a:link,
 .method-source a:visited {
-	color: var(--light-font-color);
+	color: var(--light-font-colour);
 }
 
 .method-returns p {
@@ -481,7 +481,7 @@ li.method-returns,
 }
 
 .param-attributes {
-	color: var(--light-font-color);
+	color: var(--light-font-colour);
 }
 
 .param-description p:first-child {
