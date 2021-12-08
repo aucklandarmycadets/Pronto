@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Pronto: commands/archive.js</title>
+    <title>Pronto: events/index.js</title>
     
       <link type="text/css" rel="stylesheet" href="styles/vendor/prism-okaidia.css">
     
@@ -34,7 +34,7 @@
 <main class="layout-main  layout-content--source">
   <div class="container">
     <p class="page-kind">source</p>
-    <h1 class="page-title">commands/archive.js</h1>
+    <h1 class="page-title">events/index.js</h1>
     
 
 
@@ -45,93 +45,61 @@
     <article>
         <pre id="source" class="source-page line-numbers"><code class="language-js">'use strict';
 
+// eslint-disable-next-line no-unused-vars
 const Discord = require('discord.js');
 // eslint-disable-next-line no-unused-vars
 const Typings = require('../typings');
 
-const { Lesson } = require('../models');
-const { dateTimeGroup } = require('../modules');
-const { commandError, database, debugError, embedScaffold, errorReact, sendMsg, successReact } = require('../handlers');
+const fs = require('fs');
 
 /**
- * @member {commands.Command} commands.archive Archive a \&lt;TextChannel> by restricting channel visibility and moving it to a designated channel category
+ * @namespace events
  */
 
 /**
- * Complete the \&lt;Command> object from a \&lt;BaseCommand>
- * @param {Discord.Guild} guild The \&lt;Guild> that the member shares with the bot
- * @returns {Promise&lt;Typings.Command>} The complete \&lt;Command> object with a \&lt;Command.execute()> method
+ * @typedef {Object} events.EventModule The complete \&lt;EventModule> object for one of Pronto's event module
+ * @property {string[]} bot A string[] of valid \&lt;Client>#event(s) that this \&lt;EventModule> applies to
+ * @property {string[]} process A string[] of valid \&lt;Process>#event(s) that this \&lt;EventModule> applies to
+ * @property {events.EventHandler} handler The event handler function to execute when specified event(s) are emitted
  */
-module.exports = async guild => {
-	const { ids: { logID, archivedID }, commands: { archive }, colours } = await database(guild);
 
-	/**
-	 * @param {Typings.CommandParameters} parameters The \&lt;CommandParameters> to execute this command
-	 */
-	archive.execute = ({ msg }) => {
-		const { bot } = require('../pronto');
+/**
+ * @typedef {Object.&lt;string, events.EventModule>} events.EventModules The complete \&lt;EventModules> object for all of Pronto's event modules, where each [\&lt;EventHandler>]{@link events.EventHandler} is stored in the \&lt;EventHandlers> object under a string property
+ */
 
-		// Extract the first mentioned channel
-		const channel = msg.mentions.channels.first();
+/**
+ * @typedef {function} events.EventHandler An event handler function to execute when specified event(s) are emitted
+ * @param {string} event The event that was emitted
+ * @param {...*} args The emitted arguments
+ * @returns {void}
+ */
 
-		try {
-			// Ensure there was at least one &lt;GuildChannel> mentioned
-			if (msg.mentions.channels.size === 0) throw 'You must specify a text channel.';
+/**
+ * Load the events folder
+ * @returns {Typings.EventModules} Pronto's complete \&lt;EventModules> object
+ */
+module.exports = () => processIndex('./events');
 
-			// Ensure &lt;GuildChannel> is of type &lt;TextChannel> or &lt;NewsChannel>
-			else if (msg.mentions.channels.some(mention => mention.type !== 'text' &amp;&amp; mention.type !== 'news')) throw 'You can only archive text channels.';
+/**
+ * Load the bot's \&lt;EventModules> from the specified directory
+ * @function events.index~processIndex
+ * @param {string} directory The directory to load each \&lt;EventModule> from
+ * @returns {Typings.EventModules} The loaded \&lt;EventModules> object, containing each \&lt;EventModule> in a nested object
+ */
+function processIndex(directory) {
+	// Read the file names of every Javascript file in the directory, other than the index file
+	const files = fs.readdirSync(directory).filter(file => file.endsWith('.js') &amp;&amp; file !== 'index.js');
 
-			// Ensure there was only one channel mentioned
-			else if (msg.mentions.channels.size > 1) throw 'You must archive channels individually.';
-
-			// Ensure channel is not already archived
-			else if (bot.channels.cache.get(channel.id).parentID === archivedID) throw 'Channel is already archived.';
-		}
-
-		catch (error) { return commandError(msg, error, archive.error); }
-
-		// Delete database document when archiving a lesson channel
-		Lesson.findOneAndDelete({ lessonID: msg.channel.id }, error => {
-			if (error) console.error(error);
-		});
-
-		// Move channel to archive category
-		channel.setParent(archivedID, { lockPermissions: true })
-			.then(async () => {
-				// Success react to command message
-				successReact(msg);
-
-				// Create archive embed
-				const archiveEmbed = new Discord.MessageEmbed()
-					.setTitle('Channel Archived 🔒')
-					.setColor(colours.error)
-					.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
-					.setFooter(await dateTimeGroup());
-
-				// Send archive embed
-				sendMsg(channel, { embeds: [archiveEmbed] });
-
-				// Create log embed
-				const logEmbed = new Discord.MessageEmbed()
-					.setColor(colours.warn)
-					.setAuthor(msg.author.tag, msg.author.displayAvatarURL({ dynamic: true }))
-					.setDescription(`**Channel ${channel} archived by ${msg.author}**`)
-					.setFooter(`User: ${msg.author.id} | Channel: ${channel.id} | ${await dateTimeGroup()}`);
-
-				// Get the guild's log channel and send the log embed
-				const logChannel = bot.channels.cache.get(logID);
-				sendMsg(logChannel, { embeds: [logEmbed] });
-			})
-			.catch(error => {
-				// If error, react with error and send error messages
-				errorReact(msg);
-				embedScaffold(guild, msg.channel, `${msg.author} Error archiving ${channel}.`, colours.error, 'MESSAGE');
-				debugError(error, `Error archiving ${channel}.`);
-			});
-	};
-
-	return archive;
-};</code></pre>
+	// For each &lt;EventModule>, create a new nested object within the returned object under a property matching its file name
+	return Object.fromEntries(
+		files.map(file => {
+			// Parse the name of the module from the file name
+			const moduleName = file.replace('.js', '');
+			// Create a [key, value] pair for the moduleName and the loaded &lt;EventModule>
+			return [moduleName, require(`.${directory}/${moduleName}`)];
+		}),
+	);
+}</code></pre>
     </article>
 </section>
 

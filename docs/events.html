@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Pronto: commands</title>
+    <title>Pronto: events</title>
     
       <link type="text/css" rel="stylesheet" href="styles/vendor/prism-okaidia.css">
     
@@ -34,7 +34,7 @@
 <main class="layout-main ">
   <div class="container">
     <p class="page-kind">Namespace</p>
-    <h1 class="page-title">commands</h1>
+    <h1 class="page-title">events</h1>
     
 
 
@@ -48,7 +48,7 @@
 
     
         
-        <!-- <h2>commands</h2> -->
+        <!-- <h2>events</h2> -->
 
         
 
@@ -127,13 +127,13 @@
     <div class="method-type">
         <span class="method-type-signature is-static">static</span>
     </div>
-<h4 class="member-name" id=".approve">approve<span class="type-signature"><a href="commands.html#.Command">commands.Command</a></span></h4>
+<h4 class="member-name" id=".exit">exit<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
 
 
 
 
 <div class="description">
-    <p>Approve a submitted lesson plan in a lesson channel, either from a message command or a message reaction</p>
+    <p>Event handler to notify the developer that the bot is restarting, and to close the MongoDB connection</p>
 </div>
 
 
@@ -145,7 +145,7 @@
 
 
     <span class="param-type">
-        <code><a href="commands.html#.Command">commands.Command</a></code>
+        <code><a href="events.html#.EventModule">events.EventModule</a></code>
     </span>
     
 
@@ -197,7 +197,7 @@
     <h4>Source</h4>
     <ul>
         <li class="method-source">
-            <a href="commands_approve.js.html">commands/approve.js</a><a href="commands_approve.js.html#source.10">, line 10</a>
+            <a href="events_exit.js.html">events/exit.js</a><a href="events_exit.js.html#source.12">, line 12</a>
         </li>
     </ul>
 
@@ -210,13 +210,13 @@
     <div class="method-type">
         <span class="method-type-signature is-static">static</span>
     </div>
-<h4 class="member-name" id=".archive">archive<span class="type-signature"><a href="commands.html#.Command">commands.Command</a></span></h4>
+<h4 class="member-name" id=".onBulkDelete">onBulkDelete<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
 
 
 
 
 <div class="description">
-    <p>Archive a &lt;TextChannel&gt; by restricting channel visibility and moving it to a designated channel category</p>
+    <p>Event handler to log whenever messages are deleted in bulk, and delete the purge command message if it exists</p>
 </div>
 
 
@@ -228,7 +228,7 @@
 
 
     <span class="param-type">
-        <code><a href="commands.html#.Command">commands.Command</a></code>
+        <code><a href="events.html#.EventModule">events.EventModule</a></code>
     </span>
     
 
@@ -280,7 +280,7 @@
     <h4>Source</h4>
     <ul>
         <li class="method-source">
-            <a href="commands_archive.js.html">commands/archive.js</a><a href="commands_archive.js.html#source.11">, line 11</a>
+            <a href="events_onBulkDelete.js.html">events/onBulkDelete.js</a><a href="events_onBulkDelete.js.html#source.10">, line 10</a>
         </li>
     </ul>
 
@@ -293,13 +293,13 @@
     <div class="method-type">
         <span class="method-type-signature is-static">static</span>
     </div>
-<h4 class="member-name" id=".assign">assign<span class="type-signature"><a href="commands.html#.Command">commands.Command</a></span></h4>
+<h4 class="member-name" id=".onError">onError<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
 
 
 
 
 <div class="description">
-    <p>Assign a lesson to specified instructors by creating a private lesson channel and dispatching a lesson warning</p>
+    <p>Event handler for &lt;Discord.Client&gt; and &lt;NodeJS.Process&gt; events which may be useful for debugging</p>
 </div>
 
 
@@ -311,7 +311,7 @@
 
 
     <span class="param-type">
-        <code><a href="commands.html#.Command">commands.Command</a></code>
+        <code><a href="events.html#.EventModule">events.EventModule</a></code>
     </span>
     
 
@@ -363,7 +363,7 @@
     <h4>Source</h4>
     <ul>
         <li class="method-source">
-            <a href="commands_assign.js.html">commands/assign.js</a><a href="commands_assign.js.html#source.23">, line 23</a>
+            <a href="events_onError.js.html">events/onError.js</a><a href="events_onError.js.html#source.9">, line 9</a>
         </li>
     </ul>
 
@@ -376,13 +376,13 @@
     <div class="method-type">
         <span class="method-type-signature is-static">static</span>
     </div>
-<h4 class="member-name" id=".attendance">attendance<span class="type-signature"><a href="commands.html#.Command">commands.Command</a></span></h4>
+<h4 class="member-name" id=".onGuildCreate">onGuildCreate<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
 
 
 
 
 <div class="description">
-    <p>Process an attendance register by creating an attendance embed and sending it to the attendance and original message command channels</p>
+    <p>Event handler to initialise the &lt;GuildConfiguration&gt; whenever the &lt;Client&gt; joins a new &lt;Guild&gt;</p>
 </div>
 
 
@@ -394,7 +394,7 @@
 
 
     <span class="param-type">
-        <code><a href="commands.html#.Command">commands.Command</a></code>
+        <code><a href="events.html#.EventModule">events.EventModule</a></code>
     </span>
     
 
@@ -446,7 +446,7 @@
     <h4>Source</h4>
     <ul>
         <li class="method-source">
-            <a href="commands_attendance.js.html">commands/attendance.js</a><a href="commands_attendance.js.html#source.12">, line 12</a>
+            <a href="events_onGuildCreate.js.html">events/onGuildCreate.js</a><a href="events_onGuildCreate.js.html#source.11">, line 11</a>
         </li>
     </ul>
 
@@ -459,92 +459,13 @@
     <div class="method-type">
         <span class="method-type-signature is-static">static</span>
     </div>
-<h4 class="member-name" id=".connected">connected<span class="type-signature"><a href="commands.html#.Command">commands.Command</a></span></h4>
-
-
-
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code><a href="commands.html#.Command">commands.Command</a></code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="commands_connected.js.html">commands/connected.js</a><a href="commands_connected.js.html#source.10">, line 10</a>
-        </li>
-    </ul>
-
-
-</article>
-        
-            
-
-<article class="member">
-    <div class="method-type">
-        <span class="method-type-signature is-static">static</span>
-    </div>
-<h4 class="member-name" id=".evaluate">evaluate<span class="type-signature"><a href="commands.html#.Command">commands.Command</a></span></h4>
+<h4 class="member-name" id=".onGuildDelete">onGuildDelete<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
 
 
 
 
 <div class="description">
-    <p>Evaluate Javascript code directly from a Discord message</p>
+    <p>Event handler to delete the guild's document whenever a &lt;Guild&gt; kicks the &lt;Client&gt; or the &lt;Guild&gt; is deleted/left</p>
 </div>
 
 
@@ -556,7 +477,7 @@
 
 
     <span class="param-type">
-        <code><a href="commands.html#.Command">commands.Command</a></code>
+        <code><a href="events.html#.EventModule">events.EventModule</a></code>
     </span>
     
 
@@ -608,7 +529,7 @@
     <h4>Source</h4>
     <ul>
         <li class="method-source">
-            <a href="commands_evaluate.js.html">commands/evaluate.js</a><a href="commands_evaluate.js.html#source.10">, line 10</a>
+            <a href="events_onGuildDelete.js.html">events/onGuildDelete.js</a><a href="events_onGuildDelete.js.html#source.10">, line 10</a>
         </li>
     </ul>
 
@@ -621,171 +542,13 @@
     <div class="method-type">
         <span class="method-type-signature is-static">static</span>
     </div>
-<h4 class="member-name" id=".help">help<span class="type-signature"><a href="commands.html#.Command">commands.Command</a></span></h4>
-
-
-
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code><a href="commands.html#.Command">commands.Command</a></code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="commands_help.js.html">commands/help.js</a><a href="commands_help.js.html#source.11">, line 11</a>
-        </li>
-    </ul>
-
-
-</article>
-        
-            
-
-<article class="member">
-    <div class="method-type">
-        <span class="method-type-signature is-static">static</span>
-    </div>
-<h4 class="member-name" id=".leave">leave<span class="type-signature"><a href="commands.html#.Command">commands.Command</a></span></h4>
-
-
-
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code><a href="commands.html#.Command">commands.Command</a></code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="commands_leave.js.html">commands/leave.js</a><a href="commands_leave.js.html#source.10">, line 10</a>
-        </li>
-    </ul>
-
-
-</article>
-        
-            
-
-<article class="member">
-    <div class="method-type">
-        <span class="method-type-signature is-static">static</span>
-    </div>
-<h4 class="member-name" id=".leavefor">leavefor<span class="type-signature"><a href="commands.html#.Command">commands.Command</a></span></h4>
+<h4 class="member-name" id=".onMemberAdd">onMemberAdd<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
 
 
 
 
 <div class="description">
-    <p>Process a leave request submitted on behalf of someone else</p>
+    <p>Event handler to log whenever a user joins a &lt;Guild&gt;, and to assign them to the guild's visitor role and send a welcome embed</p>
 </div>
 
 
@@ -797,7 +560,7 @@
 
 
     <span class="param-type">
-        <code><a href="commands.html#.Command">commands.Command</a></code>
+        <code><a href="events.html#.EventModule">events.EventModule</a></code>
     </span>
     
 
@@ -849,7 +612,7 @@
     <h4>Source</h4>
     <ul>
         <li class="method-source">
-            <a href="commands_leavefor.js.html">commands/leavefor.js</a><a href="commands_leavefor.js.html#source.10">, line 10</a>
+            <a href="events_onMemberAdd.js.html">events/onMemberAdd.js</a><a href="events_onMemberAdd.js.html#source.10">, line 10</a>
         </li>
     </ul>
 
@@ -862,13 +625,13 @@
     <div class="method-type">
         <span class="method-type-signature is-static">static</span>
     </div>
-<h4 class="member-name" id=".lesson">lesson<span class="type-signature"><a href="commands.html#.Command">commands.Command</a></span></h4>
+<h4 class="member-name" id=".onMemberBan">onMemberBan<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
 
 
 
 
 <div class="description">
-    <p>A family of sub-commands for an instructor to manage an existing lesson</p>
+    <p>Event handler to log whenever a member is banned or unbanned from a &lt;Guild&gt;</p>
 </div>
 
 
@@ -880,7 +643,7 @@
 
 
     <span class="param-type">
-        <code><a href="commands.html#.Command">commands.Command</a></code>
+        <code><a href="events.html#.EventModule">events.EventModule</a></code>
     </span>
     
 
@@ -932,7 +695,7 @@
     <h4>Source</h4>
     <ul>
         <li class="method-source">
-            <a href="commands_lesson.js.html">commands/lesson.js</a><a href="commands_lesson.js.html#source.17">, line 17</a>
+            <a href="events_onMemberBan.js.html">events/onMemberBan.js</a><a href="events_onMemberBan.js.html#source.10">, line 10</a>
         </li>
     </ul>
 
@@ -945,13 +708,13 @@
     <div class="method-type">
         <span class="method-type-signature is-static">static</span>
     </div>
-<h4 class="member-name" id=".ping">ping<span class="type-signature"><a href="commands.html#.Command">commands.Command</a></span></h4>
+<h4 class="member-name" id=".onMemberRemove">onMemberRemove<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
 
 
 
 
 <div class="description">
-    <p>Calculate the latency of the bot</p>
+    <p>Event handler to log whenever a &lt;GuildMember&gt; leaves a guild, or is kicked</p>
 </div>
 
 
@@ -963,7 +726,7 @@
 
 
     <span class="param-type">
-        <code><a href="commands.html#.Command">commands.Command</a></code>
+        <code><a href="events.html#.EventModule">events.EventModule</a></code>
     </span>
     
 
@@ -1015,7 +778,7 @@
     <h4>Source</h4>
     <ul>
         <li class="method-source">
-            <a href="commands_ping.js.html">commands/ping.js</a><a href="commands_ping.js.html#source.10">, line 10</a>
+            <a href="events_onMemberRemove.js.html">events/onMemberRemove.js</a><a href="events_onMemberRemove.js.html#source.10">, line 10</a>
         </li>
     </ul>
 
@@ -1028,250 +791,13 @@
     <div class="method-type">
         <span class="method-type-signature is-static">static</span>
     </div>
-<h4 class="member-name" id=".purge">purge<span class="type-signature"><a href="commands.html#.Command">commands.Command</a></span></h4>
-
-
-
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code><a href="commands.html#.Command">commands.Command</a></code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="commands_purge.js.html">commands/purge.js</a><a href="commands_purge.js.html#source.10">, line 10</a>
-        </li>
-    </ul>
-
-
-</article>
-        
-            
-
-<article class="member">
-    <div class="method-type">
-        <span class="method-type-signature is-static">static</span>
-    </div>
-<h4 class="member-name" id=".restart">restart<span class="type-signature"><a href="commands.html#.Command">commands.Command</a></span></h4>
-
-
-
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code><a href="commands.html#.Command">commands.Command</a></code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="commands_restart.js.html">commands/restart.js</a><a href="commands_restart.js.html#source.10">, line 10</a>
-        </li>
-    </ul>
-
-
-</article>
-        
-            
-
-<article class="member">
-    <div class="method-type">
-        <span class="method-type-signature is-static">static</span>
-    </div>
-<h4 class="member-name" id=".seen">seen<span class="type-signature"><a href="commands.html#.Command">commands.Command</a></span></h4>
-
-
-
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code><a href="commands.html#.Command">commands.Command</a></code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="commands_seen.js.html">commands/seen.js</a><a href="commands_seen.js.html#source.10">, line 10</a>
-        </li>
-    </ul>
-
-
-</article>
-        
-            
-
-<article class="member">
-    <div class="method-type">
-        <span class="method-type-signature is-static">static</span>
-    </div>
-<h4 class="member-name" id=".uptime">uptime<span class="type-signature"><a href="commands.html#.Command">commands.Command</a></span></h4>
+<h4 class="member-name" id=".onMemberUpdate">onMemberUpdate<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
 
 
 
 
 <div class="description">
-    <p>Display the bot's uptime</p>
+    <p>Event handler to log whenever a &lt;GuildMember&gt; changes their nickname, or has a role added/removed</p>
 </div>
 
 
@@ -1283,7 +809,7 @@
 
 
     <span class="param-type">
-        <code><a href="commands.html#.Command">commands.Command</a></code>
+        <code><a href="events.html#.EventModule">events.EventModule</a></code>
     </span>
     
 
@@ -1335,7 +861,671 @@
     <h4>Source</h4>
     <ul>
         <li class="method-source">
-            <a href="commands_uptime.js.html">commands/uptime.js</a><a href="commands_uptime.js.html#source.10">, line 10</a>
+            <a href="events_onMemberUpdate.js.html">events/onMemberUpdate.js</a><a href="events_onMemberUpdate.js.html#source.10">, line 10</a>
+        </li>
+    </ul>
+
+
+</article>
+        
+            
+
+<article class="member">
+    <div class="method-type">
+        <span class="method-type-signature is-static">static</span>
+    </div>
+<h4 class="member-name" id=".onMessage">onMessage<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
+
+
+
+
+<div class="description">
+    <p>Event handler to automatically add an acknowledgement emoji to messages in any &lt;NewsChannel&gt;,</p>
+</div>
+
+
+
+    <h4>Type</h4>
+    <ul>
+        <li>
+            
+
+
+    <span class="param-type">
+        <code><a href="events.html#.EventModule">events.EventModule</a></code>
+    </span>
+    
+
+        </li>
+    </ul>
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    <h4>Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="events_onMessage.js.html">events/onMessage.js</a><a href="events_onMessage.js.html#source.10">, line 10</a>
+        </li>
+    </ul>
+
+
+</article>
+        
+            
+
+<article class="member">
+    <div class="method-type">
+        <span class="method-type-signature is-static">static</span>
+    </div>
+<h4 class="member-name" id=".onMessageDelete">onMessageDelete<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
+
+
+
+
+<div class="description">
+    <p>Event handler to log whenever a &lt;Message&gt; is deleted</p>
+</div>
+
+
+
+    <h4>Type</h4>
+    <ul>
+        <li>
+            
+
+
+    <span class="param-type">
+        <code><a href="events.html#.EventModule">events.EventModule</a></code>
+    </span>
+    
+
+        </li>
+    </ul>
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    <h4>Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="events_onMessageDelete.js.html">events/onMessageDelete.js</a><a href="events_onMessageDelete.js.html#source.12">, line 12</a>
+        </li>
+    </ul>
+
+
+</article>
+        
+            
+
+<article class="member">
+    <div class="method-type">
+        <span class="method-type-signature is-static">static</span>
+    </div>
+<h4 class="member-name" id=".onMessageUpdate">onMessageUpdate<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
+
+
+
+
+<div class="description">
+    <p>Event handler to log whenever a &lt;Message&gt; is updated,</p>
+</div>
+
+
+
+    <h4>Type</h4>
+    <ul>
+        <li>
+            
+
+
+    <span class="param-type">
+        <code><a href="events.html#.EventModule">events.EventModule</a></code>
+    </span>
+    
+
+        </li>
+    </ul>
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    <h4>Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="events_onMessageUpdate.js.html">events/onMessageUpdate.js</a><a href="events_onMessageUpdate.js.html#source.10">, line 10</a>
+        </li>
+    </ul>
+
+
+</article>
+        
+            
+
+<article class="member">
+    <div class="method-type">
+        <span class="method-type-signature is-static">static</span>
+    </div>
+<h4 class="member-name" id=".onReactionAdd">onReactionAdd<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
+
+
+
+
+<div class="description">
+    <p>Event handler to trigger <code>handlers.manageAttendance()</code> and <code>handlers.updateUnsubmitted()</code></p>
+</div>
+
+
+
+    <h4>Type</h4>
+    <ul>
+        <li>
+            
+
+
+    <span class="param-type">
+        <code><a href="events.html#.EventModule">events.EventModule</a></code>
+    </span>
+    
+
+        </li>
+    </ul>
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    <h4>Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="events_onReactionAdd.js.html">events/onReactionAdd.js</a><a href="events_onReactionAdd.js.html#source.10">, line 10</a>
+        </li>
+    </ul>
+
+
+</article>
+        
+            
+
+<article class="member">
+    <div class="method-type">
+        <span class="method-type-signature is-static">static</span>
+    </div>
+<h4 class="member-name" id=".onReady">onReady<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
+
+
+
+
+<div class="description">
+    <p>Event handler to notify the developer and execute the bot's startup routine</p>
+</div>
+
+
+
+    <h4>Type</h4>
+    <ul>
+        <li>
+            
+
+
+    <span class="param-type">
+        <code><a href="events.html#.EventModule">events.EventModule</a></code>
+    </span>
+    
+
+        </li>
+    </ul>
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    <h4>Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="events_onReady.js.html">events/onReady.js</a><a href="events_onReady.js.html#source.10">, line 10</a>
+        </li>
+    </ul>
+
+
+</article>
+        
+            
+
+<article class="member">
+    <div class="method-type">
+        <span class="method-type-signature is-static">static</span>
+    </div>
+<h4 class="member-name" id=".onRoleInteraction">onRoleInteraction<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
+
+
+
+
+<div class="description">
+    <p>Event handler to log whenever a &lt;Role&gt; is created/deleted</p>
+</div>
+
+
+
+    <h4>Type</h4>
+    <ul>
+        <li>
+            
+
+
+    <span class="param-type">
+        <code><a href="events.html#.EventModule">events.EventModule</a></code>
+    </span>
+    
+
+        </li>
+    </ul>
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    <h4>Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="events_onRoleInteraction.js.html">events/onRoleInteraction.js</a><a href="events_onRoleInteraction.js.html#source.10">, line 10</a>
+        </li>
+    </ul>
+
+
+</article>
+        
+            
+
+<article class="member">
+    <div class="method-type">
+        <span class="method-type-signature is-static">static</span>
+    </div>
+<h4 class="member-name" id=".onRoleUpdate">onRoleUpdate<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
+
+
+
+
+<div class="description">
+    <p>Event handler to log whenever a guild &lt;Role&gt; is updated</p>
+</div>
+
+
+
+    <h4>Type</h4>
+    <ul>
+        <li>
+            
+
+
+    <span class="param-type">
+        <code><a href="events.html#.EventModule">events.EventModule</a></code>
+    </span>
+    
+
+        </li>
+    </ul>
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    <h4>Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="events_onRoleUpdate.js.html">events/onRoleUpdate.js</a><a href="events_onRoleUpdate.js.html#source.10">, line 10</a>
+        </li>
+    </ul>
+
+
+</article>
+        
+            
+
+<article class="member">
+    <div class="method-type">
+        <span class="method-type-signature is-static">static</span>
+    </div>
+<h4 class="member-name" id=".onVoiceUpdate">onVoiceUpdate<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
+
+
+
+
+<div class="description">
+    <p>Event handler to log whenever a &lt;GuildMember&gt; joins/leaves a &lt;VoiceChannel&gt;,</p>
+</div>
+
+
+
+    <h4>Type</h4>
+    <ul>
+        <li>
+            
+
+
+    <span class="param-type">
+        <code><a href="events.html#.EventModule">events.EventModule</a></code>
+    </span>
+    
+
+        </li>
+    </ul>
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    <h4>Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="events_onVoiceUpdate.js.html">events/onVoiceUpdate.js</a><a href="events_onVoiceUpdate.js.html#source.10">, line 10</a>
         </li>
     </ul>
 
@@ -1350,768 +1540,6 @@
         <h3 class="subsection-title">Type Definitions</h3>
 
         
-                
-
-<article class="member">
-    <div class="method-type">
-        
-    </div>
-<h4 class="member-name" id=".BaseCommand">BaseCommand</h4>
-
-
-
-
-<div class="description">
-    <p>The base of each of Pronto's commands, with the base properties to construct a complete <a href="commands.html#.Command">&lt;Command&gt;</a></p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code>Object</code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-    <h4 class="method-heading">Properties</h4>
-    
-
-<ul class="method-params">
-
-
-    <li>
-        
-            <span class="param-name">command</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code><a href="commands.html#.CommandName">commands.CommandName</a></code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The name of the command</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">aliases</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Array.&lt;string></code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The aliases for the command</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">description</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code><a href="commands.html#.CommandDescription">commands.CommandDescription</a></code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The <a href="commands.html#.CommandDescription">&lt;CommandDescription&gt;</a> object of the command</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">allowDirect</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>boolean</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>Whether to allow the command to execute from a direct message</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">requiredRoles</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Array.&lt;Discord.Snowflake></code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>A &lt;Role.id[]&gt; of which the &lt;GuildMember&gt; must have at least one to execute the command</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">deniedRoles</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Array.&lt;Discord.Snowflake></code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>A &lt;Role.id[]&gt; of which the &lt;GuildMember&gt; must have none to execute the command</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">developerOnly</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>boolean</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>Whether the command is only executable by the developer defined by <a href="config.html#.Configuration"><code>config.ids.DEVELOPER_ID</code></a></p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">displayInList</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>boolean</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>Whether to display the command in the guild's commands list</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">help</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Readonly.&lt;string></code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The help text to display for the command</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">error</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Readonly.&lt;?string></code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The error text to display for the command</p>
-        </div>
-
-    </li>
-    
-</ul>
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="commands_commands.js.html">commands/commands.js</a><a href="commands_commands.js.html#source.23">, line 23</a>
-        </li>
-    </ul>
-
-
-</article>
-            
-                
-
-<article class="member">
-    <div class="method-type">
-        
-    </div>
-<h4 class="member-name" id=".BaseCommands">BaseCommands</h4>
-
-
-
-
-<div class="description">
-    <p>The base of Pronto's commands object, where each <a href="commands.html#.BaseCommand">&lt;BaseCommand&gt;</a> is stored in the &lt;BaseCommands&gt; object under the property [<a href="commands.html#.CommandName">CommandName</a>]</p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code>Object.&lt;<a href="commands.html#.CommandName">commands.CommandName</a>, <a href="commands.html#.BaseCommand">commands.BaseCommand</a>></code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="commands_commands.js.html">commands/commands.js</a><a href="commands_commands.js.html#source.37">, line 37</a>
-        </li>
-    </ul>
-
-
-</article>
-            
-                
-
-<article class="member">
-    <div class="method-type">
-        
-    </div>
-<h4 class="member-name" id=".Command">Command</h4>
-
-
-
-
-<div class="description">
-    <p>The complete &lt;Command&gt; object for one of Pronto's commands, with a <a href="commands.html#.CommandExecute">&lt;Command.execute()&gt;</a> method</p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code><a href="commands.html#.BaseCommand">commands.BaseCommand</a></code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-    <h4 class="method-heading">Properties</h4>
-    
-
-<ul class="method-params">
-
-
-    <li>
-        
-            <span class="param-name">execute</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code><a href="commands.html#.CommandExecute">commands.CommandExecute</a></code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The command's <a href="commands.html#.CommandExecute">&lt;Command.execute()&gt;</a> method</p>
-        </div>
-
-    </li>
-    
-</ul>
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="commands_commands.js.html">commands/commands.js</a><a href="commands_commands.js.html#source.41">, line 41</a>
-        </li>
-    </ul>
-
-
-</article>
-            
-                
-
-<article class="member">
-    <div class="method-type">
-        
-    </div>
-<h4 class="member-name" id=".CommandDescription">CommandDescription</h4>
-
-
-
-
-<div class="description">
-    <p>The description of the command, which may differ depending on whether the message command is qualified with a different <a href="commands.html#.CommandName">&lt;CommandName&gt;</a> as an argument</p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code>Object</code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-    <h4 class="method-heading">Properties</h4>
-    
-
-<ul class="method-params">
-
-
-    <li>
-        
-            <span class="param-name">general</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-        
-
-        
-            <span class="param-attributes">
-            
-
-            
-            </span>
-        
-
-        
-
-        <div class="param-description">
-            <p>The description of the command, or the description to display in the command's base help text if the command supports a dynamic description</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">unqualified</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-        
-
-        
-            <span class="param-attributes">
-            
-
-            
-                &lt;nullable&gt;<br>
-            
-            </span>
-        
-
-        
-
-        <div class="param-description">
-            <p>The description to display as the command's base description if the command supports a dynamic description</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">qualified</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-        
-
-        
-            <span class="param-attributes">
-            
-
-            
-                &lt;nullable&gt;<br>
-            
-            </span>
-        
-
-        
-
-        <div class="param-description">
-            <p>The description to display as the command's description if qualified with a different <a href="commands.html#.CommandName">&lt;CommandName&gt;</a>, if the command supports a dynamic description</p>
-        </div>
-
-    </li>
-    
-</ul>
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="commands_commands.js.html">commands/commands.js</a><a href="commands_commands.js.html#source.16">, line 16</a>
-        </li>
-    </ul>
-
-
-</article>
-            
                 
 
 
@@ -2129,7 +1557,7 @@
     
     </div>
 
-    <h4 class="method-name" id=".CommandExecute">CommandExecute<span class="signature">(parameters)</span><span class="return-type-signature"> &rarr; {Promise.&lt;(void|Typings.Lesson)>}</span>
+    <h4 class="method-name" id=".EventHandler">EventHandler<span class="signature">(event, &hellip;args)</span><span class="return-type-signature"> &rarr; {void}</span>
     </h4>
 
 
@@ -2138,7 +1566,7 @@
 
 <div class="method-description">
     
-    <p>A command's &lt;Command.execute()&gt; method</p>
+    <p>An event handler function to execute when specified event(s) are emitted</p>
 </div>
 
 
@@ -2157,7 +1585,7 @@
 
         <li>
             
-                <span class="param-name">parameters</span>
+                <span class="param-name">event</span>
             
 
             
@@ -2165,17 +1593,61 @@
 
 
     <span class="param-type">
-        <code><a href="commands.html#.CommandParameters">commands.CommandParameters</a></code>
+        <code>string</code>
     </span>
     
 
             
 
             
+                <span class="param-attributes">
+                
+
+                
+
+                
+                </span>
+            
 
             
 
-            <div class="param-description"><p>The <a href="commands.html#.CommandParameters">&lt;CommandParameters&gt;</a> to execute this command</p></div>
+            <div class="param-description"><p>The event that was emitted</p></div>
+            
+        </li>
+
+    
+
+        <li>
+            
+                <span class="param-name">args</span>
+            
+
+            
+                
+
+
+    <span class="param-type">
+        <code>*</code>
+    </span>
+    
+
+            
+
+            
+                <span class="param-attributes">
+                
+
+                
+
+                
+                    &lt;repeatable&gt;<br>
+                
+                </span>
+            
+
+            
+
+            <div class="param-description"><p>The emitted arguments</p></div>
             
         </li>
 
@@ -2225,10 +1697,8 @@
     
         <li class="method-returns">
             
-                <code>Promise.&lt;(void|Typings.Lesson)></code>
+                <code>void</code>
             
-            
-                <p>Void, or the <a href="models.html#.Lesson">&lt;Lesson&gt;</a> object</p>
             
         </li>
     
@@ -2252,7 +1722,7 @@
     <h4 class="method-heading">Source</h4>
     <ul>
         <li class="method-source">
-            <a href="commands_commands.js.html">commands/commands.js</a><a href="commands_commands.js.html#source.50">, line 50</a>
+            <a href="events_index.js.html">events/index.js</a><a href="events_index.js.html#source.25">, line 25</a>
         </li>
     </ul>
 
@@ -2267,96 +1737,13 @@
     <div class="method-type">
         
     </div>
-<h4 class="member-name" id=".CommandName">CommandName</h4>
+<h4 class="member-name" id=".EventModule">EventModule</h4>
 
 
 
 
 <div class="description">
-    <p>The name of the command</p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="commands_commands.js.html">commands/commands.js</a><a href="commands_commands.js.html#source.12">, line 12</a>
-        </li>
-    </ul>
-
-
-</article>
-            
-                
-
-<article class="member">
-    <div class="method-type">
-        
-    </div>
-<h4 class="member-name" id=".CommandParameters">CommandParameters</h4>
-
-
-
-
-<div class="description">
-    <p>An &lt;Object&gt; of the valid parameters accepted by the <a href="commands.html#.CommandExecute">&lt;Command.execute()&gt;</a> method</p>
+    <p>The complete &lt;EventModule&gt; object for one of Pronto's event module</p>
 </div>
 
 
@@ -2387,40 +1774,7 @@
 
     <li>
         
-            <span class="param-name">msg</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Discord.Message</code>
-    </span>
-    
-
-        
-
-        
-            <span class="param-attributes">
-            
-
-            
-            </span>
-        
-
-        
-
-        <div class="param-description">
-            <p>The &lt;Message&gt; that executed the &lt;Command&gt;, or the &lt;Message&gt; that the reaction collector was attached to</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">args</span>
+            <span class="param-name">bot</span>
         
 
         
@@ -2435,19 +1789,11 @@
         
 
         
-            <span class="param-attributes">
-            
-
-            
-                &lt;nullable&gt;<br>
-            
-            </span>
-        
 
         
 
         <div class="param-description">
-            <p>The &lt;string[]&gt; containing the command arguments</p>
+            <p>A string[] of valid &lt;Client&gt;#event(s) that this &lt;EventModule&gt; applies to</p>
         </div>
 
     </li>
@@ -2455,7 +1801,7 @@
 
     <li>
         
-            <span class="param-name">msgCommand</span>
+            <span class="param-name">process</span>
         
 
         
@@ -2463,26 +1809,18 @@
 
 
     <span class="param-type">
-        <code>string</code>
+        <code>Array.&lt;string></code>
     </span>
     
 
         
 
         
-            <span class="param-attributes">
-            
-
-            
-                &lt;nullable&gt;<br>
-            
-            </span>
-        
 
         
 
         <div class="param-description">
-            <p>The message argument that was parsed to this <a href="commands.html#.BaseCommand">&lt;BaseCommand&gt;</a>, i.e. either &lt;BaseCommand.command&gt; or &lt;BaseCommand.aliases.includes(msgCommand)&gt;</p>
+            <p>A string[] of valid &lt;Process&gt;#event(s) that this &lt;EventModule&gt; applies to</p>
         </div>
 
     </li>
@@ -2490,7 +1828,7 @@
 
     <li>
         
-            <span class="param-name">user</span>
+            <span class="param-name">handler</span>
         
 
         
@@ -2498,26 +1836,18 @@
 
 
     <span class="param-type">
-        <code>Discord.User</code>
+        <code><a href="events.html#.EventHandler">events.EventHandler</a></code>
     </span>
     
 
         
 
         
-            <span class="param-attributes">
-            
-
-            
-                &lt;nullable&gt;<br>
-            
-            </span>
-        
 
         
 
         <div class="param-description">
-            <p>The &lt;User&gt; that triggered the reaction collector</p>
+            <p>The event handler function to execute when specified event(s) are emitted</p>
         </div>
 
     </li>
@@ -2568,7 +1898,7 @@
     <h4>Source</h4>
     <ul>
         <li class="method-source">
-            <a href="commands_commands.js.html">commands/commands.js</a><a href="commands_commands.js.html#source.56">, line 56</a>
+            <a href="events_index.js.html">events/index.js</a><a href="events_index.js.html#source.14">, line 14</a>
         </li>
     </ul>
 
@@ -2581,13 +1911,13 @@
     <div class="method-type">
         
     </div>
-<h4 class="member-name" id=".Commands">Commands</h4>
+<h4 class="member-name" id=".EventModules">EventModules</h4>
 
 
 
 
 <div class="description">
-    <p>The complete &lt;Commands&gt; object for all of Pronto's commands, where each <a href="commands.html#.Command">&lt;Command&gt;</a> is stored in the &lt;Commands&gt; object under the property [<a href="commands.html#.CommandName">CommandName</a>]</p>
+    <p>The complete &lt;EventModules&gt; object for all of Pronto's event modules, where each <a href="events.html#.EventHandler">&lt;EventHandler&gt;</a> is stored in the &lt;EventHandlers&gt; object under a string property</p>
 </div>
 
 
@@ -2599,7 +1929,7 @@
 
 
     <span class="param-type">
-        <code>Object.&lt;<a href="commands.html#.CommandName">commands.CommandName</a>, <a href="commands.html#.Command">commands.Command</a>></code>
+        <code>Object.&lt;string, <a href="events.html#.EventModule">events.EventModule</a>></code>
     </span>
     
 
@@ -2651,7 +1981,7 @@
     <h4>Source</h4>
     <ul>
         <li class="method-source">
-            <a href="commands_commands.js.html">commands/commands.js</a><a href="commands_commands.js.html#source.46">, line 46</a>
+            <a href="events_index.js.html">events/index.js</a><a href="events_index.js.html#source.21">, line 21</a>
         </li>
     </ul>
 
