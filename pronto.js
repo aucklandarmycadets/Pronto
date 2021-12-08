@@ -60,6 +60,7 @@ const eventHandler = (emitter, event, handler) => emitter.on(event, (...args) =>
 /**
  * Import the \<EventModules> object from the ./events folder
  * @type {Typings.EventModules}
+ * @ignore
  */
 const events = require('./events');
 
