@@ -32,14 +32,14 @@ bot.login(process.env.TOKEN)
 		module.exports = {
 			/**
 			 * The bot's \<Client> object
-			 * @memberof pronto
 			 * @type {Typings.Client}
+			 * @memberof pronto
 			 */
 			bot,
 			/**
 			 * Pronto's current version
-			 * @memberof pronto
 			 * @type {string}
+			 * @memberof pronto
 			 */
 			version: '4.2.2',
 		};
