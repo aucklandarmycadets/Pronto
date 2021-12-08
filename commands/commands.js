@@ -10,10 +10,6 @@ const { formatList } = require('../modules');
 const { database } = require('../handlers');
 
 /**
- * @namespace commands
- */
-
-/**
  * @typedef {string} commands.CommandName The name of the command
  */
 

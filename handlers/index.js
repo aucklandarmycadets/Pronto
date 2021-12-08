@@ -31,7 +31,6 @@ module.exports = {
 	// Command handlers
 
 	commandHandler: require('./commandHandler'),
-	commandLoader: require('./commandLoader'),
 	overwriteCommands: require('./overwriteCommands'),
 	upsertCommands: require('./upsertCommands'),
 
