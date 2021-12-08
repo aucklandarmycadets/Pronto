@@ -50,6 +50,12 @@ const lessonSchema = new mongoose.Schema({
 	changed: { type: Boolean, default: false },
 });
 
+// Attach <Lesson> document methods
+lessonSchema.methods.processMentions = processMentions;
+
+// Export the <Schema> as a <Model>
+module.exports = mongoose.model('lesson', lessonSchema, 'lessons');
+
 /**
  * Create a formatted string of user mentions for the \<Lesson.instructors>
  * @function models.Lesson#processMentions
@@ -62,8 +68,3 @@ function processMentions() {
 		.map(user => `<@!${user.id}>`)
 		.join('\n');
 }
-
-lessonSchema.methods.processMentions = processMentions();
-
-// Export the <Schema> as a <Model>
-module.exports = mongoose.model('lesson', lessonSchema, 'lessons');
