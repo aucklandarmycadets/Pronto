@@ -3,6 +3,8 @@
 // eslint-disable-next-line no-unused-vars
 const Discord = require('discord.js');
 // eslint-disable-next-line no-unused-vars
+const Typings = require('./typings');
+// eslint-disable-next-line no-unused-vars
 const mongoose = require('mongoose');
 
 /**
@@ -47,7 +49,7 @@ const mongoose = require('mongoose');
  */
 
 /**
- * @type {config.Configuration}
+ * @type {Typings.Configuration}
  */
 module.exports = {
 	settings: {
