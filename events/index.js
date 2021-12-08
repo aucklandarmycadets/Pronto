@@ -24,16 +24,25 @@ const fs = require('fs');
 
 /**
  * Load the events folder
- * @returns {Typings.EventModules}
+ * @returns {Typings.EventModules} Pronto's complete \<EventModules> object
  */
-module.exports = processIndex('./events');
+module.exports = () => processIndex('./events');
 
+/**
+ * Load the bot's \<EventModules> from the specified directory
+ * @param {string} directory The directory to load each \<EventModule> from
+ * @returns {Typings.EventModules} The loaded \<EventModules> object, containing each \<EventModule> in a nested object
+ */
 function processIndex(directory) {
+	// Read the file names of every Javascript file in the directory, other than the index file
 	const files = fs.readdirSync(directory).filter(file => file.endsWith('.js') && file !== 'index.js');
 
+	// For each <EventModule>, create a new nested object within the returned object under a property matching its file name
 	return Object.fromEntries(
 		files.map(file => {
+			// Parse the name of the module from the file name
 			const moduleName = file.replace('.js', '');
+			// Create a [key, value] pair for the moduleName and the loaded <EventModule>
 			return [moduleName, require(`.${directory}/${moduleName}`)];
 		}),
 	);

@@ -57,10 +57,10 @@ mongoose.login(process.env.MONGOURI);
  */
 const eventHandler = (emitter, event, handler) => emitter.on(event, (...args) => handler(event, ...args));
 
-// Import the ./events folder
+// Import the \<EventModules> object from the ./events folder
 const events = require('./events');
 
-// Iterate through each event file module
+// Iterate through each \<EventModule>
 Object.values(events).forEach(module => {
 	// Call eventHandler() for each <Client>#event in the module
 	if (module.bot.length) module.bot.forEach(event => eventHandler(bot, event, module.handler));
