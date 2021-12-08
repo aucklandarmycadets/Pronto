@@ -17,7 +17,7 @@ const { commandError, database, deleteMsg, sendMsg, ...handlers } = require('../
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { commands: { evaluate, ...commands }, colours, _doc: settings, ...document } = await database(guild);
+	const { commands: { evaluate, ...commands }, colours, _doc: config, ...document } = await database(guild);
 
 	/**
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
