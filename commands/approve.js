@@ -4,8 +4,8 @@ const Discord = require('discord.js');
 // eslint-disable-next-line no-unused-vars
 const Typings = require('../typings');
 
-const { commandError, debugError, dateTimeGroup, enumerateResources, sendMsg, successReact } = require('../modules');
-const { findLesson } = require('../handlers');
+const { dateTimeGroup, enumerateResources } = require('../modules');
+const { database, commandError, debugError, findLesson, sendMsg, successReact } = require('../handlers');
 
 /**
  * @member {commands.Command} commands.approve Approve a submitted lesson plan in a lesson channel, either from a message command or a message reaction
@@ -17,7 +17,7 @@ const { findLesson } = require('../handlers');
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { ids: { lessonsID, lessonPlansID }, commands: { approve }, colours } = await require('../handlers/database')(guild);
+	const { ids: { lessonsID, lessonPlansID }, commands: { approve }, colours } = await database(guild);
 
 	/**
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command

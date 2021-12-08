@@ -3,12 +3,12 @@
 const Discord = require('discord.js');
 
 const { settings: { PERMISSIONS_INTEGER } } = require('../config');
-const { embedScaffold } = require('../modules');
+const { database, embedScaffold } = require('../handlers');
 
 const currentlyMissing = new Set();
 
 module.exports = async (guild, changes) => {
-	const { ids: { guildID }, colours } = await require('./database')(guild);
+	const { ids: { guildID }, colours } = await database(guild);
 
 	if (!guildID) return;
 

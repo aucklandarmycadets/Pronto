@@ -1,7 +1,9 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { debugError, directCommandError, prefixCommand, stripID } = require('../modules');
+
+const { prefixCommand, extractID } = require('../modules');
+const { database, debugError, directCommandError, upsertCommands, permissionsHandler } = require('../handlers');
 
 /**
  *
@@ -12,7 +14,6 @@ module.exports = async msg => {
 
 	const { bot } = require('../pronto');
 	const { ids: { DEVELOPER_ID } } = require('../config');
-	const { upsertCommands, permissionsHandler } = require('./');
 
 	const guilds = bot.guilds.cache.filter(_guild => _guild.members.cache.has(msg.author.id));
 
@@ -20,12 +21,12 @@ module.exports = async msg => {
 
 	const guild = msg.guild || guilds.first();
 
-	const { settings: { prefix }, commands: { help } } = await require('./database')(guild);
+	const { settings: { prefix }, commands: { help } } = await database(guild);
 
 	const args = msg.content.split(/ +/);
 
 	const usesPrefix = msg.content.toLowerCase().startsWith(prefix.toLowerCase());
-	const usesBotMention = stripID(args[0]) === bot.user.id;
+	const usesBotMention = extractID(args[0]) === bot.user.id;
 
 	if (!usesPrefix && (!usesBotMention || args.length === 1)) return;
 

@@ -8,6 +8,7 @@ const Typings = require('../typings');
 const { ids: { DEFAULT_GUILD } } = require('../config');
 const { Guild } = require('../models');
 const { merge } = require('../modules');
+const { createGuild } = require('../handlers');
 
 /**
  * - `handlers.database()` queries the MongoDB database for the guild's \<GuildConfiguration> if it exists, or will first call `handlers.createGuild()`
@@ -21,7 +22,6 @@ const { merge } = require('../modules');
  */
 module.exports = async (guild, changes) => {
 	const { bot } = await require('../pronto');
-	const { createGuild } = require('./');
 
 	// If the guild is null, replace it with the <Guild> object of the default guild
 	guild = guild || bot.guilds.cache.get(DEFAULT_GUILD);

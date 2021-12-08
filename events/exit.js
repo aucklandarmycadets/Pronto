@@ -4,7 +4,8 @@ const Discord = require('discord.js');
 const mongoose = require('mongoose');
 
 const { ids: { DEVELOPER_ID } } = require('../config');
-const { dateTimeGroup, formatAge, sendDirect } = require('../modules');
+const { dateTimeGroup, formatAge } = require('../modules');
+const { database, sendDirect } = require('../handlers');
 
 module.exports = {
 	bot: [],
@@ -22,7 +23,7 @@ module.exports = {
 
 		// Asynchronous operations below this point are abandoned when handling Process#exit, and the process terminates here
 
-		const { colours } = await require('../handlers/database')();
+		const { colours } = await database();
 
 		// Create restart embed
 		const restartEmbed = new Discord.MessageEmbed()

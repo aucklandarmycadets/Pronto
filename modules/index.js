@@ -3,38 +3,53 @@
 /**
  * @namespace modules
  */
+
 module.exports = {
 	modules: exports,
+
+	// String methods
+
 	capitalise: require('./capitalise'),
 	charLimit: require('./charLimit'),
-	commandError: require('./commandError'),
-	dateTimeGroup: require('./dateTimeGroup'),
-	debugError: require('./debugError'),
-	deleteMsg: require('./deleteMsg'),
-	difference: require('./difference'),
-	directCommandError: require('./directCommandError'),
-	embedScaffold: require('./embedScaffold'),
-	emojiReact: require('./emojiReact'),
-	enumerateResources: require('./enumerateResources'),
-	equals: require('./equals'),
-	errorReact: require('./errorReact'),
-	formatAge: require('./formatAge'),
-	formatList: require('./formatList'),
-	getRoleError: require('./getRoleError'),
-	isURL: require('./isURL'),
-	jsCodeBlock: require('./jsCodeBlock'),
-	merge: require('./merge'),
-	prefixCommand: require('./prefixCommand'),
-	processResources: require('./processResources'),
-	promptEmbed: require('./promptEmbed'),
-	purgeChannel: require('./purgeChannel'),
-	remove: require('./remove'),
-	rolesOutput: require('./rolesOutput'),
-	sendDirect: require('./sendDirect'),
-	sendMsg: require('./sendMsg'),
-	sortMembersByRoles: require('./sortMembersByRoles'),
-	stripID: require('./stripID'),
-	successReact: require('./successReact'),
 	titleCase: require('./titleCase'),
+
+	// Array methods
+
+	difference: require('./difference'),
+	equals: require('./equals'),
+	remove: require('./remove'),
+
+	// Object methods
+
+	merge: require('./merge'),
+
+	// Type verification methods
+
+	isURL: require('./isURL'),
+
+	// Date/time formatting
+
+	dateTimeGroup: require('./dateTimeGroup'),
+	formatAge: require('./formatAge'),
+
+	// Lesson resource management
+
+	enumerateResources: require('./enumerateResources'),
+	processResources: require('./processResources'),
+
+	// Discord formatting methods
+
+	extractID: require('./extractID'),
+	jsCodeBlock: require('./jsCodeBlock'),
+
+	// General formatting methods
+
+	formatList: require('./formatList'),
+	formatRoles: require('./formatRoles'),
+	prefixCommand: require('./prefixCommand'),
+
+	// Discord-related modules
+
+	sortMembersByRoles: require('./sortMembersByRoles'),
 	updatedPermissions: require('./updatedPermissions'),
 };

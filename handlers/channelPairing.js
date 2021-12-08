@@ -1,12 +1,13 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { debugError, dateTimeGroup, embedScaffold, jsCodeBlock, prefixCommand, purgeChannel, sendMsg, successReact } = require('../modules');
+
+const { dateTimeGroup, jsCodeBlock, prefixCommand } = require('../modules');
+const { database, debugError, embedScaffold, permissionsCheck, purgeChannel, sendMsg, successReact } = require('../handlers');
 
 module.exports = async (oldState, newState) => {
 	const { bot } = require('../pronto');
-	const { permissionsCheck } = require('./');
-	const { ids: { channelPairs }, commands: { purge }, emojis, colours } = await require('./database')(newState.guild);
+	const { ids: { channelPairs }, commands: { purge }, emojis, colours } = await database(newState.guild);
 
 	const newMember = newState.member;
 

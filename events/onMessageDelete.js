@@ -3,7 +3,8 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 
-const { charLimit, debugError, deleteMsg, dateTimeGroup, sendMsg, stripID } = require('../modules');
+const { charLimit, dateTimeGroup, extractID } = require('../modules');
+const { database, debugError, deleteMsg, sendMsg } = require('../handlers');
 
 module.exports = {
 	bot: ['messageDelete'],
@@ -15,7 +16,7 @@ module.exports = {
 	 */
 	async handler(_, msg) {
 		const { bot } = require('../pronto');
-		const { settings: { prefix }, ids: { logID }, commands: { purge }, colours } = await require('../handlers/database')(msg.guild);
+		const { settings: { prefix }, ids: { logID }, commands: { purge }, colours } = await database(msg.guild);
 
 		// Initialise log embed
 		const logEmbed = new Discord.MessageEmbed()
@@ -121,7 +122,7 @@ module.exports = {
 			// Check if the <Command> was executed with the guild's command prefix
 			const usesPrefix = msg.content.toLowerCase().startsWith(prefix.toLowerCase());
 			// Check if the <Command> was executed by mentioning the bot user in place of a prefix
-			const usesBotMention = stripID(args[0]) === bot.user.id;
+			const usesBotMention = extractID(args[0]) === bot.user.id;
 
 			// If the message does not begin with either the guild's command prefix or the bot's mention followed by a potential <CommandName>, return false
 			if (!usesPrefix && (!usesBotMention || args.length === 1)) return false;

@@ -4,7 +4,8 @@ const Discord = require('discord.js');
 // eslint-disable-next-line no-unused-vars
 const Typings = require('../typings');
 
-const { capitalise, commandError, dateTimeGroup, prefixCommand, remove, sendDirect, sendMsg, successReact } = require('../modules');
+const { capitalise, dateTimeGroup, prefixCommand, remove } = require('../modules');
+const { database, commandError, sendDirect, sendMsg, successReact } = require('../handlers');
 
 /**
  * @member {commands.Command} commands.leavefor Process a leave request submitted on behalf of someone else
@@ -16,7 +17,7 @@ const { capitalise, commandError, dateTimeGroup, prefixCommand, remove, sendDire
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { ids: { attendanceID }, commands: { help, leave, leaveFor }, colours } = await require('../handlers/database')(guild);
+	const { ids: { attendanceID }, commands: { help, leave, leaveFor }, colours } = await database(guild);
 
 	/**
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command

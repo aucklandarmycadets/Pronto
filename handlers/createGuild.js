@@ -7,7 +7,8 @@ const mongoose = require('mongoose');
 
 const { defaults, colours } = require('../config');
 const { Guild } = require('../models');
-const { debugError, sendMsg } = require('../modules');
+const { dateTimeGroup } = require('../modules');
+const { debugError, sendMsg, lessonInstructions, overwriteCommands } = require('../handlers');
 
 /**
  * - Set to record the \<Guild.id> snowflakes of the guild currently undergoing creation
@@ -62,7 +63,6 @@ module.exports = async guild => {
 	currentlyCreating.add(guild.id);
 
 	const { bot } = require('../pronto');
-	const { lessonInstructions, overwriteCommands } = require('./');
 
 	// Call createGuildDocument() to create the guild's initial Partial<GuildConfiguration> document, and wait for the document to be saved before proceeding
 	// This is done by saving the Promise in an object within pendingPromises[guild.id], then waiting for that Promise to resolve
@@ -84,8 +84,6 @@ module.exports = async guild => {
 
 	// If this guild has had some channels created as part of the initialisation process, send an embed listing the created channels
 	if (createdChannels.some(guildID => guildID === guild.id)) {
-		const { dateTimeGroup } = require('../modules');
-
 		// Retrieve the <CategoryChannel> that was created by Pronto to categorise Pronto's created channels
 		const prontoCategory = bot.channels.cache.find(channel => channel.type === 'category' && channel.name === defaults.pronto.name);
 		// Get the guild's debug channel

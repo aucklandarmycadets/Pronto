@@ -5,8 +5,8 @@ const Discord = require('discord.js');
 const Typings = require('../typings');
 
 const { ids: { DEVELOPER_ID } } = require('../config');
-const { deleteMsg, directCommandError, embedScaffold, errorReact, formatList, getRoleError, prefixCommand, sendDirect, sendMsg, successReact } = require('../modules');
-const { permissionsHandler } = require('../handlers');
+const { formatList, prefixCommand } = require('../modules');
+const { database, deleteMsg, directCommandError, embedScaffold, errorReact, getRoleError, permissionsHandler, sendDirect, sendMsg, successReact } = require('../handlers');
 
 /**
  * @member {commands.Command} commands.help
@@ -18,7 +18,7 @@ const { permissionsHandler } = require('../handlers');
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { settings: { prontoLogo }, commands: { help, ...commands }, colours } = await require('../handlers/database')(guild);
+	const { settings: { prontoLogo }, commands: { help, ...commands }, colours } = await database(guild);
 
 	/**
 	 * Send details and assistance about a specific command, or generate a list of available commands when needed

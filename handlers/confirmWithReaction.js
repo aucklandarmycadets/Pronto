@@ -1,11 +1,13 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { debugError, dateTimeGroup, errorReact, successReact } = require('../modules');
+
+const { dateTimeGroup } = require('../modules');
+const { database, debugError, errorReact, successReact } = require('../handlers');
 
 module.exports = async (msg, dm, confirm, cancel) => {
 	const { bot } = require('../pronto');
-	const { colours, emojis } = await require('./database')(msg.guild);
+	const { colours, emojis } = await database(msg.guild);
 
 	await successReact(dm);
 	await errorReact(dm);

@@ -4,8 +4,8 @@ const Discord = require('discord.js');
 // eslint-disable-next-line no-unused-vars
 const Typings = require('../typings');
 
-const { commandError, dateTimeGroup, sendMsg, successReact } = require('../modules');
-const { findLesson } = require('../handlers');
+const { dateTimeGroup } = require('../modules');
+const { database, commandError, findLesson, sendMsg, successReact } = require('../handlers');
 
 /**
  * @member {commands.Command} commands.seen
@@ -17,11 +17,11 @@ const { findLesson } = require('../handlers');
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { ids: { lessonsID }, commands: { seen }, colours } = await require('../handlers/database')(guild);
+	const { ids: { lessonsID }, commands: { seen }, colours } = await database(guild);
 
 	/**
 	 * Acknowledge a lesson warning, either from a message command or a message reaction
-	
+
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 * @returns {Promise<Typings.Lesson>} The mongoose document for the lesson
 	 */

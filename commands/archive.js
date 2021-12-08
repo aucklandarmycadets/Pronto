@@ -5,7 +5,8 @@ const Discord = require('discord.js');
 const Typings = require('../typings');
 
 const { Lesson } = require('../models');
-const { commandError, debugError, dateTimeGroup, embedScaffold, errorReact, sendMsg, successReact } = require('../modules');
+const { dateTimeGroup } = require('../modules');
+const { commandError, database, debugError, embedScaffold, errorReact, sendMsg, successReact } = require('../handlers');
 
 /**
  * @member {commands.Command} commands.archive Archive a \<TextChannel> by restricting channel visibility and moving it to a designated channel category
@@ -17,7 +18,7 @@ const { commandError, debugError, dateTimeGroup, embedScaffold, errorReact, send
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { ids: { logID, archivedID }, commands: { archive }, colours } = await require('../handlers/database')(guild);
+	const { ids: { logID, archivedID }, commands: { archive }, colours } = await database(guild);
 
 	/**
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command

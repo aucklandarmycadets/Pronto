@@ -4,7 +4,8 @@ const Discord = require('discord.js');
 // eslint-disable-next-line no-unused-vars
 const Typings = require('../typings');
 
-const { commandError, dateTimeGroup, sendMsg, sortMembersByRoles, successReact } = require('../modules');
+const { dateTimeGroup, sortMembersByRoles } = require('../modules');
+const { commandError, database, sendMsg, successReact } = require('../handlers');
 
 /**
  * @member {commands.Command} commands.connected
@@ -16,11 +17,10 @@ const { commandError, dateTimeGroup, sendMsg, sortMembersByRoles, successReact }
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { ids: { attendanceID }, commands: { connected }, colours } = await require('../handlers/database')(guild);
+	const { ids: { attendanceID }, commands: { connected }, colours } = await database(guild);
 
 	/**
 	 * List the members connected to a \<VoiceChannel>
-	
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
 	 */
 	connected.execute = async ({ msg }) => {

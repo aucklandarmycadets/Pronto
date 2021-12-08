@@ -1,8 +1,8 @@
 'use strict';
 
-module.exports = msg => {
-	const { debugError } = require('./');
+const { debugError } = require('../handlers');
 
+module.exports = msg => {
 	(msg.guild)
 		? msg.delete().catch(error => debugError(error, `Error deleting message in ${msg.channel}.`, 'Message', msg.content))
 		: (msg.author.bot)

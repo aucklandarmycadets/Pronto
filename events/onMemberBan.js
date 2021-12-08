@@ -1,7 +1,9 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { debugError, dateTimeGroup, sendMsg } = require('../modules');
+
+const { dateTimeGroup } = require('../modules');
+const { database, debugError, sendMsg } = require('../handlers');
 
 module.exports = {
 	bot: ['guildBanAdd', 'guildBanRemove'],
@@ -14,7 +16,7 @@ module.exports = {
 	 */
 	async handler(event, guild, user) {
 		const { bot } = require('../pronto');
-		const { ids: { logID }, colours } = await require('../handlers/database')(guild);
+		const { ids: { logID }, colours } = await database(guild);
 
 		// Fetch the guild's audit logs for a ban/unban and store the whether the user was banned/unbanned
 		const [fetchedLogs, banAction] = (event === 'guildBanAdd')

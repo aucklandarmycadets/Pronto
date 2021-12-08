@@ -3,11 +3,12 @@
 const Discord = require('discord.js');
 
 const { ids: { DEVELOPER_ID } } = require('../config');
-const { prefixCommand, sendMsg } = require('../modules');
+const { prefixCommand } = require('../modules');
+const { database, sendMsg } = require('../handlers');
 
 module.exports = async (channelID, guild) => {
 	const { bot } = require('../pronto');
-	const { commands: { lesson, seen, assign, approve }, colours } = await require('../handlers/database')(guild);
+	const { commands: { lesson, seen, assign, approve }, colours } = await database(guild);
 
 
 	const instructorCommands = `

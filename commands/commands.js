@@ -5,8 +5,9 @@ const Discord = require('discord.js');
 // eslint-disable-next-line no-unused-vars
 const Typings = require('../typings');
 
-const { ids: { DEVELOPER_ID } } = require('./config');
-const { formatList } = require('./modules');
+const { ids: { DEVELOPER_ID } } = require('../config');
+const { formatList } = require('../modules');
+const { database } = require('../handlers');
 
 /**
  * @namespace commands
@@ -70,7 +71,7 @@ const { formatList } = require('./modules');
  * @returns {Promise<Typings.BaseCommands>}
  */
 module.exports = async guild => {
-	const { settings: { prefix }, ids } = await require('./handlers/database')(guild);
+	const { settings: { prefix }, ids } = await database(guild);
 
 	/**
 	 * @type {Typings.BaseCommands}
@@ -269,7 +270,7 @@ module.exports = async guild => {
 					'Description': this.description.general,
 					'Usage': `${prefixCommand(this)} <user> <date(s)> <activity> <reason> [additional remarks]`,
 					'Example': `${prefixCommand(this)} <@${DEVELOPER_ID}> 01 Jan for Parade Night due to an appointment`,
-					'Allowed Roles': rolesOutput(this.requiredRoles),
+					'Allowed Roles': formatRoles(this.requiredRoles),
 				});
 			},
 			get error() {
@@ -292,7 +293,7 @@ module.exports = async guild => {
 					'Aliases': prefixAliases(this),
 					'Description': this.description.general,
 					'Usage': `\n${prefixCommand(this)} <message>`,
-					'Allowed Roles': rolesOutput(this.requiredRoles),
+					'Allowed Roles': formatRoles(this.requiredRoles),
 				});
 			},
 			get error() {
@@ -316,7 +317,7 @@ module.exports = async guild => {
 					'Description': this.description.general,
 					'Usage': `${prefixCommand(this)} <voice channel>`,
 					'Example': `${prefixCommand(this)} #example-voice`,
-					'Allowed Roles': rolesOutput(this.requiredRoles),
+					'Allowed Roles': formatRoles(this.requiredRoles),
 				});
 			},
 			get error() {
@@ -340,7 +341,7 @@ module.exports = async guild => {
 					'Description': this.description.general,
 					'Usage': `${prefixCommand(this)} <user(s)>`,
 					'Example': `${prefixCommand(this)} <@${DEVELOPER_ID}>`,
-					'Allowed Roles': rolesOutput(this.requiredRoles),
+					'Allowed Roles': formatRoles(this.requiredRoles),
 				});
 			},
 			get error() {
@@ -363,7 +364,7 @@ module.exports = async guild => {
 					'Aliases': prefixAliases(this),
 					'Description': this.description.general,
 					'Usage': prefixCommand(this),
-					'Allowed Roles': rolesOutput(this.requiredRoles),
+					'Allowed Roles': formatRoles(this.requiredRoles),
 					'Allowed Categories': `<#${ids.lessonsID}>`,
 				});
 			},
@@ -388,7 +389,7 @@ module.exports = async guild => {
 					'Description': this.description.general,
 					'Usage': `${prefixCommand(this)} <text channel>`,
 					'Example': `${prefixCommand(this)} #example-text`,
-					'Allowed Roles': rolesOutput(this.requiredRoles),
+					'Allowed Roles': formatRoles(this.requiredRoles),
 				});
 			},
 			get error() {
@@ -412,7 +413,7 @@ module.exports = async guild => {
 					'Description': this.description.general,
 					'Usage': `${prefixCommand(this)} <count> [user]`,
 					'Examples': `\n${prefixCommand(this)} 10\n${prefixCommand(this)} 5 <@${DEVELOPER_ID}>`,
-					'Allowed Roles': rolesOutput(this.requiredRoles),
+					'Allowed Roles': formatRoles(this.requiredRoles),
 				});
 			},
 			get error() {
@@ -423,7 +424,7 @@ module.exports = async guild => {
 
 	return commands;
 
-	function rolesOutput(array) {
+	function formatRoles(array) {
 		return (array)
 			? array.filter(roleID => roleID !== ids.administratorID && roleID !== ids.everyoneID)
 				.reduce((mentions, roleID, i) => mentions + `${(i % 3 === 0) ? '\n' : ''}<@&${roleID}> `, '')

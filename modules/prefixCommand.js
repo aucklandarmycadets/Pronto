@@ -5,6 +5,8 @@ const Discord = require('discord.js');
 // eslint-disable-next-line no-unused-vars
 const Typings = require('../typings');
 
+const { database } = require('../handlers');
+
 /**
  *
  * @param {Typings.BaseCommand} command
@@ -12,6 +14,6 @@ const Typings = require('../typings');
  * @returns {Promise<string>}
  */
 module.exports = async (command, guild) => {
-	const { settings: { prefix } } = await require('../handlers/database')(guild);
+	const { settings: { prefix } } = await database(guild);
 	return `${prefix}${command.command}`;
 };

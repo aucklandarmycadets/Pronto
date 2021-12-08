@@ -10,8 +10,8 @@ let chrono = require('chrono-node');
 chrono = new chrono.Chrono(chrono.en.createConfiguration(false, true));
 
 const { Lesson } = require('../models');
-const { commandError, deleteMsg, dateTimeGroup, enumerateResources, isURL, processResources, promptEmbed, sendDirect, sendMsg, successReact, titleCase } = require('../modules');
-const { confirmWithReaction, unsubmittedLessons } = require('../handlers');
+const { dateTimeGroup, enumerateResources, isURL, processResources, titleCase } = require('../modules');
+const { commandError, createEmbed, confirmWithReaction, database, deleteMsg, sendDirect, sendMsg, successReact, unsubmittedLessons } = require('../handlers');
 
 /**
  * Set to ensure that each assigner (identified by their \<User.id>) does not attempt to assign more than one lesson at a time
@@ -30,7 +30,7 @@ const recentlyAssigned = new Set();
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { ids: { lessonsID, trainingIDs }, commands: { seen, assign }, colours, emojis } = await require('../handlers/database')(guild);
+	const { ids: { lessonsID, trainingIDs }, commands: { seen, assign }, colours, emojis } = await database(guild);
 
 	/**
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
@@ -288,9 +288,9 @@ async function getUserInput(msg, prompts, colours) {
 	// Loop through each needed input prompt
 	for (const [key, value] of Object.entries(prompts)) {
 		// If the current prompt allows for multiple inputs, call the whileLoop() function
-		if (value.allowMultiple) input[key] = await whileLoop(promptEmbed(value.prompt, colours.primary), msg, value.type, colours, value.allowMultiple);
+		if (value.allowMultiple) input[key] = await whileLoop(createEmbed(value.prompt, colours.primary), msg, value.type, colours, value.allowMultiple);
 		// Otherwise, call the msgPrompt() function
-		else input[key] = await msgPrompt(promptEmbed(value.prompt, colours.primary), msg, value.type, colours, value.allowMultiple);
+		else input[key] = await msgPrompt(createEmbed(value.prompt, colours.primary), msg, value.type, colours, value.allowMultiple);
 
 		try {
 			// If the received symbol is to 'RESTART', restart input by returning getUserInput() recursively
@@ -348,7 +348,7 @@ async function msgPrompt(prompt, msg, type, colours, allowMultiple) {
 			// Uploaded attachments have a null <Message.content>, so cannot be checked here
 			if (!input.content) {
 				// If the input is empty, send an error and try again
-				sendDirect(msg.author, { embeds: [promptEmbed('You must enter something!', colours.error)] }, null, true);
+				sendDirect(msg.author, { embeds: [createEmbed('You must enter something!', colours.error)] }, null, true);
 				throw await msgPrompt(prompt, msg, type, colours, allowMultiple);
 			}
 
@@ -358,7 +358,7 @@ async function msgPrompt(prompt, msg, type, colours, allowMultiple) {
 
 				// If no date has been successfully parsed, send an error and try again
 				if (!parsedDate) {
-					sendDirect(msg.author, { embeds: [promptEmbed('I don\'t recognise that date, please try again.', colours.error)] }, null, true);
+					sendDirect(msg.author, { embeds: [createEmbed('I don\'t recognise that date, please try again.', colours.error)] }, null, true);
 					throw await msgPrompt(prompt, msg, type, colours, allowMultiple);
 				}
 
@@ -379,7 +379,7 @@ async function msgPrompt(prompt, msg, type, colours, allowMultiple) {
 
 			// If there have not been any attachments uploaded and no URLs have been successfully parsed, send an error and try again
 			if (!attachments && !URLs.length) {
-				sendDirect(msg.author, { embeds: [promptEmbed('You must attach a file or enter a URL!', colours.error)] }, null, true);
+				sendDirect(msg.author, { embeds: [createEmbed('You must attach a file or enter a URL!', colours.error)] }, null, true);
 				throw await msgPrompt(prompt, msg, type, colours, allowMultiple);
 			}
 

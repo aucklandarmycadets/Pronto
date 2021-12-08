@@ -2,8 +2,8 @@
 
 const Discord = require('discord.js');
 
-const { dateTimeGroup, sendMsg, updatedPermissions } = require('../modules');
-const { verifyBotPermissions } = require('../handlers');
+const { dateTimeGroup, updatedPermissions } = require('../modules');
+const { database, sendMsg, verifyBotPermissions } = require('../handlers');
 
 module.exports = {
 	bot: ['roleUpdate'],
@@ -16,7 +16,7 @@ module.exports = {
 	 */
 	async handler(_, oldRole, newRole) {
 		const { bot } = require('../pronto');
-		const { ids: { logID }, colours } = await require('../handlers/database')(newRole.guild);
+		const { ids: { logID }, colours } = await database(newRole.guild);
 
 		// Initialise log embed
 		const logEmbed = new Discord.MessageEmbed()

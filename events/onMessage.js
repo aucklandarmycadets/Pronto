@@ -2,9 +2,7 @@
 
 // eslint-disable-next-line no-unused-vars
 const Discord = require('discord.js');
-
-const { emojiReact } = require('../modules');
-const { commandHandler } = require('../handlers');
+const { commandHandler, emojiReact } = require('../handlers');
 
 module.exports = {
 	bot: ['message'],

@@ -1,6 +1,7 @@
 'use strict';
 
-const { embedScaffold, jsCodeBlock } = require('../modules');
+const { jsCodeBlock } = require('../modules');
+const { database, embedScaffold } = require('../handlers');
 
 module.exports = {
 	bot: ['error', 'warn'],
@@ -12,7 +13,7 @@ module.exports = {
 	 * - \<any> may be emitted by \<NodeJS.Process>#unhandledRejection, but it is typically an \<Error>
 	 */
 	async handler(event, error) {
-		const { colours } = await require('../handlers/database')();
+		const { colours } = await database();
 
 		// If error is an <Error> with a stack, reassign the variable
 		// Only do this if the stack is actually present, and not if it is a regular <string> or <*>

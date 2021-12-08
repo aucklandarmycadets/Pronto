@@ -1,8 +1,9 @@
 'use strict';
 
+const { unsubmittedLessons } = require('../handlers');
+
 module.exports = async (reaction, user) => {
 	const { bot } = require('../pronto');
-	const { unsubmittedLessons } = require('./');
 
 	const isRefereshEmoji = reaction.emoji.name === '🔄';
 	const isBotMessage = reaction.message.author.id === bot.user.id;

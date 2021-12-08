@@ -2,8 +2,8 @@
 
 const Discord = require('discord.js');
 
-const { dateTimeGroup, sendMsg } = require('../modules');
-const { channelPairing } = require('../handlers');
+const { dateTimeGroup } = require('../modules');
+const { database, channelPairing, sendMsg } = require('../handlers');
 
 module.exports = {
 	bot: ['voiceStateUpdate'],
@@ -17,7 +17,7 @@ module.exports = {
 	 */
 	async handler(_, oldState, newState) {
 		const { bot } = require('../pronto');
-		const { ids: { logID }, colours } = await require('../handlers/database')(newState.guild);
+		const { ids: { logID }, colours } = await database(newState.guild);
 
 		// Call handlers.channelPairing() to process channel pairing functionality in case the <VoiceChannel> is paired to a <TextChannel>
 		channelPairing(oldState, newState);

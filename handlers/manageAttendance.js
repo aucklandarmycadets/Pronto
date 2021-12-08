@@ -5,15 +5,14 @@ const Discord = require('discord.js');
 const Typings = require('../typings');
 
 const { Attendance } = require('../models');
-const { debugError, deleteMsg, dateTimeGroup, embedScaffold, promptEmbed, sendDirect } = require('../modules');
+const { dateTimeGroup } = require('../modules');
+const { database, confirmWithReaction, debugError, deleteMsg, embedScaffold, createEmbed, sendDirect } = require('../handlers');
 
 const pendingInput = new Set();
 
 module.exports = async (reaction, user) => {
 	const { bot } = require('../pronto');
-	const { confirmWithReaction } = require('./');
-
-	const { ids: { attendanceID }, colours } = await require('../handlers/database')(reaction.message.guild);
+	const { ids: { attendanceID }, colours } = await database(reaction.message.guild);
 
 	/**
 	 * @type {Typings.Attendance}
@@ -77,7 +76,7 @@ module.exports = async (reaction, user) => {
 };
 
 async function userInput(user, msg, colours, callback) {
-	if (pendingInput.has(user.id)) return sendDirect(user, { embeds: [promptEmbed('You\'re already editing another register!', colours.error)] }, msg);
+	if (pendingInput.has(user.id)) return sendDirect(user, { embeds: [createEmbed('You\'re already editing another register!', colours.error)] }, msg);
 
 	const editingEmbed = new Discord.MessageEmbed()
 		.setTitle(`Editing '${msg.embeds[0].title}'...`)
@@ -93,7 +92,7 @@ async function userInput(user, msg, colours, callback) {
 
 	pendingInput.add(user.id);
 
-	const input = await msgPrompt(promptEmbed('Please reply with your updated register.', colours.primary), user, msg.channel, colours);
+	const input = await msgPrompt(createEmbed('Please reply with your updated register.', colours.primary), user, msg.channel, colours);
 
 	if (input.toLowerCase() === 'cancel') {
 		const { bot } = require('../pronto');
@@ -121,7 +120,7 @@ async function msgPrompt(prompt, user, channel, colours) {
 
 	try {
 		if (!reply.content) {
-			sendDirect(user, { embeds: [promptEmbed('You must enter something!', colours.error)] }, null, true);
+			sendDirect(user, { embeds: [createEmbed('You must enter something!', colours.error)] }, null, true);
 			throw await msgPrompt(prompt, user, channel, colours);
 		}
 

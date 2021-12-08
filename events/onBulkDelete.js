@@ -1,7 +1,9 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { deleteMsg, dateTimeGroup, sendMsg } = require('../modules');
+
+const { dateTimeGroup } = require('../modules');
+const { database, deleteMsg, sendMsg } = require('../handlers');
 
 module.exports = {
 	bot: ['messageDeleteBulk'],
@@ -13,7 +15,7 @@ module.exports = {
 	 */
 	async handler(_, msgs) {
 		const { bot } = require('../pronto');
-		const { ids: { logID }, commands: { purge }, colours } = await require('../handlers/database')(msgs.first().guild);
+		const { ids: { logID }, commands: { purge }, colours } = await database(msgs.first().guild);
 
 		// Extract the first deleted message to access a <Message> instance
 		const msg = msgs.first();

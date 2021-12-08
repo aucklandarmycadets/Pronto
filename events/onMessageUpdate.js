@@ -2,8 +2,8 @@
 
 const Discord = require('discord.js');
 
-const { charLimit, dateTimeGroup, sendMsg } = require('../modules');
-const { commandHandler } = require('../handlers');
+const { charLimit, dateTimeGroup } = require('../modules');
+const { database, commandHandler, sendMsg } = require('../handlers');
 
 module.exports = {
 	bot: ['messageUpdate'],
@@ -21,7 +21,7 @@ module.exports = {
 		// Ensure the updated <Message> is not a partial by calling the <Message.fetch()> method
 		if (newMessage.partial) await newMessage.fetch();
 
-		const { ids: { logID }, colours } = await require('../handlers/database')(newMessage.guild);
+		const { ids: { logID }, colours } = await database(newMessage.guild);
 
 		// Call handlers.commandHandler() to handle a potential command message
 		commandHandler(newMessage);

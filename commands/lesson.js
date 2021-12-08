@@ -4,8 +4,8 @@ const Discord = require('discord.js');
 // eslint-disable-next-line no-unused-vars
 const Typings = require('../typings');
 
-const { commandError, deleteMsg, dateTimeGroup, enumerateResources, errorReact, isURL, processResources, promptEmbed, remove, rolesOutput, sendDirect, sendMsg, successReact } = require('../modules');
-const { confirmWithReaction, findLesson, unsubmittedLessons } = require('../handlers');
+const { dateTimeGroup, enumerateResources, formatRoles, isURL, processResources, remove } = require('../modules');
+const { database, commandError, confirmWithReaction, createEmbed, deleteMsg, errorReact, findLesson, sendDirect, sendMsg, successReact, unsubmittedLessons } = require('../handlers');
 
 /**
  * Set to ensure that lessons (identified by their \<TextChannel.id>) which are pending confirmation of submission cannot be submitted again
@@ -24,7 +24,7 @@ const pendingConfirmation = new Set();
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { ids: { lessonsID, trainingIDs }, commands: { lesson, seen, approve }, colours, emojis } = await require('../handlers/database')(guild);
+	const { ids: { lessonsID, trainingIDs }, commands: { lesson, seen, approve }, colours, emojis } = await database(guild);
 
 	/**
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
@@ -292,7 +292,7 @@ module.exports = async guild => {
 							.setColor(colours.primary);
 
 						// Send the approval embed, and tag the Training Cell's roles in the message body
-						sendMsg(msg.channel, { content: rolesOutput(trainingIDs, true), embeds: [approveEmbed] })
+						sendMsg(msg.channel, { content: formatRoles(trainingIDs, true), embeds: [approveEmbed] })
 							.then(async approveMsg => {
 								// Add the success reaction to the approval message
 								await successReact(approveMsg);
@@ -391,13 +391,13 @@ async function getNumberInput(msg, range, colours) {
 
 		// If the input cannot be cast to a number, send an error message and try again
 		else if (isNaN(Number(reply.content))) {
-			sendMsg(msg.channel, { embeds: [promptEmbed('You must enter a number.', colours.error)] });
+			sendMsg(msg.channel, { embeds: [createEmbed('You must enter a number.', colours.error)] });
 			throw await getNumberInput(msg, range, colours);
 		}
 
 		// If the input is a number but is not in the range number[] (i.e. invalid), send an error message and try again
 		else if (!range.includes(Number(reply.content))) {
-			sendMsg(msg.channel, { embeds: [promptEmbed(`You must enter a number between ${range[0]} and ${range[range.length - 1]}.`, colours.error)] });
+			sendMsg(msg.channel, { embeds: [createEmbed(`You must enter a number between ${range[0]} and ${range[range.length - 1]}.`, colours.error)] });
 			throw await getNumberInput(msg, range, colours);
 		}
 

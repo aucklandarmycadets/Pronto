@@ -1,8 +1,8 @@
 'use strict';
 
-module.exports = async (msg, emoji) => {
-	const { debugError } = require('./');
+const { debugError } = require('../handlers');
 
+module.exports = async (msg, emoji) => {
 	msg.react(emoji).catch(error => {
 		try {
 			if (msg.guild) throw `Error reacting to [message](${msg.url}) in ${msg.channel}.`;

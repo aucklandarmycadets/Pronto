@@ -1,8 +1,8 @@
 'use strict';
 
 const { ids: { DEFAULT_GUILD, DEVELOPER_ID } } = require('../config');
-const { embedScaffold, prefixCommand } = require('../modules');
-const { lessonReminders, unsubmittedLessons, verifyBotPermissions } = require('../handlers');
+const { prefixCommand } = require('../modules');
+const { database, embedScaffold, lessonReminders, unsubmittedLessons, verifyBotPermissions } = require('../handlers');
 
 module.exports = {
 	bot: ['ready'],
@@ -13,7 +13,7 @@ module.exports = {
 	 */
 	async handler() {
 		const { bot } = require('../pronto');
-		const { commands: { help }, colours } = await require('../handlers/database')();
+		const { commands: { help }, colours } = await database();
 
 		// Log the successful log-in to the console
 		console.info(`Logged in as ${bot.user.tag}!`);

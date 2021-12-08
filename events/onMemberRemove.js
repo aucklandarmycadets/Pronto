@@ -1,7 +1,9 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { debugError, dateTimeGroup, rolesOutput, sendMsg } = require('../modules');
+
+const { dateTimeGroup, formatRoles } = require('../modules');
+const { database, debugError, sendMsg } = require('../handlers');
 
 module.exports = {
 	bot: ['guildMemberRemove'],
@@ -13,7 +15,7 @@ module.exports = {
 	 */
 	async handler(_, member) {
 		const { bot } = require('../pronto');
-		const { ids: { logID }, colours } = await require('../handlers/database')(member.guild);
+		const { ids: { logID }, colours } = await database(member.guild);
 
 		// Create log embed
 		const logEmbed = new Discord.MessageEmbed()
@@ -21,8 +23,8 @@ module.exports = {
 			.setAuthor('Member Left', member.user.displayAvatarURL({ dynamic: true }))
 			.setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
 			.setDescription(`${member} ${member.user.tag}`)
-			// Call modules.rolesOutput() to display the roles the <GuildMember> had
-			.addField('Roles', rolesOutput(member.roles.cache.array(), true, 3))
+			// Call modules.formatRoles() to display the roles the <GuildMember> had
+			.addField('Roles', formatRoles(member.roles.cache.array(), true, 3))
 			.setFooter(`ID: ${member.id} | ${await dateTimeGroup()}`);
 
 		// Fetch the guild's audit logs for a kick

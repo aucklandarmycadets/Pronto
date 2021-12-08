@@ -1,7 +1,9 @@
 'use strict';
 
 const Discord = require('discord.js');
-const { debugError, dateTimeGroup, formatAge, sendMsg } = require('../modules');
+
+const { dateTimeGroup, formatAge } = require('../modules');
+const { database, debugError, sendMsg } = require('../handlers');
 
 module.exports = {
 	bot: ['guildMemberAdd'],
@@ -13,7 +15,7 @@ module.exports = {
 	 */
 	async handler(_, member) {
 		const { bot } = require('../pronto');
-		const { ids: { logID, recruitingID, welcomeID, visitorID }, colours } = await require('../handlers/database')(member.guild);
+		const { ids: { logID, recruitingID, welcomeID, visitorID }, colours } = await database(member.guild);
 
 		// Create log embed
 		const logEmbed = new Discord.MessageEmbed()

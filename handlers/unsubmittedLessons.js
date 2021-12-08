@@ -7,10 +7,11 @@ const Typings = require('../typings');
 const dateFormat = require('dateformat');
 
 const { Lesson } = require('../models');
-const { dateTimeGroup, emojiReact, sendMsg } = require('../modules');
+const { dateTimeGroup } = require('../modules');
+const { database, emojiReact, sendMsg } = require('../handlers');
 
 module.exports = async guild => {
-	const { settings: { shortDate }, ids: { lessonReferenceID }, colours } = await require('../handlers/database')(guild);
+	const { settings: { shortDate }, ids: { lessonReferenceID }, colours } = await database(guild);
 
 	/**
 	 * @type {Typings.Lesson[]}

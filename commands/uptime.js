@@ -4,7 +4,8 @@ const Discord = require('discord.js');
 // eslint-disable-next-line no-unused-vars
 const Typings = require('../typings');
 
-const { dateTimeGroup, formatAge, sendMsg } = require('../modules');
+const { dateTimeGroup, formatAge } = require('../modules');
+const { database, sendMsg } = require('../handlers');
 
 /**
  * @member {commands.Command} commands.uptime Display the bot's uptime
@@ -16,7 +17,7 @@ const { dateTimeGroup, formatAge, sendMsg } = require('../modules');
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { commands: { uptime }, colours } = await require('../handlers/database')(guild);
+	const { commands: { uptime }, colours } = await database(guild);
 
 	/**
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command

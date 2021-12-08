@@ -1,16 +1,17 @@
 'use strict';
 
+const { database, debugError } = require('../handlers');
+
 module.exports = async msg => {
 	const { bot } = require('../pronto');
-	const { debugError } = require('./');
-	const { ids: { guildID }, emojis } = await require('../handlers/database')(msg.guild);
+	const { ids: { guildID }, emojis } = await database(msg.guild);
 
 	const guild = bot.guilds.cache.get(guildID);
-	const successEmoji = guild.emojis.cache.find(emoji => emoji.name === emojis.success.name);
+	const errorEmoji = guild.emojis.cache.find(emoji => emoji.name === emojis.error.name);
 
 	if (msg.deleted) return;
 
-	msg.react(successEmoji).catch(error => {
+	msg.react(errorEmoji).catch(error => {
 		try {
 			if (msg.guild) throw `Error reacting to [message](${msg.url}) in ${msg.channel}.`;
 			else throw 'Error reacting to message in DMs.';
