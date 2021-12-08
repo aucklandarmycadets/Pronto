@@ -11,6 +11,10 @@ export * from './models/lesson'
 
 export * from './commands/commands'
 
+// Event typings
+
+export * from './events/events'
+
 // Configuration typings
 
 import { Emoji, Colours } from './models/guild';
