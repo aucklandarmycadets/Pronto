@@ -19,7 +19,7 @@ const fs = require('fs');
 module.exports = async guild => await commandLoader('./commands', guild);
 
 /**
- * Load the bot's \<Commands> from the commands directory for a specified guild
+ * Load the bot's \<Commands> from the specified directory for a specified guild
  * @param {string} directory The directory to load each \<Command> from
  * @param {Discord.Guild} guild The \<Guild> to load \<Commands> for
  * @returns {Promise<Typings.Commands>} The loaded \<Commands> object for the guild, containing each \<Command> in a nested object
