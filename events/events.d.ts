@@ -22,5 +22,7 @@ export interface EventModules {
 
 /**
  * An event handler function to execute when specified event(s) are emitted
+ * @param {string} event The event that was emitted
+ * @param {...*} args The emitted arguments
  */
 export type EventHandler = (event: string, ...args: any[]) => void;

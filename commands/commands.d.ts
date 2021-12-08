@@ -61,7 +61,11 @@ export interface BaseCommands {
  * The complete \<Command> object for one of Pronto's commands, with a \<Command.execute()> method
  */
 export interface Command extends BaseCommand {
-	/** The command's \<Command.execute()> method */
+	/**
+	 * The command's \<Command.execute()> method
+	 * @param {CommandParameters} parameters The \<CommandParameters> to execute this command
+	 * @returns {Promise<void | Typings.Lesson>} Void, or the \<Lesson> document
+	 */
 	execute(parameters: CommandParameters): Promise<void | Typings.Lesson>;
 }
 
