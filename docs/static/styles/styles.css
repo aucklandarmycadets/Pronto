@@ -49,6 +49,10 @@
 	--code-font: Consolas, Monaco, 'Andale Mono', monospace;
 }
 
+::selection {
+	background-color: var(--primary-colour);
+}
+
 body {
 	font-family: var(--body-font);
 	font-size: var(--base-font-size);
