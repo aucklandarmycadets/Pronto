@@ -1,15 +1,23 @@
 'use strict';
 
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
 
 const { dateTimeGroup } = require('../modules');
 const { channelPairing, database, sendMsg } = require('../handlers');
 
+/**
+ * @member {events.EventModule} events.onVoiceUpdate Event handler to log whenever a \<GuildMember> joins/leaves a \<VoiceChannel>,
+ */
+
+/**
+ * @type {Typings.EventModule}
+ */
 module.exports = {
 	bot: ['voiceStateUpdate'],
 	process: [],
 	/**
-	 * Event handler to log whenever a \<GuildMember> joins/leaves a \<VoiceChannel>,
 	 * and to trigger `handlers.channelPairing()`
 	 * @param {'voiceStateUpdate'} _ The event that was emitted
 	 * @param {Discord.VoiceState} oldState The \<VoiceState> before the update

@@ -1,13 +1,22 @@
 'use strict';
 
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
+
 const { jsCodeBlock } = require('../modules');
 const { database, embedScaffold } = require('../handlers');
 
+/**
+ * @member {events.EventModule} events.onError Event handler for \<Discord.Client> and \<NodeJS.Process> events which may be useful for debugging
+ */
+
+/**
+ * @type {Typings.EventModule}
+ */
 module.exports = {
 	bot: ['error', 'warn'],
 	process: ['unhandledRejection', 'uncaughtExceptionMonitor'],
 	/**
-	 * Event handler for \<Discord.Client> and \<NodeJS.Process> events which may be useful for debugging
 	 * @param {'error' | 'warn' | 'unhandledRejection' | 'uncaughtExceptionMonitor'} event The event that was emitted
 	 * @param {Error | string | *} error The \<Error> that was enountered, or a \<string> if emitted by \<Discord.Client>#warn
 	 * - \<any> may be emitted by \<NodeJS.Process>#unhandledRejection, but it is typically an \<Error>

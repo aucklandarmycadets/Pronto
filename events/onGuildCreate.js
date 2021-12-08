@@ -2,15 +2,23 @@
 
 // eslint-disable-next-line no-unused-vars
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
 
 const { emojis } = require('../config');
 const { createGuild, verifyBotPermissions } = require('../handlers');
 
+/**
+ * @member {events.EventModule} events.onGuildCreate Event handler to initialise the \<GuildConfiguration> whenever the \<Client> joins a new \<Guild>
+ */
+
+/**
+ * @type {Typings.EventModule}
+ */
 module.exports = {
 	bot: ['guildCreate'],
 	process: [],
 	/**
-	 * Event handler to initialise the \<GuildConfiguration> whenever the \<Client> joins a new \<Guild>
 	 * @param {'guildCreate'} _ The event that was emitted
 	 * @param {Discord.Guild} guild The created \<Guild>
 	 */

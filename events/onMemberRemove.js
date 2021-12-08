@@ -1,15 +1,23 @@
 'use strict';
 
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
 
 const { dateTimeGroup, formatRoles } = require('../modules');
 const { database, debugError, sendMsg } = require('../handlers');
 
+/**
+ * @member {events.EventModule} events.onMemberRemove Event handler to log whenever a \<GuildMember> leaves a guild, or is kicked
+ */
+
+/**
+ * @type {Typings.EventModule}
+ */
 module.exports = {
 	bot: ['guildMemberRemove'],
 	process: [],
 	/**
-	 * Event handler to log whenever a \<GuildMember> leaves a guild, or is kicked
 	 * @param {'guildMemberRemove'} _ The event that was emitted
 	 * @param {Discord.GuildMember} member The \<GuildMember> that has left/been kicked from the guild
 	 */

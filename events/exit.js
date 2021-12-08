@@ -1,17 +1,25 @@
 'use strict';
 
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
 const mongoose = require('mongoose');
 
 const { ids: { DEVELOPER_ID } } = require('../config');
 const { dateTimeGroup, formatAge } = require('../modules');
 const { database, sendDirect } = require('../handlers');
 
+/**
+ * @member {events.EventModule} events.exit Event handler to notify the developer that the bot is restarting, and to close the MongoDB connection
+ */
+
+/**
+ * @type {Typings.EventModule}
+ */
 module.exports = {
 	bot: [],
 	process: ['exit', 'SIGINT'],
 	/**
-	 * Event handler to notify the developer that the bot is restarting, and to close the MongoDB connection
 	 * @param {'exit' | 'SIGINT'} event The event that was emitted
 	 * @param {?number} code The code to exit with
 	 */

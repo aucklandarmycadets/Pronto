@@ -1,15 +1,23 @@
 'use strict';
 
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
 
 const { dateTimeGroup, formatAge } = require('../modules');
 const { database, debugError, sendMsg } = require('../handlers');
 
+/**
+ * @member {events.EventModule} events.onMemberAdd Event handler to log whenever a user joins a \<Guild>, and to assign them to the guild's visitor role and send a welcome embed
+ */
+
+/**
+ * @type {Typings.EventModule}
+ */
 module.exports = {
 	bot: ['guildMemberAdd'],
 	process: [],
 	/**
-	 * Event handler to log whenever a user joins a \<Guild>, and to assign them to the guild's visitor role and send a welcome embed
 	 * @param {'guildMemberAdd'} _ The event that was emitted
 	 * @param {Discord.GuildMember} member The \<GuildMember> that has joined a \<Guild>
 	 */

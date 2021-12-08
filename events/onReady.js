@@ -1,14 +1,23 @@
 'use strict';
 
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
+
 const { ids: { DEFAULT_GUILD, DEVELOPER_ID } } = require('../config');
 const { prefixCommand } = require('../modules');
 const { database, embedScaffold, lessonReminders, unsubmittedLessons, verifyBotPermissions } = require('../handlers');
 
+/**
+ * @member {events.EventModule} events.onReady Event handler to notify the developer and execute the bot's startup routine
+ */
+
+/**
+ * @type {Typings.EventModule}
+ */
 module.exports = {
 	bot: ['ready'],
 	process: [],
 	/**
-	 * Event handler to notify the developer and execute the bot's startup routine
 	 * when the \<Client> becomes ready to start working
 	 */
 	async handler() {

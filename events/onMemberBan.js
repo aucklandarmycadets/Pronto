@@ -1,15 +1,23 @@
 'use strict';
 
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
 
 const { dateTimeGroup } = require('../modules');
 const { database, debugError, sendMsg } = require('../handlers');
 
+/**
+ * @member {events.EventModule} events.onMemberBan Event handler to log whenever a member is banned or unbanned from a \<Guild>
+ */
+
+/**
+ * @type {Typings.EventModule}
+ */
 module.exports = {
 	bot: ['guildBanAdd', 'guildBanRemove'],
 	process: [],
 	/**
-	 * Event handler to log whenever a member is banned or unbanned from a \<Guild>
 	 * @param {'guildBanAdd' | 'guildBanRemove'} event The event that was emitted
 	 * @param {Discord.Guild} guild The \<Guild> that the ban/unban occured in
 	 * @param {Discord.User} user The \<User> that was banned/unbanned

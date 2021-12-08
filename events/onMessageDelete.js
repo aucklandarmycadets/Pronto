@@ -1,16 +1,25 @@
 'use strict';
 
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
+
 const fs = require('fs');
 
 const { charLimit, dateTimeGroup, extractID } = require('../modules');
 const { database, debugError, deleteMsg, sendMsg } = require('../handlers');
 
+/**
+ * @member {events.EventModule} events.onMessageDelete Event handler to log whenever a \<Message> is deleted
+ */
+
+/**
+ * @type {Typings.EventModule}
+ */
 module.exports = {
 	bot: ['messageDelete'],
 	process: [],
 	/**
-	 * Event handler to log whenever a \<Message> is deleted
 	 * @param {'messageDelete'} _ The event that was emitted
 	 * @param {Discord.Message} msg The deleted message
 	 */

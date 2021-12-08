@@ -2,13 +2,22 @@
 
 // eslint-disable-next-line no-unused-vars
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
+
 const { manageAttendance, updateUnsubmitted } = require('../handlers');
 
+/**
+ * @member {events.EventModule} events.onReactionAdd Event handler to trigger `handlers.manageAttendance()` and `handlers.updateUnsubmitted()`
+ */
+
+/**
+ * @type {Typings.EventModule}
+ */
 module.exports = {
 	bot: ['messageReactionAdd'],
 	process: [],
 	/**
-	 * Event handler to trigger `handlers.manageAttendance()` and `handlers.updateUnsubmitted()`
 	 * whenever a reaction is added to a cached \<Message>
 	 * @param {'messageReactionAdd'} _ The event that was emitted
 	 * @param {Discord.MessageReaction} reaction The reaction object

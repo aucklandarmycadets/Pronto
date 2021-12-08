@@ -1,15 +1,23 @@
 'use strict';
 
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
 
 const { charLimit, dateTimeGroup } = require('../modules');
 const { commandHandler, database, sendMsg } = require('../handlers');
 
+/**
+ * @member {events.EventModule} events.onMessageUpdate Event handler to log whenever a \<Message> is updated,
+ */
+
+/**
+ * @type {Typings.EventModule}
+ */
 module.exports = {
 	bot: ['messageUpdate'],
 	process: [],
 	/**
-	 * Event handler to log whenever a \<Message> is updated,
 	 * and to call `handlers.commandHandler()` in case it is a \<Command> to be executed
 	 * @param {'messageUpdate'} _ The event that was emitted
 	 * @param {Discord.Message} oldMessage The \<Message> before the update

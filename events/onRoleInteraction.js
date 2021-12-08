@@ -1,15 +1,23 @@
 'use strict';
 
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
 
 const { dateTimeGroup } = require('../modules');
 const { database, sendMsg } = require('../handlers');
 
+/**
+ * @member {events.EventModule} events.onRoleInteraction Event handler to log whenever a \<Role> is created/deleted
+ */
+
+/**
+ * @type {Typings.EventModule}
+ */
 module.exports = {
 	bot: ['roleCreate', 'roleDelete'],
 	process: [],
 	/**
-	 * Event handler to log whenever a \<Role> is created/deleted
 	 * @param {'roleCreate' | 'roleDelete'} event The event that was emitted
 	 * @param {Discord.Role} role The \<Role> that was created/deleted
 	 */

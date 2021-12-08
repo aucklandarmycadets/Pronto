@@ -1,15 +1,23 @@
 'use strict';
 
 const Discord = require('discord.js');
+// eslint-disable-next-line no-unused-vars
+const Typings = require('../typings');
 
 const { dateTimeGroup, updatedPermissions } = require('../modules');
 const { database, debugError, sendMsg, verifyBotPermissions } = require('../handlers');
 
+/**
+ * @member {events.EventModule} events.onMemberUpdate Event handler to log whenever a \<GuildMember> changes their nickname, or has a role added/removed
+ */
+
+/**
+ * @type {Typings.EventModule}
+ */
 module.exports = {
 	bot: ['guildMemberUpdate'],
 	process: [],
 	/**
-	 * Event handler to log whenever a \<GuildMember> changes their nickname, or has a role added/removed
 	 * @param {'guildMemberUpdate'} _ The event that was emitted
 	 * @param {Discord.GuildMember} oldMember The \<GuildMember> before the update
 	 * @param {Discord.GuildMember} newMember The \<GuildMember> after the update
