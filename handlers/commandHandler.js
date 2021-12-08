@@ -2,6 +2,7 @@
 
 const Discord = require('discord.js');
 
+const { ids: { DEVELOPER_ID } } = require('../config');
 const { extractID, prefixCommand } = require('../modules');
 const { database, debugError, directCommandError, permissionsHandler, upsertCommands } = require('../handlers');
 
@@ -13,7 +14,6 @@ module.exports = async msg => {
 	if (msg.author.bot) return;
 
 	const { bot } = require('../pronto');
-	const { ids: { DEVELOPER_ID } } = require('../config');
 
 	const guilds = bot.guilds.cache.filter(_guild => _guild.members.cache.has(msg.author.id));
 

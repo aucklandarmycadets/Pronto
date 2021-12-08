@@ -1,11 +1,10 @@
 'use strict';
 
+const { colours } = require('../config');
 const { jsCodeBlock } = require('../modules');
 const { embedScaffold } = require('../handlers');
 
 module.exports = (user, options, guildChannel, toDebug) => {
-	const { colours } = require('../config');
-
 	// Send message to user
 	return user.send(options)
 		.catch(error => {
