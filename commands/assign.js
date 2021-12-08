@@ -11,7 +11,7 @@ chrono = new chrono.Chrono(chrono.en.createConfiguration(false, true));
 
 const { Lesson } = require('../models');
 const { dateTimeGroup, enumerateResources, isURL, processResources, titleCase } = require('../modules');
-const { commandError, createEmbed, confirmWithReaction, database, deleteMsg, sendDirect, sendMsg, successReact, unsubmittedLessons } = require('../handlers');
+const { commandError, confirmWithReaction, createEmbed, database, deleteMsg, sendDirect, sendMsg, successReact, unsubmittedLessons } = require('../handlers');
 
 /**
  * Set to ensure that each assigner (identified by their \<User.id>) does not attempt to assign more than one lesson at a time

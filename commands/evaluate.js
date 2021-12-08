@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const Typings = require('../typings');
 
 const { dateTimeGroup, jsCodeBlock, ...modules } = require('../modules');
-const { commandError, database, deleteMsg, sendMsg, ...handlers } = require('../handlers');
+const { ...handlers, commandError, database, deleteMsg, sendMsg } = require('../handlers');
 
 /**
  * @member {commands.Command} commands.evaluate Evaluate Javascript code directly from a Discord message

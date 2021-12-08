@@ -3,7 +3,7 @@
 const Discord = require('discord.js');
 
 const { charLimit, dateTimeGroup } = require('../modules');
-const { database, commandHandler, sendMsg } = require('../handlers');
+const { commandHandler, database, sendMsg } = require('../handlers');
 
 module.exports = {
 	bot: ['messageUpdate'],

@@ -6,7 +6,7 @@ const Typings = require('../typings');
 
 const { Attendance } = require('../models');
 const { dateTimeGroup } = require('../modules');
-const { database, confirmWithReaction, debugError, deleteMsg, embedScaffold, createEmbed, sendDirect } = require('../handlers');
+const { confirmWithReaction, createEmbed, database, debugError, deleteMsg, embedScaffold, sendDirect } = require('../handlers');
 
 const pendingInput = new Set();
 

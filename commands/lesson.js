@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const Typings = require('../typings');
 
 const { dateTimeGroup, enumerateResources, formatRoles, isURL, processResources, remove } = require('../modules');
-const { database, commandError, confirmWithReaction, createEmbed, deleteMsg, errorReact, findLesson, sendDirect, sendMsg, successReact, unsubmittedLessons } = require('../handlers');
+const { commandError, confirmWithReaction, createEmbed, database, deleteMsg, errorReact, findLesson, sendDirect, sendMsg, successReact, unsubmittedLessons } = require('../handlers');
 
 /**
  * Set to ensure that lessons (identified by their \<TextChannel.id>) which are pending confirmation of submission cannot be submitted again

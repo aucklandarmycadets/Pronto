@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 // eslint-disable-next-line no-unused-vars
 const Typings = require('../typings');
 
-const { database, commandError, debugError, embedScaffold, errorReact } = require('../handlers');
+const { commandError, database, debugError, embedScaffold, errorReact } = require('../handlers');
 
 /**
  * @member {commands.Command} commands.purge

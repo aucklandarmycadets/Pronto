@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const Typings = require('../typings');
 
 const { dateTimeGroup } = require('../modules');
-const { database, commandError, findLesson, sendMsg, successReact } = require('../handlers');
+const { commandError, database, findLesson, sendMsg, successReact } = require('../handlers');
 
 /**
  * @member {commands.Command} commands.seen

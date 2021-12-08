@@ -2,8 +2,8 @@
 
 const Discord = require('discord.js');
 
-const { prefixCommand, extractID } = require('../modules');
-const { database, debugError, directCommandError, upsertCommands, permissionsHandler } = require('../handlers');
+const { extractID, prefixCommand } = require('../modules');
+const { database, debugError, directCommandError, permissionsHandler, upsertCommands } = require('../handlers');
 
 /**
  *

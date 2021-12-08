@@ -3,7 +3,7 @@
 const Discord = require('discord.js');
 
 const { dateTimeGroup } = require('../modules');
-const { database, channelPairing, sendMsg } = require('../handlers');
+const { channelPairing, database, sendMsg } = require('../handlers');
 
 module.exports = {
 	bot: ['voiceStateUpdate'],

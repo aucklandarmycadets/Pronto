@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const Typings = require('../typings');
 
 const { dateTimeGroup, enumerateResources } = require('../modules');
-const { database, commandError, debugError, findLesson, sendMsg, successReact } = require('../handlers');
+const { commandError, database, debugError, findLesson, sendMsg, successReact } = require('../handlers');
 
 /**
  * @member {commands.Command} commands.approve Approve a submitted lesson plan in a lesson channel, either from a message command or a message reaction

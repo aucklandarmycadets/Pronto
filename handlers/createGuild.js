@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const { defaults, colours } = require('../config');
 const { Guild } = require('../models');
 const { dateTimeGroup } = require('../modules');
-const { debugError, sendMsg, lessonInstructions, overwriteCommands } = require('../handlers');
+const { debugError, lessonInstructions, overwriteCommands, sendMsg } = require('../handlers');
 
 /**
  * - Set to record the \<Guild.id> snowflakes of the guild currently undergoing creation

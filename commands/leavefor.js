@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const Typings = require('../typings');
 
 const { capitalise, dateTimeGroup, prefixCommand, remove } = require('../modules');
-const { database, commandError, sendDirect, sendMsg, successReact } = require('../handlers');
+const { commandError, database, sendDirect, sendMsg, successReact } = require('../handlers');
 
 /**
  * @member {commands.Command} commands.leavefor Process a leave request submitted on behalf of someone else
