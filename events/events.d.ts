@@ -5,7 +5,7 @@ import Discord = require('discord.js');
  */
 export interface EventModule {
 	/** A string[] of valid \<Client>#event(s) that this \<EventModule> applies to */
-	bot: keyof Discord.ClientEvents[],
+	bot: string[],
 	/** A string[] of valid \<Process>#event(s) that this \<EventModule> applies to */
 	process: string[],
 	/** The event handler function to execute when specified event(s) are emitted */

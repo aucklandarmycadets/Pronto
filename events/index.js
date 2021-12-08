@@ -13,7 +13,7 @@ const fs = require('fs');
 
 /**
  * @typedef {Object} events.EventModule The complete \<EventModule> object for one of Pronto's event module
- * @property {keyof Discord.ClientEvents[]} bot A string[] of valid \<Client>#event(s) that this \<EventModule> applies to
+ * @property {string[]} bot A string[] of valid \<Client>#event(s) that this \<EventModule> applies to
  * @property {string[]} process A string[] of valid \<Process>#event(s) that this \<EventModule> applies to
  * @property {events.EventHandler} handler The event handler function to execute when specified event(s) are emitted
  */
