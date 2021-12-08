@@ -9,7 +9,7 @@ export interface EventModule {
 	/** A string[] of valid \<Process>#event(s) that this \<EventModule> applies to */
 	process: string[],
 	/** The event handler function to execute when specified event(s) are emitted */
-	handler: Function,
+	handler(...args): void,
 }
 
 /**
