@@ -23,19 +23,19 @@ module.exports = async guild => {
 		if (error) console.error(error);
 	});
 
-	document.commands = await process(updatedCommands, document);
+	document.commands = await processChanges(updatedCommands, document);
 	document.markModified('commands');
 
 	return await document.save().catch(error => console.error(error));
 };
 
 /**
- * @function handlers.upsertCommands~process
+ * @function handlers.upsertCommands~processChanges
  * @param {Typings.BaseCommands} updatedCommands
  * @param {Typings.GuildConfiguration} document
  * @returns {Promise<Typings.BaseCommands>}
  */
-async function process(updatedCommands, document) {
+async function processChanges(updatedCommands, document) {
 	const commandsArray = Object.keys(updatedCommands);
 	const databaseArray = Object.keys(document.commands);
 
