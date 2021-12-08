@@ -19,7 +19,17 @@
 	},
 	"templates": {
 		"cleverLinks": false,
-		"monospaceLinks": false
+		"monospaceLinks": false,
+		"default": {
+			"staticFiles": {
+				"include": [
+					"docs/static/"
+				]
+			}
+		},
+		"css": [
+			"styles/styles.css"
+		]
 	},
 	"metadata": {
 		"title": "Pronto"
