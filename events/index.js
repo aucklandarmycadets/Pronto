@@ -37,6 +37,7 @@ module.exports = () => processIndex('./events');
 
 /**
  * Load the bot's \<EventModules> from the specified directory
+ * @function events.index~processIndex
  * @param {string} directory The directory to load each \<EventModule> from
  * @returns {Typings.EventModules} The loaded \<EventModules> object, containing each \<EventModule> in a nested object
  */
