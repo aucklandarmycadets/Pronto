@@ -19,7 +19,7 @@ const fs = require('fs');
  */
 
 /**
- * @typedef {Object.<string, events.EventModule>} events.EventModules The complete \<EventModules> object for all of Pronto's event module, where each [\<EventHandler>]{@link events.EventHandler} is stored in the \<EventHandlers> object under a string property
+ * @typedef {Object.<string, events.EventModule>} events.EventModules The complete \<EventModules> object for all of Pronto's event modules, where each [\<EventHandler>]{@link events.EventHandler} is stored in the \<EventHandlers> object under a string property
  */
 
 /**
