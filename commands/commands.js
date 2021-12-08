@@ -50,7 +50,7 @@ const { database } = require('../handlers');
 /**
  * @typedef {function} commands.CommandExecute A command's \<Command.execute()> method
  * @param {commands.CommandParameters} parameters The [\<CommandParameters>]{@link commands.CommandParameters} to execute this command
- * @returns {Promise<void | Typings.Lesson>} Void, or the [\<Lesson>]{@link models.Lesson} object
+ * @returns {Promise<void | Typings.Lesson>} Void, or the [\<Lesson>]{@link models.Lesson} document
  */
 
 /**
