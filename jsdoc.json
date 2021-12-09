@@ -34,7 +34,8 @@
 	},
 	"metadata": {
 		"title": "Pronto",
-		"logo": "static/logo.svg"
+		"logo": "static/logo.svg",
+		"favicon": "static/favicon.svg"
 	},
 	"styles": {}
 }
