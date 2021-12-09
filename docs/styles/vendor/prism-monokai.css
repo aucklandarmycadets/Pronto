@@ -1,3 +1,9 @@
+/**
+ * Monokai theme for JavaScript
+ * Based on Monokai textmate theme by http://www.monokai.nl/
+ * @author JamesNZL
+ */
+
 code[class*="language-"],
 pre[class*="language-"] {
 	color: #f8f8f2;

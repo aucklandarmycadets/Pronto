@@ -1,21 +1,18 @@
 :root {
 	--bg-colour: #282828;
 	--bg-accent-colour: #1b1b1b;
-	--primary-colour: #ffd456;
-	--secondary-colour: #ffd456;
-	--accent-colour: #1f1f1f;
+	--primary-colour: #08a8e6;
+	--secondary-colour: #08a8e6;
+	--text-colour: #fff;
 	--link-colour: rgba(255, 255, 255, .5);
 	--link-hover-colour: rgba(255, 255, 255, .75);
 	--horizontal-rule-colour: rgba(255, 255, 255, 1);
 	--border-colour: rgba(255, 255, 255, .5);
 	--code-colour: rgba(255, 255, 255, 0.875);
 	--code-attention-colour: rgba(255, 255, 255, 0.875);
-	--text-colour: #fff;
 	--light-font-colour: rgba(255, 255, 255, .5);
-	--supporting-colour: #7097b5;
 	--heading-colour: var(--text-colour);
 	--subheading-colour: var(--secondary-colour);
-	--heading-background: #f7f7f7;
 	--code-bg-colour: var(--bg-accent-colour);
 	--nav-title-colour: var(--heading-colour);
 	--nav-title-align: center;
