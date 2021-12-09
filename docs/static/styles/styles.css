@@ -143,7 +143,8 @@ code {
 	color: var(--code-attention-colour);
 }
 
-a code {
+a code,
+.method-returns a code {
 	color: var(--link-colour);
 }
 
@@ -255,7 +256,8 @@ a code {
 .layout-nav a:hover,
 .layout-footer a:hover,
 .nav-heading a:hover,
-a code:hover {
+a code:hover,
+.method-returns a code:hover {
 	color: var(--link-hover-colour);
 }
 
