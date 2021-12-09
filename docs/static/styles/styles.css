@@ -171,7 +171,7 @@ code {
 	right: 0;
 	width: var(--nav-width);
 	height: 100%;
-	overflow: scroll;
+	overflow: auto;
 }
 
 .layout-header h1 {
