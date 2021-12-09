@@ -103,8 +103,8 @@ a {
 
 a:hover,
 a:active {
-	text-decoration: underline;
 	color: var(--link-hover-colour);
+	text-decoration: none;
 }
 
 img {
