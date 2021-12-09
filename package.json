@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "jsdoc": "^3.6.7",
-    "tidy-jsdoc": "github:jamesnzl/tidy-jsdoc",
+    "tidy-jsdoc": "github:JamesNZL/tidy-jsdoc",
     "typescript": "^4.5.2"
   }
 }
