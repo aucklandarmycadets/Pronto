@@ -143,6 +143,10 @@ code {
 	color: var(--code-attention-colour);
 }
 
+a code {
+	color: var(--link-colour);
+}
+
 .prettyprint.source code:not([class*="language-"]) {
 	display: block;
 	padding: 20px;
