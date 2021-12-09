@@ -476,11 +476,6 @@ li.method-returns,
 	margin-bottom: 1em;
 }
 
-.method-source a:link,
-.method-source a:visited {
-	color: var(--light-font-colour);
-}
-
 .method-returns p {
 	margin: 0;
 }
