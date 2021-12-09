@@ -18,8 +18,7 @@
 	--code-bg-colour: var(--bg-accent-colour);
 	--nav-title-colour: var(--heading-colour);
 	--nav-title-align: center;
-	--nav-title-size: 1rem;
-	--nav-title-margin-bottom: 1.5em;
+	--nav-title-size: 1.25rem;
 	--nav-title-font-weight: 600;
 	--nav-list-margin-left: 2em;
 	--nav-bg-colour: var(--bg-accent-colour);
@@ -173,7 +172,8 @@ code {
 
 .layout-header h1 {
 	display: block;
-	margin-bottom: var(--nav-title-margin-bottom);
+	margin-top: 1.325em;
+	margin-bottom: 0.875em;
 	font-size: var(--nav-title-size);
 	font-weight: var(--nav-title-font-weight);
 	text-align: var(--nav-title-align);
