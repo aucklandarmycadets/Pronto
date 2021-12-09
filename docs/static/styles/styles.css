@@ -7,8 +7,8 @@
 	--link-colour: rgba(255,255,255,.5);
 	--link-hover-colour: rgba(255,255,255,.75);
 	--border-colour: #fff;
-	--code-colour: #666;
-	--code-attention-colour: #ca2d00;
+	--code-colour: rgba(255,255,255,0.875);
+	--code-attention-colour: rgba(255,255,255,0.875);
 	--text-colour: #fff;
 	--light-font-colour: #999;
 	--supporting-colour: #7097b5;
@@ -493,7 +493,7 @@ li.method-returns,
 
 .param-type code,
 .method-returns code {
-	color: #111;
+	color: var(--code-attention-colour);
 }
 
 .param-name {
