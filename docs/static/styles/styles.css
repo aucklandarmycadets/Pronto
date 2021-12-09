@@ -6,7 +6,8 @@
 	--accent-colour: #1f1f1f;
 	--link-colour: rgba(255,255,255,.5);
 	--link-hover-colour: rgba(255,255,255,.75);
-	--border-colour: #fff;
+	--horizontal-rule-colour: rgba(255,255,255,1);
+	--border-colour: rgba(255,255,255,.5);
 	--code-colour: rgba(255,255,255,0.875);
 	--code-attention-colour: rgba(255,255,255,0.875);
 	--text-colour: #fff;
@@ -350,7 +351,7 @@ h5+.code-caption {
 	color: var(--subheading-colour);
 	margin: 1em 0;
 	padding: 0.4em 0;
-	border-bottom: 1px solid var(--border-colour);
+	border-bottom: 1px solid var(--horizontal-rule-colour);
 }
 
 .subtitle+.event,
@@ -439,7 +440,7 @@ table p:last-child {
 }
 
 .readme h2 {
-	border-bottom: 1px solid var(--border-colour);
+	border-bottom: 1px solid var(--horizontal-rule-colour);
 	margin: 1em 0;
 	padding-bottom: 0.5rem;
 	color: var(--subheading-colour);
@@ -458,7 +459,7 @@ article.member,
 article.method {
 	padding: 1em 0 1em;
 	margin: 1em 0;
-	border-top: 1px solid var(--border-colour);
+	border-top: 1px solid var(--horizontal-rule-colour);
 }
 
 .method-type-signature:not(:empty) {
