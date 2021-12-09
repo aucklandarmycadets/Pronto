@@ -4,14 +4,14 @@
 	--primary-colour: #ffd456;
 	--secondary-colour: #ffd456;
 	--accent-colour: #1f1f1f;
-	--link-colour: rgba(255,255,255,.5);
-	--link-hover-colour: rgba(255,255,255,.75);
-	--horizontal-rule-colour: rgba(255,255,255,1);
-	--border-colour: rgba(255,255,255,.5);
-	--code-colour: rgba(255,255,255,0.875);
-	--code-attention-colour: rgba(255,255,255,0.875);
+	--link-colour: rgba(255, 255, 255, .5);
+	--link-hover-colour: rgba(255, 255, 255, .75);
+	--horizontal-rule-colour: rgba(255, 255, 255, 1);
+	--border-colour: rgba(255, 255, 255, .5);
+	--code-colour: rgba(255, 255, 255, 0.875);
+	--code-attention-colour: rgba(255, 255, 255, 0.875);
 	--text-colour: #fff;
-	--light-font-colour: rgba(255,255,255,.5);
+	--light-font-colour: rgba(255, 255, 255, .5);
 	--supporting-colour: #7097b5;
 	--heading-colour: var(--text-colour);
 	--subheading-colour: var(--secondary-colour);
@@ -24,9 +24,9 @@
 	--nav-list-margin-left: 2em;
 	--nav-bg-colour: var(--bg-accent-colour);
 	--nav-heading-display: block;
-	--nav-heading-colour: rgba(255,255,255,1);
+	--nav-heading-colour: rgba(255, 255, 255, 1);
 	--nav-link-colour: var(--link-colour);
-	--nav-text-colour: rgba(255,255,255,.75);
+	--nav-text-colour: rgba(255, 255, 255, .75);
 	--nav-type-class-colour: rgb(255, 205, 150);
 	--nav-type-class-bg: rgb(200, 100, 0);
 	--nav-type-member-colour: rgb(153, 202, 153);
@@ -44,7 +44,7 @@
 	--max-content-width: 900px;
 	--nav-width: 320px;
 	--padding-unit: 30px;
-	--layout-footer-colour: rgba(255,255,255,.75);
+	--layout-footer-colour: rgba(255, 255, 255, .75);
 	--member-name-signature-display: none;
 	--base-font-size: 16px;
 	--base-line-height: 1.7;
@@ -67,14 +67,14 @@
 
 ::-webkit-scrollbar-thumb {
 	background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
-    cursor: pointer;
-    border: 3px solid transparent;
-    background-clip: content-box;
+	border-radius: 10px;
+	cursor: pointer;
+	border: 3px solid transparent;
+	background-clip: content-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background-color: rgba(0,0,0,0.75);
+	background-color: rgba(0, 0, 0, 0.75);
 }
 
 ::-webkit-scrollbar-track {
@@ -391,7 +391,7 @@ h5+.code-caption {
 	display: inline-block;
 	margin-left: 0.25em;
 	font-size: 60%;
-	color: rgba(255,255,255,.5);
+	color: rgba(255, 255, 255, .5);
 	font-style: italic;
 	font-weight: lighter;
 }
@@ -407,7 +407,7 @@ h5+.code-caption {
 
 .type-signature,
 .return-type-signature {
-	color: rgba(255,255,255,.75);
+	color: rgba(255, 255, 255, .75);
 	font-weight: 400;
 }
 
@@ -415,7 +415,7 @@ h5+.code-caption {
 .type-signature a:visited,
 .return-type-signature a:link,
 .return-type-signature a:visited {
-	color: rgba(255,255,255,.75);
+	color: rgba(255, 255, 255, .75);
 }
 
 table {
@@ -539,7 +539,7 @@ li.method-returns,
 .property-types {
 	display: inline-block;
 	margin: 0 0.5em 0 .25em;
-	color: rgba(255,255,255,.5);
+	color: rgba(255, 255, 255, .5);
 }
 
 .param-attr,
@@ -547,7 +547,7 @@ li.method-returns,
 	display: inline-block;
 	padding: 0.2em 0.5em;
 	border: 1px solid #eee;
-	color: rgba(255,255,255,.75);
+	color: rgba(255, 255, 255, .75);
 	font-weight: 300;
 	font-size: 0.8em;
 	vertical-align: baseline;
