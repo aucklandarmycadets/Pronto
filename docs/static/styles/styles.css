@@ -24,7 +24,7 @@
 	--nav-bg-colour: var(--bg-accent-colour);
 	--nav-heading-display: block;
 	--nav-heading-colour: #aaa;
-	--nav-link-colour: #666;
+	--nav-link-colour: var(--link-colour);
 	--nav-text-colour: #aaa;
 	--nav-type-class-colour: #fff;
 	--nav-type-class-bg: #FF8C00;
@@ -237,6 +237,11 @@ code {
 .nav-heading a:link,
 .nav-heading a:visited {
 	color: var(--nav-link-colour);
+}
+
+.layout-nav a:hover,
+.nav-heading a:hover {
+	color: var(--link-hover-colour);
 }
 
 .nav-heading .nav-item-type {
