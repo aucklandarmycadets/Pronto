@@ -253,7 +253,9 @@ a code {
 }
 
 .layout-nav a:hover,
-.nav-heading a:hover {
+.layout-footer a:hover,
+.nav-heading a:hover,
+a code:hover {
 	color: var(--link-hover-colour);
 }
 
