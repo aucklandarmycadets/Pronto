@@ -137,9 +137,14 @@ samp {
 code {
 	display: inline-block;
 	background-color: var(--code-bg-colour);
-	padding: 2px 6px 0px;
+	padding: 2px 6px;
+	margin: 2px 0;
 	border-radius: 6px;
 	color: var(--code-attention-colour);
+}
+
+a code {
+	color: var(--link-colour);
 }
 
 .prettyprint.source code:not([class*="language-"]) {
