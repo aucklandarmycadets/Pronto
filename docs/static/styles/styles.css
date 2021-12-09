@@ -58,6 +58,7 @@
 
 ::-webkit-scrollbar {
 	width: 0.85rem;
+	height: 0.85rem;
 }
 
 ::-webkit-scrollbar-button {
