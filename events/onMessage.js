@@ -8,7 +8,7 @@ const Typings = require('../typings');
 const { commandHandler, emojiReact } = require('../handlers');
 
 /**
- * @member {events.EventModule} events.onMessage Event handler to automatically add an acknowledgement emoji to messages in any \<NewsChannel>,
+ * @member {events.EventModule} events.onMessage Event handler to automatically add an acknowledgement emoji to messages in any \<NewsChannel>, and to call [`handlers.commandHandler()`]{@link handlers.commandHandler} whenever a message is created
  */
 
 /**
@@ -18,7 +18,6 @@ module.exports = {
 	bot: ['message'],
 	process: [],
 	/**
-	 * and to call `handlers.commandHandler()` whenever a message is created
 	 * @param {'message'} _ The event that was emitted
 	 * @param {Discord.Message} msg The created message
 	 */

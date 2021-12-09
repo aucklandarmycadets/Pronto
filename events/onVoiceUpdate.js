@@ -8,7 +8,7 @@ const { dateTimeGroup } = require('../modules');
 const { channelPairing, findGuildConfiguration, sendMsg } = require('../handlers');
 
 /**
- * @member {events.EventModule} events.onVoiceUpdate Event handler to log whenever a \<GuildMember> joins/leaves a \<VoiceChannel>,
+ * @member {events.EventModule} events.onVoiceUpdate Event handler to log whenever a \<GuildMember> joins/leaves a \<VoiceChannel>, and to trigger [`handlers.channelPairing()`]{@link handlers.channelPairing}
  */
 
 /**
@@ -18,7 +18,6 @@ module.exports = {
 	bot: ['voiceStateUpdate'],
 	process: [],
 	/**
-	 * and to trigger `handlers.channelPairing()`
 	 * @param {'voiceStateUpdate'} _ The event that was emitted
 	 * @param {Discord.VoiceState} oldState The \<VoiceState> before the update
 	 * @param {Discord.VoiceState} newState The \<VoiceState> after the update

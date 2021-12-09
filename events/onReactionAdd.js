@@ -8,7 +8,7 @@ const Typings = require('../typings');
 const { manageAttendance, updateUnsubmitted } = require('../handlers');
 
 /**
- * @member {events.EventModule} events.onReactionAdd Event handler to trigger `handlers.manageAttendance()` and `handlers.updateUnsubmitted()`
+ * @member {events.EventModule} events.onReactionAdd Event handler to trigger [`handlers.manageAttendance()`]{@link handlers.manageAttendance} and [`handlers.updateUnsubmitted()`]{@link handlers.updateUnsubmitted}
  */
 
 /**
