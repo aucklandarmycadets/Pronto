@@ -27,15 +27,15 @@
 				]
 			}
 		},
-		"css": [
-			"styles/styles.css",
-			"styles/vendor/prism-monokai.css"
-		]
+		"css": []
 	},
 	"metadata": {
 		"title": "Pronto",
 		"logo": "static/logo.svg",
 		"favicon": "static/favicon.svg"
 	},
-	"styles": {}
+	"styles": {
+		"primary-colour": "#ffd456",
+		"secondary-colour": "#ffd456"
+	}
 }
