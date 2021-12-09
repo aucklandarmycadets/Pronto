@@ -463,9 +463,10 @@ article.method {
 
 .method-type-signature:not(:empty) {
 	display: inline-block;
-	background: #ecf0f1;
-	color: #627475;
+	background: var(--bg-accent-colour);
+	color: var(--light-font-colour);
 	padding: 0.25em 0.5em 0.35em;
+	border-radius: 6px;
 	font-weight: 300;
 	font-size: 0.8rem;
 	margin: 0 0.75em 0 0;
