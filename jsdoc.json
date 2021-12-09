@@ -33,7 +33,8 @@
 		]
 	},
 	"metadata": {
-		"title": "Pronto"
+		"title": "Pronto",
+		"logo": "static/logo.svg"
 	},
 	"styles": {}
 }
