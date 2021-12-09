@@ -15,7 +15,7 @@
 		"destination": "docs/",
 		"readme": "README.md",
 		"template": "node_modules/tidy-jsdoc",
-		"prism-theme": "prism-okaidia"
+		"prism-theme": "prism-monokai"
 	},
 	"templates": {
 		"cleverLinks": false,
@@ -28,7 +28,8 @@
 			}
 		},
 		"css": [
-			"styles/styles.css"
+			"styles/styles.css",
+			"styles/vendor/prism-monokai.css"
 		]
 	},
 	"metadata": {
