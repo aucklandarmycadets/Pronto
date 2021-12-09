@@ -11,7 +11,7 @@ const { merge } = require('../modules');
 const { createGuild } = require('../handlers');
 
 /**
- * - `handlers.findGuildConfiguration()` queries the MongoDB database for the guild's \<GuildConfiguration> if it exists, or will first call `handlers.createGuild()`
+ * - `handlers.findGuildConfiguration()` queries the MongoDB database for the guild's \<GuildConfiguration> if it exists, or will first call [`handlers.createGuild()`]{@link handlers.createGuild}
  * to create the \<GuildConfiguration>
  * - If the guild is `null`, the document of Pronto's 'master' guild is returned
  * @function handlers.findGuildConfiguration
