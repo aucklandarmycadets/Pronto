@@ -10,7 +10,7 @@
 	--code-colour: rgba(255,255,255,0.875);
 	--code-attention-colour: rgba(255,255,255,0.875);
 	--text-colour: #fff;
-	--light-font-colour: #999;
+	--light-font-colour: rgba(255,255,255,.5);
 	--supporting-colour: #7097b5;
 	--heading-colour: var(--text-colour);
 	--subheading-colour: var(--secondary-colour);
@@ -23,9 +23,9 @@
 	--nav-list-margin-left: 2em;
 	--nav-bg-colour: var(--bg-accent-colour);
 	--nav-heading-display: block;
-	--nav-heading-colour: #aaa;
+	--nav-heading-colour: rgba(255,255,255,1);
 	--nav-link-colour: var(--link-colour);
-	--nav-text-colour: #aaa;
+	--nav-text-colour: rgba(255,255,255,.75);
 	--nav-type-class-colour: #fff;
 	--nav-type-class-bg: #FF8C00;
 	--nav-type-member-colour: #39b739;
@@ -43,7 +43,7 @@
 	--max-content-width: 900px;
 	--nav-width: 320px;
 	--padding-unit: 30px;
-	--layout-footer-colour: #aaa;
+	--layout-footer-colour: rgba(255,255,255,.75);
 	--member-name-signature-display: none;
 	--base-font-size: 16px;
 	--base-line-height: 1.7;
@@ -382,7 +382,7 @@ h5+.code-caption {
 	display: inline-block;
 	margin-left: 0.25em;
 	font-size: 60%;
-	color: #999;
+	color: rgba(255,255,255,.5);
 	font-style: italic;
 	font-weight: lighter;
 }
@@ -398,7 +398,7 @@ h5+.code-caption {
 
 .type-signature,
 .return-type-signature {
-	color: #aaa;
+	color: rgba(255,255,255,.75);
 	font-weight: 400;
 }
 
@@ -406,7 +406,7 @@ h5+.code-caption {
 .type-signature a:visited,
 .return-type-signature a:link,
 .return-type-signature a:visited {
-	color: #aaa;
+	color: rgba(255,255,255,.75);
 }
 
 table {
@@ -529,7 +529,7 @@ li.method-returns,
 .property-types {
 	display: inline-block;
 	margin: 0 0.5em 0 .25em;
-	color: #999;
+	color: rgba(255,255,255,.5);
 }
 
 .param-attr,
@@ -537,7 +537,7 @@ li.method-returns,
 	display: inline-block;
 	padding: 0.2em 0.5em;
 	border: 1px solid #eee;
-	color: #aaa;
+	color: rgba(255,255,255,.75);
 	font-weight: 300;
 	font-size: 0.8em;
 	vertical-align: baseline;
