@@ -138,7 +138,7 @@ code {
 	display: inline-block;
 	background-color: var(--code-bg-colour);
 	padding: 1px 6px;
-	margin: 1px 0;
+	margin: 2px 0;
 	border-radius: 6px;
 	color: var(--code-attention-colour);
 }
