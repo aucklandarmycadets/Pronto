@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>events/onMemberUpdate.js | Pronto</title>
+    <title>handlers/findGuildConfiguration.js | Pronto</title>
     
       <link type="text/css" rel="stylesheet" href="styles/vendor/prism-monokai.css">
     
@@ -34,7 +34,7 @@
 <main class="layout-main  layout-content--source">
   <div class="container">
     <p class="page-kind">source</p>
-    <h1 class="page-title">events/onMemberUpdate.js</h1>
+    <h1 class="page-title">handlers/findGuildConfiguration.js</h1>
     
 
 
@@ -45,84 +45,53 @@
     <article>
         <pre id="source" class="source-page line-numbers"><code class="language-js">'use strict';
 
+// eslint-disable-next-line no-unused-vars
 const Discord = require('discord.js');
 // eslint-disable-next-line no-unused-vars
 const Typings = require('../typings');
 
-const { dateTimeGroup, updatedPermissions } = require('../modules');
-const { debugError, findGuildConfiguration, sendMsg, verifyBotPermissions } = require('../handlers');
+const { ids: { DEFAULT_GUILD } } = require('../config');
+const { Guild } = require('../models');
+const { merge } = require('../modules');
+const { createGuild } = require('../handlers');
 
 /**
- * @member {events.EventModule} events.onMemberUpdate Event handler to log whenever a \&lt;GuildMember> changes their nickname, or has a role added/removed
+ * - `handlers.findGuildConfiguration()` queries the MongoDB database for the guild's \&lt;GuildConfiguration> if it exists, or will first call `handlers.createGuild()`
+ * to create the \&lt;GuildConfiguration>
+ * - If the guild is `null`, the document of Pronto's 'master' guild is returned
+ * @function handlers.findGuildConfiguration
+ * @param {?Discord.Guild} guild The \&lt;Guild> to find the \&lt;GuildConfiguration> for
+ * - If `null`, the \&lt;GuildConfiguration> of the default guild defined by [`config.ids.DEFAULT_GUILD`]{@link config.Configuration} will be returned instead
+ * @param {Partial&lt;Typings.GuildConfiguration>} changes A Partial\&lt;GuildConfiguration> object of the values to update within the \&lt;GuildConfiguration>
+ * @returns {Promise&lt;Typings.GuildConfiguration>} The guild's \&lt;GuildConfiguration>, or the [`config.ids.DEFAULT_GUILD`]{@link config.Configuration}'s \&lt;GuildConfiguration>
  */
+module.exports = async (guild, changes) => {
+	const { bot } = await require('../pronto');
 
-/**
- * @type {Typings.EventModule}
- */
-module.exports = {
-	bot: ['guildMemberUpdate'],
-	process: [],
+	// If the guild is null, replace it with the &lt;Guild> object of the default guild
+	guild = guild || bot.guilds.cache.get(DEFAULT_GUILD);
+
 	/**
-	 * @param {'guildMemberUpdate'} _ The event that was emitted
-	 * @param {Discord.GuildMember} oldMember The \&lt;GuildMember> before the update
-	 * @param {Discord.GuildMember} newMember The \&lt;GuildMember> after the update
+	 * Attempt to find the \&lt;GuildConfiguration> document by querying for the guild's identifier
+	 * @type {Typings.GuildConfiguration}
 	 */
-	async handler(_, oldMember, newMember) {
-		const { bot } = require('../pronto');
-		const { ids: { logID }, colours } = await findGuildConfiguration(newMember.guild);
+	let document = await Guild.findOne({ guildID: guild.id }, error => {
+		if (error) console.error(error);
+	});
 
-		// Initialise log embed
-		const logEmbed = new Discord.MessageEmbed()
-			.setAuthor(newMember.user.tag, newMember.user.displayAvatarURL({ dynamic: true }))
-			.setColor(colours.warn)
-			.setFooter(`ID: ${newMember.id} | ${await dateTimeGroup()}`);
+	// If there are no changes to upsert, return the document if it was found, or create (and return) a new document for the guild by calling handlers.createGuild()
+	if (!changes) return document || await createGuild(guild);
 
-		// Initialise a variable to store the fetched logs if they exist
-		let fetchedLogs;
+	else if (changes instanceof Object) {
+		// Otherwise, if there are changes to upsert, call modules.merge() to merge the two objects
+		document = merge(document, changes);
 
-		// Find if there are any differences between the roles of newMember and oldMember
-		// i.e. if they have had a role added/removed
-		const roleDifference = newMember.roles.cache.difference(oldMember.roles.cache).first();
+		// Iterate through each changed key and ensure the path is marked as having been changed
+		Object.keys(changes).forEach(key => document.markModified(key));
+	}
 
-		if (roleDifference) {
-			// If there has been a role added/removed, set the log embed's description field accordingly
-			logEmbed.setDescription(`**${newMember} was ${(newMember.roles.cache.some(role => role.id === roleDifference.id)) ? 'added to' : 'removed from'}** ${roleDifference}`);
-
-			// If the &lt;GuildMember> is a bot, use modules.updatedPermissions() to find the resultant changes in the bot's permissions
-			// Then, pass it to handlers.verifyBotPermissions() to see if the changes have resolved the missing but required permissions
-			if (newMember.id === bot.user.id) verifyBotPermissions(newMember.guild, updatedPermissions(oldMember, newMember));
-
-			// Fetch the guild's audit logs for a member role update
-			fetchedLogs = await newMember.guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_ROLE_UPDATE' })
-				.catch(error => debugError(error, 'Error fetching audit logs.'));
-		}
-
-		else if (newMember.displayName !== oldMember.displayName) {
-			// Otherwise, if the &lt;GuildMember> has had their nickname changed, set the log embed accordingly
-			logEmbed.setDescription(`**Nickname for ${newMember} changed**`);
-			logEmbed.addField('Before', oldMember.displayName);
-			logEmbed.addField('After', newMember.displayName);
-
-			// Fetch the guild's audit logs for a member update
-			fetchedLogs = await newMember.guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_UPDATE' })
-				.catch(error => debugError(error, 'Error fetching audit logs.'));
-		}
-
-		// For any other actions which may have emitted &lt;Client>#guildMemberUpdate, cease further execution
-		else return;
-
-		if (fetchedLogs) {
-			// If the audit logs were successfully fethced, extract the executor and target from the audit entry
-			const { executor, target } = fetchedLogs.entries.first();
-
-			// If the audit log target matches the updated &lt;GuildMember>, edit the log embed description to include the executor's tag
-			if (target.id === newMember.id) logEmbed.setDescription(`${logEmbed.description} **by** ${executor}`);
-		}
-
-		// Get the guild's log channel and send the log embed
-		const logChannel = bot.channels.cache.get(logID);
-		sendMsg(logChannel, { embeds: [logEmbed] });
-	},
+	// Save any changes to the &lt;GuildConfiguration> document and return it
+	return await document.save().catch(error => console.error(error));
 };</code></pre>
     </article>
 </section>
