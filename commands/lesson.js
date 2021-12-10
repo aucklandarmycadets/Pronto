@@ -245,7 +245,7 @@ module.exports = async guild => {
 				.setFooter('Use the reactions below to confirm or cancel.');
 
 			// Send the lesson submission confirmation embed to the submitting instructor
-			sendDirect(msg.author, { embeds: [submitEmbed] })
+			sendDirect(msg.author, { embeds: [submitEmbed] }, msg.channel)
 				.then(dm => {
 					/**
 					 * Create a lesson submission embed in a lesson channel and prompt for lesson plan approval by the Training Cell
