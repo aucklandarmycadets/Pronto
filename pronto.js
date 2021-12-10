@@ -51,6 +51,7 @@ mongoose.login(process.env.MONGOURI);
 /**
  * Attach an event listener to a \<Discord.Client> or \<NodeJS.Process> to execute an event handler
  * @function pronto~eventHandler
+ * @ignore
  * @param {Discord.Client | NodeJS.Process} emitter The \<EventEmitter> to add the event listener to
  * @param {string} event The event to listen for
  * @param {Typings.EventHandler} handler The event handler function to execute when the event is emitted
