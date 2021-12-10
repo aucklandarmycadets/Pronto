@@ -100,15 +100,15 @@ interface Emoji {
  */
 export interface Colours {
 	/** The colour to use as the guild's non-specific colour */
-	default: number;
+	default: Discord.ColorResolvable;
 	/** The colour to use as the guild's primary colour */
-	primary: number;
+	primary: Discord.ColorResolvable;
 	/** The colour to use on the guild's leave tickets */
-	leave: number;
+	leave: Discord.ColorResolvable;
 	/** The colour to use as the guild's success colour */
-	success: number;
+	success: Discord.ColorResolvable;
 	/** The colour to use as the guild's warning colour */
-	warn: number;
+	warn: Discord.ColorResolvable;
 	/** The colour to use as the guild's error colour */
-	error: number;
+	error: Discord.ColorResolvable;
 }

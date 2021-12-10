@@ -58,12 +58,12 @@ const { settings, emojis, colours } = require('../config');
 
 /**
  * @typedef {Object} models.Colours An \<Object> of the customisable colours for each guild
- * @property {number} default The colour to use as the guild's non-specific colour
- * @property {number} primary The colour to use as the guild's primary colour
- * @property {number} leave The colour to use on the guild's leave tickets
- * @property {number} success The colour to use as the guild's success colour
- * @property {number} warn The colour to use as the guild's warning colour
- * @property {number} error The colour to use as the guild's error colour
+ * @property {Discord.ColorResolvable} default The colour to use as the guild's non-specific colour
+ * @property {Discord.ColorResolvable} primary The colour to use as the guild's primary colour
+ * @property {Discord.ColorResolvable} leave The colour to use on the guild's leave tickets
+ * @property {Discord.ColorResolvable} success The colour to use as the guild's success colour
+ * @property {Discord.ColorResolvable} warn The colour to use as the guild's warning colour
+ * @property {Discord.ColorResolvable} error The colour to use as the guild's error colour
  */
 
 // Create a new <Schema> of <Guild> type
