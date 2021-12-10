@@ -163,6 +163,10 @@ a code,
 	margin-right: auto;
 }
 
+.layout-content--source .container {
+	max-width: calc(2 * var(--max-content-width));
+}
+
 .layout-main {
 	margin-top: var(--padding-unit);
 	margin-bottom: var(--padding-unit);
@@ -230,10 +234,6 @@ a code,
 .layout-nav a:link,
 .layout-nav a a:visited {
 	color: var(--nav-link-colour);
-}
-
-.layout-content--source {
-	max-width: none;
 }
 
 .nav-heading {
