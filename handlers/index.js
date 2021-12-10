@@ -9,9 +9,9 @@ module.exports = {
 
 	// mongoose/database handlers
 
+	connectToMongoose: require('./connectToMongoose'),
 	findGuildConfiguration: require('./findGuildConfiguration'),
 	findLesson: require('./findLesson'),
-	mongoose: require('./mongoose'),
 
 	// <GuildConfiguration> handlers
 

@@ -5,7 +5,8 @@ require('dotenv').config();
 const Discord = require('discord.js');
 // eslint-disable-next-line no-unused-vars
 const Typings = require('./typings');
-const { mongoose } = require('./handlers');
+
+const { connectToMongoose } = require('./handlers');
 
 /**
  * The Discord.js library to interact with the Discord API
@@ -45,8 +46,8 @@ bot.login(process.env.TOKEN)
 		};
 	});
 
-// Log in to the MongoDB database
-mongoose.login(process.env.MONGOURI);
+// Connect to the MongoDB database
+connectToMongoose(process.env.MONGOURI);
 
 /**
  * Attach an event listener to a \<Discord.Client> or \<NodeJS.Process> to execute an event handler
