@@ -457,6 +457,10 @@ table p:last-child {
 	margin-bottom: 0;
 }
 
+.readme {
+	margin-top: calc(var(--padding-unit) + 10px);
+}
+
 .readme h2 {
 	border-bottom: 1px solid var(--horizontal-rule-colour);
 	margin: 1em 0;
