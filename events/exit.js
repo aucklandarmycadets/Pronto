@@ -21,7 +21,7 @@ module.exports = {
 	process: ['exit', 'SIGINT'],
 	/**
 	 * @param {'exit' | 'SIGINT'} event The event that was emitted
-	 * @param {?number} code The code to exit with
+	 * @param {number} [code] The code to exit with
 	 */
 	async handler(event, code) {
 		const { bot, version } = require('../pronto');
