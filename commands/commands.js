@@ -115,7 +115,7 @@ module.exports = async guild => {
 			command: 'evaluate',
 			aliases: ['eval'],
 			description: {
-				general: 'Evaluate Javascript code.',
+				general: 'Evaluate JavaScript code.',
 			},
 			allowDirect: true,
 			requiredRoles: [],

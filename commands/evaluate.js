@@ -8,7 +8,7 @@ const { dateTimeGroup, jsCodeBlock, ...modules } = require('../modules');
 const { commandError, deleteMsg, findGuildConfiguration, sendMsg, ...handlers } = require('../handlers');
 
 /**
- * @member {commands.Command} commands.evaluate Evaluate Javascript code directly from a Discord message
+ * @member {commands.Command} commands.evaluate Evaluate JavaScript code directly from a Discord message
  */
 
 /**

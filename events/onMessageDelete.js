@@ -117,7 +117,7 @@ module.exports = {
 			// Use Promise.all() to ensure all <Command> objects have been loaded before proceeding
 			const autoDeletingCommands = Promise.all(
 				fs.readdirSync('./commands/')
-					// Read the file names of all the Javascript command files inside ./commands, other than the index and <BaseCommand> schematic files
+					// Read the file names of all the JavaScript command files inside ./commands, other than the index and <BaseCommand> schematic files
 					.filter(file => file.endsWith('.js') && !['index.js', 'commands.js'].includes(file))
 					// Read the file contents of each <Command> file, and filter the string[] to the names of only the files which reference modules.deleteMsg()
 					.filter(file => fs.readFileSync(`./commands/${file}`, { encoding: 'utf-8', flag: 'r' }).includes('deleteMsg'))

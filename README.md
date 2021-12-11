@@ -43,7 +43,7 @@ A Discord bot developed for the City of Auckland Cadet Unit, built with [discord
 | ----------------- | ------------------------------------------------------------ | --------------------------------------------------------------- |
 | `!ping`           | Test the latency of the bot                                  | Developer                                                       |
 | `!uptime`         | Time since last restart                                      | Developer                                                       |
-| `!evaluate`       | Evaluate Javascript code                                     | Developer                                                       |
+| `!evaluate`       | Evaluate JavaScript code                                     | Developer                                                       |
 | `!restart`        | Restart the bot                                              | Developer                                                       |
 | `!help`           | Get help with using Pronto                                   | All                                                             |
 | `!help (command)` | Get help with a specific command                             | All (user must have permissions to use the sub-command however) |

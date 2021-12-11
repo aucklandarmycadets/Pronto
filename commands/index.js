@@ -26,7 +26,7 @@ module.exports = async guild => await commandLoader('./commands', guild);
  * @returns {Promise<Typings.Commands>} The loaded \<Commands> object for the guild, containing each \<Command> in a nested object
  */
 async function commandLoader(directory, guild) {
-	// Read the file names of every Javascript file in the directory, other than the index and <BaseCommands> schematic files
+	// Read the file names of every JavaScript file in the directory, other than the index and <BaseCommands> schematic files
 	const files = fs.readdirSync(directory).filter(file => file.endsWith('.js') && !['index.js', 'commands.js'].includes(file));
 
 	// Initialise an empty commands object

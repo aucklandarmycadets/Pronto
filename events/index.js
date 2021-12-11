@@ -42,7 +42,7 @@ module.exports = () => processIndex('./events');
  * @returns {Typings.EventModules} The loaded \<EventModules> object, containing each \<EventModule> in a nested object
  */
 function processIndex(directory) {
-	// Read the file names of every Javascript file in the directory, other than the index file
+	// Read the file names of every JavaScript file in the directory, other than the index file
 	const files = fs.readdirSync(directory).filter(file => file.endsWith('.js') && file !== 'index.js');
 
 	// For each <EventModule>, create a new nested object within the returned object under a property matching its file name
