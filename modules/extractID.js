@@ -2,6 +2,6 @@
 
 module.exports = str => {
 	const match = str.match(/^<@!?(\d+)>$/);
-	if (!match) return;
+	if (!match) return false;
 	return match[1];
 };
