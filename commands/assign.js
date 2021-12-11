@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const Typings = require('../typings');
 const mongoose = require('mongoose');
 
-// Import chrono to schedule weekly lesson reminders
+// Import chrono-node to schedule weekly lesson reminders
 let chrono = require('chrono-node');
 chrono = new chrono.Chrono(chrono.en.createConfiguration(false, true));
 
