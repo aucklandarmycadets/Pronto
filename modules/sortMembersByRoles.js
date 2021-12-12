@@ -17,7 +17,7 @@ const { findGuildConfiguration } = require('../handlers');
  * @function modules.sortMembersByRoles
  * @param {Discord.Guild} guild The \<Guild> that the members belong to
  * - If the guild's [`<GuildConfiguration.ids.administratorID>`]{@link models.GuildConfiguration} is registered, it will be ignored in the sort order
- * @returns {function(Discord.GuildMember, Discord.GuildMember):number} The `compareFunction` to be passed to the `Collection<Snowflake, GuildMember>.sort()` method
+ * @returns {Promise<function(Discord.GuildMember, Discord.GuildMember):number>} The `compareFunction` to be passed to the `Collection<Snowflake, GuildMember>.sort()` method
  */
 module.exports = async guild => {
 	const { ids: { administratorID } } = await findGuildConfiguration(guild);
