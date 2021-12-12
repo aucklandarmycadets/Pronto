@@ -3,17 +3,17 @@ import mongoose = require('mongoose');
 
 // <mongoose.Document> typings
 
-export * from './models/attendance'
-export * from './models/guild'
-export * from './models/lesson'
+export * from './models/attendance';
+export * from './models/guild';
+export * from './models/lesson';
 
 // Command typings
 
-export * from './commands/commands'
+export * from './commands/commands';
 
 // Event typings
 
-export * from './events/events'
+export * from './events/events';
 
 // Configuration typings
 
