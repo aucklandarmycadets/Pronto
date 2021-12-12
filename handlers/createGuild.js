@@ -42,7 +42,7 @@ const createdChannels = new Discord.Collection();
  */
 module.exports = async guild => {
 	/**
-	 * Attempt to find an existing \<GuildConfiguration> document by querying for the guild's identifer
+	 * Attempt to find an existing \<GuildConfiguration> document by querying for the guild's identifier
 	 * @type {?Typings.GuildConfiguration}
 	 */
 	const existingDocument = await Guild.findOne({ guildID: guild.id }, error => {
@@ -53,7 +53,7 @@ module.exports = async guild => {
 	if (existingDocument) return existingDocument;
 
 	if (currentlyCreating.has(guild.id)) {
-		// If the guild's identifier already exists inside the currentlyCreated set, await until the guild's pending Promises resolve for the <GuildConfiguration> document to be accessible
+		// If the guild's identifier already exists inside the currentlyCreating set, await until the guild's pending Promises resolve for the <GuildConfiguration> document to be accessible
 		await Promise.all(Object.values(pendingPromises[guild.id]));
 		// Recursively call handlers.createGuild() to return the created <GuildConfiguration> document
 		return await this(guild);

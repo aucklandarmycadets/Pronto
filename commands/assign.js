@@ -263,7 +263,7 @@ module.exports = async guild => {
 /**
  * @typedef {'TEXT' | 'DATE' | 'ATTCHMENT'} commands.assign.InputType A \<string> representation of the type of input
  * - Text inputs only require an input, with no additional error checking
- * - Date inputs are parsed through chrono to ensure a valid date is recognised and return a Unix timest
+ * - Date inputs are parsed through chrono to ensure a valid date is recognised and return a Unix timestamp (ms)
  * - Attachments allow attachments to be uploaded or URLs to be entered, with appropriate error checking
  */
 

@@ -18,14 +18,14 @@ module.exports = {
 	process: ['unhandledRejection', 'uncaughtExceptionMonitor'],
 	/**
 	 * @param {'error' | 'warn' | 'unhandledRejection' | 'uncaughtExceptionMonitor'} event The event that was emitted
-	 * @param {Error | string | *} error The \<Error> that was enountered, or a \<string> if emitted by \<Discord.Client>#warn
+	 * @param {Error | string | *} error The \<Error> that was encountered, or a \<string> if emitted by \<Discord.Client>#warn
 	 * - \<any> may be emitted by \<NodeJS.Process>#unhandledRejection, but it is typically an \<Error>
 	 */
 	async handler(event, error) {
 		const { colours } = await findGuildConfiguration();
 
 		// If error is an <Error> with a stack, reassign the variable
-		// Only do this if the stack is actually present, and not if it is a regular <string> or <*>
+		// Only do this if the stack actually exists, and not if it is a regular <string> or <*>
 		if (error.stack) error = error.stack;
 
 		// Print the <Error> to console with console.error() along with the emitted event

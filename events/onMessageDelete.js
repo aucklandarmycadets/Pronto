@@ -119,7 +119,7 @@ module.exports = {
 				fs.readdirSync('./commands/')
 					// Read the file names of all the JavaScript command files inside ./commands, other than the index and <BaseCommand> schematic files
 					.filter(file => file.endsWith('.js') && !['index.js', 'commands.js'].includes(file))
-					// Read the file contents of each <Command> file, and filter the string[] to the names of only the files which reference modules.deleteMsg()
+					// Read the file contents of each <Command> file, and filter the string[] to the names of only the files which reference handlers.deleteMsg()
 					.filter(file => fs.readFileSync(`./commands/${file}`, { encoding: 'utf-8', flag: 'r' }).includes('deleteMsg'))
 					// Load each <Command> by passing the guild into each command file's exported function
 					.map(async file => await require(`../commands/${file}`)(msg.guild)),
@@ -143,7 +143,7 @@ module.exports = {
 				// If the command message uses the guild's command prefix, remove the first element and remove the prefix from the substring
 				: args.shift().toLowerCase().replace(prefix.toLowerCase(), '');
 
-			// Check whether the parsed message command matches to a <Command> file that references modules.deleteMsg(), and return the boolean result
+			// Check whether the parsed message command matches to a <Command> file that references handlers.deleteMsg(), and return the boolean result
 			return autoDeletingCommands.some(command => command.command === msgCommand || command.aliases.includes(msgCommand));
 		}
 	},

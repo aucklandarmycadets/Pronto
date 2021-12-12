@@ -27,7 +27,7 @@ module.exports = async guild => {
 	attendance.execute = async ({ msg, args }) => {
 		const { bot } = require('../pronto');
 
-		// Ensure the command arguments are not empty, i.e. a register is actually present
+		// Ensure the command arguments are not empty, i.e. a register actually exists
 		try {
 			if (args.length === 0) throw '';
 

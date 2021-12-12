@@ -4,7 +4,7 @@
 const Discord = require('discord.js');
 
 /**
- * `modules.extract()` parses a \<User.id> from a potential \<UserMention | MemberMention> string
+ * `modules.extractID()` parses a \<User.id> from a potential \<UserMention | MemberMention> string
  * @example
  * // returns '192181901065322496'
  * modules.extractID('<@192181901065322496>');

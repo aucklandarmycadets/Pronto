@@ -2,7 +2,7 @@
 
 /**
  * `modules.merge()` performs a deep merge of a `source` object into a `target` object,
- * by assiging any non-existing properties and overwriting values of existing properties
+ * by assigning any non-existing properties and overwriting values of existing properties
  * - Nested objects are recursed through, to ensure all properties of the `source` object are merged into `target`
  * @example
  * const target = {

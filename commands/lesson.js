@@ -171,7 +171,7 @@ module.exports = async guild => {
 				.addField('Resources', resources.join('\n'))
 				.setFooter('Enter the corresponding serial for the resource you wish to remove, or \'cancel\' to abort.');
 
-			// Send the serialsed resources embed
+			// Send the serialised resources embed
 			sendMsg(msg.channel, { embeds: [resourcesEmbed] });
 
 			// Call getNumberInput() to collect user's input for the resource to remove
@@ -351,11 +351,11 @@ function serialiseResources(document) {
 	document.submittedResources = attachmentArray.concat(databaseArray);
 	document.save().catch(error => console.error(error));
 
-	// Concantenate the URL string[] to the <MessageAttachment> resource string[], then map it to a new string[] of serialised resource strings
+	// Concatenate the URL string[] to the <MessageAttachment> resource string[], then map it to a new string[] of serialised resource strings
 	const resources = attachmentArray.concat(urlArray)
 		.map((resource, i) => `\`${i + 1}\` ${resource}`);
 
-	// Return the serialsed resource string[], and return a new number[] of the serials
+	// Return the serialised resource string[], and return a new number[] of the serials
 	return { resources, range: resources.map((_, i) => i + 1) };
 }
 

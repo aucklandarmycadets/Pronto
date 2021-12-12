@@ -142,7 +142,7 @@ function removeSensitive(str) {
 
 	// Loop through each sensitive string
 	for (let i = 0; i < sensitives.length; i++) {
-		// Replace any occurences of the sensitive string with '*'
+		// Replace any occurrences of the sensitive string with '*'
 		// WARNING: This filter DOES NOT cover substrings of sensitive strings
 		str = str.replace(new RegExp(sensitives[i], 'g'), '*'.repeat(sensitives[i].length));
 	}
@@ -152,26 +152,26 @@ function removeSensitive(str) {
 }
 
 /**
- * Find the last occurence of a given substring within a string to ensure a comfortable message split position
+ * Find the last occurrence of a given substring within a string to ensure a comfortable message split position
  * @function commands.evaluate~findBreakIndex
  * @param {string} str The string to search within
  * @param {?string} substr The substring at which to break
  * @param {number} maximumIndex The maximum length that the message can be
- * @returns {number} The index of the last occurence of the substring
+ * @returns {number} The index of the last occurrence of the substring
  */
 function findBreakIndex(str, substr, maximumIndex) {
-	// Find the last occurence of the specified substring, but before the maximum index (accounting for the length of the substring itself)
+	// Find the last occurrence of the specified substring, but before the maximum index (accounting for the length of the substring itself)
 	const substrIndex = str.lastIndexOf(substr, maximumIndex - substr.length);
 	const hasSubstr = substrIndex !== -1;
 
-	// Find the last occurence of a ' ' character as a fallback
+	// Find the last occurrence of a ' ' character as a fallback
 	const spaceIndex = str.lastIndexOf(' ', maximumIndex - 1);
 	const hasSpace = spaceIndex !== -1;
 
 	return (str.length > maximumIndex)
 		// If the length of the string is greater than the maximum index and must be broken, follow the truthy tree
 		? (hasSubstr)
-			// If the substring is present, return the index immediately after the last occurence of the substring
+			// If the substring is present, return the index immediately after the last occurrence of the substring
 			? substrIndex + substr.length
 			: (hasSpace)
 				// Otherwise, return the index of the last space character if present

@@ -19,7 +19,7 @@ module.exports = {
 	process: [],
 	/**
 	 * @param {'guildBanAdd' | 'guildBanRemove'} event The event that was emitted
-	 * @param {Discord.Guild} guild The \<Guild> that the ban/unban occured in
+	 * @param {Discord.Guild} guild The \<Guild> that the ban/unban occurred in
 	 * @param {Discord.User} user The \<User> that was banned/unbanned
 	 */
 	async handler(event, guild, user) {

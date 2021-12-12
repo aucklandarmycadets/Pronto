@@ -67,7 +67,7 @@ module.exports = {
 		else return;
 
 		if (fetchedLogs) {
-			// If the audit logs were successfully fethced, extract the executor and target from the audit entry
+			// If the audit logs were successfully fetched, extract the executor and target from the audit entry
 			const { executor, target } = fetchedLogs.entries.first();
 
 			// If the audit log target matches the updated <GuildMember>, edit the log embed description to include the executor's tag

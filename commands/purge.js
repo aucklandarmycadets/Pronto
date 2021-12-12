@@ -62,7 +62,7 @@ module.exports = async guild => {
 			await msg.channel.messages.fetch({ limit: 100, before })
 				.then(_msgs => {
 					// Filter the fetched messages by user (if specified), then convert the <Collection> to <Message[]>
-					// Slice the resultant array to the appropriate length and concantenate it to the msgs <Message[]>
+					// Slice the resultant array to the appropriate length and concatenate it to the msgs <Message[]>
 					msgs = (userToPurge)
 						? msgs.concat(_msgs.filter(_msg => _msg.author.id === userToPurge.id).array().slice(0, purgeCount - msgs.length))
 						: msgs.concat(_msgs.array().slice(0, purgeCount - msgs.length));

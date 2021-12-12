@@ -35,11 +35,11 @@ module.exports = (array, toString) => {
 	const urlArray = processedArray.filter(resource => resource.startsWith('[Resource]'))
 		.map((resource, i) => `[Resource ${i + 1}]${resource.replace('[Resource]', '')}`);
 
-	// Concantenate the URL string[] to the <MessageAttachment> resource string[]
+	// Concatenate the URL string[] to the <MessageAttachment> resource string[]
 	const combinedArr = attachmentArray.concat(urlArray);
 
 	return (combinedArr.length)
-		// If the concantenated string[] is not empty, return either a newline-separated string or the string[] depending on the toString boolean
+		// If the concatenated string[] is not empty, return either a newline-separated string or the string[] depending on the toString boolean
 		? (toString)
 			? combinedArr.join('\n')
 			: combinedArr

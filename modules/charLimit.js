@@ -4,10 +4,10 @@
  * `modules.charLimit()` ensures a provided string does not exceed the specified character limit
  * @example
  * // returns 'I will get trimmed...'
- * module.charLimit('I will get trimmed to 21 characters', 21);
+ * modules.charLimit('I will get trimmed to 21 characters', 21);
  * @example
  * // returns '```Codeblock formatting is respected...```'
- * module.charLimit('```Codeblock formatting is respected by modules.charLimit()```', 42);
+ * modules.charLimit('```Codeblock formatting is respected by modules.charLimit()```', 42);
  * @function modules.charLimit
  * @param {string} str The string to trim if necessary
  * @param {number} [limit=2048] The allowed character limit

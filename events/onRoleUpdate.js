@@ -59,7 +59,7 @@ module.exports = {
 
 			// Filter the <PermissionString[]> difference for removed permissions, i.e. the ones which exist in the old <Role> permissions
 			const removedPermissions = changedPermissions.filter(permission => oldPermissions.includes(permission));
-			// Filter the <PermissionString[]> difference for added permissions, i.e the ones which don't exist in the old <Role> permissions
+			// Filter the <PermissionString[]> difference for added permissions, i.e. the ones which don't exist in the old <Role> permissions
 			const addedPermissions = changedPermissions.filter(permission => !oldPermissions.includes(permission));
 
 			// Ensure there were some added/removed permissions that were successfully filtered, otherwise cease further execution

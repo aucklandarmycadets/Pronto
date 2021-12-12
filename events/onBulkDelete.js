@@ -42,7 +42,7 @@ module.exports = {
 			logEmbed.setDescription(`**${msgs.array().length} messages bulk deleted in ${msg.channel}**`);
 		}
 
-		// However, if there was was indeed a remaining message, check to see if it was a commands\purge.js <Command>
+		// However, if there was indeed a remaining message, check to see if it was a commands\purge.js <Command>
 		else if (lastMsg.content.includes(purge.command) || purge.aliases.some(alias => lastMsg.content.includes(alias))) {
 			// If it was, delete the command message
 			deleteMsg(lastMsg);

@@ -37,7 +37,7 @@ async function commandLoader(directory, guild) {
 		// Parse the <CommandName> by removing the file extension
 		const command = file.replace('.js', '');
 		// Load each <Command> by passing the guild into each command file's exported function
-		// Store each indiviudal <Command> as a [key, value] pair within the <Commands> object, where the key is the <CommandName> and the value is the <Command> object
+		// Store each individual <Command> as a [key, value] pair within the <Commands> object, where the key is the <CommandName> and the value is the <Command> object
 		commandsObject[command] = await require(`.${directory}/${command}`)(guild);
 	}
 
