@@ -5,12 +5,15 @@ const Discord = require('discord.js');
 
 /**
  * `modules.extractID()` parses a \<User.id> from a potential \<UserMention | MemberMention> string
+ *
  * @example
  * // returns '192181901065322496'
  * modules.extractID('<@192181901065322496>');
+ *
  * @example
  * // returns false
  * modules.extractID('Pronto');
+ *
  * @function modules.extractID
  * @param {Discord.MemberMention | Discord.MemberMention | string} str The potential mention string
  * @returns {Discord.Snowflake | false} The parsed \<User.id>, or `false` if `str` is not a \<UserMention | MemberMention>

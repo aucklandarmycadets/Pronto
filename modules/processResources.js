@@ -4,6 +4,7 @@ const Discord = require('discord.js');
 
 /**
  * `modules.processResources()` processes an input of lesson resource(s) into a string of the format
+ *
  * required by [`<Lesson.submittedResources>`]{@link models.Lesson}
  * @example
  * // <MessageAttachment.name> = 'Message_Attachment_Name'
@@ -14,6 +15,7 @@ const Discord = require('discord.js');
  * // [Resource](https://...)\n
  * // [Resource](https://...)
  * modules.processResources(<MessageAttachment>, ['https://...', 'https://...']);
+ *
  * @function modules.processResources
  * @param {Discord.MessageAttachment} [attachment] An input \<MessageAttachment>
  * @param {string[]} [URLs] An input \<string[]> of URLs

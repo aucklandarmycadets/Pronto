@@ -5,14 +5,17 @@ const Discord = require('discord.js');
 
 /**
  * `modules.formatRoles()` formats a \<Snowflake[] | Role[]> into a formatted string of role mentions (or escaped mentions)
+ *
  * @example
  * // returns {string}:
  * // @\u200bJames @\u200bAdministrators\n
  * // @\u200bModerators
  * modules.formatRoles(['285282768286646272', '285283460078239785', '285283751695745033'], false, 2);
+ *
  * @example
  * // returns '<@&285282768286646272> <@&285283460078239785> <@&285283751695745033>'
  * modules.formatRoles(['285282768286646272', '285283460078239785', '285283751695745033'], true);
+ *
  * @function modules.formatRoles
  * @param {Discord.Snowflake[] | Discord.Role[]} array A \<Role.id[] | Role[]> to convert into a formatted string
  * @param {boolean} [mention] Whether to mention the roles, or escape the mentions

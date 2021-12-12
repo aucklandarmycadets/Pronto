@@ -3,12 +3,15 @@
 /**
  * `modules.equals()` determines whether two arrays are identical, with all elements in the same order
  * - **WARNING:** This implementation will produce unpredictable results with nested arrays or object elements
+ *
  * @example
  * // returns true
  * modules.equals([1, 2, 3], [1, 2, 3]);
+ *
  * @example
  * // returns false
  * modules.equals([1, 2, 3], [3, 2, 1]);
+ *
  * @function modules.equals
  * @param {any[]} arrayOne The first \<any[]> to compare
  * @param {any[]} arrayTwo The second \<any[]> to compare

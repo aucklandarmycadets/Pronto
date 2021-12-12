@@ -3,21 +3,26 @@
 /**
  * `modules.enumerateResources()` enumerates a \<string[]> of submitted lesson resources,
  * by ordering any \<MessageAttachment> links first, then numbering any URL resources as [Resource n]
+ *
  * @example
  * // returns ['[Message_Attachment_Name](https://cdn.discordapp.com/attachments/...)', '[Resource 1](https://...)', '[Resource 2](https://...)']
  * modules.enumerateResources(['[Resource](https://...)', '[Message_Attachment_Name](https://cdn.discordapp.com/attachments/...)', '[Resource](https://...)']);
+ *
  * @example
  * // returns ['[Message_Attachment_Name](https://cdn.discordapp.com/attachments/...)', '[Resource 1](https://...)', '[Resource 2](https://...)']
  * modules.enumerateResources(['[Message_Attachment_Name](https://cdn.discordapp.com/attachments/...)\n[Resource](https://...)', '[Resource](https://...)']);
+ *
  * @example
  * // returns {string}:
  * // [Message_Attachment_Name](https://cdn.discordapp.com/attachments/...)\n
  * // [Resource 1](https://...)\n
  * // [Resource 2](https://...)
  * modules.enumerateResources(['[Resource](https://...)', '[Message_Attachment_Name](https://cdn.discordapp.com/attachments/...)', '[Resource](https://...)'], true);
+ *
  * @example
  * // returns 'N/A'
  * modules.enumerateResources([], true);
+ *
  * @function modules.enumerateResources
  * @param {string[]} array A \<string[]> of the lesson resources to enumerate
  * @param {boolean} [toString] Whether to return the enumerated resources as a \<string[]> or a newline-delimited \<string>

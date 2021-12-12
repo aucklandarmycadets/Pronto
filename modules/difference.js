@@ -3,9 +3,11 @@
 /**
  * `modules.difference()` finds and returns the difference between two arrays, where each
  * element exists in only one of the provided arrays
+ *
  * @example
  * // returns [0, 2]
  * modules.difference([0, 1, 3], [1, 2, 3]);
+ *
  * @function modules.difference
  * @param {any[]} arrayOne The first \<any[]> to compare
  * @param {any[]} arrayTwo The second \<any[]> to compare

@@ -4,6 +4,7 @@
  * `modules.merge()` performs a deep merge of a `source` object into a `target` object,
  * by assigning any non-existing properties and overwriting values of existing properties
  * - Nested objects are recursed through, to ensure all properties of the `source` object are merged into `target`
+ *
  * @example
  * const target = {
  * 	one: 1,
@@ -26,6 +27,7 @@
  * //     },
  * // }
  * modules.merge(target, source);
+ *
  * @function modules.merge
  * @param {Object} target The target object to merge into
  * @param {Object} source The source object from which to copy properties

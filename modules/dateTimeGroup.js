@@ -5,10 +5,13 @@ const { findGuildConfiguration } = require('../handlers');
 
 /**
  * `modules.dateTimeGroup()` formats a date-time group for the specified date, or the current date if no date is provided
+ *
  * @example
  * // <GuildConfiguration.settings.longDate> = 'HHMM "h" ddd, d mmm yy'
+ *
  * // returns '2121 h Tue, 21 Sep 21'
  * modules.dateTimeGroup(1632216060000);
+ *
  * @function modules.dateTimeGroup
  * @param {string | number | Date} [date] A Date object, or a [resolvable date]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/Date#parameters} accepted by the `Date()` constructor, such as:
  * - A Unix timestamp as a \<string> | \<number>

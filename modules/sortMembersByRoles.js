@@ -7,11 +7,13 @@ const { findGuildConfiguration } = require('../handlers');
 /**
  * `modules.sortMembersByRoles()` returns a `compareFunction` for `Collection<Snowflake, GuildMember>.sort()`
  * that sorts the members in descending order of highest role
+ *
  * @example
  * // guild = <Guild>
  *
  * // Sorts a Collection<Snowflake, GuildMember> in descending order of highest role
  * Collection<Snowflake, GuildMember>.sort(modules.sortMembersByRoles(guild));
+ *
  * @function modules.sortMembersByRoles
  * @param {Discord.Guild} guild The \<Guild> that the members belong to
  * - If the guild's [`<GuildConfiguration.ids.administratorID>`]{@link models.GuildConfiguration} is registered, it will be ignored in the sort order

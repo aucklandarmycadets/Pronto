@@ -9,6 +9,7 @@ const { findGuildConfiguration } = require('../handlers');
 
 /**
  * `modules.prefixCommand()` applies the specified guild's command prefix to a \<BaseCommand>'s command
+ *
  * @example
  * // guild = <Guild>
  * // <GuildConfiguration.settings.prefix> = '!'
@@ -17,6 +18,7 @@ const { findGuildConfiguration } = require('../handlers');
  *
  * // returns '!help'
  * modules.prefixCommand(help, guild);
+ *
  * @function modules.prefixCommand
  * @param {Typings.BaseCommand} command The \<BaseCommand> of the command to prefix
  * @param {Discord.Guild} [guild] The \<Guild> to retrieve the command prefix from

@@ -2,12 +2,15 @@
 
 /**
  * `modules.isURL()` uses the `URL()` constructor to validate whether a specified string is a valid URL
+ *
  * @example
  * // returns true
  * modules.isURL('https://github.com/JamesNZL/Pronto');
+ *
  * @example
  * // returns false
  * modules.isURL('i.am.not.a.url');
+ *
  * @function modules.isURL
  * @param {string} str The string to validate
  * @returns {boolean} Whether the string is a valid URL

@@ -7,12 +7,14 @@ const { difference } = require('../modules');
 /**
  * `modules.updatedPermissions()` finds the difference between the \<Permissions> of two \<GuildMember | Role>
  * and returns it as a \<PermissionString[]>
+ *
  * @example
  * // <stateOne.permissions.toArray()> = ['MANAGE_CHANNELS', 'MANAGE_GUILD']
  * // <stateTwo.permissions.toArray()> = ['MANAGE_CHANNELS', 'MANAGE_MESSAGES']
  *
  * // returns ['MANAGE_GUILD', 'MANAGE_MESSAGES']
  * modules.updatedPermissions(<stateOne>, <stateTwo>);
+ *
  * @function modules.updatedPermissions
  * @param {Discord.GuildMember | Discord.Role} stateOne The old \<GuildMember | Role>
  * @param {Discord.GuildMember | Discord.Role} stateTwo The new \<GuildMember | Role>

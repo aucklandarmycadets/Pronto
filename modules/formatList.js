@@ -2,6 +2,7 @@
 
 /**
  * `modules.formatList()` formats a supplied `listObject` into a formatted list string
+ *
  * @example
  * // returns {string}:
  * // **KeyOne:** ValueOne\n
@@ -10,6 +11,7 @@
  *	'KeyOne': 'ValueOne',
  *	'KeyTwo': 'ValueTwo',
  * });
+ *
  * @example
  * // returns {string}:
  * // `KeyOne` - ValueOne\n
@@ -18,6 +20,7 @@
  *	'KeyOne': 'ValueOne',
  *	'KeyTwo': 'ValueTwo',
  * }, true);
+ *
  * @function modules.formatList
  * @param {Object.<string, string>} listObject The list object to convert into a formatted list
  * - Each [key, value] pair in the object represents the 'key: value' of each list entry

@@ -2,9 +2,11 @@
 
 /**
  * `modules.sentenceCase()` converts a specified string to sentence case
+ *
  * @example
  * // returns 'Convert this sentence to sentence case'
  * modules.sentenceCase('convert this sentence to sentence case');
+ *
  * @function modules.sentenceCase
  * @param {string} str The string to convert
  * @returns {string} The string in sentence case
