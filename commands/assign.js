@@ -316,7 +316,7 @@ async function getUserInput(msg, prompts, colours) {
  * @returns {Promise<string | number | 'RESTART' | 'CANCEL' | 'DONE'>} The user's input, or the symbols `RESTART` || `CANCEL` || `DONE`
  * - Text inputs return a \<string>
  * - Date inputs return a Unix timestamp (ms) as \<number>
- * - Attachments return a URL formatted as a hyperlink using processResources() as \<string>
+ * - Attachments return a URL formatted as a hyperlink using `modules.processResources()` as \<string>
  * - `RESTART` = restart input from the beginning
  * - `CANCEL` = cancel lesson assignment
  * - `DONE` = attachment input is complete
