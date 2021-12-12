@@ -1,2733 +1,1473 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>models | Pronto</title>
-    
-      <link type="text/css" rel="stylesheet" href="styles/vendor/prism-monokai.css">
-    
-    <link type="text/css" rel="stylesheet" href="styles/styles.css">
-    
-      <link type="image/x-icon" rel="icon" href="static/favicon.svg">
-    
-    
-    
+
+    <link type="text/css" rel="stylesheet" href="styles/vendor/prism-monokai.css" />
+
+    <link type="text/css" rel="stylesheet" href="styles/styles.css" />
+
+    <link type="image/x-icon" rel="icon" href="static/favicon.svg" />
+
     <style>
       :root {
-      
-      
+
+
         --primary-colour: #ffd456;
-      
-      
+
+
         --secondary-colour: #ffd456;
-      
-      
+
+
         --selection-text-colour: #000;
-      
+
       }
     </style>
-    
-</head>
-<body>
-
-<header class="layout-header">
-  
-    <a href="./index.html">
-      <img
-        src="static/logo.svg"
-        alt="Pronto logo"
-      >
-    </a>
-  
-  <h1>
-    <a href="./index.html">
-      Pronto
-    </a>
-  </h1>
-  <nav class="layout-nav">
-    <ul><li class="nav-heading">Links</li><li class="nav-item"><a href="https://github.com/JamesNZL/Pronto" target="_blank">GitHub Repository</a></li></ul><ul><li class="nav-heading">Externals</li><li class="nav-heading"><span class="nav-item-type type-external" title="external">E</span><span class="nav-item-name is-external"><a href="external-Discord.html">Discord</a></span></li><li class="nav-heading"><span class="nav-item-type type-external" title="external">E</span><span class="nav-item-name is-external"><a href="external-mongoose.html">mongoose</a></span></li><li class="nav-heading"><span class="nav-item-type type-external" title="external">E</span><span class="nav-item-name is-external"><a href="external-NodeJS.html">NodeJS</a></span></li></ul><ul><li class="nav-heading">Namespaces</li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="commands.html">commands</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.approve">approve</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.archive">archive</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.assign">assign</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.attendance">attendance</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.connected">connected</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.evaluate">evaluate</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.help">help</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.leave">leave</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.leavefor">leavefor</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.lesson">lesson</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.ping">ping</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.purge">purge</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.restart">restart</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.seen">seen</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.uptime">uptime</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.BaseCommand">BaseCommand</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.BaseCommands">BaseCommands</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.Command">Command</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandDescription">CommandDescription</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandExecute">CommandExecute</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandName">CommandName</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandParameters">CommandParameters</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.Commands">Commands</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="config.html">config</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.Configuration">Configuration</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.DefaultChannel">DefaultChannel</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.DefaultChannelType">DefaultChannelType</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.DefaultRole">DefaultRole</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="events.html">events</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.exit">exit</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onBulkDelete">onBulkDelete</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onError">onError</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onGuildCreate">onGuildCreate</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onGuildDelete">onGuildDelete</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberAdd">onMemberAdd</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberBan">onMemberBan</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberRemove">onMemberRemove</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberUpdate">onMemberUpdate</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMessage">onMessage</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMessageDelete">onMessageDelete</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMessageUpdate">onMessageUpdate</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onReactionAdd">onReactionAdd</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onReady">onReady</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onRoleInteraction">onRoleInteraction</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onRoleUpdate">onRoleUpdate</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onVoiceUpdate">onVoiceUpdate</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="events.html#.EventHandler">EventHandler</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="events.html#.EventModule">EventModule</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="events.html#.EventModules">EventModules</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="handlers.html">handlers</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.channelPairing">channelPairing</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.commandError">commandError</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.commandHandler">commandHandler</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.confirmWithReaction">confirmWithReaction</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.connectToMongoose">connectToMongoose</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.createEmbed">createEmbed</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.createGuild">createGuild</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.debugError">debugError</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.deleteMsg">deleteMsg</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.directCommandError">directCommandError</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.embedScaffold">embedScaffold</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.emojiReact">emojiReact</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.errorReact">errorReact</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.findGuildConfiguration">findGuildConfiguration</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.findLesson">findLesson</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.getRoleError">getRoleError</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.lessonInstructions">lessonInstructions</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.lessonReminders">lessonReminders</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.manageAttendance">manageAttendance</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.overwriteCommands">overwriteCommands</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.permissionsCheck">permissionsCheck</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.permissionsHandler">permissionsHandler</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.purgeChannel">purgeChannel</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.removeGuild">removeGuild</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.sendDirect">sendDirect</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.sendMsg">sendMsg</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.successReact">successReact</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.unsubmittedLessons">unsubmittedLessons</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.updateUnsubmitted">updateUnsubmitted</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.upsertCommands">upsertCommands</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.verifyBotPermissions">verifyBotPermissions</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="models.html">models</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Attendance">Attendance</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.ChannelPair">ChannelPair</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Colours">Colours</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Emoji">Emoji</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.GuildConfiguration">GuildConfiguration</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Instructors">Instructors</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Lesson">Lesson</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="modules.html">modules</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.charLimit">charLimit</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.dateTimeGroup">dateTimeGroup</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.difference">difference</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.enumerateResources">enumerateResources</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.equals">equals</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.extractID">extractID</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.formatAge">formatAge</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.formatList">formatList</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.formatRoles">formatRoles</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.isURL">isURL</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.jsCodeBlock">jsCodeBlock</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.merge">merge</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.prefixCommand">prefixCommand</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.processResources">processResources</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.remove">remove</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.sentenceCase">sentenceCase</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.sortMembersByRoles">sortMembersByRoles</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.titleCase">titleCase</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.updatedPermissions">updatedPermissions</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="pronto.html">pronto</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="pronto.html#.bot">bot</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="pronto.html#.version">version</a></span></li></ul>
-  </nav>
-</header>
-
-
-<main class="layout-main ">
-  <div class="container">
-    <p class="page-kind">Namespace</p>
-    <h1 class="page-title">models</h1>
-    
-
-
-
-
-<section>
-
-
-<header class="not-class">
-
-
-    
-        
-        <!-- <h2>models</h2> -->
-
-        
-
-        
-
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-
-
-
-    
-        
-
-        
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-     
-
-    
-
-    
-
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Type Definitions</h3>
-
-        
-                
-
-<article class="member">
-    <div class="method-type">
-        
-    </div>
-<h4 class="member-name" id=".Attendance">Attendance</h4>
-
-
-
-
-<div class="description">
-    <p>An &lt;Object&gt; representing the values of a &lt;mongoose.Document&gt; to ensure attendance registers are only manageable by authorised users</p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code>Typings.Attendance</code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-    <h4 class="method-heading">Properties</h4>
-    
-
-<ul class="method-params">
-
-
-    <li>
-        
-            <span class="param-name">_id</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>mongoose.Schema.Types.ObjectId</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>A unique document identifier</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">channelID</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Discord.Snowflake</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The &lt;Message.id&gt; of the &lt;Message&gt; sent to the original submission channel</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">attendanceID</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Discord.Snowflake</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The &lt;Message.id&gt; of the &lt;Message&gt; sent to the guild's attendance channel</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">name</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The title of this attendance register</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">formation</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The name of the formation this register belongs to</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">authors</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Array.&lt;Discord.Snowflake></code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>A &lt;User.id[]&gt; of users that have contributed to this register</p>
-        </div>
-
-    </li>
-    
-</ul>
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="models_attendance.js.html">models/attendance.js</a><a href="models_attendance.js.html#source.9">, line 9</a>
-        </li>
-    </ul>
-
-
-</article>
-            
-                
-
-<article class="member">
-    <div class="method-type">
-        
-    </div>
-<h4 class="member-name" id=".ChannelPair">ChannelPair</h4>
-
-
-
-
-<div class="description">
-    <p>An &lt;Object&gt; of a pair of &lt;VoiceChannel.id&gt; and &lt;TextChannel.id&gt;</p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code>Object</code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-    <h4 class="method-heading">Properties</h4>
-    
-
-<ul class="method-params">
-
-
-    <li>
-        
-            <span class="param-name">voice</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Discord.Snowflake</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The &lt;VoiceChannel.id&gt; of this paired voice channel</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">text</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Discord.Snowflake</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The &lt;TextChannel.id&gt; of this paired text channel</p>
-        </div>
-
-    </li>
-    
-</ul>
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="models_guild.js.html">models/guild.js</a><a href="models_guild.js.html#source.47">, line 47</a>
-        </li>
-    </ul>
-
-
-</article>
-            
-                
-
-<article class="member">
-    <div class="method-type">
-        
-    </div>
-<h4 class="member-name" id=".Colours">Colours</h4>
-
-
-
-
-<div class="description">
-    <p>An &lt;Object&gt; of the customisable colours for each guild</p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code>Object</code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-    <h4 class="method-heading">Properties</h4>
-    
-
-<ul class="method-params">
-
-
-    <li>
-        
-            <span class="param-name">default</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Discord.ColorResolvable</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The colour to use as the guild's non-specific colour</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">primary</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Discord.ColorResolvable</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The colour to use as the guild's primary colour</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">leave</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Discord.ColorResolvable</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The colour to use on the guild's leave tickets</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">success</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Discord.ColorResolvable</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The colour to use as the guild's success colour</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">warn</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Discord.ColorResolvable</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The colour to use as the guild's warning colour</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">error</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Discord.ColorResolvable</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The colour to use as the guild's error colour</p>
-        </div>
-
-    </li>
-    
-</ul>
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="models_guild.js.html">models/guild.js</a><a href="models_guild.js.html#source.59">, line 59</a>
-        </li>
-    </ul>
-
-
-</article>
-            
-                
-
-<article class="member">
-    <div class="method-type">
-        
-    </div>
-<h4 class="member-name" id=".Emoji">Emoji</h4>
-
-
-
-
-<div class="description">
-    <p>An &lt;Object&gt; to create and/or find an emoji in a guild</p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code>Object</code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-    <h4 class="method-heading">Properties</h4>
-    
-
-<ul class="method-params">
-
-
-    <li>
-        
-            <span class="param-name">name</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The name of the guild's emoji</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">URL</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The URL of the guild's emoji</p>
-        </div>
-
-    </li>
-    
-</ul>
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="models_guild.js.html">models/guild.js</a><a href="models_guild.js.html#source.53">, line 53</a>
-        </li>
-    </ul>
-
-
-</article>
-            
-                
-
-<article class="member">
-    <div class="method-type">
-        
-    </div>
-<h4 class="member-name" id=".GuildConfiguration">GuildConfiguration</h4>
-
-
-
-
-<div class="description">
-    <p>An &lt;Object&gt; representing the values of a &lt;mongoose.Document&gt; to record the specific configuration for each &lt;Guild&gt;</p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code>Typings.GuildConfigurationConfiguration</code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-    <h4 class="method-heading">Properties</h4>
-    
-
-<ul class="method-params">
-
-
-    <li>
-        
-            <span class="param-name">_id</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>mongoose.Schema.Types.ObjectId</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>A unique document identifier</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">guildID</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Discord.Snowflake</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The &lt;Guild.id&gt; that this configuration belongs to</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">guildName</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The &lt;Guild.name&gt; that this configuration belongs to</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">settings</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Object</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The guild's settings object</p>
-                <h4 class="method-heading">Properties</h4>
-
-<ul class="method-params">
-
-
-    <li>
-        
-            <span class="param-name">prefix</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The guild's command prefix</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">longDate</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The guild's default dateformat mask for its date-time groups</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">shortDate</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The guild's dateformat mask for its shortened date strings</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">prontoLogo</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The image URL to display as the guild's logo for Pronto</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">lessonCron</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The guild's cron expression to schedule lesson reminders</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">lessonReminders</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>boolean</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>A &lt;boolean&gt; to control whether to schedule lesson reminders</p>
-        </div>
-
-    </li>
-    
-</ul>
-
-            
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">ids</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Object</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The guild's object of identifiers/snowflakes</p>
-                <h4 class="method-heading">Properties</h4>
-
-<ul class="method-params">
-
-
-    <li>
-        
-            <span class="param-name">guildID</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Discord.Snowflake</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The &lt;Guild.id&gt; of the guild</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">debugID</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Discord.Snowflake</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The &lt;TextChannel.id&gt; of the guild's debugging channel</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">logID</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Discord.Snowflake</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The &lt;TextChannel.id&gt; of the guild's log channel</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">attendanceID</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Discord.Snowflake</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The &lt;TextChannel.id&gt; of the guild's attendance channel</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">recruitingID</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Discord.Snowflake</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The &lt;TextChannel.id&gt; of the guild's recruiting channel</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">welcomeID</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Discord.Snowflake</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The &lt;TextChannel.id&gt; of the guild's new members channel</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">archivedID</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Discord.Snowflake</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The &lt;TextChannel.id&gt; of the guild's debugging channel</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">lessonsID</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Discord.Snowflake</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The &lt;CategoryChannel.id&gt; of the guild's lesson plans category channel</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">lessonReferenceID</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Discord.Snowflake</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The &lt;TextChannel.id&gt; of the guild's lesson reference channel</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">lessonPlansID</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Discord.Snowflake</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The &lt;TextChannel.id&gt; of the guild's lesson plans archive channel</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">everyoneID</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Discord.Snowflake</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The &lt;Role.id&gt; of the guild's</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">visitorID</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Discord.Snowflake</code>
-    </span>
-    |
-
-    <span class="param-type">
-        <code>''</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The &lt;Role.id&gt; of the guild's visitor role if it is registered</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">administratorID</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Discord.Snowflake</code>
-    </span>
-    |
-
-    <span class="param-type">
-        <code>''</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The &lt;Role.id&gt; of the guild's administrator role if it is registered</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">trainingIDs</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Array.&lt;Discord.Snowflake></code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>A &lt;Role.id[]&gt; of the guild's training roles</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">formations</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Array.&lt;Discord.Snowflake></code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>A &lt;Role.id[]&gt; of the guild's formation roles</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">channelPairs</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Array.&lt;<a href="models.html#.ChannelPair">models.ChannelPair</a>></code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>An <a href="models.html#.ChannelPair">&lt;Object[]&gt;</a> of the guild's pairings of &lt;VoiceChannel&gt; and &lt;TextChannel&gt;</p>
-        </div>
-
-    </li>
-    
-</ul>
-
-            
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">commands</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code><a href="commands.html#.BaseCommands">commands.BaseCommands</a></code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The guild's <a href="commands.html#.BaseCommands">&lt;BaseCommands&gt;</a> object containing each individual <a href="commands.html#.BaseCommand">&lt;BaseCommand&gt;</a> under the property [<a href="commands.html#.CommandName">CommandName</a>]</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">emojis</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Object</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The guild's emojis object</p>
-                <h4 class="method-heading">Properties</h4>
-
-<ul class="method-params">
-
-
-    <li>
-        
-            <span class="param-name">success</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code><a href="models.html#.Emoji">models.Emoji</a></code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The guild's success <a href="models.html#.Emoji">&lt;Emoji&gt;</a></p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">error</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code><a href="models.html#.Emoji">models.Emoji</a></code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The guild's error <a href="models.html#.Emoji">&lt;Emoji&gt;</a></p>
-        </div>
-
-    </li>
-    
-</ul>
-
-            
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">colours</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code><a href="models.html#.Colours">models.Colours</a></code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The guild's <a href="models.html#.Colours">&lt;Colours&gt;</a> object</p>
-        </div>
-
-    </li>
-    
-</ul>
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="models_guild.js.html">models/guild.js</a><a href="models_guild.js.html#source.11">, line 11</a>
-        </li>
-    </ul>
-
-
-</article>
-            
-                
-
-<article class="member">
-    <div class="method-type">
-        
-    </div>
-<h4 class="member-name" id=".Instructors">Instructors</h4>
-
-
-
-
-<div class="description">
-    <p>An &lt;Object&gt; containing a nested &lt;Object&gt; for each lesson instructor with their &lt;User.id&gt; and acknowledgement status</p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code>Object</code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-    <h4 class="method-heading">Properties</h4>
-    
-
-<ul class="method-params">
-
-
-    <li>
-        
-            <span class="param-name">Snowflake</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Object.&lt;Discord.Snowflake, {id: Discord.Snowflake, <a href="seen.html">seen</a>: boolean}></code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The instructor's individual lesson instructor object</p>
-                <h4 class="method-heading">Properties</h4>
-
-<ul class="method-params">
-
-
-    <li>
-        
-            <span class="param-name">id</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Discord.Snowflake</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The instructor's &lt;User.id&gt;</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">seen</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>boolean</code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>Whether the instructor has acknowledged receipt of the lesson warning</p>
-        </div>
-
-    </li>
-    
-</ul>
-
-            
-        </div>
-
-    </li>
-    
-</ul>
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="models_lesson.js.html">models/lesson.js</a><a href="models_lesson.js.html#source.28">, line 28</a>
-        </li>
-    </ul>
-
-
-</article>
-            
-                
-
-<article class="member">
-    <div class="method-type">
-        
-    </div>
-<h4 class="member-name" id=".Lesson">Lesson</h4>
-
-
-
-
-<div class="description">
-    <p>An &lt;Object&gt; representing the values of a &lt;mongoose.Document&gt; to record the details of each assigned lesson</p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code>Typings.Lesson</code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-    <h4 class="method-heading">Properties</h4>
-    
-
-<ul class="method-params">
-
-
-    <li>
-        
-            <span class="param-name">_id</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>mongoose.Schema.Types.ObjectId</code>
-    </span>
-    
-
-        
-
-        
-            <span class="param-attributes">
-            
-
-            
-            </span>
-        
-
-        
-
-        <div class="param-description">
-            <p>A unique document identifier</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">lessonID</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Discord.Snowflake</code>
-    </span>
-    
-
-        
-
-        
-            <span class="param-attributes">
-            
-
-            
-            </span>
-        
-
-        
-
-        <div class="param-description">
-            <p>The &lt;TextChannel.id&gt; of the private lesson channel created for the lesson</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">lessonName</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-        
-
-        
-            <span class="param-attributes">
-            
-
-            
-            </span>
-        
-
-        
-
-        <div class="param-description">
-            <p>The name of the lesson</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">instructors</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code><a href="models.html#.Instructors">models.Instructors</a></code>
-    </span>
-    
-
-        
-
-        
-            <span class="param-attributes">
-            
-
-            
-            </span>
-        
-
-        
-
-        <div class="param-description">
-            <p>An &lt;Object&gt; containing a nested <a href="models.html#.Instructors">&lt;Object&gt;</a> for each lesson instructor with their &lt;User.id&gt; and acknowledgement status</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">dueDate</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-        
-
-        
-            <span class="param-attributes">
-            
-
-            
-            </span>
-        
-
-        
-
-        <div class="param-description">
-            <p>The formatted date-time group of the lesson plan's due date</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">dueTimestamp</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>number</code>
-    </span>
-    
-
-        
-
-        
-            <span class="param-attributes">
-            
-
-            
-            </span>
-        
-
-        
-
-        <div class="param-description">
-            <p>The Unix timestamp (ms) of the of the lesson plan's due date</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">lessonDate</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-        
-
-        
-            <span class="param-attributes">
-            
-
-            
-            </span>
-        
-
-        
-
-        <div class="param-description">
-            <p>The formatted date-time group of the lesson's date</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">lessonTimestamp</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>number</code>
-    </span>
-    
-
-        
-
-        
-            <span class="param-attributes">
-            
-
-            
-            </span>
-        
-
-        
-
-        <div class="param-description">
-            <p>The Unix timestamp (ms) of the lesson's date</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">assignedResources</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Array.&lt;string></code>
-    </span>
-    
-
-        
-
-        
-            <span class="param-attributes">
-            
-
-            
-            </span>
-        
-
-        
-
-        <div class="param-description">
-            <p>A &lt;string[]&gt; of the lesson resources supplied to the instructor</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">submittedResources</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Array.&lt;string></code>
-    </span>
-    
-
-        
-
-        
-            <span class="param-attributes">
-            
-
-            
-            </span>
-        
-
-        
-
-        <div class="param-description">
-            <p>A &lt;string[]&gt; of the lesson resources submitted by the instructor</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">archiveID</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Discord.Snowflake</code>
-    </span>
-    
-
-        
-
-        
-            <span class="param-attributes">
-            
-
-            
-                &lt;nullable&gt;<br>
-            
-            </span>
-        
-
-        
-
-        <div class="param-description">
-            <p>The &lt;Message.id&gt; of the archived lesson plan, if it has been archived</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">submitted</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>boolean</code>
-    </span>
-    
-
-        
-
-        
-            <span class="param-attributes">
-            
-
-            
-            </span>
-        
-
-        
-
-        <div class="param-description">
-            <p>A &lt;boolean&gt; to record whether the lesson has been submitted at least once</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">approved</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>boolean</code>
-    </span>
-    
-
-        
-
-        
-            <span class="param-attributes">
-            
-
-            
-            </span>
-        
-
-        
-
-        <div class="param-description">
-            <p>A &lt;boolean&gt; to record whether the lesson is approved in its current state</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">changed</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>boolean</code>
-    </span>
-    
-
-        
-
-        
-            <span class="param-attributes">
-            
-
-            
-            </span>
-        
-
-        
-
-        <div class="param-description">
-            <p>A &lt;boolean&gt; to record whether the lesson has unsubmitted changes</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">processMentions</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>function</code>
-    </span>
-    
-
-        
-
-        
-            <span class="param-attributes">
-            
-
-            
-            </span>
-        
-
-        
-
-        <div class="param-description">
-            <p>Create a formatted string of user mentions for the &lt;Lesson.instructors&gt;</p>
-        </div>
-
-    </li>
-    
-</ul>
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="models_lesson.js.html">models/lesson.js</a><a href="models_lesson.js.html#source.9">, line 9</a>
-        </li>
-    </ul>
-
-
-</article>
-            
-    
-
-    
-</article>
-
-</section>
-
-
-
-
-  </div>
-</main>
-
-<footer class="layout-footer">
-  <div class="container">
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Sun Dec 12 2021 16:41:55 GMT+1300 (New Zealand Daylight Time)
-  </div>
-</footer>
-
-
-
-<script src="scripts/prism.dev.js"></script>
-</body>
+  </head>
+  <body>
+    <header class="layout-header">
+      <a href="./index.html">
+        <img src="static/logo.svg" alt="Pronto logo" />
+      </a>
+
+      <h1>
+        <a href="./index.html"> Pronto </a>
+      </h1>
+      <nav class="layout-nav">
+        <ul>
+          <li class="nav-heading">Links</li>
+          <li class="nav-item"><a href="https://github.com/JamesNZL/Pronto" target="_blank">GitHub Repository</a></li>
+        </ul>
+        <ul>
+          <li class="nav-heading">Externals</li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-external" title="external">E</span><span class="nav-item-name is-external"><a href="external-Discord.html">Discord</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-external" title="external">E</span><span class="nav-item-name is-external"><a href="external-mongoose.html">mongoose</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-external" title="external">E</span><span class="nav-item-name is-external"><a href="external-NodeJS.html">NodeJS</a></span>
+          </li>
+        </ul>
+        <ul>
+          <li class="nav-heading">Namespaces</li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="commands.html">commands</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.approve">approve</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.archive">archive</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.assign">assign</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.attendance">attendance</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.connected">connected</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.evaluate">evaluate</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.help">help</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.leave">leave</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.leavefor">leavefor</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.lesson">lesson</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.ping">ping</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.purge">purge</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.restart">restart</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.seen">seen</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.uptime">uptime</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.BaseCommand">BaseCommand</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.BaseCommands">BaseCommands</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.Command">Command</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandDescription">CommandDescription</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandExecute">CommandExecute</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandName">CommandName</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandParameters">CommandParameters</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.Commands">Commands</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="config.html">config</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.Configuration">Configuration</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.DefaultChannel">DefaultChannel</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.DefaultChannelType">DefaultChannelType</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.DefaultRole">DefaultRole</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="events.html">events</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.exit">exit</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onBulkDelete">onBulkDelete</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onError">onError</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onGuildCreate">onGuildCreate</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onGuildDelete">onGuildDelete</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberAdd">onMemberAdd</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberBan">onMemberBan</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberRemove">onMemberRemove</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberUpdate">onMemberUpdate</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMessage">onMessage</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMessageDelete">onMessageDelete</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMessageUpdate">onMessageUpdate</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onReactionAdd">onReactionAdd</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onReady">onReady</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onRoleInteraction">onRoleInteraction</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onRoleUpdate">onRoleUpdate</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onVoiceUpdate">onVoiceUpdate</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="events.html#.EventHandler">EventHandler</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="events.html#.EventModule">EventModule</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="events.html#.EventModules">EventModules</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="handlers.html">handlers</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.channelPairing">channelPairing</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.commandError">commandError</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.commandHandler">commandHandler</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.confirmWithReaction">confirmWithReaction</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.connectToMongoose">connectToMongoose</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.createEmbed">createEmbed</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.createGuild">createGuild</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.debugError">debugError</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.deleteMsg">deleteMsg</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.directCommandError">directCommandError</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.embedScaffold">embedScaffold</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.emojiReact">emojiReact</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.errorReact">errorReact</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.findGuildConfiguration">findGuildConfiguration</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.findLesson">findLesson</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.getRoleError">getRoleError</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.lessonInstructions">lessonInstructions</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.lessonReminders">lessonReminders</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.manageAttendance">manageAttendance</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.overwriteCommands">overwriteCommands</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.permissionsCheck">permissionsCheck</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.permissionsHandler">permissionsHandler</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.purgeChannel">purgeChannel</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.removeGuild">removeGuild</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.sendDirect">sendDirect</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.sendMsg">sendMsg</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.successReact">successReact</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.unsubmittedLessons">unsubmittedLessons</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.updateUnsubmitted">updateUnsubmitted</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.upsertCommands">upsertCommands</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.verifyBotPermissions">verifyBotPermissions</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="models.html">models</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Attendance">Attendance</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.ChannelPair">ChannelPair</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Colours">Colours</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Emoji">Emoji</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.GuildConfiguration">GuildConfiguration</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Instructors">Instructors</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Lesson">Lesson</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="modules.html">modules</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.charLimit">charLimit</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.dateTimeGroup">dateTimeGroup</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.difference">difference</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.enumerateResources">enumerateResources</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.equals">equals</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.extractID">extractID</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.formatAge">formatAge</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.formatList">formatList</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.formatRoles">formatRoles</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.isURL">isURL</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.jsCodeBlock">jsCodeBlock</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.merge">merge</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.prefixCommand">prefixCommand</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.processResources">processResources</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.remove">remove</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.sentenceCase">sentenceCase</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.sortMembersByRoles">sortMembersByRoles</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.titleCase">titleCase</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.updatedPermissions">updatedPermissions</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="pronto.html">pronto</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="pronto.html#.bot">bot</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="pronto.html#.version">version</a></span>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="layout-main ">
+      <div class="container">
+        <p class="page-kind">Namespace</p>
+        <h1 class="page-title">models</h1>
+
+        <section>
+          <header class="not-class">
+            <!-- <h2>models</h2> -->
+          </header>
+
+          <article>
+            <div class="container-overview">
+              <div class="details"></div>
+            </div>
+
+            <h3 class="subsection-title">Type Definitions</h3>
+
+            <article class="member">
+              <div class="method-type"></div>
+              <h4 class="member-name" id=".Attendance">Attendance</h4>
+
+              <div class="description">
+                <p>An &lt;Object&gt; representing the values of a &lt;mongoose.Document&gt; to ensure attendance registers are only manageable by authorised users</p>
+              </div>
+
+              <h4>Type</h4>
+              <ul>
+                <li>
+                  <span class="param-type">
+                    <code>Typings.Attendance</code>
+                  </span>
+                </li>
+              </ul>
+
+              <h4 class="method-heading">Properties</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">_id</span>
+
+                  <span class="param-type">
+                    <code>mongoose.Schema.Types.ObjectId</code>
+                  </span>
+
+                  <div class="param-description">
+                    <p>A unique document identifier</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">channelID</span>
+
+                  <span class="param-type">
+                    <code>Discord.Snowflake</code>
+                  </span>
+
+                  <div class="param-description">
+                    <p>The &lt;Message.id&gt; of the &lt;Message&gt; sent to the original submission channel</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">attendanceID</span>
+
+                  <span class="param-type">
+                    <code>Discord.Snowflake</code>
+                  </span>
+
+                  <div class="param-description">
+                    <p>The &lt;Message.id&gt; of the &lt;Message&gt; sent to the guild's attendance channel</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">name</span>
+
+                  <span class="param-type">
+                    <code>string</code>
+                  </span>
+
+                  <div class="param-description">
+                    <p>The title of this attendance register</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">formation</span>
+
+                  <span class="param-type">
+                    <code>string</code>
+                  </span>
+
+                  <div class="param-description">
+                    <p>The name of the formation this register belongs to</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">authors</span>
+
+                  <span class="param-type">
+                    <code>Array.&lt;Discord.Snowflake></code>
+                  </span>
+
+                  <div class="param-description">
+                    <p>A &lt;User.id[]&gt; of users that have contributed to this register</p>
+                  </div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4>Source</h4>
+              <ul>
+                <li class="method-source"><a href="models_attendance.js.html">models/attendance.js</a><a href="models_attendance.js.html#source.9">, line 9</a></li>
+              </ul>
+            </article>
+
+            <article class="member">
+              <div class="method-type"></div>
+              <h4 class="member-name" id=".ChannelPair">ChannelPair</h4>
+
+              <div class="description">
+                <p>An &lt;Object&gt; of a pair of &lt;VoiceChannel.id&gt; and &lt;TextChannel.id&gt;</p>
+              </div>
+
+              <h4>Type</h4>
+              <ul>
+                <li>
+                  <span class="param-type">
+                    <code>Object</code>
+                  </span>
+                </li>
+              </ul>
+
+              <h4 class="method-heading">Properties</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">voice</span>
+
+                  <span class="param-type">
+                    <code>Discord.Snowflake</code>
+                  </span>
+
+                  <div class="param-description">
+                    <p>The &lt;VoiceChannel.id&gt; of this paired voice channel</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">text</span>
+
+                  <span class="param-type">
+                    <code>Discord.Snowflake</code>
+                  </span>
+
+                  <div class="param-description">
+                    <p>The &lt;TextChannel.id&gt; of this paired text channel</p>
+                  </div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4>Source</h4>
+              <ul>
+                <li class="method-source"><a href="models_guild.js.html">models/guild.js</a><a href="models_guild.js.html#source.47">, line 47</a></li>
+              </ul>
+            </article>
+
+            <article class="member">
+              <div class="method-type"></div>
+              <h4 class="member-name" id=".Colours">Colours</h4>
+
+              <div class="description">
+                <p>An &lt;Object&gt; of the customisable colours for each guild</p>
+              </div>
+
+              <h4>Type</h4>
+              <ul>
+                <li>
+                  <span class="param-type">
+                    <code>Object</code>
+                  </span>
+                </li>
+              </ul>
+
+              <h4 class="method-heading">Properties</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">default</span>
+
+                  <span class="param-type">
+                    <code>Discord.ColorResolvable</code>
+                  </span>
+
+                  <div class="param-description">
+                    <p>The colour to use as the guild's non-specific colour</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">primary</span>
+
+                  <span class="param-type">
+                    <code>Discord.ColorResolvable</code>
+                  </span>
+
+                  <div class="param-description">
+                    <p>The colour to use as the guild's primary colour</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">leave</span>
+
+                  <span class="param-type">
+                    <code>Discord.ColorResolvable</code>
+                  </span>
+
+                  <div class="param-description">
+                    <p>The colour to use on the guild's leave tickets</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">success</span>
+
+                  <span class="param-type">
+                    <code>Discord.ColorResolvable</code>
+                  </span>
+
+                  <div class="param-description">
+                    <p>The colour to use as the guild's success colour</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">warn</span>
+
+                  <span class="param-type">
+                    <code>Discord.ColorResolvable</code>
+                  </span>
+
+                  <div class="param-description">
+                    <p>The colour to use as the guild's warning colour</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">error</span>
+
+                  <span class="param-type">
+                    <code>Discord.ColorResolvable</code>
+                  </span>
+
+                  <div class="param-description">
+                    <p>The colour to use as the guild's error colour</p>
+                  </div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4>Source</h4>
+              <ul>
+                <li class="method-source"><a href="models_guild.js.html">models/guild.js</a><a href="models_guild.js.html#source.59">, line 59</a></li>
+              </ul>
+            </article>
+
+            <article class="member">
+              <div class="method-type"></div>
+              <h4 class="member-name" id=".Emoji">Emoji</h4>
+
+              <div class="description">
+                <p>An &lt;Object&gt; to create and/or find an emoji in a guild</p>
+              </div>
+
+              <h4>Type</h4>
+              <ul>
+                <li>
+                  <span class="param-type">
+                    <code>Object</code>
+                  </span>
+                </li>
+              </ul>
+
+              <h4 class="method-heading">Properties</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">name</span>
+
+                  <span class="param-type">
+                    <code>string</code>
+                  </span>
+
+                  <div class="param-description">
+                    <p>The name of the guild's emoji</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">URL</span>
+
+                  <span class="param-type">
+                    <code>string</code>
+                  </span>
+
+                  <div class="param-description">
+                    <p>The URL of the guild's emoji</p>
+                  </div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4>Source</h4>
+              <ul>
+                <li class="method-source"><a href="models_guild.js.html">models/guild.js</a><a href="models_guild.js.html#source.53">, line 53</a></li>
+              </ul>
+            </article>
+
+            <article class="member">
+              <div class="method-type"></div>
+              <h4 class="member-name" id=".GuildConfiguration">GuildConfiguration</h4>
+
+              <div class="description">
+                <p>An &lt;Object&gt; representing the values of a &lt;mongoose.Document&gt; to record the specific configuration for each &lt;Guild&gt;</p>
+              </div>
+
+              <h4>Type</h4>
+              <ul>
+                <li>
+                  <span class="param-type">
+                    <code>Typings.GuildConfigurationConfiguration</code>
+                  </span>
+                </li>
+              </ul>
+
+              <h4 class="method-heading">Properties</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">_id</span>
+
+                  <span class="param-type">
+                    <code>mongoose.Schema.Types.ObjectId</code>
+                  </span>
+
+                  <div class="param-description">
+                    <p>A unique document identifier</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">guildID</span>
+
+                  <span class="param-type">
+                    <code>Discord.Snowflake</code>
+                  </span>
+
+                  <div class="param-description">
+                    <p>The &lt;Guild.id&gt; that this configuration belongs to</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">guildName</span>
+
+                  <span class="param-type">
+                    <code>string</code>
+                  </span>
+
+                  <div class="param-description">
+                    <p>The &lt;Guild.name&gt; that this configuration belongs to</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">settings</span>
+
+                  <span class="param-type">
+                    <code>Object</code>
+                  </span>
+
+                  <div class="param-description">
+                    <p>The guild's settings object</p>
+                    <h4 class="method-heading">Properties</h4>
+
+                    <ul class="method-params">
+                      <li>
+                        <span class="param-name">prefix</span>
+
+                        <span class="param-type">
+                          <code>string</code>
+                        </span>
+
+                        <div class="param-description">
+                          <p>The guild's command prefix</p>
+                        </div>
+                      </li>
+
+                      <li>
+                        <span class="param-name">longDate</span>
+
+                        <span class="param-type">
+                          <code>string</code>
+                        </span>
+
+                        <div class="param-description">
+                          <p>The guild's default dateformat mask for its date-time groups</p>
+                        </div>
+                      </li>
+
+                      <li>
+                        <span class="param-name">shortDate</span>
+
+                        <span class="param-type">
+                          <code>string</code>
+                        </span>
+
+                        <div class="param-description">
+                          <p>The guild's dateformat mask for its shortened date strings</p>
+                        </div>
+                      </li>
+
+                      <li>
+                        <span class="param-name">prontoLogo</span>
+
+                        <span class="param-type">
+                          <code>string</code>
+                        </span>
+
+                        <div class="param-description">
+                          <p>The image URL to display as the guild's logo for Pronto</p>
+                        </div>
+                      </li>
+
+                      <li>
+                        <span class="param-name">lessonCron</span>
+
+                        <span class="param-type">
+                          <code>string</code>
+                        </span>
+
+                        <div class="param-description">
+                          <p>The guild's cron expression to schedule lesson reminders</p>
+                        </div>
+                      </li>
+
+                      <li>
+                        <span class="param-name">lessonReminders</span>
+
+                        <span class="param-type">
+                          <code>boolean</code>
+                        </span>
+
+                        <div class="param-description">
+                          <p>A &lt;boolean&gt; to control whether to schedule lesson reminders</p>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">ids</span>
+
+                  <span class="param-type">
+                    <code>Object</code>
+                  </span>
+
+                  <div class="param-description">
+                    <p>The guild's object of identifiers/snowflakes</p>
+                    <h4 class="method-heading">Properties</h4>
+
+                    <ul class="method-params">
+                      <li>
+                        <span class="param-name">guildID</span>
+
+                        <span class="param-type">
+                          <code>Discord.Snowflake</code>
+                        </span>
+
+                        <div class="param-description">
+                          <p>The &lt;Guild.id&gt; of the guild</p>
+                        </div>
+                      </li>
+
+                      <li>
+                        <span class="param-name">debugID</span>
+
+                        <span class="param-type">
+                          <code>Discord.Snowflake</code>
+                        </span>
+
+                        <div class="param-description">
+                          <p>The &lt;TextChannel.id&gt; of the guild's debugging channel</p>
+                        </div>
+                      </li>
+
+                      <li>
+                        <span class="param-name">logID</span>
+
+                        <span class="param-type">
+                          <code>Discord.Snowflake</code>
+                        </span>
+
+                        <div class="param-description">
+                          <p>The &lt;TextChannel.id&gt; of the guild's log channel</p>
+                        </div>
+                      </li>
+
+                      <li>
+                        <span class="param-name">attendanceID</span>
+
+                        <span class="param-type">
+                          <code>Discord.Snowflake</code>
+                        </span>
+
+                        <div class="param-description">
+                          <p>The &lt;TextChannel.id&gt; of the guild's attendance channel</p>
+                        </div>
+                      </li>
+
+                      <li>
+                        <span class="param-name">recruitingID</span>
+
+                        <span class="param-type">
+                          <code>Discord.Snowflake</code>
+                        </span>
+
+                        <div class="param-description">
+                          <p>The &lt;TextChannel.id&gt; of the guild's recruiting channel</p>
+                        </div>
+                      </li>
+
+                      <li>
+                        <span class="param-name">welcomeID</span>
+
+                        <span class="param-type">
+                          <code>Discord.Snowflake</code>
+                        </span>
+
+                        <div class="param-description">
+                          <p>The &lt;TextChannel.id&gt; of the guild's new members channel</p>
+                        </div>
+                      </li>
+
+                      <li>
+                        <span class="param-name">archivedID</span>
+
+                        <span class="param-type">
+                          <code>Discord.Snowflake</code>
+                        </span>
+
+                        <div class="param-description">
+                          <p>The &lt;TextChannel.id&gt; of the guild's debugging channel</p>
+                        </div>
+                      </li>
+
+                      <li>
+                        <span class="param-name">lessonsID</span>
+
+                        <span class="param-type">
+                          <code>Discord.Snowflake</code>
+                        </span>
+
+                        <div class="param-description">
+                          <p>The &lt;CategoryChannel.id&gt; of the guild's lesson plans category channel</p>
+                        </div>
+                      </li>
+
+                      <li>
+                        <span class="param-name">lessonReferenceID</span>
+
+                        <span class="param-type">
+                          <code>Discord.Snowflake</code>
+                        </span>
+
+                        <div class="param-description">
+                          <p>The &lt;TextChannel.id&gt; of the guild's lesson reference channel</p>
+                        </div>
+                      </li>
+
+                      <li>
+                        <span class="param-name">lessonPlansID</span>
+
+                        <span class="param-type">
+                          <code>Discord.Snowflake</code>
+                        </span>
+
+                        <div class="param-description">
+                          <p>The &lt;TextChannel.id&gt; of the guild's lesson plans archive channel</p>
+                        </div>
+                      </li>
+
+                      <li>
+                        <span class="param-name">everyoneID</span>
+
+                        <span class="param-type">
+                          <code>Discord.Snowflake</code>
+                        </span>
+
+                        <div class="param-description">
+                          <p>The &lt;Role.id&gt; of the guild's</p>
+                        </div>
+                      </li>
+
+                      <li>
+                        <span class="param-name">visitorID</span>
+
+                        <span class="param-type">
+                          <code>Discord.Snowflake</code>
+                        </span>
+                        |
+
+                        <span class="param-type">
+                          <code>''</code>
+                        </span>
+
+                        <div class="param-description">
+                          <p>The &lt;Role.id&gt; of the guild's visitor role if it is registered</p>
+                        </div>
+                      </li>
+
+                      <li>
+                        <span class="param-name">administratorID</span>
+
+                        <span class="param-type">
+                          <code>Discord.Snowflake</code>
+                        </span>
+                        |
+
+                        <span class="param-type">
+                          <code>''</code>
+                        </span>
+
+                        <div class="param-description">
+                          <p>The &lt;Role.id&gt; of the guild's administrator role if it is registered</p>
+                        </div>
+                      </li>
+
+                      <li>
+                        <span class="param-name">trainingIDs</span>
+
+                        <span class="param-type">
+                          <code>Array.&lt;Discord.Snowflake></code>
+                        </span>
+
+                        <div class="param-description">
+                          <p>A &lt;Role.id[]&gt; of the guild's training roles</p>
+                        </div>
+                      </li>
+
+                      <li>
+                        <span class="param-name">formations</span>
+
+                        <span class="param-type">
+                          <code>Array.&lt;Discord.Snowflake></code>
+                        </span>
+
+                        <div class="param-description">
+                          <p>A &lt;Role.id[]&gt; of the guild's formation roles</p>
+                        </div>
+                      </li>
+
+                      <li>
+                        <span class="param-name">channelPairs</span>
+
+                        <span class="param-type">
+                          <code>Array.&lt;<a href="models.html#.ChannelPair">models.ChannelPair</a>></code>
+                        </span>
+
+                        <div class="param-description">
+                          <p>An <a href="models.html#.ChannelPair">&lt;Object[]&gt;</a> of the guild's pairings of &lt;VoiceChannel&gt; and &lt;TextChannel&gt;</p>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">commands</span>
+
+                  <span class="param-type">
+                    <code><a href="commands.html#.BaseCommands">commands.BaseCommands</a></code>
+                  </span>
+
+                  <div class="param-description">
+                    <p>The guild's <a href="commands.html#.BaseCommands">&lt;BaseCommands&gt;</a> object containing each individual <a href="commands.html#.BaseCommand">&lt;BaseCommand&gt;</a> under the property [<a href="commands.html#.CommandName">CommandName</a>]</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">emojis</span>
+
+                  <span class="param-type">
+                    <code>Object</code>
+                  </span>
+
+                  <div class="param-description">
+                    <p>The guild's emojis object</p>
+                    <h4 class="method-heading">Properties</h4>
+
+                    <ul class="method-params">
+                      <li>
+                        <span class="param-name">success</span>
+
+                        <span class="param-type">
+                          <code><a href="models.html#.Emoji">models.Emoji</a></code>
+                        </span>
+
+                        <div class="param-description">
+                          <p>The guild's success <a href="models.html#.Emoji">&lt;Emoji&gt;</a></p>
+                        </div>
+                      </li>
+
+                      <li>
+                        <span class="param-name">error</span>
+
+                        <span class="param-type">
+                          <code><a href="models.html#.Emoji">models.Emoji</a></code>
+                        </span>
+
+                        <div class="param-description">
+                          <p>The guild's error <a href="models.html#.Emoji">&lt;Emoji&gt;</a></p>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">colours</span>
+
+                  <span class="param-type">
+                    <code><a href="models.html#.Colours">models.Colours</a></code>
+                  </span>
+
+                  <div class="param-description">
+                    <p>The guild's <a href="models.html#.Colours">&lt;Colours&gt;</a> object</p>
+                  </div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4>Source</h4>
+              <ul>
+                <li class="method-source"><a href="models_guild.js.html">models/guild.js</a><a href="models_guild.js.html#source.11">, line 11</a></li>
+              </ul>
+            </article>
+
+            <article class="member">
+              <div class="method-type"></div>
+              <h4 class="member-name" id=".Instructors">Instructors</h4>
+
+              <div class="description">
+                <p>An &lt;Object&gt; containing a nested &lt;Object&gt; for each lesson instructor with their &lt;User.id&gt; and acknowledgement status</p>
+              </div>
+
+              <h4>Type</h4>
+              <ul>
+                <li>
+                  <span class="param-type">
+                    <code>Object</code>
+                  </span>
+                </li>
+              </ul>
+
+              <h4 class="method-heading">Properties</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">Snowflake</span>
+
+                  <span class="param-type">
+                    <code>Object.&lt;Discord.Snowflake, {id: Discord.Snowflake, <a href="seen.html">seen</a>: boolean}></code>
+                  </span>
+
+                  <div class="param-description">
+                    <p>The instructor's individual lesson instructor object</p>
+                    <h4 class="method-heading">Properties</h4>
+
+                    <ul class="method-params">
+                      <li>
+                        <span class="param-name">id</span>
+
+                        <span class="param-type">
+                          <code>Discord.Snowflake</code>
+                        </span>
+
+                        <div class="param-description">
+                          <p>The instructor's &lt;User.id&gt;</p>
+                        </div>
+                      </li>
+
+                      <li>
+                        <span class="param-name">seen</span>
+
+                        <span class="param-type">
+                          <code>boolean</code>
+                        </span>
+
+                        <div class="param-description">
+                          <p>Whether the instructor has acknowledged receipt of the lesson warning</p>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4>Source</h4>
+              <ul>
+                <li class="method-source"><a href="models_lesson.js.html">models/lesson.js</a><a href="models_lesson.js.html#source.28">, line 28</a></li>
+              </ul>
+            </article>
+
+            <article class="member">
+              <div class="method-type"></div>
+              <h4 class="member-name" id=".Lesson">Lesson</h4>
+
+              <div class="description">
+                <p>An &lt;Object&gt; representing the values of a &lt;mongoose.Document&gt; to record the details of each assigned lesson</p>
+              </div>
+
+              <h4>Type</h4>
+              <ul>
+                <li>
+                  <span class="param-type">
+                    <code>Typings.Lesson</code>
+                  </span>
+                </li>
+              </ul>
+
+              <h4 class="method-heading">Properties</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">_id</span>
+
+                  <span class="param-type">
+                    <code>mongoose.Schema.Types.ObjectId</code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description">
+                    <p>A unique document identifier</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">lessonID</span>
+
+                  <span class="param-type">
+                    <code>Discord.Snowflake</code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description">
+                    <p>The &lt;TextChannel.id&gt; of the private lesson channel created for the lesson</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">lessonName</span>
+
+                  <span class="param-type">
+                    <code>string</code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description">
+                    <p>The name of the lesson</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">instructors</span>
+
+                  <span class="param-type">
+                    <code><a href="models.html#.Instructors">models.Instructors</a></code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description">
+                    <p>An &lt;Object&gt; containing a nested <a href="models.html#.Instructors">&lt;Object&gt;</a> for each lesson instructor with their &lt;User.id&gt; and acknowledgement status</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">dueDate</span>
+
+                  <span class="param-type">
+                    <code>string</code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description">
+                    <p>The formatted date-time group of the lesson plan's due date</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">dueTimestamp</span>
+
+                  <span class="param-type">
+                    <code>number</code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description">
+                    <p>The Unix timestamp (ms) of the of the lesson plan's due date</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">lessonDate</span>
+
+                  <span class="param-type">
+                    <code>string</code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description">
+                    <p>The formatted date-time group of the lesson's date</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">lessonTimestamp</span>
+
+                  <span class="param-type">
+                    <code>number</code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description">
+                    <p>The Unix timestamp (ms) of the lesson's date</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">assignedResources</span>
+
+                  <span class="param-type">
+                    <code>Array.&lt;string></code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description">
+                    <p>A &lt;string[]&gt; of the lesson resources supplied to the instructor</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">submittedResources</span>
+
+                  <span class="param-type">
+                    <code>Array.&lt;string></code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description">
+                    <p>A &lt;string[]&gt; of the lesson resources submitted by the instructor</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">archiveID</span>
+
+                  <span class="param-type">
+                    <code>Discord.Snowflake</code>
+                  </span>
+
+                  <span class="param-attributes"> &lt;nullable&gt;<br /> </span>
+
+                  <div class="param-description">
+                    <p>The &lt;Message.id&gt; of the archived lesson plan, if it has been archived</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">submitted</span>
+
+                  <span class="param-type">
+                    <code>boolean</code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description">
+                    <p>A &lt;boolean&gt; to record whether the lesson has been submitted at least once</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">approved</span>
+
+                  <span class="param-type">
+                    <code>boolean</code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description">
+                    <p>A &lt;boolean&gt; to record whether the lesson is approved in its current state</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">changed</span>
+
+                  <span class="param-type">
+                    <code>boolean</code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description">
+                    <p>A &lt;boolean&gt; to record whether the lesson has unsubmitted changes</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">processMentions</span>
+
+                  <span class="param-type">
+                    <code>function</code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description">
+                    <p>Create a formatted string of user mentions for the &lt;Lesson.instructors&gt;</p>
+                  </div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4>Source</h4>
+              <ul>
+                <li class="method-source"><a href="models_lesson.js.html">models/lesson.js</a><a href="models_lesson.js.html#source.9">, line 9</a></li>
+              </ul>
+            </article>
+          </article>
+        </section>
+      </div>
+    </main>
+
+    <footer class="layout-footer">
+      <div class="container">Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Sun Dec 12 2021 17:38:46 GMT+1300 (New Zealand Daylight Time)</div>
+    </footer>
+
+    <script src="scripts/prism.dev.js"></script>
+  </body>
 </html>

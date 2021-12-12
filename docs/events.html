@@ -1,2033 +1,1069 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>events | Pronto</title>
-    
-      <link type="text/css" rel="stylesheet" href="styles/vendor/prism-monokai.css">
-    
-    <link type="text/css" rel="stylesheet" href="styles/styles.css">
-    
-      <link type="image/x-icon" rel="icon" href="static/favicon.svg">
-    
-    
-    
+
+    <link type="text/css" rel="stylesheet" href="styles/vendor/prism-monokai.css" />
+
+    <link type="text/css" rel="stylesheet" href="styles/styles.css" />
+
+    <link type="image/x-icon" rel="icon" href="static/favicon.svg" />
+
     <style>
       :root {
-      
-      
+
+
         --primary-colour: #ffd456;
-      
-      
+
+
         --secondary-colour: #ffd456;
-      
-      
+
+
         --selection-text-colour: #000;
-      
+
       }
     </style>
-    
-</head>
-<body>
-
-<header class="layout-header">
-  
-    <a href="./index.html">
-      <img
-        src="static/logo.svg"
-        alt="Pronto logo"
-      >
-    </a>
-  
-  <h1>
-    <a href="./index.html">
-      Pronto
-    </a>
-  </h1>
-  <nav class="layout-nav">
-    <ul><li class="nav-heading">Links</li><li class="nav-item"><a href="https://github.com/JamesNZL/Pronto" target="_blank">GitHub Repository</a></li></ul><ul><li class="nav-heading">Externals</li><li class="nav-heading"><span class="nav-item-type type-external" title="external">E</span><span class="nav-item-name is-external"><a href="external-Discord.html">Discord</a></span></li><li class="nav-heading"><span class="nav-item-type type-external" title="external">E</span><span class="nav-item-name is-external"><a href="external-mongoose.html">mongoose</a></span></li><li class="nav-heading"><span class="nav-item-type type-external" title="external">E</span><span class="nav-item-name is-external"><a href="external-NodeJS.html">NodeJS</a></span></li></ul><ul><li class="nav-heading">Namespaces</li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="commands.html">commands</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.approve">approve</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.archive">archive</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.assign">assign</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.attendance">attendance</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.connected">connected</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.evaluate">evaluate</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.help">help</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.leave">leave</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.leavefor">leavefor</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.lesson">lesson</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.ping">ping</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.purge">purge</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.restart">restart</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.seen">seen</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.uptime">uptime</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.BaseCommand">BaseCommand</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.BaseCommands">BaseCommands</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.Command">Command</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandDescription">CommandDescription</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandExecute">CommandExecute</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandName">CommandName</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandParameters">CommandParameters</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.Commands">Commands</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="config.html">config</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.Configuration">Configuration</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.DefaultChannel">DefaultChannel</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.DefaultChannelType">DefaultChannelType</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.DefaultRole">DefaultRole</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="events.html">events</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.exit">exit</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onBulkDelete">onBulkDelete</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onError">onError</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onGuildCreate">onGuildCreate</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onGuildDelete">onGuildDelete</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberAdd">onMemberAdd</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberBan">onMemberBan</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberRemove">onMemberRemove</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberUpdate">onMemberUpdate</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMessage">onMessage</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMessageDelete">onMessageDelete</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMessageUpdate">onMessageUpdate</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onReactionAdd">onReactionAdd</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onReady">onReady</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onRoleInteraction">onRoleInteraction</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onRoleUpdate">onRoleUpdate</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onVoiceUpdate">onVoiceUpdate</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="events.html#.EventHandler">EventHandler</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="events.html#.EventModule">EventModule</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="events.html#.EventModules">EventModules</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="handlers.html">handlers</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.channelPairing">channelPairing</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.commandError">commandError</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.commandHandler">commandHandler</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.confirmWithReaction">confirmWithReaction</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.connectToMongoose">connectToMongoose</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.createEmbed">createEmbed</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.createGuild">createGuild</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.debugError">debugError</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.deleteMsg">deleteMsg</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.directCommandError">directCommandError</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.embedScaffold">embedScaffold</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.emojiReact">emojiReact</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.errorReact">errorReact</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.findGuildConfiguration">findGuildConfiguration</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.findLesson">findLesson</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.getRoleError">getRoleError</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.lessonInstructions">lessonInstructions</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.lessonReminders">lessonReminders</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.manageAttendance">manageAttendance</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.overwriteCommands">overwriteCommands</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.permissionsCheck">permissionsCheck</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.permissionsHandler">permissionsHandler</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.purgeChannel">purgeChannel</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.removeGuild">removeGuild</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.sendDirect">sendDirect</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.sendMsg">sendMsg</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.successReact">successReact</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.unsubmittedLessons">unsubmittedLessons</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.updateUnsubmitted">updateUnsubmitted</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.upsertCommands">upsertCommands</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.verifyBotPermissions">verifyBotPermissions</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="models.html">models</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Attendance">Attendance</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.ChannelPair">ChannelPair</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Colours">Colours</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Emoji">Emoji</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.GuildConfiguration">GuildConfiguration</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Instructors">Instructors</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Lesson">Lesson</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="modules.html">modules</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.charLimit">charLimit</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.dateTimeGroup">dateTimeGroup</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.difference">difference</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.enumerateResources">enumerateResources</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.equals">equals</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.extractID">extractID</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.formatAge">formatAge</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.formatList">formatList</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.formatRoles">formatRoles</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.isURL">isURL</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.jsCodeBlock">jsCodeBlock</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.merge">merge</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.prefixCommand">prefixCommand</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.processResources">processResources</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.remove">remove</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.sentenceCase">sentenceCase</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.sortMembersByRoles">sortMembersByRoles</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.titleCase">titleCase</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.updatedPermissions">updatedPermissions</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="pronto.html">pronto</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="pronto.html#.bot">bot</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="pronto.html#.version">version</a></span></li></ul>
-  </nav>
-</header>
-
-
-<main class="layout-main ">
-  <div class="container">
-    <p class="page-kind">Namespace</p>
-    <h1 class="page-title">events</h1>
-    
-
-
-
-
-<section>
-
-
-<header class="not-class">
-
-
-    
-        
-        <!-- <h2>events</h2> -->
-
-        
-
-        
-
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-
-
-
-    
-        
-
-        
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-     
-
-    
-
-    
-
-
-    
-        <h3 class="subtitle">Members</h3>
-
-        
-            
-
-<article class="member">
-    <div class="method-type">
-        <span class="method-type-signature is-static">static</span>
-    </div>
-<h4 class="member-name" id=".exit">exit<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
-
-
-
-
-<div class="description">
-    <p>Event handler to notify the developer that the bot is restarting, and to close the MongoDB connection</p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code><a href="events.html#.EventModule">events.EventModule</a></code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="events_exit.js.html">events/exit.js</a><a href="events_exit.js.html#source.12">, line 12</a>
-        </li>
-    </ul>
-
-
-</article>
-        
-            
-
-<article class="member">
-    <div class="method-type">
-        <span class="method-type-signature is-static">static</span>
-    </div>
-<h4 class="member-name" id=".onBulkDelete">onBulkDelete<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
-
-
-
-
-<div class="description">
-    <p>Event handler to log whenever messages are deleted in bulk, and delete the purge command message if it exists</p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code><a href="events.html#.EventModule">events.EventModule</a></code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="events_onBulkDelete.js.html">events/onBulkDelete.js</a><a href="events_onBulkDelete.js.html#source.10">, line 10</a>
-        </li>
-    </ul>
-
-
-</article>
-        
-            
-
-<article class="member">
-    <div class="method-type">
-        <span class="method-type-signature is-static">static</span>
-    </div>
-<h4 class="member-name" id=".onError">onError<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
-
-
-
-
-<div class="description">
-    <p>Event handler for &lt;Discord.Client&gt; and &lt;NodeJS.Process&gt; events which may be useful for debugging</p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code><a href="events.html#.EventModule">events.EventModule</a></code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="events_onError.js.html">events/onError.js</a><a href="events_onError.js.html#source.9">, line 9</a>
-        </li>
-    </ul>
-
-
-</article>
-        
-            
-
-<article class="member">
-    <div class="method-type">
-        <span class="method-type-signature is-static">static</span>
-    </div>
-<h4 class="member-name" id=".onGuildCreate">onGuildCreate<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
-
-
-
-
-<div class="description">
-    <p>Event handler to initialise the &lt;GuildConfiguration&gt; whenever the &lt;Client&gt; joins a new &lt;Guild&gt;</p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code><a href="events.html#.EventModule">events.EventModule</a></code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="events_onGuildCreate.js.html">events/onGuildCreate.js</a><a href="events_onGuildCreate.js.html#source.11">, line 11</a>
-        </li>
-    </ul>
-
-
-</article>
-        
-            
-
-<article class="member">
-    <div class="method-type">
-        <span class="method-type-signature is-static">static</span>
-    </div>
-<h4 class="member-name" id=".onGuildDelete">onGuildDelete<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
-
-
-
-
-<div class="description">
-    <p>Event handler to delete the guild's document whenever a &lt;Guild&gt; kicks the &lt;Client&gt; or the &lt;Guild&gt; is deleted/left</p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code><a href="events.html#.EventModule">events.EventModule</a></code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="events_onGuildDelete.js.html">events/onGuildDelete.js</a><a href="events_onGuildDelete.js.html#source.10">, line 10</a>
-        </li>
-    </ul>
-
-
-</article>
-        
-            
-
-<article class="member">
-    <div class="method-type">
-        <span class="method-type-signature is-static">static</span>
-    </div>
-<h4 class="member-name" id=".onMemberAdd">onMemberAdd<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
-
-
-
-
-<div class="description">
-    <p>Event handler to log whenever a user joins a &lt;Guild&gt;, and to assign them to the guild's visitor role and send a welcome embed</p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code><a href="events.html#.EventModule">events.EventModule</a></code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="events_onMemberAdd.js.html">events/onMemberAdd.js</a><a href="events_onMemberAdd.js.html#source.10">, line 10</a>
-        </li>
-    </ul>
-
-
-</article>
-        
-            
-
-<article class="member">
-    <div class="method-type">
-        <span class="method-type-signature is-static">static</span>
-    </div>
-<h4 class="member-name" id=".onMemberBan">onMemberBan<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
-
-
-
-
-<div class="description">
-    <p>Event handler to log whenever a member is banned or unbanned from a &lt;Guild&gt;</p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code><a href="events.html#.EventModule">events.EventModule</a></code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="events_onMemberBan.js.html">events/onMemberBan.js</a><a href="events_onMemberBan.js.html#source.10">, line 10</a>
-        </li>
-    </ul>
-
-
-</article>
-        
-            
-
-<article class="member">
-    <div class="method-type">
-        <span class="method-type-signature is-static">static</span>
-    </div>
-<h4 class="member-name" id=".onMemberRemove">onMemberRemove<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
-
-
-
-
-<div class="description">
-    <p>Event handler to log whenever a &lt;GuildMember&gt; leaves a guild, or is kicked</p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code><a href="events.html#.EventModule">events.EventModule</a></code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="events_onMemberRemove.js.html">events/onMemberRemove.js</a><a href="events_onMemberRemove.js.html#source.10">, line 10</a>
-        </li>
-    </ul>
-
-
-</article>
-        
-            
-
-<article class="member">
-    <div class="method-type">
-        <span class="method-type-signature is-static">static</span>
-    </div>
-<h4 class="member-name" id=".onMemberUpdate">onMemberUpdate<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
-
-
-
-
-<div class="description">
-    <p>Event handler to log whenever a &lt;GuildMember&gt; changes their nickname, or has a role added/removed</p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code><a href="events.html#.EventModule">events.EventModule</a></code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="events_onMemberUpdate.js.html">events/onMemberUpdate.js</a><a href="events_onMemberUpdate.js.html#source.10">, line 10</a>
-        </li>
-    </ul>
-
-
-</article>
-        
-            
-
-<article class="member">
-    <div class="method-type">
-        <span class="method-type-signature is-static">static</span>
-    </div>
-<h4 class="member-name" id=".onMessage">onMessage<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
-
-
-
-
-<div class="description">
-    <p>Event handler to automatically add an acknowledgement emoji to messages in any &lt;NewsChannel&gt;, and to call <a href="handlers.html#.commandHandler"><code>handlers.commandHandler()</code></a> whenever a message is created</p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code><a href="events.html#.EventModule">events.EventModule</a></code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="events_onMessage.js.html">events/onMessage.js</a><a href="events_onMessage.js.html#source.10">, line 10</a>
-        </li>
-    </ul>
-
-
-</article>
-        
-            
-
-<article class="member">
-    <div class="method-type">
-        <span class="method-type-signature is-static">static</span>
-    </div>
-<h4 class="member-name" id=".onMessageDelete">onMessageDelete<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
-
-
-
-
-<div class="description">
-    <p>Event handler to log whenever a &lt;Message&gt; is deleted</p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code><a href="events.html#.EventModule">events.EventModule</a></code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="events_onMessageDelete.js.html">events/onMessageDelete.js</a><a href="events_onMessageDelete.js.html#source.12">, line 12</a>
-        </li>
-    </ul>
-
-
-</article>
-        
-            
-
-<article class="member">
-    <div class="method-type">
-        <span class="method-type-signature is-static">static</span>
-    </div>
-<h4 class="member-name" id=".onMessageUpdate">onMessageUpdate<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
-
-
-
-
-<div class="description">
-    <p>Event handler to log whenever a &lt;Message&gt; is updated,</p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code><a href="events.html#.EventModule">events.EventModule</a></code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="events_onMessageUpdate.js.html">events/onMessageUpdate.js</a><a href="events_onMessageUpdate.js.html#source.10">, line 10</a>
-        </li>
-    </ul>
-
-
-</article>
-        
-            
-
-<article class="member">
-    <div class="method-type">
-        <span class="method-type-signature is-static">static</span>
-    </div>
-<h4 class="member-name" id=".onReactionAdd">onReactionAdd<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
-
-
-
-
-<div class="description">
-    <p>Event handler to trigger <a href="handlers.html#.manageAttendance"><code>handlers.manageAttendance()</code></a> and <a href="handlers.html#.updateUnsubmitted"><code>handlers.updateUnsubmitted()</code></a></p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code><a href="events.html#.EventModule">events.EventModule</a></code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="events_onReactionAdd.js.html">events/onReactionAdd.js</a><a href="events_onReactionAdd.js.html#source.10">, line 10</a>
-        </li>
-    </ul>
-
-
-</article>
-        
-            
-
-<article class="member">
-    <div class="method-type">
-        <span class="method-type-signature is-static">static</span>
-    </div>
-<h4 class="member-name" id=".onReady">onReady<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
-
-
-
-
-<div class="description">
-    <p>Event handler to notify the developer and execute the bot's startup routine</p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code><a href="events.html#.EventModule">events.EventModule</a></code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="events_onReady.js.html">events/onReady.js</a><a href="events_onReady.js.html#source.10">, line 10</a>
-        </li>
-    </ul>
-
-
-</article>
-        
-            
-
-<article class="member">
-    <div class="method-type">
-        <span class="method-type-signature is-static">static</span>
-    </div>
-<h4 class="member-name" id=".onRoleInteraction">onRoleInteraction<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
-
-
-
-
-<div class="description">
-    <p>Event handler to log whenever a &lt;Role&gt; is created/deleted</p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code><a href="events.html#.EventModule">events.EventModule</a></code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="events_onRoleInteraction.js.html">events/onRoleInteraction.js</a><a href="events_onRoleInteraction.js.html#source.10">, line 10</a>
-        </li>
-    </ul>
-
-
-</article>
-        
-            
-
-<article class="member">
-    <div class="method-type">
-        <span class="method-type-signature is-static">static</span>
-    </div>
-<h4 class="member-name" id=".onRoleUpdate">onRoleUpdate<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
-
-
-
-
-<div class="description">
-    <p>Event handler to log whenever a guild &lt;Role&gt; is updated</p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code><a href="events.html#.EventModule">events.EventModule</a></code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="events_onRoleUpdate.js.html">events/onRoleUpdate.js</a><a href="events_onRoleUpdate.js.html#source.10">, line 10</a>
-        </li>
-    </ul>
-
-
-</article>
-        
-            
-
-<article class="member">
-    <div class="method-type">
-        <span class="method-type-signature is-static">static</span>
-    </div>
-<h4 class="member-name" id=".onVoiceUpdate">onVoiceUpdate<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span></h4>
-
-
-
-
-<div class="description">
-    <p>Event handler to log whenever a &lt;GuildMember&gt; joins/leaves a &lt;VoiceChannel&gt;, and to trigger <a href="handlers.html#.channelPairing"><code>handlers.channelPairing()</code></a></p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code><a href="events.html#.EventModule">events.EventModule</a></code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="events_onVoiceUpdate.js.html">events/onVoiceUpdate.js</a><a href="events_onVoiceUpdate.js.html#source.10">, line 10</a>
-        </li>
-    </ul>
-
-
-</article>
-        
-    
-
-    
-
-    
-        <h3 class="subsection-title">Type Definitions</h3>
-
-        
-                
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    
-    </div>
-
-    <h4 class="method-name" id=".EventHandler">EventHandler<span class="signature">(event, &hellip;args)</span><span class="return-type-signature"> &rarr; {void}</span>
-    </h4>
-
-
-
-
-
-<div class="method-description">
-    
-    <p>An event handler function to execute when specified event(s) are emitted</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">event</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>The event that was emitted</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">args</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>*</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-
-                
-
-                
-                    &lt;repeatable&gt;<br>
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>The emitted arguments</p></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-    <h4 class="method-heading">Returns</h4>
-    <ul>
-    
-        <li class="method-returns">
-            
-                <code>void</code>
-            
-            
-        </li>
-    
-    </ul>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="events_index.js.html">events/index.js</a><a href="events_index.js.html#source.25">, line 25</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-            
-                
-
-<article class="member">
-    <div class="method-type">
-        
-    </div>
-<h4 class="member-name" id=".EventModule">EventModule</h4>
-
-
-
-
-<div class="description">
-    <p>The complete &lt;EventModule&gt; object for one of Pronto's event module</p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code>Object</code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-    <h4 class="method-heading">Properties</h4>
-    
-
-<ul class="method-params">
-
-
-    <li>
-        
-            <span class="param-name">bot</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Array.&lt;string></code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>A string[] of valid &lt;Client&gt;#event(s) that this &lt;EventModule&gt; applies to</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">process</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code>Array.&lt;string></code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>A string[] of valid &lt;Process&gt;#event(s) that this &lt;EventModule&gt; applies to</p>
-        </div>
-
-    </li>
-    
-
-    <li>
-        
-            <span class="param-name">handler</span>
-        
-
-        
-            
-
-
-    <span class="param-type">
-        <code><a href="events.html#.EventHandler">events.EventHandler</a></code>
-    </span>
-    
-
-        
-
-        
-
-        
-
-        <div class="param-description">
-            <p>The event handler function to execute when specified event(s) are emitted</p>
-        </div>
-
-    </li>
-    
-</ul>
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="events_index.js.html">events/index.js</a><a href="events_index.js.html#source.14">, line 14</a>
-        </li>
-    </ul>
-
-
-</article>
-            
-                
-
-<article class="member">
-    <div class="method-type">
-        
-    </div>
-<h4 class="member-name" id=".EventModules">EventModules</h4>
-
-
-
-
-<div class="description">
-    <p>The complete &lt;EventModules&gt; object for all of Pronto's event modules, where each <a href="events.html#.EventHandler">&lt;EventHandler&gt;</a> is stored in the &lt;EventHandlers&gt; object under a string property</p>
-</div>
-
-
-
-    <h4>Type</h4>
-    <ul>
-        <li>
-            
-
-
-    <span class="param-type">
-        <code>Object.&lt;string, <a href="events.html#.EventModule">events.EventModule</a>></code>
-    </span>
-    
-
-        </li>
-    </ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    <h4>Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="events_index.js.html">events/index.js</a><a href="events_index.js.html#source.21">, line 21</a>
-        </li>
-    </ul>
-
-
-</article>
-            
-    
-
-    
-</article>
-
-</section>
-
-
-
-
-  </div>
-</main>
-
-<footer class="layout-footer">
-  <div class="container">
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Sun Dec 12 2021 16:41:55 GMT+1300 (New Zealand Daylight Time)
-  </div>
-</footer>
-
-
-
-<script src="scripts/prism.dev.js"></script>
-</body>
+  </head>
+  <body>
+    <header class="layout-header">
+      <a href="./index.html">
+        <img src="static/logo.svg" alt="Pronto logo" />
+      </a>
+
+      <h1>
+        <a href="./index.html"> Pronto </a>
+      </h1>
+      <nav class="layout-nav">
+        <ul>
+          <li class="nav-heading">Links</li>
+          <li class="nav-item"><a href="https://github.com/JamesNZL/Pronto" target="_blank">GitHub Repository</a></li>
+        </ul>
+        <ul>
+          <li class="nav-heading">Externals</li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-external" title="external">E</span><span class="nav-item-name is-external"><a href="external-Discord.html">Discord</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-external" title="external">E</span><span class="nav-item-name is-external"><a href="external-mongoose.html">mongoose</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-external" title="external">E</span><span class="nav-item-name is-external"><a href="external-NodeJS.html">NodeJS</a></span>
+          </li>
+        </ul>
+        <ul>
+          <li class="nav-heading">Namespaces</li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="commands.html">commands</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.approve">approve</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.archive">archive</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.assign">assign</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.attendance">attendance</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.connected">connected</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.evaluate">evaluate</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.help">help</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.leave">leave</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.leavefor">leavefor</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.lesson">lesson</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.ping">ping</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.purge">purge</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.restart">restart</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.seen">seen</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.uptime">uptime</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.BaseCommand">BaseCommand</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.BaseCommands">BaseCommands</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.Command">Command</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandDescription">CommandDescription</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandExecute">CommandExecute</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandName">CommandName</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandParameters">CommandParameters</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.Commands">Commands</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="config.html">config</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.Configuration">Configuration</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.DefaultChannel">DefaultChannel</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.DefaultChannelType">DefaultChannelType</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.DefaultRole">DefaultRole</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="events.html">events</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.exit">exit</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onBulkDelete">onBulkDelete</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onError">onError</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onGuildCreate">onGuildCreate</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onGuildDelete">onGuildDelete</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberAdd">onMemberAdd</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberBan">onMemberBan</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberRemove">onMemberRemove</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberUpdate">onMemberUpdate</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMessage">onMessage</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMessageDelete">onMessageDelete</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMessageUpdate">onMessageUpdate</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onReactionAdd">onReactionAdd</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onReady">onReady</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onRoleInteraction">onRoleInteraction</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onRoleUpdate">onRoleUpdate</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onVoiceUpdate">onVoiceUpdate</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="events.html#.EventHandler">EventHandler</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="events.html#.EventModule">EventModule</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="events.html#.EventModules">EventModules</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="handlers.html">handlers</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.channelPairing">channelPairing</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.commandError">commandError</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.commandHandler">commandHandler</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.confirmWithReaction">confirmWithReaction</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.connectToMongoose">connectToMongoose</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.createEmbed">createEmbed</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.createGuild">createGuild</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.debugError">debugError</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.deleteMsg">deleteMsg</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.directCommandError">directCommandError</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.embedScaffold">embedScaffold</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.emojiReact">emojiReact</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.errorReact">errorReact</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.findGuildConfiguration">findGuildConfiguration</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.findLesson">findLesson</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.getRoleError">getRoleError</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.lessonInstructions">lessonInstructions</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.lessonReminders">lessonReminders</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.manageAttendance">manageAttendance</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.overwriteCommands">overwriteCommands</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.permissionsCheck">permissionsCheck</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.permissionsHandler">permissionsHandler</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.purgeChannel">purgeChannel</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.removeGuild">removeGuild</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.sendDirect">sendDirect</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.sendMsg">sendMsg</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.successReact">successReact</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.unsubmittedLessons">unsubmittedLessons</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.updateUnsubmitted">updateUnsubmitted</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.upsertCommands">upsertCommands</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.verifyBotPermissions">verifyBotPermissions</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="models.html">models</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Attendance">Attendance</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.ChannelPair">ChannelPair</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Colours">Colours</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Emoji">Emoji</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.GuildConfiguration">GuildConfiguration</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Instructors">Instructors</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Lesson">Lesson</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="modules.html">modules</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.charLimit">charLimit</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.dateTimeGroup">dateTimeGroup</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.difference">difference</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.enumerateResources">enumerateResources</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.equals">equals</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.extractID">extractID</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.formatAge">formatAge</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.formatList">formatList</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.formatRoles">formatRoles</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.isURL">isURL</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.jsCodeBlock">jsCodeBlock</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.merge">merge</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.prefixCommand">prefixCommand</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.processResources">processResources</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.remove">remove</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.sentenceCase">sentenceCase</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.sortMembersByRoles">sortMembersByRoles</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.titleCase">titleCase</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.updatedPermissions">updatedPermissions</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="pronto.html">pronto</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="pronto.html#.bot">bot</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="pronto.html#.version">version</a></span>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="layout-main ">
+      <div class="container">
+        <p class="page-kind">Namespace</p>
+        <h1 class="page-title">events</h1>
+
+        <section>
+          <header class="not-class">
+            <!-- <h2>events</h2> -->
+          </header>
+
+          <article>
+            <div class="container-overview">
+              <div class="details"></div>
+            </div>
+
+            <h3 class="subtitle">Members</h3>
+
+            <article class="member">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+              <h4 class="member-name" id=".exit">
+                exit<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span>
+              </h4>
+
+              <div class="description">
+                <p>Event handler to notify the developer that the bot is restarting, and to close the MongoDB connection</p>
+              </div>
+
+              <h4>Type</h4>
+              <ul>
+                <li>
+                  <span class="param-type">
+                    <code><a href="events.html#.EventModule">events.EventModule</a></code>
+                  </span>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4>Source</h4>
+              <ul>
+                <li class="method-source"><a href="events_exit.js.html">events/exit.js</a><a href="events_exit.js.html#source.12">, line 12</a></li>
+              </ul>
+            </article>
+
+            <article class="member">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+              <h4 class="member-name" id=".onBulkDelete">
+                onBulkDelete<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span>
+              </h4>
+
+              <div class="description">
+                <p>Event handler to log whenever messages are deleted in bulk, and delete the purge command message if it exists</p>
+              </div>
+
+              <h4>Type</h4>
+              <ul>
+                <li>
+                  <span class="param-type">
+                    <code><a href="events.html#.EventModule">events.EventModule</a></code>
+                  </span>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4>Source</h4>
+              <ul>
+                <li class="method-source"><a href="events_onBulkDelete.js.html">events/onBulkDelete.js</a><a href="events_onBulkDelete.js.html#source.10">, line 10</a></li>
+              </ul>
+            </article>
+
+            <article class="member">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+              <h4 class="member-name" id=".onError">
+                onError<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span>
+              </h4>
+
+              <div class="description">
+                <p>Event handler for &lt;Discord.Client&gt; and &lt;NodeJS.Process&gt; events which may be useful for debugging</p>
+              </div>
+
+              <h4>Type</h4>
+              <ul>
+                <li>
+                  <span class="param-type">
+                    <code><a href="events.html#.EventModule">events.EventModule</a></code>
+                  </span>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4>Source</h4>
+              <ul>
+                <li class="method-source"><a href="events_onError.js.html">events/onError.js</a><a href="events_onError.js.html#source.9">, line 9</a></li>
+              </ul>
+            </article>
+
+            <article class="member">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+              <h4 class="member-name" id=".onGuildCreate">
+                onGuildCreate<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span>
+              </h4>
+
+              <div class="description">
+                <p>Event handler to initialise the &lt;GuildConfiguration&gt; whenever the &lt;Client&gt; joins a new &lt;Guild&gt;</p>
+              </div>
+
+              <h4>Type</h4>
+              <ul>
+                <li>
+                  <span class="param-type">
+                    <code><a href="events.html#.EventModule">events.EventModule</a></code>
+                  </span>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4>Source</h4>
+              <ul>
+                <li class="method-source"><a href="events_onGuildCreate.js.html">events/onGuildCreate.js</a><a href="events_onGuildCreate.js.html#source.11">, line 11</a></li>
+              </ul>
+            </article>
+
+            <article class="member">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+              <h4 class="member-name" id=".onGuildDelete">
+                onGuildDelete<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span>
+              </h4>
+
+              <div class="description">
+                <p>Event handler to delete the guild's document whenever a &lt;Guild&gt; kicks the &lt;Client&gt; or the &lt;Guild&gt; is deleted/left</p>
+              </div>
+
+              <h4>Type</h4>
+              <ul>
+                <li>
+                  <span class="param-type">
+                    <code><a href="events.html#.EventModule">events.EventModule</a></code>
+                  </span>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4>Source</h4>
+              <ul>
+                <li class="method-source"><a href="events_onGuildDelete.js.html">events/onGuildDelete.js</a><a href="events_onGuildDelete.js.html#source.10">, line 10</a></li>
+              </ul>
+            </article>
+
+            <article class="member">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+              <h4 class="member-name" id=".onMemberAdd">
+                onMemberAdd<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span>
+              </h4>
+
+              <div class="description">
+                <p>Event handler to log whenever a user joins a &lt;Guild&gt;, and to assign them to the guild's visitor role and send a welcome embed</p>
+              </div>
+
+              <h4>Type</h4>
+              <ul>
+                <li>
+                  <span class="param-type">
+                    <code><a href="events.html#.EventModule">events.EventModule</a></code>
+                  </span>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4>Source</h4>
+              <ul>
+                <li class="method-source"><a href="events_onMemberAdd.js.html">events/onMemberAdd.js</a><a href="events_onMemberAdd.js.html#source.10">, line 10</a></li>
+              </ul>
+            </article>
+
+            <article class="member">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+              <h4 class="member-name" id=".onMemberBan">
+                onMemberBan<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span>
+              </h4>
+
+              <div class="description">
+                <p>Event handler to log whenever a member is banned or unbanned from a &lt;Guild&gt;</p>
+              </div>
+
+              <h4>Type</h4>
+              <ul>
+                <li>
+                  <span class="param-type">
+                    <code><a href="events.html#.EventModule">events.EventModule</a></code>
+                  </span>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4>Source</h4>
+              <ul>
+                <li class="method-source"><a href="events_onMemberBan.js.html">events/onMemberBan.js</a><a href="events_onMemberBan.js.html#source.10">, line 10</a></li>
+              </ul>
+            </article>
+
+            <article class="member">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+              <h4 class="member-name" id=".onMemberRemove">
+                onMemberRemove<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span>
+              </h4>
+
+              <div class="description">
+                <p>Event handler to log whenever a &lt;GuildMember&gt; leaves a guild, or is kicked</p>
+              </div>
+
+              <h4>Type</h4>
+              <ul>
+                <li>
+                  <span class="param-type">
+                    <code><a href="events.html#.EventModule">events.EventModule</a></code>
+                  </span>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4>Source</h4>
+              <ul>
+                <li class="method-source"><a href="events_onMemberRemove.js.html">events/onMemberRemove.js</a><a href="events_onMemberRemove.js.html#source.10">, line 10</a></li>
+              </ul>
+            </article>
+
+            <article class="member">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+              <h4 class="member-name" id=".onMemberUpdate">
+                onMemberUpdate<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span>
+              </h4>
+
+              <div class="description">
+                <p>Event handler to log whenever a &lt;GuildMember&gt; changes their nickname, or has a role added/removed</p>
+              </div>
+
+              <h4>Type</h4>
+              <ul>
+                <li>
+                  <span class="param-type">
+                    <code><a href="events.html#.EventModule">events.EventModule</a></code>
+                  </span>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4>Source</h4>
+              <ul>
+                <li class="method-source"><a href="events_onMemberUpdate.js.html">events/onMemberUpdate.js</a><a href="events_onMemberUpdate.js.html#source.10">, line 10</a></li>
+              </ul>
+            </article>
+
+            <article class="member">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+              <h4 class="member-name" id=".onMessage">
+                onMessage<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span>
+              </h4>
+
+              <div class="description">
+                <p>
+                  Event handler to automatically add an acknowledgement emoji to messages in any &lt;NewsChannel&gt;, and to call <a href="handlers.html#.commandHandler"><code>handlers.commandHandler()</code></a> whenever a message is created
+                </p>
+              </div>
+
+              <h4>Type</h4>
+              <ul>
+                <li>
+                  <span class="param-type">
+                    <code><a href="events.html#.EventModule">events.EventModule</a></code>
+                  </span>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4>Source</h4>
+              <ul>
+                <li class="method-source"><a href="events_onMessage.js.html">events/onMessage.js</a><a href="events_onMessage.js.html#source.10">, line 10</a></li>
+              </ul>
+            </article>
+
+            <article class="member">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+              <h4 class="member-name" id=".onMessageDelete">
+                onMessageDelete<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span>
+              </h4>
+
+              <div class="description">
+                <p>Event handler to log whenever a &lt;Message&gt; is deleted</p>
+              </div>
+
+              <h4>Type</h4>
+              <ul>
+                <li>
+                  <span class="param-type">
+                    <code><a href="events.html#.EventModule">events.EventModule</a></code>
+                  </span>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4>Source</h4>
+              <ul>
+                <li class="method-source"><a href="events_onMessageDelete.js.html">events/onMessageDelete.js</a><a href="events_onMessageDelete.js.html#source.12">, line 12</a></li>
+              </ul>
+            </article>
+
+            <article class="member">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+              <h4 class="member-name" id=".onMessageUpdate">
+                onMessageUpdate<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span>
+              </h4>
+
+              <div class="description">
+                <p>Event handler to log whenever a &lt;Message&gt; is updated,</p>
+              </div>
+
+              <h4>Type</h4>
+              <ul>
+                <li>
+                  <span class="param-type">
+                    <code><a href="events.html#.EventModule">events.EventModule</a></code>
+                  </span>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4>Source</h4>
+              <ul>
+                <li class="method-source"><a href="events_onMessageUpdate.js.html">events/onMessageUpdate.js</a><a href="events_onMessageUpdate.js.html#source.10">, line 10</a></li>
+              </ul>
+            </article>
+
+            <article class="member">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+              <h4 class="member-name" id=".onReactionAdd">
+                onReactionAdd<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span>
+              </h4>
+
+              <div class="description">
+                <p>
+                  Event handler to trigger <a href="handlers.html#.manageAttendance"><code>handlers.manageAttendance()</code></a> and <a href="handlers.html#.updateUnsubmitted"><code>handlers.updateUnsubmitted()</code></a>
+                </p>
+              </div>
+
+              <h4>Type</h4>
+              <ul>
+                <li>
+                  <span class="param-type">
+                    <code><a href="events.html#.EventModule">events.EventModule</a></code>
+                  </span>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4>Source</h4>
+              <ul>
+                <li class="method-source"><a href="events_onReactionAdd.js.html">events/onReactionAdd.js</a><a href="events_onReactionAdd.js.html#source.10">, line 10</a></li>
+              </ul>
+            </article>
+
+            <article class="member">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+              <h4 class="member-name" id=".onReady">
+                onReady<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span>
+              </h4>
+
+              <div class="description">
+                <p>Event handler to notify the developer and execute the bot's startup routine</p>
+              </div>
+
+              <h4>Type</h4>
+              <ul>
+                <li>
+                  <span class="param-type">
+                    <code><a href="events.html#.EventModule">events.EventModule</a></code>
+                  </span>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4>Source</h4>
+              <ul>
+                <li class="method-source"><a href="events_onReady.js.html">events/onReady.js</a><a href="events_onReady.js.html#source.10">, line 10</a></li>
+              </ul>
+            </article>
+
+            <article class="member">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+              <h4 class="member-name" id=".onRoleInteraction">
+                onRoleInteraction<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span>
+              </h4>
+
+              <div class="description">
+                <p>Event handler to log whenever a &lt;Role&gt; is created/deleted</p>
+              </div>
+
+              <h4>Type</h4>
+              <ul>
+                <li>
+                  <span class="param-type">
+                    <code><a href="events.html#.EventModule">events.EventModule</a></code>
+                  </span>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4>Source</h4>
+              <ul>
+                <li class="method-source"><a href="events_onRoleInteraction.js.html">events/onRoleInteraction.js</a><a href="events_onRoleInteraction.js.html#source.10">, line 10</a></li>
+              </ul>
+            </article>
+
+            <article class="member">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+              <h4 class="member-name" id=".onRoleUpdate">
+                onRoleUpdate<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span>
+              </h4>
+
+              <div class="description">
+                <p>Event handler to log whenever a guild &lt;Role&gt; is updated</p>
+              </div>
+
+              <h4>Type</h4>
+              <ul>
+                <li>
+                  <span class="param-type">
+                    <code><a href="events.html#.EventModule">events.EventModule</a></code>
+                  </span>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4>Source</h4>
+              <ul>
+                <li class="method-source"><a href="events_onRoleUpdate.js.html">events/onRoleUpdate.js</a><a href="events_onRoleUpdate.js.html#source.10">, line 10</a></li>
+              </ul>
+            </article>
+
+            <article class="member">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+              <h4 class="member-name" id=".onVoiceUpdate">
+                onVoiceUpdate<span class="type-signature"><a href="events.html#.EventModule">events.EventModule</a></span>
+              </h4>
+
+              <div class="description">
+                <p>
+                  Event handler to log whenever a &lt;GuildMember&gt; joins/leaves a &lt;VoiceChannel&gt;, and to trigger <a href="handlers.html#.channelPairing"><code>handlers.channelPairing()</code></a>
+                </p>
+              </div>
+
+              <h4>Type</h4>
+              <ul>
+                <li>
+                  <span class="param-type">
+                    <code><a href="events.html#.EventModule">events.EventModule</a></code>
+                  </span>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4>Source</h4>
+              <ul>
+                <li class="method-source"><a href="events_onVoiceUpdate.js.html">events/onVoiceUpdate.js</a><a href="events_onVoiceUpdate.js.html#source.10">, line 10</a></li>
+              </ul>
+            </article>
+
+            <h3 class="subsection-title">Type Definitions</h3>
+
+            <article class="method">
+              <div class="method-type"></div>
+
+              <h4 class="method-name" id=".EventHandler">EventHandler<span class="signature">(event, &hellip;args)</span><span class="return-type-signature"> &rarr; {void}</span></h4>
+
+              <div class="method-description">
+                <p>An event handler function to execute when specified event(s) are emitted</p>
+              </div>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">event</span>
+
+                  <span class="param-type">
+                    <code>string</code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description"><p>The event that was emitted</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">args</span>
+
+                  <span class="param-type">
+                    <code>*</code>
+                  </span>
+
+                  <span class="param-attributes"> &lt;repeatable&gt;<br /> </span>
+
+                  <div class="param-description"><p>The emitted arguments</p></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Returns</h4>
+              <ul>
+                <li class="method-returns">
+                  <code>void</code>
+                </li>
+              </ul>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="events_index.js.html">events/index.js</a><a href="events_index.js.html#source.25">, line 25</a></li>
+              </ul>
+            </article>
+
+            <article class="member">
+              <div class="method-type"></div>
+              <h4 class="member-name" id=".EventModule">EventModule</h4>
+
+              <div class="description">
+                <p>The complete &lt;EventModule&gt; object for one of Pronto's event module</p>
+              </div>
+
+              <h4>Type</h4>
+              <ul>
+                <li>
+                  <span class="param-type">
+                    <code>Object</code>
+                  </span>
+                </li>
+              </ul>
+
+              <h4 class="method-heading">Properties</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">bot</span>
+
+                  <span class="param-type">
+                    <code>Array.&lt;string></code>
+                  </span>
+
+                  <div class="param-description">
+                    <p>A string[] of valid &lt;Client&gt;#event(s) that this &lt;EventModule&gt; applies to</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">process</span>
+
+                  <span class="param-type">
+                    <code>Array.&lt;string></code>
+                  </span>
+
+                  <div class="param-description">
+                    <p>A string[] of valid &lt;Process&gt;#event(s) that this &lt;EventModule&gt; applies to</p>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">handler</span>
+
+                  <span class="param-type">
+                    <code><a href="events.html#.EventHandler">events.EventHandler</a></code>
+                  </span>
+
+                  <div class="param-description">
+                    <p>The event handler function to execute when specified event(s) are emitted</p>
+                  </div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4>Source</h4>
+              <ul>
+                <li class="method-source"><a href="events_index.js.html">events/index.js</a><a href="events_index.js.html#source.14">, line 14</a></li>
+              </ul>
+            </article>
+
+            <article class="member">
+              <div class="method-type"></div>
+              <h4 class="member-name" id=".EventModules">EventModules</h4>
+
+              <div class="description">
+                <p>The complete &lt;EventModules&gt; object for all of Pronto's event modules, where each <a href="events.html#.EventHandler">&lt;EventHandler&gt;</a> is stored in the &lt;EventHandlers&gt; object under a string property</p>
+              </div>
+
+              <h4>Type</h4>
+              <ul>
+                <li>
+                  <span class="param-type">
+                    <code>Object.&lt;string, <a href="events.html#.EventModule">events.EventModule</a>></code>
+                  </span>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4>Source</h4>
+              <ul>
+                <li class="method-source"><a href="events_index.js.html">events/index.js</a><a href="events_index.js.html#source.21">, line 21</a></li>
+              </ul>
+            </article>
+          </article>
+        </section>
+      </div>
+    </main>
+
+    <footer class="layout-footer">
+      <div class="container">Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Sun Dec 12 2021 17:38:45 GMT+1300 (New Zealand Daylight Time)</div>
+    </footer>
+
+    <script src="scripts/prism.dev.js"></script>
+  </body>
 </html>

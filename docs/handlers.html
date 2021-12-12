@@ -1,5622 +1,1962 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>handlers | Pronto</title>
-    
-      <link type="text/css" rel="stylesheet" href="styles/vendor/prism-monokai.css">
-    
-    <link type="text/css" rel="stylesheet" href="styles/styles.css">
-    
-      <link type="image/x-icon" rel="icon" href="static/favicon.svg">
-    
-    
-    
+
+    <link type="text/css" rel="stylesheet" href="styles/vendor/prism-monokai.css" />
+
+    <link type="text/css" rel="stylesheet" href="styles/styles.css" />
+
+    <link type="image/x-icon" rel="icon" href="static/favicon.svg" />
+
     <style>
       :root {
-      
-      
+
+
         --primary-colour: #ffd456;
-      
-      
+
+
         --secondary-colour: #ffd456;
-      
-      
+
+
         --selection-text-colour: #000;
-      
+
       }
     </style>
-    
-</head>
-<body>
-
-<header class="layout-header">
-  
-    <a href="./index.html">
-      <img
-        src="static/logo.svg"
-        alt="Pronto logo"
-      >
-    </a>
-  
-  <h1>
-    <a href="./index.html">
-      Pronto
-    </a>
-  </h1>
-  <nav class="layout-nav">
-    <ul><li class="nav-heading">Links</li><li class="nav-item"><a href="https://github.com/JamesNZL/Pronto" target="_blank">GitHub Repository</a></li></ul><ul><li class="nav-heading">Externals</li><li class="nav-heading"><span class="nav-item-type type-external" title="external">E</span><span class="nav-item-name is-external"><a href="external-Discord.html">Discord</a></span></li><li class="nav-heading"><span class="nav-item-type type-external" title="external">E</span><span class="nav-item-name is-external"><a href="external-mongoose.html">mongoose</a></span></li><li class="nav-heading"><span class="nav-item-type type-external" title="external">E</span><span class="nav-item-name is-external"><a href="external-NodeJS.html">NodeJS</a></span></li></ul><ul><li class="nav-heading">Namespaces</li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="commands.html">commands</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.approve">approve</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.archive">archive</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.assign">assign</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.attendance">attendance</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.connected">connected</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.evaluate">evaluate</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.help">help</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.leave">leave</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.leavefor">leavefor</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.lesson">lesson</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.ping">ping</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.purge">purge</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.restart">restart</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.seen">seen</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.uptime">uptime</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.BaseCommand">BaseCommand</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.BaseCommands">BaseCommands</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.Command">Command</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandDescription">CommandDescription</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandExecute">CommandExecute</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandName">CommandName</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandParameters">CommandParameters</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.Commands">Commands</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="config.html">config</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.Configuration">Configuration</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.DefaultChannel">DefaultChannel</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.DefaultChannelType">DefaultChannelType</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.DefaultRole">DefaultRole</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="events.html">events</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.exit">exit</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onBulkDelete">onBulkDelete</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onError">onError</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onGuildCreate">onGuildCreate</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onGuildDelete">onGuildDelete</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberAdd">onMemberAdd</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberBan">onMemberBan</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberRemove">onMemberRemove</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberUpdate">onMemberUpdate</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMessage">onMessage</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMessageDelete">onMessageDelete</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMessageUpdate">onMessageUpdate</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onReactionAdd">onReactionAdd</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onReady">onReady</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onRoleInteraction">onRoleInteraction</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onRoleUpdate">onRoleUpdate</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onVoiceUpdate">onVoiceUpdate</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="events.html#.EventHandler">EventHandler</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="events.html#.EventModule">EventModule</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="events.html#.EventModules">EventModules</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="handlers.html">handlers</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.channelPairing">channelPairing</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.commandError">commandError</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.commandHandler">commandHandler</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.confirmWithReaction">confirmWithReaction</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.connectToMongoose">connectToMongoose</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.createEmbed">createEmbed</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.createGuild">createGuild</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.debugError">debugError</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.deleteMsg">deleteMsg</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.directCommandError">directCommandError</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.embedScaffold">embedScaffold</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.emojiReact">emojiReact</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.errorReact">errorReact</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.findGuildConfiguration">findGuildConfiguration</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.findLesson">findLesson</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.getRoleError">getRoleError</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.lessonInstructions">lessonInstructions</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.lessonReminders">lessonReminders</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.manageAttendance">manageAttendance</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.overwriteCommands">overwriteCommands</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.permissionsCheck">permissionsCheck</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.permissionsHandler">permissionsHandler</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.purgeChannel">purgeChannel</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.removeGuild">removeGuild</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.sendDirect">sendDirect</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.sendMsg">sendMsg</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.successReact">successReact</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.unsubmittedLessons">unsubmittedLessons</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.updateUnsubmitted">updateUnsubmitted</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.upsertCommands">upsertCommands</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.verifyBotPermissions">verifyBotPermissions</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="models.html">models</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Attendance">Attendance</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.ChannelPair">ChannelPair</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Colours">Colours</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Emoji">Emoji</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.GuildConfiguration">GuildConfiguration</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Instructors">Instructors</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Lesson">Lesson</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="modules.html">modules</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.charLimit">charLimit</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.dateTimeGroup">dateTimeGroup</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.difference">difference</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.enumerateResources">enumerateResources</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.equals">equals</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.extractID">extractID</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.formatAge">formatAge</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.formatList">formatList</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.formatRoles">formatRoles</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.isURL">isURL</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.jsCodeBlock">jsCodeBlock</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.merge">merge</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.prefixCommand">prefixCommand</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.processResources">processResources</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.remove">remove</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.sentenceCase">sentenceCase</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.sortMembersByRoles">sortMembersByRoles</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.titleCase">titleCase</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.updatedPermissions">updatedPermissions</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="pronto.html">pronto</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="pronto.html#.bot">bot</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="pronto.html#.version">version</a></span></li></ul>
-  </nav>
-</header>
-
-
-<main class="layout-main ">
-  <div class="container">
-    <p class="page-kind">Namespace</p>
-    <h1 class="page-title">handlers</h1>
-    
-
-
-
-
-<section>
-
-
-<header class="not-class">
-
-
-    
-        
-        <!-- <h2>handlers</h2> -->
-
-        
-
-        
-
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-
-
-
-    
-        
-
-        
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-     
-
-    
-
-    
-
-
-    
-
-    
-        <h3 class="subtitle">Methods</h3>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".channelPairing">channelPairing<span class="signature">(oldState, newState)</span><span class="return-type-signature"></span>
-    </h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">oldState</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.VoiceState</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"><p>The &lt;VoiceState&gt; before the update</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">newState</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.VoiceState</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"><p>The &lt;VoiceState&gt; after the update</p></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_channelPairing.js.html">handlers/channelPairing.js</a><a href="handlers_channelPairing.js.html#source.10">, line 10</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".commandError">commandError<span class="signature">(msg, errorMsg, commandError, footer<span class="signature-attributes">opt</span>)</span><span class="return-type-signature"></span>
-    </h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">msg</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.Message</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>Erroneous command message</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">errorMsg</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>Error message to display</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">commandError</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>The error text to display for the command</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">footer</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-                    &lt;optional&gt;<br>
-                
-
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>Optional supplementary footer</p></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_commandError.js.html">handlers/commandError.js</a><a href="handlers_commandError.js.html#source.8">, line 8</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".commandHandler">commandHandler<span class="signature">(msg)</span><span class="return-type-signature"></span>
-    </h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">msg</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.Message</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"><p>The &lt;Message&gt; that emitted the &lt;Client&gt;#message event</p></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_commandHandler.js.html">handlers/commandHandler.js</a><a href="handlers_commandHandler.js.html#source.11">, line 11</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".confirmWithReaction">confirmWithReaction<span class="signature">(msg, dm, confirm, cancel)</span><span class="return-type-signature"></span>
-    </h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">msg</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.Message</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"><p>Command/reaction message</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">dm</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.Message</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"><p>Direct message to attach confirmation emojis to</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">confirm</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>function</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"><p>Callback function to execute on confirmation</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">cancel</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>function</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"><p>Callback function to execute on cancel</p></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_confirmWithReaction.js.html">handlers/confirmWithReaction.js</a><a href="handlers_confirmWithReaction.js.html#source.10">, line 10</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".connectToMongoose">connectToMongoose<span class="signature">(uri)</span><span class="return-type-signature"></span>
-    </h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">uri</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"><p>MongoDB connection URI</p></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_connectToMongoose.js.html">handlers/connectToMongoose.js</a><a href="handlers_connectToMongoose.js.html#source.8">, line 8</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".createEmbed">createEmbed<span class="signature">(prompt, colour<span class="signature-attributes">opt</span>)</span><span class="return-type-signature"> &rarr; {Discord.MessageEmbed}</span>
-    </h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">prompt</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>The prompt to display as the embed description</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">colour</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.ColorResolvable</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-                    &lt;optional&gt;<br>
-                
-
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>The colour to set the embed to</p></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-    <h4 class="method-heading">Returns</h4>
-    <ul>
-    
-        <li class="method-returns">
-            
-                <code>Discord.MessageEmbed</code>
-            
-            
-                <p>The created embed</p>
-            
-        </li>
-    
-    </ul>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_createEmbed.js.html">handlers/createEmbed.js</a><a href="handlers_createEmbed.js.html#source.7">, line 7</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".createGuild">createGuild<span class="signature">(guild)</span><span class="return-type-signature"> &rarr; {Promise.&lt;Typings.GuildConfiguration>}</span>
-    </h4>
-
-
-
-
-
-<div class="method-description">
-    
-    <p><code>handlers.createGuild()</code> performs the initialisation process for a guild by creating/finding the default channels defined by <a href="config.html#.Configuration"><code>config.defaults</code></a>,
-and creates and returns a new &lt;GuildConfiguration&gt; document if it does not already exist</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">guild</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.Guild</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"><p>The &lt;Guild&gt; to initialise</p></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-    <h4 class="method-heading">Returns</h4>
-    <ul>
-    
-        <li class="method-returns">
-            
-                <code>Promise.&lt;Typings.GuildConfiguration></code>
-            
-            
-                <p>The guild's &lt;GuildConfiguration&gt; document</p>
-            
-        </li>
-    
-    </ul>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_createGuild.js.html">handlers/createGuild.js</a><a href="handlers_createGuild.js.html#source.36">, line 36</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".debugError">debugError<span class="signature">(error, errorMsg, fieldTitle<span class="signature-attributes">opt</span>, fieldContent<span class="signature-attributes">opt</span>)</span><span class="return-type-signature"></span>
-    </h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">error</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Error</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>The error object</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">errorMsg</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>A string to display as an error message</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">fieldTitle</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-                    &lt;optional&gt;<br>
-                
-
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>A title for an optional additional embed field</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">fieldContent</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-                    &lt;optional&gt;<br>
-                
-
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>The field content for the optional embed field</p></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_debugError.js.html">handlers/debugError.js</a><a href="handlers_debugError.js.html#source.7">, line 7</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".deleteMsg">deleteMsg<span class="signature">(msg)</span><span class="return-type-signature"></span>
-    </h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">msg</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.Message</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"><p>The message to delete</p></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_deleteMsg.js.html">handlers/deleteMsg.js</a><a href="handlers_deleteMsg.js.html#source.9">, line 9</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".directCommandError">directCommandError<span class="signature">(msg, type<span class="signature-attributes">opt</span>)</span><span class="return-type-signature"></span>
-    </h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">msg</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.Message</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>The erroneous command message</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">type</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>'NO_PERMISSION'</code>
-    </span>
-    |
-
-    <span class="param-type">
-        <code>'HAS_ROLE_MENTION'</code>
-    </span>
-    |
-
-    <span class="param-type">
-        <code>'NO_DIRECT'</code>
-    </span>
-    |
-
-    <span class="param-type">
-        <code>'MULTIPLE_GUILDS'</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-                    &lt;optional&gt;<br>
-                
-
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>The reason for the command error</p></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_directCommandError.js.html">handlers/directCommandError.js</a><a href="handlers_directCommandError.js.html#source.9">, line 9</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".embedScaffold">embedScaffold<span class="signature">(guild<span class="signature-attributes">nullable</span>, destination, description, colour, type, fieldTitle<span class="signature-attributes">opt, nullable</span>, fieldContent<span class="signature-attributes">opt, nullable</span>, errorField<span class="signature-attributes">opt</span>)</span><span class="return-type-signature"></span>
-    </h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">guild</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.Guild</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-
-                
-                    &lt;nullable&gt;<br>
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>The guild the member shares with the bot</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">destination</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.TextBasedChannels</code>
-    </span>
-    |
-
-    <span class="param-type">
-        <code>Discord.User</code>
-    </span>
-    |
-
-    <span class="param-type">
-        <code>Discord.GuildMember</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>The TextBasedChannel to send the embed to</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">description</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>The description of the embed to be created</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">colour</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.ColorResolvable</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>The colour of the embed to be created</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">type</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>'MESSAGE'</code>
-    </span>
-    |
-
-    <span class="param-type">
-        <code>'DIRECT'</code>
-    </span>
-    |
-
-    <span class="param-type">
-        <code>'DEVELOPER'</code>
-    </span>
-    |
-
-    <span class="param-type">
-        <code>'DEBUG'</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>The intended purpose of the embed</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">fieldTitle</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-                    &lt;optional&gt;<br>
-                
-
-                
-                    &lt;nullable&gt;<br>
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>A title for an optional embed field</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">fieldContent</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-                    &lt;optional&gt;<br>
-                
-
-                
-                    &lt;nullable&gt;<br>
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>Embed field content</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">errorField</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-                    &lt;optional&gt;<br>
-                
-
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>An optional additional error message to append to the end of the description</p></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_embedScaffold.js.html">handlers/embedScaffold.js</a><a href="handlers_embedScaffold.js.html#source.10">, line 10</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".emojiReact">emojiReact<span class="signature">(msg, emoji)</span><span class="return-type-signature"></span>
-    </h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">msg</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.Message</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"><p>The message to react to</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">emoji</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.EmojiIdentifierResolvable</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"><p>The emoji to react with</p></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_emojiReact.js.html">handlers/emojiReact.js</a><a href="handlers_emojiReact.js.html#source.9">, line 9</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".errorReact">errorReact<span class="signature">(msg)</span><span class="return-type-signature"></span>
-    </h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">msg</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.Message</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"><p>The message to error react to</p></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_errorReact.js.html">handlers/errorReact.js</a><a href="handlers_errorReact.js.html#source.9">, line 9</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".findGuildConfiguration">findGuildConfiguration<span class="signature">(guild<span class="signature-attributes">opt</span>, changes<span class="signature-attributes">opt</span>)</span><span class="return-type-signature"> &rarr; {Promise.&lt;Typings.GuildConfiguration>}</span>
-    </h4>
-
-
-
-
-
-<div class="method-description">
-    
-    <p><code>handlers.findGuildConfiguration()</code> queries the MongoDB database for the guild's &lt;GuildConfiguration&gt; if it exists, or will first call <a href="handlers.html#.createGuild"><code>handlers.createGuild()</code></a>
-to create the &lt;GuildConfiguration&gt;</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">guild</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.Guild</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-                    &lt;optional&gt;<br>
-                
-
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>The &lt;Guild&gt; to find the &lt;GuildConfiguration&gt; for</p>
-<ul>
-<li>If <code>undefined</code>, the &lt;GuildConfiguration&gt; of the default guild defined by <a href="config.html#.Configuration"><code>config.ids.DEFAULT_GUILD</code></a> will be returned instead</li>
-</ul></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">changes</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Partial.&lt;Typings.GuildConfiguration></code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-                    &lt;optional&gt;<br>
-                
-
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>A Partial&lt;GuildConfiguration&gt; object of the values to update within the &lt;GuildConfiguration&gt;</p></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-    <h4 class="method-heading">Returns</h4>
-    <ul>
-    
-        <li class="method-returns">
-            
-                <code>Promise.&lt;Typings.GuildConfiguration></code>
-            
-            
-                <p>The guild's &lt;GuildConfiguration&gt;, or the <a href="config.html#.Configuration"><code>config.ids.DEFAULT_GUILD</code></a>'s &lt;GuildConfiguration&gt;</p>
-            
-        </li>
-    
-    </ul>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_findGuildConfiguration.js.html">handlers/findGuildConfiguration.js</a><a href="handlers_findGuildConfiguration.js.html#source.13">, line 13</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".findLesson">findLesson<span class="signature">(id)</span><span class="return-type-signature"> &rarr; {Promise.&lt;Typings.Lesson>}</span>
-    </h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">id</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.Snowflake</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-    <h4 class="method-heading">Returns</h4>
-    <ul>
-    
-        <li class="method-returns">
-            
-                <code>Promise.&lt;Typings.Lesson></code>
-            
-            
-        </li>
-    
-    </ul>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_findLesson.js.html">handlers/findLesson.js</a><a href="handlers_findLesson.js.html#source.12">, line 12</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".getRoleError">getRoleError<span class="signature">(msg)</span><span class="return-type-signature"> &rarr; {Promise.&lt;'ERROR'>}</span>
-    </h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">msg</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.Message</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"><p>The command message</p></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-    <h4 class="method-heading">Returns</h4>
-    <ul>
-    
-        <li class="method-returns">
-            
-                <code>Promise.&lt;'ERROR'></code>
-            
-            
-                <p>An error!</p>
-            
-        </li>
-    
-    </ul>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_getRoleError.js.html">handlers/getRoleError.js</a><a href="handlers_getRoleError.js.html#source.9">, line 9</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".lessonInstructions">lessonInstructions<span class="signature">(channelID, guild)</span><span class="return-type-signature"></span>
-    </h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">channelID</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.Snowflake</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">guild</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.Guild</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_lessonInstructions.js.html">handlers/lessonInstructions.js</a><a href="handlers_lessonInstructions.js.html#source.11">, line 11</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".lessonReminders">lessonReminders<span class="signature">(guild)</span><span class="return-type-signature"></span>
-    </h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">guild</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.Guild</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_lessonReminders.js.html">handlers/lessonReminders.js</a><a href="handlers_lessonReminders.js.html#source.15">, line 15</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".manageAttendance">manageAttendance<span class="signature">(reaction, user)</span><span class="return-type-signature"></span>
-    </h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">reaction</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.MessageReaction</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"><p>The reaction object</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">user</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.User</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"><p>The &lt;User&gt; that applied the guild or reaction emoji</p></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_manageAttendance.js.html">handlers/manageAttendance.js</a><a href="handlers_manageAttendance.js.html#source.15">, line 15</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".overwriteCommands">overwriteCommands<span class="signature">(guild)</span><span class="return-type-signature"> &rarr; {Promise.&lt;Typings.GuildConfiguration>}</span>
-    </h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">guild</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.Guild</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-    <h4 class="method-heading">Returns</h4>
-    <ul>
-    
-        <li class="method-returns">
-            
-                <code>Promise.&lt;Typings.GuildConfiguration></code>
-            
-            
-        </li>
-    
-    </ul>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_overwriteCommands.js.html">handlers/overwriteCommands.js</a><a href="handlers_overwriteCommands.js.html#source.12">, line 12</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".permissionsCheck">permissionsCheck<span class="signature">(memberRoles, id, command)</span><span class="return-type-signature"> &rarr; {boolean}</span>
-    </h4>
-
-
-
-
-
-<div class="method-description">
-    
-    <p><code>handlers.permissionsCheck()</code> verifies whether a &lt;User&gt; has the adequate permissions to access a specified &lt;Command&gt;,
-as per the truth table at https://imgur.com/a/iwiKpsG</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">memberRoles</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.Collection.&lt;Discord.Snowflake, Discord.Role></code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"><p>The Collection&lt;Snowflake, Role&gt; of the &lt;GuildMember&gt;</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">id</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.Snowflake</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"><p>The &lt;User.id&gt; of the user to check permissions for</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">command</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Typings.BaseCommand</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"><p>The &lt;BaseCommand&gt; object to check permissions against</p></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h4 class="method-heading">See</h4>
+  </head>
+  <body>
+    <header class="layout-header">
+      <a href="./index.html">
+        <img src="static/logo.svg" alt="Pronto logo" />
+      </a>
+
+      <h1>
+        <a href="./index.html"> Pronto </a>
+      </h1>
+      <nav class="layout-nav">
         <ul>
-            
-                <li><a href="https://imgur.com/a/iwiKpsGv">https://imgur.com/a/iwiKpsGv</a></li>
-            
+          <li class="nav-heading">Links</li>
+          <li class="nav-item"><a href="https://github.com/JamesNZL/Pronto" target="_blank">GitHub Repository</a></li>
         </ul>
-    
-
-    
-</div>
-
-
-
-    <h4 class="method-heading">Returns</h4>
-    <ul>
-    
-        <li class="method-returns">
-            
-                <code>boolean</code>
-            
-            
-                <p>Whether the &lt;User&gt; has the adequate permissions to access the &lt;Command&gt;</p>
-            
-        </li>
-    
-    </ul>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_permissionsCheck.js.html">handlers/permissionsCheck.js</a><a href="handlers_permissionsCheck.js.html#source.10">, line 10</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".permissionsHandler">permissionsHandler<span class="signature">(msg, command)</span><span class="return-type-signature"> &rarr; {Promise.&lt;(boolean|'ERROR')>}</span>
-    </h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">msg</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.Message</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"><p>The command message</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">command</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Typings.BaseCommand</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"><p>The &lt;BaseCommand&gt; object to check permissions against</p></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-    <h4 class="method-heading">Returns</h4>
-    <ul>
-    
-        <li class="method-returns">
-            
-                <code>Promise.&lt;(boolean|'ERROR')></code>
-            
-            
-                <p>If user has permissions or <code>ERROR</code></p>
-            
-        </li>
-    
-    </ul>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_permissionsHandler.js.html">handlers/permissionsHandler.js</a><a href="handlers_permissionsHandler.js.html#source.12">, line 12</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".purgeChannel">purgeChannel<span class="signature">(msgs, channel, collector<span class="signature-attributes">opt</span>)</span><span class="return-type-signature"></span>
-    </h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">msgs</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.Collection.&lt;Discord.Snowflake, Discord.Message></code>
-    </span>
-    |
-
-    <span class="param-type">
-        <code>Array.&lt;Discord.MessageResolvable></code>
-    </span>
-    |
-
-    <span class="param-type">
-        <code>number</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>Messages to delete</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">channel</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.TextBasedChannels</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>Channel to purge</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">collector</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.ReactionCollector</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-                    &lt;optional&gt;<br>
-                
-
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>An optional reaction collector to stop</p></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_purgeChannel.js.html">handlers/purgeChannel.js</a><a href="handlers_purgeChannel.js.html#source.9">, line 9</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".removeGuild">removeGuild<span class="signature">(guild)</span><span class="return-type-signature"></span>
-    </h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">guild</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.Guild</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"><p>The guild to delete from the database</p></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_removeGuild.js.html">handlers/removeGuild.js</a><a href="handlers_removeGuild.js.html#source.9">, line 9</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".sendDirect">sendDirect<span class="signature">(user, options, guildChannel<span class="signature-attributes">nullable</span>, toDebug<span class="signature-attributes">opt</span>)</span><span class="return-type-signature"> &rarr; {Promise.&lt;?Discord.Message>}</span>
-    </h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">user</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.User</code>
-    </span>
-    |
-
-    <span class="param-type">
-        <code>Discord.GuildMember</code>
-    </span>
-    |
-
-    <span class="param-type">
-        <code>Discord.DMChannel</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>User to send to</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">options</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    |
-
-    <span class="param-type">
-        <code>Discord.MessagePayload</code>
-    </span>
-    |
-
-    <span class="param-type">
-        <code>Discord.MessageOptions</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>Message options</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">guildChannel</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.GuildTextBasedChannel</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-
-                
-                    &lt;nullable&gt;<br>
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>A guild channel that the user has access to, to send an error in case cannot send DM</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">toDebug</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>boolean</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-                    &lt;optional&gt;<br>
-                
-
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>Whether to send the error message to debugging rather than the user in a guild channel</p></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-    <h4 class="method-heading">Returns</h4>
-    <ul>
-    
-        <li class="method-returns">
-            
-                <code>Promise.&lt;?Discord.Message></code>
-            
-            
-                <p>Message if it was sent</p>
-            
-        </li>
-    
-    </ul>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_sendDirect.js.html">handlers/sendDirect.js</a><a href="handlers_sendDirect.js.html#source.12">, line 12</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".sendMsg">sendMsg<span class="signature">(destination, options)</span><span class="return-type-signature"> &rarr; {Promise.&lt;?Discord.Message>}</span>
-    </h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">destination</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.GuildTextBasedChannel</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"><p>Destination channel</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">options</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>string</code>
-    </span>
-    |
-
-    <span class="param-type">
-        <code>Discord.MessagePayload</code>
-    </span>
-    |
-
-    <span class="param-type">
-        <code>Discord.MessageOptions</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"><p>Message payload/options</p></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-    <h4 class="method-heading">Returns</h4>
-    <ul>
-    
-        <li class="method-returns">
-            
-                <code>Promise.&lt;?Discord.Message></code>
-            
-            
-                <p>The message if it was successfully sent</p>
-            
-        </li>
-    
-    </ul>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_sendMsg.js.html">handlers/sendMsg.js</a><a href="handlers_sendMsg.js.html#source.7">, line 7</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".successReact">successReact<span class="signature">(msg)</span><span class="return-type-signature"></span>
-    </h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">msg</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.Message</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"><p>The message to success react to</p></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_successReact.js.html">handlers/successReact.js</a><a href="handlers_successReact.js.html#source.9">, line 9</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".unsubmittedLessons">unsubmittedLessons<span class="signature">(guild)</span><span class="return-type-signature"></span>
-    </h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">guild</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.Guild</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"><p>The guild to update lessons for</p></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_unsubmittedLessons.js.html">handlers/unsubmittedLessons.js</a><a href="handlers_unsubmittedLessons.js.html#source.15">, line 15</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".updateUnsubmitted">updateUnsubmitted<span class="signature">(reaction, user)</span><span class="return-type-signature"></span>
-    </h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">reaction</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.MessageReaction</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"><p>The reaction object</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">user</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.User</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"><p>The &lt;User&gt; that applied the guild or reaction emoji</p></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_updateUnsubmitted.js.html">handlers/updateUnsubmitted.js</a><a href="handlers_updateUnsubmitted.js.html#source.7">, line 7</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".upsertCommands">upsertCommands<span class="signature">(guild)</span><span class="return-type-signature"> &rarr; {Promise.&lt;Typings.GuildConfiguration>}</span>
-    </h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">guild</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.Guild</code>
-    </span>
-    
-
-            
-
-            
-
-            
-
-            <div class="param-description"></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-    <h4 class="method-heading">Returns</h4>
-    <ul>
-    
-        <li class="method-returns">
-            
-                <code>Promise.&lt;Typings.GuildConfiguration></code>
-            
-            
-        </li>
-    
-    </ul>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_upsertCommands.js.html">handlers/upsertCommands.js</a><a href="handlers_upsertCommands.js.html#source.11">, line 11</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-            
-
-
-    <article class="method">
-
-
-
-
-    
-
-
-    
-
-    <div class="method-type">
-    <span class="method-type-signature is-static">static</span>
-    </div>
-
-    <h4 class="method-name" id=".verifyBotPermissions">verifyBotPermissions<span class="signature">(guild, changes<span class="signature-attributes">opt</span>)</span><span class="return-type-signature"></span>
-    </h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Parameters</h4>
-    
-
-<ul class="method-params">
-    
-
-        <li>
-            
-                <span class="param-name">guild</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Discord.Guild</code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"><p>The &lt;Guild&gt; to verify permissions for</p></div>
-            
-        </li>
-
-    
-
-        <li>
-            
-                <span class="param-name">changes</span>
-            
-
-            
-                
-
-
-    <span class="param-type">
-        <code>Array.&lt;Discord.PermissionString></code>
-    </span>
-    
-
-            
-
-            
-                <span class="param-attributes">
-                
-                    &lt;optional&gt;<br>
-                
-
-                
-
-                
-                </span>
-            
-
-            
-
-            <div class="param-description"></div>
-            
-        </li>
-
-    
-</ul>
-
-
-
-
-
-<div class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h4 class="method-heading">Source</h4>
-    <ul>
-        <li class="method-source">
-            <a href="handlers_verifyBotPermissions.js.html">handlers/verifyBotPermissions.js</a><a href="handlers_verifyBotPermissions.js.html#source.12">, line 12</a>
-        </li>
-    </ul>
-
-
-
-    </article>
-
-        
-    
-
-    
-
-    
-</article>
-
-</section>
-
-
-
-
-  </div>
-</main>
-
-<footer class="layout-footer">
-  <div class="container">
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Sun Dec 12 2021 16:41:55 GMT+1300 (New Zealand Daylight Time)
-  </div>
-</footer>
-
-
-
-<script src="scripts/prism.dev.js"></script>
-</body>
+        <ul>
+          <li class="nav-heading">Externals</li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-external" title="external">E</span><span class="nav-item-name is-external"><a href="external-Discord.html">Discord</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-external" title="external">E</span><span class="nav-item-name is-external"><a href="external-mongoose.html">mongoose</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-external" title="external">E</span><span class="nav-item-name is-external"><a href="external-NodeJS.html">NodeJS</a></span>
+          </li>
+        </ul>
+        <ul>
+          <li class="nav-heading">Namespaces</li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="commands.html">commands</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.approve">approve</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.archive">archive</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.assign">assign</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.attendance">attendance</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.connected">connected</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.evaluate">evaluate</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.help">help</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.leave">leave</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.leavefor">leavefor</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.lesson">lesson</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.ping">ping</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.purge">purge</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.restart">restart</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.seen">seen</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.uptime">uptime</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.BaseCommand">BaseCommand</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.BaseCommands">BaseCommands</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.Command">Command</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandDescription">CommandDescription</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandExecute">CommandExecute</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandName">CommandName</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandParameters">CommandParameters</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.Commands">Commands</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="config.html">config</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.Configuration">Configuration</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.DefaultChannel">DefaultChannel</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.DefaultChannelType">DefaultChannelType</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.DefaultRole">DefaultRole</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="events.html">events</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.exit">exit</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onBulkDelete">onBulkDelete</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onError">onError</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onGuildCreate">onGuildCreate</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onGuildDelete">onGuildDelete</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberAdd">onMemberAdd</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberBan">onMemberBan</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberRemove">onMemberRemove</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberUpdate">onMemberUpdate</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMessage">onMessage</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMessageDelete">onMessageDelete</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMessageUpdate">onMessageUpdate</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onReactionAdd">onReactionAdd</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onReady">onReady</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onRoleInteraction">onRoleInteraction</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onRoleUpdate">onRoleUpdate</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onVoiceUpdate">onVoiceUpdate</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="events.html#.EventHandler">EventHandler</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="events.html#.EventModule">EventModule</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="events.html#.EventModules">EventModules</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="handlers.html">handlers</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.channelPairing">channelPairing</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.commandError">commandError</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.commandHandler">commandHandler</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.confirmWithReaction">confirmWithReaction</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.connectToMongoose">connectToMongoose</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.createEmbed">createEmbed</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.createGuild">createGuild</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.debugError">debugError</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.deleteMsg">deleteMsg</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.directCommandError">directCommandError</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.embedScaffold">embedScaffold</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.emojiReact">emojiReact</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.errorReact">errorReact</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.findGuildConfiguration">findGuildConfiguration</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.findLesson">findLesson</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.getRoleError">getRoleError</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.lessonInstructions">lessonInstructions</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.lessonReminders">lessonReminders</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.manageAttendance">manageAttendance</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.overwriteCommands">overwriteCommands</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.permissionsCheck">permissionsCheck</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.permissionsHandler">permissionsHandler</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.purgeChannel">purgeChannel</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.removeGuild">removeGuild</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.sendDirect">sendDirect</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.sendMsg">sendMsg</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.successReact">successReact</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.unsubmittedLessons">unsubmittedLessons</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.updateUnsubmitted">updateUnsubmitted</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.upsertCommands">upsertCommands</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.verifyBotPermissions">verifyBotPermissions</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="models.html">models</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Attendance">Attendance</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.ChannelPair">ChannelPair</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Colours">Colours</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Emoji">Emoji</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.GuildConfiguration">GuildConfiguration</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Instructors">Instructors</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Lesson">Lesson</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="modules.html">modules</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.charLimit">charLimit</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.dateTimeGroup">dateTimeGroup</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.difference">difference</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.enumerateResources">enumerateResources</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.equals">equals</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.extractID">extractID</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.formatAge">formatAge</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.formatList">formatList</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.formatRoles">formatRoles</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.isURL">isURL</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.jsCodeBlock">jsCodeBlock</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.merge">merge</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.prefixCommand">prefixCommand</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.processResources">processResources</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.remove">remove</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.sentenceCase">sentenceCase</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.sortMembersByRoles">sortMembersByRoles</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.titleCase">titleCase</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.updatedPermissions">updatedPermissions</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="pronto.html">pronto</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="pronto.html#.bot">bot</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="pronto.html#.version">version</a></span>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="layout-main ">
+      <div class="container">
+        <p class="page-kind">Namespace</p>
+        <h1 class="page-title">handlers</h1>
+
+        <section>
+          <header class="not-class">
+            <!-- <h2>handlers</h2> -->
+          </header>
+
+          <article>
+            <div class="container-overview">
+              <div class="details"></div>
+            </div>
+
+            <h3 class="subtitle">Methods</h3>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".channelPairing">channelPairing<span class="signature">(oldState, newState)</span><span class="return-type-signature"></span></h4>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">oldState</span>
+
+                  <span class="param-type">
+                    <code>Discord.VoiceState</code>
+                  </span>
+
+                  <div class="param-description"><p>The &lt;VoiceState&gt; before the update</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">newState</span>
+
+                  <span class="param-type">
+                    <code>Discord.VoiceState</code>
+                  </span>
+
+                  <div class="param-description"><p>The &lt;VoiceState&gt; after the update</p></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_channelPairing.js.html">handlers/channelPairing.js</a><a href="handlers_channelPairing.js.html#source.10">, line 10</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".commandError">
+                commandError<span class="signature">(msg, errorMsg, commandError, footer<span class="signature-attributes">opt</span>)</span><span class="return-type-signature"></span>
+              </h4>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">msg</span>
+
+                  <span class="param-type">
+                    <code>Discord.Message</code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description"><p>Erroneous command message</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">errorMsg</span>
+
+                  <span class="param-type">
+                    <code>string</code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description"><p>Error message to display</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">commandError</span>
+
+                  <span class="param-type">
+                    <code>string</code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description"><p>The error text to display for the command</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">footer</span>
+
+                  <span class="param-type">
+                    <code>string</code>
+                  </span>
+
+                  <span class="param-attributes"> &lt;optional&gt;<br /> </span>
+
+                  <div class="param-description"><p>Optional supplementary footer</p></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_commandError.js.html">handlers/commandError.js</a><a href="handlers_commandError.js.html#source.8">, line 8</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".commandHandler">commandHandler<span class="signature">(msg)</span><span class="return-type-signature"></span></h4>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">msg</span>
+
+                  <span class="param-type">
+                    <code>Discord.Message</code>
+                  </span>
+
+                  <div class="param-description"><p>The &lt;Message&gt; that emitted the &lt;Client&gt;#message event</p></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_commandHandler.js.html">handlers/commandHandler.js</a><a href="handlers_commandHandler.js.html#source.11">, line 11</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".confirmWithReaction">confirmWithReaction<span class="signature">(msg, dm, confirm, cancel)</span><span class="return-type-signature"></span></h4>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">msg</span>
+
+                  <span class="param-type">
+                    <code>Discord.Message</code>
+                  </span>
+
+                  <div class="param-description"><p>Command/reaction message</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">dm</span>
+
+                  <span class="param-type">
+                    <code>Discord.Message</code>
+                  </span>
+
+                  <div class="param-description"><p>Direct message to attach confirmation emojis to</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">confirm</span>
+
+                  <span class="param-type">
+                    <code>function</code>
+                  </span>
+
+                  <div class="param-description"><p>Callback function to execute on confirmation</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">cancel</span>
+
+                  <span class="param-type">
+                    <code>function</code>
+                  </span>
+
+                  <div class="param-description"><p>Callback function to execute on cancel</p></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_confirmWithReaction.js.html">handlers/confirmWithReaction.js</a><a href="handlers_confirmWithReaction.js.html#source.10">, line 10</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".connectToMongoose">connectToMongoose<span class="signature">(uri)</span><span class="return-type-signature"></span></h4>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">uri</span>
+
+                  <span class="param-type">
+                    <code>string</code>
+                  </span>
+
+                  <div class="param-description"><p>MongoDB connection URI</p></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_connectToMongoose.js.html">handlers/connectToMongoose.js</a><a href="handlers_connectToMongoose.js.html#source.8">, line 8</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".createEmbed">
+                createEmbed<span class="signature">(prompt, colour<span class="signature-attributes">opt</span>)</span><span class="return-type-signature"> &rarr; {Discord.MessageEmbed}</span>
+              </h4>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">prompt</span>
+
+                  <span class="param-type">
+                    <code>string</code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description"><p>The prompt to display as the embed description</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">colour</span>
+
+                  <span class="param-type">
+                    <code>Discord.ColorResolvable</code>
+                  </span>
+
+                  <span class="param-attributes"> &lt;optional&gt;<br /> </span>
+
+                  <div class="param-description"><p>The colour to set the embed to</p></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Returns</h4>
+              <ul>
+                <li class="method-returns">
+                  <code>Discord.MessageEmbed</code>
+
+                  <p>The created embed</p>
+                </li>
+              </ul>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_createEmbed.js.html">handlers/createEmbed.js</a><a href="handlers_createEmbed.js.html#source.7">, line 7</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".createGuild">createGuild<span class="signature">(guild)</span><span class="return-type-signature"> &rarr; {Promise.&lt;Typings.GuildConfiguration>}</span></h4>
+
+              <div class="method-description">
+                <p>
+                  <code>handlers.createGuild()</code> performs the initialisation process for a guild by creating/finding the default channels defined by <a href="config.html#.Configuration"><code>config.defaults</code></a
+                  >, and creates and returns a new &lt;GuildConfiguration&gt; document if it does not already exist
+                </p>
+              </div>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">guild</span>
+
+                  <span class="param-type">
+                    <code>Discord.Guild</code>
+                  </span>
+
+                  <div class="param-description"><p>The &lt;Guild&gt; to initialise</p></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Returns</h4>
+              <ul>
+                <li class="method-returns">
+                  <code>Promise.&lt;Typings.GuildConfiguration></code>
+
+                  <p>The guild's &lt;GuildConfiguration&gt; document</p>
+                </li>
+              </ul>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_createGuild.js.html">handlers/createGuild.js</a><a href="handlers_createGuild.js.html#source.36">, line 36</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".debugError">
+                debugError<span class="signature">(error, errorMsg, fieldTitle<span class="signature-attributes">opt</span>, fieldContent<span class="signature-attributes">opt</span>)</span><span class="return-type-signature"></span>
+              </h4>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">error</span>
+
+                  <span class="param-type">
+                    <code>Error</code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description"><p>The error object</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">errorMsg</span>
+
+                  <span class="param-type">
+                    <code>string</code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description"><p>A string to display as an error message</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">fieldTitle</span>
+
+                  <span class="param-type">
+                    <code>string</code>
+                  </span>
+
+                  <span class="param-attributes"> &lt;optional&gt;<br /> </span>
+
+                  <div class="param-description"><p>A title for an optional additional embed field</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">fieldContent</span>
+
+                  <span class="param-type">
+                    <code>string</code>
+                  </span>
+
+                  <span class="param-attributes"> &lt;optional&gt;<br /> </span>
+
+                  <div class="param-description"><p>The field content for the optional embed field</p></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_debugError.js.html">handlers/debugError.js</a><a href="handlers_debugError.js.html#source.7">, line 7</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".deleteMsg">deleteMsg<span class="signature">(msg)</span><span class="return-type-signature"></span></h4>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">msg</span>
+
+                  <span class="param-type">
+                    <code>Discord.Message</code>
+                  </span>
+
+                  <div class="param-description"><p>The message to delete</p></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_deleteMsg.js.html">handlers/deleteMsg.js</a><a href="handlers_deleteMsg.js.html#source.9">, line 9</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".directCommandError">
+                directCommandError<span class="signature">(msg, type<span class="signature-attributes">opt</span>)</span><span class="return-type-signature"></span>
+              </h4>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">msg</span>
+
+                  <span class="param-type">
+                    <code>Discord.Message</code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description"><p>The erroneous command message</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">type</span>
+
+                  <span class="param-type">
+                    <code>'NO_PERMISSION'</code>
+                  </span>
+                  |
+
+                  <span class="param-type">
+                    <code>'HAS_ROLE_MENTION'</code>
+                  </span>
+                  |
+
+                  <span class="param-type">
+                    <code>'NO_DIRECT'</code>
+                  </span>
+                  |
+
+                  <span class="param-type">
+                    <code>'MULTIPLE_GUILDS'</code>
+                  </span>
+
+                  <span class="param-attributes"> &lt;optional&gt;<br /> </span>
+
+                  <div class="param-description"><p>The reason for the command error</p></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_directCommandError.js.html">handlers/directCommandError.js</a><a href="handlers_directCommandError.js.html#source.9">, line 9</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".embedScaffold">
+                embedScaffold<span class="signature"
+                  >(guild<span class="signature-attributes">nullable</span>, destination, description, colour, type, fieldTitle<span class="signature-attributes">opt, nullable</span>, fieldContent<span class="signature-attributes">opt, nullable</span>, errorField<span class="signature-attributes"
+                    >opt</span
+                  >)</span
+                ><span class="return-type-signature"></span>
+              </h4>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">guild</span>
+
+                  <span class="param-type">
+                    <code>Discord.Guild</code>
+                  </span>
+
+                  <span class="param-attributes"> &lt;nullable&gt;<br /> </span>
+
+                  <div class="param-description"><p>The guild the member shares with the bot</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">destination</span>
+
+                  <span class="param-type">
+                    <code>Discord.TextBasedChannels</code>
+                  </span>
+                  |
+
+                  <span class="param-type">
+                    <code>Discord.User</code>
+                  </span>
+                  |
+
+                  <span class="param-type">
+                    <code>Discord.GuildMember</code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description"><p>The TextBasedChannel to send the embed to</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">description</span>
+
+                  <span class="param-type">
+                    <code>string</code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description"><p>The description of the embed to be created</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">colour</span>
+
+                  <span class="param-type">
+                    <code>Discord.ColorResolvable</code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description"><p>The colour of the embed to be created</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">type</span>
+
+                  <span class="param-type">
+                    <code>'MESSAGE'</code>
+                  </span>
+                  |
+
+                  <span class="param-type">
+                    <code>'DIRECT'</code>
+                  </span>
+                  |
+
+                  <span class="param-type">
+                    <code>'DEVELOPER'</code>
+                  </span>
+                  |
+
+                  <span class="param-type">
+                    <code>'DEBUG'</code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description"><p>The intended purpose of the embed</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">fieldTitle</span>
+
+                  <span class="param-type">
+                    <code>string</code>
+                  </span>
+
+                  <span class="param-attributes">
+                    &lt;optional&gt;<br />
+
+                    &lt;nullable&gt;<br />
+                  </span>
+
+                  <div class="param-description"><p>A title for an optional embed field</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">fieldContent</span>
+
+                  <span class="param-type">
+                    <code>string</code>
+                  </span>
+
+                  <span class="param-attributes">
+                    &lt;optional&gt;<br />
+
+                    &lt;nullable&gt;<br />
+                  </span>
+
+                  <div class="param-description"><p>Embed field content</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">errorField</span>
+
+                  <span class="param-type">
+                    <code>string</code>
+                  </span>
+
+                  <span class="param-attributes"> &lt;optional&gt;<br /> </span>
+
+                  <div class="param-description"><p>An optional additional error message to append to the end of the description</p></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_embedScaffold.js.html">handlers/embedScaffold.js</a><a href="handlers_embedScaffold.js.html#source.10">, line 10</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".emojiReact">emojiReact<span class="signature">(msg, emoji)</span><span class="return-type-signature"></span></h4>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">msg</span>
+
+                  <span class="param-type">
+                    <code>Discord.Message</code>
+                  </span>
+
+                  <div class="param-description"><p>The message to react to</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">emoji</span>
+
+                  <span class="param-type">
+                    <code>Discord.EmojiIdentifierResolvable</code>
+                  </span>
+
+                  <div class="param-description"><p>The emoji to react with</p></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_emojiReact.js.html">handlers/emojiReact.js</a><a href="handlers_emojiReact.js.html#source.9">, line 9</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".errorReact">errorReact<span class="signature">(msg)</span><span class="return-type-signature"></span></h4>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">msg</span>
+
+                  <span class="param-type">
+                    <code>Discord.Message</code>
+                  </span>
+
+                  <div class="param-description"><p>The message to error react to</p></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_errorReact.js.html">handlers/errorReact.js</a><a href="handlers_errorReact.js.html#source.9">, line 9</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".findGuildConfiguration">
+                findGuildConfiguration<span class="signature">(guild<span class="signature-attributes">opt</span>, changes<span class="signature-attributes">opt</span>)</span><span class="return-type-signature"> &rarr; {Promise.&lt;Typings.GuildConfiguration>}</span>
+              </h4>
+
+              <div class="method-description">
+                <p>
+                  <code>handlers.findGuildConfiguration()</code> queries the MongoDB database for the guild's &lt;GuildConfiguration&gt; if it exists, or will first call <a href="handlers.html#.createGuild"><code>handlers.createGuild()</code></a> to create the &lt;GuildConfiguration&gt;
+                </p>
+              </div>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">guild</span>
+
+                  <span class="param-type">
+                    <code>Discord.Guild</code>
+                  </span>
+
+                  <span class="param-attributes"> &lt;optional&gt;<br /> </span>
+
+                  <div class="param-description">
+                    <p>The &lt;Guild&gt; to find the &lt;GuildConfiguration&gt; for</p>
+                    <ul>
+                      <li>
+                        If <code>undefined</code>, the &lt;GuildConfiguration&gt; of the default guild defined by <a href="config.html#.Configuration"><code>config.ids.DEFAULT_GUILD</code></a> will be returned instead
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+
+                <li>
+                  <span class="param-name">changes</span>
+
+                  <span class="param-type">
+                    <code>Partial.&lt;Typings.GuildConfiguration></code>
+                  </span>
+
+                  <span class="param-attributes"> &lt;optional&gt;<br /> </span>
+
+                  <div class="param-description"><p>A Partial&lt;GuildConfiguration&gt; object of the values to update within the &lt;GuildConfiguration&gt;</p></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Returns</h4>
+              <ul>
+                <li class="method-returns">
+                  <code>Promise.&lt;Typings.GuildConfiguration></code>
+
+                  <p>
+                    The guild's &lt;GuildConfiguration&gt;, or the <a href="config.html#.Configuration"><code>config.ids.DEFAULT_GUILD</code></a
+                    >'s &lt;GuildConfiguration&gt;
+                  </p>
+                </li>
+              </ul>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_findGuildConfiguration.js.html">handlers/findGuildConfiguration.js</a><a href="handlers_findGuildConfiguration.js.html#source.13">, line 13</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".findLesson">findLesson<span class="signature">(id)</span><span class="return-type-signature"> &rarr; {Promise.&lt;Typings.Lesson>}</span></h4>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">id</span>
+
+                  <span class="param-type">
+                    <code>Discord.Snowflake</code>
+                  </span>
+
+                  <div class="param-description"></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Returns</h4>
+              <ul>
+                <li class="method-returns">
+                  <code>Promise.&lt;Typings.Lesson></code>
+                </li>
+              </ul>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_findLesson.js.html">handlers/findLesson.js</a><a href="handlers_findLesson.js.html#source.12">, line 12</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".getRoleError">getRoleError<span class="signature">(msg)</span><span class="return-type-signature"> &rarr; {Promise.&lt;'ERROR'>}</span></h4>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">msg</span>
+
+                  <span class="param-type">
+                    <code>Discord.Message</code>
+                  </span>
+
+                  <div class="param-description"><p>The command message</p></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Returns</h4>
+              <ul>
+                <li class="method-returns">
+                  <code>Promise.&lt;'ERROR'></code>
+
+                  <p>An error!</p>
+                </li>
+              </ul>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_getRoleError.js.html">handlers/getRoleError.js</a><a href="handlers_getRoleError.js.html#source.9">, line 9</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".lessonInstructions">lessonInstructions<span class="signature">(channelID, guild)</span><span class="return-type-signature"></span></h4>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">channelID</span>
+
+                  <span class="param-type">
+                    <code>Discord.Snowflake</code>
+                  </span>
+
+                  <div class="param-description"></div>
+                </li>
+
+                <li>
+                  <span class="param-name">guild</span>
+
+                  <span class="param-type">
+                    <code>Discord.Guild</code>
+                  </span>
+
+                  <div class="param-description"></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_lessonInstructions.js.html">handlers/lessonInstructions.js</a><a href="handlers_lessonInstructions.js.html#source.11">, line 11</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".lessonReminders">lessonReminders<span class="signature">(guild)</span><span class="return-type-signature"></span></h4>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">guild</span>
+
+                  <span class="param-type">
+                    <code>Discord.Guild</code>
+                  </span>
+
+                  <div class="param-description"></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_lessonReminders.js.html">handlers/lessonReminders.js</a><a href="handlers_lessonReminders.js.html#source.15">, line 15</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".manageAttendance">manageAttendance<span class="signature">(reaction, user)</span><span class="return-type-signature"></span></h4>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">reaction</span>
+
+                  <span class="param-type">
+                    <code>Discord.MessageReaction</code>
+                  </span>
+
+                  <div class="param-description"><p>The reaction object</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">user</span>
+
+                  <span class="param-type">
+                    <code>Discord.User</code>
+                  </span>
+
+                  <div class="param-description"><p>The &lt;User&gt; that applied the guild or reaction emoji</p></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_manageAttendance.js.html">handlers/manageAttendance.js</a><a href="handlers_manageAttendance.js.html#source.15">, line 15</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".overwriteCommands">overwriteCommands<span class="signature">(guild)</span><span class="return-type-signature"> &rarr; {Promise.&lt;Typings.GuildConfiguration>}</span></h4>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">guild</span>
+
+                  <span class="param-type">
+                    <code>Discord.Guild</code>
+                  </span>
+
+                  <div class="param-description"></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Returns</h4>
+              <ul>
+                <li class="method-returns">
+                  <code>Promise.&lt;Typings.GuildConfiguration></code>
+                </li>
+              </ul>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_overwriteCommands.js.html">handlers/overwriteCommands.js</a><a href="handlers_overwriteCommands.js.html#source.12">, line 12</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".permissionsCheck">permissionsCheck<span class="signature">(memberRoles, id, command)</span><span class="return-type-signature"> &rarr; {boolean}</span></h4>
+
+              <div class="method-description">
+                <p><code>handlers.permissionsCheck()</code> verifies whether a &lt;User&gt; has the adequate permissions to access a specified &lt;Command&gt;, as per the truth table at https://imgur.com/a/iwiKpsG</p>
+              </div>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">memberRoles</span>
+
+                  <span class="param-type">
+                    <code>Discord.Collection.&lt;Discord.Snowflake, Discord.Role></code>
+                  </span>
+
+                  <div class="param-description"><p>The Collection&lt;Snowflake, Role&gt; of the &lt;GuildMember&gt;</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">id</span>
+
+                  <span class="param-type">
+                    <code>Discord.Snowflake</code>
+                  </span>
+
+                  <div class="param-description"><p>The &lt;User.id&gt; of the user to check permissions for</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">command</span>
+
+                  <span class="param-type">
+                    <code>Typings.BaseCommand</code>
+                  </span>
+
+                  <div class="param-description"><p>The &lt;BaseCommand&gt; object to check permissions against</p></div>
+                </li>
+              </ul>
+
+              <div class="details">
+                <h4 class="method-heading">See</h4>
+                <ul>
+                  <li><a href="https://imgur.com/a/iwiKpsGv">https://imgur.com/a/iwiKpsGv</a></li>
+                </ul>
+              </div>
+
+              <h4 class="method-heading">Returns</h4>
+              <ul>
+                <li class="method-returns">
+                  <code>boolean</code>
+
+                  <p>Whether the &lt;User&gt; has the adequate permissions to access the &lt;Command&gt;</p>
+                </li>
+              </ul>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_permissionsCheck.js.html">handlers/permissionsCheck.js</a><a href="handlers_permissionsCheck.js.html#source.10">, line 10</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".permissionsHandler">permissionsHandler<span class="signature">(msg, command)</span><span class="return-type-signature"> &rarr; {Promise.&lt;(boolean|'ERROR')>}</span></h4>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">msg</span>
+
+                  <span class="param-type">
+                    <code>Discord.Message</code>
+                  </span>
+
+                  <div class="param-description"><p>The command message</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">command</span>
+
+                  <span class="param-type">
+                    <code>Typings.BaseCommand</code>
+                  </span>
+
+                  <div class="param-description"><p>The &lt;BaseCommand&gt; object to check permissions against</p></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Returns</h4>
+              <ul>
+                <li class="method-returns">
+                  <code>Promise.&lt;(boolean|'ERROR')></code>
+
+                  <p>If user has permissions or <code>ERROR</code></p>
+                </li>
+              </ul>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_permissionsHandler.js.html">handlers/permissionsHandler.js</a><a href="handlers_permissionsHandler.js.html#source.12">, line 12</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".purgeChannel">
+                purgeChannel<span class="signature">(msgs, channel, collector<span class="signature-attributes">opt</span>)</span><span class="return-type-signature"></span>
+              </h4>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">msgs</span>
+
+                  <span class="param-type">
+                    <code>Discord.Collection.&lt;Discord.Snowflake, Discord.Message></code>
+                  </span>
+                  |
+
+                  <span class="param-type">
+                    <code>Array.&lt;Discord.MessageResolvable></code>
+                  </span>
+                  |
+
+                  <span class="param-type">
+                    <code>number</code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description"><p>Messages to delete</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">channel</span>
+
+                  <span class="param-type">
+                    <code>Discord.TextBasedChannels</code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description"><p>Channel to purge</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">collector</span>
+
+                  <span class="param-type">
+                    <code>Discord.ReactionCollector</code>
+                  </span>
+
+                  <span class="param-attributes"> &lt;optional&gt;<br /> </span>
+
+                  <div class="param-description"><p>An optional reaction collector to stop</p></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_purgeChannel.js.html">handlers/purgeChannel.js</a><a href="handlers_purgeChannel.js.html#source.9">, line 9</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".removeGuild">removeGuild<span class="signature">(guild)</span><span class="return-type-signature"></span></h4>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">guild</span>
+
+                  <span class="param-type">
+                    <code>Discord.Guild</code>
+                  </span>
+
+                  <div class="param-description"><p>The guild to delete from the database</p></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_removeGuild.js.html">handlers/removeGuild.js</a><a href="handlers_removeGuild.js.html#source.9">, line 9</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".sendDirect">
+                sendDirect<span class="signature">(user, options, guildChannel<span class="signature-attributes">nullable</span>, toDebug<span class="signature-attributes">opt</span>)</span><span class="return-type-signature"> &rarr; {Promise.&lt;?Discord.Message>}</span>
+              </h4>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">user</span>
+
+                  <span class="param-type">
+                    <code>Discord.User</code>
+                  </span>
+                  |
+
+                  <span class="param-type">
+                    <code>Discord.GuildMember</code>
+                  </span>
+                  |
+
+                  <span class="param-type">
+                    <code>Discord.DMChannel</code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description"><p>User to send to</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">options</span>
+
+                  <span class="param-type">
+                    <code>string</code>
+                  </span>
+                  |
+
+                  <span class="param-type">
+                    <code>Discord.MessagePayload</code>
+                  </span>
+                  |
+
+                  <span class="param-type">
+                    <code>Discord.MessageOptions</code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description"><p>Message options</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">guildChannel</span>
+
+                  <span class="param-type">
+                    <code>Discord.GuildTextBasedChannel</code>
+                  </span>
+
+                  <span class="param-attributes"> &lt;nullable&gt;<br /> </span>
+
+                  <div class="param-description"><p>A guild channel that the user has access to, to send an error in case cannot send DM</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">toDebug</span>
+
+                  <span class="param-type">
+                    <code>boolean</code>
+                  </span>
+
+                  <span class="param-attributes"> &lt;optional&gt;<br /> </span>
+
+                  <div class="param-description"><p>Whether to send the error message to debugging rather than the user in a guild channel</p></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Returns</h4>
+              <ul>
+                <li class="method-returns">
+                  <code>Promise.&lt;?Discord.Message></code>
+
+                  <p>Message if it was sent</p>
+                </li>
+              </ul>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_sendDirect.js.html">handlers/sendDirect.js</a><a href="handlers_sendDirect.js.html#source.12">, line 12</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".sendMsg">sendMsg<span class="signature">(destination, options)</span><span class="return-type-signature"> &rarr; {Promise.&lt;?Discord.Message>}</span></h4>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">destination</span>
+
+                  <span class="param-type">
+                    <code>Discord.GuildTextBasedChannel</code>
+                  </span>
+
+                  <div class="param-description"><p>Destination channel</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">options</span>
+
+                  <span class="param-type">
+                    <code>string</code>
+                  </span>
+                  |
+
+                  <span class="param-type">
+                    <code>Discord.MessagePayload</code>
+                  </span>
+                  |
+
+                  <span class="param-type">
+                    <code>Discord.MessageOptions</code>
+                  </span>
+
+                  <div class="param-description"><p>Message payload/options</p></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Returns</h4>
+              <ul>
+                <li class="method-returns">
+                  <code>Promise.&lt;?Discord.Message></code>
+
+                  <p>The message if it was successfully sent</p>
+                </li>
+              </ul>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_sendMsg.js.html">handlers/sendMsg.js</a><a href="handlers_sendMsg.js.html#source.7">, line 7</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".successReact">successReact<span class="signature">(msg)</span><span class="return-type-signature"></span></h4>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">msg</span>
+
+                  <span class="param-type">
+                    <code>Discord.Message</code>
+                  </span>
+
+                  <div class="param-description"><p>The message to success react to</p></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_successReact.js.html">handlers/successReact.js</a><a href="handlers_successReact.js.html#source.9">, line 9</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".unsubmittedLessons">unsubmittedLessons<span class="signature">(guild)</span><span class="return-type-signature"></span></h4>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">guild</span>
+
+                  <span class="param-type">
+                    <code>Discord.Guild</code>
+                  </span>
+
+                  <div class="param-description"><p>The guild to update lessons for</p></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_unsubmittedLessons.js.html">handlers/unsubmittedLessons.js</a><a href="handlers_unsubmittedLessons.js.html#source.15">, line 15</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".updateUnsubmitted">updateUnsubmitted<span class="signature">(reaction, user)</span><span class="return-type-signature"></span></h4>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">reaction</span>
+
+                  <span class="param-type">
+                    <code>Discord.MessageReaction</code>
+                  </span>
+
+                  <div class="param-description"><p>The reaction object</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">user</span>
+
+                  <span class="param-type">
+                    <code>Discord.User</code>
+                  </span>
+
+                  <div class="param-description"><p>The &lt;User&gt; that applied the guild or reaction emoji</p></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_updateUnsubmitted.js.html">handlers/updateUnsubmitted.js</a><a href="handlers_updateUnsubmitted.js.html#source.7">, line 7</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".upsertCommands">upsertCommands<span class="signature">(guild)</span><span class="return-type-signature"> &rarr; {Promise.&lt;Typings.GuildConfiguration>}</span></h4>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">guild</span>
+
+                  <span class="param-type">
+                    <code>Discord.Guild</code>
+                  </span>
+
+                  <div class="param-description"></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Returns</h4>
+              <ul>
+                <li class="method-returns">
+                  <code>Promise.&lt;Typings.GuildConfiguration></code>
+                </li>
+              </ul>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_upsertCommands.js.html">handlers/upsertCommands.js</a><a href="handlers_upsertCommands.js.html#source.11">, line 11</a></li>
+              </ul>
+            </article>
+
+            <article class="method">
+              <div class="method-type">
+                <span class="method-type-signature is-static">static</span>
+              </div>
+
+              <h4 class="method-name" id=".verifyBotPermissions">
+                verifyBotPermissions<span class="signature">(guild, changes<span class="signature-attributes">opt</span>)</span><span class="return-type-signature"></span>
+              </h4>
+
+              <h4 class="method-heading">Parameters</h4>
+
+              <ul class="method-params">
+                <li>
+                  <span class="param-name">guild</span>
+
+                  <span class="param-type">
+                    <code>Discord.Guild</code>
+                  </span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description"><p>The &lt;Guild&gt; to verify permissions for</p></div>
+                </li>
+
+                <li>
+                  <span class="param-name">changes</span>
+
+                  <span class="param-type">
+                    <code>Array.&lt;Discord.PermissionString></code>
+                  </span>
+
+                  <span class="param-attributes"> &lt;optional&gt;<br /> </span>
+
+                  <div class="param-description"></div>
+                </li>
+              </ul>
+
+              <div class="details"></div>
+
+              <h4 class="method-heading">Source</h4>
+              <ul>
+                <li class="method-source"><a href="handlers_verifyBotPermissions.js.html">handlers/verifyBotPermissions.js</a><a href="handlers_verifyBotPermissions.js.html#source.12">, line 12</a></li>
+              </ul>
+            </article>
+          </article>
+        </section>
+      </div>
+    </main>
+
+    <footer class="layout-footer">
+      <div class="container">Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Sun Dec 12 2021 17:38:46 GMT+1300 (New Zealand Daylight Time)</div>
+    </footer>
+
+    <script src="scripts/prism.dev.js"></script>
+  </body>
 </html>

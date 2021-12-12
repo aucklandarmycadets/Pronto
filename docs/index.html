@@ -1,269 +1,600 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>Home | Pronto</title>
-    
-      <link type="text/css" rel="stylesheet" href="styles/vendor/prism-monokai.css">
-    
-    <link type="text/css" rel="stylesheet" href="styles/styles.css">
-    
-      <link type="image/x-icon" rel="icon" href="static/favicon.svg">
-    
-    
-    
+
+    <link type="text/css" rel="stylesheet" href="styles/vendor/prism-monokai.css" />
+
+    <link type="text/css" rel="stylesheet" href="styles/styles.css" />
+
+    <link type="image/x-icon" rel="icon" href="static/favicon.svg" />
+
     <style>
       :root {
-      
-      
+
+
         --primary-colour: #ffd456;
-      
-      
+
+
         --secondary-colour: #ffd456;
-      
-      
+
+
         --selection-text-colour: #000;
-      
+
       }
     </style>
-    
-</head>
-<body>
+  </head>
+  <body>
+    <header class="layout-header">
+      <a href="./index.html">
+        <img src="static/logo.svg" alt="Pronto logo" />
+      </a>
 
-<header class="layout-header">
-  
-    <a href="./index.html">
-      <img
-        src="static/logo.svg"
-        alt="Pronto logo"
-      >
-    </a>
-  
-  <h1>
-    <a href="./index.html">
-      Pronto
-    </a>
-  </h1>
-  <nav class="layout-nav">
-    <ul><li class="nav-heading">Links</li><li class="nav-item"><a href="https://github.com/JamesNZL/Pronto" target="_blank">GitHub Repository</a></li></ul><ul><li class="nav-heading">Externals</li><li class="nav-heading"><span class="nav-item-type type-external" title="external">E</span><span class="nav-item-name is-external"><a href="external-Discord.html">Discord</a></span></li><li class="nav-heading"><span class="nav-item-type type-external" title="external">E</span><span class="nav-item-name is-external"><a href="external-mongoose.html">mongoose</a></span></li><li class="nav-heading"><span class="nav-item-type type-external" title="external">E</span><span class="nav-item-name is-external"><a href="external-NodeJS.html">NodeJS</a></span></li></ul><ul><li class="nav-heading">Namespaces</li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="commands.html">commands</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.approve">approve</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.archive">archive</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.assign">assign</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.attendance">attendance</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.connected">connected</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.evaluate">evaluate</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.help">help</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.leave">leave</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.leavefor">leavefor</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.lesson">lesson</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.ping">ping</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.purge">purge</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.restart">restart</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.seen">seen</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.uptime">uptime</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.BaseCommand">BaseCommand</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.BaseCommands">BaseCommands</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.Command">Command</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandDescription">CommandDescription</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandExecute">CommandExecute</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandName">CommandName</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandParameters">CommandParameters</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.Commands">Commands</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="config.html">config</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.Configuration">Configuration</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.DefaultChannel">DefaultChannel</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.DefaultChannelType">DefaultChannelType</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.DefaultRole">DefaultRole</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="events.html">events</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.exit">exit</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onBulkDelete">onBulkDelete</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onError">onError</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onGuildCreate">onGuildCreate</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onGuildDelete">onGuildDelete</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberAdd">onMemberAdd</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberBan">onMemberBan</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberRemove">onMemberRemove</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberUpdate">onMemberUpdate</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMessage">onMessage</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMessageDelete">onMessageDelete</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMessageUpdate">onMessageUpdate</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onReactionAdd">onReactionAdd</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onReady">onReady</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onRoleInteraction">onRoleInteraction</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onRoleUpdate">onRoleUpdate</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onVoiceUpdate">onVoiceUpdate</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="events.html#.EventHandler">EventHandler</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="events.html#.EventModule">EventModule</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="events.html#.EventModules">EventModules</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="handlers.html">handlers</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.channelPairing">channelPairing</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.commandError">commandError</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.commandHandler">commandHandler</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.confirmWithReaction">confirmWithReaction</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.connectToMongoose">connectToMongoose</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.createEmbed">createEmbed</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.createGuild">createGuild</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.debugError">debugError</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.deleteMsg">deleteMsg</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.directCommandError">directCommandError</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.embedScaffold">embedScaffold</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.emojiReact">emojiReact</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.errorReact">errorReact</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.findGuildConfiguration">findGuildConfiguration</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.findLesson">findLesson</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.getRoleError">getRoleError</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.lessonInstructions">lessonInstructions</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.lessonReminders">lessonReminders</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.manageAttendance">manageAttendance</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.overwriteCommands">overwriteCommands</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.permissionsCheck">permissionsCheck</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.permissionsHandler">permissionsHandler</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.purgeChannel">purgeChannel</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.removeGuild">removeGuild</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.sendDirect">sendDirect</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.sendMsg">sendMsg</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.successReact">successReact</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.unsubmittedLessons">unsubmittedLessons</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.updateUnsubmitted">updateUnsubmitted</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.upsertCommands">upsertCommands</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.verifyBotPermissions">verifyBotPermissions</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="models.html">models</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Attendance">Attendance</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.ChannelPair">ChannelPair</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Colours">Colours</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Emoji">Emoji</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.GuildConfiguration">GuildConfiguration</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Instructors">Instructors</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Lesson">Lesson</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="modules.html">modules</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.charLimit">charLimit</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.dateTimeGroup">dateTimeGroup</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.difference">difference</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.enumerateResources">enumerateResources</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.equals">equals</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.extractID">extractID</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.formatAge">formatAge</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.formatList">formatList</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.formatRoles">formatRoles</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.isURL">isURL</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.jsCodeBlock">jsCodeBlock</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.merge">merge</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.prefixCommand">prefixCommand</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.processResources">processResources</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.remove">remove</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.sentenceCase">sentenceCase</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.sortMembersByRoles">sortMembersByRoles</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.titleCase">titleCase</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.updatedPermissions">updatedPermissions</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="pronto.html">pronto</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="pronto.html#.bot">bot</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="pronto.html#.version">version</a></span></li></ul>
-  </nav>
-</header>
+      <h1>
+        <a href="./index.html"> Pronto </a>
+      </h1>
+      <nav class="layout-nav">
+        <ul>
+          <li class="nav-heading">Links</li>
+          <li class="nav-item"><a href="https://github.com/JamesNZL/Pronto" target="_blank">GitHub Repository</a></li>
+        </ul>
+        <ul>
+          <li class="nav-heading">Externals</li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-external" title="external">E</span><span class="nav-item-name is-external"><a href="external-Discord.html">Discord</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-external" title="external">E</span><span class="nav-item-name is-external"><a href="external-mongoose.html">mongoose</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-external" title="external">E</span><span class="nav-item-name is-external"><a href="external-NodeJS.html">NodeJS</a></span>
+          </li>
+        </ul>
+        <ul>
+          <li class="nav-heading">Namespaces</li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="commands.html">commands</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.approve">approve</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.archive">archive</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.assign">assign</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.attendance">attendance</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.connected">connected</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.evaluate">evaluate</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.help">help</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.leave">leave</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.leavefor">leavefor</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.lesson">lesson</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.ping">ping</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.purge">purge</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.restart">restart</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.seen">seen</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="commands.html#.uptime">uptime</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.BaseCommand">BaseCommand</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.BaseCommands">BaseCommands</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.Command">Command</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandDescription">CommandDescription</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandExecute">CommandExecute</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandName">CommandName</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.CommandParameters">CommandParameters</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="commands.html#.Commands">Commands</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="config.html">config</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.Configuration">Configuration</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.DefaultChannel">DefaultChannel</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.DefaultChannelType">DefaultChannelType</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="config.html#.DefaultRole">DefaultRole</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="events.html">events</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.exit">exit</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onBulkDelete">onBulkDelete</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onError">onError</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onGuildCreate">onGuildCreate</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onGuildDelete">onGuildDelete</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberAdd">onMemberAdd</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberBan">onMemberBan</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberRemove">onMemberRemove</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMemberUpdate">onMemberUpdate</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMessage">onMessage</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMessageDelete">onMessageDelete</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onMessageUpdate">onMessageUpdate</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onReactionAdd">onReactionAdd</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onReady">onReady</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onRoleInteraction">onRoleInteraction</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onRoleUpdate">onRoleUpdate</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="events.html#.onVoiceUpdate">onVoiceUpdate</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="events.html#.EventHandler">EventHandler</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="events.html#.EventModule">EventModule</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="events.html#.EventModules">EventModules</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="handlers.html">handlers</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.channelPairing">channelPairing</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.commandError">commandError</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.commandHandler">commandHandler</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.confirmWithReaction">confirmWithReaction</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.connectToMongoose">connectToMongoose</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.createEmbed">createEmbed</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.createGuild">createGuild</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.debugError">debugError</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.deleteMsg">deleteMsg</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.directCommandError">directCommandError</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.embedScaffold">embedScaffold</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.emojiReact">emojiReact</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.errorReact">errorReact</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.findGuildConfiguration">findGuildConfiguration</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.findLesson">findLesson</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.getRoleError">getRoleError</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.lessonInstructions">lessonInstructions</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.lessonReminders">lessonReminders</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.manageAttendance">manageAttendance</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.overwriteCommands">overwriteCommands</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.permissionsCheck">permissionsCheck</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.permissionsHandler">permissionsHandler</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.purgeChannel">purgeChannel</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.removeGuild">removeGuild</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.sendDirect">sendDirect</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.sendMsg">sendMsg</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.successReact">successReact</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.unsubmittedLessons">unsubmittedLessons</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.updateUnsubmitted">updateUnsubmitted</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.upsertCommands">upsertCommands</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="handlers.html#.verifyBotPermissions">verifyBotPermissions</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="models.html">models</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Attendance">Attendance</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.ChannelPair">ChannelPair</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Colours">Colours</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Emoji">Emoji</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.GuildConfiguration">GuildConfiguration</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Instructors">Instructors</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="models.html#.Lesson">Lesson</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="modules.html">modules</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.charLimit">charLimit</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.dateTimeGroup">dateTimeGroup</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.difference">difference</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.enumerateResources">enumerateResources</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.equals">equals</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.extractID">extractID</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.formatAge">formatAge</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.formatList">formatList</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.formatRoles">formatRoles</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.isURL">isURL</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.jsCodeBlock">jsCodeBlock</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.merge">merge</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.prefixCommand">prefixCommand</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.processResources">processResources</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.remove">remove</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.sentenceCase">sentenceCase</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.sortMembersByRoles">sortMembersByRoles</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.titleCase">titleCase</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.updatedPermissions">updatedPermissions</a></span>
+          </li>
+          <li class="nav-heading">
+            <span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="pronto.html">pronto</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="pronto.html#.bot">bot</a></span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="pronto.html#.version">version</a></span>
+          </li>
+        </ul>
+      </nav>
+    </header>
 
+    <main class="layout-main ">
+      <div class="container">
+        <p class="page-kind"></p>
+        <h1 class="page-title"></h1>
 
-<main class="layout-main ">
-  <div class="container">
-    <p class="page-kind"></p>
-    <h1 class="page-title"></h1>
-    
+        <h3></h3>
 
-
-
-    
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-    <section class="readme">
-        <article><h1>Pronto v4.2.2</h1>
-<p>A Discord bot developed for the City of Auckland Cadet Unit, built with <a href="https://www.npmjs.com/package/discord.js">discord.js</a> v12.</p>
-<blockquote>
-<p>Named after the Radio Appointment Title of a Signaller, Pronto is specifically designed for community groups, featuring attendance tracking and many other useful commands!</p>
-</blockquote>
-<h2>Table of Contents</h2>
-<ul>
-<li><a href="#table-of-contents">Table of Contents</a></li>
-<li><a href="#about">About</a>
-<ul>
-<li><a href="#features">Features</a></li>
-<li><a href="#commands-list">Commands List</a></li>
-<li><a href="#jsdoc-documentation">JSDoc Documentation</a></li>
-</ul>
-</li>
-<li><a href="#installation">Installation</a>
-<ul>
-<li><a href="#requirements">Requirements</a></li>
-<li><a href="#dependencies">Dependencies</a></li>
-<li><a href="#instructions">Instructions</a></li>
-</ul>
-</li>
-</ul>
-<h2>About</h2>
-<h3>Features</h3>
-<ul>
-<li><code>!leave</code> and <code>!leavefor</code> commands to submit leave tickets into an attendance channel, and messaging a duplicate to the absentee</li>
-<li><code>!attendance</code> to submit an attendance register for a formation</li>
-<li>Dynamic <code>!help</code> command tree, displaying only commands the user has permissions for</li>
-<li><code>!connected</code> command to export a list of members connected to a voice channel</li>
-<li><code>!archive</code> command to archive old or retired channels</li>
-<li><code>!purge</code> command to bulk delete messages</li>
-<li>Individual configuration database for each separate guild, allowing guild-specific permissions and settings to be applied</li>
-<li>A comprehensive suite of lesson management commands, enabling assignment of lesson warnings to specified instructors, and the creation of a private lesson channel for the instructor to develop a lesson plan</li>
-<li>Applies message reactions on successful/unsuccessful executions of commands</li>
-<li>Automatically applies an acknowledgement reaction to announcement posts</li>
-<li>Notifies a recruitment channel when new members join</li>
-<li>Applies a visitor role to new members</li>
-<li>'Channel pairing', displaying a hidden text channel to the members connected to the paired voice channel only</li>
-<li>A comprehensive logging feature set, such as tracking message edits and deletions</li>
-<li>Fully-featured error detection and responses, with specific prompts detailing expected input</li>
-<li>Easily forkable, with a consolidated configuration and commands list to adapt to your needs, alongside a broad collection of useful modules and handlers</li>
-<li>Easily modified permissions and aliases for individual commands, including whether the command is allowed in direct messages</li>
-</ul>
-<h3>Commands List</h3>
-<table>
-<thead>
-<tr>
-<th>Command</th>
-<th>Description</th>
-<th>Default Permissions</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>!ping</code></td>
-<td>Test the latency of the bot</td>
-<td>Developer</td>
-</tr>
-<tr>
-<td><code>!uptime</code></td>
-<td>Time since last restart</td>
-<td>Developer</td>
-</tr>
-<tr>
-<td><code>!evaluate</code></td>
-<td>Evaluate JavaScript code</td>
-<td>Developer</td>
-</tr>
-<tr>
-<td><code>!restart</code></td>
-<td>Restart the bot</td>
-<td>Developer</td>
-</tr>
-<tr>
-<td><code>!help</code></td>
-<td>Get help with using Pronto</td>
-<td>All</td>
-</tr>
-<tr>
-<td><code>!help (command)</code></td>
-<td>Get help with a specific command</td>
-<td>All (user must have permissions to use the sub-command however)</td>
-</tr>
-<tr>
-<td><code>!leave</code></td>
-<td>Submit a leave request</td>
-<td>None</td>
-</tr>
-<tr>
-<td><code>!leavefor</code></td>
-<td>Submit a leave request for another cadet</td>
-<td>None</td>
-</tr>
-<tr>
-<td><code>!attendance</code></td>
-<td>Submit an attendance register</td>
-<td>None</td>
-</tr>
-<tr>
-<td><code>!connected</code></td>
-<td>List the members connected to a voice channel</td>
-<td>None</td>
-</tr>
-<tr>
-<td><code>!archive</code></td>
-<td>Archive a text channel</td>
-<td>None</td>
-</tr>
-<tr>
-<td><code>!purge</code></td>
-<td>Delete a number of messages from a channel</td>
-<td>None</td>
-</tr>
-<tr>
-<td><code>!lesson view</code></td>
-<td>Preview details and attached resources of an assigned lesson</td>
-<td>Lesson Instructor</td>
-</tr>
-<tr>
-<td><code>!lesson add</code></td>
-<td>Add a resource to a lesson</td>
-<td>Lesson Instructor</td>
-</tr>
-<tr>
-<td><code>!lesson remove</code></td>
-<td>Remove a resource from a lesson</td>
-<td>Lesson Instructor</td>
-</tr>
-<tr>
-<td><code>!lesson submit</code></td>
-<td>Submit a lesson for approval</td>
-<td>Lesson Instructor</td>
-</tr>
-<tr>
-<td><code>!seen</code></td>
-<td>Acknowledge receipt of a lesson warning</td>
-<td>Lesson Instructor</td>
-</tr>
-<tr>
-<td><code>!assign</code></td>
-<td>Assign a lesson to an instructor</td>
-<td>None</td>
-</tr>
-<tr>
-<td><code>!approve</code></td>
-<td>Approve a lesson plan</td>
-<td>None</td>
-</tr>
-</tbody>
-</table>
-<h3>JSDoc Documentation</h3>
-<p><a href="https://jamesnzl.github.io/Pronto/">GitHub Pages</a></p>
-<h2>Installation</h2>
-<h3>Requirements</h3>
-<ul>
-<li><strong>Node.js</strong> v12.x</li>
-<li><strong>npm</strong></li>
-</ul>
-<h3>Dependencies</h3>
-<ul>
-<li><a href="https://www.npmjs.com/package/discord.js">discord.js</a></li>
-<li><a href="https://www.npmjs.com/package/dotenv">dotenv</a></li>
-<li><a href="https://www.npmjs.com/package/dateformat">dateformat</a></li>
-<li><a href="https://www.npmjs.com/package/mongoose">mongoose</a></li>
-<li><a href="https://www.npmjs.com/package/chrono-node">chrono-node</a></li>
-<li><a href="https://www.npmjs.com/package/node-cron">node-cron</a></li>
-</ul>
-<h3>Instructions</h3>
-<ol>
-<li>
-<p>Clone this repository <code>$ git clone https://github.com/JamesNZL/Pronto.git</code></p>
-</li>
-<li>
-<p>Install required packages by running <code>$ npm install</code> in the repository's folder</p>
-</li>
-<li>
-<p>Install <a href="https://docs.mongodb.com/manual/administration/install-community/">MongoDB Community Edition</a></p>
-<blockquote>
-<p>NOTE: These instructions apply to the set-up of a local database.
-This guide will not cover how to connect to a MongoDB Atlas database, however this only requires a substitution of <code>'mongodb://localhost/pronto'</code> with the Atlas connection string within the value of <code>MONGOURI=</code> in <code>.env</code>.</p>
-</blockquote>
-</li>
-<li>
-<p>Open <code>config.js</code> and change the configuration settings &amp; default identifiers:</p>
-<pre class="prettyprint source lang-js"><code>exports.settings = {
+        <section class="readme">
+          <article>
+            <h1>Pronto v4.2.2</h1>
+            <p>A Discord bot developed for the City of Auckland Cadet Unit, built with <a href="https://www.npmjs.com/package/discord.js">discord.js</a> v12.</p>
+            <blockquote>
+              <p>Named after the Radio Appointment Title of a Signaller, Pronto is specifically designed for community groups, featuring attendance tracking and many other useful commands!</p>
+            </blockquote>
+            <h2>Table of Contents</h2>
+            <ul>
+              <li><a href="#table-of-contents">Table of Contents</a></li>
+              <li>
+                <a href="#about">About</a>
+                <ul>
+                  <li><a href="#features">Features</a></li>
+                  <li><a href="#commands-list">Commands List</a></li>
+                  <li><a href="#jsdoc-documentation">JSDoc Documentation</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#installation">Installation</a>
+                <ul>
+                  <li><a href="#requirements">Requirements</a></li>
+                  <li><a href="#dependencies">Dependencies</a></li>
+                  <li><a href="#instructions">Instructions</a></li>
+                </ul>
+              </li>
+            </ul>
+            <h2>About</h2>
+            <h3>Features</h3>
+            <ul>
+              <li><code>!leave</code> and <code>!leavefor</code> commands to submit leave tickets into an attendance channel, and messaging a duplicate to the absentee</li>
+              <li><code>!attendance</code> to submit an attendance register for a formation</li>
+              <li>Dynamic <code>!help</code> command tree, displaying only commands the user has permissions for</li>
+              <li><code>!connected</code> command to export a list of members connected to a voice channel</li>
+              <li><code>!archive</code> command to archive old or retired channels</li>
+              <li><code>!purge</code> command to bulk delete messages</li>
+              <li>Individual configuration database for each separate guild, allowing guild-specific permissions and settings to be applied</li>
+              <li>A comprehensive suite of lesson management commands, enabling assignment of lesson warnings to specified instructors, and the creation of a private lesson channel for the instructor to develop a lesson plan</li>
+              <li>Applies message reactions on successful/unsuccessful executions of commands</li>
+              <li>Automatically applies an acknowledgement reaction to announcement posts</li>
+              <li>Notifies a recruitment channel when new members join</li>
+              <li>Applies a visitor role to new members</li>
+              <li>'Channel pairing', displaying a hidden text channel to the members connected to the paired voice channel only</li>
+              <li>A comprehensive logging feature set, such as tracking message edits and deletions</li>
+              <li>Fully-featured error detection and responses, with specific prompts detailing expected input</li>
+              <li>Easily forkable, with a consolidated configuration and commands list to adapt to your needs, alongside a broad collection of useful modules and handlers</li>
+              <li>Easily modified permissions and aliases for individual commands, including whether the command is allowed in direct messages</li>
+            </ul>
+            <h3>Commands List</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Command</th>
+                  <th>Description</th>
+                  <th>Default Permissions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>!ping</code></td>
+                  <td>Test the latency of the bot</td>
+                  <td>Developer</td>
+                </tr>
+                <tr>
+                  <td><code>!uptime</code></td>
+                  <td>Time since last restart</td>
+                  <td>Developer</td>
+                </tr>
+                <tr>
+                  <td><code>!evaluate</code></td>
+                  <td>Evaluate JavaScript code</td>
+                  <td>Developer</td>
+                </tr>
+                <tr>
+                  <td><code>!restart</code></td>
+                  <td>Restart the bot</td>
+                  <td>Developer</td>
+                </tr>
+                <tr>
+                  <td><code>!help</code></td>
+                  <td>Get help with using Pronto</td>
+                  <td>All</td>
+                </tr>
+                <tr>
+                  <td><code>!help (command)</code></td>
+                  <td>Get help with a specific command</td>
+                  <td>All (user must have permissions to use the sub-command however)</td>
+                </tr>
+                <tr>
+                  <td><code>!leave</code></td>
+                  <td>Submit a leave request</td>
+                  <td>None</td>
+                </tr>
+                <tr>
+                  <td><code>!leavefor</code></td>
+                  <td>Submit a leave request for another cadet</td>
+                  <td>None</td>
+                </tr>
+                <tr>
+                  <td><code>!attendance</code></td>
+                  <td>Submit an attendance register</td>
+                  <td>None</td>
+                </tr>
+                <tr>
+                  <td><code>!connected</code></td>
+                  <td>List the members connected to a voice channel</td>
+                  <td>None</td>
+                </tr>
+                <tr>
+                  <td><code>!archive</code></td>
+                  <td>Archive a text channel</td>
+                  <td>None</td>
+                </tr>
+                <tr>
+                  <td><code>!purge</code></td>
+                  <td>Delete a number of messages from a channel</td>
+                  <td>None</td>
+                </tr>
+                <tr>
+                  <td><code>!lesson view</code></td>
+                  <td>Preview details and attached resources of an assigned lesson</td>
+                  <td>Lesson Instructor</td>
+                </tr>
+                <tr>
+                  <td><code>!lesson add</code></td>
+                  <td>Add a resource to a lesson</td>
+                  <td>Lesson Instructor</td>
+                </tr>
+                <tr>
+                  <td><code>!lesson remove</code></td>
+                  <td>Remove a resource from a lesson</td>
+                  <td>Lesson Instructor</td>
+                </tr>
+                <tr>
+                  <td><code>!lesson submit</code></td>
+                  <td>Submit a lesson for approval</td>
+                  <td>Lesson Instructor</td>
+                </tr>
+                <tr>
+                  <td><code>!seen</code></td>
+                  <td>Acknowledge receipt of a lesson warning</td>
+                  <td>Lesson Instructor</td>
+                </tr>
+                <tr>
+                  <td><code>!assign</code></td>
+                  <td>Assign a lesson to an instructor</td>
+                  <td>None</td>
+                </tr>
+                <tr>
+                  <td><code>!approve</code></td>
+                  <td>Approve a lesson plan</td>
+                  <td>None</td>
+                </tr>
+              </tbody>
+            </table>
+            <h3>JSDoc Documentation</h3>
+            <p><a href="https://jamesnzl.github.io/Pronto/">GitHub Pages</a></p>
+            <h2>Installation</h2>
+            <h3>Requirements</h3>
+            <ul>
+              <li><strong>Node.js</strong> v12.x</li>
+              <li><strong>npm</strong></li>
+            </ul>
+            <h3>Dependencies</h3>
+            <ul>
+              <li><a href="https://www.npmjs.com/package/discord.js">discord.js</a></li>
+              <li><a href="https://www.npmjs.com/package/dotenv">dotenv</a></li>
+              <li><a href="https://www.npmjs.com/package/dateformat">dateformat</a></li>
+              <li><a href="https://www.npmjs.com/package/mongoose">mongoose</a></li>
+              <li><a href="https://www.npmjs.com/package/chrono-node">chrono-node</a></li>
+              <li><a href="https://www.npmjs.com/package/node-cron">node-cron</a></li>
+            </ul>
+            <h3>Instructions</h3>
+            <ol>
+              <li>
+                <p>Clone this repository <code>$ git clone https://github.com/JamesNZL/Pronto.git</code></p>
+              </li>
+              <li>
+                <p>Install required packages by running <code>$ npm install</code> in the repository's folder</p>
+              </li>
+              <li>
+                <p>Install <a href="https://docs.mongodb.com/manual/administration/install-community/">MongoDB Community Edition</a></p>
+                <blockquote>
+                  <p>
+                    NOTE: These instructions apply to the set-up of a local database. This guide will not cover how to connect to a MongoDB Atlas database, however this only requires a substitution of <code>'mongodb://localhost/pronto'</code> with the Atlas connection string within the value of
+                    <code>MONGOURI=</code> in <code>.env</code>.
+                  </p>
+                </blockquote>
+              </li>
+              <li>
+                <p>Open <code>config.js</code> and change the configuration settings &amp; default identifiers:</p>
+                <pre class="prettyprint source lang-js"><code>exports.settings = {
 	prefix: '!',
 	PERMISSIONS_INTEGER: 1879141584,
 	longDate: 'HHMM &quot;h&quot; ddd, d mmm yy',
@@ -279,51 +610,56 @@ exports.ids = {
 
 ...
 </code></pre>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">Property</th>
-<th style="text-align:left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left"><code>prefix</code></td>
-<td style="text-align:left">The command prefix for message commands</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>PERMISSIONS_INTEGER</code></td>
-<td style="text-align:left">You shouldn't change this unless you know what you're doing or adding/removing things from the bot.<br>If you are, Pronto may require more/less minimum <a href="https://discordapi.com/permissions.html">Discord permissions</a>.<br>This integer allows Pronto to verify that it has the necessary permissions to function properly.</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>longDate</code></td>
-<td style="text-align:left">The dateformat mask / format string.<br><a href="https://www.npmjs.com/package/dateformat#mask-options">Documentation</a></td>
-</tr>
-<tr>
-<td style="text-align:left"><code>shortDate</code></td>
-<td style="text-align:left">The dateformat mask that Pronto uses for a 'shortened' date string</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>prontoLogo</code></td>
-<td style="text-align:left">A link to the image to use as Pronto's logo (e.g. in the thumbnail of the Commands List embed)<br><em>NOTE: This is not the avatar of the bot – you need to set that when you create the bot user</em></td>
-</tr>
-<tr>
-<td style="text-align:left"><code>lessonCron</code></td>
-<td style="text-align:left">The cron schedule expression that controls when Pronto sends out lesson reminders.<br><a href="https://www.npmjs.com/package/node-cron#cron-syntax">Documentation</a></td>
-</tr>
-<tr>
-<td style="text-align:left"><code>DEFAULT_GUILD</code></td>
-<td style="text-align:left">The identifier of Pronto's 'master' guild, used as a fallback when a secondary guild has a database error.<br><a href="https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-">How to find a Discord identifier</a></td>
-</tr>
-<tr>
-<td style="text-align:left"><code>DEVELOPER_ID</code></td>
-<td style="text-align:left">The identifier of the user managing the bot (i.e. you)</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>To assign command permissions in v4.2.2, use the following command in a guild channel:</p>
-<pre class="prettyprint source lang-js"><code>!eval database(msg.guild, {
+                <table>
+                  <thead>
+                    <tr>
+                      <th style="text-align:left">Property</th>
+                      <th style="text-align:left">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="text-align:left"><code>prefix</code></td>
+                      <td style="text-align:left">The command prefix for message commands</td>
+                    </tr>
+                    <tr>
+                      <td style="text-align:left"><code>PERMISSIONS_INTEGER</code></td>
+                      <td style="text-align:left">
+                        You shouldn't change this unless you know what you're doing or adding/removing things from the bot.<br />If you are, Pronto may require more/less minimum <a href="https://discordapi.com/permissions.html">Discord permissions</a>.<br />This integer allows Pronto to verify that
+                        it has the necessary permissions to function properly.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="text-align:left"><code>longDate</code></td>
+                      <td style="text-align:left">The dateformat mask / format string.<br /><a href="https://www.npmjs.com/package/dateformat#mask-options">Documentation</a></td>
+                    </tr>
+                    <tr>
+                      <td style="text-align:left"><code>shortDate</code></td>
+                      <td style="text-align:left">The dateformat mask that Pronto uses for a 'shortened' date string</td>
+                    </tr>
+                    <tr>
+                      <td style="text-align:left"><code>prontoLogo</code></td>
+                      <td style="text-align:left">A link to the image to use as Pronto's logo (e.g. in the thumbnail of the Commands List embed)<br /><em>NOTE: This is not the avatar of the bot – you need to set that when you create the bot user</em></td>
+                    </tr>
+                    <tr>
+                      <td style="text-align:left"><code>lessonCron</code></td>
+                      <td style="text-align:left">The cron schedule expression that controls when Pronto sends out lesson reminders.<br /><a href="https://www.npmjs.com/package/node-cron#cron-syntax">Documentation</a></td>
+                    </tr>
+                    <tr>
+                      <td style="text-align:left"><code>DEFAULT_GUILD</code></td>
+                      <td style="text-align:left">
+                        The identifier of Pronto's 'master' guild, used as a fallback when a secondary guild has a database error.<br /><a href="https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-">How to find a Discord identifier</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="text-align:left"><code>DEVELOPER_ID</code></td>
+                      <td style="text-align:left">The identifier of the user managing the bot (i.e. you)</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <blockquote>
+                  <p>To assign command permissions in v4.2.2, use the following command in a guild channel:</p>
+                  <pre class="prettyprint source lang-js"><code>!eval database(msg.guild, {
 	ids: {
 		formations: ['&lt;roleOneID>', '&lt;roleTwoID>'...],
 	},
@@ -355,10 +691,10 @@ exports.ids = {
 	}
 }) --silent
 </code></pre>
-</blockquote>
-<blockquote>
-<p>To set up channel linking, use the following:</p>
-<pre class="prettyprint source lang-js"><code>!eval (async () => {
+                </blockquote>
+                <blockquote>
+                  <p>To set up channel linking, use the following:</p>
+                  <pre class="prettyprint source lang-js"><code>!eval (async () => {
 	const Guild = require('../models/guild');
 
 	const database = await Guild.findOne({ guildID: msg.guild.id }, error => {
@@ -375,71 +711,62 @@ exports.ids = {
 	return await database.save().catch(error => console.error(error));
 })() --silent
 </code></pre>
-</blockquote>
-<blockquote>
-<p>A dashboard is coming soon!</p>
-</blockquote>
-</li>
-<li>
-<p>Follow <a href="https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot">this guide</a> to create your own bot user and get your bot token (you can set your own picture and name also!)</p>
-<blockquote>
-<p>The only locations where 'Pronto' is actually named by the bot are <code>commands.js</code> and <code>config.js</code>, and the developer-only <code>commands\ping.js</code>, <code>commands\uptime.js</code> and <code>events\exit.js</code>:</p>
-<pre class="prettyprint source lang-js"><code>help: {
+                </blockquote>
+                <blockquote>
+                  <p>A dashboard is coming soon!</p>
+                </blockquote>
+              </li>
+              <li>
+                <p>Follow <a href="https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot">this guide</a> to create your own bot user and get your bot token (you can set your own picture and name also!)</p>
+                <blockquote>
+                  <p>The only locations where 'Pronto' is actually named by the bot are <code>commands.js</code> and <code>config.js</code>, and the developer-only <code>commands\ping.js</code>, <code>commands\uptime.js</code> and <code>events\exit.js</code>:</p>
+                  <pre class="prettyprint source lang-js"><code>help: {
 	command: 'help',
 	aliases: ['cmd', 'cmds', 'command', 'commands'],
 	description: {
 		general: 'Get help with using Pronto.',
 		...
 </code></pre>
-<pre class="prettyprint source lang-js"><code>pronto: {
+                  <pre class="prettyprint source lang-js"><code>pronto: {
 	name: 'Pronto',
 },
 </code></pre>
-<pre class="prettyprint source lang-js"><code>.setFooter(`${pingValue} ms | ${await dateTimeGroup()} | Pronto v${version}`);`
+                  <pre class="prettyprint source lang-js"><code>.setFooter(`${pingValue} ms | ${await dateTimeGroup()} | Pronto v${version}`);`
 </code></pre>
-<p>You can rename the bot here (inside the ' ' marks), and everything will still work! Basically, just don't change file names :)</p>
-</blockquote>
-<blockquote>
-<p>To change the bot's status message, look in <code>events\onReady.js</code>:</p>
-<pre class="prettyprint source lang-js"><code>bot.user.setActivity(`the radio net | ${await prefixCommand(help)}`, { type: 'LISTENING' });
+                  <p>You can rename the bot here (inside the ' ' marks), and everything will still work! Basically, just don't change file names :)</p>
+                </blockquote>
+                <blockquote>
+                  <p>To change the bot's status message, look in <code>events\onReady.js</code>:</p>
+                  <pre class="prettyprint source lang-js"><code>bot.user.setActivity(`the radio net | ${await prefixCommand(help)}`, { type: 'LISTENING' });
 </code></pre>
-<p>Documentation can be found <a href="https://discordjs.guide/popular-topics/faq.html#how-do-i-set-my-playing-status">here</a>.</p>
-</blockquote>
-</li>
-<li>
-<p>Create a file named <code>.env</code> in the top-level folder (i.e. in the same folder as <code>pronto.js</code>) and enter:</p>
-<pre class="prettyprint source lang-text"><code>TOKEN=&lt;PASTE_YOUR_BOT_TOKEN_HERE>
+                  <p>Documentation can be found <a href="https://discordjs.guide/popular-topics/faq.html#how-do-i-set-my-playing-status">here</a>.</p>
+                </blockquote>
+              </li>
+              <li>
+                <p>Create a file named <code>.env</code> in the top-level folder (i.e. in the same folder as <code>pronto.js</code>) and enter:</p>
+                <pre class="prettyprint source lang-text"><code>TOKEN=&lt;PASTE_YOUR_BOT_TOKEN_HERE>
 MONGOURI=mongodb://localhost/pronto
 </code></pre>
-</li>
-<li>
-<p>Start the bot with <code>$ node pronto.js</code> in the repository's folder</p>
-</li>
-<li>
-<p>Done! The bot should now be online, however now you run into the problem of hosting...</p>
-<blockquote>
-<p>Read <a href="https://www.writebots.com/discord-bot-hosting/">this</a> document for more on hosting :)</p>
-</blockquote>
-</li>
-</ol></article>
-    </section>
+              </li>
+              <li>
+                <p>Start the bot with <code>$ node pronto.js</code> in the repository's folder</p>
+              </li>
+              <li>
+                <p>Done! The bot should now be online, however now you run into the problem of hosting...</p>
+                <blockquote>
+                  <p>Read <a href="https://www.writebots.com/discord-bot-hosting/">this</a> document for more on hosting :)</p>
+                </blockquote>
+              </li>
+            </ol>
+          </article>
+        </section>
+      </div>
+    </main>
 
+    <footer class="layout-footer">
+      <div class="container">Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Sun Dec 12 2021 17:38:45 GMT+1300 (New Zealand Daylight Time)</div>
+    </footer>
 
-
-
-
-
-  </div>
-</main>
-
-<footer class="layout-footer">
-  <div class="container">
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Sun Dec 12 2021 16:41:55 GMT+1300 (New Zealand Daylight Time)
-  </div>
-</footer>
-
-
-
-<script src="scripts/prism.dev.js"></script>
-</body>
+    <script src="scripts/prism.dev.js"></script>
+  </body>
 </html>
