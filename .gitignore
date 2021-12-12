@@ -75,3 +75,6 @@ updateVersion.sh
 
 # Ignore compiled Typescript files
 ts-compiled/
+
+# husky hooks
+.husky/
