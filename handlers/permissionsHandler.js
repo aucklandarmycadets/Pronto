@@ -7,11 +7,14 @@ const Typings = require('../typings');
 
 const { getRoleError, permissionsCheck } = require('../handlers');
 
+/** */
+
 /**
  *
- * @param {Discord.Message} msg
+ * @function handlers.permissionsHandler
+ * @param {Discord.Message} msg The command message
  * @param {Typings.BaseCommand} command The \<BaseCommand> object to check permissions against
- * @returns {Promise<boolean | 'ERROR'>}
+ * @returns {Promise<boolean | 'ERROR'>} If user has permissions or `ERROR`
  */
 module.exports = async (msg, command) => {
 	const { bot } = require('../pronto');

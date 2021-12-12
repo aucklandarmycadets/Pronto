@@ -1,7 +1,17 @@
 'use strict';
 
+// eslint-disable-next-line no-unused-vars
+const Discord = require('discord.js');
 const { embedScaffold, errorReact, findGuildConfiguration } = require('../handlers');
 
+/** */
+
+/**
+ *
+ * @function handlers.directCommandError
+ * @param {Discord.Message} msg The erroneous command message
+ * @param {'NO_PERMISSION' | 'HAS_ROLE_MENTION' | 'NO_DIRECT' | 'MULTIPLE_GUILDS'} [type] The reason for the command error
+ */
 module.exports = async (msg, type) => {
 	// There will not be a guild as sent in DMs
 	const { colours } = await findGuildConfiguration();

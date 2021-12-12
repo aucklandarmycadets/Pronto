@@ -7,6 +7,14 @@ const { embedScaffold, findGuildConfiguration } = require('../handlers');
 
 const currentlyMissing = new Set();
 
+/** */
+
+/**
+ *
+ * @function handlers.verifyBotPermissions
+ * @param {Discord.Guild} guild The \<Guild> to verify permissions for
+ * @param {Discord.PermissionString[]} [changes]
+ */
 module.exports = async (guild, changes) => {
 	const { ids: { guildID }, colours } = await findGuildConfiguration(guild);
 

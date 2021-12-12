@@ -5,6 +5,16 @@ const Discord = require('discord.js');
 const { dateTimeGroup } = require('../modules');
 const { debugError, errorReact, findGuildConfiguration, successReact } = require('../handlers');
 
+/** */
+
+/**
+ *
+ * @function handlers.confirmWithReaction
+ * @param {Discord.Message} msg Command/reaction message
+ * @param {Discord.Message} dm Direct message to attach confirmation emojis to
+ * @param {function():void} confirm Callback function to execute on confirmation
+ * @param {function():void} cancel Callback function to execute on cancel
+ */
 module.exports = async (msg, dm, confirm, cancel) => {
 	const { bot } = require('../pronto');
 	const { colours, emojis } = await findGuildConfiguration(msg.guild);

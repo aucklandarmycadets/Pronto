@@ -3,6 +3,16 @@
 const Discord = require('discord.js');
 const { errorReact, findGuildConfiguration, sendMsg } = require('../handlers');
 
+/** */
+
+/**
+ *
+ * @function handlers.commandError
+ * @param {Discord.Message} msg Erroneous command message
+ * @param {string} errorMsg Error message to display
+ * @param {string} commandError The error text to display for the command
+ * @param {string} [footer] Optional supplementary footer
+ */
 module.exports = async (msg, errorMsg, commandError, footer) => {
 	const { colours } = await findGuildConfiguration(msg.guild);
 

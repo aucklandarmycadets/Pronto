@@ -6,8 +6,11 @@ const { ids: { DEVELOPER_ID } } = require('../config');
 const { extractID, prefixCommand } = require('../modules');
 const { debugError, directCommandError, findGuildConfiguration, permissionsHandler, upsertCommands } = require('../handlers');
 
+/** */
+
 /**
  *
+ * @function handlers.commandHandler
  * @param {Discord.Message} msg The \<Message> that emitted the \<Client>#message event
  */
 module.exports = async msg => {

@@ -3,7 +3,13 @@
 const mongoose = require('mongoose');
 const { databaseOptions } = require('../config');
 
+/** */
 
+/**
+ *
+ * @function handlers.connectToMongoose
+ * @param {string} uri MongoDB connection URI
+ */
 module.exports = uri => {
 	mongoose.connect(uri, databaseOptions);
 	mongoose.set('useFindAndModify', false);

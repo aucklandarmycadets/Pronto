@@ -11,19 +11,18 @@ const { merge } = require('../modules');
 const { createGuild } = require('../handlers');
 
 /**
- * - `handlers.findGuildConfiguration()` queries the MongoDB database for the guild's \<GuildConfiguration> if it exists, or will first call [`handlers.createGuild()`]{@link handlers.createGuild}
+ * `handlers.findGuildConfiguration()` queries the MongoDB database for the guild's \<GuildConfiguration> if it exists, or will first call [`handlers.createGuild()`]{@link handlers.createGuild}
  * to create the \<GuildConfiguration>
- * - If the guild is `null`, the document of Pronto's 'master' guild is returned
  * @function handlers.findGuildConfiguration
- * @param {?Discord.Guild} guild The \<Guild> to find the \<GuildConfiguration> for
- * - If `null`, the \<GuildConfiguration> of the default guild defined by [`config.ids.DEFAULT_GUILD`]{@link config.Configuration} will be returned instead
- * @param {Partial<Typings.GuildConfiguration>} changes A Partial\<GuildConfiguration> object of the values to update within the \<GuildConfiguration>
+ * @param {Discord.Guild} [guild] The \<Guild> to find the \<GuildConfiguration> for
+ * - If `undefined`, the \<GuildConfiguration> of the default guild defined by [`config.ids.DEFAULT_GUILD`]{@link config.Configuration} will be returned instead
+ * @param {Partial<Typings.GuildConfiguration>} [changes] A Partial\<GuildConfiguration> object of the values to update within the \<GuildConfiguration>
  * @returns {Promise<Typings.GuildConfiguration>} The guild's \<GuildConfiguration>, or the [`config.ids.DEFAULT_GUILD`]{@link config.Configuration}'s \<GuildConfiguration>
  */
 module.exports = async (guild, changes) => {
 	const { bot } = await require('../pronto');
 
-	// If the guild is null, replace it with the <Guild> object of the default guild
+	// If the guild is undefined, replace it with the <Guild> object of the default guild
 	guild = guild || bot.guilds.cache.get(DEFAULT_GUILD);
 
 	/**

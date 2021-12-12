@@ -1,9 +1,23 @@
 'use strict';
 
+// eslint-disable-next-line no-unused-vars
+const Discord = require('discord.js');
+
 const { colours } = require('../config');
 const { jsCodeBlock } = require('../modules');
 const { embedScaffold } = require('../handlers');
 
+/** */
+
+/**
+ *
+ * @function handlers.sendDirect
+ * @param {Discord.User | Discord.GuildMember | Discord.DMChannel} user User to send to
+ * @param {string | Discord.MessagePayload | Discord.MessageOptions} options Message options
+ * @param {?Discord.GuildTextBasedChannel} guildChannel A guild channel that the user has access to, to send an error in case cannot send DM
+ * @param {boolean} [toDebug] Whether to send the error message to debugging rather than the user in a guild channel
+ * @returns {Promise<?Discord.Message>} Message if it was sent
+ */
 module.exports = (user, options, guildChannel, toDebug) => {
 	// Send message to user
 	return user.send(options)

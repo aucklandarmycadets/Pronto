@@ -5,6 +5,14 @@ const Discord = require('discord.js');
 const { dateTimeGroup, jsCodeBlock, prefixCommand } = require('../modules');
 const { debugError, embedScaffold, findGuildConfiguration, permissionsCheck, purgeChannel, sendMsg, successReact } = require('../handlers');
 
+/** */
+
+/**
+ *
+ * @function handlers.channelPairing
+ * @param {Discord.VoiceState} oldState The \<VoiceState> before the update
+ * @param {Discord.VoiceState} newState The \<VoiceState> after the update
+ */
 module.exports = async (oldState, newState) => {
 	const { bot } = require('../pronto');
 	const { ids: { channelPairs }, commands: { purge }, emojis, colours } = await findGuildConfiguration(newState.guild);

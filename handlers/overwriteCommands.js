@@ -7,8 +7,11 @@ const Typings = require('../typings');
 
 const { Guild } = require('../models');
 
+/** */
+
 /**
  *
+ * @function handlers.overwriteCommands
  * @param {Discord.Guild} guild
  * @returns {Promise<Typings.GuildConfiguration>}
  */

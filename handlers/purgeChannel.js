@@ -1,14 +1,25 @@
 'use strict';
 
+// eslint-disable-next-line no-unused-vars
+const Discord = require('discord.js');
 const { debugError, embedScaffold, findGuildConfiguration } = require('../handlers');
 
-module.exports = async (msgs, chnl, collector) => {
-	const { colours } = await findGuildConfiguration(chnl.guild);
+/** */
 
-	chnl.bulkDelete(msgs)
+/**
+ *
+ * @function handlers.purgeChannel
+ * @param {Discord.Collection<Discord.Snowflake, Discord.Message> | Discord.MessageResolvable[] | number} msgs Messages to delete
+ * @param {Discord.TextBasedChannels} channel Channel to purge
+ * @param {Discord.ReactionCollector} [collector] An optional reaction collector to stop
+ */
+module.exports = async (msgs, channel, collector) => {
+	const { colours } = await findGuildConfiguration(channel.guild);
+
+	channel.bulkDelete(msgs)
 		.catch(error => {
-			embedScaffold(null, chnl, `Error purging ${chnl}.`, colours.error, 'MESSAGE');
-			debugError(error, `Error purging ${chnl}.`);
+			embedScaffold(null, channel, `Error purging ${channel}.`, colours.error, 'MESSAGE');
+			debugError(error, `Error purging ${channel}.`);
 		});
 
 	if (collector) collector.stop();

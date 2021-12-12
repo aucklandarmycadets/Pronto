@@ -5,6 +5,20 @@ const Discord = require('discord.js');
 const { charLimit, dateTimeGroup } = require('../modules');
 const { findGuildConfiguration, sendDirect, sendMsg } = require('../handlers');
 
+/** */
+
+/**
+ *
+ * @function handlers.embedScaffold
+ * @param {?Discord.Guild} guild The guild the member shares with the bot
+ * @param {?Discord.TextBasedChannels | Discord.User | Discord.GuildMember} destination The TextBasedChannel to send the embed to
+ * @param {string} description The description of the embed to be created
+ * @param {Discord.ColorResolvable} colour The colour of the embed to be created
+ * @param {'MESSAGE' | 'DIRECT' | 'DEVELOPER' | 'DEBUG'} type The intended purpose of the embed
+ * @param {?string} [fieldTitle] A title for an optional embed field
+ * @param {?string} [fieldContent] Embed field content
+ * @param {string} [errorField] An optional additional error message to append to the end of the description
+ */
 module.exports = async (guild, destination, description, colour, type, fieldTitle, fieldContent, errorField) => {
 	const { bot, version } = require('../pronto');
 	const { ids: { debugID } } = await findGuildConfiguration(guild);

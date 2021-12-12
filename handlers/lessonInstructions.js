@@ -6,6 +6,14 @@ const { ids: { DEVELOPER_ID } } = require('../config');
 const { prefixCommand } = require('../modules');
 const { findGuildConfiguration, sendMsg } = require('../handlers');
 
+/** */
+
+/**
+ *
+ * @function handlers.lessonInstructions
+ * @param {Discord.Snowflake} channelID
+ * @param {Discord.Guild} guild
+ */
 module.exports = async (channelID, guild) => {
 	const { bot } = require('../pronto');
 	const { commands: { lesson, seen, assign, approve }, colours } = await findGuildConfiguration(guild);

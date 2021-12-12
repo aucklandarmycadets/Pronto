@@ -10,6 +10,13 @@ const { Lesson } = require('../models');
 const { dateTimeGroup } = require('../modules');
 const { emojiReact, findGuildConfiguration, sendMsg } = require('../handlers');
 
+/** */
+
+/**
+ *
+ * @function handlers.unsubmittedLessons
+ * @param {Discord.Guild} guild The guild to update lessons for
+ */
 module.exports = async guild => {
 	const { settings: { shortDate }, ids: { lessonReferenceID }, colours } = await findGuildConfiguration(guild);
 

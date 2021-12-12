@@ -10,6 +10,13 @@ const { Lesson } = require('../models');
 const { dateTimeGroup } = require('../modules');
 const { findGuildConfiguration, sendMsg } = require('../handlers');
 
+/** */
+
+/**
+ *
+ * @function handlers.lessonReminders
+ * @param {Discord.Guild} guild
+ */
 module.exports = async guild => {
 	const { settings: { lessonCron, lessonReminders }, ids: { archivedID }, colours } = await findGuildConfiguration(guild);
 
