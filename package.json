@@ -4,7 +4,8 @@
   "description": "A Discord bot developed for the City of Auckland Cadet Unit.",
   "main": "pronto.js",
   "scripts": {
-    "doc": "DEL /Q \"docs\\*.*\" && ATTRIB +H docs/static && (FOR /D %G IN (\"docs/*\") DO RD /S /Q \"docs/%G\")>nul && ATTRIB -H docs/static && jsdoc -c jsdoc.json"
+    "doc": "DEL /Q \"docs\\*.*\" && ATTRIB +H docs/static && (FOR /D %G IN (\"docs/*\") DO RD /S /Q \"docs/%G\")>nul && ATTRIB -H docs/static && jsdoc -c jsdoc.json",
+    "prettier": "npx pretty-quick --pattern \"docs/**/*.html\""
   },
   "repository": {
     "type": "git",
@@ -30,5 +31,10 @@
     "pretty-quick": "^3.1.2",
     "tidy-jsdoc": "github:JamesNZL/tidy-jsdoc",
     "typescript": "^4.5.2"
+  },
+  "prettier": {
+    "endOfLine": "crlf",
+    "embeddedLanguageFormatting": "off",
+    "printWidth": 300
   }
 }
