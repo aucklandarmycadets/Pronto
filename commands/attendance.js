@@ -65,7 +65,7 @@ module.exports = async guild => {
 		 * @function commands.attendance~createRegister
 		 */
 		function createRegister() {
-			// Parse the attendance register from the message arguments, by joining them into a string separataed by a space, then splitting again by newlines
+			// Parse the attendance register from the message arguments, by joining them into a string separated by a space, then splitting again by newlines
 			const content = args.join(' ').split('\n');
 			// Extract the title of the register as the first line of the message (before the first newline), removing it from the content string[]
 			const title = content.shift();
