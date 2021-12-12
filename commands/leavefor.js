@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 // eslint-disable-next-line no-unused-vars
 const Typings = require('../typings');
 
-const { sentenceCase, dateTimeGroup, prefixCommand, remove } = require('../modules');
+const { dateTimeGroup, prefixCommand, remove, sentenceCase } = require('../modules');
 const { commandError, findGuildConfiguration, sendDirect, sendMsg, successReact } = require('../handlers');
 
 /**
