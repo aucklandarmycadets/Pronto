@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 // eslint-disable-next-line no-unused-vars
 const Typings = require('../typings');
 
-const { capitalise, dateTimeGroup, prefixCommand, remove } = require('../modules');
+const { sentenceCase, dateTimeGroup, prefixCommand, remove } = require('../modules');
 const { commandError, findGuildConfiguration, sendDirect, sendMsg, successReact } = require('../handlers');
 
 /**
@@ -60,7 +60,7 @@ module.exports = async guild => {
 				{ name: 'Absentee', value: absentee.toString() },
 				{ name: 'Channel', value: msg.channel.toString() },
 				// Capitalise the first letter of the command arguments and add them to a 'Remarks' field
-				{ name: 'Remarks', value: capitalise(args.join(' ')) },
+				{ name: 'Remarks', value: sentenceCase(args.join(' ')) },
 			)
 			.setFooter(await dateTimeGroup());
 
@@ -71,7 +71,7 @@ module.exports = async guild => {
 			.setAuthor(msg.guild.name, msg.guild.iconURL({ dynamic: true }))
 			.setDescription(`Hi **${msg.member.displayName}**, your submission of leave for **${absentee.displayName}** has been received.`)
 			.addField('Channel', msg.channel.toString())
-			.addField('Remarks', capitalise(args.join(' ')))
+			.addField('Remarks', sentenceCase(args.join(' ')))
 			.setFooter(await dateTimeGroup());
 
 		// Create notice embed to inform absentee that a request has been made on their behalf
@@ -81,7 +81,7 @@ module.exports = async guild => {
 			.setAuthor(msg.guild.name, msg.guild.iconURL({ dynamic: true }))
 			.setDescription(`**${msg.member.displayName}** has submitted leave for you in **#${msg.channel.name}**.`)
 			.addField('Channel', msg.channel.toString())
-			.addField('Remarks', capitalise(args.join(' ')))
+			.addField('Remarks', sentenceCase(args.join(' ')))
 			.setFooter(`Reply with '${await prefixCommand(help, guild)} ${leave.command}' to learn how to request leave for yourself.`);
 
 		// Get the guild's attendance channel

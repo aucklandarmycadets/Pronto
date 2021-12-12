@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 // eslint-disable-next-line no-unused-vars
 const Typings = require('../typings');
 
-const { capitalise, dateTimeGroup } = require('../modules');
+const { sentenceCase, dateTimeGroup } = require('../modules');
 const { commandError, findGuildConfiguration, sendDirect, sendMsg, successReact } = require('../handlers');
 
 /**
@@ -44,7 +44,7 @@ module.exports = async guild => {
 			.setDescription(`**${msg.member.displayName}** has requested leave in **#${msg.channel.name}**`)
 			.addField('Channel', msg.channel.toString())
 			// Capitalise the first letter of the command arguments and add them to a 'Remarks' field
-			.addField('Remarks', capitalise(args.join(' ')))
+			.addField('Remarks', sentenceCase(args.join(' ')))
 			.setFooter(await dateTimeGroup());
 
 		// Create confirmation embed
@@ -54,7 +54,7 @@ module.exports = async guild => {
 			.setAuthor(msg.guild.name, msg.guild.iconURL({ dynamic: true }))
 			.setDescription(`Hi **${msg.member.displayName}**, your submission of leave has been received.`)
 			.addField('Channel', msg.channel.toString())
-			.addField('Remarks', capitalise(args.join(' ')))
+			.addField('Remarks', sentenceCase(args.join(' ')))
 			.setFooter(await dateTimeGroup());
 
 		// Get the guild's attendance channel

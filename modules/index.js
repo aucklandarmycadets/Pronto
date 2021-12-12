@@ -9,8 +9,8 @@ module.exports = {
 
 	// String methods
 
-	capitalise: require('./capitalise'),
 	charLimit: require('./charLimit'),
+	sentenceCase: require('./sentenceCase'),
 	titleCase: require('./titleCase'),
 
 	// Array methods
