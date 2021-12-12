@@ -1,4 +1,5 @@
 :root {
+	--selection-text-colour: #fff;
 	--bg-colour: #282828;
 	--bg-accent-colour: #1b1b1b;
 	--primary-colour: #08a8e6;
@@ -51,6 +52,7 @@
 
 ::selection {
 	background-color: var(--primary-colour);
+	color: var(--selection-text-colour);
 }
 
 ::-webkit-scrollbar {
