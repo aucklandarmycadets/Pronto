@@ -9,6 +9,12 @@ const Typings = require('./typings');
 const { connectToMongoose } = require('./handlers');
 
 /**
+ * The Node.js JavaScript runtime environment to run the bot's code
+ * @external NodeJS
+ * @see https://nodejs.org/api/
+ */
+
+/**
  * The Discord.js library to interact with the Discord API
  * @external Discord
  * @see https://discord.js.org/#/docs
