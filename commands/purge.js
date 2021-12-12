@@ -82,7 +82,7 @@ module.exports = async guild => {
 				debugError(error, `Error purging ${purgeCount} messages in ${msg.channel}.`);
 			});
 
-		// deleteMsg() is called on the command message by <Client>#messageDeleteBulk
+		// handlers.deleteMsg() is called on the command message by <Client>#messageDeleteBulk
 	};
 
 	return purge;

@@ -182,7 +182,7 @@ module.exports = async guild => {
 
 							// Send the lesson warning embed to the private lesson channel
 							await sendMsg(channel, { embeds: [lessonEmbed] });
-							// Call unsubmittedLessons() to update the master unsubmitted lessons tracker embed
+							// Call handlers.unsubmittedLessons() to update the master unsubmitted lessons tracker embed
 							unsubmittedLessons(guild);
 
 							// Retrieve the guild's success emoji
@@ -316,7 +316,7 @@ async function getUserInput(msg, prompts, colours) {
  * @returns {Promise<string | number | 'RESTART' | 'CANCEL' | 'DONE'>} The user's input, or the symbols `RESTART` || `CANCEL` || `DONE`
  * - Text inputs return a \<string>
  * - Date inputs return a Unix timestamp (ms) as \<number>
- * - Attachments return a URL formatted as a hyperlink using `modules.processResources()` as \<string>
+ * - Attachments return a URL formatted as a hyperlink using [`modules.processResources()`]{@link modules.processResources} as \<string>
  * - `RESTART` = restart input from the beginning
  * - `CANCEL` = cancel lesson assignment
  * - `DONE` = attachment input is complete
