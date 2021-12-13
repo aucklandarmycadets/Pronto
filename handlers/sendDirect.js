@@ -15,10 +15,10 @@ const { embedScaffold } = require('../handlers');
  * @param {Discord.User | Discord.GuildMember | Discord.DMChannel} user User to send to
  * @param {string | Discord.MessagePayload | Discord.MessageOptions} options Message options
  * @param {?Discord.GuildTextBasedChannel} guildChannel A guild channel that the user has access to, to send an error in case cannot send DM
- * @param {boolean} [toDebug] Whether to send the error message to debugging rather than the user in a guild channel
+ * @param {boolean} [toDebug=false] Whether to send the error message to debugging rather than the user in a guild channel
  * @returns {Promise<?Discord.Message>} Message if it was sent
  */
-module.exports = (user, options, guildChannel, toDebug) => {
+module.exports = (user, options, guildChannel, toDebug = false) => {
 	// Send message to user
 	return user.send(options)
 		.catch(error => {

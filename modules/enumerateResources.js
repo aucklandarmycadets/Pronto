@@ -25,11 +25,11 @@
  *
  * @function modules.enumerateResources
  * @param {string[]} array A \<string[]> of the lesson resources to enumerate
- * @param {boolean} [toString] Whether to return the enumerated resources as a \<string[]> or a newline-delimited \<string>
+ * @param {boolean} [toString=false] Whether to return the enumerated resources as a \<string[]> or a newline-delimited \<string>
  * @returns {string | string[]} A newline-separated \<string>, or a \<string[]> of the enumerated resources
  * - If the input \<string[]> is empty, a \<string> | \<string[]> of `N/A` will be returned
  */
-module.exports = (array, toString) => {
+module.exports = (array, toString = false) => {
 	// Split apart any potential string[] elements which contain both a <MessageAttachment> and a URL, and return a flattened string[]
 	const processedArray = array.flatMap(resource => resource.split('\n'));
 

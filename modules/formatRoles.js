@@ -18,11 +18,11 @@ const Discord = require('discord.js');
  *
  * @function modules.formatRoles
  * @param {Discord.Snowflake[] | Discord.Role[]} array A \<Role.id[] | Role[]> to convert into a formatted string
- * @param {boolean} [mention] Whether to mention the roles, or escape the mentions
+ * @param {boolean} [mention=false] Whether to mention the roles, or escape the mentions
  * @param {number} [breakAt] The number of roles to allow on each line, before inserting a line break
  * @returns {string} The formatted string of role mentions
  */
-module.exports = (array, mention, breakAt) => {
+module.exports = (array, mention = false, breakAt) => {
 	const { bot } = require('../pronto');
 
 	if (typeof array[0] === 'string') {

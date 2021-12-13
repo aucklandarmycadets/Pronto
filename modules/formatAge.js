@@ -10,10 +10,10 @@
  *
  * @function modules.formatAge
  * @param {number} raw A duration of elapsed time in milliseconds, or a Unix timestamp (ms) in the past
- * @param {boolean} [isElapsed] Whether `raw` is a duration of elapsed time, or is a timestamp whose duration since must be calculated
+ * @param {boolean} [isElapsed=false] Whether `raw` is a duration of elapsed time, or is a timestamp whose duration since must be calculated
  * @returns {string} The formatted string describing the elapsed duration
  */
-module.exports = (raw, isElapsed) => {
+module.exports = (raw, isElapsed = false) => {
 	// Constant arrays to store the each unit duration of time in milliseconds, where each pair of duration and unit share the same index
 	const durations = [31556952000, 2629800000, 86400000, 3600000, 60000, 1000];
 	const units = ['year', 'month', 'day', 'hr', 'min', 'sec'];
