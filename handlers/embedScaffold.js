@@ -33,13 +33,13 @@ module.exports = async (guild, destination, description, colour, type, fieldTitl
 		.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }))
 		.setColor(colour)
 		// Ensure embed payload does not exceed character limit
-		.setDescription(charLimit(description, 2048))
+		.setDescription(charLimit(description, 'EMBED_DESCRIPTION'))
 		.setFooter(`${await dateTimeGroup()}${developerFooter}`);
 
 	// Add additional fields if appropriate
 	if (fieldTitle) embed.addField(fieldTitle, fieldContent);
 	// Format error field into description if present
-	if (errorField) embed.setDescription(charLimit(`${description}\n${errorField}`, 2048));
+	if (errorField) embed.setDescription(charLimit(`${description}\n${errorField}`, 'EMBED_DESCRIPTION'));
 
 	// Get the guild's debug channel
 	const debugChannel = bot.channels.cache.get(debugID);

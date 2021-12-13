@@ -43,7 +43,7 @@ module.exports = {
 		if (oldMessage.partial && oldMessage.guild) {
 			logEmbed.setDescription(`**Uncached message edited in ${newMessage.channel}** [Jump to Message](${newMessage.url})`);
 			// Use modules.charLimit() to ensure the embed field does not exceed Discord's <EmbedField> character limit
-			logEmbed.addField('After', charLimit(newMessage.content, 1024));
+			logEmbed.addField('After', charLimit(newMessage.content, 'EMBED_FIELD_VALUE'));
 			logEmbed.setFooter(`ID: ${newMessage.id} | ${await dateTimeGroup()}`);
 		}
 
@@ -54,8 +54,8 @@ module.exports = {
 
 			// Update the log embed to fully log the <Message> update
 			logEmbed.setDescription(`**Message edited in ${newMessage.channel}** [Jump to Message](${newMessage.url})`);
-			logEmbed.addField('Before', charLimit(oldMessage.content, 1024));
-			logEmbed.addField('After', charLimit(newMessage.content, 1024));
+			logEmbed.addField('Before', charLimit(oldMessage.content, 'EMBED_FIELD_VALUE'));
+			logEmbed.addField('After', charLimit(newMessage.content, 'EMBED_FIELD_VALUE'));
 			logEmbed.setFooter(`Author: ${newMessage.author.id} | Message: ${newMessage.id} | ${await dateTimeGroup()}`);
 		}
 

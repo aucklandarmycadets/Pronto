@@ -45,7 +45,7 @@ module.exports = {
 			if (autoDeletingCommand()) return;
 
 			// Attempt to extract the deleted <Message> content, which may be an element of a <MessageEmbed>
-			let content = (!msg.content)
+			const content = (!msg.content)
 				// If the <Message.content> field is empty, check if the <Message> had an embed
 				? (msg.embeds[0])
 					// If it did have an embed, check if the <MessageEmbed> had a description
@@ -63,9 +63,6 @@ module.exports = {
 				// Otherwise, if the <Message.content> is not empty, store it as the message's content
 				: msg.content;
 
-			// Use modules.charLimit() to ensure the message's content does not exceed Discord's <MessageEmbed.description> character limit
-			content = charLimit(`>>> ${content}`, 2048);
-
 			// Extract the <MessageAttachment> from the deleted message if it exists
 			const attachment = (msg.attachments)
 				? msg.attachments.first()
@@ -73,7 +70,8 @@ module.exports = {
 
 			// Set the log embed's author and footer fields, and preliminarily set the embed's description
 			logEmbed.setAuthor(msg.author.tag, msg.author.displayAvatarURL({ dynamic: true }));
-			logEmbed.setDescription(`**Message sent by ${msg.author} deleted in ${msg.channel}**\n${content}`);
+			// Use modules.charLimit() to ensure the message's content does not exceed Discord's <MessageEmbed.description> character limit
+			logEmbed.setDescription(charLimit(`**Message sent by ${msg.author} deleted in ${msg.channel}**\n>>> ${content}`, 'EMBED_DESCRIPTION'));
 			logEmbed.setFooter(`Author: ${msg.author.id} | Message: ${msg.id} | ${await dateTimeGroup()}`);
 
 			// If there was a <MessageAttachment>, add a field to the log embed to include the attachment's name
