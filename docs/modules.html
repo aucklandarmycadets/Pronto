@@ -345,7 +345,7 @@
             <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.extractID">extractID</a></span>
           </li>
           <li class="nav-item">
-            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.formatAge">formatAge</a></span>
+            <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.formatDuration">formatDuration</a></span>
           </li>
           <li class="nav-item">
             <span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="modules.html#.formatList">formatList</a></span>
@@ -393,6 +393,13 @@
             <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="pronto.html#.version">version</a></span>
           </li>
         </ul>
+        <li class="nav-heading"><a href="global.html">Globals</a></li>
+        <li class="nav-item">
+          <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="global.html#DISCORD_LIMITS">DISCORD_LIMITS</a></span>
+        </li>
+        <li class="nav-item">
+          <span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="global.html#UNIT_DURATIONS">UNIT_DURATIONS</a></span>
+        </li>
       </nav>
     </header>
 
@@ -419,7 +426,7 @@
               </div>
 
               <h4 class="method-name" id=".charLimit">
-                charLimit<span class="signature">(str, limit<span class="signature-attributes">opt</span>)</span><span class="return-type-signature"> &rarr; {string|'No message content'}</span>
+                charLimit<span class="signature">(str, type, limit<span class="signature-attributes">opt</span>)</span><span class="return-type-signature"> &rarr; {string|'No message content'}</span>
               </h4>
 
               <div class="method-description">
@@ -440,13 +447,45 @@
                 </li>
 
                 <li>
+                  <span class="param-name">type</span>
+
+                  <span class="param-type"><code>'MESSAGE'</code></span>
+                  &nbsp|&nbsp
+
+                  <span class="param-type"><code>'EMBED_TITLE'</code></span>
+                  &nbsp|&nbsp
+
+                  <span class="param-type"><code>'EMBED_DESCRIPTION'</code></span>
+                  &nbsp|&nbsp
+
+                  <span class="param-type"><code>'EMBED_FIELD_NAME'</code></span>
+                  &nbsp|&nbsp
+
+                  <span class="param-type"><code>'EMBED_FIELD_VALUE'</code></span>
+                  &nbsp|&nbsp
+
+                  <span class="param-type"><code>'EMBED_FOOTER'</code></span>
+                  &nbsp|&nbsp
+
+                  <span class="param-type"><code>'EMBED_AUTHOR'</code></span>
+
+                  <span class="param-attributes"> </span>
+
+                  <div class="param-description">
+                    <p>The indended purpose of the string</p>
+                    <ul>
+                      <li>If specified, the limit will be retrieved from an object of known API limits</li>
+                      <li><strong>NOTE:</strong> If a <code>limit</code> is also specified, this argument will be ignored and the <code>limit</code> will be applied</li>
+                    </ul>
+                  </div>
+                </li>
+
+                <li>
                   <span class="param-name">limit</span>
 
                   <span class="param-type"><code>number</code></span>
 
                   <span class="param-attributes"> &lt;optional&gt;<br /> </span>
-
-                  <span class="param-default"> 2048 </span>
 
                   <div class="param-description"><p>The allowed character limit</p></div>
                 </li>
@@ -469,18 +508,18 @@
               <h4 class="method-heading">Examples</h4>
 
               <pre><code class="language-js">// returns 'I will get trimmed...'
-modules.charLimit('I will get trimmed to 21 characters', 21);</code></pre>
+modules.charLimit('I will get trimmed to 21 characters', null, 21);</code></pre>
 
               <pre><code class="language-js">// returns '```Codeblock formatting is respected...```'
-modules.charLimit('```Codeblock formatting is respected by modules.charLimit()```', 42);</code></pre>
+modules.charLimit('```Codeblock formatting is respected by modules.charLimit()```', null, 42);</code></pre>
 
               <h4 class="method-heading">Source</h4>
               <ul>
                 <li class="method-source">
-                  <a href="modules_charLimit.js.html">modules/charLimit.js</a><a href="modules_charLimit.js.html#source.3">, line 3</a>
+                  <a href="modules_charLimit.js.html">modules/charLimit.js</a><a href="modules_charLimit.js.html#source.16">, line 16</a>
 
                   &nbsp//&nbsp
-                  <a href="https://github.com/JamesNZL/Pronto/blob/major-refactor-v5/modules/charLimit.js#L3" target="_blank">View on GitHub</a>
+                  <a href="https://github.com/JamesNZL/Pronto/blob/major-refactor-v5/modules/charLimit.js#L16" target="_blank">View on GitHub</a>
                 </li>
               </ul>
             </article>
@@ -513,6 +552,8 @@ modules.charLimit('```Codeblock formatting is respected by modules.charLimit()``
                   <span class="param-type"><code>Date</code></span>
 
                   <span class="param-attributes"> &lt;optional&gt;<br /> </span>
+
+                  <span class="param-default"> Date.now() </span>
 
                   <div class="param-description">
                     <p>A Date object, or a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/Date#parameters">resolvable date</a> accepted by the <code>Date()</code> constructor, such as:</p>
@@ -646,6 +687,8 @@ modules.difference([0, 1, 3], [1, 2, 3]);</code></pre>
                   <span class="param-type"><code>boolean</code></span>
 
                   <span class="param-attributes"> &lt;optional&gt;<br /> </span>
+
+                  <span class="param-default"> false </span>
 
                   <div class="param-description"><p>Whether to return the enumerated resources as a &lt;string[]&gt; or a newline-delimited &lt;string&gt;</p></div>
                 </li>
@@ -827,12 +870,12 @@ modules.extractID('Pronto');</code></pre>
                 <span class="method-type-signature is-static">static</span>
               </div>
 
-              <h4 class="method-name" id=".formatAge">
-                formatAge<span class="signature">(raw, isElapsed<span class="signature-attributes">opt</span>)</span><span class="return-type-signature"> &rarr; {string}</span>
+              <h4 class="method-name" id=".formatDuration">
+                formatDuration<span class="signature">(raw, isElapsed<span class="signature-attributes">opt</span>)</span><span class="return-type-signature"> &rarr; {string}</span>
               </h4>
 
               <div class="method-description">
-                <p><code>modules.formatAge()</code> formats a duration of time or a historical Unix timestamp (ms) into a formatted string describing the elapsed duration</p>
+                <p><code>modules.formatDuration()</code> formats a duration of time or a historical Unix timestamp (ms) into a formatted string describing the elapsed duration</p>
               </div>
 
               <h4 class="method-heading">Parameters</h4>
@@ -855,6 +898,8 @@ modules.extractID('Pronto');</code></pre>
 
                   <span class="param-attributes"> &lt;optional&gt;<br /> </span>
 
+                  <span class="param-default"> false </span>
+
                   <div class="param-description">
                     <p>Whether <code>raw</code> is a duration of elapsed time, or is a timestamp whose duration since must be calculated</p>
                   </div>
@@ -875,15 +920,15 @@ modules.extractID('Pronto');</code></pre>
               <h4 class="method-heading">Example</h4>
 
               <pre><code class="language-js">// returns '21 days, 9 hrs, 6 min'
-modules.formatAge(1847160000, true);</code></pre>
+modules.formatDuration(1847160000, true);</code></pre>
 
               <h4 class="method-heading">Source</h4>
               <ul>
                 <li class="method-source">
-                  <a href="modules_formatAge.js.html">modules/formatAge.js</a><a href="modules_formatAge.js.html#source.3">, line 3</a>
+                  <a href="modules_formatDuration.js.html">modules/formatDuration.js</a><a href="modules_formatDuration.js.html#source.15">, line 15</a>
 
                   &nbsp//&nbsp
-                  <a href="https://github.com/JamesNZL/Pronto/blob/major-refactor-v5/modules/formatAge.js#L3" target="_blank">View on GitHub</a>
+                  <a href="https://github.com/JamesNZL/Pronto/blob/major-refactor-v5/modules/formatDuration.js#L15" target="_blank">View on GitHub</a>
                 </li>
               </ul>
             </article>
@@ -894,7 +939,7 @@ modules.formatAge(1847160000, true);</code></pre>
               </div>
 
               <h4 class="method-name" id=".formatList">
-                formatList<span class="signature">(listObject, forCommandsList<span class="signature-attributes">opt</span>)</span><span class="return-type-signature"> &rarr; {string}</span>
+                formatList<span class="signature">(listObject, format<span class="signature-attributes">opt</span>)</span><span class="return-type-signature"> &rarr; {string}</span>
               </h4>
 
               <div class="method-description">
@@ -920,13 +965,15 @@ modules.formatAge(1847160000, true);</code></pre>
                 </li>
 
                 <li>
-                  <span class="param-name">forCommandsList</span>
+                  <span class="param-name">format</span>
 
-                  <span class="param-type"><code>boolean</code></span>
+                  <span class="param-type"><code>Array.&lt;string></code></span>
 
                   <span class="param-attributes"> &lt;optional&gt;<br /> </span>
 
-                  <div class="param-description"><p>Whether the list should be formatted appropriately for the commands list</p></div>
+                  <span class="param-default"> ['**', ':** '] </span>
+
+                  <div class="param-description"><p>The formatting to apply [before, after] each key in the list</p></div>
                 </li>
               </ul>
 
@@ -957,7 +1004,7 @@ modules.formatList({
 modules.formatList({
 	'KeyOne': 'ValueOne',
 	'KeyTwo': 'ValueTwo',
-}, true);</code></pre>
+}, ['`', '` - ']);</code></pre>
 
               <h4 class="method-heading">Source</h4>
               <ul>
@@ -1005,6 +1052,8 @@ modules.formatList({
                   <span class="param-type"><code>boolean</code></span>
 
                   <span class="param-attributes"> &lt;optional&gt;<br /> </span>
+
+                  <span class="param-default"> false </span>
 
                   <div class="param-description"><p>Whether to mention the roles, or escape the mentions</p></div>
                 </li>
@@ -1317,7 +1366,7 @@ modules.prefixCommand(help, guild);</code></pre>
               </div>
 
               <h4 class="method-name" id=".processResources">
-                processResources<span class="signature">(attachment<span class="signature-attributes">opt</span>, URLs<span class="signature-attributes">opt</span>)</span><span class="return-type-signature"> &rarr; {string}</span>
+                processResources<span class="signature">(attachment<span class="signature-attributes">opt</span>, urls<span class="signature-attributes">opt</span>)</span><span class="return-type-signature"> &rarr; {string}</span>
               </h4>
 
               <div class="method-description">
@@ -1341,7 +1390,7 @@ modules.prefixCommand(help, guild);</code></pre>
                 </li>
 
                 <li>
-                  <span class="param-name">URLs</span>
+                  <span class="param-name">urls</span>
 
                   <span class="param-type"><code>Array.&lt;string></code></span>
 
@@ -1703,7 +1752,7 @@ modules.updatedPermissions(&lt;stateOne>, &lt;stateTwo>);</code></pre>
     </main>
 
     <footer class="layout-footer">
-      <div class="container">Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Mon Dec 13 2021 18:06:11 GMT+1300 (New Zealand Daylight Time)</div>
+      <div class="container">Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Mon Dec 13 2021 20:56:00 GMT+1300 (New Zealand Daylight Time)</div>
     </footer>
 
     <script src="scripts/prism.dev.js"></script>
