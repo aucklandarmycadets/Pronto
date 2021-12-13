@@ -39,7 +39,7 @@ module.exports = {
 		if (!lastMsg) {
 			// If the channel was completely emptied, then there is not any <Message> to extract further context from
 			logEmbed.setAuthor(msg.guild.name, msg.guild.iconURL({ dynamic: true }));
-			logEmbed.setDescription(`**${msgs.array().length} messages bulk deleted in ${msg.channel}**`);
+			logEmbed.setDescription(`**${[...msgs.keys()].length} messages bulk deleted in ${msg.channel}**`);
 		}
 
 		// However, if there was indeed a remaining message, check to see if it was a commands\purge.js <Command>
@@ -49,7 +49,7 @@ module.exports = {
 
 			// Add additional context to the log embed on the command author
 			logEmbed.setAuthor(lastMsg.author.tag, lastMsg.author.displayAvatarURL({ dynamic: true }));
-			logEmbed.setDescription(`**${msgs.array().length} messages bulk deleted by ${lastMsg.author} in ${msg.channel}**`);
+			logEmbed.setDescription(`**${[...msgs.keys()].length} messages bulk deleted by ${lastMsg.author} in ${msg.channel}**`);
 		}
 
 		// Get the guild's log channel and send the log embed

@@ -32,7 +32,7 @@ module.exports = {
 			.setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
 			.setDescription(`${member} ${member.user.tag}`)
 			// Call modules.formatRoles() to display the roles the <GuildMember> had
-			.addField('Roles', formatRoles(member.roles.cache.array(), true, 3))
+			.addField('Roles', formatRoles([...member.roles.cache.values()], true, 3))
 			.setFooter(`ID: ${member.id} | ${await dateTimeGroup()}`);
 
 		// Fetch the guild's audit logs for a kick

@@ -46,13 +46,13 @@ module.exports = async guild => {
 		let formationName = msg.guild.name;
 
 		// Check whether the command author has any formation roles, defined in the guild's config
-		for (const role of Object.values(msg.member.roles.cache.array())) {
+		[...msg.member.roles.cache.values()].forEach(role => {
 			// If so, update the formation colour & name to be that role's colour & name
 			if (formations.includes(role.id)) {
 				formationColour = role.color;
 				formationName = role.name;
 			}
-		}
+		});
 
 		// Check for legacy syntax - if the command intention is to update an existing register, return an error message instructing the user to use the edit reaction
 		if (args[0].toLowerCase() === 'update') return commandError(msg, 'Please use the 📝 reaction to edit a register.', attendance.error);
