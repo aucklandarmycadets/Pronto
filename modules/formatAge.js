@@ -1,6 +1,18 @@
 'use strict';
 
 /**
+ * An object of each unit of time, and the duration of that unit in milliseconds
+ */
+const UNIT_DURATIONS = {
+	'year': 31556952000,
+	'month': 2629800000,
+	'day': 86400000,
+	'hr': 3600000,
+	'min': 60000,
+	'sec': 1000,
+};
+
+/**
  * `modules.formatAge()` formats a duration of time or a historical Unix timestamp (ms) into a formatted string
  * describing the elapsed duration
  *
@@ -14,16 +26,12 @@
  * @returns {string} The formatted string describing the elapsed duration
  */
 module.exports = (raw, isElapsed = false) => {
-	// Constant arrays to store the each unit duration of time in milliseconds, where each pair of duration and unit share the same index
-	const durations = [31556952000, 2629800000, 86400000, 3600000, 60000, 1000];
-	const units = ['year', 'month', 'day', 'hr', 'min', 'sec'];
-
 	// If the provided raw value is not an elapsed duration, calculate the time elapsed between the provided timestamp to the current time
 	if (!isElapsed) raw = Date.now() - raw;
 
 	// Map the duration values to a new string[] of each individual unit quantity
 	// i.e. ['', '', '21 days', '9 hrs', '6 min', '']
-	return durations.map((duration, i) => {
+	return Object.entries(UNIT_DURATIONS).map(([unit, duration]) => {
 		// Calculate the unit value of the elapsed duration for this unit duration of time
 		const unitValue = Math.floor(raw / duration);
 
@@ -32,7 +40,7 @@ module.exports = (raw, isElapsed = false) => {
 
 		return (unitValue > 0)
 			// If the unit value for this unit duration of time is non-zero, set the mapped value to be the calculated unit quantity accompanied by the unit (pluralised if necessary)
-			? `${unitValue} ${(unitValue > 1) ? `${units[i]}s` : units[i]}`
+			? `${unitValue} ${(unitValue > 1) ? `${unit}s` : unit}`
 			// If the unit value for this unit duration of time is zero, set the mapped value to be an empty string ''
 			: '';
 	})
