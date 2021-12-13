@@ -32,7 +32,7 @@ module.exports = {
 		for (const emoji of Object.values(emojis)) {
 			// If the guild does not already have a guild with a matching name, create it for the guild
 			if (!guild.emojis.cache.some(guildEmoji => guildEmoji.name === emoji.name)) {
-				guild.emojis.create(emoji.URL, emoji.name);
+				guild.emojis.create(emoji.url, emoji.name);
 			}
 		}
 	},

@@ -375,16 +375,16 @@ async function msgPrompt(prompt, msg, type, colours, allowMultiple) {
 			const substrings = input.content.split(/ +/);
 			const attachments = input.attachments.first();
 			// Filter the substrings of the input message for URLs
-			const URLs = substrings.filter(substr => isURL(substr));
+			const urls = substrings.filter(substr => isURL(substr));
 
 			// If there have not been any attachments uploaded and no URLs have been successfully parsed, send an error and try again
-			if (!attachments && !URLs.length) {
+			if (!attachments && !urls.length) {
 				sendDirect(msg.author, { embeds: [createEmbed('You must attach a file or enter a URL!', colours.error)] }, null, true);
 				throw await msgPrompt(prompt, msg, type, colours, allowMultiple);
 			}
 
 			// Otherwise, if there have successfully been attachments and/or URLs input, return it through modules.processResources()
-			throw processResources(attachments, URLs);
+			throw processResources(attachments, urls);
 		}
 	}
 

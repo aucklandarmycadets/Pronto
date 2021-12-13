@@ -92,7 +92,7 @@ interface Emoji {
 	/** The name of the guild's emoji */
 	name: string;
 	/** The URL of the guild's emoji */
-	URL: string;
+	url: string;
 }
 
 /**

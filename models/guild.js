@@ -104,11 +104,11 @@ const guildSchema = new mongoose.Schema({
 		default: {
 			success: {
 				name: emojis.success.name,
-				URL: emojis.success.URL,
+				url: emojis.success.url,
 			},
 			error: {
 				name: emojis.error.name,
-				URL: emojis.error.URL,
+				url: emojis.error.url,
 			},
 		},
 	},

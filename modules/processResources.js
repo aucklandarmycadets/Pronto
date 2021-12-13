@@ -18,10 +18,10 @@ const Discord = require('discord.js');
  *
  * @function modules.processResources
  * @param {Discord.MessageAttachment} [attachment] An input \<MessageAttachment>
- * @param {string[]} [URLs] An input \<string[]> of URLs
+ * @param {string[]} [urls] An input \<string[]> of URLs
  * @returns {string} A formatted string of Markdown hyperlinks, where each resource is separated by a newline
  */
-module.exports = (attachment, URLs) => {
+module.exports = (attachment, urls) => {
 	// Format the link for the <MessageAttachment> if one exists
 	const attachmentLink = (attachment)
 		// If there is an attachment, format the link using the <MessageAttachment.name>
@@ -30,5 +30,5 @@ module.exports = (attachment, URLs) => {
 		: '';
 
 	// Map each URL to the format of [Resource](URL), then join the string[] with a newline separator and append it to the attachment link
-	return attachmentLink + URLs.map(url => `[Resource](${url})`).join('\n');
+	return attachmentLink + urls.map(url => `[Resource](${url})`).join('\n');
 };

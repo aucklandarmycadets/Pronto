@@ -49,7 +49,7 @@ module.exports = async guild => {
 		// Extract the <MessageAttachment> if it exists
 		const attachments = msg.attachments.first();
 		// Filter the command arguments for URLs
-		const URLs = args.filter(arg => isURL(arg));
+		const urls = args.filter(arg => isURL(arg));
 
 		try {
 			// Ensure message channel is contained within lessons category
@@ -69,7 +69,7 @@ module.exports = async guild => {
 
 			// If the lesson sub-command is 'add', ensure there was at least one attachment or URL
 			if (command === 'add') {
-				if (!attachments && !URLs.length) throw 'You must attach a file or enter a URL!';
+				if (!attachments && !urls.length) throw 'You must attach a file or enter a URL!';
 			}
 
 			// If the lesson sub-command is 'remove', ensure there are existing submitted resources
@@ -128,10 +128,10 @@ module.exports = async guild => {
 			successReact(msg);
 
 			// If the added resources already exist in the lesson's submittedResources string[], cease further execution
-			if (lessonDocument.submittedResources.includes(processResources(attachments, URLs))) return;
+			if (lessonDocument.submittedResources.includes(processResources(attachments, urls))) return;
 
 			// Add the resource to the lesson's submittedResources string[]
-			lessonDocument.submittedResources.push(processResources(attachments, URLs));
+			lessonDocument.submittedResources.push(processResources(attachments, urls));
 			// Mark the lesson as having been changed, and ensure it is not marked as approved
 			lessonDocument.changed = true;
 			lessonDocument.approved = false;

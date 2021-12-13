@@ -136,11 +136,11 @@ module.exports = {
 	emojis: {
 		success: {
 			name: 'success',
-			URL: 'https://i.imgur.com/OMi5RLT.png',
+			url: 'https://i.imgur.com/OMi5RLT.png',
 		},
 		error: {
 			name: 'error',
-			URL: 'https://i.imgur.com/DW8EJJ7.png',
+			url: 'https://i.imgur.com/DW8EJJ7.png',
 		},
 	},
 	colours: {
