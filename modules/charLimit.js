@@ -2,6 +2,7 @@
 
 /**
  * An object of known Discord API limits
+ * @memberof modules.charLimit
  */
 const DISCORD_LIMITS = {
 	'MESSAGE': 2000,

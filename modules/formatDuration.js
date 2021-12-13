@@ -2,6 +2,7 @@
 
 /**
  * An object of each unit of time, and the duration of that unit in milliseconds
+ * @memberof modules.formatDuration
  */
 const UNIT_DURATIONS = {
 	'year': 31556952000,
