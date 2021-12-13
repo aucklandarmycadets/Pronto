@@ -52,21 +52,22 @@ module.exports = async guild => {
 
 		catch (error) { return commandError(msg, error, purge.error); }
 
-		// Initialise values for <Message[]> and before to ensure purgeCount messages are actually fetched and filtered
+		// Initialise values for the <Message.id[]> and before to ensure purgeCount messages are actually fetched and filtered
+		/** @type {Discord.Snowflake[]} */
 		let msgs = [];
 		let before = msg.id;
 
-		// Loop through until purgeCount messages are added to the msgs <Message[]>
+		// Loop through until purgeCount messages are added to the msgs <Snowflake[]>
 		while (msgs.length !== purgeCount) {
 			// Fetch messages in blocks of 100 (maximum allowed by the API) moving back in time
 			await msg.channel.messages.fetch({ limit: 100, before })
 				.then(_msgs => {
-					// Filter the fetched messages by user (if specified), and convert the <Collection> to a <Message[]>
+					// Filter the fetched messages by user (if specified), and convert the <Collection> to a <Snowflake[]> of each <Message.id>
 					msgs = (userToPurge)
-						? [...msgs, ..._msgs.filter(_msg => _msg.author.id === userToPurge.id).values()]
-						: [...msgs, ..._msgs.values()];
+						? [...msgs, ..._msgs.filter(_msg => _msg.author.id === userToPurge.id).keys()]
+						: [...msgs, ..._msgs.keys()];
 
-					// Slice the resultant <Message[]> to the appropriate length
+					// Slice the resultant <Snowflake[]> to the appropriate length
 					msgs = msgs.slice(0, purgeCount - msgs.length);
 
 					// Update oldest message ID
