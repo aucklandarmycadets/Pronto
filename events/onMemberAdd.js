@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 // eslint-disable-next-line no-unused-vars
 const Typings = require('../typings');
 
-const { dateTimeGroup, formatAge } = require('../modules');
+const { dateTimeGroup, formatDuration } = require('../modules');
 const { debugError, findGuildConfiguration, sendMsg } = require('../handlers');
 
 /**
@@ -31,8 +31,8 @@ module.exports = {
 			.setAuthor('Member Joined', member.user.displayAvatarURL({ dynamic: true }))
 			.setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
 			.setDescription(`${member} ${member.user.tag}`)
-			// Parse the user's account age through modules.formatAge()
-			.addField('Account Age', formatAge(member.user.createdAt))
+			// Parse the user's account age through modules.formatDuration()
+			.addField('Account Age', formatDuration(member.user.createdAt))
 			.setFooter(`ID: ${member.id} | ${await dateTimeGroup()}`);
 
 		// Get the guild's log channel and send the log embed

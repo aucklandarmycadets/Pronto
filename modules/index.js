@@ -30,7 +30,7 @@ module.exports = {
 	// Date/time formatting
 
 	dateTimeGroup: require('./dateTimeGroup'),
-	formatAge: require('./formatAge'),
+	formatDuration: require('./formatDuration'),
 
 	// Lesson resource management
 

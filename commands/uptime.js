@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 // eslint-disable-next-line no-unused-vars
 const Typings = require('../typings');
 
-const { dateTimeGroup, formatAge } = require('../modules');
+const { dateTimeGroup, formatDuration } = require('../modules');
 const { findGuildConfiguration, sendMsg } = require('../handlers');
 
 /**
@@ -28,8 +28,8 @@ module.exports = async guild => {
 		// Create uptime embed
 		const uptimeEmbed = new Discord.MessageEmbed()
 			.setColor(colours.success)
-			// Parse <Client.uptime> through modules.formatAge()
-			.setFooter(`${formatAge(bot.uptime, true)} | ${await dateTimeGroup()} | Pronto v${version}`);
+			// Parse <Client.uptime> through modules.formatDuration()
+			.setFooter(`${formatDuration(bot.uptime, true)} | ${await dateTimeGroup()} | Pronto v${version}`);
 
 		// Send the uptime embed
 		sendMsg(msg.channel, { embeds: [uptimeEmbed] });

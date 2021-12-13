@@ -6,7 +6,7 @@ const Typings = require('../typings');
 const mongoose = require('mongoose');
 
 const { ids: { DEVELOPER_ID } } = require('../config');
-const { dateTimeGroup, formatAge } = require('../modules');
+const { dateTimeGroup, formatDuration } = require('../modules');
 const { findGuildConfiguration, sendDirect } = require('../handlers');
 
 /**
@@ -27,7 +27,7 @@ module.exports = {
 		const { bot, version } = require('../pronto');
 
 		// If the event that was emitted was Process#exit, log the code to the console along with the bot's uptime
-		if (event === 'exit') console.log(`Exiting with code ${code}, uptime of ${formatAge(bot.uptime, true)}`);
+		if (event === 'exit') console.log(`Exiting with code ${code}, uptime of ${formatDuration(bot.uptime, true)}`);
 
 		// Asynchronous operations below this point are abandoned when handling Process#exit, and the process terminates here
 
@@ -37,8 +37,8 @@ module.exports = {
 		const restartEmbed = new Discord.MessageEmbed()
 			.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }))
 			.setDescription('**Restarting...**')
-			// Parse <Client.uptime> through modules.formatAge()
-			.addField('Uptime', formatAge(bot.uptime, true))
+			// Parse <Client.uptime> through modules.formatDuration()
+			.addField('Uptime', formatDuration(bot.uptime, true))
 			.setColor(colours.warn)
 			.setFooter(`${await dateTimeGroup()} | Pronto v${version}`);
 

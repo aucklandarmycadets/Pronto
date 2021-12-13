@@ -13,14 +13,14 @@ const UNIT_DURATIONS = {
 };
 
 /**
- * `modules.formatAge()` formats a duration of time or a historical Unix timestamp (ms) into a formatted string
+ * `modules.formatDuration()` formats a duration of time or a historical Unix timestamp (ms) into a formatted string
  * describing the elapsed duration
  *
  * @example
  * // returns '21 days, 9 hrs, 6 min'
- * modules.formatAge(1847160000, true);
+ * modules.formatDuration(1847160000, true);
  *
- * @function modules.formatAge
+ * @function modules.formatDuration
  * @param {number} raw A duration of elapsed time in milliseconds, or a Unix timestamp (ms) in the past
  * @param {boolean} [isElapsed=false] Whether `raw` is a duration of elapsed time, or is a timestamp whose duration since must be calculated
  * @returns {string} The formatted string describing the elapsed duration
