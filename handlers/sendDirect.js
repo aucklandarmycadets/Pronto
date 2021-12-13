@@ -18,9 +18,9 @@ const { embedScaffold } = require('../handlers');
  * @param {boolean} [toDebug=false] Whether to send the error message to debugging rather than the user in a guild channel
  * @returns {Promise<?Discord.Message>} Message if it was sent
  */
-module.exports = (user, options, guildChannel, toDebug = false) => {
+module.exports = async (user, options, guildChannel, toDebug = false) => {
 	// Send message to user
-	return user.send(options)
+	return await user.send(options)
 		.catch(error => {
 			const support = '[support.discord.com](https://support.discord.com/hc/en-us/articles/217916488-Blocking-Privacy-Settings)';
 
