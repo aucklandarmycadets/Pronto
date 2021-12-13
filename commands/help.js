@@ -128,7 +128,7 @@ module.exports = async guild => {
 			helpEmbed.setThumbnail(prontoLogo);
 			helpEmbed.setColor(colours.primary);
 			// Format the commandsList object using modules.formatList()
-			helpEmbed.setDescription(formatList(commandsList, true));
+			helpEmbed.setDescription(formatList(commandsList, ['`', '` - ']));
 			// Add developer information to embed footer
 			helpEmbed.setFooter(`Developed by ${James.tag}`, James.avatarURL({ dynamic: true }));
 

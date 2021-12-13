@@ -19,22 +19,17 @@
  * modules.formatList({
  *	'KeyOne': 'ValueOne',
  *	'KeyTwo': 'ValueTwo',
- * }, true);
+ * }, ['`', '` - ']);
  *
  * @function modules.formatList
  * @param {Object.<string, string>} listObject The list object to convert into a formatted list
  * - Each [key, value] pair in the object represents the 'key: value' of each list entry
- * @param {boolean} [forCommandsList] Whether the list should be formatted appropriately for the commands list
+ * @param {string[]} [format=['**', ':** ']] The formatting to apply [before, after] each key in the list
  * @returns {string} The newline-separated list string
  */
-module.exports = (listObject, forCommandsList) => {
-	// Dynamically set the startFormat and endFormat depending on whether the list is for the commands list
-	const [startFormat, endFormat] = (forCommandsList)
-		? ['`', '` - ']
-		: ['**', ':** '];
-
+module.exports = (listObject, [beforeFormat = '**', afterFormat = ':** ']) => {
 	// Map each list value to a new string[] of formatted strings, then join the string[] with a newline separator
 	return Object.entries(listObject)
-		.map(([key, value]) => `${startFormat}${key}${endFormat}${value}`)
+		.map(([key, value]) => `${beforeFormat}${key}${afterFormat}${value}`)
 		.join('\n');
 };
