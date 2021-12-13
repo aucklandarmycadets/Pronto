@@ -101,6 +101,7 @@ body {
 
 * {
 	box-sizing: border-box;
+	scrollbar-width: thin;
 }
 
 a {
