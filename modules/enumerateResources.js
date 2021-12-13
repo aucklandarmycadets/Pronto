@@ -41,7 +41,7 @@ module.exports = (array, toString) => {
 		.map((resource, i) => `[Resource ${i + 1}]${resource.replace('[Resource]', '')}`);
 
 	// Concatenate the URL string[] to the <MessageAttachment> resource string[]
-	const combinedArr = attachmentArray.concat(urlArray);
+	const combinedArr = [...attachmentArray, ...urlArray];
 
 	return (combinedArr.length)
 		// If the concatenated string[] is not empty, return either a newline-separated string or the string[] depending on the toString boolean

@@ -64,8 +64,8 @@ module.exports = async guild => {
 					// Filter the fetched messages by user (if specified), then convert the <Collection> to <Message[]>
 					// Slice the resultant array to the appropriate length and concatenate it to the msgs <Message[]>
 					msgs = (userToPurge)
-						? msgs.concat(_msgs.filter(_msg => _msg.author.id === userToPurge.id).array().slice(0, purgeCount - msgs.length))
-						: msgs.concat(_msgs.array().slice(0, purgeCount - msgs.length));
+						? [...msgs, ..._msgs.filter(_msg => _msg.author.id === userToPurge.id).array().slice(0, purgeCount - msgs.length)]
+						: [...msgs, ..._msgs.array().slice(0, purgeCount - msgs.length];
 
 					// Update oldest message ID
 					before = _msgs.last().id;

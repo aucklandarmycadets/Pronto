@@ -347,12 +347,12 @@ function serialiseResources(document) {
 	// Map the databaseArray of URL resources to a new string[] of enumerated [Resource n] strings
 	const urlArray = databaseArray.map((resource, i) => `[Resource ${i + 1}]${resource.replace('[Resource]', '')}`);
 
-	// Save the new databaseArray in the <Lesson> document, to ensure that the user's input corresponds to the intended array element
-	document.submittedResources = attachmentArray.concat(databaseArray);
+	// Save the new databaseArray in the <Lesson> document, to ensure that the user's input corresponds to their intended array element
+	document.submittedResources = [...attachmentArray, ...databaseArray];
 	document.save().catch(error => console.error(error));
 
 	// Concatenate the URL string[] to the <MessageAttachment> resource string[], then map it to a new string[] of serialised resource strings
-	const resources = attachmentArray.concat(urlArray)
+	const resources = [...attachmentArray, ...urlArray]
 		.map((resource, i) => `\`${i + 1}\` ${resource}`);
 
 	// Return the serialised resource string[], and return a new number[] of the serials
