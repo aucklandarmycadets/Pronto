@@ -45,5 +45,10 @@
 			"link": "https://github.com/JamesNZL/Pronto",
 			"target": "_blank"
 		}
-	]
+	],
+	"repository": {
+		"link": "https://github.com/JamesNZL/Pronto",
+		"branch": "major-refactor-v5",
+		"type": "GitHub"
+	}
 }
