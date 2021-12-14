@@ -6,7 +6,8 @@
   "scripts": {
     "doc": "RD /S /Q \"docs/\") && jsdoc -c jsdoc.json",
     "prettier": "npx pretty-quick --pattern \"docs/**/*.html\"",
-    "release": "standard-version --sign"
+    "release": "standard-version --sign",
+    "start": "node src/pronto.js"
   },
   "repository": {
     "type": "git",
