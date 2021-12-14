@@ -74,10 +74,10 @@ mongoose.connection.on('err', error => console.error('Mongoose connection error:
 const eventHandler = (emitter, event, handler) => emitter.on(event, (...args) => handler(event, ...args));
 
 /**
- * Import the \<EventModules> object from the ./events folder
  * @type {Typings.EventModules}
  * @ignore
  */
+// Import the \<EventModules> object from the ./events folder
 const events = require('./events');
 
 // Iterate through each \<EventModule>
