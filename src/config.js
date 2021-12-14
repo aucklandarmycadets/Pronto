@@ -152,8 +152,6 @@ module.exports = {
 		error: 0xef4949,
 	},
 	databaseOptions: {
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
 		autoIndex: false,
 		family: 4,
 	},
