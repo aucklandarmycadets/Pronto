@@ -73,8 +73,5 @@ updateVersion.sh
 # Local files
 .local/
 
-# Ignore compiled Typescript files
-ts-compiled/
-
 # husky commit hooks
 .husky/
