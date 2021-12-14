@@ -1,5 +1,6 @@
 'use strict';
 
+// Load environment variables
 require('dotenv').config();
 
 const Discord = require('discord.js');
