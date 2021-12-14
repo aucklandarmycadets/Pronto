@@ -5,7 +5,8 @@
   "main": "pronto.js",
   "scripts": {
     "doc": "DEL /Q \"docs\\*.*\" && ATTRIB +H docs/static && (FOR /D %G IN (\"docs/*\") DO RD /S /Q \"docs/%G\")>nul && ATTRIB -H docs/static && jsdoc -c jsdoc.json",
-    "prettier": "npx pretty-quick --pattern \"docs/**/*.html\""
+    "prettier": "npx pretty-quick --pattern \"docs/**/*.html\"",
+    "release": "standard-version"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
     "husky": "^7.0.4",
     "jsdoc": "^3.6.7",
     "pretty-quick": "^3.1.2",
+    "standard-version": "^9.3.2",
     "tidy-jsdoc": "github:JamesNZL/tidy-jsdoc",
     "typescript": "^4.5.2"
   },
