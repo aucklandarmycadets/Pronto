@@ -30,6 +30,11 @@ const mongoose = require('mongoose');
  * @namespace pronto
  */
 
+/**
+ * @typedef {Discord.Client} pronto.Client The \<Client> object for Pronto, with an extended \<Client.commands> property to store the guild's commands, upserted on each execution of [`handlers.commandHandler()`]{@link handlers.commandHandler}
+ * @property {?Discord.Collection<commands.CommandName, commands.Command>} commands A \<Collection> of the bot's loaded commands for the current \<Guild>
+ */
+
 // Create a new <Client>, and allow partial <Message> events
 const bot = new Discord.Client({ partials: ['MESSAGE'] });
 

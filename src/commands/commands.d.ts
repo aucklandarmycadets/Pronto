@@ -2,9 +2,10 @@ import Discord = require('discord.js');
 import Typings = require('../typings');
 
 /**
- * The \<Client> object for Pronto, with an extended \<Client.commands> property to store the guild's \<Commands>, upserted on each execution of `handlers.commandHandler()`
+ * The \<Client> object for Pronto, with an extended \<Client.commands> property to store the guild's commands, upserted on each execution of `handlers.commandHandler()`
  */
 export interface Client extends Discord.Client {
+	/** A \<Collection> of the bot's loaded commands for the current \<Guild> */
 	commands?: Discord.Collection<CommandName, Command>;
 }
 
