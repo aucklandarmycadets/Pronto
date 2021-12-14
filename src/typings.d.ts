@@ -74,9 +74,9 @@ export interface DefaultChannel {
 	/** The type of the required \<GuildChannel> */
 	type: DefaultChannelType,
 	/** The \<TextChannel.topic>of the channel for the created \<GuildChannel> */
-	description: ?string,
+	description?: string,
 	/** The name of the parent \<CategoryChannel> for the created \<GuildChannel> */
-	parent: ?string,
+	parent?: string,
 }
 
 /**

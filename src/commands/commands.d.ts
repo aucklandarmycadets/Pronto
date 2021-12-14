@@ -5,7 +5,7 @@ import Typings = require('../typings');
  * The \<Client> object for Pronto, with an extended \<Client.commands> property to store the guild's \<Commands>, upserted on each execution of `handlers.commandHandler()`
  */
 export interface Client extends Discord.Client {
-	commands: ?Discord.Collection<CommandName, Command>;
+	commands?: Discord.Collection<CommandName, Command>;
 }
 
 /** The name of the command */
@@ -18,9 +18,9 @@ interface CommandDescription {
 	/** The description of the command, or the description to display in the command's base help text if the command supports a dynamic description */
 	general: string;
 	/** The description of the command, or the description to display in the command's base help text if the command supports a dynamic description */
-	unqualified: ?string;
+	unqualified?: string;
 	/** The description to display as the command's description if qualified with a different \<CommandName>, if the command supports a dynamic description */
-	qualified: ?string;
+	qualified?: string;
 }
 
 /**
@@ -46,7 +46,7 @@ export interface BaseCommand {
 	/** The help text to display for the command */
 	readonly help: string;
 	/** The error text to display for the command */
-	readonly error: ?string;
+	readonly error?: string;
 }
 
 /**
@@ -84,9 +84,9 @@ export interface CommandParameters {
 	/** The \<Message> that executed the \<Command>, or the \<Message> that the reaction collector was attached to */
 	msg: Discord.Message;
 	/** The \<string[]> containing the command arguments */
-	args: ?string[];
+	args?: string[];
 	/** The message argument that was parsed to this \<BaseCommand>, i.e. either \<BaseCommand.command> or \<BaseCommand.aliases.includes(msgCommand)> */
-	msgCommand: ?string;
+	msgCommand?: string;
 	/** The \<User> that triggered the reaction collector */
-	user: ?Discord.User;
+	user?: Discord.User;
 }

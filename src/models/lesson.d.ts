@@ -26,7 +26,7 @@ export interface Lesson extends mongoose.Document {
 	/** A \<string[]> of the lesson resources submitted by the instructor */
 	submittedResources: string[];
 	/** The \<Message.id> of the archived lesson plan, if it has been archived */
-	archiveID: ?Discord.Snowflake;
+	archiveID?: Discord.Snowflake;
 	/** A \<boolean> to record whether the lesson has been submitted at least once */
 	submitted: boolean;
 	/** A \<boolean> to record whether the lesson is approved in its current state */
