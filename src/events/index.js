@@ -30,9 +30,10 @@ const fs = require('fs');
  */
 
 /**
- * Load the events folder
- * @returns {Typings.EventModules} Pronto's complete \<EventModules> object
+ * Pronto's complete \<EventModules> object
+ * @type {Typings.EventModules}
  */
+// Load the events folder
 module.exports = processIndex('./events');
 
 /**
