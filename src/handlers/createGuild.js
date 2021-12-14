@@ -42,12 +42,11 @@ const createdChannels = new Discord.Collection();
  */
 module.exports = async guild => {
 	/**
-	 * Attempt to find an existing \<GuildConfiguration> document by querying for the guild's identifier
 	 * @type {?Typings.GuildConfiguration}
 	 */
-	const existingDocument = await Guild.findOne({ guildID: guild.id }, error => {
-		if (error) console.error(error);
-	});
+	// Attempt to find an existing <GuildConfiguration> document by querying for the guild's identifier
+	const existingDocument = await Guild.findOne({ guildID: guild.id }).exec()
+		.catch(error => console.error(error));
 
 	// If the guild already has an existing <GuildConfiguration> document, return it and cease further execution
 	if (existingDocument) return existingDocument;

@@ -24,7 +24,8 @@ module.exports = async guild => {
 		/**
 		 * @type {Typings.Lesson[]}
 		 */
-		const unsubmitted = await Lesson.find({ submitted: false, dueTimestamp: { $gte: Date.now(), $lte: new Date().setDate(new Date().getDate() + 8).valueOf() } });
+		const unsubmitted = await Lesson.find({ submitted: false, dueTimestamp: { $gte: Date.now(), $lte: new Date().setDate(new Date().getDate() + 8).valueOf() } }).exec()
+			.catch(error => console.error(error));
 
 		for (const lesson of unsubmitted) {
 			const lessonChannel = guild.channels.cache.get(lesson.lessonID);

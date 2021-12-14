@@ -33,10 +33,12 @@ module.exports = async guild => {
 	lesson.execute = async ({ msg, args, msgCommand }) => {
 		const { bot } = require('../pronto');
 
+		/**
+		 * @type {?Typings.Lesson}
+		 */
 		// Find <Lesson> document by querying database for lesson channel ID
-		let lessonDocument = await Lesson.findOne({ lessonID: msg.channel.id }, error => {
-			if (error) console.error(error);
-		});
+		let lessonDocument = await Lesson.findOne({ lessonID: msg.channel.id }).exec()
+			.catch(error => console.error(error));
 
 		// Attempt to parse the lesson sub-command from the command message
 		const command = (lesson.aliases.includes(msgCommand))

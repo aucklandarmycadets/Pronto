@@ -26,12 +26,11 @@ module.exports = async (guild, changes) => {
 	guild = guild || bot.guilds.cache.get(DEFAULT_GUILD);
 
 	/**
-	 * Attempt to find the \<GuildConfiguration> document by querying for the guild's identifier
-	 * @type {Typings.GuildConfiguration}
+	 * @type {?Typings.GuildConfiguration}
 	 */
-	let document = await Guild.findOne({ guildID: guild.id }, error => {
-		if (error) console.error(error);
-	});
+	// Attempt to find the <GuildConfiguration> document by querying for the guild's identifier
+	let document = await Guild.findOne({ guildID: guild.id }).exec()
+		.catch(error => console.error(error));
 
 	// If there are no changes to upsert, return the document if it was found, or create (and return) a new document for the guild by calling handlers.createGuild()
 	if (!changes) return document || await createGuild(guild);

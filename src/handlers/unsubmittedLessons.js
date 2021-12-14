@@ -23,7 +23,8 @@ module.exports = async guild => {
 	/**
 	 * @type {Typings.Lesson[]}
 	 */
-	const unsubmitted = await Lesson.find({ submitted: false }).sort({ dueTimestamp: 'ascending' });
+	const unsubmitted = await Lesson.find({ submitted: false }).sort({ dueTimestamp: 'ascending' }).exec()
+		.catch(error => console.error(error));
 
 	const embedTitle = 'Lessons To Be Submitted';
 
@@ -37,7 +38,9 @@ module.exports = async guild => {
 		/**
 		 * @type {Typings.Lesson[]}
 		 */
-		const lessons = await Lesson.find();
+		const lessons = await Lesson.find().exec()
+			.catch(error => console.error(error));
+
 		if (!lessons.length) return;
 
 		unsubmittedEmbed.setDescription('All lesson plans have been submitted!');

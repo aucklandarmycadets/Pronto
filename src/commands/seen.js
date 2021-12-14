@@ -27,10 +27,12 @@ module.exports = async guild => {
 	 * @returns {Promise<Typings.Lesson>} The mongoose document for the lesson
 	 */
 	seen.execute = async ({ msg, user }) => {
+		/**
+		 * @type {?Typings.Lesson}
+		 */
 		// Find <Lesson> document by querying database for lesson channel ID
-		const lessonDocument = await Lesson.findOne({ lessonID: msg.channel.id }, error => {
-			if (error) console.error(error);
-		});
+		const lessonDocument = await Lesson.findOne({ lessonID: msg.channel.id }).exec()
+			.catch(error => console.error(error));
 
 		// Resolve the instructor, depending on whether executed via command or reaction
 		const instructor = user || msg.author;

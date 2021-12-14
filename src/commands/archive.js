@@ -46,9 +46,8 @@ module.exports = async guild => {
 		catch (error) { return commandError(msg, error, archive.error); }
 
 		// Delete database document when archiving a lesson channel
-		Lesson.findOneAndDelete({ lessonID: msg.channel.id }, error => {
-			if (error) console.error(error);
-		});
+		Lesson.findOneAndDelete({ lessonID: msg.channel.id }).exec()
+			.catch(error => console.error(error));
 
 		// Move channel to archive category
 		channel.setParent(archivedID, { lockPermissions: true })

@@ -19,9 +19,8 @@ module.exports = async guild => {
 	/**
 	 * @type {Typings.GuildConfiguration}
 	 */
-	const document = await Guild.findOne({ guildID: guild.id }, error => {
-		if (error) console.error(error);
-	});
+	const document = await Guild.findOne({ guildID: guild.id }).exec()
+		.catch(error => console.error(error));
 
 	document.commands = await processChanges(updatedCommands, document);
 	document.markModified('commands');

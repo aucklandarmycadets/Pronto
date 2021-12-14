@@ -25,7 +25,8 @@ module.exports = async (reaction, user) => {
 	/**
 	 * @type {?Typings.Attendance}
 	 */
-	const document = await Attendance.findOne({ channelID: reaction.message.id });
+	const document = await Attendance.findOne({ channelID: reaction.message.id }).exec()
+		.catch(error => console.error(error));
 
 	if (!document) return;
 
