@@ -30,8 +30,8 @@
 	},
 	"metadata": {
 		"title": "Pronto",
-		"logo": "static/logo.svg",
-		"favicon": "static/favicon.svg"
+		"logo": "logo.svg",
+		"favicon": "favicon.svg"
 	},
 	"styles": {
 		"primary-colour": "#ffd456",
