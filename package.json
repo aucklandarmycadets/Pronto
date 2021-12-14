@@ -52,7 +52,7 @@
         "type": "json"
       },
       {
-        "filename": "pronto.js",
+        "filename": "src/pronto.js",
         "updater": "build/standard-version-updater.js"
       }
     ]
