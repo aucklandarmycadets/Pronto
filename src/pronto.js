@@ -6,8 +6,7 @@ require('dotenv').config();
 const Discord = require('discord.js');
 // eslint-disable-next-line no-unused-vars
 const Typings = require('./typings');
-
-const { connectToMongoose } = require('./handlers');
+const mongoose = require('mongoose');
 
 /**
  * The Node.js JavaScript runtime environment to run the bot's code
@@ -54,7 +53,10 @@ bot.login(process.env.TOKEN)
 	});
 
 // Connect to the MongoDB database
-connectToMongoose(process.env.MONGOURI);
+mongoose.connect(process.env.MONGOURI, { family: 4 });
+
+// Log the MongoDB connection error if it occurs
+mongoose.connection.on('err', error => console.error('Mongoose connection error:\n', error));
 
 /**
  * Attach an event listener to a \<Discord.Client> or \<NodeJS.Process> to execute an event handler

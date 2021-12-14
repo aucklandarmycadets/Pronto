@@ -7,9 +7,8 @@
 module.exports = {
 	handlers: exports,
 
-	// mongoose/database handlers
+	// database handlers
 
-	connectToMongoose: require('./connectToMongoose'),
 	findGuildConfiguration: require('./findGuildConfiguration'),
 	findLesson: require('./findLesson'),
 
