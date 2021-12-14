@@ -4,6 +4,7 @@
   "description": "A Discord bot developed for the City of Auckland Cadet Unit.",
   "main": "pronto.js",
   "scripts": {
+    "tsc": "tsc -p build/",
     "doc": "RD /S /Q \"docs\" && jsdoc -c build/jsdoc.json",
     "prettier": "npx pretty-quick --pattern \"docs/**/*.html\"",
     "release": "standard-version --sign",
