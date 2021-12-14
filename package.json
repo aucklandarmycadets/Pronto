@@ -6,7 +6,7 @@
   "scripts": {
     "doc": "DEL /Q \"docs\\*.*\" && ATTRIB +H docs/static && (FOR /D %G IN (\"docs/*\") DO RD /S /Q \"docs/%G\")>nul && ATTRIB -H docs/static && jsdoc -c jsdoc.json",
     "prettier": "npx pretty-quick --pattern \"docs/**/*.html\"",
-    "release": "standard-version"
+    "release": "standard-version --sign"
   },
   "repository": {
     "type": "git",
