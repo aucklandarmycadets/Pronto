@@ -23,7 +23,7 @@ module.exports = {
 	 */
 	async handler(event, role) {
 		const { bot } = require('../pronto');
-		const { ids: { logID }, colours } = await findGuildConfiguration(role.guild);
+		const { ids: { logId }, colours } = await findGuildConfiguration(role.guild);
 
 		// Create log embed
 		const logEmbed = new Discord.MessageEmbed()
@@ -31,10 +31,10 @@ module.exports = {
 			// Set colour and description dynamically, depending on the emitted event
 			.setColor((event === 'roleCreate') ? colours.success : colours.error)
 			.setDescription(`**Role ${(event === 'roleCreate') ? 'Created' : 'Deleted'}: ${role.name}**`)
-			.setFooter(`ID: ${role.id} | ${await dateTimeGroup()}`);
+			.setFooter(`Id: ${role.id} | ${await dateTimeGroup()}`);
 
 		// Get the guild's log channel and send the log embed
-		const logChannel = bot.channels.cache.get(logID);
+		const logChannel = bot.channels.cache.get(logId);
 		sendMsg(logChannel, { embeds: [logEmbed] });
 	},
 };

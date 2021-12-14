@@ -21,7 +21,7 @@ module.exports = async guild => {
 	/**
 	 * @type {Partial<Typings.GuildConfiguration>}
 	 */
-	const document = await Guild.findOne({ guildID: guild.id }).exec()
+	const document = await Guild.findOne({ guildId: guild.id }).exec()
 		.catch(error => console.error(error));
 
 	document.commands = commands;

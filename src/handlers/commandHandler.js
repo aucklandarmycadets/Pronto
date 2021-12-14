@@ -3,7 +3,7 @@
 const Discord = require('discord.js');
 
 const { ids: { DEVELOPER_ID } } = require('../config');
-const { extractID, prefixCommand } = require('../modules');
+const { extractId, prefixCommand } = require('../modules');
 const { debugError, directCommandError, findGuildConfiguration, permissionsHandler, upsertCommands } = require('../handlers');
 
 /** */
@@ -29,7 +29,7 @@ module.exports = async msg => {
 	const args = msg.content.split(/ +/);
 
 	const usesPrefix = msg.content.toLowerCase().startsWith(prefix.toLowerCase());
-	const usesBotMention = extractID(args[0]) === bot.user.id;
+	const usesBotMention = extractId(args[0]) === bot.user.id;
 
 	if (!usesPrefix && (!usesBotMention || args.length === 1)) return;
 

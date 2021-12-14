@@ -39,7 +39,7 @@ module.exports = {
 
 	// Discord formatting methods
 
-	extractID: require('./extractID'),
+	extractId: require('./extractId'),
 	jsCodeBlock: require('./jsCodeBlock'),
 
 	// General formatting methods

@@ -11,7 +11,7 @@ const { settings, emojis, colours } = require('../config');
 /**
  * @typedef {Typings.GuildConfiguration} models.GuildConfiguration An \<Object> representing the values of a \<mongoose.Document> to record the specific configuration for each \<Guild>
  * @property {mongoose.Schema.Types.ObjectId} _id A unique document identifier
- * @property {Discord.Snowflake} guildID The \<Guild.id> that this configuration belongs to
+ * @property {Discord.Snowflake} guildId The \<Guild.id> that this configuration belongs to
  * @property {string} guildName The \<Guild.name> that this configuration belongs to
  * @property {Object} settings The guild's settings object
  * @property {string} settings.prefix The guild's command prefix
@@ -22,20 +22,20 @@ const { settings, emojis, colours } = require('../config');
  * @property {string} settings.timezone	The [moment-timezone]{@link https://momentjs.com/timezone/} to schedule the guild's lesson reminders in
  * @property {boolean} settings.lessonReminders A \<boolean> to control whether to schedule lesson reminders
  * @property {Object} ids The guild's object of identifiers/snowflakes
- * @property {Discord.Snowflake} ids.guildID The \<Guild.id> of the guild
- * @property {Discord.Snowflake} ids.debugID The \<TextChannel.id> of the guild's debugging channel
- * @property {Discord.Snowflake} ids.logID The \<TextChannel.id> of the guild's log channel
- * @property {Discord.Snowflake} ids.attendanceID The \<TextChannel.id> of the guild's attendance channel
- * @property {Discord.Snowflake} ids.recruitingID The \<TextChannel.id> of the guild's recruiting channel
- * @property {Discord.Snowflake} ids.welcomeID The \<TextChannel.id> of the guild's new members channel
- * @property {Discord.Snowflake} ids.archivedID The \<TextChannel.id> of the guild's debugging channel
- * @property {Discord.Snowflake} ids.lessonsID The \<CategoryChannel.id> of the guild's lesson plans category channel
- * @property {Discord.Snowflake} ids.lessonReferenceID The \<TextChannel.id> of the guild's lesson reference channel
- * @property {Discord.Snowflake} ids.lessonPlansID The \<TextChannel.id> of the guild's lesson plans archive channel
- * @property {Discord.Snowflake} ids.everyoneID The \<Role.id> of the guild's \@everyone role
- * @property {Discord.Snowflake | ''} ids.visitorID The \<Role.id> of the guild's visitor role if it is registered
- * @property {Discord.Snowflake | ''} ids.administratorID The \<Role.id> of the guild's administrator role if it is registered
- * @property {Discord.Snowflake[]} ids.trainingIDs A \<Role.id[]> of the guild's training roles
+ * @property {Discord.Snowflake} ids.guildId The \<Guild.id> of the guild
+ * @property {Discord.Snowflake} ids.debugId The \<TextChannel.id> of the guild's debugging channel
+ * @property {Discord.Snowflake} ids.logId The \<TextChannel.id> of the guild's log channel
+ * @property {Discord.Snowflake} ids.attendanceId The \<TextChannel.id> of the guild's attendance channel
+ * @property {Discord.Snowflake} ids.recruitingId The \<TextChannel.id> of the guild's recruiting channel
+ * @property {Discord.Snowflake} ids.welcomeId The \<TextChannel.id> of the guild's new members channel
+ * @property {Discord.Snowflake} ids.archivedId The \<TextChannel.id> of the guild's debugging channel
+ * @property {Discord.Snowflake} ids.lessonsId The \<CategoryChannel.id> of the guild's lesson plans category channel
+ * @property {Discord.Snowflake} ids.lessonReferenceId The \<TextChannel.id> of the guild's lesson reference channel
+ * @property {Discord.Snowflake} ids.lessonPlansId The \<TextChannel.id> of the guild's lesson plans archive channel
+ * @property {Discord.Snowflake} ids.everyoneId The \<Role.id> of the guild's \@everyone role
+ * @property {Discord.Snowflake | ''} ids.visitorId The \<Role.id> of the guild's visitor role if it is registered
+ * @property {Discord.Snowflake | ''} ids.administratorId The \<Role.id> of the guild's administrator role if it is registered
+ * @property {Discord.Snowflake[]} ids.trainingIds A \<Role.id[]> of the guild's training roles
  * @property {Discord.Snowflake[]} ids.formations A \<Role.id[]> of the guild's formation roles
  * @property {models.ChannelPair[]} ids.channelPairs An {@link models.ChannelPair|<Object[]>} of the guild's pairings of \<VoiceChannel> and \<TextChannel>
  * @property {commands.BaseCommands} commands The guild's [\<BaseCommands>]{@link commands.BaseCommands} object containing each individual [\<BaseCommand>]{@link commands.BaseCommand} under the property [{@link commands.CommandName|CommandName}]
@@ -70,7 +70,7 @@ const { settings, emojis, colours } = require('../config');
 // Create a new <Schema> of <Guild> type
 const guildSchema = new mongoose.Schema({
 	_id: mongoose.Schema.Types.ObjectId,
-	guildID: String,
+	guildId: String,
 	guildName: String,
 	settings: {
 		prefix: { type: String, default: settings.prefix },
@@ -82,20 +82,20 @@ const guildSchema = new mongoose.Schema({
 		lessonReminders: { type: Boolean, default: false },
 	},
 	ids: {
-		guildID: String,
-		debugID: String,
-		logID: String,
-		attendanceID: String,
-		recruitingID: String,
-		welcomeID: String,
-		archivedID: String,
-		lessonsID: String,
-		lessonReferenceID: String,
-		lessonPlansID: String,
-		everyoneID: String,
-		visitorID: String,
-		administratorID: { type: String, default: '' },
-		trainingIDs: Array,
+		guildId: String,
+		debugId: String,
+		logId: String,
+		attendanceId: String,
+		recruitingId: String,
+		welcomeId: String,
+		archivedId: String,
+		lessonsId: String,
+		lessonReferenceId: String,
+		lessonPlansId: String,
+		everyoneId: String,
+		visitorId: String,
+		administratorId: { type: String, default: '' },
+		trainingIds: Array,
 		formations: Array,
 		channelPairs: Array,
 

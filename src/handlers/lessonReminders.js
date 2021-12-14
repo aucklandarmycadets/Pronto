@@ -18,7 +18,7 @@ const { findGuildConfiguration, sendMsg } = require('../handlers');
  * @param {Discord.Guild} guild
  */
 module.exports = async guild => {
-	const { settings: { lessonCron, timezone, lessonReminders }, ids: { archivedID }, colours } = await findGuildConfiguration(guild);
+	const { settings: { lessonCron, timezone, lessonReminders }, ids: { archivedId }, colours } = await findGuildConfiguration(guild);
 
 	cron.schedule(lessonCron, async () => {
 		/**
@@ -28,9 +28,9 @@ module.exports = async guild => {
 			.catch(error => console.error(error));
 
 		for (const lesson of unsubmitted) {
-			const lessonChannel = guild.channels.cache.get(lesson.lessonID);
+			const lessonChannel = guild.channels.cache.get(lesson.lessonId);
 
-			if (lessonChannel.parentID === archivedID) continue;
+			if (lessonChannel.parentId === archivedId) continue;
 
 			const remindEmbed = new Discord.MessageEmbed()
 				.setTitle('Lesson Reminder')
@@ -40,7 +40,7 @@ module.exports = async guild => {
 
 			if (lesson.dueTimestamp - Date.now() <= 86400000) remindEmbed.setColor(colours.error);
 
-			sendMsg(lessonChannel, { content: Object.keys(lesson.instructors).map(userID => `<@!${userID}>`).join(' '), embeds: [remindEmbed] });
+			sendMsg(lessonChannel, { content: Object.keys(lesson.instructors).map(userId => `<@!${userId}>`).join(' '), embeds: [remindEmbed] });
 		}
 	}, {
 		scheduled: lessonReminders,

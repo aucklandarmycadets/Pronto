@@ -16,11 +16,11 @@ const { findGuildConfiguration } = require('../handlers');
  *
  * @function modules.sortMembersByRoles
  * @param {Discord.Guild} guild The \<Guild> that the members belong to
- * - If the guild's [`<GuildConfiguration.ids.administratorID>`]{@link models.GuildConfiguration} is registered, it will be ignored in the sort order
+ * - If the guild's [`<GuildConfiguration.ids.administratorId>`]{@link models.GuildConfiguration} is registered, it will be ignored in the sort order
  * @returns {Promise<function(Discord.GuildMember, Discord.GuildMember):number>} The `compareFunction` to be passed to the `Collection<Snowflake, GuildMember>.sort()` method
  */
 module.exports = async guild => {
-	const { ids: { administratorID } } = await findGuildConfiguration(guild);
+	const { ids: { administratorId } } = await findGuildConfiguration(guild);
 
 	/**
 	 * Find the highest, non-administrator \<Role> of a specified \<GuildMember>
@@ -28,10 +28,10 @@ module.exports = async guild => {
 	 * @param {Discord.GuildMember} member The \<GuildMember> to find the highest non-administrator \<Role> for
 	 * @returns {Discord.Role} The highest non-administrator \<Role> of the \<GuildMember>
 	 */
-	const highestRole = member => (member.roles.highest.id === administratorID)
-		// If the identifier of the member's highest role matches the registered administratorID in the <GuildConfiguration>,
+	const highestRole = member => (member.roles.highest.id === administratorId)
+		// If the identifier of the member's highest role matches the registered administratorId in the <GuildConfiguration>,
 		// find the highest non-administrator <Role>
-		? member.roles.cache.filter(role => role.id !== administratorID).sort((roleOne, roleTwo) => roleOne.position - roleTwo.position).last()
+		? member.roles.cache.filter(role => role.id !== administratorId).sort((roleOne, roleTwo) => roleOne.position - roleTwo.position).last()
 		// Otherwise, return the <GuildMemberRoleManager.highest>
 		: member.roles.highest;
 

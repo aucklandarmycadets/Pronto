@@ -164,7 +164,7 @@ module.exports = async guild => {
 				qualified: 'Get help with a specific command.',
 			},
 			allowDirect: true,
-			requiredRoles: [ids.everyoneID],
+			requiredRoles: [ids.everyoneId],
 			deniedRoles: [],
 			developerOnly: false,
 			displayInList: true,
@@ -219,7 +219,7 @@ module.exports = async guild => {
 					'Aliases': prefixAliases(this),
 					'Description': this.description.general,
 					'Usage': prefixCommand(this),
-					'Allowed Categories': `<#${ids.lessonsID}>`,
+					'Allowed Categories': `<#${ids.lessonsId}>`,
 				});
 			},
 			get error() {
@@ -242,7 +242,7 @@ module.exports = async guild => {
 					'Aliases': prefixAliases(this),
 					'Description': this.description.general,
 					'Usage': prefixCommand(this),
-					'Allowed Categories': `<#${ids.lessonsID}>`,
+					'Allowed Categories': `<#${ids.lessonsId}>`,
 				});
 			},
 			get error() {
@@ -361,7 +361,7 @@ module.exports = async guild => {
 					'Description': this.description.general,
 					'Usage': prefixCommand(this),
 					'Allowed Roles': formatRoles(this.requiredRoles),
-					'Allowed Categories': `<#${ids.lessonsID}>`,
+					'Allowed Categories': `<#${ids.lessonsId}>`,
 				});
 			},
 			get error() {
@@ -422,8 +422,8 @@ module.exports = async guild => {
 
 	function formatRoles(array) {
 		return (array)
-			? array.filter(roleID => roleID !== ids.administratorID && roleID !== ids.everyoneID)
-				.reduce((mentions, roleID, i) => mentions + `${(i % 3 === 0) ? '\n' : ''}<@&${roleID}> `, '')
+			? array.filter(roleId => roleId !== ids.administratorId && roleId !== ids.everyoneId)
+				.reduce((mentions, roleId, i) => mentions + `${(i % 3 === 0) ? '\n' : ''}<@&${roleId}> `, '')
 			: '';
 	}
 

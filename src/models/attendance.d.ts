@@ -8,9 +8,9 @@ export interface Attendance extends mongoose.Document {
 	/** A unique document identifier */
 	_id: mongoose.Schema.Types.ObjectId;
 	/** The \<Message.id> of the \<Message> sent to the original submission channel */
-	channelID: Discord.Snowflake;
+	channelId: Discord.Snowflake;
 	/** The \<Message.id> of the \<Message> sent to the guild's attendance channel */
-	attendanceID: Discord.Snowflake;
+	attendanceId: Discord.Snowflake;
 	/** The title of this attendance register */
 	name: string;
 	/** The name of the formation this register belongs to */

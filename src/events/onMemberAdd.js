@@ -23,7 +23,7 @@ module.exports = {
 	 */
 	async handler(_, member) {
 		const { bot } = require('../pronto');
-		const { ids: { logID, recruitingID, welcomeID, visitorID }, colours } = await findGuildConfiguration(member.guild);
+		const { ids: { logId, recruitingId, welcomeId, visitorId }, colours } = await findGuildConfiguration(member.guild);
 
 		// Create log embed
 		const logEmbed = new Discord.MessageEmbed()
@@ -33,22 +33,22 @@ module.exports = {
 			.setDescription(`${member} ${member.user.tag}`)
 			// Parse the user's account age through modules.formatDuration()
 			.addField('Account Age', formatDuration(member.user.createdAt))
-			.setFooter(`ID: ${member.id} | ${await dateTimeGroup()}`);
+			.setFooter(`Id: ${member.id} | ${await dateTimeGroup()}`);
 
 		// Get the guild's log channel and send the log embed
-		const logChannel = bot.channels.cache.get(logID);
+		const logChannel = bot.channels.cache.get(logId);
 		sendMsg(logChannel, { embeds: [logEmbed] });
 
 		// If the <GuildMember> is a bot, do not assign the visitor role or send a welcome embed
 		if (member.user.bot) return;
 
 		// Retrieve the guild's 'visitor' role
-		const visitorRole = member.guild.roles.cache.find(visitorID);
+		const visitorRole = member.guild.roles.cache.find(visitorId);
 		// Assign the visitor role to the <GuildMember>
 		member.roles.add(visitorRole).catch(error => debugError(error, `Error adding ${member} to ${visitorRole}.`));
 
 		// Get the guild's 'new members' channel
-		const welcomeChannel = bot.channels.cache.get(welcomeID);
+		const welcomeChannel = bot.channels.cache.get(welcomeId);
 
 		// Create welcome embed
 		const welcomeEmbed = new Discord.MessageEmbed()
@@ -59,7 +59,7 @@ module.exports = {
 			.setFooter(await dateTimeGroup());
 
 		// Get the guild's recruiting channel and send the welcome embed
-		const recruiting = bot.channels.cache.get(recruitingID);
+		const recruiting = bot.channels.cache.get(recruitingId);
 		sendMsg(recruiting, { embeds: [welcomeEmbed] });
 	},
 };

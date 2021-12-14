@@ -17,7 +17,7 @@ const { commandError, findGuildConfiguration, sendMsg, successReact } = require(
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { ids: { attendanceID }, commands: { connected }, colours } = await findGuildConfiguration(guild);
+	const { ids: { attendanceId }, commands: { connected }, colours } = await findGuildConfiguration(guild);
 
 	/**
 	 * List the members connected to a \<VoiceChannel>
@@ -40,19 +40,19 @@ module.exports = async guild => {
 			else if (msg.mentions.channels.size > 1) throw 'You can only display one channel at a time.';
 		}
 
-		catch (error) { return commandError(msg, error, connected.error, 'Note: Use the <#channelID> syntax!'); }
+		catch (error) { return commandError(msg, error, connected.error, 'Note: Use the <#channelId> syntax!'); }
 
 		// Sort connected members in descending order according to their highest (non-administrator) role, then map the <Collection> to a string[] of member mentions
 		const connectedMembers = channel.members.sort(await sortMembersByRoles(guild)).map(member => member.toString());
 
 		// Return an error message if there are no members connected to the channel
-		if (connectedMembers.length === 0) return commandError(msg, `There are no members connected to ${channel}.`, connected.error, 'Note: Use the <#channelID> syntax!');
+		if (connectedMembers.length === 0) return commandError(msg, `There are no members connected to ${channel}.`, connected.error, 'Note: Use the <#channelId> syntax!');
 
 		// Success react to command message
 		successReact(msg);
 
 		// Get the guild's attendance channel
-		const attendanceChannel = bot.channels.cache.get(attendanceID);
+		const attendanceChannel = bot.channels.cache.get(attendanceId);
 
 		// Create connected embed and send to the attendance channel
 		const connectedEmbed = new Discord.MessageEmbed()

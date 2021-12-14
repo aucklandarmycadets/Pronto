@@ -9,7 +9,7 @@ export interface GuildConfiguration extends mongoose.Document {
 	/** A unique document identifier */
 	_id: mongoose.Schema.Types.ObjectId;
 	/** The \<Guild.id> that this configuration belongs to */
-	guildID: Discord.Snowflake;
+	guildId: Discord.Snowflake;
 	/** The \<Guild.name> that this configuration belongs to */
 	guildName: string;
 	/** The guild's settings object */
@@ -32,33 +32,33 @@ export interface GuildConfiguration extends mongoose.Document {
 	/** The guild's object of identifiers/snowflakes */
 	ids: {
 		/** The \<Guild.id> of the guild */
-		guildID: Discord.Snowflake;
+		guildId: Discord.Snowflake;
 		/** The \<TextChannel.id> of the guild's debugging channel */
-		debugID: Discord.Snowflake;
+		debugId: Discord.Snowflake;
 		/** The \<TextChannel.id> of the guild's log channel */
-		logID: Discord.Snowflake;
+		logId: Discord.Snowflake;
 		/** The \<TextChannel.id> of the guild's attendance channel */
-		attendanceID: Discord.Snowflake;
+		attendanceId: Discord.Snowflake;
 		/** The \<TextChannel.id> of the guild's recruiting channel */
-		recruitingID: Discord.Snowflake;
+		recruitingId: Discord.Snowflake;
 		/** The \<TextChannel.id> of the guild's new members channel */
-		welcomeID: Discord.Snowflake;
+		welcomeId: Discord.Snowflake;
 		/** The \<TextChannel.id> of the guild's debugging channel */
-		archivedID: Discord.Snowflake;
+		archivedId: Discord.Snowflake;
 		/** The \<CategoryChannel.id> of the guild's lesson plans category channel */
-		lessonsID: Discord.Snowflake;
+		lessonsId: Discord.Snowflake;
 		/** The \<TextChannel.id> of the guild's lesson reference channel */
-		lessonReferenceID: Discord.Snowflake;
+		lessonReferenceId: Discord.Snowflake;
 		/** The \<TextChannel.id> of the guild's lesson plans archive channel */
-		lessonPlansID: Discord.Snowflake;
+		lessonPlansId: Discord.Snowflake;
 		/** The \<Role.id> of the guild's \@everyone role */
-		everyoneID: Discord.Snowflake;
+		everyoneId: Discord.Snowflake;
 		/** The \<Role.id> of the guild's visitor role if it is registered */
-		visitorID: Discord.Snowflake | '';
+		visitorId: Discord.Snowflake | '';
 		/** The \<Role.id> of the guild's administrator role if it is registered */
-		administratorID: Discord.Snowflake | '';
+		administratorId: Discord.Snowflake | '';
 		/** A \<Role.id[]> of the guild's training roles */
-		trainingIDs: Discord.Snowflake[];
+		trainingIds: Discord.Snowflake[];
 		/** A \<Role.id[]> of the guild's formation roles */
 		formations: Discord.Snowflake[];
 		/** An \<Object[]> of the guild's pairings of \<VoiceChannel> and \<TextChannel> */

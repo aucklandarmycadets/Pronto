@@ -17,7 +17,7 @@ const { commandError, findGuildConfiguration, sendDirect, sendMsg, successReact 
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { ids: { attendanceID }, commands: { leave, leaveFor }, colours } = await findGuildConfiguration(guild);
+	const { ids: { attendanceId }, commands: { leave, leaveFor }, colours } = await findGuildConfiguration(guild);
 
 	/**
 	 * Process an individual's leave request
@@ -58,7 +58,7 @@ module.exports = async guild => {
 			.setFooter(await dateTimeGroup());
 
 		// Get the guild's attendance channel
-		const attendanceChannel = bot.channels.cache.get(attendanceID);
+		const attendanceChannel = bot.channels.cache.get(attendanceId);
 
 		// Send the leave request and confirmation embeds
 		sendMsg(attendanceChannel, { embeds: [leaveEmbed] });

@@ -19,7 +19,7 @@ const { commandError, confirmWithReaction, deleteMsg, emojiReact, findGuildConfi
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { ids: { attendanceID, formations }, commands: { attendance }, colours } = await findGuildConfiguration(guild);
+	const { ids: { attendanceId, formations }, commands: { attendance }, colours } = await findGuildConfiguration(guild);
 
 	/**
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
@@ -95,7 +95,7 @@ module.exports = async guild => {
 						attendanceEmbed.setFooter(await dateTimeGroup());
 
 						// Get the guild's attendance channel
-						const attendanceChannel = bot.channels.cache.get(attendanceID);
+						const attendanceChannel = bot.channels.cache.get(attendanceId);
 
 						// Send the embed into the guild's attendance channel and the original submission channel
 						const attendanceMessage = await sendMsg(attendanceChannel, { embeds: [attendanceEmbed] });
@@ -107,8 +107,8 @@ module.exports = async guild => {
 						 */
 						const document = await new Attendance({
 							_id: new mongoose.Types.ObjectId(),
-							channelID: channelMessage.id,
-							attendanceID: attendanceMessage.id,
+							channelId: channelMessage.id,
+							attendanceId: attendanceMessage.id,
 							name: title,
 							formation: formationName,
 							author: [msg.author.id],

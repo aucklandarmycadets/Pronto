@@ -18,7 +18,7 @@ const { emojiReact, findGuildConfiguration, sendMsg } = require('../handlers');
  * @param {Discord.Guild} guild The guild to update lessons for
  */
 module.exports = async guild => {
-	const { settings: { shortDate }, ids: { lessonReferenceID }, colours } = await findGuildConfiguration(guild);
+	const { settings: { shortDate }, ids: { lessonReferenceId }, colours } = await findGuildConfiguration(guild);
 
 	/**
 	 * @type {Typings.Lesson[]}
@@ -49,8 +49,8 @@ module.exports = async guild => {
 	else if (unsubmitted.length) {
 		for (const lesson of unsubmitted) {
 			try {
-				const lessonChannel = guild.channels.cache.get(lesson.lessonID);
-				const lastMessage = await lessonChannel.messages.fetch(lessonChannel.lastMessageID);
+				const lessonChannel = guild.channels.cache.get(lesson.lessonId);
+				const lastMessage = await lessonChannel.messages.fetch(lessonChannel.lastMessageId);
 				const channelURL = lastMessage.url.split('/').slice(0, -1).join('/');
 
 				const dueString = `Due \`${dateFormat(lesson.dueTimestamp, shortDate)}\` — `;
@@ -71,7 +71,7 @@ module.exports = async guild => {
 		}
 	}
 
-	const referenceChannel = guild.channels.cache.get(lessonReferenceID);
+	const referenceChannel = guild.channels.cache.get(lessonReferenceId);
 	await referenceChannel.messages.fetch();
 
 	const existingMsg = referenceChannel.messages.cache.find(msg => {

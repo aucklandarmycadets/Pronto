@@ -11,10 +11,10 @@ const { findGuildConfiguration, sendMsg } = require('../handlers');
 /**
  *
  * @function handlers.lessonInstructions
- * @param {Discord.Snowflake} channelID
+ * @param {Discord.Snowflake} channelId
  * @param {Discord.Guild} guild
  */
-module.exports = async (channelID, guild) => {
+module.exports = async (channelId, guild) => {
 	const { bot } = require('../pronto');
 	const { commands: { lesson, seen, assign, approve }, colours } = await findGuildConfiguration(guild);
 
@@ -80,7 +80,7 @@ module.exports = async (channelID, guild) => {
 		.addField(`${await prefixCommand(assign, guild)}`, assignField, true)
 		.addField('Example', assignExample, true);
 
-	const instructionsChannel = bot.channels.cache.get(channelID);
+	const instructionsChannel = bot.channels.cache.get(channelId);
 
 	await sendMsg(instructionsChannel, { embeds: [instructionsEmbed] });
 	await sendMsg(instructionsChannel, { embeds: [usageEmbed] });

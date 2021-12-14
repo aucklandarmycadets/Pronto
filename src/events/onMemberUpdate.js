@@ -24,13 +24,13 @@ module.exports = {
 	 */
 	async handler(_, oldMember, newMember) {
 		const { bot } = require('../pronto');
-		const { ids: { logID }, colours } = await findGuildConfiguration(newMember.guild);
+		const { ids: { logId }, colours } = await findGuildConfiguration(newMember.guild);
 
 		// Initialise log embed
 		const logEmbed = new Discord.MessageEmbed()
 			.setAuthor(newMember.user.tag, newMember.user.displayAvatarURL({ dynamic: true }))
 			.setColor(colours.warn)
-			.setFooter(`ID: ${newMember.id} | ${await dateTimeGroup()}`);
+			.setFooter(`Id: ${newMember.id} | ${await dateTimeGroup()}`);
 
 		// Initialise a variable to store the fetched logs if they exist
 		let fetchedLogs;
@@ -75,7 +75,7 @@ module.exports = {
 		}
 
 		// Get the guild's log channel and send the log embed
-		const logChannel = bot.channels.cache.get(logID);
+		const logChannel = bot.channels.cache.get(logId);
 		sendMsg(logChannel, { embeds: [logEmbed] });
 	},
 };

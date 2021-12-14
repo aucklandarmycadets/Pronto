@@ -18,7 +18,7 @@ const { commandError, debugError, embedScaffold, errorReact, findGuildConfigurat
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { ids: { logID, archivedID }, commands: { archive }, colours } = await findGuildConfiguration(guild);
+	const { ids: { logId, archivedId }, commands: { archive }, colours } = await findGuildConfiguration(guild);
 
 	/**
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
@@ -40,17 +40,17 @@ module.exports = async guild => {
 			else if (msg.mentions.channels.size > 1) throw 'You must archive channels individually.';
 
 			// Ensure channel is not already archived
-			else if (bot.channels.cache.get(channel.id).parentID === archivedID) throw 'Channel is already archived.';
+			else if (bot.channels.cache.get(channel.id).parentId === archivedId) throw 'Channel is already archived.';
 		}
 
 		catch (error) { return commandError(msg, error, archive.error); }
 
 		// Delete database document when archiving a lesson channel
-		Lesson.findOneAndDelete({ lessonID: msg.channel.id }).exec()
+		Lesson.findOneAndDelete({ lessonId: msg.channel.id }).exec()
 			.catch(error => console.error(error));
 
 		// Move channel to archive category
-		channel.setParent(archivedID, { lockPermissions: true })
+		channel.setParent(archivedId, { lockPermissions: true })
 			.then(async () => {
 				// Success react to command message
 				successReact(msg);
@@ -73,7 +73,7 @@ module.exports = async guild => {
 					.setFooter(`User: ${msg.author.id} | Channel: ${channel.id} | ${await dateTimeGroup()}`);
 
 				// Get the guild's log channel and send the log embed
-				const logChannel = bot.channels.cache.get(logID);
+				const logChannel = bot.channels.cache.get(logId);
 				sendMsg(logChannel, { embeds: [logEmbed] });
 			})
 			.catch(error => {

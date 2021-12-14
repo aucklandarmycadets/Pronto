@@ -30,7 +30,7 @@ const recentlyAssigned = new Set();
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { ids: { lessonsID, trainingIDs }, commands: { seen, assign }, colours, emojis } = await findGuildConfiguration(guild);
+	const { ids: { lessonsId, trainingIds }, commands: { seen, assign }, colours, emojis } = await findGuildConfiguration(guild);
 
 	/**
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
@@ -57,7 +57,7 @@ module.exports = async guild => {
 		// Delete the command message
 		deleteMsg(msg);
 
-		// Add the assigner's ID to the recentlyAssigned set
+		// Add the assigner's Id to the recentlyAssigned set
 		// This ensures that each assigner cannot attempt to assign more than one lesson at a time
 		recentlyAssigned.add(msg.author.id);
 
@@ -111,7 +111,7 @@ module.exports = async guild => {
 				.setDescription('**Cancelled.**')
 				.setFooter(await dateTimeGroup());
 
-			// Remove the assigner's ID from the recentlyAssigned set
+			// Remove the assigner's Id from the recentlyAssigned set
 			recentlyAssigned.delete(msg.author.id);
 
 			// Send the cancellation embed and cease further execution
@@ -151,7 +151,7 @@ module.exports = async guild => {
 					 * Set channel topic to be a list of the instructor(s)'s mentions, and create the channel under the lessons category channel
 					 * @type {Discord.GuildChannelCreateOptions}
 					 */
-					const channelOptions = { topic: processMentions(lessonInstructors), parent: lessonsID };
+					const channelOptions = { topic: processMentions(lessonInstructors), parent: lessonsId };
 
 					// Create the private lesson channel, with a name matching the lesson name and with the above channel options
 					// '.' in lesson name are invalid characters for channel names, therefore substitute them with '-'
@@ -161,13 +161,13 @@ module.exports = async guild => {
 							// Make the channel private for all users other than the bot, training cell, and instructors
 							await channel.createOverwrite(bot.user.id, { 'VIEW_CHANNEL': true });
 							channel.createOverwrite(guild.roles.everyone, { 'VIEW_CHANNEL': false });
-							trainingIDs.forEach(staff => channel.createOverwrite(staff, { 'VIEW_CHANNEL': true }));
+							trainingIds.forEach(staff => channel.createOverwrite(staff, { 'VIEW_CHANNEL': true }));
 							lessonInstructors.each(instructor => channel.createOverwrite(instructor, { 'VIEW_CHANNEL': true }));
 
 							// Create and save a new database entry for the lesson
 							saveLesson(channel.id);
 
-							// Remove the assigner's ID from the recentlyAssigned set now that lesson assignment has been completed
+							// Remove the assigner's Id from the recentlyAssigned set now that lesson assignment has been completed
 							recentlyAssigned.delete(msg.author.id);
 
 							// Modify the lesson assignment confirmation embed to repurpose it into the lesson warning embed
@@ -212,7 +212,7 @@ module.exports = async guild => {
 				};
 
 				/**
-				 * Remove the assigner's ID from the recentlyAssigned set
+				 * Remove the assigner's Id from the recentlyAssigned set
 				 * @function commands.assign~assignCancelled
 				 */
 				const assignCancelled = () => recentlyAssigned.delete(msg.author.id);
@@ -224,11 +224,11 @@ module.exports = async guild => {
 		/**
 		 * Create a new mongoose \<Lesson> document for the assigned lesson
 		 * @function commands.assign~saveLesson
-		 * @param {Discord.Snowflake} channelID The \<TextChannel.id> of the private lesson channel created for the lesson
+		 * @param {Discord.Snowflake} channelId The \<TextChannel.id> of the private lesson channel created for the lesson
 		 * @returns {Promise<Typings.Lesson>} The mongoose document for the lesson
 		 */
-		async function saveLesson(channelID) {
-			// For each instructor, create a new nested object within the instructors object with an ID property and a boolean flag to record acknowledgement status
+		async function saveLesson(channelId) {
+			// For each instructor, create a new nested object within the instructors object with an Id property and a boolean flag to record acknowledgement status
 			const instructors = Object.fromEntries(
 				lessonInstructors.map(mention => [mention.id, {
 					id: mention.id,
@@ -242,7 +242,7 @@ module.exports = async guild => {
 			 */
 			const lesson = await new Lesson({
 				_id: new mongoose.Types.ObjectId(),
-				lessonID: channelID,
+				lessonId: channelId,
 				lessonName,
 				instructors,
 				dueDate,

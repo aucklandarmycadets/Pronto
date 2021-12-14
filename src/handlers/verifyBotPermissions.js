@@ -16,9 +16,9 @@ const currentlyMissing = new Set();
  * @param {Discord.PermissionString[]} [changes]
  */
 module.exports = async (guild, changes) => {
-	const { ids: { guildID }, colours } = await findGuildConfiguration(guild);
+	const { ids: { guildId }, colours } = await findGuildConfiguration(guild);
 
-	if (!guildID) return;
+	if (!guildId) return;
 
 	const requiredPermissions = new Discord.Permissions(PERMISSIONS_INTEGER);
 	const botPermissions = guild.me.permissions;

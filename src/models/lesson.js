@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 /**
  * @typedef {Typings.Lesson} models.Lesson An \<Object> representing the values of a \<mongoose.Document> to record the details of each assigned lesson
  * @property {mongoose.Schema.Types.ObjectId} _id A unique document identifier
- * @property {Discord.Snowflake} lessonID The \<TextChannel.id> of the private lesson channel created for the lesson
+ * @property {Discord.Snowflake} lessonId The \<TextChannel.id> of the private lesson channel created for the lesson
  * @property {string} lessonName The name of the lesson
  * @property {models.Instructors} instructors An \<Object> containing a nested [\<Object>]{@link models.Instructors} for each lesson instructor with their \<User.id> and acknowledgement status
  * @property {string} dueDate The formatted date-time group of the lesson plan's due date
@@ -18,7 +18,7 @@ const mongoose = require('mongoose');
  * @property {number} lessonTimestamp The Unix timestamp (ms) of the lesson's date
  * @property {string[]} assignedResources A \<string[]> of the lesson resources supplied to the instructor
  * @property {string[]} submittedResources A \<string[]> of the lesson resources submitted by the instructor
- * @property {?Discord.Snowflake} archiveID The \<Message.id> of the archived lesson plan, if it has been archived
+ * @property {?Discord.Snowflake} archiveId The \<Message.id> of the archived lesson plan, if it has been archived
  * @property {boolean} submitted A \<boolean> to record whether the lesson has been submitted at least once
  * @property {boolean} approved A \<boolean> to record whether the lesson is approved in its current state
  * @property {boolean} changed A \<boolean> to record whether the lesson has unsubmitted changes
@@ -35,7 +35,7 @@ const mongoose = require('mongoose');
 // Create a new <Schema> of <Lesson> type
 const lessonSchema = new mongoose.Schema({
 	_id: mongoose.Schema.Types.ObjectId,
-	lessonID: String,
+	lessonId: String,
 	lessonName: String,
 	instructors: Object,
 	dueDate: String,
@@ -44,7 +44,7 @@ const lessonSchema = new mongoose.Schema({
 	lessonTimestamp: Number,
 	assignedResources: Array,
 	submittedResources: Array,
-	archiveID: String,
+	archiveId: String,
 	submitted: { type: Boolean, default: false },
 	approved: { type: Boolean, default: false },
 	changed: { type: Boolean, default: false },

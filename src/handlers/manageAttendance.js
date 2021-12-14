@@ -20,12 +20,12 @@ const pendingInput = new Set();
  */
 module.exports = async (reaction, user) => {
 	const { bot } = require('../pronto');
-	const { ids: { attendanceID }, colours } = await findGuildConfiguration(reaction.message.guild);
+	const { ids: { attendanceId }, colours } = await findGuildConfiguration(reaction.message.guild);
 
 	/**
 	 * @type {?Typings.Attendance}
 	 */
-	const document = await Attendance.findOne({ channelID: reaction.message.id }).exec()
+	const document = await Attendance.findOne({ channelId: reaction.message.id }).exec()
 		.catch(error => console.error(error));
 
 	if (!document) return;
@@ -34,12 +34,12 @@ module.exports = async (reaction, user) => {
 
 	if (!formation.members.get(user.id) && !document.authors.includes(user.id)) return reaction.users.remove(user.id);
 
-	const attendanceChannel = bot.channels.cache.get(attendanceID);
-	const attendanceMessage = await attendanceChannel.messages.fetch(document.attendanceID)
+	const attendanceChannel = bot.channels.cache.get(attendanceId);
+	const attendanceMessage = await attendanceChannel.messages.fetch(document.attendanceId)
 		.catch(error => debugError(error, `Error fetching messages in ${attendanceChannel}.`));
 
 	if (reaction.emoji.name === '🗑️') {
-		Attendance.findOneAndDelete({ channelID: reaction.message.id });
+		Attendance.findOneAndDelete({ channelId: reaction.message.id });
 		deleteMsg(reaction.message);
 		deleteMsg(attendanceMessage);
 	}

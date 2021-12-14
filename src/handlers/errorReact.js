@@ -13,9 +13,9 @@ const { debugError, findGuildConfiguration } = require('../handlers');
  */
 module.exports = async msg => {
 	const { bot } = require('../pronto');
-	const { ids: { guildID }, emojis } = await findGuildConfiguration(msg.guild);
+	const { ids: { guildId }, emojis } = await findGuildConfiguration(msg.guild);
 
-	const guild = bot.guilds.cache.get(guildID);
+	const guild = bot.guilds.cache.get(guildId);
 	const errorEmoji = guild.emojis.cache.find(emoji => emoji.name === emojis.error.name);
 
 	if (msg.deleted) return;

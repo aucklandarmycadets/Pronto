@@ -24,12 +24,12 @@ module.exports = {
 	 */
 	async handler(_, oldRole, newRole) {
 		const { bot } = require('../pronto');
-		const { ids: { logID }, colours } = await findGuildConfiguration(newRole.guild);
+		const { ids: { logId }, colours } = await findGuildConfiguration(newRole.guild);
 
 		// Initialise log embed
 		const logEmbed = new Discord.MessageEmbed()
 			.setAuthor(newRole.guild.name, newRole.guild.iconURL({ dynamic: true }))
-			.setFooter(`ID: ${newRole.id} | ${await dateTimeGroup()}`);
+			.setFooter(`Id: ${newRole.id} | ${await dateTimeGroup()}`);
 
 		if (oldRole.color !== newRole.color) {
 			// If the <Role> colour has changed, set the log embed accordingly
@@ -78,7 +78,7 @@ module.exports = {
 		else return;
 
 		// Get the guild's log channel and send the log embed
-		const logChannel = bot.channels.cache.get(logID);
+		const logChannel = bot.channels.cache.get(logId);
 		sendMsg(logChannel, { embeds: [logEmbed] });
 	},
 };

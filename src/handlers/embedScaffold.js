@@ -21,7 +21,7 @@ const { findGuildConfiguration, sendDirect, sendMsg } = require('../handlers');
  */
 module.exports = async (guild, destination, description, colour, type, fieldTitle, fieldContent, errorField) => {
 	const { bot, version } = require('../pronto');
-	const { ids: { debugID } } = await findGuildConfiguration(guild);
+	const { ids: { debugId } } = await findGuildConfiguration(guild);
 
 	// Dynamically set footer to show current version for developer
 	const developerFooter = (type === 'DEVELOPER')
@@ -42,7 +42,7 @@ module.exports = async (guild, destination, description, colour, type, fieldTitl
 	if (errorField) embed.setDescription(charLimit(`${description}\n${errorField}`, 'EMBED_DESCRIPTION'));
 
 	// Get the guild's debug channel
-	const debugChannel = bot.channels.cache.get(debugID);
+	const debugChannel = bot.channels.cache.get(debugId);
 
 	try {
 		// Ensure there is a valid destination channel

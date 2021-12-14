@@ -18,7 +18,7 @@ const { commandError, debugError, findGuildConfiguration, sendMsg, successReact 
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { ids: { lessonsID, lessonPlansID }, commands: { approve }, colours } = await findGuildConfiguration(guild);
+	const { ids: { lessonsId, lessonPlansId }, commands: { approve }, colours } = await findGuildConfiguration(guild);
 
 	/**
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
@@ -28,14 +28,14 @@ module.exports = async guild => {
 		/**
 		 * @type {?Typings.Lesson}
 		 */
-		// Find <Lesson> document by querying database for lesson channel ID
-		const lessonDocument = await Lesson.findOne({ lessonID: msg.channel.id }).exec()
+		// Find <Lesson> document by querying database for lesson channel Id
+		const lessonDocument = await Lesson.findOne({ lessonId: msg.channel.id }).exec()
 			.catch(error => console.error(error));
 
 		try {
 			// Ensure message channel is contained within lessons category
-			if (msg.channel.parentID !== lessonsID) {
-				const lessonsCategory = msg.guild.channels.cache.get(lessonsID);
+			if (msg.channel.parentId !== lessonsId) {
+				const lessonsCategory = msg.guild.channels.cache.get(lessonsId);
 				throw `You can only use that command in **${lessonsCategory}**.`;
 			}
 
@@ -71,7 +71,7 @@ module.exports = async guild => {
 		if (!user) successReact(msg);
 
 		// Get the master lesson plans channel
-		const lessonPlansChannel = msg.guild.channels.cache.get(lessonPlansID);
+		const lessonPlansChannel = msg.guild.channels.cache.get(lessonPlansId);
 
 		// Create lesson submission embed
 		const submissionEmbed = new Discord.MessageEmbed()
@@ -86,11 +86,11 @@ module.exports = async guild => {
 			.setFooter(await dateTimeGroup());
 
 		// If lesson has not yet been archived in the master channel, send a copy into the channel
-		if (!lessonDocument.archiveID) {
+		if (!lessonDocument.archiveId) {
 			sendMsg(lessonPlansChannel, { embeds: [submissionEmbed] })
 				.then(async archiveMsg => {
-					// Record the archived message's ID
-					lessonDocument.archiveID = archiveMsg.id;
+					// Record the archived message's Id
+					lessonDocument.archiveId = archiveMsg.id;
 					await lessonDocument.save().catch(error => console.error(error));
 				});
 		}
@@ -99,15 +99,15 @@ module.exports = async guild => {
 		else {
 			let archiveMsg, before;
 
-			// Filter messages in the archive channel for the archived message's ID
+			// Filter messages in the archive channel for the archived message's Id
 			while (!archiveMsg) {
 				// Fetch messages in blocks of 100 (maximum allowed by the API) moving back in time until archive message is found
 				await lessonPlansChannel.messages.fetch({ limit: 100, before })
 					.then(msgs => {
-						// Attempt to find the message matching the archived message's ID
-						archiveMsg = msgs.get(lessonDocument.archiveID);
+						// Attempt to find the message matching the archived message's Id
+						archiveMsg = msgs.get(lessonDocument.archiveId);
 
-						// Update oldest message ID
+						// Update oldest message Id
 						before = msgs.last().id;
 					})
 					.catch(error => debugError(error, `Error fetching messages in ${lessonPlansChannel}.`));

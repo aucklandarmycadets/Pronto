@@ -29,7 +29,7 @@ module.exports = async (guild, changes) => {
 	 * @type {?Typings.GuildConfiguration}
 	 */
 	// Attempt to find the <GuildConfiguration> document by querying for the guild's identifier
-	let document = await Guild.findOne({ guildID: guild.id }).exec()
+	let document = await Guild.findOne({ guildId: guild.id }).exec()
 		.catch(error => console.error(error));
 
 	// If there are no changes to upsert, return the document if it was found, or create (and return) a new document for the guild by calling handlers.createGuild()

@@ -17,7 +17,7 @@ const { commandError, findGuildConfiguration, sendDirect, sendMsg, successReact 
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { ids: { attendanceID }, commands: { help, leave, leaveFor }, colours } = await findGuildConfiguration(guild);
+	const { ids: { attendanceId }, commands: { help, leave, leaveFor }, colours } = await findGuildConfiguration(guild);
 
 	/**
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
@@ -85,7 +85,7 @@ module.exports = async guild => {
 			.setFooter(`Reply with '${await prefixCommand(help, guild)} ${leave.command}' to learn how to request leave for yourself.`);
 
 		// Get the guild's attendance channel
-		const attendanceChannel = bot.channels.cache.get(attendanceID);
+		const attendanceChannel = bot.channels.cache.get(attendanceId);
 
 		// Send the embeds to their respective destinations
 		sendMsg(attendanceChannel, { embeds: [attendanceEmbed] });

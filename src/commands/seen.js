@@ -18,7 +18,7 @@ const { commandError, findGuildConfiguration, sendMsg, successReact } = require(
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { ids: { lessonsID }, commands: { seen }, colours } = await findGuildConfiguration(guild);
+	const { ids: { lessonsId }, commands: { seen }, colours } = await findGuildConfiguration(guild);
 
 	/**
 	 * Acknowledge a lesson warning, either from a message command or a message reaction
@@ -30,8 +30,8 @@ module.exports = async guild => {
 		/**
 		 * @type {?Typings.Lesson}
 		 */
-		// Find <Lesson> document by querying database for lesson channel ID
-		const lessonDocument = await Lesson.findOne({ lessonID: msg.channel.id }).exec()
+		// Find <Lesson> document by querying database for lesson channel Id
+		const lessonDocument = await Lesson.findOne({ lessonId: msg.channel.id }).exec()
 			.catch(error => console.error(error));
 
 		// Resolve the instructor, depending on whether executed via command or reaction
@@ -39,8 +39,8 @@ module.exports = async guild => {
 
 		try {
 			// Ensure message channel is contained within lessons category
-			if (msg.channel.parentID !== lessonsID) {
-				const lessonsCategory = msg.guild.channels.cache.get(lessonsID);
+			if (msg.channel.parentId !== lessonsId) {
+				const lessonsCategory = msg.guild.channels.cache.get(lessonsId);
 				throw `You can only use that command in **${lessonsCategory}**.`;
 			}
 

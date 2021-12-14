@@ -30,7 +30,7 @@ module.exports = (array, mention = false, breakAt) => {
 		const guild = bot.guilds.cache.find(_guild => _guild.roles.cache.get(array[0]));
 
 		// Map each <Role.id> to its <Role> object and replace the original array
-		array = array.map(roleID => guild.roles.cache.get(roleID));
+		array = array.map(roleId => guild.roles.cache.get(roleId));
 	}
 
 	// Filter @everyone from the <Role[]>

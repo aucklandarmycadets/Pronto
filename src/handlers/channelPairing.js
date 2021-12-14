@@ -19,24 +19,24 @@ module.exports = async (oldState, newState) => {
 
 	const newMember = newState.member;
 
-	const oldID = (oldState.channel)
-		? oldState.channelID
+	const oldId = (oldState.channel)
+		? oldState.channelId
 		: null;
 
-	const newID = (newState.channel)
-		? newState.channelID
+	const newId = (newState.channel)
+		? newState.channelId
 		: null;
 
 	for (let i = 0; i < channelPairs.length; i++) {
 		const textChannel = newState.guild.channels.cache.get(channelPairs[i].text);
 		if (!textChannel) {
-			embedScaffold(newState.guild, null, 'Invalid text channel ID', colours.error, 'DEBUG', null, null, jsCodeBlock(`#${channelPairs[i].text}`));
+			embedScaffold(newState.guild, null, 'Invalid text channel Id', colours.error, 'DEBUG', null, null, jsCodeBlock(`#${channelPairs[i].text}`));
 			continue;
 		}
 
-		const vcID = channelPairs[i].voice;
+		const vcId = channelPairs[i].voice;
 
-		if (oldID !== vcID && newID === vcID) {
+		if (oldId !== vcId && newId === vcId) {
 			textChannel.updateOverwrite(newState.id, { VIEW_CHANNEL: true, SEND_MESSAGES: true })
 				.then(async () => {
 					const joinEmbed = new Discord.MessageEmbed()
@@ -51,7 +51,7 @@ module.exports = async (oldState, newState) => {
 				});
 		}
 
-		else if (oldID === vcID && newID !== vcID) {
+		else if (oldId === vcId && newId !== vcId) {
 			textChannel.permissionOverwrites.get(newState.id).delete()
 				.then(async () => {
 					const leaveEmbed = new Discord.MessageEmbed()

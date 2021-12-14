@@ -45,7 +45,7 @@ module.exports = async guild => {
 	 * @type {?Typings.GuildConfiguration}
 	 */
 	// Attempt to find an existing <GuildConfiguration> document by querying for the guild's identifier
-	const existingDocument = await Guild.findOne({ guildID: guild.id }).exec()
+	const existingDocument = await Guild.findOne({ guildId: guild.id }).exec()
 		.catch(error => console.error(error));
 
 	// If the guild already has an existing <GuildConfiguration> document, return it and cease further execution
@@ -79,14 +79,14 @@ module.exports = async guild => {
 	currentlyCreating.delete(guild.id);
 
 	// Call handlers.lessonInstructions() to send an instructional embed on Pronto's lesson management functionality
-	lessonInstructions(guildDocument.ids.lessonReferenceID, guild);
+	lessonInstructions(guildDocument.ids.lessonReferenceId, guild);
 
 	// If this guild has had some channels created as part of the initialisation process, send an embed listing the created channels
-	if (createdChannels.some(guildID => guildID === guild.id)) {
+	if (createdChannels.some(guildId => guildId === guild.id)) {
 		// Retrieve the <CategoryChannel> that was created by Pronto to categorise Pronto's created channels
 		const prontoCategory = bot.channels.cache.find(channel => channel.type === 'category' && channel.name === defaults.pronto.name);
 		// Get the guild's debug channel
-		const debugChannel = bot.channels.cache.get(guildDocument.ids.debugID);
+		const debugChannel = bot.channels.cache.get(guildDocument.ids.debugId);
 
 		// Create created channels embed
 		const createdChannelsEmbed = new Discord.MessageEmbed()
@@ -103,8 +103,8 @@ module.exports = async guild => {
 	}
 
 	// Filter the createdChannels <Collection> for channels created in this guild, and delete them from the <Collection> now that we are done with them
-	[...createdChannels.filter(guildID => guildID === guild.id).keys()]
-		.forEach(channelID => createdChannels.delete(channelID));
+	[...createdChannels.filter(guildId => guildId === guild.id).keys()]
+		.forEach(channelId => createdChannels.delete(channelId));
 
 	// Delete the guild's property from the pendingPromises <Object> now that we are done with it
 	delete pendingPromises[guild.id];
@@ -126,21 +126,21 @@ async function createGuildDocument(guild) {
 	 */
 	const guildDocument = await new Guild({
 		_id: new mongoose.Types.ObjectId(),
-		guildID: guild.id,
+		guildId: guild.id,
 		guildName: guild.name,
 		ids: {
-			guildID: guild.id,
-			debugID: await initialiseChannel(defaults.debug, guild),
-			logID: await initialiseChannel(defaults.log, guild),
-			attendanceID: await initialiseChannel(defaults.attendance, guild),
-			recruitingID: await initialiseChannel(defaults.recruiting, guild),
-			welcomeID: await initialiseChannel(defaults.welcome, guild),
-			archivedID: await initialiseChannel(defaults.archived, guild),
-			lessonsID: await initialiseChannel(defaults.lessons, guild),
-			lessonReferenceID: await initialiseChannel(defaults.lessonReference, guild),
-			lessonPlansID: await initialiseChannel(defaults.lessonPlans, guild),
-			everyoneID: guild.roles.everyone.id,
-			visitorID: findRole(defaults.visitor, guild),
+			guildId: guild.id,
+			debugId: await initialiseChannel(defaults.debug, guild),
+			logId: await initialiseChannel(defaults.log, guild),
+			attendanceId: await initialiseChannel(defaults.attendance, guild),
+			recruitingId: await initialiseChannel(defaults.recruiting, guild),
+			welcomeId: await initialiseChannel(defaults.welcome, guild),
+			archivedId: await initialiseChannel(defaults.archived, guild),
+			lessonsId: await initialiseChannel(defaults.lessons, guild),
+			lessonReferenceId: await initialiseChannel(defaults.lessonReference, guild),
+			lessonPlansId: await initialiseChannel(defaults.lessonPlans, guild),
+			everyoneId: guild.roles.everyone.id,
+			visitorId: findRole(defaults.visitor, guild),
 		},
 	});
 
@@ -278,7 +278,7 @@ function findRole(defaultRole, guild) {
  */
 function channelsOutput(collection, guild) {
 	// Filter the <Collection> for channels created in the specified guild, then map each <GuildChannel.Snowflake> to a new string[] of formatted mentions, and finally join the string[] with a newline separator
-	return [...collection.filter(guildID => guildID === guild.id).keys()]
+	return [...collection.filter(guildId => guildId === guild.id).keys()]
 		.map(channel => `<#${channel}>`)
 		.join('\n');
 }

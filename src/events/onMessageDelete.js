@@ -6,7 +6,7 @@ const Typings = require('../typings');
 
 const fs = require('fs');
 
-const { charLimit, dateTimeGroup, extractID } = require('../modules');
+const { charLimit, dateTimeGroup, extractId } = require('../modules');
 const { debugError, deleteMsg, findGuildConfiguration, sendMsg } = require('../handlers');
 
 /**
@@ -25,7 +25,7 @@ module.exports = {
 	 */
 	async handler(_, msg) {
 		const { bot } = require('../pronto');
-		const { settings: { prefix }, ids: { logID }, commands: { purge }, colours } = await findGuildConfiguration(msg.guild);
+		const { settings: { prefix }, ids: { logId }, commands: { purge }, colours } = await findGuildConfiguration(msg.guild);
 
 		// Initialise log embed
 		const logEmbed = new Discord.MessageEmbed()
@@ -35,7 +35,7 @@ module.exports = {
 		if (msg.partial && msg.guild) {
 			logEmbed.setAuthor(msg.guild.name, msg.guild.iconURL({ dynamic: true }));
 			logEmbed.setDescription(`**Uncached message deleted in ${msg.channel}**`);
-			logEmbed.setFooter(`ID: ${msg.id} | ${await dateTimeGroup()}`);
+			logEmbed.setFooter(`Id: ${msg.id} | ${await dateTimeGroup()}`);
 		}
 
 		// Otherwise, if the deleted <Message> was sent in a guild and is not a partial, attempt to fully log its deletion
@@ -104,7 +104,7 @@ module.exports = {
 		else return;
 
 		// Get the guild's log channel and send the log embed
-		const logChannel = bot.channels.cache.get(logID);
+		const logChannel = bot.channels.cache.get(logId);
 		sendMsg(logChannel, { embeds: [logEmbed] });
 
 		/**
@@ -129,7 +129,7 @@ module.exports = {
 			// Check if the <Command> was executed with the guild's command prefix
 			const usesPrefix = msg.content.toLowerCase().startsWith(prefix.toLowerCase());
 			// Check if the <Command> was executed by mentioning the bot user in place of a prefix
-			const usesBotMention = extractID(args[0]) === bot.user.id;
+			const usesBotMention = extractId(args[0]) === bot.user.id;
 
 			// If the message does not begin with either the guild's command prefix or the bot's mention followed by a potential <CommandName>, return false
 			if (!usesPrefix && (!usesBotMention || args.length === 1)) return false;

@@ -25,7 +25,7 @@ const pendingConfirmation = new Set();
  * @returns {Promise<Typings.Command>} The complete \<Command> object with a \<Command.execute()> method
  */
 module.exports = async guild => {
-	const { ids: { lessonsID, trainingIDs }, commands: { lesson, seen, approve }, colours, emojis } = await findGuildConfiguration(guild);
+	const { ids: { lessonsId, trainingIds }, commands: { lesson, seen, approve }, colours, emojis } = await findGuildConfiguration(guild);
 
 	/**
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
@@ -36,8 +36,8 @@ module.exports = async guild => {
 		/**
 		 * @type {?Typings.Lesson}
 		 */
-		// Find <Lesson> document by querying database for lesson channel ID
-		let lessonDocument = await Lesson.findOne({ lessonID: msg.channel.id }).exec()
+		// Find <Lesson> document by querying database for lesson channel Id
+		let lessonDocument = await Lesson.findOne({ lessonId: msg.channel.id }).exec()
 			.catch(error => console.error(error));
 
 		// Attempt to parse the lesson sub-command from the command message
@@ -58,8 +58,8 @@ module.exports = async guild => {
 
 		try {
 			// Ensure message channel is contained within lessons category
-			if (msg.channel.parentID !== lessonsID) {
-				const lessonsCategory = msg.guild.channels.cache.get(lessonsID);
+			if (msg.channel.parentId !== lessonsId) {
+				const lessonsCategory = msg.guild.channels.cache.get(lessonsId);
 				throw `You can only use that command in **${lessonsCategory}**.`;
 			}
 
@@ -91,7 +91,7 @@ module.exports = async guild => {
 				else if (!lessonDocument.changed && lessonDocument.submitted) throw 'There are no changes to submit.';
 
 				// Ensure the lesson has not already been submitted and is pending confirmation of submission
-				else if (pendingConfirmation.has(lessonDocument.lessonID)) throw 'This lesson has already been submitted and is pending confirmation in your Direct Messages.';
+				else if (pendingConfirmation.has(lessonDocument.lessonId)) throw 'This lesson has already been submitted and is pending confirmation in your Direct Messages.';
 			}
 
 			// Ensure the lesson sub-command has been successfully parsed
@@ -232,8 +232,8 @@ module.exports = async guild => {
 			// Delete the command message
 			deleteMsg(msg);
 
-			// Add the lesson ID to the pendingConfirmation set
-			pendingConfirmation.add(lessonDocument.lessonID);
+			// Add the lesson Id to the pendingConfirmation set
+			pendingConfirmation.add(lessonDocument.lessonId);
 
 			// Create lesson submission confirmation embed
 			const submitEmbed = new Discord.MessageEmbed()
@@ -264,8 +264,8 @@ module.exports = async guild => {
 						// Save the <Lesson> document
 						lessonDocument.save().catch(error => console.error(error));
 
-						// Remove the lesson ID from the pendingConfirmation set
-						pendingConfirmation.delete(lessonDocument.lessonID);
+						// Remove the lesson Id from the pendingConfirmation set
+						pendingConfirmation.delete(lessonDocument.lessonId);
 
 						// Modify the lesson submission confirmation embed to repurpose it into the lesson submission embed
 						submitEmbed.setTitle(`Lesson Plan Submitted - ${lessonDocument.lessonName}`);
@@ -297,7 +297,7 @@ module.exports = async guild => {
 							.setColor(colours.primary);
 
 						// Send the approval embed, and tag the Training Cell's roles in the message body
-						sendMsg(msg.channel, { content: formatRoles(trainingIDs, true), embeds: [approveEmbed] })
+						sendMsg(msg.channel, { content: formatRoles(trainingIds, true), embeds: [approveEmbed] })
 							.then(async approveMsg => {
 								// Add the success reaction to the approval message
 								await successReact(approveMsg);
@@ -305,7 +305,7 @@ module.exports = async guild => {
 								// Filter reaction collector for reactions only of the success emoji, and that are made by a user with a Training Cell role
 								const filter = async (reaction, user) => {
 									const roles = await msg.guild.members.fetch(user.id).then(member => member.roles.cache);
-									return reaction.emoji.name === emojis.success.name && roles.some(role => trainingIDs.includes(role.id));
+									return reaction.emoji.name === emojis.success.name && roles.some(role => trainingIds.includes(role.id));
 								};
 
 								// Create a new reaction collector on the approval message with the filter applied
@@ -320,10 +320,10 @@ module.exports = async guild => {
 					};
 
 					/**
-					 * Remove the lesson ID from the pendingConfirmation set
+					 * Remove the lesson Id from the pendingConfirmation set
 					 * @function commands.lesson~lessonCancelled
 					 */
-					const lessonCancelled = () => pendingConfirmation.delete(lessonDocument.lessonID);
+					const lessonCancelled = () => pendingConfirmation.delete(lessonDocument.lessonId);
 
 					// Call handlers.confirmWithReaction() on the lesson assignment confirmation embed with assignLesson() and assignCancelled() as callbacks
 					return confirmWithReaction(msg, dm, lessonSubmit, lessonCancelled);

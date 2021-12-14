@@ -70,7 +70,7 @@ module.exports = async guild => {
 					// Slice the resultant <Snowflake[]> to the appropriate length
 					msgs = msgs.slice(0, purgeCount - msgs.length);
 
-					// Update oldest message ID
+					// Update oldest message Id
 					before = _msgs.last().id;
 				})
 				.catch(error => debugError(error, `Error fetching messages in ${msg.channel}.`));

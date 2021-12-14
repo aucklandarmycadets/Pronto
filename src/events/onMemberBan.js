@@ -24,7 +24,7 @@ module.exports = {
 	 */
 	async handler(event, guild, user) {
 		const { bot } = require('../pronto');
-		const { ids: { logID }, colours } = await findGuildConfiguration(guild);
+		const { ids: { logId }, colours } = await findGuildConfiguration(guild);
 
 		// Fetch the guild's audit logs for a ban/unban and store the whether the user was banned/unbanned
 		const [fetchedLogs, banAction] = (event === 'guildBanAdd')
@@ -38,7 +38,7 @@ module.exports = {
 			.setColor((event === 'guildBanAdd') ? colours.error : colours.success)
 			.setThumbnail(user.displayAvatarURL({ dynamic: true }))
 			.setDescription(`${user} ${user.tag}`)
-			.setFooter(`ID: ${user.id} | ${await dateTimeGroup()}`);
+			.setFooter(`Id: ${user.id} | ${await dateTimeGroup()}`);
 
 		if (fetchedLogs) {
 			// If the audit logs were successfully fetched, extract the executor and target from the ban audit entry
@@ -48,7 +48,7 @@ module.exports = {
 		}
 
 		// Get the guild's log channel and send the log embed
-		const log = bot.channels.cache.get(logID);
+		const log = bot.channels.cache.get(logId);
 		sendMsg(log, { embeds: [logEmbed] });
 	},
 };

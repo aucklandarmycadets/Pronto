@@ -19,11 +19,11 @@ module.exports = {
 	process: [],
 	/**
 	 * @param {'messageDeleteBulk'} _ The event that was emitted
-	 * @param {Discord.Collection<Discord.Snowflake, Discord.Message>} msgs The deleted messages, mapped by their ID
+	 * @param {Discord.Collection<Discord.Snowflake, Discord.Message>} msgs The deleted messages, mapped by their Id
 	 */
 	async handler(_, msgs) {
 		const { bot } = require('../pronto');
-		const { ids: { logID }, commands: { purge }, colours } = await findGuildConfiguration(msgs.first().guild);
+		const { ids: { logId }, commands: { purge }, colours } = await findGuildConfiguration(msgs.first().guild);
 
 		// Extract the first deleted message to access a <Message> instance
 		const msg = msgs.first();
@@ -53,7 +53,7 @@ module.exports = {
 		}
 
 		// Get the guild's log channel and send the log embed
-		const logChannel = bot.channels.cache.get(logID);
+		const logChannel = bot.channels.cache.get(logId);
 		sendMsg(logChannel, { embeds: [logEmbed] });
 	},
 };

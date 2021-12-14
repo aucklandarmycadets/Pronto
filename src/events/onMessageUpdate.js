@@ -29,7 +29,7 @@ module.exports = {
 		// Ensure the updated <Message> is not a partial by calling the <Message.fetch()> method
 		if (newMessage.partial) await newMessage.fetch();
 
-		const { ids: { logID }, colours } = await findGuildConfiguration(newMessage.guild);
+		const { ids: { logId }, colours } = await findGuildConfiguration(newMessage.guild);
 
 		// Call handlers.commandHandler() to handle a potential command message
 		commandHandler(newMessage);
@@ -44,7 +44,7 @@ module.exports = {
 			logEmbed.setDescription(`**Uncached message edited in ${newMessage.channel}** [Jump to Message](${newMessage.url})`);
 			// Use modules.charLimit() to ensure the embed field does not exceed Discord's <EmbedField> character limit
 			logEmbed.addField('After', charLimit(newMessage.content, 'EMBED_FIELD_VALUE'));
-			logEmbed.setFooter(`ID: ${newMessage.id} | ${await dateTimeGroup()}`);
+			logEmbed.setFooter(`Id: ${newMessage.id} | ${await dateTimeGroup()}`);
 		}
 
 		// Otherwise, if the oldMessage was sent in a guild and is not a partial, attempt to fully log its update
@@ -63,7 +63,7 @@ module.exports = {
 		else return;
 
 		// Get the guild's log channel and send the log embed
-		const logChannel = bot.channels.cache.get(logID);
+		const logChannel = bot.channels.cache.get(logId);
 		sendMsg(logChannel, { embeds: [logEmbed] });
 	},
 };

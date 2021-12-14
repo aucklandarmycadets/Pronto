@@ -34,7 +34,7 @@ module.exports = {
 		const developer = await bot.users.fetch(DEVELOPER_ID);
 
 		// If the bot cannot find the config's default guild, send an error message to the developer and cease further execution
-		if (!bot.guilds.cache.get(DEFAULT_GUILD)) return embedScaffold(null, developer, '**Error reaching the default server, check the config!**', colours.error, 'DEVELOPER', 'Server ID', DEFAULT_GUILD);
+		if (!bot.guilds.cache.get(DEFAULT_GUILD)) return embedScaffold(null, developer, '**Error reaching the default server, check the config!**', colours.error, 'DEVELOPER', 'Server Id', DEFAULT_GUILD);
 		// Otherwise, send a success message to the developer
 		embedScaffold(null, developer, '**Ready to go!**', colours.success, 'DEVELOPER');
 
