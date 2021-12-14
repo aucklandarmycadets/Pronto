@@ -20,6 +20,7 @@ const mongoose = require('mongoose');
  * @property {string} settings.shortDate The default dateformat mask for shortened date strings
  * @property {string} settings.prontoLogo The image URL to display as the default logo for Pronto
  * @property {string} settings.lessonCron The default cron expression for scheduled lesson reminders
+ * @property {string} settings.timezone The default [moment-timezone]{@link https://momentjs.com/timezone/} to schedule lesson reminders in
  * @property {Object} ids An \<Object> of constant identifiers/snowflakes that Pronto uses
  * @property {Discord.Snowflake} ids.DEFAULT_GUILD The \<Guild.id> of the 'master' guild
  * @property {Discord.Snowflake} ids.DEVELOPER_ID The \<User.id> of the developer
@@ -58,6 +59,7 @@ module.exports = {
 		shortDate: 'd mmm',
 		prontoLogo: 'https://i.imgur.com/Whgm87R.png',
 		lessonCron: '0 16 * * 3',
+		timezone: 'Pacific/Auckland',
 	},
 	ids: {
 		DEFAULT_GUILD: '765758073942966272',

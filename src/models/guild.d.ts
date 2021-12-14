@@ -24,6 +24,8 @@ export interface GuildConfiguration extends mongoose.Document {
 		prontoLogo: string;
 		/** The guild's cron expression to schedule lesson reminders */
 		lessonCron: string;
+		/** The moment-timezone to schedule the guild's lesson reminders in */
+		timezone: string,
 		/** A \<boolean> to control whether to schedule lesson reminders */
 		lessonReminders: boolean;
 	};

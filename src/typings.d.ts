@@ -42,6 +42,8 @@ export interface Configuration {
 		prontoLogo: string,
 		/** The default cron expression for scheduled lesson reminders */
 		lessonCron: string,
+		/** The default moment-timezone to schedule lesson reminders in */
+		timezone: string,
 	}
 	/** An \<Object> of constant identifiers/snowflakes that Pronto uses */
 	ids: {

@@ -19,6 +19,7 @@ const { settings, emojis, colours } = require('../config');
  * @property {string} settings.shortDate The guild's dateformat mask for its shortened date strings
  * @property {string} settings.prontoLogo The image URL to display as the guild's logo for Pronto
  * @property {string} settings.lessonCron The guild's cron expression to schedule lesson reminders
+ * @property {string} settings.timezone	The [moment-timezone]{@link https://momentjs.com/timezone/} to schedule the guild's lesson reminders in
  * @property {boolean} settings.lessonReminders A \<boolean> to control whether to schedule lesson reminders
  * @property {Object} ids The guild's object of identifiers/snowflakes
  * @property {Discord.Snowflake} ids.guildID The \<Guild.id> of the guild
@@ -77,6 +78,7 @@ const guildSchema = new mongoose.Schema({
 		shortDate: { type: String, default: settings.shortDate },
 		prontoLogo: { type: String, default: settings.prontoLogo },
 		lessonCron: { type: String, default: settings.lessonCron },
+		timezone: { type: String, default: settings.timezone },
 		lessonReminders: { type: Boolean, default: false },
 	},
 	ids: {

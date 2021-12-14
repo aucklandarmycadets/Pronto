@@ -18,7 +18,7 @@ const { findGuildConfiguration, sendMsg } = require('../handlers');
  * @param {Discord.Guild} guild
  */
 module.exports = async guild => {
-	const { settings: { lessonCron, lessonReminders }, ids: { archivedID }, colours } = await findGuildConfiguration(guild);
+	const { settings: { lessonCron, timezone, lessonReminders }, ids: { archivedID }, colours } = await findGuildConfiguration(guild);
 
 	cron.schedule(lessonCron, async () => {
 		/**
@@ -44,6 +44,6 @@ module.exports = async guild => {
 		}
 	}, {
 		scheduled: lessonReminders,
-		timezone: 'Pacific/Auckland',
+		timezone: timezone,
 	});
 };
