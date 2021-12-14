@@ -1,4 +1,5 @@
 'use strict';
+
 const { jsCodeBlock } = require('../modules');
 const { embedScaffold, findGuildConfiguration } = require('../handlers');
 
