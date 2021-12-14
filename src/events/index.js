@@ -33,7 +33,7 @@ const fs = require('fs');
  * Load the events folder
  * @returns {Typings.EventModules} Pronto's complete \<EventModules> object
  */
-module.exports = () => processIndex('./events');
+module.exports = processIndex('./events');
 
 /**
  * Load the bot's \<EventModules> from the specified directory
