@@ -210,7 +210,7 @@ A Discord bot developed for the City of Auckland Cadet Unit, built with [discord
 	MONGOURI=mongodb://localhost/pronto
 	```
 
-7. Start the bot with `$ node pronto.js` in the repository's folder
+7. Start the bot with `$ npm run start` in the repository's folder
 
 8. Done! The bot should now be online, however now you run into the problem of hosting...
 	> Read [this](https://www.writebots.com/discord-bot-hosting/) document for more on hosting :)
