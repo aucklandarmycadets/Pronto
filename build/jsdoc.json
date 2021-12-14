@@ -1,10 +1,9 @@
 {
 	"source": {
 		"include": [
-			"./src"
+			"../src"
 		],
-		"includePattern": ".js$",
-		"excludePattern": "(node_modules|docs)"
+		"includePattern": ".js$"
 	},
 	"plugins": [
 		"plugins/markdown"
@@ -12,9 +11,9 @@
 	"opts": {
 		"recurse": true,
 		"encoding": "utf8",
-		"destination": "docs/",
-		"readme": "README.md",
-		"template": "node_modules/tidy-jsdoc",
+		"destination": "../docs/",
+		"readme": "../README.md",
+		"template": "../node_modules/tidy-jsdoc",
 		"prism-theme": "prism-monokai"
 	},
 	"templates": {
@@ -23,7 +22,7 @@
 		"default": {
 			"staticFiles": {
 				"include": [
-					"build/static/"
+					"static/"
 				]
 			}
 		},
