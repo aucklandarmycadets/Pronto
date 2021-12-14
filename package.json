@@ -54,6 +54,10 @@
       {
         "filename": "src/pronto.js",
         "updater": "build/standard-version-updater.js"
+      },
+      {
+        "filename": "README.md",
+        "updater": "build/standard-version-updater.js"
       }
     ]
   }
