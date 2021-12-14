@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 const { settings, emojis, colours } = require('../config');
 
 /**
- * @typedef {Typings.GuildConfigurationConfiguration} models.GuildConfiguration An \<Object> representing the values of a \<mongoose.Document> to record the specific configuration for each \<Guild>
+ * @typedef {Typings.GuildConfiguration} models.GuildConfiguration An \<Object> representing the values of a \<mongoose.Document> to record the specific configuration for each \<Guild>
  * @property {mongoose.Schema.Types.ObjectId} _id A unique document identifier
  * @property {Discord.Snowflake} guildID The \<Guild.id> that this configuration belongs to
  * @property {string} guildName The \<Guild.name> that this configuration belongs to
