@@ -10,7 +10,6 @@ module.exports = {
 	// database handlers
 
 	findGuildConfiguration: require('./findGuildConfiguration'),
-	findLesson: require('./findLesson'),
 
 	// <GuildConfiguration> handlers
 

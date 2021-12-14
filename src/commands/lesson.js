@@ -4,8 +4,9 @@ const Discord = require('discord.js');
 // eslint-disable-next-line no-unused-vars
 const Typings = require('../typings');
 
+const { Lesson } = require('../models');
 const { dateTimeGroup, enumerateResources, formatRoles, isURL, processResources, remove } = require('../modules');
-const { commandError, confirmWithReaction, createEmbed, deleteMsg, errorReact, findGuildConfiguration, findLesson, sendDirect, sendMsg, successReact, unsubmittedLessons } = require('../handlers');
+const { commandError, confirmWithReaction, createEmbed, deleteMsg, errorReact, findGuildConfiguration, sendDirect, sendMsg, successReact, unsubmittedLessons } = require('../handlers');
 
 /**
  * Set to ensure that lessons (identified by their \<TextChannel.id>) which are pending confirmation of submission cannot be submitted again
@@ -33,7 +34,9 @@ module.exports = async guild => {
 		const { bot } = require('../pronto');
 
 		// Find <Lesson> document by querying database for lesson channel ID
-		let lessonDocument = await findLesson(msg.channel.id);
+		let lessonDocument = await Lesson.findOne({ lessonID: msg.channel.id }, error => {
+			if (error) console.error(error);
+		});
 
 		// Attempt to parse the lesson sub-command from the command message
 		const command = (lesson.aliases.includes(msgCommand))

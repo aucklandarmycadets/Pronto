@@ -4,8 +4,9 @@ const Discord = require('discord.js');
 // eslint-disable-next-line no-unused-vars
 const Typings = require('../typings');
 
+const { Lesson } = require('../models');
 const { dateTimeGroup, enumerateResources } = require('../modules');
-const { commandError, debugError, findGuildConfiguration, findLesson, sendMsg, successReact } = require('../handlers');
+const { commandError, debugError, findGuildConfiguration, sendMsg, successReact } = require('../handlers');
 
 /**
  * @member {commands.Command} commands.approve Approve a submitted lesson plan in a lesson channel, either from a message command or a message reaction
@@ -25,7 +26,9 @@ module.exports = async guild => {
 	 */
 	approve.execute = async ({ msg, user }) => {
 		// Find <Lesson> document by querying database for lesson channel ID
-		const lessonDocument = await findLesson(msg.channel.id);
+		const lessonDocument = await Lesson.findOne({ lessonID: msg.channel.id }, error => {
+			if (error) console.error(error);
+		});
 
 		try {
 			// Ensure message channel is contained within lessons category

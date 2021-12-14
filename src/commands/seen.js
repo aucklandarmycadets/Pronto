@@ -4,8 +4,9 @@ const Discord = require('discord.js');
 // eslint-disable-next-line no-unused-vars
 const Typings = require('../typings');
 
+const { Lesson } = require('../models');
 const { dateTimeGroup } = require('../modules');
-const { commandError, findGuildConfiguration, findLesson, sendMsg, successReact } = require('../handlers');
+const { commandError, findGuildConfiguration, sendMsg, successReact } = require('../handlers');
 
 /**
  * @member {commands.Command} commands.seen
@@ -27,7 +28,9 @@ module.exports = async guild => {
 	 */
 	seen.execute = async ({ msg, user }) => {
 		// Find <Lesson> document by querying database for lesson channel ID
-		const lessonDocument = await findLesson(msg.channel.id);
+		const lessonDocument = await Lesson.findOne({ lessonID: msg.channel.id }, error => {
+			if (error) console.error(error);
+		});
 
 		// Resolve the instructor, depending on whether executed via command or reaction
 		const instructor = user || msg.author;
