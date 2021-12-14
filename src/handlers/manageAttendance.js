@@ -23,7 +23,7 @@ module.exports = async (reaction, user) => {
 	const { ids: { attendanceID }, colours } = await findGuildConfiguration(reaction.message.guild);
 
 	/**
-	 * @type {Typings.Attendance}
+	 * @type {?Typings.Attendance}
 	 */
 	const document = await Attendance.findOne({ channelID: reaction.message.id });
 
