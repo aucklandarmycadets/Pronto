@@ -106,7 +106,7 @@ module.exports = async guild => {
 						 * @type {Typings.Attendance}
 						 */
 						const document = await new Attendance({
-							_id: mongoose.Types.ObjectId(),
+							_id: new mongoose.Types.ObjectId(),
 							channelID: channelMessage.id,
 							attendanceID: attendanceMessage.id,
 							name: title,

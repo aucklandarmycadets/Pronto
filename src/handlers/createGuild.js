@@ -126,7 +126,7 @@ async function createGuildDocument(guild) {
 	 * @type {Typings.GuildConfiguration}
 	 */
 	const guildDocument = await new Guild({
-		_id: mongoose.Types.ObjectId(),
+		_id: new mongoose.Types.ObjectId(),
 		guildID: guild.id,
 		guildName: guild.name,
 		ids: {

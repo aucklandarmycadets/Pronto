@@ -241,7 +241,7 @@ module.exports = async guild => {
 			 * @type {Typings.Lesson}
 			 */
 			const lesson = await new Lesson({
-				_id: mongoose.Types.ObjectId(),
+				_id: new mongoose.Types.ObjectId(),
 				lessonID: channelID,
 				lessonName,
 				instructors,
