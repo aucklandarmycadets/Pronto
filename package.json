@@ -38,5 +38,21 @@
     "endOfLine": "crlf",
     "embeddedLanguageFormatting": "off",
     "printWidth": 300
+  },
+  "standard-version": {
+    "bumpFiles": [
+      {
+        "filename": "package.json",
+        "type": "json"
+      },
+      {
+        "filename": "package-lock.json",
+        "type": "json"
+      },
+      {
+        "filename": "pronto.js",
+        "updater": "build/standard-version-updater.js"
+      }
+    ]
   }
 }
