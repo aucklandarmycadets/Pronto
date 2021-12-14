@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"outDir": "./ts-compiled",
+		"outDir": "../compiled",
 		"allowJs": true,
 		"lib": [
 			"es2021"
