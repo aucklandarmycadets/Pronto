@@ -63,8 +63,6 @@ export interface Configuration {
 	}
 	/** The default \<Colours> object */
 	colours: Colours,
-	/** The \<mongoose.ConnectOptions> to use when connecting to the MongoDB database */
-	databaseOptions: mongoose.ConnectOptions,
 }
 
 /**

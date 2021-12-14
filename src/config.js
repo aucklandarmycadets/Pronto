@@ -28,7 +28,6 @@ const mongoose = require('mongoose');
  * @property {models.Emoji} emojis.success The default success [\<Emoji>]{@link models.Emoji}
  * @property {models.Emoji} emojis.error The default error [\<Emoji>]{@link models.Emoji}
  * @property {models.Colours} colours The default [\<Colours>]{@link models.Colours} object
- * @property {mongoose.ConnectOptions} databaseOptions The \<mongoose.ConnectOptions> to use when connecting to the MongoDB database
  */
 
 /**
@@ -150,9 +149,5 @@ module.exports = {
 		success: 0x45bb8a,
 		warn: 0xffcc4d,
 		error: 0xef4949,
-	},
-	databaseOptions: {
-		autoIndex: false,
-		family: 4,
 	},
 };
