@@ -1,6 +1,15 @@
 import Discord = require('discord.js');
 import Typings = require('../typings');
 
+export = commands;
+
+/**
+ * Load the \<BaseCommands> object for the specified guild
+ * @param guild The \<Guild> to load the \<BaseCommands> for
+ * @returns {Promise<BaseCommands>} The guild's complete \<BaseCommands> object
+ */
+declare function commands(guild: Discord.Guild): Promise<BaseCommands>
+
 /**
  * The \<Client> object for Pronto, with an extended \<Client.commands> property to store the guild's commands, upserted on each execution of `handlers.commandHandler()`
  */

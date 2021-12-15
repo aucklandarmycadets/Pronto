@@ -62,9 +62,9 @@ const { findGuildConfiguration } = require('../handlers');
  */
 
 /**
- *
- * @param {Discord.Guild} guild
- * @returns {Promise<Typings.BaseCommands>}
+ * Load the [\<BaseCommands>]{@link commands.BaseCommands} object for the specified guild
+ * @param {Discord.Guild} guild The \<Guild> to load the [\<BaseCommands>]{@link commands.BaseCommands} for
+ * @returns {Promise<Typings.BaseCommands>} The guild's complete [\<BaseCommands>]{@link commands.BaseCommands} object
  */
 module.exports = async guild => {
 	const { settings: { prefix }, ids } = await findGuildConfiguration(guild);
