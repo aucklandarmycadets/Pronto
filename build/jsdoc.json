@@ -14,7 +14,8 @@
 		"destination": "./docs/",
 		"readme": "README.md",
 		"template": "node_modules/tidy-jsdoc",
-		"prism-theme": "prism-monokai"
+		"prism-theme": "prism-monokai",
+		"showTypedefsInNav": true
 	},
 	"templates": {
 		"cleverLinks": false,
