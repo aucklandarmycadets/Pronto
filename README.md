@@ -85,7 +85,7 @@ A Discord bot developed for the City of Auckland Cadet Unit, built with [discord
 
 1. Clone this repository `$ git clone https://github.com/JamesNZL/Pronto.git`
 
-2. Install required packages by running `$ npm install` in the repository's folder
+2. Install required packages by running `$ npm install --production` in the repository's folder
 
 3. Install [MongoDB Community Edition](https://docs.mongodb.com/manual/administration/install-community/)
 	> NOTE: These instructions apply to the set-up of a local database.
