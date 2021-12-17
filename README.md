@@ -10,6 +10,7 @@ A Discord bot developed for the City of Auckland Cadet Unit, built with [discord
 	- [Features](#features)
 	- [Commands List](#commands-list)
 	- [JSDoc Documentation](#jsdoc-documentation)
+	- [Versioning](#versioning)
 - [Installation](#installation)
 	- [Requirements](#requirements)
 	- [Dependencies](#dependencies)
@@ -64,6 +65,14 @@ A Discord bot developed for the City of Auckland Cadet Unit, built with [discord
 ### JSDoc Documentation
 
 [GitHub Pages](https://jamesnzl.github.io/Pronto/)
+
+### Versioning
+
+Beginning with `v5.0.0`, Pronto uses [standard-version](https://www.npmjs.com/package/standard-version) to release new versions. Hence, as of `v5.0.0`, Pronto follows [semver](https://semver.org/) (semantic versioning) standards, using the format [MAJOR].[MINOR].[PATCH]:
+
+1. **Major.** There is at least one breaking change to Pronto's public functionality, or a breaking change that requires an update to any existing database documents.
+2. **Minor.** There is at least one new backwards-compatible feature added to Pronto's functionality.
+3. **Patch.** There is at least one backwards-compatible bug fix.
 
 ## Installation
 
