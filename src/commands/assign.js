@@ -273,8 +273,8 @@ module.exports = async guild => {
  * @param {Discord.Message} msg The \<Message> that executed the \<Command>
  * @param {Object.<string, {prompt: string, type: commands.assign.InputType, allowMultiple: boolean}>} prompts An object defining the individual inputs to prompt for
  * - Must contain an object.prompt property of type \<string>
- * - Must contain an object.type property for the type of input of type \<string>: `TEXT` || `DATE` || `ATTACHMENT`
- * - Must contain an object.allowMultiple \<boolean>: `true` || `false`
+ * - Must contain an object.type property for the type of input of type \<string>: `TEXT` | `DATE` | `ATTACHMENT`
+ * - Must contain an object.allowMultiple \<boolean>: `true` | `false`
  * - Text inputs only require an input, with no additional error checking
  * - Date inputs are parsed through chrono to ensure a valid date is recognised and return a Unix timestamp (ms)
  * - Attachments allow attachments to be uploaded or URLs to be entered, with appropriate error checking
@@ -310,10 +310,10 @@ async function getUserInput(msg, prompts, colours) {
  * @function commands.assign~msgPrompt
  * @param {Discord.MessageEmbed} prompt The embed to use to prompt the user for the input
  * @param {Discord.Message} msg The \<Message> that executed the \<Command>
- * @param {commands.assign.InputType} type The type of input being prompted for: `TEXT` || `DATE` || `ATTACHMENT`
+ * @param {commands.assign.InputType} type The type of input being prompted for: `TEXT` | `DATE` | `ATTACHMENT`
  * @param {Typings.Colours} colours The guild's colour object
  * @param {boolean} allowMultiple Whether to allow multiple inputs
- * @returns {Promise<string | number | 'RESTART' | 'CANCEL' | 'DONE'>} The user's input, or the symbols `RESTART` || `CANCEL` || `DONE`
+ * @returns {Promise<string | number | 'RESTART' | 'CANCEL' | 'DONE'>} The user's input, or the symbols `RESTART` | `CANCEL` | `DONE`
  * - Text inputs return a \<string>
  * - Date inputs return a Unix timestamp (ms) as \<number>
  * - Attachments return a URL formatted as a hyperlink using [`modules.processResources()`]{@link modules.processResources} as \<string>
@@ -396,10 +396,10 @@ async function msgPrompt(prompt, msg, type, colours, allowMultiple) {
  * @function commands.assign~whileLoop
  * @param {Discord.MessageEmbed} prompt The embed to use to prompt the user for the input
  * @param {Discord.Message} msg The \<Message> that executed the \<Command>
- * @param {commands.assign.InputType} type The type of input being prompted for: `TEXT` || `DATE` || `ATTACHMENT`
+ * @param {commands.assign.InputType} type The type of input being prompted for: `TEXT` | `DATE` | `ATTACHMENT`
  * @param {Typings.Colours} colours The guild's colour object
  * @param {boolean} allowMultiple Whether to allow multiple inputs
- * @returns {Promise<string[] | number[] | 'RESTART' | 'CANCEL'>} An array of the user's inputs, or the symbols `RESTART` || `CANCEL`
+ * @returns {Promise<string[] | number[] | 'RESTART' | 'CANCEL'>} An array of the user's inputs, or the symbols `RESTART` | `CANCEL`
  * - The type stored within the array is dependent on the input type returned by msgPrompt()
  * - `RESTART` = restart input from the beginning
  * - `CANCEL` = cancel lesson assignment
@@ -410,7 +410,7 @@ async function whileLoop(prompt, msg, type, colours, allowMultiple) {
 
 	/**
 	 * A recursive function which repeatedly prompts the user for input until loop is ended
-	 * @returns {Promise<string[] | number[] | 'RESTART' | 'CANCEL'>} An array of the user's inputs, or the symbols `RESTART` || `CANCEL`
+	 * @returns {Promise<string[] | number[] | 'RESTART' | 'CANCEL'>} An array of the user's inputs, or the symbols `RESTART` | `CANCEL`
 	 * - The type stored within the array is dependent on the input type returned by msgPrompt()
 	 * - `RESTART` = restart input from the beginning
 	 * - `CANCEL` = cancel lesson assignment

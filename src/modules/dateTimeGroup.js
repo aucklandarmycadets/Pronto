@@ -17,7 +17,7 @@ const { findGuildConfiguration } = require('../handlers');
  *
  * @function modules.dateTimeGroup
  * @param {?Discord.Guild} [guild] The \<Guild> to format the date-time group for
- * - If `null` || `undefined`, the \<GuildConfiguration> of the default guild defined by [`config.ids.DEFAULT_GUILD`]{@link config.Configuration} will be used instead
+ * - If `null` | `undefined`, the \<GuildConfiguration> of the default guild defined by [`config.ids.DEFAULT_GUILD`]{@link config.Configuration} will be used instead
  * @param {string | number | Date} [date=Date.now()] A Date object, or a [resolvable date]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/Date#parameters} accepted by the `Date()` constructor, such as:
  * - A Unix timestamp as a \<string> | \<number>
  * - A string such as `09:00 1 Aug 2021`
