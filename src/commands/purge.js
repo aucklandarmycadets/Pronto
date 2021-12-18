@@ -50,7 +50,7 @@ module.exports = async guild => {
 			else if (purgeCount > 100) throw 'You cannot purge more than 100 messages at a time.';
 		}
 
-		catch (error) { return commandError(msg, error, purge.error); }
+		catch (thrownError) { return commandError(msg, thrownError, purge.error); }
 
 		// Initialise values for the <Message.id[]> and before to ensure purgeCount messages are actually fetched and filtered
 		/** @type {Discord.Snowflake[]} */
