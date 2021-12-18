@@ -22,7 +22,7 @@ module.exports = async guild => {
 
 	/**
 	 * @param {Typings.CommandParameters} parameters The \<CommandParameters> to execute this command
-	 * @returns {Promise<Typings.Lesson>} The mongoose document for the lesson
+	 * @returns {Promise<void | Typings.Lesson>} The mongoose document for the lesson
 	 */
 	approve.execute = async ({ msg, user }) => {
 		/**
