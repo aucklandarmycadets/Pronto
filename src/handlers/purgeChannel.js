@@ -10,7 +10,7 @@ const { debugError, embedScaffold, findGuildConfiguration } = require('../handle
  *
  * @function handlers.purgeChannel
  * @param {Discord.Collection<Discord.Snowflake, Discord.Message> | Discord.MessageResolvable[] | number} msgs Messages to delete
- * @param {Discord.TextBasedChannels} channel Channel to purge
+ * @param {Discord.GuildTextBasedChannel} channel Channel to purge
  * @param {Discord.ReactionCollector} [collector] An optional reaction collector to stop
  */
 module.exports = async (msgs, channel, collector) => {
