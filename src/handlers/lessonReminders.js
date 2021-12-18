@@ -36,7 +36,7 @@ module.exports = async guild => {
 				.setTitle('Lesson Reminder')
 				.setColor(colours.warn)
 				.setDescription(`Reminder — your lesson plan is due at \`${lesson.dueDate}\`.`)
-				.setFooter(await dateTimeGroup());
+				.setFooter(await dateTimeGroup(guild));
 
 			if (lesson.dueTimestamp - Date.now() <= 86400000) remindEmbed.setColor(colours.error);
 

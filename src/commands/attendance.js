@@ -92,7 +92,7 @@ module.exports = async guild => {
 						// Update the embed author to include the submitting user
 						attendanceEmbed.setAuthor(`${formationName} (${msg.member.displayName})`, msg.guild.iconURL({ dynamic: true }));
 						// Update the footer to be a timestamp
-						attendanceEmbed.setFooter(await dateTimeGroup());
+						attendanceEmbed.setFooter(await dateTimeGroup(guild));
 
 						// Get the guild's attendance channel
 						const attendanceChannel = bot.channels.cache.get(attendanceId);

@@ -119,7 +119,7 @@ module.exports = async guild => {
 				.addField('Lesson Date', lessonDocument.lessonDate)
 				// Call modules.enumerateResources() to format and output the lesson resources
 				.addField('Resources', enumerateResources(lessonDocument.submittedResources, true))
-				.setFooter(await dateTimeGroup());
+				.setFooter(await dateTimeGroup(guild));
 
 			// Send the lesson preview embed
 			return sendMsg(msg.channel, { embeds: [lessonEmbed] });
@@ -153,7 +153,7 @@ module.exports = async guild => {
 				.addField('Lesson', lessonDocument.lessonName)
 				// Call modules.enumerateResources() to format and output the lesson resources
 				.addField('Resources', enumerateResources(lessonDocument.submittedResources, true))
-				.setFooter(await dateTimeGroup());
+				.setFooter(await dateTimeGroup(guild));
 
 			// Send the lesson updated embed
 			return sendMsg(msg.channel, { embeds: [updatedEmbed] });
@@ -192,7 +192,7 @@ module.exports = async guild => {
 					.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }))
 					.setColor(colours.error)
 					.setDescription('**Cancelled.**')
-					.setFooter(await dateTimeGroup());
+					.setFooter(await dateTimeGroup(guild));
 
 				// Send the cancellation embed and cease further execution
 				return sendMsg(msg.channel, { embeds: [cancelEmbed] });
@@ -219,7 +219,7 @@ module.exports = async guild => {
 				.addField('Lesson', lessonDocument.lessonName)
 				// Call modules.enumerateResources() to format and output the lesson resources
 				.addField('Resources', enumerateResources(lessonDocument.submittedResources, true))
-				.setFooter(await dateTimeGroup());
+				.setFooter(await dateTimeGroup(guild));
 
 			// Send the lesson updated embed
 			return sendMsg(msg.channel, { embeds: [updatedEmbed] });
@@ -270,7 +270,7 @@ module.exports = async guild => {
 						// Modify the lesson submission confirmation embed to repurpose it into the lesson submission embed
 						submitEmbed.setTitle(`Lesson Plan Submitted - ${lessonDocument.lessonName}`);
 						submitEmbed.setColor(colours.success);
-						submitEmbed.setFooter(await dateTimeGroup());
+						submitEmbed.setFooter(await dateTimeGroup(guild));
 
 						// Send the lesson submission embed to the private lesson channel
 						await sendMsg(msg.channel, { embeds: [submitEmbed] });

@@ -60,7 +60,7 @@ module.exports = async guild => {
 					.setTitle('Channel Archived 🔒')
 					.setColor(colours.error)
 					.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
-					.setFooter(await dateTimeGroup());
+					.setFooter(await dateTimeGroup(guild));
 
 				// Send archive embed
 				sendMsg(channel, { embeds: [archiveEmbed] });
@@ -70,7 +70,7 @@ module.exports = async guild => {
 					.setColor(colours.warn)
 					.setAuthor(msg.author.tag, msg.author.displayAvatarURL({ dynamic: true }))
 					.setDescription(`**Channel ${channel} archived by ${msg.author}**`)
-					.setFooter(`User: ${msg.author.id} | Channel: ${channel.id} | ${await dateTimeGroup()}`);
+					.setFooter(`User: ${msg.author.id} | Channel: ${channel.id} | ${await dateTimeGroup(guild)}`);
 
 				// Get the guild's log channel and send the log embed
 				const logChannel = bot.channels.cache.get(logId);

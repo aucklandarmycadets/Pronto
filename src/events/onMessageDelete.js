@@ -35,7 +35,7 @@ module.exports = {
 		if (msg.partial && msg.guild) {
 			logEmbed.setAuthor(msg.guild.name, msg.guild.iconURL({ dynamic: true }));
 			logEmbed.setDescription(`**Uncached message deleted in ${msg.channel}**`);
-			logEmbed.setFooter(`Id: ${msg.id} | ${await dateTimeGroup()}`);
+			logEmbed.setFooter(`Id: ${msg.id} | ${await dateTimeGroup(msg.guild)}`);
 		}
 
 		// Otherwise, if the deleted <Message> was sent in a guild and is not a partial, attempt to fully log its deletion
@@ -72,7 +72,7 @@ module.exports = {
 			logEmbed.setAuthor(msg.author.tag, msg.author.displayAvatarURL({ dynamic: true }));
 			// Use modules.charLimit() to ensure the message's content does not exceed Discord's <MessageEmbed.description> character limit
 			logEmbed.setDescription(charLimit(`**Message sent by ${msg.author} deleted in ${msg.channel}**\n>>> ${content}`, 'EMBED_DESCRIPTION'));
-			logEmbed.setFooter(`Author: ${msg.author.id} | Message: ${msg.id} | ${await dateTimeGroup()}`);
+			logEmbed.setFooter(`Author: ${msg.author.id} | Message: ${msg.id} | ${await dateTimeGroup(msg.guild)}`);
 
 			// If there was a <MessageAttachment>, add a field to the log embed to include the attachment's name
 			if (attachment) logEmbed.addField('Attachment', Discord.escapeMarkdown(attachment.name));

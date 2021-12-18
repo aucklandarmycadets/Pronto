@@ -18,7 +18,7 @@ module.exports = async (msgs, channel, collector) => {
 
 	channel.bulkDelete(msgs)
 		.catch(error => {
-			embedScaffold(null, channel, `Error purging ${channel}.`, colours.error, 'MESSAGE');
+			embedScaffold(channel.guild, channel, `Error purging ${channel}.`, colours.error, 'MESSAGE');
 			debugError(channel.guild, error, `Error purging ${channel}.`);
 		});
 

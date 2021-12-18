@@ -28,6 +28,6 @@ module.exports = async (user, options, guildChannel, toDebug = false) => {
 
 			// Send correct error message depending on intended user
 			if (toDebug) embedScaffold(null, null, `Error sending direct message to ${user}.`, colours.error, 'DEBUG', 'More Information', support, jsCodeBlock(error.stack));
-			else embedScaffold(null, guildChannel, `${user} I can't send direct messages to you!`, colours.error, 'MESSAGE', 'More Information', support);
+			else embedScaffold(guildChannel.guild, guildChannel, `${user} I can't send direct messages to you!`, colours.error, 'MESSAGE', 'More Information', support);
 		});
 };

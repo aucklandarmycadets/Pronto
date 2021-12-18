@@ -37,7 +37,7 @@ module.exports = async guild => {
 				const pongEmbed = new Discord.MessageEmbed()
 					.setColor(colours.success)
 					// Calculate the delay between the ping timestamp and the pong message
-					.setFooter(`${pong.createdTimestamp - pingTimestamp} ms | ${await dateTimeGroup()} | Pronto v${version}`);
+					.setFooter(`${pong.createdTimestamp - pingTimestamp} ms | ${await dateTimeGroup(guild)} | Pronto v${version}`);
 
 				// Edit the initial pong message and add the pong embed
 				pong.edit({ embeds: [pongEmbed] });

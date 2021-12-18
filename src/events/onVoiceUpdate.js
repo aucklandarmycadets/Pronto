@@ -49,21 +49,21 @@ module.exports = {
 			// If there is no old <VoiceChannel>, i.e. the <GuildMember> has joined a <VoiceChannel>, set the log embed accordingly
 			logEmbed.setColor(colours.success);
 			logEmbed.setDescription(`**${newState.member} joined voice channel ${newState.channel}**`);
-			logEmbed.setFooter(`Id: ${newState.member.id} | Channel: ${newChannelId} | ${await dateTimeGroup()}`);
+			logEmbed.setFooter(`Id: ${newState.member.id} | Channel: ${newChannelId} | ${await dateTimeGroup(newState.guild)}`);
 		}
 
 		else if (!newChannelId) {
 			// Otherwise, if there is no new <VoiceChannel>, i.e. the <GuildMember> has left a <VoiceChannel>, set the log embed accordingly
 			logEmbed.setColor(colours.error);
 			logEmbed.setDescription(`**${newState.member} left voice channel ${oldState.channel}**`);
-			logEmbed.setFooter(`Id: ${newState.member.id} | Channel: ${oldChannelId} | ${await dateTimeGroup()}`);
+			logEmbed.setFooter(`Id: ${newState.member.id} | Channel: ${oldChannelId} | ${await dateTimeGroup(newState.guild)}`);
 		}
 
 		else if (oldChannelId !== newChannelId) {
 			// Otherwise, if the two <VoiceChannel.id> snowflakes do not match, i.e. the <GuildMember> has changed from one <VoiceChannel> to another, set the log embed accordingly
 			logEmbed.setColor(colours.warn);
 			logEmbed.setDescription(`**${newState.member} changed voice channel ${oldState.channel} > ${newState.channel}**`);
-			logEmbed.setFooter(`Id: ${newState.member.id} | ${await dateTimeGroup()}`);
+			logEmbed.setFooter(`Id: ${newState.member.id} | ${await dateTimeGroup(newState.guild)}`);
 		}
 
 		// For any other actions which may have emitted <Client>#voiceStateUpdate, cease further execution

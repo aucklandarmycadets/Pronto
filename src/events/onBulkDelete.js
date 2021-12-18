@@ -34,7 +34,7 @@ module.exports = {
 		// Initialise log embed
 		const logEmbed = new Discord.MessageEmbed()
 			.setColor(colours.error)
-			.setFooter(await dateTimeGroup());
+			.setFooter(await dateTimeGroup(msg.guild));
 
 		if (!lastMsg) {
 			// If the channel was completely emptied, then there is not any <Message> to extract further context from

@@ -34,7 +34,7 @@ module.exports = async (guild, destination, description, colour, type, fieldTitl
 		.setColor(colour)
 		// Ensure embed payload does not exceed character limit
 		.setDescription(charLimit(description, 'EMBED_DESCRIPTION'))
-		.setFooter(`${await dateTimeGroup()}${developerFooter}`);
+		.setFooter(`${await dateTimeGroup(guild)}${developerFooter}`);
 
 	// Add additional fields if appropriate
 	if (fieldTitle) embed.addField(fieldTitle, fieldContent);

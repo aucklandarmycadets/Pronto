@@ -96,7 +96,7 @@ module.exports = async guild => {
 			// Call channelsOutput() to format the guild's created channels into a
 			.addField('Created Channels', channelsOutput(createdChannels, guildDocument))
 			.addField('More Information', 'To modify my configuration, please visit my dashboard.')
-			.setFooter(await dateTimeGroup());
+			.setFooter(await dateTimeGroup(guild));
 
 		// Send the created channels embed
 		sendMsg(debugChannel, { embeds: [createdChannelsEmbed] });

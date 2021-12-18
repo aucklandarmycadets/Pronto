@@ -69,7 +69,7 @@ module.exports = async guild => {
 			.setDescription('Type `restart` to start again, or `cancel` to abort.')
 			// Resolve the mentioned members into a formatted string and add new field
 			.addField('Instructor(s)', processMentions(lessonInstructors))
-			.setFooter(await dateTimeGroup());
+			.setFooter(await dateTimeGroup(guild));
 
 		// Send the assign embed
 		sendDirect(msg.author, { embeds: [assignEmbed] }, msg.channel);
@@ -109,7 +109,7 @@ module.exports = async guild => {
 				.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }))
 				.setColor(colours.error)
 				.setDescription('**Cancelled.**')
-				.setFooter(await dateTimeGroup());
+				.setFooter(await dateTimeGroup(guild));
 
 			// Remove the assigner's Id from the recentlyAssigned set
 			recentlyAssigned.delete(msg.author.id);
@@ -122,8 +122,8 @@ module.exports = async guild => {
 		const { lessonName, dueTimestamp, lessonTimestamp, resources } = userInput;
 
 		// Obtain and store formatted date-time groups from parsed time stamps
-		const dueDate = await dateTimeGroup(dueTimestamp);
-		const lessonDate = await dateTimeGroup(lessonTimestamp);
+		const dueDate = await dateTimeGroup(guild, dueTimestamp);
+		const lessonDate = await dateTimeGroup(guild, lessonTimestamp);
 
 		// Create lesson assignment confirmation embed
 		const lessonEmbed = new Discord.MessageEmbed()
@@ -173,7 +173,7 @@ module.exports = async guild => {
 							// Modify the lesson assignment confirmation embed to repurpose it into the lesson warning embed
 							lessonEmbed.setTitle(`Lesson Warning - ${lessonName}`);
 							lessonEmbed.setDescription('You have been assigned a lesson, use this channel to organise yourself.');
-							lessonEmbed.setFooter(await dateTimeGroup());
+							lessonEmbed.setFooter(await dateTimeGroup(guild));
 
 							// If there is only one instructor, set the author of the lesson warning embed to be the instructor's name and display avatar
 							if (lessonInstructors.size === 1) lessonEmbed.setAuthor(lessonInstructors.first().displayName, lessonInstructors.first().user.displayAvatarURL({ dynamic: true }));

@@ -62,7 +62,7 @@ module.exports = async (reaction, user) => {
 				.then(dm => {
 					const sendAttendance = async () => {
 						attendanceEmbed.setAuthor(`${document.formation} (${member.displayName})`, reaction.message.guild.iconURL({ dynamic: true }));
-						attendanceEmbed.setFooter(`Last updated at ${await dateTimeGroup()}`);
+						attendanceEmbed.setFooter(`Last updated at ${await dateTimeGroup(reaction.message.guild)}`);
 
 						attendanceMessage.edit(attendanceEmbed);
 						reaction.message.edit(attendanceEmbed);
@@ -93,7 +93,7 @@ async function userInput(user, msg, colours, callback) {
 		.setColor(colours.success)
 		.setDescription('Type `cancel` to exit.')
 		.addField('Current Attendance', msg.embeds[0].description)
-		.setFooter(await dateTimeGroup());
+		.setFooter(await dateTimeGroup(msg.guild));
 
 	const dm = await sendDirect(user, { embeds: [editingEmbed.addField('Message Link', `[${msg.embeds[0].title}](${msg.url})`)] }, msg.channel);
 
@@ -110,7 +110,7 @@ async function userInput(user, msg, colours, callback) {
 			.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }))
 			.setColor(colours.error)
 			.setDescription('**Cancelled.**')
-			.setFooter(await dateTimeGroup());
+			.setFooter(await dateTimeGroup(msg.guild));
 
 		pendingInput.delete(user.id);
 

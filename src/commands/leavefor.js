@@ -62,7 +62,7 @@ module.exports = async guild => {
 				// Capitalise the first letter of the command arguments and add them to a 'Remarks' field
 				{ name: 'Remarks', value: sentenceCase(args.join(' ')) },
 			)
-			.setFooter(await dateTimeGroup());
+			.setFooter(await dateTimeGroup(guild));
 
 		// Create confirmation embed
 		const directEmbed = new Discord.MessageEmbed()
@@ -72,7 +72,7 @@ module.exports = async guild => {
 			.setDescription(`Hi **${msg.member.displayName}**, your submission of leave for **${absentee.displayName}** has been received.`)
 			.addField('Channel', msg.channel.toString())
 			.addField('Remarks', sentenceCase(args.join(' ')))
-			.setFooter(await dateTimeGroup());
+			.setFooter(await dateTimeGroup(guild));
 
 		// Create notice embed to inform absentee that a request has been made on their behalf
 		const absenteeEmbed = new Discord.MessageEmbed()

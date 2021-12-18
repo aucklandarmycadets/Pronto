@@ -63,7 +63,7 @@ module.exports = async guild => {
 		const seenEmbed = new Discord.MessageEmbed()
 			.setColor(colours.success)
 			.setDescription(`**${await guild.members.fetch(instructor.id).then(member => member.displayName)}** has confirmed receipt of this lesson warning.`)
-			.setFooter(await dateTimeGroup());
+			.setFooter(await dateTimeGroup(guild));
 
 		// Send the seen embed
 		sendMsg(msg.channel, { embeds: [seenEmbed] });
@@ -80,7 +80,7 @@ module.exports = async guild => {
 			const allSeenEmbed = new Discord.MessageEmbed()
 				.setColor(colours.success)
 				.setDescription('All instructors have acknowledged receipt of this lesson warning.')
-				.setFooter(await dateTimeGroup());
+				.setFooter(await dateTimeGroup(guild));
 			sendMsg(msg.channel, { embeds: [allSeenEmbed] });
 		}
 

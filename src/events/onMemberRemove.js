@@ -33,7 +33,7 @@ module.exports = {
 			.setDescription(`${member} ${member.user.tag}`)
 			// Call modules.formatRoles() to display the roles the <GuildMember> had
 			.addField('Roles', formatRoles([...member.roles.cache.values()], true, 3))
-			.setFooter(`Id: ${member.id} | ${await dateTimeGroup()}`);
+			.setFooter(`Id: ${member.id} | ${await dateTimeGroup(member.guild)}`);
 
 		// Fetch the guild's audit logs for a kick
 		const fetchedLogs = await member.guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_KICK' })

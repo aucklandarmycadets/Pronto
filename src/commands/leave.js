@@ -45,7 +45,7 @@ module.exports = async guild => {
 			.addField('Channel', msg.channel.toString())
 			// Capitalise the first letter of the command arguments and add them to a 'Remarks' field
 			.addField('Remarks', sentenceCase(args.join(' ')))
-			.setFooter(await dateTimeGroup());
+			.setFooter(await dateTimeGroup(guild));
 
 		// Create confirmation embed
 		const confirmationEmbed = new Discord.MessageEmbed()
@@ -55,7 +55,7 @@ module.exports = async guild => {
 			.setDescription(`Hi **${msg.member.displayName}**, your submission of leave has been received.`)
 			.addField('Channel', msg.channel.toString())
 			.addField('Remarks', sentenceCase(args.join(' ')))
-			.setFooter(await dateTimeGroup());
+			.setFooter(await dateTimeGroup(guild));
 
 		// Get the guild's attendance channel
 		const attendanceChannel = bot.channels.cache.get(attendanceId);

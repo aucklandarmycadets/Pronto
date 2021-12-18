@@ -31,7 +31,7 @@ module.exports = async (msg, dm, confirm, cancel) => {
 				.setAuthor(bot.user.tag, bot.user.avatarURL({ dynamic: true }))
 				.setColor(colours.error)
 				.setDescription('**Cancelled.**')
-				.setFooter(await dateTimeGroup());
+				.setFooter(await dateTimeGroup(msg.guild));
 
 			if (reaction.emoji.name === emojis.success.name) {
 				confirmEmbed.setColor(colours.success);

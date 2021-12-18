@@ -83,7 +83,7 @@ module.exports = async guild => {
 			.addField('Lesson Plan Due', lessonDocument.dueDate)
 			.addField('Lesson Date', lessonDocument.lessonDate)
 			.addField('Resources', enumerateResources(lessonDocument.submittedResources, true))
-			.setFooter(await dateTimeGroup());
+			.setFooter(await dateTimeGroup(guild));
 
 		// If lesson has not yet been archived in the master channel, send a copy into the channel
 		if (!lessonDocument.archiveId) {
@@ -124,7 +124,7 @@ module.exports = async guild => {
 		const approvedEmbed = new Discord.MessageEmbed()
 			.setColor(colours.success)
 			.setDescription(`${approver} has approved this lesson plan.`)
-			.setFooter(await dateTimeGroup());
+			.setFooter(await dateTimeGroup(guild));
 
 		// Send lesson approval embed
 		sendMsg(msg.channel, { embeds: [approvedEmbed] });

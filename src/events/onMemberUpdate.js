@@ -30,7 +30,7 @@ module.exports = {
 		const logEmbed = new Discord.MessageEmbed()
 			.setAuthor(newMember.user.tag, newMember.user.displayAvatarURL({ dynamic: true }))
 			.setColor(colours.warn)
-			.setFooter(`Id: ${newMember.id} | ${await dateTimeGroup()}`);
+			.setFooter(`Id: ${newMember.id} | ${await dateTimeGroup(newMember.guild)}`);
 
 		// Initialise a variable to store the fetched logs if they exist
 		let fetchedLogs;

@@ -43,7 +43,7 @@ module.exports = async (oldState, newState) => {
 						.setColor(colours.success)
 						.setAuthor(newMember.displayName, newMember.user.displayAvatarURL({ dynamic: true }))
 						.setDescription(`**${newMember.displayName}** has joined the channel.`)
-						.setFooter(await dateTimeGroup());
+						.setFooter(await dateTimeGroup(newState.guild));
 					sendMsg(textChannel, { embeds: [joinEmbed] });
 				})
 				.catch(error => {
@@ -58,7 +58,7 @@ module.exports = async (oldState, newState) => {
 						.setColor(colours.error)
 						.setAuthor(newMember.displayName, newMember.user.displayAvatarURL({ dynamic: true }))
 						.setDescription(`**${newMember.displayName}** has left the channel.`)
-						.setFooter(await dateTimeGroup());
+						.setFooter(await dateTimeGroup(newState.guild));
 					sendMsg(textChannel, { embeds: [leaveEmbed] });
 
 					if (oldState.channel.members.size === 0) {

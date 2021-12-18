@@ -32,7 +32,7 @@ module.exports = async guild => {
 		.setColor(colours.primary)
 		.setTitle(embedTitle)
 		.setAuthor(guild.name, guild.iconURL({ dynamic: true }))
-		.setFooter(`Last updated at ${await dateTimeGroup()}`);
+		.setFooter(`Last updated at ${await dateTimeGroup(guild)}`);
 
 	if (!unsubmitted.length) {
 		/**

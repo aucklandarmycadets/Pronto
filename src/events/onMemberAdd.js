@@ -33,7 +33,7 @@ module.exports = {
 			.setDescription(`${member} ${member.user.tag}`)
 			// Parse the user's account age through modules.formatDuration()
 			.addField('Account Age', formatDuration(member.user.createdAt))
-			.setFooter(`Id: ${member.id} | ${await dateTimeGroup()}`);
+			.setFooter(`Id: ${member.id} | ${await dateTimeGroup(member.guild)}`);
 
 		// Get the guild's log channel and send the log embed
 		const logChannel = bot.channels.cache.get(logId);
@@ -56,7 +56,7 @@ module.exports = {
 			.setAuthor(member.user.tag, member.user.displayAvatarURL({ dynamic: true }))
 			.setDescription(`**${member.displayName} has just entered ${welcomeChannel.name}.**\nMake them feel welcome!`)
 			.addField('User', member.toString())
-			.setFooter(await dateTimeGroup());
+			.setFooter(await dateTimeGroup(member.guild));
 
 		// Get the guild's recruiting channel and send the welcome embed
 		const recruiting = bot.channels.cache.get(recruitingId);

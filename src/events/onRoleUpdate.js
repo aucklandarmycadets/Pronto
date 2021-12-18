@@ -29,7 +29,7 @@ module.exports = {
 		// Initialise log embed
 		const logEmbed = new Discord.MessageEmbed()
 			.setAuthor(newRole.guild.name, newRole.guild.iconURL({ dynamic: true }))
-			.setFooter(`Id: ${newRole.id} | ${await dateTimeGroup()}`);
+			.setFooter(`Id: ${newRole.id} | ${await dateTimeGroup(newRole.guild)}`);
 
 		if (oldRole.color !== newRole.color) {
 			// If the <Role> colour has changed, set the log embed accordingly

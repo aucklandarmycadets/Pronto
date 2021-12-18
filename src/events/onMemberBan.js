@@ -38,7 +38,7 @@ module.exports = {
 			.setColor((event === 'guildBanAdd') ? colours.error : colours.success)
 			.setThumbnail(user.displayAvatarURL({ dynamic: true }))
 			.setDescription(`${user} ${user.tag}`)
-			.setFooter(`Id: ${user.id} | ${await dateTimeGroup()}`);
+			.setFooter(`Id: ${user.id} | ${await dateTimeGroup(guild)}`);
 
 		if (fetchedLogs) {
 			// If the audit logs were successfully fetched, extract the executor and target from the ban audit entry

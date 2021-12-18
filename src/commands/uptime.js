@@ -29,7 +29,7 @@ module.exports = async guild => {
 		const uptimeEmbed = new Discord.MessageEmbed()
 			.setColor(colours.success)
 			// Parse <Client.uptime> through modules.formatDuration()
-			.setFooter(`${formatDuration(bot.uptime, true)} | ${await dateTimeGroup()} | Pronto v${version}`);
+			.setFooter(`${formatDuration(bot.uptime, true)} | ${await dateTimeGroup(guild)} | Pronto v${version}`);
 
 		// Send the uptime embed
 		sendMsg(msg.channel, { embeds: [uptimeEmbed] });

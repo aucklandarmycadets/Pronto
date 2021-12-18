@@ -61,7 +61,7 @@ module.exports = async guild => {
 			.setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ dynamic: true }))
 			// Join the connectedMembers string[] with a newline separator
 			.setDescription(connectedMembers.join('\n'))
-			.setFooter(await dateTimeGroup());
+			.setFooter(await dateTimeGroup(guild));
 
 		// Send the connected embed to the attendance channel
 		sendMsg(attendanceChannel, { embeds: [connectedEmbed] });
