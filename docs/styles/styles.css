@@ -541,6 +541,7 @@ li.method-returns,
 
 .param-attributes {
 	color: var(--light-font-colour);
+	padding-left: 0.325em;
 }
 
 .param-description p:first-child {
