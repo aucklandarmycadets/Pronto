@@ -42,7 +42,7 @@ module.exports = async guild => {
 			else if (args.length < 2) throw 'Insufficient remarks.';
 		}
 
-		catch (error) { return commandError(msg, error, leaveFor.error); }
+		catch (thrownError) { return commandError(msg, thrownError, leaveFor.error); }
 
 		// Success react to command message
 		successReact(msg);

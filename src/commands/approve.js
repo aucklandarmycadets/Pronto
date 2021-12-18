@@ -52,7 +52,7 @@ module.exports = async guild => {
 			else if (lessonDocument.changed) throw 'There are currently unsubmitted changes.';
 		}
 
-		catch (error) {
+		catch (thrownError) {
 			// If approve is triggered by reaction, ensure msg has the correct author properties (approver, not submitter)
 			msg = (user)
 				? {
@@ -64,7 +64,7 @@ module.exports = async guild => {
 				}
 				: msg;
 
-			return commandError(msg, error, approve.error);
+			return commandError(msg, thrownError, approve.error);
 		}
 
 		// Success react if executed via command

@@ -52,7 +52,7 @@ module.exports = async guild => {
 			else if (recentlyAssigned.has(msg.author.id)) throw 'You are already assigning a lesson!';
 		}
 
-		catch (error) { return commandError(msg, error, assign.error); }
+		catch (thrownError) { return commandError(msg, thrownError, assign.error); }
 
 		// Delete the command message
 		deleteMsg(msg);

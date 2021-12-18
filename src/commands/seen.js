@@ -54,7 +54,7 @@ module.exports = async guild => {
 			else if (lessonDocument.instructors[instructor.id].seen) throw 'You have already acknowledged this lesson warning.';
 		}
 
-		catch (error) { return commandError(msg, error, seen.error); }
+		catch (thrownError) { return commandError(msg, thrownError, seen.error); }
 
 		// Success react if executed via command
 		if (!user) successReact(msg);

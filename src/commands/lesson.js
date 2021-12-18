@@ -98,7 +98,7 @@ module.exports = async guild => {
 			else if (!lesson.aliases.includes(command)) throw 'Invalid input.';
 		}
 
-		catch (error) { return commandError(msg, error, lesson.error); }
+		catch (thrownError) { return commandError(msg, thrownError, lesson.error); }
 
 		/**
 		 * Preview details and attached resources of an assigned lesson

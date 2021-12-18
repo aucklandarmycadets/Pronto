@@ -43,7 +43,7 @@ module.exports = async guild => {
 			else if (bot.channels.cache.get(channel.id).parentId === archivedId) throw 'Channel is already archived.';
 		}
 
-		catch (error) { return commandError(msg, error, archive.error); }
+		catch (thrownError) { return commandError(msg, thrownError, archive.error); }
 
 		// Delete database document when archiving a lesson channel
 		Lesson.findOneAndDelete({ lessonId: msg.channel.id }).exec()

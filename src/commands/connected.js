@@ -40,7 +40,7 @@ module.exports = async guild => {
 			else if (msg.mentions.channels.size > 1) throw 'You can only display one channel at a time.';
 		}
 
-		catch (error) { return commandError(msg, error, connected.error, 'Note: Use the <#channelId> syntax!'); }
+		catch (thrownError) { return commandError(msg, thrownError, connected.error, 'Note: Use the <#channelId> syntax!'); }
 
 		// Sort connected members in descending order according to their highest (non-administrator) role, then map the <Collection> to a string[] of member mentions
 		const connectedMembers = channel.members.sort(await sortMembersByRoles(guild)).map(member => member.toString());

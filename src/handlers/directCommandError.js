@@ -26,5 +26,5 @@ module.exports = async (msg, type) => {
 		else throw 'Invalid command.';
 	}
 
-	catch (error) { embedScaffold(null, msg.author, error, colours.error, 'DIRECT'); }
+	catch (thrownError) { embedScaffold(null, msg.author, thrownError, colours.error, 'DIRECT'); }
 };

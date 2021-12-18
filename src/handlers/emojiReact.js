@@ -19,6 +19,6 @@ module.exports = async (msg, emoji) => {
 			else throw 'Error reacting to message in DMs.';
 		}
 
-		catch (errorMsg) { debugError(msg.guild, error, errorMsg); }
+		catch (thrownError) { debugError(msg.guild, error, thrownError); }
 	});
 };
