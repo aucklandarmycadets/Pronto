@@ -37,7 +37,7 @@ module.exports = {
 
 		// Fetch the guild's audit logs for a kick
 		const fetchedLogs = await member.guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_KICK' })
-			.catch(error => debugError(error, 'Error fetching audit logs.'));
+			.catch(error => debugError(member.guild, error, 'Error fetching audit logs.'));
 
 		if (fetchedLogs) {
 			// If the audit logs were successfully fetched, extract the executor and target from the kick audit entry

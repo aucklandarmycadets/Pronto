@@ -36,7 +36,7 @@ module.exports = async (reaction, user) => {
 
 	const attendanceChannel = bot.channels.cache.get(attendanceId);
 	const attendanceMessage = await attendanceChannel.messages.fetch(document.attendanceId)
-		.catch(error => debugError(error, `Error fetching messages in ${attendanceChannel}.`));
+		.catch(error => debugError(reaction.message.guild, error, `Error fetching messages in ${attendanceChannel}.`));
 
 	if (reaction.emoji.name === '🗑️') {
 		Attendance.findOneAndDelete({ channelId: reaction.message.id });

@@ -49,7 +49,7 @@ module.exports = {
 
 			// Fetch the guild's audit logs for a member role update
 			fetchedLogs = await newMember.guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_ROLE_UPDATE' })
-				.catch(error => debugError(error, 'Error fetching audit logs.'));
+				.catch(error => debugError(newMember.guild, error, 'Error fetching audit logs.'));
 		}
 
 		else if (newMember.displayName !== oldMember.displayName) {
@@ -60,7 +60,7 @@ module.exports = {
 
 			// Fetch the guild's audit logs for a member update
 			fetchedLogs = await newMember.guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_UPDATE' })
-				.catch(error => debugError(error, 'Error fetching audit logs.'));
+				.catch(error => debugError(newMember.guild, error, 'Error fetching audit logs.'));
 		}
 
 		// For any other actions which may have emitted <Client>#guildMemberUpdate, cease further execution

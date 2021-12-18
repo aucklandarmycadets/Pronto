@@ -110,7 +110,7 @@ module.exports = async guild => {
 						// Update oldest message Id
 						before = msgs.last().id;
 					})
-					.catch(error => debugError(error, `Error fetching messages in ${lessonPlansChannel}.`));
+					.catch(error => debugError(guild, error, `Error fetching messages in ${lessonPlansChannel}.`));
 			}
 
 			// Edit the archived message

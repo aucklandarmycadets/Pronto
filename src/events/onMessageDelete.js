@@ -89,7 +89,7 @@ module.exports = {
 
 			// Fetch the guild's audit logs for a deleted message
 			const fetchedLogs = await msg.guild.fetchAuditLogs({ limit: 1, type: 'MESSAGE_DELETE' })
-				.catch(error => debugError(error, 'Error fetching audit logs.'));
+				.catch(error => debugError(msg.guild, error, 'Error fetching audit logs.'));
 
 			if (fetchedLogs) {
 				// If the audit logs were successfully fetched, extract the executor and target from the message deletion audit entry

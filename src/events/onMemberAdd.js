@@ -45,7 +45,7 @@ module.exports = {
 		// Retrieve the guild's 'visitor' role
 		const visitorRole = member.guild.roles.cache.find(visitorId);
 		// Assign the visitor role to the <GuildMember>
-		member.roles.add(visitorRole).catch(error => debugError(error, `Error adding ${member} to ${visitorRole}.`));
+		member.roles.add(visitorRole).catch(error => debugError(member.guild, error, `Error adding ${member} to ${visitorRole}.`));
 
 		// Get the guild's 'new members' channel
 		const welcomeChannel = bot.channels.cache.get(welcomeId);

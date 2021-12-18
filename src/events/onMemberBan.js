@@ -28,8 +28,8 @@ module.exports = {
 
 		// Fetch the guild's audit logs for a ban/unban and store the whether the user was banned/unbanned
 		const [fetchedLogs, banAction] = (event === 'guildBanAdd')
-			? [await guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_BAN_ADD' }).catch(error => debugError(error, 'Error fetching audit logs.')), 'Banned']
-			: [await guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_BAN_REMOVE' }).catch(error => debugError(error, 'Error fetching audit logs.')), 'Unbanned'];
+			? [await guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_BAN_ADD' }).catch(error => debugError(guild, error, 'Error fetching audit logs.')), 'Banned']
+			: [await guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_BAN_REMOVE' }).catch(error => debugError(guild, error, 'Error fetching audit logs.')), 'Unbanned'];
 
 		// Create log embed
 		const logEmbed = new Discord.MessageEmbed()

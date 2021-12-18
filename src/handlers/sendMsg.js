@@ -11,4 +11,4 @@ const { debugError } = require('../handlers');
  * @param {string | Discord.MessagePayload | Discord.MessageOptions} options Message payload/options
  * @returns {Promise<void | Discord.Message>} The message if it was successfully sent
  */
-module.exports = async (destination, options) => await destination.send(options).catch(error => debugError(error, `Error sending message to ${destination}.`));
+module.exports = async (destination, options) => await destination.send(options).catch(error => debugError(destination.guild, error, `Error sending message to ${destination}.`));

@@ -214,7 +214,7 @@ async function initialiseChannel(defaultChannel, guild) {
 				// Store the created <CategoryChannel> in the prontoCategory variable
 				prontoCategory = channel;
 			})
-			.catch(error => debugError(error, `Error creating category '${defaults.pronto.name}' in ${guild.name}\n`));
+			.catch(error => debugError(null, error, `Error creating category '${defaults.pronto.name}' in ${guild.name}\n`));
 	}
 
 	// If the channel to be created must be created within a specific category, attempt to find it
@@ -237,7 +237,7 @@ async function initialiseChannel(defaultChannel, guild) {
 
 	// Create the <GuildChannel>, using the specified name and appropriate <GuildChannelCreateOptions>
 	const createdChannel = await guild.channels.create(defaultChannel.name, channelOptions)
-		.catch(error => debugError(error, `Error creating ${defaultChannel.name} in ${guild.name}\n`));
+		.catch(error => debugError(null, error, `Error creating ${defaultChannel.name} in ${guild.name}\n`));
 
 	// Record the identifier of the created <GuildChannel> and its <Guild.id> within the createdChannels <Collection>
 	createdChannels.set(createdChannel.id, guild.id);

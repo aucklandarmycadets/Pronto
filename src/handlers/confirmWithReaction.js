@@ -56,7 +56,7 @@ module.exports = async (msg, dm, confirm, cancel) => {
 		}
 
 		catch (error) {
-			debugError(error, 'Error removing reactions from message in DMs.');
+			debugError(msg.guild, error, 'Error removing reactions from message in DMs.');
 		}
 	});
 };

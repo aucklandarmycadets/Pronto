@@ -26,6 +26,6 @@ module.exports = async msg => {
 			else throw 'Error reacting to message in DMs.';
 		}
 
-		catch (errorMsg) { debugError(error, errorMsg); }
+		catch (errorMsg) { debugError(msg.guild, error, errorMsg); }
 	});
 };

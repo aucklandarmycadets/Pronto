@@ -47,7 +47,7 @@ module.exports = async (oldState, newState) => {
 					sendMsg(textChannel, { embeds: [joinEmbed] });
 				})
 				.catch(error => {
-					debugError(error, `Error giving ${newMember} permissions to ${textChannel}.`);
+					debugError(newState.guild, error, `Error giving ${newMember} permissions to ${textChannel}.`);
 				});
 		}
 
@@ -80,7 +80,7 @@ module.exports = async (oldState, newState) => {
 										if (permissionsCheck(await msg.guild.members.fetch(user.id).then(member => member.roles.cache), user.id, purge)) {
 											msg.channel.messages.fetch({ limit: 100 })
 												.then(messages => purgeChannel(messages, msg.channel, collector))
-												.catch(error => debugError(error, `Error fetching messages in ${msg.channel}.`));
+												.catch(error => debugError(newState.guild, error, `Error fetching messages in ${msg.channel}.`));
 										}
 
 										else {
@@ -97,14 +97,14 @@ module.exports = async (oldState, newState) => {
 									if (permissionsCheck(await msg.guild.members.fetch(user.id).then(member => member.roles.cache), user.id, purge)) {
 										msg.channel.messages.fetch({ limit: 100 })
 											.then(messages => purgeChannel(messages, msg.channel, collector))
-											.catch(error => debugError(error, `Error fetching messages in ${msg.channel}.`));
+											.catch(error => debugError(newState.guild, error, `Error fetching messages in ${msg.channel}.`));
 									}
 								});
 
 								collector.on('end', async (_, reason) => {
 									if (reason === 'time') {
 										msg.reactions.removeAll()
-											.catch(error => debugError(error, `Error removing reactions from [message](${msg.url}) in ${textChannel}.`));
+											.catch(error => debugError(newState.guild, error, `Error removing reactions from [message](${msg.url}) in ${textChannel}.`));
 
 										const timeEmbed = new Discord.MessageEmbed()
 											.setColor(colours.error)
@@ -117,7 +117,7 @@ module.exports = async (oldState, newState) => {
 					}
 				})
 				.catch(error => {
-					debugError(error, `Error removing ${newMember}'s permissions to ${textChannel}.`);
+					debugError(newState.guild, error, `Error removing ${newMember}'s permissions to ${textChannel}.`);
 				});
 		}
 	}

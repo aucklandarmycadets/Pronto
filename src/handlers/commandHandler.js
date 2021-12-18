@@ -72,6 +72,6 @@ module.exports = async msg => {
 	}
 
 	catch (error) {
-		debugError(error, `Error executing ${await prefixCommand(command, guild)}`);
+		debugError(msg.guild, error, `Error executing ${await prefixCommand(command, guild)}`);
 	}
 };

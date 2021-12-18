@@ -80,7 +80,7 @@ module.exports = async guild => {
 				// If error, react with error and send error messages
 				errorReact(msg);
 				embedScaffold(guild, msg.channel, `${msg.author} Error archiving ${channel}.`, colours.error, 'MESSAGE');
-				debugError(error, `Error archiving ${channel}.`);
+				debugError(guild, error, `Error archiving ${channel}.`);
 			});
 	};
 

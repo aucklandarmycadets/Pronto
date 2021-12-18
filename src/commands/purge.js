@@ -73,7 +73,7 @@ module.exports = async guild => {
 					// Update oldest message Id
 					before = _msgs.last().id;
 				})
-				.catch(error => debugError(error, `Error fetching messages in ${msg.channel}.`));
+				.catch(error => debugError(guild, error, `Error fetching messages in ${msg.channel}.`));
 		}
 
 		// Once all the messages to purge have been fetched, call the <TextChannel.bulkDelete()> method
@@ -82,7 +82,7 @@ module.exports = async guild => {
 			// If error, react with error and send error messages
 				errorReact(msg);
 				embedScaffold(guild, msg.channel, `${msg.author} Error purging ${purgeCount} messages.`, colours.error, 'MESSAGE');
-				debugError(error, `Error purging ${purgeCount} messages in ${msg.channel}.`);
+				debugError(guild, error, `Error purging ${purgeCount} messages in ${msg.channel}.`);
 			});
 
 		// handlers.deleteMsg() is called on the command message by <Client>#messageDeleteBulk
