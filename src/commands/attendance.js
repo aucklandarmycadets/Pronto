@@ -34,7 +34,7 @@ module.exports = async guild => {
 			if (args[0].toLowerCase() === 'update' && args.length === 1) throw '';
 		}
 
-		catch (_) {
+		catch {
 			return commandError(msg, 'You cannot submit an empty register.', attendance.error);
 		}
 
