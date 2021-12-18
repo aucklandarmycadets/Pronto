@@ -279,7 +279,7 @@ module.exports = async guild => {
  * - Date inputs are parsed through chrono to ensure a valid date is recognised and return a Unix timestamp (ms)
  * - Attachments allow attachments to be uploaded or URLs to be entered, with appropriate error checking
  * @param {Typings.Colours} colours The guild's colour object
- * @returns {Promise<Object.<string, string | number> | 'CANCEL'>} An object with the user's completed inputs stored in each respective property, or the symbol `CANCEL` to represent a cancelled lesson assignment
+ * @returns {Promise<Object.<string, string | number | string[] | number[]> | 'CANCEL'>} An object with the user's completed inputs stored in each respective property, or the symbol `CANCEL` to represent a cancelled lesson assignment
  */
 async function getUserInput(msg, prompts, colours) {
 	// Initialise an empty object in preparation to store the user's input to each property of prompts as they are completed individually in turn
