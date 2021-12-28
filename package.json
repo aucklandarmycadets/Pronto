@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/JamesNZL/Pronto#readme",
   "dependencies": {
-    "chrono-node": "^2.3.4",
+    "chrono-node": "^2.3.5",
     "dateformat": "^4.6.3",
     "discord.js": "^13.4.0",
     "dotenv": "^10.0.0",
