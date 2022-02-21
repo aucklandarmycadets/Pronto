@@ -25,6 +25,9 @@ module.exports = async guild => {
 	evaluate.execute = async ({ msg, args }) => {
 		const { bot } = require('../pronto');
 
+		// Separate arguments by both spaces and newlines
+		args = args.join(' ').split(/[ \n]+/);
+
 		// Parse the short flags from the message, which consist of single letters that may be joined together under a single '-'
 		// Construct a string[] of each individual flag letter
 		const shortFlags = args.filter(arg => arg.match(/(?<![-a-zA-Z])-[A-z]+(?![\s\S]*})/g))
@@ -44,10 +47,10 @@ module.exports = async guild => {
 
 		// Filter out all flags from the message prior to evaluation
 		// Use regex to ensure only flags containing letters are filtered, and not numbers or standalone '-' characters
-		args = args.filter(arg => !arg.match(/(?<!(?<!--\w*)[a-zA-Z])-{1,2}[a-zA-Z]+/g));
+		args = args.filter(arg => !arg.match(/(?<!(?<!--\w*)[a-zA-Z])(-{1,2}[a-zA-Z]+)+/g));
 
-		// If the arguments contain a codeblock, separate arguments by newlines rather than spaces, and filter out the codeblocks
-		if (args.includes('```')) args = args.join(' ').split('\n').filter(arg => !arg.includes('```'));
+		// If the arguments contain a codeblock, filter them out
+		if (args.includes('```')) args = args.filter(arg => !arg.includes('```'));
 
 		// If there is no code to evaluate, return an error
 		if (args.length === 0) return commandError(msg, 'You must enter something to evaluate.', evaluate.error);
