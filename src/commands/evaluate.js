@@ -33,6 +33,9 @@ module.exports = async guild => {
 		// Flag for whether to display the evaluated result in a code block
 		const codeBlock = !(args.includes('--no-code') || args.includes('--plain') || shortFlags.includes('P'));
 
+		// Flag for whether to automatically include a 'return' statement in front of the code to evaluate
+		const implicitReturn = !(args.includes('--no-implicit-return') || shortFlags.includes('R'));
+
 		// Flag for whether to supress result
 		const silent = (args.includes('--silent') || shortFlags.includes('s'));
 
@@ -58,7 +61,7 @@ module.exports = async guild => {
 
 			// Only evaluate the code if there is no attempt to extract the bot token
 			let result = (!code.toLowerCase().includes('token'))
-				? await eval(`(async () => { return ${code} })()`)
+				? await eval(`(async () => { ${(implicitReturn) ? 'return' : ''} ${code} })()`)
 				: '*'.repeat(bot.token.length);
 
 			// If the embed has been modified, automatically send it into the message channel
