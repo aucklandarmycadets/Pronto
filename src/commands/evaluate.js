@@ -30,7 +30,7 @@ module.exports = async guild => {
 
 		// Parse the short flags from the message, which consist of single letters that may be joined together under a single '-'
 		// Construct a string[] of each individual flag letter
-		const shortFlags = args.filter(arg => arg.match(/(?<![-a-zA-Z])-[A-z]+(?![\s\S]*})/g))
+		const shortFlags = args.filter(arg => arg.match(/(?<![-a-zA-Z0-9])-[A-z]+(?![\s\S]*})/g))
 			.flatMap(flags => [...flags.replace('-', '')]);
 
 		// Flag for whether to display the evaluated result in a code block
@@ -47,7 +47,7 @@ module.exports = async guild => {
 
 		// Filter out all flags from the message prior to evaluation
 		// Use regex to ensure only flags containing letters are filtered, and not numbers or standalone '-' characters
-		args = args.filter(arg => !arg.match(/(?<!(?<!--\w*)[a-zA-Z])(-{1,2}[a-zA-Z]+)+/g));
+		args = args.filter(arg => !arg.match(/(?<!(?<!--\w*)[a-zA-Z0-9])(-{1,2}[a-zA-Z]+)+/g));
 
 		// If the arguments contain a codeblock, filter them out
 		if (args.includes('```')) args = args.filter(arg => !arg.includes('```'));
