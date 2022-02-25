@@ -37,11 +37,11 @@ module.exports = (target, source) => {
 	// Iterate through each key of the source object
 	Object.keys(source).forEach(key => {
 		// If the value is a nested object, use recursion to merge the nested source object into the target object
-		if (source[key] instanceof Object) source[key] = { ...source[key], ...module.exports(target[key], source[key]) };
+		if (source[key] instanceof Object) source[key] = { ...source[key], ...module.exports(target[key] || {}, source[key]) };
 	});
 
 	// Once all nested objects have been merged, perform a final merge on the remaining shallow properties
 	// If the current target is null or undefined, pass an empty object instead
 	// This may occur if the original source object has nested objects that are greater than one level deeper than the original target
-	return { ...target, ...source };
+	return { ...target || {}, ...source };
 };
