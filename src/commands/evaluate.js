@@ -104,8 +104,8 @@ module.exports = async guild => {
 				// Use the codeblock boolean flag to determine whether to wrap result in a codeblock
 				// If so, ensure the MAXIMUM_INDEX accounts for the codeblock characters
 				const breakIndex = (codeBlock)
-					? findBreakIndex(str, substr, MAXIMUM_INDEX)
-					: findBreakIndex(str, substr, MAXIMUM_INDEX - '```js\n```'.length);
+					? findBreakIndex(str, substr, MAXIMUM_INDEX - '```js\n```'.length)
+					: findBreakIndex(str, substr, MAXIMUM_INDEX);
 
 				// Wrap the message in a codeblock if flag is true, and send the message payload
 				(codeBlock)
