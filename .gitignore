@@ -60,9 +60,6 @@ typings/
 # next.js build output
 .next
 
-# eslint configuration
-.eslintrc.json
-
 # Iterate version script
 updateVersion.js
 updateVersion.sh
